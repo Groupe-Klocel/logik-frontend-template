@@ -1,0 +1,8 @@
+// SWC will be disabled by custom Babel configuration for styled components integration
+// https://nextjs.org/docs/messages/swc-disabled
+{ 
+  "presets": ["next/babel"], 
+  "plugins": [
+    ["styled-components", { "ssr": true }]
+  ]
+}
