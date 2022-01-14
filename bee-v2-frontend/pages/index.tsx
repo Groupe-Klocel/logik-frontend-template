@@ -1,18 +1,17 @@
-import { AppHead, AppLayout, Welcome } from '@components'
-import { NextPage } from 'next'
-export interface IHomePageProps { }
+import { FC } from 'react'
+import MainLayout from '../components/layouts/MainLayout'
+import {Welcome} from '@components'
 
-export const HomePage: NextPage<IHomePageProps> = () => {
-  return (
-    <>
-      <AppHead title="Bee V2" />
-      <AppLayout>
-        <Welcome />
-      </AppLayout>
-    </>
-  )
+type PageComponent = FC & { layout: typeof MainLayout} 
+
+const HomePage: PageComponent = () => {
+	return (
+		<>
+			<Welcome/>
+		</>
+	)
 }
 
-HomePage.displayName = 'HomePage'
+HomePage.layout = MainLayout
 
 export default HomePage

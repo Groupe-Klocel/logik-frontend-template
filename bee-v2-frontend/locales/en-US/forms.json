@@ -1,0 +1,15 @@
+{
+	"base-unit-weight": "Base Unit Weight",
+	"base-weight": "Base Weight",
+	"box-quantity": "Box Quantity",
+	"box-to-be-replenish": "Box To Be Replenish",
+	"family": "Family",
+	"grouping-id": "Grouping Id",
+	"permanent-product": "Permanent Product",
+	"piece-to-be-replenish": "Piece To Be Replenish",
+	"reference": "Reference",
+	"sub-family": "Sub family",
+	"rot":"Rot",
+	"date-type":"Date Type",
+	"product-description":"Product Description"
+}

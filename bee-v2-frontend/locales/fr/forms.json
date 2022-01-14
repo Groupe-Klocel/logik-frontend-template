@@ -1,0 +1,15 @@
+{
+	"base-unit-weight": "Poids Unité de base",
+	"base-weight": "Poids de base",
+	"box-quantity": "Quantité de boîtes",
+	"box-to-be-replenish": "Boîte à réapprovisionner",
+	"family": "Famille",
+	"grouping-id": "Id du groupement",
+	"permanent-product": "Produit permanent",
+	"piece-to-be-replenish": "Pièce à réapprovisionner",
+	"reference": "Référence",
+	"sub-family": "Sous-famille",
+	"rot":"Rot",
+	"date-type":"Type de date",
+	"product-description":"Description produit"
+}

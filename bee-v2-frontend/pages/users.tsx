@@ -1,22 +1,19 @@
-import { AppHead, AppLayout, Welcome } from '@components'
-import { Typography } from 'antd'
-import { NextPage } from 'next'
+import { AppHead } from '@components'
+import { FC } from 'react'
+import MainLayout from '../components/layouts/MainLayout'
+import {Users} from '../modules/Users/PagesContainer/Users'
 
-export interface IUsersPageProps { }
+type PageComponent = FC & { layout: typeof MainLayout} 
 
-export const UsersPage: NextPage<IUsersPageProps> = () => {
+const UsersPage: PageComponent = () => {
 	return (
 		<>
-			<AppHead title="Bee V2" />
-			<AppLayout>
-				<Typography.Title level={3}>
-					Welcome to {UsersPage.displayName}
-				</Typography.Title>
-			</AppLayout>
+		<AppHead title="Bee V2" />
+		<Users />
 		</>
 	)
 }
 
-UsersPage.displayName = 'UsersPage'
+UsersPage.layout = MainLayout
 
 export default UsersPage

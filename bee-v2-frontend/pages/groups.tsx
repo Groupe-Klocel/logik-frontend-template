@@ -1,22 +1,20 @@
-import { AppHead, AppLayout, Welcome } from '@components'
-import { Typography } from 'antd'
-import { NextPage } from 'next'
+import { AppHead } from '@components'
+import { FC } from 'react'
+import MainLayout from '../components/layouts/MainLayout'
+import {Groups} from '../modules/Groups/PagesContainer/Groups'
 
-export interface IGroupsPageProps { }
+type PageComponent = FC & { layout: typeof MainLayout} 
 
-export const GroupsPage: NextPage<IGroupsPageProps> = () => {
+const GroupsPage: PageComponent = () => {
+
 	return (
 		<>
 			<AppHead title="Bee V2" />
-			<AppLayout>
-				<Typography.Title level={3}>
-					Welcome to {GroupsPage.displayName}
-				</Typography.Title>
-			</AppLayout>
+			<Groups/>
 		</>
 	)
 }
 
-GroupsPage.displayName = 'GroupsPage'
+GroupsPage.layout = MainLayout
 
 export default GroupsPage

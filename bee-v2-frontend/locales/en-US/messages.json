@@ -1,0 +1,11 @@
+{
+	"error-message-empty-input": "Field must not be empty",
+	"error-message-requiered-input": "Field is requiered",
+	"please-enter-a": "Please enter a {{name}}",
+	"please-fill-your": "Please fill your {{name}}",
+	"please-input": "Please input {{name}}",
+	"please-select": "Please select {{name}}",
+	"please-select-a": "Please select a {{name}}",
+	"please-select-an": "Please select a {{name}}",
+	"please-select-your": "Please select your {{name}}"
+}

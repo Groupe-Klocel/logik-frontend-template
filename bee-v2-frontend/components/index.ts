@@ -1,10 +1,5 @@
-export * from './Page'
-export * from './AppHead'
-export * from './AppLayout'
-export * from './AppContent'
-export * from './AppMenu'
-export * from './AppFooter'
-export * from './AppHeader'
-export * from './Welcome'
-
-
+export * from './common/Smart/Page'
+export * from './common/Smart/AppHead'
+export * from './common/Dumb/AppContent'
+export * from './common/Smart/AppTable'
+export * from './common/Dumb/Welcome'
