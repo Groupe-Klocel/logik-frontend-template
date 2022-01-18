@@ -6,7 +6,6 @@ import { Header } from 'components/common/Smart/Header/Header'
 import SideMenu from 'components/common/Smart/SideMenu/SideMenu'
 import { WithDrawer } from 'components/common/Smart/Drawers/WithDrawer'
 
-
 const StyledMainLayout = styled(Layout)`
   height: 100vh;
 `
@@ -37,29 +36,29 @@ export interface IMainLayoutProps {
 const MainLayout: FC<IMainLayoutProps> = ({ children }: IMainLayoutProps) => {
 	const [menuCollapsed, setMenuCollapsed] = useState(true)
 	const [theme, setTheme] = useState('dark');
-	
-	
+
+
 	const onCollapseMenu = () => {
 		console.log(menuCollapsed);
 		setMenuCollapsed(!menuCollapsed)
 	}
 
-	const changeTheme =( value: string )=> {
-    setTheme(value ? 'light' : 'dark');
-  };
+	const changeTheme = (value: string) => {
+		setTheme(value ? 'light' : 'dark');
+	};
 
 	return (
 		<StyledMainLayout>
 			<Header />
 			<StyledMainLayout >
 				<WithDrawer>
-				<StyledSider theme={theme} collapsible collapsed={menuCollapsed} onCollapse={onCollapseMenu}>
-					<AlignWrapper>
-						<Switch checkedChildren="Dark" unCheckedChildren="Light" onChange={changeTheme} />
-					</AlignWrapper>
-					<SideMenu theme={theme} />
-				</StyledSider>
-					<AppContent >
+					<StyledSider theme={theme} collapsible collapsed={menuCollapsed} onCollapse={onCollapseMenu}>
+						<AlignWrapper>
+							<Switch checkedChildren="Dark" unCheckedChildren="Light" onChange={changeTheme} />
+						</AlignWrapper>
+						<SideMenu theme={theme} />
+					</StyledSider>
+					<AppContent>
 						{children}
 					</AppContent>
 				</WithDrawer>

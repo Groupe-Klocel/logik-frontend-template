@@ -10,8 +10,8 @@ export type ColumnType = {
 	key: React.Key;
 	title: string,
 	dataIndex: string,
-  disabled?: boolean;
-  fixed?: boolean;
+	disabled?: boolean;
+	fixed?: boolean;
 	render?: ReactNode
 }
 
@@ -20,7 +20,7 @@ export type ProfileMenuType = {
 	title: string;
 	path?: string;
 	icon?: ReactNode;
-	onClick: Function;
+	onClick: any ;
 }
 
 
@@ -38,9 +38,9 @@ export type DrawerType = {
 	context: any;
 	title: string;
 	cancelButton: boolean;
-	confirmButton : boolean;
+	confirmButton: boolean;
 	cancelButtonTitle: string;
-	confirmButtonTitle : string;
+	confirmButtonTitle: string;
 	placement: "top" | "right" | "bottom" | "left" | undefined;
 	content?: ReactNode;
 	onConfirm?: Function;
@@ -49,7 +49,7 @@ export type DrawerType = {
 }
 
 export type DataFilterType = {
-  key: React.Key;
-  disabled: boolean;
-  title: string;
+	key: React.Key;
+	disabled: boolean;
+	title: string;
 }

@@ -19,3 +19,5 @@ export function getKeys(data: Array<any>): React.Key[] {
 export function isVisible(value: React.Key , list: Array<any>) {
 	return list.includes(value);
 }
+
+export const isServer = () => typeof window === 'undefined';

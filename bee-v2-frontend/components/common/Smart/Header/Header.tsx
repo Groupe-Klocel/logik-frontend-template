@@ -1,4 +1,4 @@
-import { FC, useContext} from 'react'
+import { FC, useContext } from 'react'
 import styled from 'styled-components';
 import { Layout, Row, Col } from 'antd';
 import { LanguageSelector } from 'components/common/Dumb/LanguageSelector/LanguageSelector'
@@ -7,7 +7,6 @@ import { ProfileMenu } from 'components/common/Dumb/ProfileMenu/ProfileMenu';
 import { ThemeSwitch } from '../ThemeSwitch/ThemeSwitch';
 import { SettingOutlined } from '@ant-design/icons';
 import useTranslation from 'next-translate/useTranslation';
-import { useDrawerUpdater } from 'helpers/context/DrawerContext';
 
 const StyledHeader = styled(Layout.Header)`
 color: ${props => props.theme.palette.primary.contrastText};
@@ -28,18 +27,6 @@ export interface IHeaderProps {
 
 export const Header: FC<IHeaderProps> = ({ }: IHeaderProps) => {
 	let { t } = useTranslation()
-	const setDrawerOptions = useDrawerUpdater()
-
-	const userSettingDrawerProps = {
-		context: "r",
-		title: t('menu:settings'),
-		placement:'right',
-		cancelButtonTitle:t('actions:cancel') ,
-		confirmButtonTitle:t('actions:save'),
-		content: <div>Search</div>,
-		onConfirm: (_, context) => console.log(context),
-		onClose: () => setDrawerOptions({ isOpen: false })
-	}
 
 	const profileMenuList = [
 		{
@@ -60,9 +47,9 @@ export const Header: FC<IHeaderProps> = ({ }: IHeaderProps) => {
 				<StyledCol flex="0 1 auto" >
 					<LanguageSelector />
 				</StyledCol>
-				{/* <StyledCol flex="0 1 auto" >
+				<StyledCol flex="0 1 auto" >
 					<ThemeSwitch />
-				</StyledCol> */}
+				</StyledCol>
 			</Row>
 		</StyledHeader>
 	);

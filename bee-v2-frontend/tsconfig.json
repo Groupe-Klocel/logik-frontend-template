@@ -15,11 +15,19 @@
 		"isolatedModules": true,
 		"jsx": "preserve",
 		"paths": {
+			"@/*": ["./src/*"],
 			"@components": ["./components/index.ts"],
 			"@configs/*": ["./configs/*"]
 		},
 		"incremental": true
 	},
-	"include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "helpers/utils/constant.ts", "helpers/utils/utils.ts"],
+	"include": [
+		"next-env.d.ts",
+		"**/*.ts",
+		"**/*.tsx",
+		"**/*.js",
+		"helpers/utils/constant.ts",
+		"helpers/utils/utils.ts",
+	],
 	"exclude": ["node_modules"]
 }

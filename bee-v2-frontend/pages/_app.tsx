@@ -8,7 +8,14 @@ import { ReactQueryDevtools } from 'react-query/devtools'
 import '../styles/globals.css'
 import { ThemeProvider } from 'styled-components';
 import { defaultTheme } from '../styles/theme'
-import {PageWithMainLayoutType} from 'helpers/types/pageWithLayout'
+import { PageWithMainLayoutType } from 'helpers/types/pageWithLayout'
+import { AppWrapper } from "helpers/context/AppContext";
+import { ThemeSwitcherProvider, useThemeSwitcher } from "react-css-theme-switcher";
+
+const themes = {
+  dark: `/dark-theme.css`,
+  light: `/light-theme.css`,
+};
 
 const queryClient = new QueryClient();
 
@@ -24,21 +31,29 @@ const App = ({ Component, pageProps }: AppLayoutProps) => {
 
   return (
     <>
-      <ThemeProvider theme={defaultTheme}>
-        <Head>
-          <title>{`${META_DEFAULTS.title} | ${META_DEFAULTS.description}`}</title>
-          <meta
-            name="viewport"
-            content="width=device-width, initial-scale=1, maximum-scale=5"
-          />
-        </Head>
-        <QueryClientProvider client={queryClient}>
-          <Layout>
-           {getLayout( <Component {...pageProps} />)}
-          </Layout>
-          <ReactQueryDevtools initialIsOpen={false} />
-        </QueryClientProvider>
-      </ThemeProvider>
+      <ThemeSwitcherProvider themeMap={themes} defaultTheme="light">
+
+        <ThemeProvider theme={defaultTheme}>
+          <Head>
+            <title>{`${META_DEFAULTS.title} | ${META_DEFAULTS.description}`}</title>
+            <meta
+              name="viewport"
+              content="width=device-width, initial-scale=1, maximum-scale=5"
+            />
+          </Head>
+          <QueryClientProvider client={queryClient}>
+            <div className={`theme-dark`}>
+              <AppWrapper>
+                <Layout>
+                  {getLayout(<Component {...pageProps} />)}
+                </Layout>
+              </AppWrapper>
+            </div>
+            <ReactQueryDevtools initialIsOpen={false} />
+          </QueryClientProvider>
+        </ThemeProvider>
+      </ThemeSwitcherProvider>
+
     </>
   )
 }
