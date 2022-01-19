@@ -21,6 +21,11 @@ export interface IAppTableProps {
 export const AppTable: FC<IAppTableProps> = ({ data, columns, scroll }) => {
 	let { t } = useTranslation()
 
+	const dispatch = useDrawerDispatch();
+	const closeDrawer = useCallback(() => dispatch({ type: 'CLOSE_DRAWER' }), [
+			dispatch,
+	]);
+
 	const setDrawerOptions = useDrawerUpdater()
 
 	// FILTER  

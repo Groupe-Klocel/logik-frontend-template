@@ -3,6 +3,7 @@ import { AppReducer, initialState } from "helpers/reducers/AppReducer";
 
 interface IAppContext {
 	theme: "dark" | "light";
+	isMenuCollapsed: boolean;
 	locale: string;
 }
 
@@ -10,6 +11,7 @@ interface IAppWrapper {
 	children: ReactNode;
 }
 
+// get state from cookies here
 const AppContext = createContext<IAppContext>({});
 
 // AppWrapper which will pass down the context to the rest of the app

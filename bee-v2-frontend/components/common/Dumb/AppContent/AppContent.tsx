@@ -16,7 +16,7 @@ scrollbar-color: #8f54a0 #ffffff;
   }
 
 &::-webkit-scrollbar-thumb {
-    background-color: ${props => props.theme.palette.secondary.main};
+    background-color: #262630;
     border-radius: 10px;
     border: 3px solid #ffffff;
   }

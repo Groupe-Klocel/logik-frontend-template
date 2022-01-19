@@ -20,7 +20,7 @@ export type ProfileMenuType = {
 	title: string;
 	path?: string;
 	icon?: ReactNode;
-	onClick: any ;
+	drawer?: any;
 }
 
 
@@ -53,3 +53,4 @@ export type DataFilterType = {
 	disabled: boolean;
 	title: string;
 }
+

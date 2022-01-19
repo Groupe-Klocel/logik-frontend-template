@@ -1,28 +1,63 @@
-import { DrawerType } from "helpers/types/types";
-import { createContext, useContext, useState } from "react"
+import { createCtx } from './create-context';
 
-interface IDrawerContext {
-	isOpen: boolean;
-	drawerProps: {} | DrawerType;
-}
-
-export const DrawerStateContext = createContext<IDrawerContext>({
+const initialState = {
 	isOpen: false,
-	drawerProps: {},
-})
+	drawerComponent: null,
+	data: null,
+	title: "",
+	placement: "right",
+	cancelButton: false,
+	comfirmButton: true,
+	cancelButtonTitle: "",
+	comfirmButtonTitle: ""
+};
 
-export const DrawerUpdaterContext = createContext<IDrawerContext>({
-	isOpen: false,
-	drawerProps: {},
-})
+type State = typeof initialState;
+type Action = any;
+function reducer(state: State, action: Action) {
 
-export function useDrawerState() {
-	return useContext(DrawerStateContext);
+	switch (action.type) {
+		case 'OPEN_DRAWER':
+			return {
+				...state,
+				isOpen: true,
+				drawerComponent: action.drawerComponent,
+				data: action.data,
+				title: action.title,
+				cancelButton: action.cancelButton,
+				comfirmButton: action.comfirmButton,
+				cancelButtonTitle: action.cancelButtonTitle,
+				comfirmButtonTitle: action.comfirmButtonTitle
+			};
+		case 'CLOSE_DRAWER':
+			return {
+				...state,
+				isOpen: false,
+				drawerComponent: null,
+				data: null,
+			};
+		case 'ON_CANCEL':
+			return {
+				...state,
+				isOpen: false,
+				drawerComponent: null,
+				data: null,
+			};
+		case 'ON_COMFIRM':
+			return {
+				...state,
+				isOpen: false,
+				drawerComponent: null,
+				data: action.data,
+			};
+		default:
+			return state;
+	}
 }
+const [useDrawerState, useDrawerDispatch, DrawerProvider] = createCtx(
+	initialState,
+	reducer
+);
 
-export function useDrawerUpdater() {
-	return useContext(DrawerUpdaterContext);
-}
-
-
+export { useDrawerState, useDrawerDispatch, DrawerProvider };
 

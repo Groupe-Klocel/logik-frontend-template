@@ -21,11 +21,11 @@ const plugins = [
 			// },
 		})
 	],
+	nextTranslate,
 
 	/* ...other plugins... */
 ];
 
 module.exports = withPlugins(plugins, {
 	reactStrictMode: true,
-	...nextTranslate(),
-});
+	});

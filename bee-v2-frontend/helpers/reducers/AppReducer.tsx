@@ -1,10 +1,10 @@
 // contain an initialState variable and an AppReducer arrow function.
 // The initialState variable will be used to store the initial state of the app and
 // the arrow function will be used to store the dispatch methods used to modify the state.
-import { useRouter } from "next/router"
 
 export const initialState = {
 	theme: "dark",
+	isMenuCollapsed: true,
 	locale: "fr",
 };
 
@@ -17,6 +17,12 @@ export const AppReducer = (state: any, action: { type: any; value: any; }) => {
 			return {
 				...state,
 				theme: action.value,
+			};
+		}
+		case "collapse_menu": {
+			return {
+				...state,
+				isMenuCollapsed: !state.isMenuCollapsed,
 			};
 		}
 	}

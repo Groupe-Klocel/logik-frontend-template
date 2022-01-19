@@ -13,7 +13,7 @@ export interface IThemeSwitchProps {
 
 export const ThemeSwitch: FC<IThemeSwitchProps> = ({ }: IThemeSwitchProps) => {
 	const [isDarkMode, setIsDarkMode] = useState();
-	const { switcher, currentTheme, status, themes } = useThemeSwitcher();
+	const { switcher, currentTheme, themes } = useThemeSwitcher();
 
 	const toggleTheme = (isChecked: any) => {
 		setIsDarkMode(isChecked);
@@ -28,7 +28,6 @@ console.log("theme",currentTheme)
 			onChange={toggleTheme}
 			checkedChildren={<LightThemeIcon />}
 			unCheckedChildren={<DarkThemeIcon />}
-			defaultChecked
 		/>
 	);
 }

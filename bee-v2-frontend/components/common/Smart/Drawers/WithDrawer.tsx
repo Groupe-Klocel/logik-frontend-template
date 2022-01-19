@@ -14,7 +14,7 @@ export const WithDrawer: FC<IWithDrawerProps> = ({ children }: IWithDrawerProps)
   });
 
   return (
-    <DrawerUpdaterContext.Provider value={setDrawerOptions}>
+    <DrawerUpdaterContext.Provider value={setDrawerOptions()}>
       <DrawerStateContext.Provider value={drawerOptions}>
         <GlobalDrawer />
         {children}

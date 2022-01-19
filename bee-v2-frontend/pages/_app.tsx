@@ -31,27 +31,24 @@ const App = ({ Component, pageProps }: AppLayoutProps) => {
 
   return (
     <>
-      <ThemeSwitcherProvider themeMap={themes} defaultTheme="light">
-
-        <ThemeProvider theme={defaultTheme}>
-          <Head>
-            <title>{`${META_DEFAULTS.title} | ${META_DEFAULTS.description}`}</title>
-            <meta
-              name="viewport"
-              content="width=device-width, initial-scale=1, maximum-scale=5"
-            />
-          </Head>
-          <QueryClientProvider client={queryClient}>
-            <div className={`theme-dark`}>
-              <AppWrapper>
-                <Layout>
-                  {getLayout(<Component {...pageProps} />)}
-                </Layout>
-              </AppWrapper>
-            </div>
-            <ReactQueryDevtools initialIsOpen={false} />
-          </QueryClientProvider>
-        </ThemeProvider>
+      <ThemeSwitcherProvider themeMap={themes} defaultTheme="LIGHT">
+        <Head>
+          <title>{`${META_DEFAULTS.title} | ${META_DEFAULTS.description}`}</title>
+          <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, maximum-scale=5"
+          />
+        </Head>
+        <QueryClientProvider client={queryClient}>
+          <div className={`theme-dark`}>
+            <AppWrapper>
+              <Layout>
+                {getLayout(<Component {...pageProps} />)}
+              </Layout>
+            </AppWrapper>
+          </div>
+          <ReactQueryDevtools initialIsOpen={false} />
+        </QueryClientProvider>
       </ThemeSwitcherProvider>
 
     </>

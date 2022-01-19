@@ -18,17 +18,17 @@ const { SubMenu } = Menu;
 
 
 export interface ISideMenuProps {
-	theme: MenuTheme | undefined
+
 }
 
 
 
 export const SideMenu: FC<ISideMenuProps> =
-	({ theme }: ISideMenuProps) => {
+	({ }: ISideMenuProps) => {
 		let { t } = useTranslation('menu')
 
 		return (
-			<Menu theme={theme} mode="inline">
+			<Menu mode="inline">
 				<SubMenu icon={<AuditOutlined />} key="administration" title={t("administration")}>
 					<SubMenu key="administration-access-management" title={t("access-management")}>
 						<Menu.Item key="administration-access-management-users"><Link href='/users'>{t("users")}</Link></Menu.Item>

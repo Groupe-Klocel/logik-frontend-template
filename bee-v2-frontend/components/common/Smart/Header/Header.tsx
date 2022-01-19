@@ -1,16 +1,17 @@
-import { FC, useContext } from 'react'
+import { FC, useCallback } from 'react'
 import styled from 'styled-components';
 import { Layout, Row, Col } from 'antd';
 import { LanguageSelector } from 'components/common/Dumb/LanguageSelector/LanguageSelector'
 import { Logo } from 'components/common/Dumb/Logo/Logo'
 import { ProfileMenu } from 'components/common/Dumb/ProfileMenu/ProfileMenu';
-import { ThemeSwitch } from '../ThemeSwitch/ThemeSwitch';
+import { ThemeSwitch } from '../Switchs/ThemeSwitch';
 import { SettingOutlined } from '@ant-design/icons';
 import useTranslation from 'next-translate/useTranslation';
+import { useDrawerDispatch } from 'helpers/context/DrawerContext';
+import { useAppContext } from 'helpers/context/AppContext';
+import { UserSettings } from 'components/common/Dumb/DrawerItems/UserSettings';
 
 const StyledHeader = styled(Layout.Header)`
-color: ${props => props.theme.palette.primary.contrastText};
-background-color: ${props => props.theme.palette.primary.main};
 padding: 0px 10px 0px 10px;
 line-height: 50px;
 height: 53px;
@@ -28,12 +29,34 @@ export interface IHeaderProps {
 export const Header: FC<IHeaderProps> = ({ }: IHeaderProps) => {
 	let { t } = useTranslation()
 
+	const { state, dispatch } = useAppContext();
+
+	const dispatchDrawer = useDrawerDispatch();
+
+	const openUserSettingDrawer = useCallback(
+		(variables) => dispatchDrawer({
+			type: 'OPEN_DRAWER',
+			drawerComponent: variables.drawerComponent,
+			data: variables.data,
+			title: variables.title,
+			cancelButton: variables.cancelButton,
+			comfirmButton: variables.comfirmButton,
+		}),
+		[dispatchDrawer, state]
+	)
+
 	const profileMenuList = [
 		{
 			key: 'settings',
 			title: t('menu:settings'),
 			icon: <SettingOutlined />,
-			onClick: () => console.log("f"),
+			onClick: openUserSettingDrawer({
+				drawerComponent: 'USER_SETTINGS', 
+				data: state,
+				title: t('menu:user-settings'),
+				cancelButton: false,
+				comfirmButton: false,
+			})
 		}
 	]
 

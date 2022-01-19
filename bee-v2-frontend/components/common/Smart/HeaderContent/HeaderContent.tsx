@@ -18,13 +18,13 @@ export interface IHeaderContentProps {
 export const HeaderContent: FC<IHeaderContentProps> = ({ children, title, routes, actions }: IHeaderContentProps) => {
 	return (
 
-		<StyledHeaderContent
+		<PageHeader
 			title={title}
 			breadcrumb={<GlobalBreadcrumb routes={routes} />}
 			extra={actions}
 		>
 			{children}
-		</StyledHeaderContent>
+		</PageHeader>
 
 	);
 }

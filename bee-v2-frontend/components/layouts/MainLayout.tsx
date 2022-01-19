@@ -5,6 +5,8 @@ import styled from 'styled-components'
 import { Header } from 'components/common/Smart/Header/Header'
 import SideMenu from 'components/common/Smart/SideMenu/SideMenu'
 import { WithDrawer } from 'components/common/Smart/Drawers/WithDrawer'
+import { DrawerProvider } from 'helpers/context/DrawerContext'
+import { DrawerItems } from 'components/common/Smart/Drawers/DrawerItems'
 
 const StyledMainLayout = styled(Layout)`
   height: 100vh;
@@ -34,8 +36,8 @@ export interface IMainLayoutProps {
 }
 
 const MainLayout: FC<IMainLayoutProps> = ({ children }: IMainLayoutProps) => {
+	// get from app context 
 	const [menuCollapsed, setMenuCollapsed] = useState(true)
-	const [theme, setTheme] = useState('dark');
 
 
 	const onCollapseMenu = () => {
@@ -43,25 +45,20 @@ const MainLayout: FC<IMainLayoutProps> = ({ children }: IMainLayoutProps) => {
 		setMenuCollapsed(!menuCollapsed)
 	}
 
-	const changeTheme = (value: string) => {
-		setTheme(value ? 'light' : 'dark');
-	};
 
 	return (
 		<StyledMainLayout>
 			<Header />
 			<StyledMainLayout >
-				<WithDrawer>
-					<StyledSider theme={theme} collapsible collapsed={menuCollapsed} onCollapse={onCollapseMenu}>
-						<AlignWrapper>
-							<Switch checkedChildren="Dark" unCheckedChildren="Light" onChange={changeTheme} />
-						</AlignWrapper>
-						<SideMenu theme={theme} />
+				<DrawerProvider>
+					<StyledSider collapsible collapsed={menuCollapsed} onCollapse={onCollapseMenu}>
+						<SideMenu />
 					</StyledSider>
 					<AppContent>
 						{children}
 					</AppContent>
-				</WithDrawer>
+					<DrawerItems />
+				</DrawerProvider>
 			</StyledMainLayout >
 		</StyledMainLayout >
 	);
