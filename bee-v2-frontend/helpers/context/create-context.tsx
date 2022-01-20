@@ -1,4 +1,4 @@
-import React, { createContext, Dispatch, Reducer, useContext } from 'react';
+import React, { createContext, Dispatch, Reducer, useContext, useMemo } from 'react';
 
 export function createCtx<S, A>(defaultValue: S, reducer: Reducer<S, A>) {
   const defaultDispatch: Dispatch<A> = () => defaultValue;
@@ -16,6 +16,11 @@ export function createCtx<S, A>(defaultValue: S, reducer: Reducer<S, A>) {
 
   function Provider({ children }: React.PropsWithChildren<{}>) {
     const [state, dispatch] = React.useReducer(reducer, defaultValue);
+    
+    const contextValue = useMemo(() => {
+      return { state, dispatch };
+    }, [state, dispatch]);
+    console.log(contextValue)
     return (
       <dispatchCtx.Provider value={dispatch}>
         <stateCtx.Provider value={state}>{children}</stateCtx.Provider>

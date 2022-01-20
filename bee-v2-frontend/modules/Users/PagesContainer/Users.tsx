@@ -8,7 +8,6 @@ import { LinkButton } from 'components/common/Dumb/Buttons/LinkButton';
 import { PageContentWrapper } from 'components/common/Dumb/Wrappers/Wrappers';
 import { SearchOutlined } from '@ant-design/icons';
 import { Space } from 'antd';
-import { useDrawerUpdater } from 'helpers/context/DrawerContext';
 
 
 
@@ -18,26 +17,27 @@ export interface IUsersProps {
 
 export const Users: FC<IUsersProps> = ({ }: IUsersProps) => {
 	let { t } = useTranslation()
-	const setDrawerOptions = useDrawerUpdater();
 
-	//	SEARCH DRAWER 
-	const [search, setSearch] = useState('');
-	const searchDrawerProps = {
-		context: search,
-		title:"Search",
-		placement:'right',
-		cancelButtonTitle:t('actions:cancel') ,
-		confirmButtonTitle:t('actions:search'),
-		content: <div>Search</div>,
-		onConfirm: (_:any, context:any) => setSearch(context),
-		onClose: () => setDrawerOptions({ isOpen: false })
-	}
+
+
+	// //	SEARCH DRAWER 
+	// const [search, setSearch] = useState('');
+	// const searchDrawerProps = {
+	// 	context: search,
+	// 	title:"Search",
+	// 	placement:'right',
+	// 	cancelButtonTitle:t('actions:cancel') ,
+	// 	confirmButtonTitle:t('actions:search'),
+	// 	content: <div>Search</div>,
+	// 	onConfirm: (_:any, context:any) => setSearch(context),
+	// 	onClose: () => setDrawerOptions({ isOpen: false })
+	// }
 
 	return (
 		<>
 			<HeaderContent title={t('common:users')} routes={usersRoutes} actions={
 				<Space>
-				<DrawerButton icon={< SearchOutlined />} onClick={() => setDrawerOptions({ isOpen: true, drawerProps: searchDrawerProps })} title={t('actions:search')} />
+				{/* <DrawerButton icon={< SearchOutlined />} onClick={() => setDrawerOptions({ isOpen: true, drawerProps: searchDrawerProps })} title={t('actions:search')} /> */}
 				<LinkButton title={t('actions:add2', { name: t('common:user') })} path='/add-user' type="primary"/>
 			</Space>
 			} />

@@ -1,35 +1,37 @@
-import { createContext, ReactNode, useContext, useMemo, FC, useState, useReducer } from "react";
-import { AppReducer, initialState } from "helpers/reducers/AppReducer";
+import { createCtx } from './create-context';
+import { cookie, stringToBoolean } from 'helpers/utils/utils';
 
-interface IAppContext {
-	theme: "dark" | "light";
-	isMenuCollapsed: boolean;
-	locale: string;
+const menuState = cookie.get('isMenuCollapsed') ? stringToBoolean(cookie.get('isMenuCollapsed')) : true
+// init from cookies 
+
+const initialState = {
+	theme:"light",
+	isMenuCollapsed: menuState,
+	locale: 'fr',
 }
 
-interface IAppWrapper {
-	children: ReactNode;
+type State = typeof initialState;
+type Action = any;
+function reducer(state: State, action: Action) {
+	switch (action.type) {
+		case 'SWITCH_THEME':
+			return {
+				...state,
+				theme:action.theme,
+			};
+		case 'SWITCH_MENU':
+			return {
+				...state,
+				isMenuCollapsed: action.isMenuCollapsed,
+			};
+		default:
+			return state;
+	}
 }
+const [useAppState, useAppDispatch, AppProvider] = createCtx(
+	initialState,
+	reducer
+);
 
-// get state from cookies here
-const AppContext = createContext<IAppContext>({});
+export { useAppState, useAppDispatch, AppProvider };
 
-// AppWrapper which will pass down the context to the rest of the app
-export const AppWrapper: FC<IAppWrapper> = ({ children }) => {
-
-	const { state, dispatch } = useReducer(AppReducer, initialState);
-
-	const contextValue = useMemo(() => {
-		return { state, dispatch };
-	}, [state, dispatch]);
-
-	return (
-		<AppContext.Provider value={contextValue}>
-			{children}
-		</AppContext.Provider>
-	);
-}
-
-export function useAppContext() {
-	return useContext(AppContext);
-}

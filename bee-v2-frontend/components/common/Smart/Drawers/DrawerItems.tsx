@@ -10,61 +10,42 @@ import React, { useCallback } from 'react';
 
 
 
-/** Components Name Constants */
-const DRAWER_COMPONENTS = {
-  ARTICLES_SEARCH: ArticlesSearch,
-  TABLE_FILTER: TableFilter,
-  USER_SETTINGS: UserSettings,
-};
-
-
-
 export const DrawerItems = () => {
 
-  const { 
+  const {
     isOpen,
-    drawerComponent, 
-    data, 
-    title, 
-    placement, 
-    cancelButton, 
-    confirmButton, 
-    cancelButtonTitle, 
-    confirmButtonTitle 
+    data,
+    title,
+    cancelButton,
+    comfirmButton,
+    cancelButtonTitle,
+    comfirmButtonTitle,
+    content,
+    onComfirm,
+    onCancel,
   } = useDrawerState();
 
   const dispatch = useDrawerDispatch();
+ 
   const closeDrawer = useCallback(() => dispatch({ type: 'CLOSE_DRAWER' }), [
     dispatch,
   ]);
 
-  const onCancel = useCallback(() => dispatch({ type: 'ON_CANCEL' }), [
-    dispatch,
-  ]);
-
-  const onComfirm = useCallback(() => dispatch({ type: 'ON_COMFIRM' }), [
-    dispatch,
-  ]);
-
-  if (!drawerComponent) {
-    return null;
-  }
-  const SpecificContent = DRAWER_COMPONENTS[drawerComponent];
 
   return (
     <Drawer
       onClose={closeDrawer}
       visible={isOpen}
       title={title}
-      placement={placement}
+      placement="right"
       extra={
         <Space>
           {cancelButton ? <Button onClick={onCancel}>{cancelButtonTitle} </Button> : null}
-          {confirmButton ? <Button onClick={onComfirm} type="primary">{confirmButtonTitle}  </Button> : null}
+          {comfirmButton ? <Button onClick={onComfirm} type="primary">{comfirmButtonTitle}  </Button> : null}
 
         </Space>
       }>
-      <SpecificContent onClose={closeDrawer} data={data} />
+      {content}
     </Drawer>
   );
 }

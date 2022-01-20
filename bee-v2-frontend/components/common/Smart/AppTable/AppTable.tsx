@@ -1,11 +1,11 @@
 import { FC, useCallback, useState, useEffect } from 'react'
 import { Button, Table, Affix, Checkbox, Divider } from 'antd'
 import { ColumnType } from 'helpers/types/types';
-import { useDrawerUpdater } from 'helpers/context/DrawerContext';
 import { getKeys } from 'helpers/utils/utils';
 import { SettingOutlined } from '@ant-design/icons';
 import useTranslation from 'next-translate/useTranslation';
 import { TableFilter } from 'components/common/Dumb/DrawerItems/TableFilter';
+import { useDrawerDispatch } from 'helpers/context/DrawerContext';
 
 export interface IAppTableProps {
 	// Refactory to strong type
@@ -21,13 +21,6 @@ export interface IAppTableProps {
 export const AppTable: FC<IAppTableProps> = ({ data, columns, scroll }) => {
 	let { t } = useTranslation()
 
-	const dispatch = useDrawerDispatch();
-	const closeDrawer = useCallback(() => dispatch({ type: 'CLOSE_DRAWER' }), [
-			dispatch,
-	]);
-
-	const setDrawerOptions = useDrawerUpdater()
-
 	// FILTER  
 
 	const allColumnKeys = getKeys(columns);
@@ -38,35 +31,33 @@ export const AppTable: FC<IAppTableProps> = ({ data, columns, scroll }) => {
 
 	// make wrapper function to give child
 	const wrapperSetVisibleColumnKeys = useCallback(val => {
-		console.log("Parent : visible ", val)
 		setVisibleColumnKeys(val);
 	}, [setVisibleColumnKeys]);
-
-	const [fixedRows, setFixedRows] = useState([]);
-	const [loading, setLoading] = useState(false);
 
 	// table columns filtered
 	const [tableColumns, setTableColumns] = useState(columns);
 
 	function handleReset() {
 		setVisibleColumnKeys(allColumnKeys)
-		filterDrawerProps.onClose()
 	}
 
-	const filterDrawerProps = {
-		context: visibleColumnKeys,
-		title: "Filter",
-		placement: 'right',
-		cancelButton: true,
-		confirmButton: false,
-		cancelButtonTitle: t('actions:reset'),
-		confirmButtonTitle: t('actions:filter'),
-		content: <TableFilter key='filter' toFilter={filterData} onShowChange={wrapperSetVisibleColumnKeys} visibleKeys={visibleColumnKeys} />,
-		onCancel: () => handleReset(),
-		onClose: () => setDrawerOptions({ isOpen: false })
-	}
+	const dispatchDrawer = useDrawerDispatch();
 
+	const closeDrawer = useCallback(() => dispatchDrawer({ type: 'CLOSE_DRAWER' }), [
+		dispatchDrawer,
+	]);
 
+	const openFilterDrawer = useCallback(
+		() => dispatchDrawer({
+			type: 'OPEN_DRAWER',
+			title: t('actions:filter'),
+			cancelButtonTitle: t('actions:reset'),
+			cancelButton: true,
+			content: <TableFilter key='filter' toFilter={filterData} onShowChange={wrapperSetVisibleColumnKeys} visibleKeys={visibleColumnKeys} />,
+			onCancel: () => handleReset(),
+		}),
+		[dispatchDrawer, visibleColumnKeys]
+	)
 
 	useEffect(() => {
 		if (visibleColumnKeys) {
@@ -80,15 +71,17 @@ export const AppTable: FC<IAppTableProps> = ({ data, columns, scroll }) => {
 		return () => { };
 	}, [visibleColumnKeys]);
 
+	
+
 	return (
 		<>
 			<Affix offsetTop={140}>
 				<Button
 					icon={<SettingOutlined />}
-					onClick={() => setDrawerOptions({ isOpen: true, drawerProps: filterDrawerProps })}
+					onClick={() => openFilterDrawer()}
 				/>
 			</Affix>
-			<Table rowKey='id' pagination={{ position: ["bottomRight"] }} columns={tableColumns} dataSource={data} scroll={scroll} size="small" loading={loading} />
+			<Table rowKey='id' pagination={{ position: ["bottomRight"] }} columns={tableColumns} dataSource={data} scroll={scroll} size="small" />
 		</>
 	);
 }

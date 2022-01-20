@@ -16,7 +16,7 @@ export const ProfileMenu: FC<IProfileMenuProps> = ({ username, role, profileMenu
 	const profileMenuItem = (
 		<Menu>
 			{profileMenu.map((menu) =>
-				<Menu.Item onClick={()=> menu.onClick}
+				<Menu.Item onClick={menu.onClick}
 				 key={menu.key} 
 				 icon={menu.icon}>
 					 {menu.title}

@@ -50,5 +50,8 @@
 	"users": "All Users",
 	"value": "Value",
 	"weight": "Weight",
-	"width": "Width"
+	"width": "Width",
+	"theme-settings": "Theme",
+	"menu": "Menu",
+	"language": "Language" 
 }

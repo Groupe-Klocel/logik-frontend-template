@@ -1,24 +1,20 @@
-import { DrawerStateContext, DrawerUpdaterContext } from "helpers/context/DrawerContext";
-import { useDrawerState } from "helpers/hooks/hooks";
-import { GlobalDrawer } from "./GlobalDrawer";
-import { FC, ReactNode } from 'react'
+import { useDrawerDispatch } from "helpers/context/DrawerContext";
+import { useCallback } from "react";
 
-export interface IWithDrawerProps {
-	children?: ReactNode
-}
+export const dispatchDrawer = useDrawerDispatch();
 
-export const WithDrawer: FC<IWithDrawerProps> = ({ children }: IWithDrawerProps) => {
-  const [drawerOptions, setDrawerOptions] = useDrawerState({
-    isOpen: false,
-    drawerProps: {}
-  });
+export const closeDrawer = useCallback(() => dispatchDrawer({ type: 'CLOSE_DRAWER' }), [
+  dispatchDrawer,
+]);
 
-  return (
-    <DrawerUpdaterContext.Provider value={setDrawerOptions()}>
-      <DrawerStateContext.Provider value={drawerOptions}>
-        <GlobalDrawer />
-        {children}
-      </DrawerStateContext.Provider>
-    </DrawerUpdaterContext.Provider>
-  );
-};
+export const openDrawer = useCallback(
+  (variables) => dispatchDrawer({
+    type: 'OPEN_DRAWER',
+    title: variables.title,
+    cancelButtonTitle: variables.cancelButtonTitle,
+    cancelButton: variables.cancelButton,
+    content: variables.content,
+    onCancel: variables.onCancel,
+  }),
+  [dispatchDrawer]
+)

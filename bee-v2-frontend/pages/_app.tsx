@@ -6,10 +6,8 @@ import Head from 'next/head'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { ReactQueryDevtools } from 'react-query/devtools'
 import '../styles/globals.css'
-import { ThemeProvider } from 'styled-components';
-import { defaultTheme } from '../styles/theme'
 import { PageWithMainLayoutType } from 'helpers/types/pageWithLayout'
-import { AppWrapper } from "helpers/context/AppContext";
+import { AppProvider } from "helpers/context/AppContext";
 import { ThemeSwitcherProvider, useThemeSwitcher } from "react-css-theme-switcher";
 
 const themes = {
@@ -31,27 +29,24 @@ const App = ({ Component, pageProps }: AppLayoutProps) => {
 
   return (
     <>
-      <ThemeSwitcherProvider themeMap={themes} defaultTheme="LIGHT">
         <Head>
           <title>{`${META_DEFAULTS.title} | ${META_DEFAULTS.description}`}</title>
           <meta
             name="viewport"
             content="width=device-width, initial-scale=1, maximum-scale=5"
-          />
+            />
         </Head>
         <QueryClientProvider client={queryClient}>
-          <div className={`theme-dark`}>
-            <AppWrapper>
-              <Layout>
-                {getLayout(<Component {...pageProps} />)}
-              </Layout>
-            </AppWrapper>
-          </div>
+        <ThemeSwitcherProvider themeMap={themes} defaultTheme="LIGHT">
+            <AppProvider>
+            <Layout>
+              {getLayout(<Component {...pageProps} />)}
+            </Layout>
+            </AppProvider>
+        </ThemeSwitcherProvider>
           <ReactQueryDevtools initialIsOpen={false} />
         </QueryClientProvider>
-      </ThemeSwitcherProvider>
-
-    </>
+      </>
   )
 }
 

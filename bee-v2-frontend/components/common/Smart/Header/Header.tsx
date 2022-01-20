@@ -8,7 +8,7 @@ import { ThemeSwitch } from '../Switchs/ThemeSwitch';
 import { SettingOutlined } from '@ant-design/icons';
 import useTranslation from 'next-translate/useTranslation';
 import { useDrawerDispatch } from 'helpers/context/DrawerContext';
-import { useAppContext } from 'helpers/context/AppContext';
+import { useAppState } from 'helpers/context/AppContext';
 import { UserSettings } from 'components/common/Dumb/DrawerItems/UserSettings';
 
 const StyledHeader = styled(Layout.Header)`
@@ -29,34 +29,27 @@ export interface IHeaderProps {
 export const Header: FC<IHeaderProps> = ({ }: IHeaderProps) => {
 	let { t } = useTranslation()
 
-	const { state, dispatch } = useAppContext();
-
 	const dispatchDrawer = useDrawerDispatch();
 
 	const openUserSettingDrawer = useCallback(
-		(variables) => dispatchDrawer({
+		() => dispatchDrawer({
 			type: 'OPEN_DRAWER',
-			drawerComponent: variables.drawerComponent,
-			data: variables.data,
-			title: variables.title,
-			cancelButton: variables.cancelButton,
-			comfirmButton: variables.comfirmButton,
+			title: t('menu:user-settings'),
+			cancelButton: false,
+			comfirmButton: false,
+			content: <UserSettings />,
 		}),
-		[dispatchDrawer, state]
+		[dispatchDrawer]
 	)
+
+
 
 	const profileMenuList = [
 		{
 			key: 'settings',
 			title: t('menu:settings'),
 			icon: <SettingOutlined />,
-			onClick: openUserSettingDrawer({
-				drawerComponent: 'USER_SETTINGS', 
-				data: state,
-				title: t('menu:user-settings'),
-				cancelButton: false,
-				comfirmButton: false,
-			})
+			onClick: () => openUserSettingDrawer()
 		}
 	]
 
@@ -66,12 +59,6 @@ export const Header: FC<IHeaderProps> = ({ }: IHeaderProps) => {
 				<StyledCol flex="10vw"><Logo /></StyledCol>
 				<StyledCol flex="0 1 auto" offset={8} >
 					<ProfileMenu username="Demo" role="Administrateur" profileMenu={profileMenuList} />
-				</StyledCol>
-				<StyledCol flex="0 1 auto" >
-					<LanguageSelector />
-				</StyledCol>
-				<StyledCol flex="0 1 auto" >
-					<ThemeSwitch />
 				</StyledCol>
 			</Row>
 		</StyledHeader>

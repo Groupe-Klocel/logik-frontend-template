@@ -1,22 +1,32 @@
 import { Switch } from 'antd';
-import { FC, useState } from 'react'
+import { FC, useState, useCallback } from 'react'
+import { cookie, stringToBoolean } from 'helpers/utils/utils';
+import { useAppState,useAppDispatch } from 'helpers/context/AppContext'
 
-export interface IMenuSwitchProps {}
+export interface IMenuSwitchProps { }
 
 export const MenuSwitch: FC<IMenuSwitchProps> = ({ }: IMenuSwitchProps) => {
-	// get from context here
-	const [menuCollapsed, setMenuCollapsed] = useState(true)
+	// get state from context here
+	const {isMenuCollapsed} = useAppState()	
+	const dispatchMenu = useAppDispatch()
+
+	const switchMenu = useCallback(
+		() => dispatchMenu({
+			type:'SWITCH_MENU',
+			isMenuCollapsed: !isMenuCollapsed,
+		}),
+		[dispatchMenu , isMenuCollapsed]
+	)
 
 	const onCollapseMenu = () => {
-		setMenuCollapsed(!menuCollapsed)
+		switchMenu()
+		cookie.set('isMenuCollapsed', (!isMenuCollapsed).toString())
 	}
 
 
-console.log("theme",currentTheme)
-
 	return (
 		<Switch
-			checked={menuCollapsed}
+			checked={cookie.get('isMenuCollapsed') ? stringToBoolean(cookie.get('isMenuCollapsed')) : true}
 			onChange={onCollapseMenu}
 			defaultChecked
 		/>

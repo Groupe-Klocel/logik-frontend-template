@@ -20,7 +20,7 @@ export type ProfileMenuType = {
 	title: string;
 	path?: string;
 	icon?: ReactNode;
-	drawer?: any;
+	onClick?: any;
 }
 
 
@@ -38,12 +38,12 @@ export type DrawerType = {
 	context: any;
 	title: string;
 	cancelButton: boolean;
-	confirmButton: boolean;
+	comfirmButton: boolean;
 	cancelButtonTitle: string;
-	confirmButtonTitle: string;
+	comfirmButtonTitle: string;
 	placement: "top" | "right" | "bottom" | "left" | undefined;
 	content?: ReactNode;
-	onConfirm?: Function;
+	onComfirm?: Function;
 	onCancel?: Function;
 	onClose?: Function;
 }

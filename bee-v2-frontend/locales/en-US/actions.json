@@ -20,5 +20,7 @@
 	"filter":"Filter",
 	"search":"Search",
 	"fixed":"Fixed",
-	"show-hide":"Show/Hide"
+	"show-hide":"Show/Hide",
+	"collapse-menu":"Collapse Menu",
+	"dark-mode":"Dark Mode"
  }

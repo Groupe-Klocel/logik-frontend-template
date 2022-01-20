@@ -1,17 +1,18 @@
 import { AppContent } from '@components'
-import { Layout, Switch } from 'antd'
-import { FC, ReactChild, ReactFragment, ReactNode, ReactPortal, useState } from 'react'
+import { Layout } from 'antd'
+import { FC, ReactNode, useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { Header } from 'components/common/Smart/Header/Header'
 import SideMenu from 'components/common/Smart/SideMenu/SideMenu'
-import { WithDrawer } from 'components/common/Smart/Drawers/WithDrawer'
 import { DrawerProvider } from 'helpers/context/DrawerContext'
+import { useAppState, useAppDispatch } from 'helpers/context/AppContext'
 import { DrawerItems } from 'components/common/Smart/Drawers/DrawerItems'
 
 const StyledMainLayout = styled(Layout)`
   height: 100vh;
 `
 const StyledSider = styled(Layout.Sider)`
+border-right: 1px solid;
 overflow: auto;
 scrollbar-width: auto;
 
@@ -24,12 +25,6 @@ scrollbar-width: auto;
   }
 
 `
-const AlignWrapper = styled.div`
-display: flex;
-  align-items: center;
-	justify-content:center;
-  padding: 10px 0 0 0;
-`
 
 export interface IMainLayoutProps {
 	children?: ReactNode
@@ -37,29 +32,40 @@ export interface IMainLayoutProps {
 
 const MainLayout: FC<IMainLayoutProps> = ({ children }: IMainLayoutProps) => {
 	// get from app context 
-	const [menuCollapsed, setMenuCollapsed] = useState(true)
+	const { isMenuCollapsed } = useAppState()
+	const [menuCollapsed, setMenuCollapsed] = useState(isMenuCollapsed)
+	console.log("menu", isMenuCollapsed)
+	// const dispatchMenu = useAppDispatch()
 
+	// const switchMenu = useCallback(
+	// 	() => dispatchMenu({
+	// 		type:'SWITCH_MENU',
+	// 		isMenuCollapsed: !isMenuCollapsed,
+	// 	}),
+	// 	[dispatchMenu, isMenuCollapsed]
+	// )
 
 	const onCollapseMenu = () => {
 		console.log(menuCollapsed);
 		setMenuCollapsed(!menuCollapsed)
 	}
 
-
+	
+	useEffect(() => setMenuCollapsed(menuCollapsed), [])
 	return (
 		<StyledMainLayout>
-			<Header />
-			<StyledMainLayout >
-				<DrawerProvider>
-					<StyledSider collapsible collapsed={menuCollapsed} onCollapse={onCollapseMenu}>
+			<DrawerProvider>
+				<Header />
+				<StyledMainLayout >
+					<StyledSider collapsible collapsed={menuCollapsed} onCollapse={onCollapseMenu} >
 						<SideMenu />
 					</StyledSider>
 					<AppContent>
 						{children}
 					</AppContent>
-					<DrawerItems />
-				</DrawerProvider>
-			</StyledMainLayout >
+				</StyledMainLayout >
+				<DrawerItems />
+			</DrawerProvider>
 		</StyledMainLayout >
 	);
 }

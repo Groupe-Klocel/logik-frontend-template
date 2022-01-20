@@ -24,20 +24,14 @@ export interface ITableFilterProps {
 export const TableFilter: FC<ITableFilterProps> = ({ toFilter, visibleKeys, onShowChange }: ITableFilterProps) => {
 	let { t } = useTranslation()
 
-	const allKeys = getKeys(toFilter)
-
 	const [showKeys, setShowKeys] = useState(visibleKeys);
-	const [loading, setLoading] = useState(false);
-
-
-	useEffect(() => {
-		console.log('childe visiblekeys', visibleKeys)
-	}, [visibleKeys]);
 
 	useEffect(() => {
 		onShowChange(showKeys);
 		return () => { };
 	}, [onShowChange, showKeys]);
+
+
 
 	async function handleVisibleChange(key: Key) {
 		const tempList = [...showKeys];
@@ -85,7 +79,6 @@ export const TableFilter: FC<ITableFilterProps> = ({ toFilter, visibleKeys, onSh
 	return (
 		<>
 			<Table
-				loading={loading}
 				pagination={false}
 				rowSelection={{
 					...fixedSelection,
