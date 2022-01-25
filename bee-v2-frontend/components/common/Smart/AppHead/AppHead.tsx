@@ -63,8 +63,6 @@ export const AppHead: FC<IAppHeadProps> = ({ title, description }: IAppHeadProps
         href="/images/safari-pinned-tab.svg"
         color="#83ac9f"
       />
-      {/*<!--styles-insertion-point-->*/}
-
     </Head>
   )
 }

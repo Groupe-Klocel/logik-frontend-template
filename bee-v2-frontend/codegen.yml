@@ -1,0 +1,11 @@
+overwrite: true
+schema: "https://1pxe4inbtg.execute-api.eu-west-1.amazonaws.com/graphql"
+documents: "**/**/*.graphql"
+generates:
+  generated/graphql.ts:
+    plugins:
+      - "typescript"
+      - "typescript-operations"
+      - "typescript-react-query"
+    config:
+      fetcher: graphql-request

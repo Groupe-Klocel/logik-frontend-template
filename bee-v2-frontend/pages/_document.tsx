@@ -20,6 +20,7 @@ class ExtendedDocument extends Document {
           <>
             {initialProps.styles}
             {sheet.getStyleElement()}
+
           </>
         ),
       }
@@ -31,7 +32,9 @@ class ExtendedDocument extends Document {
   render(): JSX.Element {
     return (
       <Html lang="en">
-        <Head />
+        <Head>
+          <noscript id="styles-insertion-point"></noscript>
+        </Head>
         <body>
           <Main />
           <NextScript />

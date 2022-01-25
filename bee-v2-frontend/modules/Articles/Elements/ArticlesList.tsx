@@ -4,13 +4,26 @@ import { AppTable } from '@components';
 import { articlesData } from 'fake-data/articles';
 import useTranslation from 'next-translate/useTranslation';
 import { FC } from 'react'
+import { request, gql } from "graphql-request";
+import { useQuery } from 'react-query';
+import { GraphQLResponse } from 'graphql-request/dist/types';
+import { IArticlesProps } from '../PagesContainer/Articles';
+import graphqlRequestClient from 'graphql/graphqlRequestClient';
+import { useGetAllArticlesQuery } from 'generated/graphql';
 
-export interface IArticlesListProps {
 
-}
 
-export const ArticlesList: FC<IArticlesListProps> = ({ }) => {
-	let { t } = useTranslation()
+
+export const ArticlesList: FC = ({ }) => {
+	const { t } = useTranslation()
+
+	const { isLoading, data, error } = useGetAllArticlesQuery<GetAllArticlesQuery, Error>(graphqlRequestClient, {
+		variables: {
+			page: 1,
+			itemsPerPage: 25,
+		}
+	})
+
 
 	const columns = [
 		{
@@ -80,6 +93,10 @@ export const ArticlesList: FC<IArticlesListProps> = ({ }) => {
 			),
 		},
 	];
+
+
+
+
 	return (
 		<AppTable columns={columns} data={articlesData} scroll={{ x: 800 }} />
 	);

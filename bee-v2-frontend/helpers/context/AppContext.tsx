@@ -3,7 +3,6 @@ import { cookie, stringToBoolean } from 'helpers/utils/utils';
 
 const menuState = cookie.get('isMenuCollapsed') ? stringToBoolean(cookie.get('isMenuCollapsed')) : true
 // init from cookies 
-
 const initialState = {
 	theme:"light",
 	isMenuCollapsed: menuState,
@@ -17,7 +16,7 @@ function reducer(state: State, action: Action) {
 		case 'SWITCH_THEME':
 			return {
 				...state,
-				theme:action.theme,
+				theme: action.theme,
 			};
 		case 'SWITCH_MENU':
 			return {

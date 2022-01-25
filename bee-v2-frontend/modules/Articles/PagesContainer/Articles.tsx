@@ -49,8 +49,6 @@ export const Articles: FC<IArticlesProps> = ({ }: IArticlesProps) => {
 		closeDrawer()
 	}
 
-
-
 	return (
 		<>
 			<HeaderContent title={t('common:articles')} routes={articlesSubRoutes} actions={

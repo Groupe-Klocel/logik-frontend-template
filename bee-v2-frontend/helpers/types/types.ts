@@ -54,3 +54,7 @@ export type DataFilterType = {
 	title: string;
 }
 
+export type OnlyChildrenType = {
+	children: ReactNode;
+}
+

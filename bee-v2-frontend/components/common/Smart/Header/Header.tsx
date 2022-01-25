@@ -1,15 +1,13 @@
-import { FC, useCallback } from 'react'
-import styled from 'styled-components';
-import { Layout, Row, Col } from 'antd';
-import { LanguageSelector } from 'components/common/Dumb/LanguageSelector/LanguageSelector'
-import { Logo } from 'components/common/Dumb/Logo/Logo'
-import { ProfileMenu } from 'components/common/Dumb/ProfileMenu/ProfileMenu';
-import { ThemeSwitch } from '../Switchs/ThemeSwitch';
 import { SettingOutlined } from '@ant-design/icons';
-import useTranslation from 'next-translate/useTranslation';
-import { useDrawerDispatch } from 'helpers/context/DrawerContext';
-import { useAppState } from 'helpers/context/AppContext';
+import { Col, Layout, Row } from 'antd';
 import { UserSettings } from 'components/common/Dumb/DrawerItems/UserSettings';
+import { Logo } from 'components/common/Dumb/Logo/Logo';
+import { ProfileMenu } from 'components/common/Dumb/ProfileMenu/ProfileMenu';
+import { useAuth } from 'helpers/context/AuthContext';
+import { useDrawerDispatch } from 'helpers/context/DrawerContext';
+import useTranslation from 'next-translate/useTranslation';
+import { FC, useCallback } from 'react';
+import styled from 'styled-components';
 
 const StyledHeader = styled(Layout.Header)`
 padding: 0px 10px 0px 10px;
@@ -28,7 +26,7 @@ export interface IHeaderProps {
 
 export const Header: FC<IHeaderProps> = ({ }: IHeaderProps) => {
 	let { t } = useTranslation()
-
+	const {user} = useAuth()
 	const dispatchDrawer = useDrawerDispatch();
 
 	const openUserSettingDrawer = useCallback(
@@ -58,7 +56,7 @@ export const Header: FC<IHeaderProps> = ({ }: IHeaderProps) => {
 			<Row wrap={false} align='middle'>
 				<StyledCol flex="10vw"><Logo /></StyledCol>
 				<StyledCol flex="0 1 auto" offset={8} >
-					<ProfileMenu username="Demo" role="Administrateur" profileMenu={profileMenuList} />
+					<ProfileMenu username={user.username} profileMenu={profileMenuList} />
 				</StyledCol>
 			</Row>
 		</StyledHeader>

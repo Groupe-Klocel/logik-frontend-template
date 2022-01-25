@@ -1,17 +1,13 @@
-import { DownOutlined, UserOutlined } from '@ant-design/icons';
-import { Menu, Avatar, Space, Dropdown } from 'antd';
+import { DownOutlined } from '@ant-design/icons';
+import { Avatar, Dropdown, Menu, Space } from 'antd';
 import { ProfileMenuType } from 'helpers/types/types';
-import Link from 'next/link';
-import { FC } from 'react'
-
-
+import { FC } from 'react';
 export interface IProfileMenuProps {
 	username: string;
-	role: string;
 	profileMenu: Array<ProfileMenuType>
 }
 
-export const ProfileMenu: FC<IProfileMenuProps> = ({ username, role, profileMenu }: IProfileMenuProps) => {
+export const ProfileMenu: FC<IProfileMenuProps> = ({ username, profileMenu }: IProfileMenuProps) => {
 
 	const profileMenuItem = (
 		<Menu>
@@ -28,10 +24,10 @@ export const ProfileMenu: FC<IProfileMenuProps> = ({ username, role, profileMenu
 	return (
 		<>
 			<Space>
-				<Avatar icon={<UserOutlined />} />
-				<Dropdown overlay={profileMenuItem} >
+				<Avatar>{username.charAt(0).toUpperCase()}</Avatar>
+				<Dropdown overlay={profileMenuItem} placement="bottomCenter">
 					<a onClick={e => e.preventDefault()}>
-						{`${username} - ${role} `} <DownOutlined />
+						{`${username}   `} <DownOutlined />
 					</a>
 				</Dropdown>
 			</Space>

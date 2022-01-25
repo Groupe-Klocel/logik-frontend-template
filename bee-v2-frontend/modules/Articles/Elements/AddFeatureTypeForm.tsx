@@ -1,8 +1,8 @@
-import { FC, useState} from 'react'
-import { Form, Input, Button,Row , Col, Checkbox } from 'antd';
+import { FC, useState } from 'react'
+import { Form, Input, Button, Row, Col, Checkbox } from 'antd';
 import { WrapperForm } from 'components/common/Dumb/Wrappers/Wrappers'
 import useTranslation from 'next-translate/useTranslation';
-import {groupsData} from 'fake-data/groups'
+import { groupsData } from 'fake-data/groups'
 
 export interface IAddFeatureTypeFormProps {
 
@@ -26,7 +26,7 @@ export const AddFeatureTypeForm: FC<IAddFeatureTypeFormProps> = ({ }: IAddFeatur
 	};
 
 	return (
-<WrapperForm>
+		<WrapperForm>
 			<Form
 				name="basic"
 				layout="vertical"
@@ -43,13 +43,13 @@ export const AddFeatureTypeForm: FC<IAddFeatureTypeFormProps> = ({ }: IAddFeatur
 				>
 					<Input />
 				</Form.Item>
-		
+
 				<Row>
-        <Col span={24} style={{ textAlign: 'right' }}>
-					<Button type="primary" htmlType="submit">
-					{t('submit')}
-					</Button>
-				</Col>
+					<Col span={24} style={{ textAlign: 'right' }}>
+						<Button type="primary" htmlType="submit">
+							{t('submit')}
+						</Button>
+					</Col>
 				</Row>
 			</Form>
 		</WrapperForm>

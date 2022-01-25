@@ -1,32 +1,28 @@
 
 import {
-	SettingOutlined,
-	SlidersOutlined,
 	ApartmentOutlined,
 	AuditOutlined,
 	ExportOutlined,
 	HourglassOutlined,
-	QuestionCircleOutlined,
-} from '@ant-design/icons'
-import { Menu, MenuTheme } from 'antd'
-import Link from 'next/link';
-import React, { FC } from 'react'
+	QuestionCircleOutlined, SettingOutlined,
+	SlidersOutlined
+} from '@ant-design/icons';
+import { Menu } from 'antd';
 import useTranslation from 'next-translate/useTranslation';
+import Link from 'next/link';
+import React, { FC } from 'react';
+import { useAuth } from 'helpers/context/AuthContext';
 
 const { SubMenu } = Menu;
-
-
 
 export interface ISideMenuProps {
 
 }
 
-
-
 export const SideMenu: FC<ISideMenuProps> =
 	({ }: ISideMenuProps) => {
 		let { t } = useTranslation('menu')
-
+		const {logout} = useAuth()
 		return (
 			<Menu mode="inline">
 				<SubMenu icon={<AuditOutlined />} key="administration" title={t("administration")}>
@@ -125,8 +121,8 @@ export const SideMenu: FC<ISideMenuProps> =
 				<Menu.Item icon={<QuestionCircleOutlined />} key="about" >
 					<Link href='/about'>{t("about")}</Link>
 				</Menu.Item>
-				<Menu.Item icon={<ExportOutlined />} key="logout" >
-				<Link href='/login'>{t("logout")}</Link>
+				<Menu.Item icon={<ExportOutlined />} key="logout" onClick={() => logout()}>
+					{t("logout")}
 				</Menu.Item>
 			</Menu >
 		)

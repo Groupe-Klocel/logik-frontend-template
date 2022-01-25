@@ -3,7 +3,7 @@ import { MenuSwitch } from 'components/common/Smart/Switchs/MenuSwitch';
 import { FC } from 'react'
 import {Row , Col, Divider} from 'antd'
 import useTranslation from 'next-translate/useTranslation';
-import { LanguageSelector } from 'components/common/Dumb/LanguageSelector/LanguageSelector'
+import { LanguageSelector } from 'components/common/Smart/LanguageSelector/LanguageSelector'
 
 export interface IUserSettingsProps {
 

@@ -10,3 +10,9 @@ export const isoLangs: Array<LanguageType> = [
 		code: "fr"
 	}
 ]
+
+export const appRoutes: JSON = {
+	"HOME_PAGE": "/",
+	"LOGIN_PAGE": "/login",
+	"FORGOT_PASSWORD": "/forgot_password",
+} 
