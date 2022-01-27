@@ -50,11 +50,14 @@ const Header: FC = () => {
 		await setFinishSaving(true)
 	}
 
-	useEffect( async () => {
-		if(finishSaving){
-			switcher({ theme: theme! });
-			await setFinishSaving(false)
+	useEffect(() => {
+		const onfinish = async () => {
+			if (finishSaving) {
+				switcher({ theme: theme! });
+				await setFinishSaving(false)
+			}
 		}
+		onfinish()
 	}, [finishSaving])
 
 
