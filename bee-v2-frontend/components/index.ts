@@ -1,5 +1,0 @@
-export * from './common/Smart/Page'
-export * from './common/Smart/AppHead'
-export * from './common/Dumb/AppContent'
-export * from './common/Smart/AppTable'
-export * from './common/Dumb/Welcome'

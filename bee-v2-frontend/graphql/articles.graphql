@@ -1,6 +1,0 @@
-query GetAllArticles($filters: FiltersInput, $orderBy: String, $page: Int!, $itemsPerPage: Int!) {
-    articles(filters: $filters, orderBy: $orderBy, page: $page, itemsPerPage: $itemsPerPage) {
-        id
-        accountId
-    }
-}

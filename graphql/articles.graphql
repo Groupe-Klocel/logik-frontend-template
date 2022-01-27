@@ -1,0 +1,60 @@
+query GetAllArticles($filters: FiltersInput, $orderBy: String, $page: Int!, $itemsPerPage: Int!) {
+    articles(filters: $filters, orderBy: $orderBy, page: $page, itemsPerPage: $itemsPerPage) {
+        id
+        accountId
+        companyId
+        status
+        code
+        name
+        length
+        width
+        height
+        baseUnitWeight
+        boxWeight
+        boxQuantity
+        baseUnitPicking
+        boxPicking
+        cubingType
+        permanentProduct
+        additionalDescription
+        supplierName
+    }
+}
+
+query GetArticleById($id: ID!) {
+    article(id: $id) {
+        id
+        accountId
+        companyId
+        status
+        code
+        name
+        length
+        width
+        height
+        baseUnitWeight
+        boxWeight
+        boxQuantity
+        baseUnitPicking
+        boxPicking
+        cubingType
+        permanentProduct
+        barcodes {
+            id
+        }
+        additionalDescription
+        supplierName
+        baseUnitPrice
+        baseUnitRotation
+        boxRotation
+        featureTypeId
+        created
+        createdBy
+        modified
+        modifiedBy
+        tariffClassification
+        family
+        subfamily
+        groupingId
+    }
+}
