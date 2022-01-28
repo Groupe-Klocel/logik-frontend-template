@@ -79,11 +79,39 @@ export type Barcode = {
   supplierName?: Maybe<Scalars['String']>;
 };
 
-export type FiltersInput = {
+export type FacetFilters = {
+  accountId: Scalars['Int'];
+  additionalDescription?: InputMaybe<Scalars['String']>;
+  baseUnitPicking: Scalars['Boolean'];
+  baseUnitPrice?: InputMaybe<Scalars['Float']>;
+  baseUnitRotation?: InputMaybe<Scalars['String']>;
+  /** Weight in kilograms (kg) */
+  baseUnitWeight: Scalars['Float'];
+  boxPicking: Scalars['Boolean'];
+  boxQuantity: Scalars['Float'];
+  boxRotation?: InputMaybe<Scalars['String']>;
+  boxWeight: Scalars['Float'];
+  code: Scalars['String'];
+  companyId: Scalars['Int'];
+  created?: InputMaybe<Scalars['DateTime']>;
+  createdBy?: InputMaybe<Scalars['String']>;
+  cubingType: Scalars['Int'];
+  family?: InputMaybe<Scalars['String']>;
+  featureTypeId?: InputMaybe<Scalars['Int']>;
+  groupingId?: InputMaybe<Scalars['String']>;
   /** Height in centimeters (cm) */
   height: Scalars['Float'];
+  id: Scalars['Int'];
   /** Length in centimeters (cm) */
   length: Scalars['Float'];
+  modified?: InputMaybe<Scalars['DateTime']>;
+  modifiedBy?: InputMaybe<Scalars['String']>;
+  name: Scalars['String'];
+  permanentProduct: Scalars['Boolean'];
+  status: Scalars['Int'];
+  subfamily?: InputMaybe<Scalars['String']>;
+  supplierName?: InputMaybe<Scalars['String']>;
+  tariffClassification?: InputMaybe<Scalars['String']>;
   /** Width in centimeters (cm) */
   width: Scalars['Float'];
 };
@@ -97,7 +125,7 @@ export type LoginSuccess = {
 export type Mutation = {
   __typename?: 'Mutation';
   /** Create a new Workspace */
-  createWorkspace: WorkspaceType;
+  createWorkspace: Workspace;
   /** Invite a new User via email */
   inviteUser: Scalars['String'];
   /** Obtain a JSON Web Token (JWT) to use in the frontend */
@@ -142,7 +170,7 @@ export type Query = {
   /** Retrieve a given Article by its SKU */
   article: Article;
   /** List multiple articles */
-  articles: Array<Article>;
+  articles: SearchResult;
 };
 
 
@@ -152,7 +180,7 @@ export type QueryArticleArgs = {
 
 
 export type QueryArticlesArgs = {
-  filters?: InputMaybe<FiltersInput>;
+  filters?: InputMaybe<FacetFilters>;
   itemsPerPage?: Scalars['Int'];
   orderBy?: InputMaybe<Scalars['String']>;
   page?: Scalars['Int'];
@@ -163,40 +191,48 @@ export enum Role {
   Write = 'WRITE'
 }
 
-export type UserType = {
-  __typename?: 'UserType';
+export type SearchResult = {
+  __typename?: 'SearchResult';
+  count: Scalars['Int'];
+  itemsPerPage: Scalars['Int'];
+  results: Array<Article>;
+  totalPages: Scalars['Int'];
+};
+
+export type User = {
+  __typename?: 'User';
   createdAt?: Maybe<Scalars['DateTime']>;
   email?: Maybe<Scalars['String']>;
   permissions: Array<Permission>;
   username: Scalars['String'];
-  workspace: WorkspaceType;
+  workspace: Workspace;
 };
 
-export type WorkspaceType = {
-  __typename?: 'WorkspaceType';
+export type Workspace = {
+  __typename?: 'Workspace';
   /** This is your workspace's auto-generated unique identifier. It can't be changed. */
   id: Scalars['String'];
   name: Scalars['String'];
-  owner?: Maybe<UserType>;
+  owner?: Maybe<User>;
   slug: Scalars['String'];
 };
 
 export type GetAllArticlesQueryVariables = Exact<{
-  filters?: InputMaybe<FiltersInput>;
+  filters?: InputMaybe<FacetFilters>;
   orderBy?: InputMaybe<Scalars['String']>;
   page: Scalars['Int'];
   itemsPerPage: Scalars['Int'];
 }>;
 
 
-export type GetAllArticlesQuery = { __typename?: 'Query', articles: Array<{ __typename?: 'Article', id: number, accountId: number, companyId: number, status: number, code: string, name: string, length: number, width: number, height: number, baseUnitWeight: number, boxWeight: number, boxQuantity: number, baseUnitPicking: boolean, boxPicking: boolean, cubingType: number, permanentProduct: boolean, additionalDescription?: string | null | undefined, supplierName?: string | null | undefined }> };
+export type GetAllArticlesQuery = { __typename?: 'Query', articles: { __typename?: 'SearchResult', count: number, itemsPerPage: number, totalPages: number, results: Array<{ __typename?: 'Article', id: number, accountId: number, companyId: number, status: number, code: string, name: string, length: number, width: number, height: number, baseUnitWeight: number, boxWeight: number, boxQuantity: number, baseUnitPicking: boolean, boxPicking: boolean, cubingType: number, permanentProduct: boolean, additionalDescription?: string | null | undefined, supplierName?: string | null | undefined }> } };
 
 export type GetArticleByIdQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
 
-export type GetArticleByIdQuery = { __typename?: 'Query', article: { __typename?: 'Article', id: number, accountId: number, companyId: number, status: number, code: string, name: string, length: number, width: number, height: number, baseUnitWeight: number, boxWeight: number, boxQuantity: number, baseUnitPicking: boolean, boxPicking: boolean, cubingType: number, permanentProduct: boolean, additionalDescription?: string | null | undefined, supplierName?: string | null | undefined, baseUnitPrice?: number | null | undefined, baseUnitRotation?: string | null | undefined, boxRotation?: string | null | undefined, featureTypeId?: number | null | undefined, created?: any | null | undefined, createdBy?: string | null | undefined, modified?: any | null | undefined, modifiedBy?: string | null | undefined, tariffClassification?: string | null | undefined, family?: string | null | undefined, subfamily?: string | null | undefined, groupingId?: string | null | undefined, barcodes: Array<{ __typename?: 'Barcode', id: number }> } };
+export type GetArticleByIdQuery = { __typename?: 'Query', article: { __typename?: 'Article', accountId: number, companyId: number, status: number, code: string, name: string, length: number, width: number, height: number, baseUnitWeight: number, boxWeight: number, boxQuantity: number, baseUnitPicking: boolean, boxPicking: boolean, cubingType: number, permanentProduct: boolean, additionalDescription?: string | null | undefined, supplierName?: string | null | undefined, baseUnitPrice?: number | null | undefined, baseUnitRotation?: string | null | undefined, boxRotation?: string | null | undefined, featureTypeId?: number | null | undefined, created?: any | null | undefined, createdBy?: string | null | undefined, modified?: any | null | undefined, modifiedBy?: string | null | undefined, tariffClassification?: string | null | undefined, family?: string | null | undefined, subfamily?: string | null | undefined, groupingId?: string | null | undefined } };
 
 export type LoginMutationVariables = Exact<{
   username: Scalars['String'];
@@ -209,31 +245,36 @@ export type LoginMutation = { __typename?: 'Mutation', login?: { __typename?: 'L
 
 
 export const GetAllArticlesDocument = `
-    query GetAllArticles($filters: FiltersInput, $orderBy: String, $page: Int!, $itemsPerPage: Int!) {
+    query GetAllArticles($filters: FacetFilters, $orderBy: String, $page: Int!, $itemsPerPage: Int!) {
   articles(
     filters: $filters
     orderBy: $orderBy
     page: $page
     itemsPerPage: $itemsPerPage
   ) {
-    id
-    accountId
-    companyId
-    status
-    code
-    name
-    length
-    width
-    height
-    baseUnitWeight
-    boxWeight
-    boxQuantity
-    baseUnitPicking
-    boxPicking
-    cubingType
-    permanentProduct
-    additionalDescription
-    supplierName
+    count
+    itemsPerPage
+    totalPages
+    results {
+      id
+      accountId
+      companyId
+      status
+      code
+      name
+      length
+      width
+      height
+      baseUnitWeight
+      boxWeight
+      boxQuantity
+      baseUnitPicking
+      boxPicking
+      cubingType
+      permanentProduct
+      additionalDescription
+      supplierName
+    }
   }
 }
     `;
@@ -254,7 +295,6 @@ export const useGetAllArticlesQuery = <
 export const GetArticleByIdDocument = `
     query GetArticleById($id: ID!) {
   article(id: $id) {
-    id
     accountId
     companyId
     status
@@ -270,9 +310,6 @@ export const GetArticleByIdDocument = `
     boxPicking
     cubingType
     permanentProduct
-    barcodes {
-      id
-    }
     additionalDescription
     supplierName
     baseUnitPrice

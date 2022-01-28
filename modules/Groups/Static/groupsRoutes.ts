@@ -5,35 +5,35 @@ import { accessManagementRoutes } from '../../Users/Static/usersRoutes';
 export const groupsRoutes: Array<BreadcrumbType> = [...accessManagementRoutes,
   {
     path: '/groups',
-    breadcrumbName:'groups',
+    breadcrumbName:'menu:groups',
   }
 ];
 
 export const addGroupRoutes: Array<BreadcrumbType> = [...groupsRoutes, 
   {
     path: '/add-group',
-    breadcrumbName:'add-group',
+    breadcrumbName:'menu:add-group',
   }
   ]
 
   export const groupOfUsersRoutes: Array<BreadcrumbType> = [...accessManagementRoutes,
     {
-      breadcrumbName: 'rights',
+      breadcrumbName: 'menu:rights',
     },
     {
       path: '/group-of-users',
-      breadcrumbName:'group-of-users',
+      breadcrumbName:'menu:group-of-users',
     }
   ];
   
 
   export const groupsRightsRoutes: Array<BreadcrumbType> = [...accessManagementRoutes,
     {
-      breadcrumbName: 'rights',
+      breadcrumbName: 'menu:rights',
     },
     {
       path: '/groups-rigths',
-      breadcrumbName:'groups-rigths',
+      breadcrumbName:'menu:groups-rigths',
     }
   ];
   

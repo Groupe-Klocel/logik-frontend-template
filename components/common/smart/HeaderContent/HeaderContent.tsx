@@ -12,20 +12,20 @@ export interface IHeaderContentProps {
 	children?: ReactNode
 	title: string
 	routes: Array<BreadcrumbType>
+	onBack?: any
 	actions?: ReactNode
 }
 
-const HeaderContent: FC<IHeaderContentProps> = ({ children, title, routes, actions }: IHeaderContentProps) => {
+const HeaderContent: FC<IHeaderContentProps> = ({ children, title, routes, actions, onBack }: IHeaderContentProps) => {
 	return (
-
 		<PageHeader
 			title={title}
 			breadcrumb={<GlobalBreadcrumb routes={routes} />}
+			onBack={onBack}
 			extra={actions}
 		>
 			{children}
 		</PageHeader>
-
 	);
 }
 

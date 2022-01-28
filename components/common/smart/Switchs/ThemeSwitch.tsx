@@ -1,17 +1,17 @@
 import Icon from '@ant-design/icons';
 import { cookie, stringToBoolean } from '@helpers';
 import { Switch } from 'antd';
-import { FC, useState,useCallback } from 'react';
+import { FC, useState, useCallback } from 'react';
 import { useThemeSwitcher } from "react-css-theme-switcher";
 import { useAppDispatch, useAppState } from 'context/AppContext';
 
-const LightThemeIcon = () => <Icon component={() => (<img src="/moon.svg" />)} />;
-const DarkThemeIcon = () => <Icon component={() => (<img src="/sun.svg" />)} />;
+const LightThemeIcon = () => <span role="img" aria-label="light">🌔</span>;
+const DarkThemeIcon = () => <span role="img" aria-label="dark">🌘</span>;
 
 
 const ThemeSwitch: FC = () => {
 	const { themes } = useThemeSwitcher();
-	
+
 	const { theme } = useAppState()
 
 	const dispatchMenu = useAppDispatch()

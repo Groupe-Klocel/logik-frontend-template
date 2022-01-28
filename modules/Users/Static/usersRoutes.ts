@@ -4,34 +4,34 @@ import { BreadcrumbType } from "@helpers";
 
 export const accessManagementRoutes = [
   {
-    breadcrumbName: 'administration',
+    breadcrumbName: 'menu:administration',
   },
   {
-    breadcrumbName: 'access-management',
+    breadcrumbName: 'menu:access-management',
   },
 ]
 
 export const usersRoutes: Array<BreadcrumbType> = [...accessManagementRoutes,  
   {
     path: '/users',
-    breadcrumbName: 'users',
+    breadcrumbName: 'menu:users',
   }
 ];
 
 export const addUserRoutes: Array<BreadcrumbType> = [...usersRoutes,
 {
   path: '/add-user',
-  breadcrumbName: 'add-user',
+  breadcrumbName: 'menu:add-user',
 }
 ]
 
 export const usersRightsRoutes: Array<BreadcrumbType> = [...accessManagementRoutes,
 {
-  breadcrumbName: 'rights',
+  breadcrumbName: 'menu:rights',
 },
 {
   path: '/users-rights',
-  breadcrumbName: 'users-rights',
+  breadcrumbName: 'menu:users-rights',
 }
 ]
 

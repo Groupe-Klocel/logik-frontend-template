@@ -1,29 +1,33 @@
-query GetAllArticles($filters: FiltersInput, $orderBy: String, $page: Int!, $itemsPerPage: Int!) {
+query GetAllArticles($filters: FacetFilters, $orderBy: String, $page: Int!, $itemsPerPage: Int!) {
     articles(filters: $filters, orderBy: $orderBy, page: $page, itemsPerPage: $itemsPerPage) {
-        id
-        accountId
-        companyId
-        status
-        code
-        name
-        length
-        width
-        height
-        baseUnitWeight
-        boxWeight
-        boxQuantity
-        baseUnitPicking
-        boxPicking
-        cubingType
-        permanentProduct
-        additionalDescription
-        supplierName
+        count
+        itemsPerPage
+        totalPages
+        results {
+            id
+            accountId
+            companyId
+            status
+            code
+            name
+            length
+            width
+            height
+            baseUnitWeight
+            boxWeight
+            boxQuantity
+            baseUnitPicking
+            boxPicking
+            cubingType
+            permanentProduct
+            additionalDescription
+            supplierName
+        }
     }
 }
 
 query GetArticleById($id: ID!) {
     article(id: $id) {
-        id
         accountId
         companyId
         status
@@ -39,9 +43,6 @@ query GetArticleById($id: ID!) {
         boxPicking
         cubingType
         permanentProduct
-        barcodes {
-            id
-        }
         additionalDescription
         supplierName
         baseUnitPrice

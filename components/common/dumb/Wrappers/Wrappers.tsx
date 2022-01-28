@@ -1,12 +1,14 @@
 import styled from 'styled-components'
 
 const WrapperForm = styled.div`
-	background-color: white;
 	padding: 20px;
 `
+const WrapperStepContent = styled.div`
+	margin: 40px auto;
+`
+
 const WrapperLogin = styled.div`
 	display: flex;
-	background-color: white;
   align-items: center;
 	justify-items:center;
   padding: 3%;
@@ -54,4 +56,4 @@ const PageContentWrapper = styled.div`
 	margin: 15px 30px ;
 `
 
-export { PageContentWrapper, WrapperLogin, WrapperForm }
+export { PageContentWrapper, WrapperLogin, WrapperForm, WrapperStepContent }

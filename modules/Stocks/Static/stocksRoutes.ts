@@ -3,17 +3,17 @@
 
 export const stocksRoutes = [
   {
-    breadcrumbName: 'configuration',
+    breadcrumbName: 'menu:configuration',
   },
   {
     path: '/stock-statuses',
-    breadcrumbName: 'stock-statuses',
+    breadcrumbName: 'menu:stock-statuses',
   }
 ]
 
 export const addStockStatusRoutes = [...stocksRoutes,
   {
     path: '/add-stock-status',
-    breadcrumbName: 'add-stock-status',
+    breadcrumbName: 'menu:add-stock-status',
   }
 ]

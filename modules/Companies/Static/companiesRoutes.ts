@@ -3,18 +3,18 @@
 
 export const companiesRoutes = [
   {
-    breadcrumbName: 'configuration',
+    breadcrumbName: 'menu:configuration',
   },
   {
     path: '/companies',
-    breadcrumbName: 'companies',
+    breadcrumbName: 'menu:companies',
   }
 ]
 
 export const addCompanyRoutes = [...companiesRoutes,
   {
     path: '/add-company',
-    breadcrumbName: 'company',
+    breadcrumbName: 'menu:company',
   }
 ]
 

@@ -17,6 +17,7 @@ const ArticlesList = ({ }: IArticlesListProps) => {
 		page: 1,
 		itemsPerPage: 20,
 	})
+	console.log(data)
 
 	// to refactor to be automatique when fetching data 
 	const columns = [
@@ -90,7 +91,7 @@ const ArticlesList = ({ }: IArticlesListProps) => {
 	return (
 		<>
 			{data ? (
-				<AppTable columns={columns} data={data.articles} scroll={{ x: 800 }} isLoading={isLoading} />
+				<AppTable columns={columns} data={data?.articles?.results} scroll={{ x: 800 }} isLoading={isLoading} />
 			) : (
 				<ScreenSpin />
 			)

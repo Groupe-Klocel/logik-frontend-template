@@ -3,38 +3,38 @@
 
 export const cartographyRoutes = [
   {
-    breadcrumbName: 'configuration',
+    breadcrumbName: 'menu:configuration',
   },
   {
-    breadcrumbName: 'cartography',
+    breadcrumbName: 'menu:cartography',
   }
 ]
 
 export const blocsRoutes = [...cartographyRoutes,
   {
     path:'/blocs',
-    breadcrumbName: 'blocs',
+    breadcrumbName: 'menu:blocs',
   },
 ]
 
 export const addBlocRoutes = [...blocsRoutes,
   {
     path:'/add-bloc',
-    breadcrumbName: 'add-bloc',
+    breadcrumbName: 'menu:add-bloc',
   },
 ]
 
 export const locationsRoutes = [...cartographyRoutes,
   {
     path:'/locations',
-    breadcrumbName: 'locations',
+    breadcrumbName: 'menu:locations',
   },
 ]
 
 export const addLocationRoutes = [...locationsRoutes,
   {
     path:'/add-location',
-    breadcrumbName: 'add-location',
+    breadcrumbName: 'menu:add-location',
   },
 ]
 

@@ -3,11 +3,11 @@
 
 export const settingsRoutes = [
   {
-    breadcrumbName: 'administration',
+    breadcrumbName: 'menu:administration',
   },
   {
     path: '/settings',
-    breadcrumbName: 'settings',
+    breadcrumbName: 'menu:settings',
   }
 ]
 
