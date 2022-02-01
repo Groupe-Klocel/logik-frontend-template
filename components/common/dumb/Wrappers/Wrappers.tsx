@@ -2,9 +2,15 @@ import styled from 'styled-components'
 
 const WrapperForm = styled.div`
 	padding: 20px;
+  max-height: 30vh;
 `
 const WrapperStepContent = styled.div`
 	margin: 40px auto;
+`
+const WrapperFilter = styled.div`
+  position:absolute;
+  right:0;
+  align-self:flex-end;
 `
 
 const WrapperLogin = styled.div`
@@ -56,4 +62,4 @@ const PageContentWrapper = styled.div`
 	margin: 15px 30px ;
 `
 
-export { PageContentWrapper, WrapperLogin, WrapperForm, WrapperStepContent }
+export { PageContentWrapper, WrapperLogin, WrapperForm, WrapperStepContent, WrapperFilter }

@@ -1,5 +1,5 @@
 import { SettingOutlined } from '@ant-design/icons';
-import { TableFilter } from '@components';
+import { TableFilter, WrapperFilter } from '@components';
 import { getKeys } from '@helpers';
 import { Affix, Button, Table } from 'antd';
 import { useDrawerDispatch } from 'context/DrawerContext';
@@ -14,13 +14,16 @@ export interface IAppTableProps {
 	scroll?: {
 		x?: number,
 		y?: number,
-	}
+	},
+	pagination?: any
+	setPagination?: any
 }
 
 
-const AppTable: FC<IAppTableProps> = ({ data, columns, scroll, isLoading }) => {
+const AppTable: FC<IAppTableProps> = ({ data, columns, scroll, isLoading, pagination, setPagination }) => {
 	let { t } = useTranslation()
 
+	console.log("pagination", pagination)
 	// FILTER  
 
 	const allColumnKeys = getKeys(columns);
@@ -75,13 +78,31 @@ const AppTable: FC<IAppTableProps> = ({ data, columns, scroll, isLoading }) => {
 
 	return (
 		<>
-			<Affix offsetTop={140}>
-				<Button
-					icon={<SettingOutlined />}
-					onClick={() => openFilterDrawer()}
-				/>
+			<Affix offsetTop={140} >
+				<WrapperFilter>
+					<Button
+						icon={<SettingOutlined />}
+						onClick={() => openFilterDrawer()}
+					/>
+				</WrapperFilter>
 			</Affix>
-			<Table rowKey='id' pagination={{ position: ["bottomRight"] }} columns={tableColumns} dataSource={data} scroll={scroll} size="small" loading={isLoading} />
+			<Table rowKey='id'
+				columns={tableColumns}
+				dataSource={data}
+				scroll={scroll}
+				size="small"
+				loading={isLoading}
+				pagination={{
+					position: ["bottomRight"],
+					total: pagination.total,
+					current: pagination.current,
+					pageSize: pagination.itemsPerPage,
+					onChange: (page, pageSize) => {
+						setPagination(page, pageSize)
+					}
+				}}
+
+			/>
 		</>
 	);
 }

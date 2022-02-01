@@ -11,7 +11,12 @@ const isoLangs: Array<LanguageType> = [
 	}
 ]
 
-export { isoLangs }
+// PAgination setting
+const DEFAULT_PAGE_NUMBER = 1
+const DEFAULT_ITEMS_PER_PAGE = 20
+
+
+export { isoLangs , DEFAULT_PAGE_NUMBER , DEFAULT_ITEMS_PER_PAGE }
 
 // export const appRoutes: JSON = {
 // 	"HOME_PAGE": "/",

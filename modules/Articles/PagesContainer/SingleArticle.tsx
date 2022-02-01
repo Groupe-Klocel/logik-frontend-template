@@ -36,7 +36,8 @@ const SingleArticle: FC<ISingleArticleProps> = ({ aId, router }: ISingleArticleP
 	},
 	{
 		breadcrumbName: `${aId}`,
-	}]
+	}
+]
 
 	return (
 		<>

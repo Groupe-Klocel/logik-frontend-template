@@ -31,8 +31,7 @@ const DrawerItems = () => {
       extra={
         <Space>
           {cancelButton ? <Button onClick={onCancel}>{cancelButtonTitle} </Button> : null}
-          {comfirmButton ? <Button onClick={onComfirm} type="primary">{comfirmButtonTitle}  </Button> : null}
-
+          {comfirmButton ? <Button onClick={onComfirm} type="primary" >{comfirmButtonTitle}  </Button> : null}
         </Space>
       }>
       {content}

@@ -3,13 +3,11 @@ import useTranslation from 'next-translate/useTranslation';
 import { FC } from 'react';
 
 export interface IArticlesSearchProps {
-	onSearch: Function
+	form: any
 }
 
-const ArticlesSearch: FC<IArticlesSearchProps> = ({ onSearch }: IArticlesSearchProps) => {
+const ArticlesSearch: FC<IArticlesSearchProps> = ({ form }: IArticlesSearchProps) => {
 	let { t } = useTranslation()
-
-	const [form] = Form.useForm();
 
 	const companies = [];
 	const status = [];
@@ -38,11 +36,6 @@ const ArticlesSearch: FC<IArticlesSearchProps> = ({ onSearch }: IArticlesSearchP
 	};
 
 
-	const onFinish = (values: any) => {
-		console.log("searchValue", values);
-		onSearch(values)
-	};
-
 	const onReset = () => {
 		form.resetFields();
 	};
@@ -57,7 +50,7 @@ const ArticlesSearch: FC<IArticlesSearchProps> = ({ onSearch }: IArticlesSearchP
 
 	return (
 		<>
-			<Form {...layout} form={form} name="control-hooks" onFinish={onFinish}>
+			<Form {...layout} form={form} name="control-hooks">
 				<Form.Item {...tailLayout}>
 					<Space>
 						<Button htmlType="button" onClick={onReset}>
@@ -65,7 +58,7 @@ const ArticlesSearch: FC<IArticlesSearchProps> = ({ onSearch }: IArticlesSearchP
 						</Button>
 					</Space>
 				</Form.Item>
-				<Form.Item name="company" label={t('common:company')} >
+				<Form.Item name="companyId" label={t('common:company')} >
 					<Select
 						mode="multiple"
 						allowClear
@@ -76,16 +69,16 @@ const ArticlesSearch: FC<IArticlesSearchProps> = ({ onSearch }: IArticlesSearchP
 					/>
 
 				</Form.Item>
-				<Form.Item name="reference" label={t('forms:reference')} >
+				<Form.Item name="name" label={t('forms:name')} >
 					<Input />
 				</Form.Item>
-				<Form.Item name="description" label={t('common:description')} >
+				<Form.Item name="additionalDescription" label={t('common:additionalDescription')} >
 					<Input />
 				</Form.Item>
-				<Form.Item name="supplier" label={t('forms:supplier')} >
+				<Form.Item name="code" label={t('forms:code')} >
 					<Input />
 				</Form.Item>
-				<Form.Item name="supplier-articles" label={t('forms:supplier-article')} >
+				<Form.Item name="status" label={t('forms:status')} >
 					<Input />
 				</Form.Item>
 

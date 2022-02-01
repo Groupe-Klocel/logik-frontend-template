@@ -5,7 +5,7 @@ const initialState = {
 	data: null,
 	content: null,
 	title: "",
-	cancelButton: false,
+	cancelButton:false,
 	comfirmButton: true,
 	cancelButtonTitle: "",
 	comfirmButtonTitle: "",

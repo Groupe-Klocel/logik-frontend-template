@@ -1,23 +1,66 @@
 import { AppTable, LinkButton, ScreenSpin } from '@components';
+import { DEFAULT_ITEMS_PER_PAGE, DEFAULT_PAGE_NUMBER, useArticles } from '@helpers';
 import { useAuth } from 'context/AuthContext';
 import { GetAllArticlesQuery, useGetAllArticlesQuery } from 'generated/graphql';
 import useTranslation from 'next-translate/useTranslation';
+import { useState, useEffect, useCallback } from 'react'
 
-export interface IArticlesListProps {
-
+interface IArticles {
+	count: number;
+	itemsPerPage: number;
+	results: Array<any>;
+	totalPages: number;
 }
 
-const ArticlesList = ({ }: IArticlesListProps) => {
+interface IPagination {
+	total: number | undefined;
+	current: number;
+	itemsPerPage: number;
+}
+
+export interface IArticlesListProps {
+	searchCriteria?: any
+}
+
+const ArticlesList = ({ searchCriteria }: IArticlesListProps) => {
 	const { t } = useTranslation()
 	const { graphqlRequestClient } = useAuth()
 
-	const { isLoading, data, error } = useGetAllArticlesQuery<Partial<GetAllArticlesQuery>, Error>(graphqlRequestClient, {
-		filters: null,
-		orderBy: null,
-		page: 1,
-		itemsPerPage: 20,
+	// Local State init 
+	const [articles, setArticles] = useState<IArticles | undefined>(undefined)
+	const [pagination, setPagination] = useState<IPagination>({
+		total: undefined,
+		current: DEFAULT_PAGE_NUMBER,
+		itemsPerPage: DEFAULT_ITEMS_PER_PAGE,
 	})
-	console.log(data)
+
+	const { isLoading, data, error } = useArticles(searchCriteria, pagination.current, pagination.itemsPerPage)
+
+	// make wrapper function to give child
+	const onChangePagination = useCallback((currentPage, itemsPerPage) => {
+		// Re fetch data for new current page or items per page 
+		setPagination({
+			...pagination,
+			current: currentPage,
+			itemsPerPage: itemsPerPage,
+		});
+	}, [setPagination]);
+
+	// For pagination
+	useEffect(() => {
+		if (data) {
+			setArticles(data?.articles)
+			setPagination({
+				total: data?.articles?.count,
+				current: 1,
+				itemsPerPage: 20,
+			})
+		}
+		console.log("data from api", data)
+		console.log("articles", articles)
+		console.log("pagination", pagination)
+	}, [data])
+
 
 	// to refactor to be automatique when fetching data 
 	const columns = [
@@ -75,23 +118,23 @@ const ArticlesList = ({ }: IArticlesListProps) => {
 			dataIndex: 'boxWeight',
 			key: 'boxWeight',
 			disabled: false,
-		},
-		{
-			title: t("actions:actions"),
-			key: 'actions',
-			disabled: false,
-			render: (record: { id: string }) => (
-				<LinkButton title={t("actions:view")} path={pathParams(record.id)} />
-			)
 		}
 	]
+
 	const pathParams = (id: string) => { return { pathname: '/article/[aid]', query: { aid: id } } }
 
 
 	return (
 		<>
-			{data ? (
-				<AppTable columns={columns} data={data?.articles?.results} scroll={{ x: 800 }} isLoading={isLoading} />
+			{articles && !isLoading ? (
+				<AppTable
+					columns={columns}
+					data={articles!.results}
+					scroll={{ x: 800 }}
+					isLoading={isLoading}
+					pagination={pagination}
+					setPagination={onChangePagination}
+				/>
 			) : (
 				<ScreenSpin />
 			)

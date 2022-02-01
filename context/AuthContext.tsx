@@ -1,8 +1,9 @@
-import { cookie, decodeJWT, OnlyChildrenType } from '@helpers';
+import { cookie, decodeJWT, OnlyChildrenType, showError , showSuccess} from '@helpers';
 import { LoginMutation, LoginMutationVariables, useLoginMutation } from 'generated/graphql';
 import { GraphQLClient } from 'graphql-request';
 import { useRouter } from 'next/router';
-import React, { createContext, FC, useContext, useEffect, useState } from 'react';
+import React, { createContext, FC, useContext, useEffect, useState, useCallback } from 'react';
+
 
 interface IAuthContext {
 	isAuthenticated: boolean;
@@ -53,13 +54,16 @@ export const AuthProvider: FC<OnlyChildrenType> = ({ children }: OnlyChildrenTyp
 				setUser(user)
 				router.push('/')
 				console.log("Got user", user)
+				showSuccess('Your now login')
 			}
-		}
-
+		},
+		onError:(error) => {
+			showError('There is an error with your credentials')
+		},
 	})
 
 	const login = async ({ username, password, workspaceId }: LoginMutationVariables) => {
-		mutate({ username, password, workspaceId })
+		mutate({ username, password, workspaceId})
 	}
 
 	const logout = () => {

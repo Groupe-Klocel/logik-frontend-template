@@ -1,4 +1,4 @@
-import { AppContent, DrawerItems, Header, ProtectRoute, ScreenSpin, SideMenu } from '@components'
+import { AppContent, DrawerItems, Header, ProtectRoute, ScreenSpin, SideMenu} from '@components'
 import { Layout } from 'antd'
 import { useAppState , useAppDispatch} from 'context/AppContext'
 import { DrawerProvider } from 'context/DrawerContext'
@@ -62,7 +62,7 @@ const MainLayout: FC<IMainLayoutProps> = ({ children }: IMainLayoutProps) => {
 							<Scroll>
 								<SideMenu />
 							</Scroll>
-						</Layout.Sider>
+						</Layout.Sider>         
 						<AppContent>
 							{children}
 						</AppContent>

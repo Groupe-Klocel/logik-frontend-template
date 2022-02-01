@@ -1,17 +1,17 @@
 import { SearchOutlined } from '@ant-design/icons';
 import { DrawerButton, LinkButton } from '@components';
-import { Layout, Space } from 'antd';
+import { Layout, Space , Form} from 'antd';
 import { ArticlesSearch } from 'components/common/dumb/DrawerItems/ArticlesSearch';
 import { useDrawerDispatch } from 'context/DrawerContext';
 import { ArticlesList } from 'modules/Articles/Elements/ArticlesList';
 import { articlesSubRoutes } from 'modules/Articles/Static/articlesRoutes';
 import useTranslation from 'next-translate/useTranslation';
-import { FC, useCallback, useState } from 'react';
+import { FC, useCallback, useState,useEffect } from 'react';
 import styled from 'styled-components';
 import { HeaderContent } from '../../../components/common/smart/HeaderContent/HeaderContent';
 
 const StyledPageContent = styled(Layout.Content)`
-	margin: 15px 30px ;
+	margin:  15px 30px 15px 15px ;
 `
 
 export interface IArticlesProps {
@@ -21,6 +21,11 @@ export interface IArticlesProps {
 const Articles: FC<IArticlesProps> = ({ }: IArticlesProps) => {
 	let { t } = useTranslation()
 
+	const [search, setSearch] = useState({});
+	
+	//	SEARCH DRAWER 
+	const [formSearch] = Form.useForm();
+
 	const dispatchDrawer = useDrawerDispatch();
 
 	const openSearchDrawer = useCallback(
@@ -29,8 +34,9 @@ const Articles: FC<IArticlesProps> = ({ }: IArticlesProps) => {
 			title: t('actions:search'),
 			comfirmButtonTitle: t('actions:search'),
 			comfirmButton: true,
-			content: <ArticlesSearch onSearch={setSearch} />,
-			onComfirm: () => handleConfirmation(),
+			submit: true,
+			content: <ArticlesSearch form={formSearch}/>,
+			onComfirm: () => handleSubmit(),
 		}),
 		[dispatchDrawer]
 	)
@@ -38,15 +44,18 @@ const Articles: FC<IArticlesProps> = ({ }: IArticlesProps) => {
 	const closeDrawer = useCallback(() => dispatchDrawer({ type: 'CLOSE_DRAWER' }), [
 		dispatchDrawer,
 	]);
-	//	SEARCH DRAWER 
-	const [search, setSearch] = useState('');
 
-	const onSearch = () => {
-		console.log();
+	const handleSubmit = () => {
+		formSearch
+			.validateFields()
+			.then(() => {
+				// Here make api call of something else
+				console.log(formSearch.getFieldsValue(true))
+				setSearch(formSearch.getFieldsValue(true))
+				closeDrawer()
+			})
+			.catch((err) => console.log(err));
 	};
-	async function handleConfirmation() {
-		closeDrawer()
-	}
 
 	return (
 		<>
@@ -57,7 +66,7 @@ const Articles: FC<IArticlesProps> = ({ }: IArticlesProps) => {
 				</Space>
 			} />
 			<StyledPageContent>
-				<ArticlesList />
+				<ArticlesList searchCriteria={search}/>
 			</StyledPageContent>
 		</>
 	);
