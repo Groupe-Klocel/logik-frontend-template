@@ -1,4 +1,4 @@
-import { cookie, decodeJWT, OnlyChildrenType, showError , showSuccess} from '@helpers';
+import { cookie, decodeJWT, OnlyChildrenType, showError, showSuccess } from '@helpers';
 import { LoginMutation, LoginMutationVariables, useLoginMutation } from 'generated/graphql';
 import { GraphQLClient } from 'graphql-request';
 import { useRouter } from 'next/router';
@@ -57,13 +57,13 @@ export const AuthProvider: FC<OnlyChildrenType> = ({ children }: OnlyChildrenTyp
 				showSuccess('Your now login')
 			}
 		},
-		onError:(error) => {
+		onError: (error) => {
 			showError('There is an error with your credentials')
 		},
 	})
 
 	const login = async ({ username, password, workspaceId }: LoginMutationVariables) => {
-		mutate({ username, password, workspaceId})
+		mutate({ username, password, workspaceId })
 	}
 
 	const logout = () => {
@@ -76,6 +76,7 @@ export const AuthProvider: FC<OnlyChildrenType> = ({ children }: OnlyChildrenTyp
 
 	const setHeader = (token: string) => {
 		const requestHeader = {
+			"X-API-Seed": "foo",
 			authorization: `Bearer ${token}`,
 		};
 		const graphqlClientWithHeader = new GraphQLClient(process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT as string, {

@@ -1,7 +1,6 @@
 import { AppTable, LinkButton, ScreenSpin } from '@components';
 import { DEFAULT_ITEMS_PER_PAGE, DEFAULT_PAGE_NUMBER, useArticles } from '@helpers';
-import { useAuth } from 'context/AuthContext';
-import { GetAllArticlesQuery, useGetAllArticlesQuery } from 'generated/graphql';
+import { EyeTwoTone } from '@ant-design/icons';
 import useTranslation from 'next-translate/useTranslation';
 import { useState, useEffect, useCallback } from 'react'
 
@@ -24,10 +23,10 @@ export interface IArticlesListProps {
 
 const ArticlesList = ({ searchCriteria }: IArticlesListProps) => {
 	const { t } = useTranslation()
-	const { graphqlRequestClient } = useAuth()
 
 	// Local State init 
 	const [articles, setArticles] = useState<IArticles | undefined>(undefined)
+
 	const [pagination, setPagination] = useState<IPagination>({
 		total: undefined,
 		current: DEFAULT_PAGE_NUMBER,
@@ -51,14 +50,10 @@ const ArticlesList = ({ searchCriteria }: IArticlesListProps) => {
 		if (data) {
 			setArticles(data?.articles)
 			setPagination({
+				...pagination,
 				total: data?.articles?.count,
-				current: 1,
-				itemsPerPage: 20,
 			})
 		}
-		console.log("data from api", data)
-		console.log("articles", articles)
-		console.log("pagination", pagination)
 	}, [data])
 
 
@@ -70,54 +65,72 @@ const ArticlesList = ({ searchCriteria }: IArticlesListProps) => {
 			key: 'name',
 			fixed: true,
 			disabled: false,
+			index: 0,
 		},
 		{
 			title: t("common:additionalDescription"),
 			dataIndex: 'additionalDescription',
 			key: 'additionalDescription',
 			disabled: true,
+			index: 1,
 		},
 		{
 			title: t("forms:code"),
 			dataIndex: 'code',
 			key: 'code',
 			disabled: true,
+			index: 2,
 		},
 		{
 			title: t("common:status"),
 			dataIndex: 'status',
 			key: 'status',
 			disabled: false,
+			index: 3,
 		},
 		{
 			title: t("common:length"),
 			dataIndex: 'length',
 			key: 'length',
 			disabled: false,
+			index: 4,
 		},
 		{
 			title: t("common:width"),
 			dataIndex: 'width',
 			key: 'width',
 			disabled: false,
+			index: 5,
 		},
 		{
 			title: t("common:height"),
 			dataIndex: 'height',
 			key: 'height',
 			disabled: false,
+			index: 6,
 		},
 		{
 			title: t("common:baseUnitWeight"),
 			dataIndex: 'baseUnitWeight',
 			key: 'baseUnitWeight',
 			disabled: false,
+			index: 7,
 		},
 		{
 			title: t("common:boxWeight"),
 			dataIndex: 'boxWeight',
 			key: 'boxWeight',
 			disabled: false,
+			index: 8,
+		},
+		{
+			key: 'actions',
+			disabled: false,
+			width: 50,
+			index: 9,
+			render: (record: { id: string }) => (
+				<LinkButton icon={<EyeTwoTone />} path={pathParams(record.id)} />
+				)
 		}
 	]
 
@@ -126,7 +139,7 @@ const ArticlesList = ({ searchCriteria }: IArticlesListProps) => {
 
 	return (
 		<>
-			{articles && !isLoading ? (
+			{articles &&
 				<AppTable
 					columns={columns}
 					data={articles!.results}
@@ -135,9 +148,7 @@ const ArticlesList = ({ searchCriteria }: IArticlesListProps) => {
 					pagination={pagination}
 					setPagination={onChangePagination}
 				/>
-			) : (
-				<ScreenSpin />
-			)
+
 			}
 		</>
 	);

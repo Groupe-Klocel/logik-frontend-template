@@ -4,7 +4,7 @@ import { getKeys } from '@helpers';
 import { Affix, Button, Table } from 'antd';
 import { useDrawerDispatch } from 'context/DrawerContext';
 import useTranslation from 'next-translate/useTranslation';
-import { FC, useCallback, useEffect, useState } from 'react';
+import { FC, useCallback, useEffect, useState, useRef } from 'react';
 
 export interface IAppTableProps {
 	// Refactory to strong type
@@ -22,12 +22,13 @@ export interface IAppTableProps {
 
 const AppTable: FC<IAppTableProps> = ({ data, columns, scroll, isLoading, pagination, setPagination }) => {
 	let { t } = useTranslation()
+	const filterDrawerRef = useRef()
 
-	console.log("pagination", pagination)
 	// FILTER  
 
 	const allColumnKeys = getKeys(columns);
-	const filterData = columns.map((m) => ({ key: m.key, title: m.title, disabled: m.disabled, dataIndex: m.dataIndex }));
+	const index = 0
+	const filterData = columns.map((m) => ({ key: m.key, title: m.title, disabled: m.disabled, dataIndex: m.dataIndex, index: m.index }));
 
 	// this parentState will be set by its child component TableFilter
 	const [visibleColumnKeys, setVisibleColumnKeys] = useState(allColumnKeys);
@@ -42,21 +43,19 @@ const AppTable: FC<IAppTableProps> = ({ data, columns, scroll, isLoading, pagina
 
 	function handleReset() {
 		setVisibleColumnKeys(allColumnKeys)
+		filterDrawerRef.current.reset()
 	}
 
 	const dispatchDrawer = useDrawerDispatch();
 
-	const closeDrawer = useCallback(() => dispatchDrawer({ type: 'CLOSE_DRAWER' }), [
-		dispatchDrawer,
-	]);
-
 	const openFilterDrawer = useCallback(
 		() => dispatchDrawer({
+			size: 700,
 			type: 'OPEN_DRAWER',
 			title: t('actions:filter'),
 			cancelButtonTitle: t('actions:reset'),
 			cancelButton: true,
-			content: <TableFilter key='filter' toFilter={filterData} onShowChange={wrapperSetVisibleColumnKeys} visibleKeys={visibleColumnKeys} />,
+			content: <TableFilter ref={filterDrawerRef} key='filter' toFilter={filterData} onShowChange={wrapperSetVisibleColumnKeys} visibleKeys={visibleColumnKeys} />,
 			onCancel: () => handleReset(),
 		}),
 		[dispatchDrawer, visibleColumnKeys]
