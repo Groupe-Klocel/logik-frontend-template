@@ -26,7 +26,7 @@ const ProfileMenu: FC<IProfileMenuProps> = ({ username, profileMenu }: IProfileM
 			<Space>
 				<Avatar>{username.charAt(0).toUpperCase()}</Avatar>
 				<Dropdown overlay={profileMenuItem} placement="bottomCenter">
-					<a onClick={e => e.preventDefault()}>
+					<a onClick={e => e.preventDefault()} style={{color:'black'}}>
 						{`${username}   `} <DownOutlined />
 					</a>
 				</Dropdown>
