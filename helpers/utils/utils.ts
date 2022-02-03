@@ -42,8 +42,8 @@ function isCookieSet(cookieName: string) {
 }
 
 function getDefaultTheme() {
-	switch (cookie.get('darkMode')) {
-		case "true": return "dark";
+	switch (cookie.get('theme')) {
+		case "dark": return "dark";
 		default: return "light";
 	}
 }

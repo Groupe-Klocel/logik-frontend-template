@@ -9,18 +9,18 @@ import styled from 'styled-components'
 const StyledMainLayout = styled(Layout)`
   height: 100vh;
 `
-const Scroll = styled.div`
-overflow: auto;
-scrollbar-width: auto;
+// const Scroll = styled.div`
+// overflow: auto;
+// scrollbar-width: auto;
 
-&::-webkit-scrollbar {
-    width: 5px;
-  }
+// &::-webkit-scrollbar {
+//     width: 5px;
+//   }
 
-&::-webkit-scrollbar-thumb {
-    border-radius: 10px;
-  }
-`;
+// &::-webkit-scrollbar-thumb {
+//     border-radius: 10px;
+//   }
+// `;
 
 export interface IMainLayoutProps {
 	children?: ReactNode
@@ -58,10 +58,10 @@ const MainLayout: FC<IMainLayoutProps> = ({ children }: IMainLayoutProps) => {
 				<DrawerProvider>
 					<Header />
 					<StyledMainLayout >
-						<Layout.Sider collapsible collapsed={isSessionMenuCollapsed} onCollapse={onCollapseMenu} >
-							<Scroll>
+						<Layout.Sider collapsible collapsed={isSessionMenuCollapsed} onCollapse={onCollapseMenu} style={{overflow:'auto'}}>
+							{/* <Scroll> */}
 								<SideMenu />
-							</Scroll>
+							{/* </Scroll> */}
 						</Layout.Sider>
 						<AppContent>
 							{children}
