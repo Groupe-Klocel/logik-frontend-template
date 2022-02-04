@@ -33,6 +33,7 @@ export const LoginForm: FC<ILoginFormProps> = ({ }: ILoginFormProps) => {
 
 	const onFinishFailed = (errorInfo: any) => {
 		console.log('Failed:', errorInfo);
+
 	};
 
 	return (
@@ -57,7 +58,6 @@ export const LoginForm: FC<ILoginFormProps> = ({ }: ILoginFormProps) => {
 				</Form.Item>
 				<Form.Item
 					name="password"
-					hasFeedback
 					rules={[{ required: true, message: errorMessagePassword }]}
 				>
 					<Input

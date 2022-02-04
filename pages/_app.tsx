@@ -9,7 +9,7 @@ import Head from 'next/head'
 import { useRouter } from "next/router"
 import { Fragment, useEffect } from 'react'
 import { ThemeSwitcherProvider } from "react-css-theme-switcher"
-import { QueryClient, QueryClientProvider } from 'react-query'
+import { QueryCache, QueryClient, QueryClientProvider } from 'react-query'
 import { ReactQueryDevtools } from 'react-query/devtools'
 import '../styles/globals.css'
 
@@ -63,18 +63,18 @@ const App = ({ Component, pageProps }: AppLayoutProps) => {
           content="width=device-width, initial-scale=1, maximum-scale=5"
         />
       </Head>
-      <QueryClientProvider client={queryClient}>
-        <AuthProvider>
-          <ThemeSwitcherProvider defaultTheme={getDefaultTheme()} themeMap={themes} insertionPoint={insertPoint} >
-            <AppProvider>
-              <Layout>
-                {getLayout(<Component {...pageProps} />)}
-              </Layout>
-            </AppProvider>
-          </ThemeSwitcherProvider>
-        </AuthProvider>
-        <ReactQueryDevtools initialIsOpen={false} />
-      </QueryClientProvider>
+        <QueryClientProvider client={queryClient}>
+          <AuthProvider>
+            <ThemeSwitcherProvider defaultTheme={getDefaultTheme()} themeMap={themes} insertionPoint={insertPoint} >
+              <AppProvider>
+                <Layout>
+                  {getLayout(<Component {...pageProps} />)}
+                </Layout>
+              </AppProvider>
+            </ThemeSwitcherProvider>
+          </AuthProvider>
+          <ReactQueryDevtools initialIsOpen={false} />
+        </QueryClientProvider>
     </>
   )
 }

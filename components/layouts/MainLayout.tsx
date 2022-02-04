@@ -1,4 +1,4 @@
-import { AppContent, DrawerItems, Header, ProtectRoute, ScreenSpin, SideMenu } from '@components'
+import { AppContent, DrawerItems, Header, ProtectRoute, ScreenSpin, SideMenu} from '@components'
 import { Layout } from 'antd'
 import { useAppState , useAppDispatch} from 'context/AppContext'
 import { DrawerProvider } from 'context/DrawerContext'
@@ -9,18 +9,6 @@ import styled from 'styled-components'
 const StyledMainLayout = styled(Layout)`
   height: 100vh;
 `
-// const Scroll = styled.div`
-// overflow: auto;
-// scrollbar-width: auto;
-
-// &::-webkit-scrollbar {
-//     width: 5px;
-//   }
-
-// &::-webkit-scrollbar-thumb {
-//     border-radius: 10px;
-//   }
-// `;
 
 export interface IMainLayoutProps {
 	children?: ReactNode
@@ -59,9 +47,7 @@ const MainLayout: FC<IMainLayoutProps> = ({ children }: IMainLayoutProps) => {
 					<Header />
 					<StyledMainLayout >
 						<Layout.Sider collapsible collapsed={isSessionMenuCollapsed} onCollapse={onCollapseMenu} style={{overflow:'auto'}}>
-							{/* <Scroll> */}
 								<SideMenu />
-							{/* </Scroll> */}
 						</Layout.Sider>
 						<AppContent>
 							{children}

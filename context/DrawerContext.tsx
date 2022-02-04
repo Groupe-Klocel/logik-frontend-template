@@ -1,8 +1,8 @@
 import { createCtx } from './create-context';
 
 const initialState = {
+	size: 200,
 	isOpen: false,
-	data: null,
 	content: null,
 	title: "",
 	cancelButton: false,
@@ -21,9 +21,9 @@ function reducer(state: State, action: Action) {
 		case 'OPEN_DRAWER':
 			return {
 				...state,
+				size: action.size,
 				isOpen: true,
 				content: action.content,
-				data: action.data,
 				title: action.title,
 				cancelButton: action.cancelButton,
 				comfirmButton: action.comfirmButton,

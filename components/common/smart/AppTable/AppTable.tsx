@@ -1,10 +1,10 @@
 import { SettingOutlined } from '@ant-design/icons';
-import { TableFilter } from '@components';
-import { getKeys } from '@helpers';
+import { TableFilter, WrapperFilter } from '@components';
+import { getKeys,setCustomColumnsProps} from '@helpers';
 import { Affix, Button, Table } from 'antd';
 import { useDrawerDispatch } from 'context/DrawerContext';
 import useTranslation from 'next-translate/useTranslation';
-import { FC, useCallback, useEffect, useState } from 'react';
+import { FC, useCallback, useEffect, useState, useRef } from 'react';
 
 export interface IAppTableProps {
 	// Refactory to strong type
@@ -14,46 +14,52 @@ export interface IAppTableProps {
 	scroll?: {
 		x?: number,
 		y?: number,
-	}
+	},
+	pagination?: any
+	setPagination?: any
 }
 
 
-const AppTable: FC<IAppTableProps> = ({ data, columns, scroll, isLoading }) => {
+const AppTable: FC<IAppTableProps> = ({ data, columns, scroll, isLoading, pagination, setPagination }) => {
 	let { t } = useTranslation()
+	const filterDrawerRef = useRef() as any | undefined
 
-	// FILTER  
-
+	// FILTER   
 	const allColumnKeys = getKeys(columns);
-	const filterData = columns.map((m) => ({ key: m.key, title: m.title, disabled: m.disabled, dataIndex: m.dataIndex }));
-
+	
 	// this parentState will be set by its child component TableFilter
 	const [visibleColumnKeys, setVisibleColumnKeys] = useState(allColumnKeys);
+	const [filteredColumns, setFilteredColumns] = useState(setCustomColumnsProps(columns));
+	// table columns filtered
+	const [tableColumns, setTableColumns] = useState(setCustomColumnsProps(columns));
 
 	// make wrapper function to give child
-	const wrapperSetVisibleColumnKeys = useCallback(val => {
+	const childSetVisibleColumnKeys = useCallback(val => {
 		setVisibleColumnKeys(val);
 	}, [setVisibleColumnKeys]);
 
-	// table columns filtered
-	const [tableColumns, setTableColumns] = useState(columns);
+	// make wrapper function to give child
+	const childSetTableColumns = useCallback(val => {
+		setFilteredColumns(val);
+	}, [setFilteredColumns]);
+
 
 	function handleReset() {
 		setVisibleColumnKeys(allColumnKeys)
+		setTableColumns(columns);
+		filterDrawerRef!.current.reset(allColumnKeys, columns)
 	}
 
 	const dispatchDrawer = useDrawerDispatch();
 
-	const closeDrawer = useCallback(() => dispatchDrawer({ type: 'CLOSE_DRAWER' }), [
-		dispatchDrawer,
-	]);
-
 	const openFilterDrawer = useCallback(
 		() => dispatchDrawer({
+			size: 700,
 			type: 'OPEN_DRAWER',
 			title: t('actions:filter'),
 			cancelButtonTitle: t('actions:reset'),
 			cancelButton: true,
-			content: <TableFilter key='filter' toFilter={filterData} onShowChange={wrapperSetVisibleColumnKeys} visibleKeys={visibleColumnKeys} />,
+			content: <TableFilter ref={filterDrawerRef} key='filter' colmunsToFilter={filteredColumns} onSort={childSetTableColumns} onShowChange={childSetVisibleColumnKeys} visibleKeys={visibleColumnKeys} />,
 			onCancel: () => handleReset(),
 		}),
 		[dispatchDrawer, visibleColumnKeys]
@@ -62,26 +68,42 @@ const AppTable: FC<IAppTableProps> = ({ data, columns, scroll, isLoading }) => {
 	useEffect(() => {
 		if (visibleColumnKeys) {
 			if (visibleColumnKeys.length) {
-				const temp = columns.filter((f) => visibleColumnKeys.includes(f.key));
+				const temp = filteredColumns.filter((f:any) => visibleColumnKeys.includes(f.key));
 				setTableColumns(temp);
 			} else {
-				setTableColumns(columns);
+				setTableColumns(filteredColumns);
 			}
 		}
 		return () => { };
-	}, [visibleColumnKeys]);
-
-
+	}, [visibleColumnKeys, filteredColumns]);
 
 	return (
 		<>
-			<Affix offsetTop={140}>
-				<Button
-					icon={<SettingOutlined />}
-					onClick={() => openFilterDrawer()}
-				/>
+			<Affix offsetTop={140} >
+				<WrapperFilter>
+					<Button
+						icon={<SettingOutlined />}
+						onClick={() => openFilterDrawer()}
+					/>
+				</WrapperFilter>
 			</Affix>
-			<Table rowKey='id' pagination={{ position: ["bottomRight"] }} columns={tableColumns} dataSource={data} scroll={scroll} size="small" loading={isLoading} />
+			<Table rowKey='id'
+				columns={tableColumns}
+				dataSource={data}
+				scroll={scroll}
+				size="small"
+				loading={isLoading}
+				pagination={{
+					position: ["bottomRight"],
+					total: pagination.total,
+					current: pagination.current,
+					pageSize: pagination.itemsPerPage,
+					onChange: (page, pageSize) => {
+						setPagination(page, pageSize)
+					}
+				}}
+
+			/>
 		</>
 	);
 }

@@ -2,7 +2,6 @@ import { FC, ReactNode } from 'react'
 import styled from 'styled-components'
 
 
-
 const StyledAuthLayout = styled.div`
 	background-color: #FADB14;
 	display: flex;

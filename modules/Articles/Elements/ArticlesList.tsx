@@ -1,23 +1,61 @@
 import { AppTable, LinkButton, ScreenSpin } from '@components';
-import { useAuth } from 'context/AuthContext';
-import { GetAllArticlesQuery, useGetAllArticlesQuery } from 'generated/graphql';
+import { DEFAULT_ITEMS_PER_PAGE, DEFAULT_PAGE_NUMBER, useArticles } from '@helpers';
+import { EyeTwoTone } from '@ant-design/icons';
 import useTranslation from 'next-translate/useTranslation';
+import { useState, useEffect, useCallback } from 'react'
 
-export interface IArticlesListProps {
-
+interface IArticles {
+	count: number;
+	itemsPerPage: number;
+	results: Array<any>;
+	totalPages: number;
 }
 
-const ArticlesList = ({ }: IArticlesListProps) => {
-	const { t } = useTranslation()
-	const { graphqlRequestClient } = useAuth()
+interface IPagination {
+	total: number | undefined;
+	current: number;
+	itemsPerPage: number;
+}
 
-	const { isLoading, data, error } = useGetAllArticlesQuery<Partial<GetAllArticlesQuery>, Error>(graphqlRequestClient, {
-		filters: null,
-		orderBy: null,
-		page: 1,
-		itemsPerPage: 20,
+export interface IArticlesListProps {
+	searchCriteria?: any
+}
+
+const ArticlesList = ({ searchCriteria }: IArticlesListProps) => {
+	const { t } = useTranslation()
+
+	// Local State init 
+	const [articles, setArticles] = useState<IArticles | undefined>(undefined)
+
+	const [pagination, setPagination] = useState<IPagination>({
+		total: undefined,
+		current: DEFAULT_PAGE_NUMBER,
+		itemsPerPage: DEFAULT_ITEMS_PER_PAGE,
 	})
-	console.log(data)
+
+	const { isLoading, data, error } = useArticles(searchCriteria, pagination.current, pagination.itemsPerPage)
+
+	// make wrapper function to give child
+	const onChangePagination = useCallback((currentPage, itemsPerPage) => {
+		// Re fetch data for new current page or items per page 
+		setPagination({
+			...pagination,
+			current: currentPage,
+			itemsPerPage: itemsPerPage,
+		});
+	}, [setPagination]);
+
+	// For pagination
+	useEffect(() => {
+		if (data) {
+			setArticles(data?.articles)
+			setPagination({
+				...pagination,
+				total: data?.articles?.count,
+			})
+		}
+	}, [data])
+
 
 	// to refactor to be automatique when fetching data 
 	const columns = [
@@ -25,76 +63,80 @@ const ArticlesList = ({ }: IArticlesListProps) => {
 			title: t("common:name"),
 			dataIndex: 'name',
 			key: 'name',
-			fixed: true,
-			disabled: false,
+			index: 0,
 		},
 		{
 			title: t("common:additionalDescription"),
 			dataIndex: 'additionalDescription',
 			key: 'additionalDescription',
-			disabled: true,
+			index: 1,
 		},
 		{
 			title: t("forms:code"),
 			dataIndex: 'code',
 			key: 'code',
-			disabled: true,
+			index: 2,
 		},
 		{
 			title: t("common:status"),
 			dataIndex: 'status',
 			key: 'status',
-			disabled: false,
+			index: 3,
 		},
 		{
 			title: t("common:length"),
 			dataIndex: 'length',
 			key: 'length',
-			disabled: false,
+			index: 4,
 		},
 		{
 			title: t("common:width"),
 			dataIndex: 'width',
 			key: 'width',
-			disabled: false,
+			index: 5,
 		},
 		{
 			title: t("common:height"),
 			dataIndex: 'height',
 			key: 'height',
-			disabled: false,
+			index: 6,
 		},
 		{
 			title: t("common:baseUnitWeight"),
 			dataIndex: 'baseUnitWeight',
 			key: 'baseUnitWeight',
-			disabled: false,
+			index: 7,
 		},
 		{
 			title: t("common:boxWeight"),
 			dataIndex: 'boxWeight',
 			key: 'boxWeight',
-			disabled: false,
+			index: 8,
 		},
 		{
-			title: t("actions:actions"),
 			key: 'actions',
-			disabled: false,
+			width: 50,
+			index: 9,
 			render: (record: { id: string }) => (
-				<LinkButton title={t("actions:view")} path={pathParams(record.id)} />
-			)
+				<LinkButton icon={<EyeTwoTone />} path={pathParams(record.id)} />
+				)
 		}
 	]
-	const pathParams = (id: string) => { return { pathname: '/article/[aid]', query: { aid: id } } }
 
+	const pathParams = (id: string) => { return { pathname: '/article/[aid]', query: { aid: id } } }
 
 	return (
 		<>
-			{data ? (
-				<AppTable columns={columns} data={data?.articles?.results} scroll={{ x: 800 }} isLoading={isLoading} />
-			) : (
-				<ScreenSpin />
-			)
+			{articles &&
+				<AppTable
+					columns={columns}
+					data={articles!.results}
+					scroll={{ x: 800 }}
+					isLoading={isLoading}
+					pagination={pagination}
+					setPagination={onChangePagination}
+				/>
+
 			}
 		</>
 	);

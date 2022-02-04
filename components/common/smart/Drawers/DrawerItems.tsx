@@ -4,8 +4,8 @@ import React, { useCallback } from 'react';
 
 const DrawerItems = () => {
   const {
+    size,
     isOpen,
-    data,
     title,
     cancelButton,
     comfirmButton,
@@ -27,12 +27,12 @@ const DrawerItems = () => {
       onClose={closeDrawer}
       visible={isOpen}
       title={title}
+      width={size}
       placement="right"
       extra={
         <Space>
           {cancelButton ? <Button onClick={onCancel}>{cancelButtonTitle} </Button> : null}
-          {comfirmButton ? <Button onClick={onComfirm} type="primary">{comfirmButtonTitle}  </Button> : null}
-
+          {comfirmButton ? <Button onClick={onComfirm} type="primary" >{comfirmButtonTitle}  </Button> : null}
         </Space>
       }>
       {content}
