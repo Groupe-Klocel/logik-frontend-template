@@ -21,6 +21,10 @@ a {
   border: 1px solid #ccc;
 }
 
+.sortableHelper {
+  z-index: 2000;
+}
+
 .row-dragging td {
   padding: 16px;
 }

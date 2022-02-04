@@ -63,69 +63,58 @@ const ArticlesList = ({ searchCriteria }: IArticlesListProps) => {
 			title: t("common:name"),
 			dataIndex: 'name',
 			key: 'name',
-			fixed: true,
-			disabled: false,
 			index: 0,
 		},
 		{
 			title: t("common:additionalDescription"),
 			dataIndex: 'additionalDescription',
 			key: 'additionalDescription',
-			disabled: true,
 			index: 1,
 		},
 		{
 			title: t("forms:code"),
 			dataIndex: 'code',
 			key: 'code',
-			disabled: true,
 			index: 2,
 		},
 		{
 			title: t("common:status"),
 			dataIndex: 'status',
 			key: 'status',
-			disabled: false,
 			index: 3,
 		},
 		{
 			title: t("common:length"),
 			dataIndex: 'length',
 			key: 'length',
-			disabled: false,
 			index: 4,
 		},
 		{
 			title: t("common:width"),
 			dataIndex: 'width',
 			key: 'width',
-			disabled: false,
 			index: 5,
 		},
 		{
 			title: t("common:height"),
 			dataIndex: 'height',
 			key: 'height',
-			disabled: false,
 			index: 6,
 		},
 		{
 			title: t("common:baseUnitWeight"),
 			dataIndex: 'baseUnitWeight',
 			key: 'baseUnitWeight',
-			disabled: false,
 			index: 7,
 		},
 		{
 			title: t("common:boxWeight"),
 			dataIndex: 'boxWeight',
 			key: 'boxWeight',
-			disabled: false,
 			index: 8,
 		},
 		{
 			key: 'actions',
-			disabled: false,
 			width: 50,
 			index: 9,
 			render: (record: { id: string }) => (
@@ -135,7 +124,6 @@ const ArticlesList = ({ searchCriteria }: IArticlesListProps) => {
 	]
 
 	const pathParams = (id: string) => { return { pathname: '/article/[aid]', query: { aid: id } } }
-
 
 	return (
 		<>

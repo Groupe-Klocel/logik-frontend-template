@@ -19,6 +19,45 @@ function getKeys(data: Array<any>): React.Key[] {
 	return keys
 }
 
+
+// Set index to each object in an array
+function setIndex(array: Array<any>): Array<any> {
+	const arrayWithIndex = array.map((object: Object) => (
+		{ ...object, index: array.indexOf(object) }
+	)
+	)
+	return arrayWithIndex
+}
+
+// add key pair value to each object in an array
+function addKeyValueToArrayObject(array: Array<any>, key: string, value: any): Array<any> {
+	const newarray = array.map((object: Object) => (
+		addKeyValueToObject(object, key, value)
+	)
+	)
+	return newarray
+}
+// add key pair value to an object 
+function addKeyValueToObject(object: Object, key: string, value: any): Object {
+	return Object.defineProperty(object, key, {
+		value: value,
+		writable: true,
+		enumerable: true,
+		configurable: true
+	})
+}
+
+function setCustomColumnsProps(columnsToInitialize: any): any {
+	let temp = setIndex(columnsToInitialize)
+	temp = temp.map((object) => {
+		if (object.index === 0 || object.index === 1 || object.index === columnsToInitialize.length - 1 || object.index === columnsToInitialize.length - 2) {
+			return addKeyValueToObject(object, "disabled", false)
+		} else return addKeyValueToObject(object, "disabled", true)
+	})
+	const finalColumns = addKeyValueToArrayObject(temp, "fixed", false)
+	return finalColumns
+}
+
 // Check if value is inside a list 
 function isVisible(value: React.Key, list: Array<any>) {
 	return list.includes(value);
@@ -73,20 +112,20 @@ function decodeJWT(token: String) {
 	return JSON.parse(jsonPayload);
 };
 
-const showSuccess = (messageText:string) => {
+const showSuccess = (messageText: string) => {
 	message.success(messageText);
-};	
+};
 
-const showInfo = (messageText:string) => {
+const showInfo = (messageText: string) => {
 	message.info(messageText);
 };
 
-const showError = (messageText:string) => {
-  message.error(messageText);
+const showError = (messageText: string) => {
+	message.error(messageText);
 };
 
-const showWarning = (messageText:string) => {
-  message.warning(messageText);
+const showWarning = (messageText: string) => {
+	message.warning(messageText);
 };
 
 
@@ -102,5 +141,5 @@ const showWarning = (messageText:string) => {
 //   [dispatchDrawer]
 // )
 
-export { showSuccess, showWarning, showInfo, showError,decodeJWT, getMenuState, getDefaultTheme, isCookieSet, stringToBoolean, isServer, isVisible, getLanguageNameFromISOCode, getKeys };
+export { setCustomColumnsProps, setIndex, addKeyValueToArrayObject, addKeyValueToObject, showSuccess, showWarning, showInfo, showError, decodeJWT, getMenuState, getDefaultTheme, isCookieSet, stringToBoolean, isServer, isVisible, getLanguageNameFromISOCode, getKeys };
 

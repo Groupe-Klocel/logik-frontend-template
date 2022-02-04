@@ -1,6 +1,6 @@
 import { SettingOutlined } from '@ant-design/icons';
 import { TableFilter, WrapperFilter } from '@components';
-import { getKeys } from '@helpers';
+import { getKeys,setCustomColumnsProps} from '@helpers';
 import { Affix, Button, Table } from 'antd';
 import { useDrawerDispatch } from 'context/DrawerContext';
 import useTranslation from 'next-translate/useTranslation';
@@ -22,28 +22,32 @@ export interface IAppTableProps {
 
 const AppTable: FC<IAppTableProps> = ({ data, columns, scroll, isLoading, pagination, setPagination }) => {
 	let { t } = useTranslation()
-	const filterDrawerRef = useRef()
+	const filterDrawerRef = useRef() as any | undefined
 
-	// FILTER  
-
+	// FILTER   
 	const allColumnKeys = getKeys(columns);
-	const index = 0
-	const filterData = columns.map((m) => ({ key: m.key, title: m.title, disabled: m.disabled, dataIndex: m.dataIndex, index: m.index }));
-
+	
 	// this parentState will be set by its child component TableFilter
 	const [visibleColumnKeys, setVisibleColumnKeys] = useState(allColumnKeys);
+	const [filteredColumns, setFilteredColumns] = useState(setCustomColumnsProps(columns));
+	// table columns filtered
+	const [tableColumns, setTableColumns] = useState(setCustomColumnsProps(columns));
 
 	// make wrapper function to give child
-	const wrapperSetVisibleColumnKeys = useCallback(val => {
+	const childSetVisibleColumnKeys = useCallback(val => {
 		setVisibleColumnKeys(val);
 	}, [setVisibleColumnKeys]);
 
-	// table columns filtered
-	const [tableColumns, setTableColumns] = useState(columns);
+	// make wrapper function to give child
+	const childSetTableColumns = useCallback(val => {
+		setFilteredColumns(val);
+	}, [setFilteredColumns]);
+
 
 	function handleReset() {
 		setVisibleColumnKeys(allColumnKeys)
-		filterDrawerRef.current.reset()
+		setTableColumns(columns);
+		filterDrawerRef!.current.reset(allColumnKeys, columns)
 	}
 
 	const dispatchDrawer = useDrawerDispatch();
@@ -55,7 +59,7 @@ const AppTable: FC<IAppTableProps> = ({ data, columns, scroll, isLoading, pagina
 			title: t('actions:filter'),
 			cancelButtonTitle: t('actions:reset'),
 			cancelButton: true,
-			content: <TableFilter ref={filterDrawerRef} key='filter' toFilter={filterData} onShowChange={wrapperSetVisibleColumnKeys} visibleKeys={visibleColumnKeys} />,
+			content: <TableFilter ref={filterDrawerRef} key='filter' colmunsToFilter={filteredColumns} onSort={childSetTableColumns} onShowChange={childSetVisibleColumnKeys} visibleKeys={visibleColumnKeys} />,
 			onCancel: () => handleReset(),
 		}),
 		[dispatchDrawer, visibleColumnKeys]
@@ -64,16 +68,14 @@ const AppTable: FC<IAppTableProps> = ({ data, columns, scroll, isLoading, pagina
 	useEffect(() => {
 		if (visibleColumnKeys) {
 			if (visibleColumnKeys.length) {
-				const temp = columns.filter((f) => visibleColumnKeys.includes(f.key));
+				const temp = filteredColumns.filter((f:any) => visibleColumnKeys.includes(f.key));
 				setTableColumns(temp);
 			} else {
-				setTableColumns(columns);
+				setTableColumns(filteredColumns);
 			}
 		}
 		return () => { };
-	}, [visibleColumnKeys]);
-
-
+	}, [visibleColumnKeys, filteredColumns]);
 
 	return (
 		<>
