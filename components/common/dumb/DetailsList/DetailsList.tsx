@@ -6,7 +6,6 @@ export interface IDetailsListProps {
 }
 
 const DetailsList: FC<IDetailsListProps> = ({ details }: IDetailsListProps) => {
-	console.log("details", details )
 	return (
 		<>
 			{Object.keys(details).map((key) =>

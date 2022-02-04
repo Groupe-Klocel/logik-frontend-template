@@ -10,7 +10,6 @@ import styled from 'styled-components';
 import { HeaderContent } from '@components';
 
 const StyledPageContent = styled(Layout.Content)`
-	background-color: white;
 	margin: 15px 30px ;
 	padding: 20px
 `
