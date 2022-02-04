@@ -93,7 +93,7 @@ const AppTable: FC<IAppTableProps> = ({ data, columns, scroll, isLoading, pagina
 				scroll={scroll}
 				size="small"
 				loading={isLoading}
-				pagination={{
+				pagination={pagination && {
 					position: ["bottomRight"],
 					total: pagination.total,
 					current: pagination.current,

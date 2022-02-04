@@ -40,6 +40,8 @@ export const ReturnCodesList: FC<IReturnCodesListProps> = ({ }) => {
 		},
 	];
 	return (
-		<AppTable columns={columns} data={returnCodesData} />
+		<AppTable
+		columns={columns}
+		scroll={{ x: 800 }} data={returnCodesData} />
 	);
 }

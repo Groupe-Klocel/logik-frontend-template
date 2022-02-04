@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { Layout } from 'antd'
-import { HeaderContent } from '../../../components/common/smart/HeaderContent/HeaderContent'
+import { HeaderContent } from '@components'
 import { companiesRoutes } from 'modules/Companies/Static/companiesRoutes'
 import useTranslation from 'next-translate/useTranslation';
 import { CompaniesList } from 'modules/Companies/Elements/CompaniesList'
@@ -20,7 +20,7 @@ export const Companies: FC<ICompaniesProps> = ({ }: ICompaniesProps) => {
 	return (
 		<>
 			<HeaderContent title={t('menu:companies')} routes={companiesRoutes} actions={
-				<LinkButton title={t('actions:add2',{name:t('common:company')})} path='/add-company' />
+				<LinkButton title={t('actions:add2', { name: t('common:company') })} path='/add-company' />
 			} />
 			<StyledPageContent>
 				<CompaniesList />

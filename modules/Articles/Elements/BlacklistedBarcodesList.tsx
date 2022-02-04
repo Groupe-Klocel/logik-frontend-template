@@ -40,6 +40,8 @@ export const BlacklistedBarcodesList: FC<IBlacklistedBarcodesListProps> = ({ }) 
 		},
 	];
 	return (
-		<AppTable columns={columns} data={barcodesData} />
+		<AppTable
+		columns={columns}
+		scroll={{ x: 800 }} data={barcodesData} />
 	);
 }

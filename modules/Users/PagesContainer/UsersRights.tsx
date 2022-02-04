@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { Layout } from 'antd'
-import { HeaderContent } from '../../../components/common/smart/HeaderContent/HeaderContent'
+import { HeaderContent } from '@components'
 import { usersRightsRoutes } from 'modules/Users/Static/usersRoutes'
 import useTranslation from 'next-translate/useTranslation';
 import { UsersRightsList } from 'modules/Users/Elements/UsersRightsList'

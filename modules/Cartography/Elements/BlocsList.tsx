@@ -59,6 +59,9 @@ export const BlocsList: FC<IBlocsListProps> = ({ }) => {
 		},
 	];
 	return (
-		<AppTable columns={columns} data={blocsData} />
+		<AppTable
+		columns={columns}
+		scroll={{ x: 800 }}
+		 data={blocsData} />
 	);
 }

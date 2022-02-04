@@ -52,6 +52,8 @@ export const StockStatusesList: FC<IStockStatusesListProps> = ({ }) => {
 		},
 	];
 	return (
-		<AppTable columns={columns} data={stockData} />
+		<AppTable
+		columns={columns}
+		scroll={{ x: 800 }} data={stockData} />
 	);
 }

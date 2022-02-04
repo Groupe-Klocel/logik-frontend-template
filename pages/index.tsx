@@ -7,7 +7,7 @@ type PageComponent = FC & { layout: typeof MainLayout }
 const HomePage: PageComponent = () => {
 	return (
 		<>
-			<Welcome />
+			<Welcome text='Welcome to the new Bee Interface!' />
 		</>
 	)
 }

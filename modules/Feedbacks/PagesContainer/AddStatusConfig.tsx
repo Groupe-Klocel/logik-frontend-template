@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { Layout } from 'antd'
-import { HeaderContent } from '../../../components/common/smart/HeaderContent/HeaderContent'
+import { HeaderContent } from '@components'
 import { addStatusConfigRoutes } from 'modules/Feedbacks/Static/feedbacksRoutes'
 import useTranslation from 'next-translate/useTranslation';
 import { AddStatusConfigForm } from 'modules/Feedbacks/Elements/AddStatusConfigForm'

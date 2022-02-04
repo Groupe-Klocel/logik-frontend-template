@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { Layout } from 'antd'
-import { HeaderContent } from '../../../components/common/smart/HeaderContent/HeaderContent'
+import { HeaderContent } from '@components'
 import { packagingsRoutes } from 'modules/Packagings/Static/packagingsRoutes'
 import useTranslation from 'next-translate/useTranslation';
 import { PackagingsList } from 'modules/Packagings/Elements/PackagingsList'

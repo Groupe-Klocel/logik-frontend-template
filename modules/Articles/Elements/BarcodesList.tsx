@@ -85,6 +85,9 @@ export const BarcodesList: FC<IBarcodesListProps> = ({ }) => {
 		},
 	];
 	return (
-		<AppTable columns={columns} data={barcodesData} />
+		<AppTable
+		columns={columns}
+		scroll={{ x: 800 }}
+		data={barcodesData} />
 	);
 }

@@ -5,7 +5,7 @@ import { UsersList } from 'modules/Users/Elements/UsersList';
 import { usersRoutes } from 'modules/Users/Static/usersRoutes';
 import useTranslation from 'next-translate/useTranslation';
 import { FC } from 'react';
-import { HeaderContent } from '../../../components/common/smart/HeaderContent/HeaderContent';
+import { HeaderContent } from '@components';
 
 
 
@@ -15,21 +15,6 @@ export interface IUsersProps {
 
 export const Users: FC<IUsersProps> = ({ }: IUsersProps) => {
 	let { t } = useTranslation()
-
-
-
-	// //	SEARCH DRAWER 
-	// const [search, setSearch] = useState('');
-	// const searchDrawerProps = {
-	// 	context: search,
-	// 	title:"Search",
-	// 	placement:'right',
-	// 	cancelButtonTitle:t('actions:cancel') ,
-	// 	confirmButtonTitle:t('actions:search'),
-	// 	content: <div>Search</div>,
-	// 	onConfirm: (_:any, context:any) => setSearch(context),
-	// 	onClose: () => setDrawerOptions({ isOpen: false })
-	// }
 
 	return (
 		<>

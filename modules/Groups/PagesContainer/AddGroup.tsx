@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { Layout } from 'antd'
-import { HeaderContent } from '../../../components/common/smart/HeaderContent/HeaderContent'
+import { HeaderContent } from '@components'
 import { addGroupRoutes } from 'modules/Groups/Static/groupsRoutes'
 import { AddGroupForm } from 'modules/Groups/Elements/AddGroupForm'
 import useTranslation from 'next-translate/useTranslation';

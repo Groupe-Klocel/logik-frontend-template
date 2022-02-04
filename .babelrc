@@ -6,5 +6,8 @@
 		["styled-components", { "ssr": true }],
 		["import", { "libraryName": "antd", "style": true }],
 		["module-resolver", { "alias": { "@": "./src" } }]
+	],
+	"ignore": [
+		"**/__fake-data__", // ignore the whole fake-data directory
 	]
 }

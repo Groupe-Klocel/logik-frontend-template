@@ -50,6 +50,8 @@ export const FeaturesCodesList: FC<IFeaturesCodesListProps> = ({ }) => {
 	]
 
 	return (
-		<AppTable columns={columns} data={featureCodesData} />
+		<AppTable
+		columns={columns}
+		scroll={{ x: 800 }} data={featureCodesData} />
 	);
 }

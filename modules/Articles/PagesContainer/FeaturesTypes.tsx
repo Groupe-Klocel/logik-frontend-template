@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { Layout } from 'antd'
-import { HeaderContent } from '../../../components/common/smart/HeaderContent/HeaderContent'
+import { HeaderContent } from '@components'
 import { featuresTypesRoutes } from 'modules/Articles/Static/articlesRoutes'
 import useTranslation from 'next-translate/useTranslation';
 import { FeaturesTypesList } from 'modules/Articles/Elements/FeaturesTypesList'
@@ -20,7 +20,7 @@ export const FeaturesTypes: FC<IFeaturesTypesProps> = ({ }: IFeaturesTypesProps)
 	return (
 		<>
 			<HeaderContent title={t('menu:features-types')} routes={featuresTypesRoutes} actions={
-				<LinkButton title={t('actions:add2',{name:t('menu:feature-type')})} path='/add-feature-type' />
+				<LinkButton title={t('actions:add2', { name: t('menu:feature-type') })} path='/add-feature-type' />
 			} />
 			<StyledPageContent>
 				<FeaturesTypesList />

@@ -71,6 +71,10 @@ export const PackagingsList: FC<IPackagingsListProps> = ({ }) => {
 		},
 	];
 	return (
-		<AppTable columns={columns} data={packagingsData} />
+		<AppTable
+		columns={columns}
+		data={packagingsData}
+		scroll={{ x: 800 }}
+	 />
 	);
 }

@@ -1,14 +1,14 @@
 import { SearchOutlined } from '@ant-design/icons';
 import { DrawerButton, LinkButton } from '@components';
-import { Layout, Space , Form} from 'antd';
+import { Layout, Space, Form } from 'antd';
 import { ArticlesSearch } from 'components/common/dumb/DrawerItems/ArticlesSearch';
 import { useDrawerDispatch } from 'context/DrawerContext';
 import { ArticlesList } from 'modules/Articles/Elements/ArticlesList';
 import { articlesSubRoutes } from 'modules/Articles/Static/articlesRoutes';
 import useTranslation from 'next-translate/useTranslation';
-import { FC, useCallback, useState,useEffect } from 'react';
+import { FC, useCallback, useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { HeaderContent } from '../../../components/common/smart/HeaderContent/HeaderContent';
+import { HeaderContent } from '@components';
 
 const StyledPageContent = styled(Layout.Content)`
 	margin:  15px 30px 15px 15px ;
@@ -22,7 +22,7 @@ const Articles: FC<IArticlesProps> = ({ }: IArticlesProps) => {
 	let { t } = useTranslation()
 
 	const [search, setSearch] = useState({});
-	
+
 	//	SEARCH DRAWER 
 	const [formSearch] = Form.useForm();
 
@@ -35,7 +35,7 @@ const Articles: FC<IArticlesProps> = ({ }: IArticlesProps) => {
 			comfirmButtonTitle: t('actions:search'),
 			comfirmButton: true,
 			submit: true,
-			content: <ArticlesSearch form={formSearch}/>,
+			content: <ArticlesSearch form={formSearch} />,
 			onComfirm: () => handleSubmit(),
 		}),
 		[dispatchDrawer]
@@ -66,7 +66,7 @@ const Articles: FC<IArticlesProps> = ({ }: IArticlesProps) => {
 				</Space>
 			} />
 			<StyledPageContent>
-				<ArticlesList searchCriteria={search}/>
+				<ArticlesList searchCriteria={search} />
 			</StyledPageContent>
 		</>
 	);

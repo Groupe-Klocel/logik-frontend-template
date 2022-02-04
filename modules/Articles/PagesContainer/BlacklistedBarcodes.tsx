@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { Layout } from 'antd'
-import { HeaderContent } from '../../../components/common/smart/HeaderContent/HeaderContent'
+import { HeaderContent } from '@components'
 import { blacklistedBarcodesRoutes } from 'modules/Articles/Static/articlesRoutes'
 import useTranslation from 'next-translate/useTranslation';
 import { BlacklistedBarcodesList } from 'modules/Articles/Elements/BlacklistedBarcodesList'

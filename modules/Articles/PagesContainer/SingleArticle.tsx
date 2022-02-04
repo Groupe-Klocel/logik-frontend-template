@@ -7,7 +7,7 @@ import { useAuth } from 'context/AuthContext';
 import { FC } from 'react';
 import { NextRouter } from 'next/router';
 import styled from 'styled-components';
-import { HeaderContent } from '../../../components/common/smart/HeaderContent/HeaderContent';
+import { HeaderContent } from '@components';
 
 const StyledPageContent = styled(Layout.Content)`
 	background-color: white;
@@ -37,7 +37,7 @@ const SingleArticle: FC<ISingleArticleProps> = ({ aId, router }: ISingleArticleP
 	{
 		breadcrumbName: `${aId}`,
 	}
-]
+	]
 
 	return (
 		<>
