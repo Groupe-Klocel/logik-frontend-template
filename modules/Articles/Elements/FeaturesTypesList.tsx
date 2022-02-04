@@ -40,6 +40,8 @@ export const FeaturesTypesList: FC<IFeaturesTypesListProps> = ({ }) => {
 	]
 
 	return (
-		<AppTable columns={columns} data={featureTypesData} />
+		<AppTable
+		columns={columns}
+		scroll={{ x: 800 }} data={featureTypesData} />
 	);
 }

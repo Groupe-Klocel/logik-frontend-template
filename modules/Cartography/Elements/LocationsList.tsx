@@ -71,6 +71,8 @@ export const LocationsList: FC<ILocationsListProps> = ({ }) => {
 	]
 
 	return (
-		<AppTable columns={columns} data={locationsData} />
+		<AppTable
+		columns={columns}
+		scroll={{ x: 800 }} data={locationsData} />
 	);
 }

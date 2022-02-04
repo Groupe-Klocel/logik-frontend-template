@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { Layout } from 'antd'
-import { HeaderContent } from '../../../components/common/smart/HeaderContent/HeaderContent'
+import { HeaderContent } from '@components'
 import { addBlocRoutes } from 'modules/Cartography/Static/cartographyRoutes'
 import { AddBlocForm } from 'modules/Cartography/Elements/AddBlocForm'
 import useTranslation from 'next-translate/useTranslation';
@@ -18,7 +18,7 @@ export const AddBloc: FC<IAddBlocProps> = ({ }: IAddBlocProps) => {
 	let { t } = useTranslation('actions')
 	return (
 		<>
-			<HeaderContent title={t('add2',{name:"Bloc"})} routes={addBlocRoutes} />
+			<HeaderContent title={t('add2', { name: "Bloc" })} routes={addBlocRoutes} />
 			<StyledPageContent>
 				<AddBlocForm />
 			</StyledPageContent>

@@ -43,6 +43,8 @@ export const GroupOfUsersList: FC<IGroupOfUsersListProps> = ({ }) => {
 		},
 	];
 	return (
-		<AppTable columns={columns} data={usersData} />
+		<AppTable
+		columns={columns}
+		scroll={{ x: 800 }} data={usersData} />
 	);
 }

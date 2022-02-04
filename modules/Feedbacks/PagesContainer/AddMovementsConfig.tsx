@@ -1,7 +1,7 @@
 
 import { FC } from 'react'
 import { Layout } from 'antd'
-import { HeaderContent } from '../../../components/common/smart/HeaderContent/HeaderContent'
+import { HeaderContent } from '@components'
 import { addMovementsConfigRoutes } from 'modules/Feedbacks/Static/feedbacksRoutes'
 import useTranslation from 'next-translate/useTranslation';
 import { AddMovementsConfigForm } from 'modules/Feedbacks/Elements/AddMovementsConfigForm'

@@ -44,6 +44,8 @@ export const SettingsList: FC<ISettingsListProps> = ({ }) => {
 		},
 	];
 	return (
-		<AppTable columns={columns} data={settingsData} />
+		<AppTable
+		columns={columns}
+		scroll={{ x: 800 }} data={settingsData} />
 	);
 }

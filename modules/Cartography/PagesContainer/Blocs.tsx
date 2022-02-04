@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { Layout } from 'antd'
-import { HeaderContent } from '../../../components/common/smart/HeaderContent/HeaderContent'
+import { HeaderContent } from '@components'
 import { cartographyRoutes } from 'modules/Cartography/Static/cartographyRoutes'
 import useTranslation from 'next-translate/useTranslation';
 import { BlocsList } from 'modules/Cartography/Elements/BlocsList'
@@ -20,7 +20,7 @@ export const Blocs: FC<IBlocsProps> = ({ }: IBlocsProps) => {
 	return (
 		<>
 			<HeaderContent title={t('menu:blocs')} routes={cartographyRoutes} actions={
-				<LinkButton title={t('actions:add2',{name:t('menu:bloc')})} path='/add-bloc' />
+				<LinkButton title={t('actions:add2', { name: t('menu:bloc') })} path='/add-bloc' />
 			} />
 			<StyledPageContent>
 				<BlocsList />

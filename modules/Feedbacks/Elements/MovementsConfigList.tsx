@@ -60,6 +60,8 @@ export const MovementsConfigList: FC<IMovementsConfigListProps> = ({ }) => {
 		},
 	];
 	return (
-		<AppTable columns={columns} data={companiesData} />
+		<AppTable
+		columns={columns}
+		scroll={{ x: 800 }} data={companiesData} />
 	);
 }

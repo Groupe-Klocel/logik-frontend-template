@@ -85,6 +85,6 @@ export const EquipmentsList: FC<IEquipmentsListProps> = ({ }) => {
 		},
 	];
 	return (
-		<AppTable columns={columns} data={equipmentsData} scroll={{ x: 1500, y: 300 }} />
+		<AppTable columns={columns} data={equipmentsData} scroll={{ x: 800 }} />
 	);
 }

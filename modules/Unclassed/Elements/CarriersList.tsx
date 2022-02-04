@@ -56,6 +56,9 @@ export const CarriersList: FC<ICarriersListProps> = ({ }) => {
 		},
 	];
 	return (
-		<AppTable columns={columns} data={carriersData} />
+		<AppTable
+		columns={columns}
+		scroll={{ x: 800 }}
+		data={carriersData} />
 	);
 }

@@ -66,6 +66,8 @@ export const StatusConfigList: FC<IStatusConfigListProps> = ({ }) => {
 		},
 	];
 	return (
-		<AppTable columns={columns} data={companiesData} />
+		<AppTable
+		columns={columns}
+		scroll={{ x: 800 }} data={companiesData} />
 	);
 }

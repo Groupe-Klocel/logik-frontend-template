@@ -12,16 +12,18 @@ const StyledWelcomeWrapper = styled.div`
   justify-content: center;
 `
 
-export interface IWelcomeProps { }
+export interface IWelcomeProps { 
+  text: string
+}
 
-const Welcome: FC<IWelcomeProps> = ({ }: IWelcomeProps) => {
+const Welcome: FC<IWelcomeProps> = ({ text }: IWelcomeProps) => {
   return (
     <Page>
       <StyledWelcomeWrapper>
         <Space direction="vertical" size="large">
           <Row align="middle" justify="center">
             <Typography.Title level={3}>
-              Welcome to the new Bee Interface!
+             {text}
             </Typography.Title>
           </Row>
 

@@ -18,24 +18,20 @@ export const UsersList: FC<IUsersListProps> = ({ }) => {
 			title: t("common:username"),
 			dataIndex: 'username',
 			key: 'username',
-			disabled: false,
 		},
 		{
 			title: t("common:group"),
 			dataIndex: 'group',
 			key: 'group',
-			disabled: true,
 		},
 		{
 			title: t("common:status"),
 			dataIndex: 'status',
 			key: 'status',
-			disabled: true,
 		},
 		{
 			title: t("actions:actions"),
 			key: 'actions',
-			disabled: true,
 			render: (record: { id: number; username: string; }) => (
 				<Button
 					onClick={() => alert(`View ${record.id} - ${record.username}`)}
@@ -45,6 +41,11 @@ export const UsersList: FC<IUsersListProps> = ({ }) => {
 	];
 
 	return (
-		<AppTable columns={columns} data={usersData} />
+		
+		<AppTable
+		columns={columns}
+		scroll={{ x: 800 }}
+		data={usersData}
+	/>
 	);
 }

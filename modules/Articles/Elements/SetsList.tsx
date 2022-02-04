@@ -55,6 +55,8 @@ export const SetsList: FC<ISetsListProps> = ({ }) => {
 		},
 	];
 	return (
-		<AppTable columns={columns} data={setsData} />
+		<AppTable
+		columns={columns}
+		scroll={{ x: 800 }} data={setsData} />
 	);
 }
