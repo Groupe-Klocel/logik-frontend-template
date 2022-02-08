@@ -22,11 +22,9 @@ const WrapperLogin = styled.div`
   padding: 3%;
 	box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
   flex-direction: column;
-  height: 80vh;
-  width: 40vw;
+  width: 95vw;
 	@media only screen and (max-width: 320px) {
-    width: 80vw;
-    height: 90vh;
+    width: 90vw;
     hr {
       margin-bottom: 0.3rem;
     }
@@ -35,35 +33,30 @@ const WrapperLogin = styled.div`
     }
   }
   @media only screen and (min-width: 360px) {
-    width: 80vw;
-    height: 90vh;
+    width: 90vw;
     h4 {
       font-size: small;
     }
   }
   @media only screen and (min-width: 411px) {
     width: 80vw;
-    height: 90vh;
   }
 
   @media only screen and (min-width: 768px) {
     width: 80vw;
-    height: 40vh;
   }
   @media only screen and (min-width: 1024px) {
     width: 70vw;
-    height:  40vh;
   }
   @media only screen and (min-width: 1280px) {
     width: 30vw;
-    height: 40vh;
   }
 `
 
 const PageContentWrapper = styled.div`
 	margin: 15px 30px ;
 `
- const PageTableContentWrapper = styled(Layout.Content)`
+const PageTableContentWrapper = styled(Layout.Content)`
 	margin:  15px 40px 15px 15px ;
 `
 export { PageContentWrapper, PageTableContentWrapper, WrapperLogin, WrapperForm, WrapperStepContent, WrapperStickyActions }
