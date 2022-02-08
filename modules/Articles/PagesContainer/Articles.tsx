@@ -1,5 +1,6 @@
-import { SearchOutlined } from '@ant-design/icons';
-import { DrawerButton, LinkButton } from '@components';
+import { SearchOutlined, FileExcelOutlined } from '@ant-design/icons';
+import { Button } from 'antd';
+import { LinkButton } from '@components';
 import { Layout, Space, Form } from 'antd';
 import { ArticlesSearch } from 'components/common/dumb/DrawerItems/ArticlesSearch';
 import { useDrawerDispatch } from 'context/DrawerContext';
@@ -10,9 +11,6 @@ import { FC, useCallback, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { HeaderContent } from '@components';
 
-const StyledPageContent = styled(Layout.Content)`
-	margin:  15px 30px 15px 15px ;
-`
 
 export interface IArticlesProps {
 
@@ -56,18 +54,17 @@ const Articles: FC<IArticlesProps> = ({ }: IArticlesProps) => {
 			})
 			.catch((err) => console.log(err));
 	};
-
+ 
 	return (
 		<>
-			<HeaderContent title={t('common:articles')} routes={articlesSubRoutes} actions={
+			<HeaderContent title={t('common:articles')} routes={articlesSubRoutes}
+			actionsRight={
 				<Space>
-					<DrawerButton icon={< SearchOutlined />} onClick={() => openSearchDrawer()} />
+					<Button icon={< SearchOutlined />} onClick={() => openSearchDrawer()} />
 					<LinkButton title={t('actions:add2', { name: t('common:article') })} path='/add-article' type='primary' />
 				</Space>
 			} />
-			<StyledPageContent>
 				<ArticlesList searchCriteria={search} />
-			</StyledPageContent>
 		</>
 	);
 }
@@ -76,3 +73,4 @@ Articles.displayName = 'Articles';
 
 export { Articles };
 
+	

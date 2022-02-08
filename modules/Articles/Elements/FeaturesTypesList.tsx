@@ -1,7 +1,8 @@
 
 import { FC } from 'react'
+import {  DeleteOutlined, EyeTwoTone , EditTwoTone} from '@ant-design/icons';
 import useTranslation from 'next-translate/useTranslation';
-import { Button, Row } from 'antd'
+import { Button, Space } from 'antd'
 import { featureTypesData } from 'fake-data/features'
 import { AppTable } from '@components';
 
@@ -22,18 +23,11 @@ export const FeaturesTypesList: FC<IFeaturesTypesListProps> = ({ }) => {
 			title: t("actions:actions"),
 			key: 'actions',
 			render: (record: { id: number }) => (
-				<Row>
-
-					<Button
-						onClick={() => alert(`View ${record.id} `)}
-					> {t("actions:view")} </Button>
-					< Button
-						onClick={() => alert(`Edit ${record.id} `)}
-					> {t("actions:edit")} </Button>
-					< Button
-						onClick={() => alert(`Delete ${record.id} `)}
-					> {t("actions:delete")} </Button>
-				</Row>
+				<Space>
+					<Button	icon={<EyeTwoTone />}	onClick={() => alert(`View ${record.id} `)}/>
+					<Button icon={<EditTwoTone />} 	onClick={() => alert(`Edit ${record.id} `)} />
+					<Button icon={<DeleteOutlined />} danger onClick={() => alert(`Delete ${record.id} `)} />
+				</Space>
 
 			),
 		},
@@ -41,7 +35,9 @@ export const FeaturesTypesList: FC<IFeaturesTypesListProps> = ({ }) => {
 
 	return (
 		<AppTable
+		type="features-types"
 		columns={columns}
-		scroll={{ x: 800 }} data={featureTypesData} />
+		scroll={{ x: 800 }}
+	  data={featureTypesData} />
 	);
 }

@@ -1,4 +1,5 @@
 {
+	"action-impossible": "{{name}} action is not possible, you must select a record",
 	"error-message-empty-input": "Field must not be empty",
 	"error-message-requiered-input": "Field is requiered",
 	"please-enter-a": "Please enter a {{name}}",

@@ -1,4 +1,4 @@
-import { CheckCircleOutlined, CloseSquareOutlined } from '@ant-design/icons';
+import { DeleteOutlined, EyeTwoTone , EditTwoTone } from '@ant-design/icons';
 import { Button, Space } from 'antd';
 import { AppTable } from '@components';
 import { setsData } from 'fake-data/sets';
@@ -36,27 +36,20 @@ export const SetsList: FC<ISetsListProps> = ({ }) => {
 		{
 			title: t("actions:actions"),
 			key: 'actions',
-			render: (record: { id: number; name: string; }) => (
+			render: (record: { id: number }) => (
 				<Space>
-					<Button
-						onClick={() => alert(`View ${record.id} - ${record.name}`)}>
-						{t("actions:view")}
-					</Button>
-					<Button
-						onClick={() => alert(`Edit ${record.id} - ${record.name}`)}>
-						{t("actions:edit")}
-					</Button>
-					<Button
-						onClick={() => alert(`Delete ${record.id} - ${record.name}`)}>
-						{t("actions:delete")}
-					</Button>
-					</Space>
+					<Button	icon={<EyeTwoTone />}	onClick={() => alert(`View ${record.id} `)}/>
+					<Button icon={<EditTwoTone />} 	onClick={() => alert(`Edit ${record.id} `)} />
+					<Button icon={<DeleteOutlined />} danger onClick={() => alert(`Delete ${record.id} `)} />
+				</Space>
 			),
 		},
 	];
 	return (
-		<AppTable
+		<AppTable		
+		type="sets"
 		columns={columns}
-		scroll={{ x: 800 }} data={setsData} />
+		scroll={{ x: 800 }}
+		data={setsData} />
 	);
 }

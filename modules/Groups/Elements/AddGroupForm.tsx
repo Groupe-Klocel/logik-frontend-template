@@ -38,7 +38,7 @@ export const AddGroupForm: FC<IAddGroupFormProps> = ({ }: IAddGroupFormProps) =>
 				<Form.Item
 					label={t('name')}
 					name="name"
-					rules={[{ required: true, message: 'Please input a name !' }]}
+					rules={[{ required: true, message: t('messages:please-enter-a', {name:t('common:name')}) }]}
 				>
 					<Input />
 				</Form.Item>
@@ -46,7 +46,7 @@ export const AddGroupForm: FC<IAddGroupFormProps> = ({ }: IAddGroupFormProps) =>
 				<Row>
 					<Col span={24} style={{ textAlign: 'right' }}>
 						<Button type="primary" htmlType="submit">
-							{t('submit')}
+							{t('actions:submit')}
 						</Button>
 					</Col>
 				</Row>

@@ -7,24 +7,19 @@ import { PackagingsList } from 'modules/Packagings/Elements/PackagingsList'
 import styled from 'styled-components'
 import { LinkButton } from 'components/common/dumb/Buttons/LinkButton';
 
-const StyledPageContent = styled(Layout.Content)`
-	margin: 15px 30px ;
-`
 
 export interface IPackagingsProps {
 
 }
 
 export const Packagings: FC<IPackagingsProps> = ({ }: IPackagingsProps) => {
-	let { t } = useTranslation('actions')
+	let { t } = useTranslation()
 	return (
 		<>
-			<HeaderContent title={t('packagings')} routes={packagingsRoutes} actions={
-				<LinkButton title={t('add-packaging')} path='/add-packaging' />
+			<HeaderContent title={t('menu:packagings')} routes={packagingsRoutes} actionsRight={
+				<LinkButton title={t('actions:add-packaging')} path='/add-packaging' />
 			} />
-			<StyledPageContent>
 				<PackagingsList />
-			</StyledPageContent>
 		</>
 	);
 }

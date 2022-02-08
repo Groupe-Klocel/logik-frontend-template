@@ -1,4 +1,4 @@
-import { CheckCircleOutlined, CloseSquareOutlined } from '@ant-design/icons';
+import { EyeTwoTone, PrinterOutlined } from '@ant-design/icons';
 import { Button, Space } from 'antd'
 import { AppTable } from '@components';
 import { carriersData } from 'fake-data/carriers';
@@ -39,26 +39,21 @@ export const CarriersList: FC<ICarriersListProps> = ({ }) => {
 			key: 'status',
 		},
 		{
-			title: t("actions"),
+			title: t("actions:actions"),
 			key: 'actions',
 			render: (record: { id: number; name: string; }) => (
 				<Space>
-					<Button
-						onClick={() => alert(`View ${record.id} - ${record.name}`)}>
-						{t("actions:view")}
-					</Button>
-					<Button
-						onClick={() => alert(`Print ${record.id} - ${record.name}`)}>
-						{t("actions:print")}
-					</Button>
+					<Button icon={<EyeTwoTone />} onClick={() => alert(`View ${record.id} - ${record.name}`)} />
+					<Button icon={<PrinterOutlined />} onClick={() => alert(`Print ${record.id} - ${record.name}`)} />
 				</Space>
 			),
 		},
 	];
 	return (
 		<AppTable
-		columns={columns}
-		scroll={{ x: 800 }}
-		data={carriersData} />
+			type="carriers"
+			columns={columns}
+			scroll={{ x: 800 }}
+			data={carriersData} />
 	);
 }

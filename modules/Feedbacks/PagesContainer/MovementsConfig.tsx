@@ -8,24 +8,18 @@ import { LinkButton } from 'components/common/dumb/Buttons/LinkButton';
 import { MovementsConfigList } from 'modules/Feedbacks/Elements/MovementsConfigList'
 
 
-const StyledPageContent = styled(Layout.Content)`
-	margin: 15px 30px ;
-`
-
 export interface IMovementsConfigProps {
 
 }
 
 export const MovementsConfig: FC<IMovementsConfigProps> = ({ }: IMovementsConfigProps) => {
-	let { t } = useTranslation('actions')
+	let { t } = useTranslation()
 	return (
 		<>
-			<HeaderContent title={t('movements-config')} routes={movementsConfigRoutes} actions={
-				<LinkButton title={t('add-movements-config-feedback')} path='/add-movements-config-feedback' />
+			<HeaderContent title={t('menu:movements-config')} routes={movementsConfigRoutes} actionsRight={
+				<LinkButton title={t('actions:add-movements-config-feedback')} path='/add-movements-config-feedback' />
 			} />
-			<StyledPageContent>
 				<MovementsConfigList />
-			</StyledPageContent>
 		</>
 	);
 }

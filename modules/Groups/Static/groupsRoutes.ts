@@ -21,8 +21,8 @@ export const addGroupRoutes: Array<BreadcrumbType> = [...groupsRoutes,
       breadcrumbName: 'menu:rights',
     },
     {
-      path: '/group-of-users',
-      breadcrumbName:'menu:group-of-users',
+      path: '/groups-of-users',
+      breadcrumbName:'menu:groups-of-users',
     }
   ];
   
@@ -32,8 +32,8 @@ export const addGroupRoutes: Array<BreadcrumbType> = [...groupsRoutes,
       breadcrumbName: 'menu:rights',
     },
     {
-      path: '/groups-rigths',
-      breadcrumbName:'menu:groups-rigths',
+      path: '/groups-rights',
+      breadcrumbName:'menu:groups-rights',
     }
   ];
   

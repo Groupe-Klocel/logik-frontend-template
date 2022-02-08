@@ -7,10 +7,6 @@ import { AddFeatureTypeForm } from 'modules/Articles/Elements/AddFeatureTypeForm
 import styled from 'styled-components'
 import { LinkButton } from 'components/common/dumb/Buttons/LinkButton';
 
-const StyledPageContent = styled(Layout.Content)`
-	margin: 15px 30px ;
-`
-
 export interface IAddFeatureTypeProps {
 
 }
@@ -20,9 +16,7 @@ export const AddFeatureType: FC<IAddFeatureTypeProps> = ({ }: IAddFeatureTypePro
 	return (
 		<>
 			<HeaderContent title={t('add2', { name: "Feature Type" })} routes={addFeatureTypeRoutes} />
-			<StyledPageContent>
 				<AddFeatureTypeForm />
-			</StyledPageContent>
 		</>
 	);
 }

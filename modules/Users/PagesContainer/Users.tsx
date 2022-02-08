@@ -18,15 +18,13 @@ export const Users: FC<IUsersProps> = ({ }: IUsersProps) => {
 
 	return (
 		<>
-			<HeaderContent title={t('common:users')} routes={usersRoutes} actions={
+			<HeaderContent title={t('common:users')} routes={usersRoutes} actionsRight={
 				<Space>
 					{/* <DrawerButton icon={< SearchOutlined />} onClick={() => setDrawerOptions({ isOpen: true, drawerProps: searchDrawerProps })} title={t('actions:search')} /> */}
 					<LinkButton title={t('actions:add2', { name: t('common:user') })} path='/add-user' type="primary" />
 				</Space>
 			} />
-			<PageContentWrapper>
 				<UsersList />
-			</PageContentWrapper>
 		</>
 	);
 }

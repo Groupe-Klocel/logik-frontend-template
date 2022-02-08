@@ -6,22 +6,17 @@ import useTranslation from 'next-translate/useTranslation';
 import { GroupOfUsersList } from 'modules/Groups/Elements/GroupOfUsersList'
 import styled from 'styled-components'
 
-const StyledPageContent = styled(Layout.Content)`
-	margin: 15px 30px ;
-`
 
 export interface IGroupOfUsersProps {
 
 }
 
 export const GroupOfUsers: FC<IGroupOfUsersProps> = ({ }: IGroupOfUsersProps) => {
-	let { t } = useTranslation('common')
+	let { t } = useTranslation()
 	return (
 		<>
-			<HeaderContent title={t('groups-rights')} routes={groupOfUsersRoutes} />
-			<StyledPageContent>
+			<HeaderContent title={t('menu:groups-of-users')} routes={groupOfUsersRoutes} />
 				<GroupOfUsersList />
-			</StyledPageContent>
 		</>
 	);
 }

@@ -1,4 +1,4 @@
-import { CheckCircleOutlined, CloseSquareOutlined } from '@ant-design/icons';
+import { EyeTwoTone, PrinterOutlined } from '@ant-design/icons';
 import { Button, Space } from 'antd'
 import { AppTable } from '@components';
 import { packagingsData } from 'fake-data/packagings';
@@ -54,27 +54,22 @@ export const PackagingsList: FC<IPackagingsListProps> = ({ }) => {
 			key: 'height',
 		},
 		{
-			title: t("actions"),
+			title: t("actions:actions"),
 			key: 'actions',
 			render: (record: { id: number; name: string; }) => (
 				<Space>
-					<Button
-						onClick={() => alert(`View ${record.id} - ${record.name}`)}>
-						{t("view")}
-					</Button>
-					<Button
-						onClick={() => alert(`Print ${record.id} - ${record.name}`)}>
-						{t("print")}
-					</Button>
+					<Button icon={<EyeTwoTone />} onClick={() => alert(`View ${record.id} - ${record.name}`)} />
+					<Button icon={<PrinterOutlined />} onClick={() => alert(`Print ${record.id} - ${record.name}`)} />
 				</Space>
 			),
 		},
 	];
 	return (
 		<AppTable
-		columns={columns}
-		data={packagingsData}
-		scroll={{ x: 800 }}
-	 />
+			type="packagings"
+			columns={columns}
+			data={packagingsData}
+			scroll={{ x: 800 }}
+		/>
 	);
 }

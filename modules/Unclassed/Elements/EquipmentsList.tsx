@@ -1,4 +1,4 @@
-import { CaretUpOutlined, CaretDownOutlined } from '@ant-design/icons';
+import { CaretUpOutlined, CaretDownOutlined, EyeTwoTone } from '@ant-design/icons';
 import { Button, Space } from 'antd';
 import { AppTable } from '@components';
 import { equipmentsData } from 'fake-data/equipments';
@@ -65,26 +65,24 @@ export const EquipmentsList: FC<IEquipmentsListProps> = ({ }) => {
 			key: 'check-position',
 		},
 		{
-			title: t("actions"),
+			title: t("actions:actions"),
 			key: 'actions',
 			fixed: 'right',
 			render: (record: { id: number; name: string; }) => (
 				<Space>
-						<Button
-						onClick={() => alert(`GO UP `)} icon={<CaretUpOutlined />}>
-					</Button>
-						<Button
-						onClick={() => alert(`GO DOWN `)} icon={<CaretDownOutlined />}>
-					</Button>
-						<Button
-						onClick={() => alert(`View ${record.id} - ${record.name}`)}>
-						{t("view")}
-					</Button>
+						<Button	onClick={() => alert(`GO UP `)} icon={<CaretUpOutlined />}/>
+						<Button	onClick={() => alert(`GO DOWN `)} icon={<CaretDownOutlined />}/>
+						<Button icon={<EyeTwoTone />} onClick={() => alert(`View ${record.id} - ${record.name}`)} />
 					</Space>
 			),
 		},
 	];
 	return (
-		<AppTable columns={columns} data={equipmentsData} scroll={{ x: 800 }} />
+		<AppTable 
+		type="equipments"
+		columns={columns} 
+		data={equipmentsData} 
+		scroll={{ x: 800 }} 
+		/>
 	);
 }

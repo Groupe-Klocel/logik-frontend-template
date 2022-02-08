@@ -1,5 +1,5 @@
 import { EyeInvisibleTwoTone, EyeTwoTone } from '@ant-design/icons';
-import { isVisible, MyColumnType, setCustomColumnsProps } from '@helpers';
+import { isVisible, MyColumnType, setCustomColumnsProps, cookie } from '@helpers';
 import { Button, Space, Table } from 'antd';
 import Text from 'antd/lib/typography/Text';
 import useTranslation from 'next-translate/useTranslation';
@@ -11,10 +11,13 @@ import { MenuOutlined } from '@ant-design/icons';
 
 export interface ITableFilterProps {
 	ref: any,
-	colmunsToFilter: any, //need to find what is wrong with this MyColumnType[],
+	columnsToFilter: any, //need to find what is wrong with this MyColumnType[],
 	visibleKeys: Key[],
+	fixKeys: Key[],
 	onShowChange: Function,
 	onSort: Function,
+	onFixed: Function,
+	cookieKey: string,
 }
 
 interface Iindex {
@@ -28,19 +31,22 @@ const SortableBody = SortableContainer((props: JSX.IntrinsicAttributes & ClassAt
 
 
 
-const TableFilter: FC<ITableFilterProps> = forwardRef(({ colmunsToFilter, visibleKeys, onShowChange, onSort }: ITableFilterProps, ref) => {
+const TableFilter: FC<ITableFilterProps> = forwardRef(({ columnsToFilter, visibleKeys, onShowChange, onSort, cookieKey , fixKeys, onFixed}: ITableFilterProps, ref) => {
 	let { t } = useTranslation()
 
+
 	const [showKeys, setShowKeys] = useState(visibleKeys);
-	const [fixedKeys, setFixedKeys] = useState<Key[]>([]);
-	const [currentFilteredColmuns, setDataSource] = useState(colmunsToFilter);
+	const [fixedKeys, setFixedKeys] = useState<Key[]>(fixKeys);
+	const [currentFilteredColumns, setCurrentFilteredColumns] = useState(columnsToFilter);
 
 	useImperativeHandle(ref, () => ({
-		reset(keys: any, colmuns: any) {
+		reset(keys: any, columns: any) {
 			setShowKeys(keys)
-			setDataSource(colmuns)
-		},
+			setFixedKeys([])
+			setCurrentFilteredColumns(columns)
+		}
 	}));
+
 
 	useEffect(() => {
 		onShowChange(showKeys);
@@ -48,9 +54,14 @@ const TableFilter: FC<ITableFilterProps> = forwardRef(({ colmunsToFilter, visibl
 	}, [onShowChange, showKeys]);
 
 	useEffect(() => {
-		onSort(currentFilteredColmuns);
+		onSort(currentFilteredColumns);
 		return () => { };
-	}, [onSort, currentFilteredColmuns]);
+	}, [onSort, currentFilteredColumns]);
+
+	useEffect(() => {
+		onFixed(fixedKeys);
+		return () => { };
+	}, [onFixed, fixedKeys]);
 
 
 
@@ -69,22 +80,21 @@ const TableFilter: FC<ITableFilterProps> = forwardRef(({ colmunsToFilter, visibl
 	const fixedSelection = {
 		selectedRowKeys: fixedKeys,
 		onChange: (selectedRowKeys: Key[]) => {
-			let tempColumns = currentFilteredColmuns
-			tempColumns = currentFilteredColmuns.map((obj: any) => {
+			let tempColumns = currentFilteredColumns
+			tempColumns = currentFilteredColumns.map((obj: any) => {
 				// change fixed to true
 				if (selectedRowKeys.some(r => obj.index === r)) {
 					if (obj.index === 0 || obj.index === 1) {
 						return { ...obj, fixed: "left" }
-					} else if (obj.index === colmunsToFilter.length - 1 || obj.index === colmunsToFilter.length - 2) {
+					} else if (obj.index === columnsToFilter.length - 1 || obj.index === columnsToFilter.length - 2) {
 						return { ...obj, fixed: "right" }
 					}
 				} else {
 					return { ...obj, fixed: false }
 				}
 			})
-
 			setFixedKeys(selectedRowKeys);
-			setDataSource(tempColumns);
+			setCurrentFilteredColumns(tempColumns);
 		},
 		getCheckboxProps: (record: MyColumnType) => ({
 			disabled: record.disabled, // Column configuration not to be checked
@@ -94,7 +104,6 @@ const TableFilter: FC<ITableFilterProps> = forwardRef(({ colmunsToFilter, visibl
 	const columns = [
 		{
 			title: t("actions:fixed"),
-			dataIndex: 'fixed',
 			key: 'fixed',
 			width: "1%" // width to minimum possible
 		},
@@ -124,11 +133,12 @@ const TableFilter: FC<ITableFilterProps> = forwardRef(({ colmunsToFilter, visibl
 
 	const onSortEnd = ({ oldIndex, newIndex }: Iindex) => {
 		if (oldIndex !== newIndex) {
-			const newData = arrayMoveImmutable([].concat(currentFilteredColmuns), oldIndex, newIndex).filter(
+			const newData = arrayMoveImmutable([].concat(currentFilteredColumns), oldIndex, newIndex).filter(
 				el => !!el,
-			);
+			)
 			const newDataWithNewIndex = setCustomColumnsProps(newData)
-			setDataSource(newDataWithNewIndex);
+			setFixedKeys([])
+			setCurrentFilteredColumns(newDataWithNewIndex);
 		}
 	};
 
@@ -144,7 +154,7 @@ const TableFilter: FC<ITableFilterProps> = forwardRef(({ colmunsToFilter, visibl
 
 	const DraggableBodyRow = ({ className, style, ...restProps }: any) => {
 		// function findIndex base on Table rowKey props and should always be a right array index
-		const index = currentFilteredColmuns.findIndex((x: { index: number }) => x.index === restProps['data-row-key']);
+		const index = currentFilteredColumns.findIndex((x: { index: number }) => x.index === restProps['data-row-key']);
 		return <SortableItem className="sortableHelper" index={index} {...restProps} />;
 	};
 
@@ -154,11 +164,9 @@ const TableFilter: FC<ITableFilterProps> = forwardRef(({ colmunsToFilter, visibl
 		<>
 			<Table
 				pagination={false}
-				rowSelection={{
-					...fixedSelection,
-				}}
+				rowSelection={fixedSelection}
 				columns={columns}
-				dataSource={currentFilteredColmuns}
+				dataSource={currentFilteredColumns}
 				rowKey="index"
 				components={{
 					body: {

@@ -7,10 +7,6 @@ import { BlocsList } from 'modules/Cartography/Elements/BlocsList'
 import styled from 'styled-components'
 import { LinkButton } from 'components/common/dumb/Buttons/LinkButton';
 
-const StyledPageContent = styled(Layout.Content)`
-	margin: 15px 30px ;
-`
-
 export interface IBlocsProps {
 
 }
@@ -19,12 +15,10 @@ export const Blocs: FC<IBlocsProps> = ({ }: IBlocsProps) => {
 	let { t } = useTranslation()
 	return (
 		<>
-			<HeaderContent title={t('menu:blocs')} routes={cartographyRoutes} actions={
+			<HeaderContent title={t('menu:blocs')} routes={cartographyRoutes} actionsRight={
 				<LinkButton title={t('actions:add2', { name: t('menu:bloc') })} path='/add-bloc' />
 			} />
-			<StyledPageContent>
 				<BlocsList />
-			</StyledPageContent>
 		</>
 	);
 }

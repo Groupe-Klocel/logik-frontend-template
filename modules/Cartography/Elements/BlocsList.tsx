@@ -1,5 +1,6 @@
 
 import { FC } from 'react'
+import {  DeleteOutlined, EyeTwoTone , EditTwoTone} from '@ant-design/icons';
 import useTranslation from 'next-translate/useTranslation';
 import { Button, Space } from 'antd'
 import { blocsData } from 'fake-data/blocs'
@@ -39,27 +40,20 @@ export const BlocsList: FC<IBlocsListProps> = ({ }) => {
 			key: 'warehouse-code',
 		},
 		{
-			title: t("actions"),
+			title: t("actions:actions"),
 			key: 'actions',
 			render: (record: { id: number }) => (
-				<Space>
-
-					<Button
-						onClick={() => alert(`View ${record.id} `)}
-					>{t("view")}</Button>
-					<Button
-						onClick={() => alert(`Edit ${record.id} `)}
-					>{t("edit")}</Button>
-					<Button
-						onClick={() => alert(`Delete ${record.id} `)}
-					>{t("delete")}</Button>
-				</Space>
-
+			<Space>
+				<Button	icon={<EyeTwoTone />}	onClick={() => alert(`View ${record.id} `)}/>
+				<Button icon={<EditTwoTone />} 	onClick={() => alert(`Edit ${record.id} `)} />
+				<Button icon={<DeleteOutlined />} danger onClick={() => alert(`Delete ${record.id} `)} />
+			</Space>
 			),
 		},
 	];
 	return (
 		<AppTable
+		type="blocs"
 		columns={columns}
 		scroll={{ x: 800 }}
 		 data={blocsData} />

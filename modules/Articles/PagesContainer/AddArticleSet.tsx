@@ -7,10 +7,6 @@ import { AddArticleSetForm } from 'modules/Articles/Elements/AddArticleSetForm'
 import styled from 'styled-components'
 import { LinkButton } from 'components/common/dumb/Buttons/LinkButton';
 
-const StyledPageContent = styled(Layout.Content)`
-	margin: 15px 30px ;
-`
-
 export interface IAddArticleSetProps {
 
 }
@@ -20,9 +16,7 @@ export const AddArticleSet: FC<IAddArticleSetProps> = ({ }: IAddArticleSetProps)
 	return (
 		<>
 			<HeaderContent title={t('add2', { name: "Article Set" })} routes={addArticleSetRoutes} />
-			<StyledPageContent>
 				<AddArticleSetForm />
-			</StyledPageContent>
 		</>
 	);
 }

@@ -7,10 +7,6 @@ import { BlacklistedBarcodesList } from 'modules/Articles/Elements/BlacklistedBa
 import styled from 'styled-components'
 import { LinkButton } from 'components/common/dumb/Buttons/LinkButton';
 
-const StyledPageContent = styled(Layout.Content)`
-	margin: 15px 30px ;
-`
-
 export interface IBlacklistedBarcodesProps {
 
 }
@@ -20,9 +16,7 @@ export const BlacklistedBarcodes: FC<IBlacklistedBarcodesProps> = ({ }: IBlackli
 	return (
 		<>
 			<HeaderContent title={t('blacklisted-barcodes')} routes={blacklistedBarcodesRoutes} />
-			<StyledPageContent>
 				<BlacklistedBarcodesList />
-			</StyledPageContent>
 		</>
 	);
 }

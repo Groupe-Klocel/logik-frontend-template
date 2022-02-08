@@ -7,24 +7,19 @@ import { GroupsList } from 'modules/Groups/Elements/GroupsList'
 import styled from 'styled-components'
 import { LinkButton } from 'components/common/dumb/Buttons/LinkButton';
 
-const StyledPageContent = styled(Layout.Content)`
-	margin: 15px 30px ;
-`
 
 export interface IGroupsProps {
 
 }
 
 export const Groups: FC<IGroupsProps> = ({ }: IGroupsProps) => {
-	let { t } = useTranslation('actions')
+	let { t } = useTranslation()
 	return (
 		<>
-			<HeaderContent title={t('groups')} routes={groupsRoutes} actions={
-				<LinkButton title={t('add-group')} path='/add-group' />
+			<HeaderContent title={t('menu:groups')} routes={groupsRoutes} actionsRight={
+				<LinkButton title={t('menu:add-group')} path='/add-group' />
 			} />
-			<StyledPageContent>
 				<GroupsList />
-			</StyledPageContent>
 		</>
 	);
 }

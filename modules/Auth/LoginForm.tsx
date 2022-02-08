@@ -31,10 +31,6 @@ export const LoginForm: FC<ILoginFormProps> = ({ }: ILoginFormProps) => {
 		login({ username: values.username, password: values.password, workspaceId: values.workspaceId })
 	};
 
-	const onFinishFailed = (errorInfo: any) => {
-		console.log('Failed:', errorInfo);
-
-	};
 
 	return (
 		<WrapperLogin>
@@ -46,7 +42,6 @@ export const LoginForm: FC<ILoginFormProps> = ({ }: ILoginFormProps) => {
 				form={form}
 				name="login"
 				onFinish={onFinish}
-				onFinishFailed={onFinishFailed}
 				autoComplete="off"
 				scrollToFirstError
 			>

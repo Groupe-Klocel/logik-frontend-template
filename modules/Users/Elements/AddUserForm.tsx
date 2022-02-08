@@ -16,7 +16,7 @@ export const AddUserForm: FC<IAddUserFormProps> = ({ }: IAddUserFormProps) => {
 
 	// TEXTS TRANSLATION ( REFACTORING POSSIBLE / EXPORT / DON'T KNOW YET )
 	const username = t('common:username')
-	const pleaseInputUsername = t('messages:please-enter', { name: t('common:username') })
+	const pleaseInputUsername = t('messages:please-enter-a', { name: t('common:username') })
 	const pleaseSelectGroup = t('messages:please-select', { name: t('common:group') })
 	const selectGroup = t('messages:please-select', { name: t('common:group') })
 	const submit = t('actions:submit')

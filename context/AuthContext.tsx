@@ -54,7 +54,7 @@ export const AuthProvider: FC<OnlyChildrenType> = ({ children }: OnlyChildrenTyp
 				setUser(user)
 				router.push('/')
 				console.log("Got user", user)
-				showSuccess('Your now login')
+				showSuccess('You are now login')
 			}
 		},
 		onError: (error) => {

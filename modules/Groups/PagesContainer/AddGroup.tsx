@@ -15,10 +15,10 @@ export interface IAddGroupProps {
 }
 
 export const AddGroup: FC<IAddGroupProps> = ({ }: IAddGroupProps) => {
-	let { t } = useTranslation('actions')
+	let { t } = useTranslation()
 	return (
 		<>
-			<HeaderContent title={t('add-group')} routes={addGroupRoutes} />
+			<HeaderContent title={t('menu:add-group')} routes={addGroupRoutes} />
 			<StyledPageContent>
 				<AddGroupForm />
 			</StyledPageContent>

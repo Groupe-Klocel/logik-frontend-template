@@ -1,10 +1,10 @@
 
-import { FC} from 'react'
+import { FC } from 'react'
 import useTranslation from 'next-translate/useTranslation';
 import { Button } from 'antd'
 import { usersData } from 'fake-data/users'
 import { AppTable } from '@components';
-
+import { EyeTwoTone } from '@ant-design/icons';
 
 export interface IUsersListProps {
 
@@ -33,19 +33,18 @@ export const UsersList: FC<IUsersListProps> = ({ }) => {
 			title: t("actions:actions"),
 			key: 'actions',
 			render: (record: { id: number; username: string; }) => (
-				<Button
-					onClick={() => alert(`View ${record.id} - ${record.username}`)}
-				>{t("actions:view")}</Button>
+				<Button icon={<EyeTwoTone />} onClick={() => alert(`View ${record.id} - ${record.username}`)} />
 			),
 		},
 	];
 
 	return (
-		
+
 		<AppTable
-		columns={columns}
-		scroll={{ x: 800 }}
-		data={usersData}
-	/>
+			type="users"
+			columns={columns}
+			scroll={{ x: 800 }}
+			data={usersData}
+		/>
 	);
 }

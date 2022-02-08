@@ -6,10 +6,6 @@ import useTranslation from 'next-translate/useTranslation';
 import { FC } from 'react';
 import styled from 'styled-components';
 
-const StyledPageContent = styled(Layout.Content)`
-	margin: 15px 30px ;
-`
-
 export interface IAddArticleProps {
 
 }
@@ -19,9 +15,7 @@ export const AddArticle: FC<IAddArticleProps> = ({ }: IAddArticleProps) => {
 	return (
 		<>
 			<HeaderContent title={t('add2',{name:"Article"})} routes={addArticleRoutes} />
-			<StyledPageContent>
-				<AddArticleForm />
-			</StyledPageContent>
+			<AddArticleForm />
 		</>
 	);
 }

@@ -7,10 +7,6 @@ import { SetsList } from 'modules/Articles/Elements/SetsList'
 import styled from 'styled-components'
 import { LinkButton } from 'components/common/dumb/Buttons/LinkButton';
 
-const StyledPageContent = styled(Layout.Content)`
-	margin: 15px 30px ;
-`
-
 export interface ISetsProps {
 
 }
@@ -19,12 +15,10 @@ export const Sets: FC<ISetsProps> = ({ }: ISetsProps) => {
 	let { t } = useTranslation()
 	return (
 		<>
-			<HeaderContent title={t('menu:sets')} routes={setsRoutes} actions={
+			<HeaderContent title={t('menu:sets')} routes={setsRoutes} actionsRight={
 				<LinkButton title={t('actions:add2', { name: t('menu:article-set') })} path='/add-article-set' />
 			} />
-			<StyledPageContent>
 				<SetsList />
-			</StyledPageContent>
 		</>
 	);
 }

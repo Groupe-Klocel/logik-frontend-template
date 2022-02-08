@@ -9,16 +9,16 @@ export interface IGroupsRightsProps {
 }
 
 export const GroupsRightsList: FC<IGroupsRightsProps> = ({ }) => {
-	let { t } = useTranslation('common')
+	let { t } = useTranslation()
 
 	const columns = [
 		{
-			title: t("action"),
+			title: t("actions:action"),
 			dataIndex: 'action',
 			key: 'action',
 		},
 		{
-			title: t("administator"),
+			title: t("common:administator"),
 			key: 'admin',
 			render: (record: { admin: boolean; }) => {
 
@@ -26,7 +26,7 @@ export const GroupsRightsList: FC<IGroupsRightsProps> = ({ }) => {
 			}
 		},
 		{
-			title: t("operator"),
+			title: t("common:operator"),
 			key: 'ope',
 			render: (record: {  ope: boolean; }) => {
 
@@ -34,7 +34,7 @@ export const GroupsRightsList: FC<IGroupsRightsProps> = ({ }) => {
 			}
 		},
 		{
-			title: t("prepers"),
+			title: t("common:prepers"),
 			key: 'prep',
 			render: (record: { prep: boolean; }) => {
 
@@ -44,7 +44,9 @@ export const GroupsRightsList: FC<IGroupsRightsProps> = ({ }) => {
 	];
 	return (
 		<AppTable
+		type="groups-rights"
 		columns={columns}
-		scroll={{ x: 800 }} data={groupsRightsData} />
+		scroll={{ x: 800 }} 
+		data={groupsRightsData} />
 	);
 }

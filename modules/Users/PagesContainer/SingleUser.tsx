@@ -26,7 +26,7 @@ export const SingleUser: FC<ISingleUserProps> = ({ username, userId }: ISingleUs
 
 	return (
 		<>
-			<HeaderContent title={username} routes={singleUserRoutes} actions={
+			<HeaderContent title={username} routes={singleUserRoutes} actionsRight={
 				<>
 					<LinkButton title={t('new-user')} path='/new-user' />
 				</>

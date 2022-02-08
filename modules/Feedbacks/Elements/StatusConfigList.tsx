@@ -1,4 +1,4 @@
-import { CheckCircleOutlined, CloseSquareOutlined } from '@ant-design/icons';
+import {  DeleteOutlined, EyeTwoTone , EditTwoTone} from '@ant-design/icons';
 import { Button, Space } from 'antd'
 import { AppTable } from '@components';
 import { companiesData } from 'fake-data/companies';
@@ -44,30 +44,23 @@ export const StatusConfigList: FC<IStatusConfigListProps> = ({ }) => {
 			key: 'custom-value',
 		},
 		{
-			title: t("actions"),
+			title: t("actions:actions"),
 			key: 'actions',
 			render: (record: { id: number; account: string; }) => (
-				<Space size="small">
-					<Button
-						onClick={() => alert(`View ${record.id} - ${record.account}`)}>
-						{t("view")}
-					</Button>
-					<Button
-						onClick={() => alert(`Modify ${record.id} - ${record.account}`)}>
-						{t("modify")}
-					</Button>
-					<Button
-						onClick={() => alert(`Delete ${record.id} - ${record.account}`)}>
-						{t("delete")}
-					</Button>
-				</Space>
+				<Space>
+				<Button	icon={<EyeTwoTone />}	onClick={() => alert(`View ${record.id} - ${record.account}`)}/>
+				<Button icon={<EditTwoTone />} 	onClick={() => alert(`Edit ${record.id} - ${record.account}`)} />
+				<Button icon={<DeleteOutlined />} danger onClick={() => alert(`Delete ${record.id} - ${record.account}`)} />
+		</Space>
 
 			),
 		},
 	];
 	return (
 		<AppTable
+		type="status-config"
 		columns={columns}
-		scroll={{ x: 800 }} data={companiesData} />
+		scroll={{ x: 800 }} 
+		data={companiesData} />
 	);
 }

@@ -1,5 +1,6 @@
 export const equipmentsData = [
   {
+    "id":1,
     "priority": 1,
     "type": "Trolley multi",
     "name": "Chariot 15",
@@ -12,6 +13,7 @@ export const equipmentsData = [
     "check-position": "Yes"
   },
   {
+    "id":2,
     "priority": 2,
     "type": "Trolley mono",
     "name": "Chariot mono",
@@ -24,6 +26,7 @@ export const equipmentsData = [
     "check-position": "No"
   },
   {
+    "id":3,
     "priority": 3,
     "type": "Trolley multi",
     "name": "Chariot 7",
@@ -36,6 +39,7 @@ export const equipmentsData = [
     "check-position": "Yes"
   },
   {
+    "id":4,
     "priority": 4,
     "type": "Trolley multi",
     "name": "Chariot 4",
@@ -48,6 +52,7 @@ export const equipmentsData = [
     "check-position": "Yes"
   },
   {
+    "id":5,
     "priority": 5,
     "type": "Trolley multi",
     "name": "Chariot 2",
@@ -60,6 +65,7 @@ export const equipmentsData = [
     "check-position": "Yes"
   },
   {
+    "id":6,
     "priority": 6,
     "type": "Trolley multi",
     "name": "Chariot 3",
@@ -72,6 +78,7 @@ export const equipmentsData = [
     "check-position": "Yes"
   },
   {
+    "id":7,
     "priority": 7,
     "type": "Trolley mono",
     "name": "Chariot mono Lourd",
@@ -84,6 +91,7 @@ export const equipmentsData = [
     "check-position": "No"
   },
   {
+    "id":8,
     "priority": 8,
     "type": "Trolley multi",
     "name": "Chariot lourd",
@@ -96,6 +104,7 @@ export const equipmentsData = [
     "check-position": "No"
   },
   {
+    "id":9,
     "priority": 9,
     "type": "Trolley mono",
     "name": "Chariot mono Hors Gab",
@@ -108,6 +117,7 @@ export const equipmentsData = [
     "check-position": "No"
   },
   {
+    "id":10,
     "priority": 10,
     "type": "Trolley multi",
     "name": "Grosse commande",
@@ -120,6 +130,7 @@ export const equipmentsData = [
     "check-position": "No"
   },
   {
+    "id":11,
     "priority": 11,
     "type": "Trolley mono",
     "name": "Chariot SAV",
@@ -132,6 +143,7 @@ export const equipmentsData = [
     "check-position": "No"
   },
   {
+    "id":12,
     "priority": 12,
     "type": "Trolley multi",
     "name": "Chariot 5",
@@ -144,6 +156,7 @@ export const equipmentsData = [
     "check-position": "Yes"
   },
   {
+    "id":13,
     "priority": 13,
     "type": "Trolley mono",
     "name": "Chariot palette",

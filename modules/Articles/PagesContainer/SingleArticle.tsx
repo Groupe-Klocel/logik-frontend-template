@@ -44,7 +44,7 @@ const SingleArticle: FC<ISingleArticleProps> = ({ aId, router }: ISingleArticleP
 				title={`${t('common:article')} ${aId}`}
 				routes={breadsCrumb}
 				onBack={() => router.back()}
-				actions={
+				actionsRight={
 					<Space>
 						<LinkButton title={t('actions:edit')} path='/edit' type='primary' />
 						<LinkButton title={t('actions:delete')} path='/delete' />

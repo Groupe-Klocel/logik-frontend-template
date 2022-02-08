@@ -2,6 +2,7 @@ import { AppTable } from '@components';
 import { Button, Space } from 'antd';
 import { barcodesData } from 'fake-data/barcodes';
 import useTranslation from 'next-translate/useTranslation';
+import { EyeTwoTone, PrinterOutlined } from '@ant-design/icons';
 import { FC } from 'react';
 
 export interface IBarcodesListProps {
@@ -43,7 +44,7 @@ export const BarcodesList: FC<IBarcodesListProps> = ({ }) => {
 			key: 'rot',
 		},
 		{
-			title: t("forms:preparation-mode"),
+			title: t("common:preparation-mode"),
 			dataIndex: 'preparation-mode',
 			key: 'preparation-mode',
 		},
@@ -72,20 +73,15 @@ export const BarcodesList: FC<IBarcodesListProps> = ({ }) => {
 			key: 'actions',
 			render: (record: { id: number; name: string; }) => (
 				<Space>
-					<Button
-						onClick={() => alert(`View ${record.id} - ${record.name}`)}>
-						{t("actions:view")}
-					</Button>
-					<Button
-						onClick={() => alert(`Print ${record.id} - ${record.name}`)}>
-						{t("actions:print")}
-					</Button>
+					<Button	icon={<EyeTwoTone />}	onClick={() => alert(`View ${record.id} - ${record.name}`)}/>
+					<Button icon={<PrinterOutlined />} onClick={() => alert(`Print ${record.id} - ${record.name}`)}/>
 				</Space>
 			),
 		},
 	];
 	return (
 		<AppTable
+		type="barcodes"
 		columns={columns}
 		scroll={{ x: 800 }}
 		data={barcodesData} />

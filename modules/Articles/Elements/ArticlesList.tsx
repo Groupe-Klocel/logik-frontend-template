@@ -1,6 +1,7 @@
-import { AppTable, LinkButton, ScreenSpin } from '@components';
+import { AppTable, LinkButton } from '@components';
+import { Space, Button } from 'antd'
 import { DEFAULT_ITEMS_PER_PAGE, DEFAULT_PAGE_NUMBER, useArticles } from '@helpers';
-import { EyeTwoTone } from '@ant-design/icons';
+import { EyeTwoTone, DeleteOutlined } from '@ant-design/icons';
 import useTranslation from 'next-translate/useTranslation';
 import { useState, useEffect, useCallback } from 'react'
 
@@ -102,24 +103,27 @@ const ArticlesList = ({ searchCriteria }: IArticlesListProps) => {
 			index: 6,
 		},
 		{
-			title: t("common:baseUnitWeight"),
+			title: t("forms:baseUnitWeight"),
 			dataIndex: 'baseUnitWeight',
 			key: 'baseUnitWeight',
 			index: 7,
 		},
 		{
-			title: t("common:boxWeight"),
+			title: t("forms:boxWeight"),
 			dataIndex: 'boxWeight',
 			key: 'boxWeight',
 			index: 8,
 		},
 		{
+			title: t("actions:actions"),
 			key: 'actions',
-			width: 50,
 			index: 9,
 			render: (record: { id: string }) => (
-				<LinkButton icon={<EyeTwoTone />} path={pathParams(record.id)} />
-				)
+				<Space>
+					<LinkButton icon={<EyeTwoTone />} path={pathParams(record.id)} />
+					<Button icon={<DeleteOutlined />} danger onClick={() => alert(`delete article N° ${record.id}`)} />
+				</Space>
+			)
 		}
 	]
 
@@ -129,6 +133,7 @@ const ArticlesList = ({ searchCriteria }: IArticlesListProps) => {
 		<>
 			{articles &&
 				<AppTable
+					type="articles"
 					columns={columns}
 					data={articles!.results}
 					scroll={{ x: 800 }}

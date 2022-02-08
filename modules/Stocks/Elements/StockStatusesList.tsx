@@ -1,4 +1,4 @@
-import { CheckCircleOutlined, CloseSquareOutlined } from '@ant-design/icons';
+import { DeleteOutlined, EyeTwoTone, EditTwoTone } from '@ant-design/icons';
 import { Button, Space } from 'antd'
 import { AppTable } from '@components';
 import { stockData } from 'fake-data/stock';
@@ -34,26 +34,21 @@ export const StockStatusesList: FC<IStockStatusesListProps> = ({ }) => {
 			key: 'comment',
 		},
 		{
-			title: t("actions"),
+			title: t("actions:actions"),
 			key: 'actions',
-			render: (record: { id: number; name: string; }) => (
-				<Space size="small">
-					<Button
-						onClick={() => alert(`View ${record.id} - ${record.name}`)}>
-						{t("view")}
-					</Button>
-					<Button
-						onClick={() => alert(`Edit ${record.id} - ${record.name}`)}>
-						{t("edit")}
-					</Button>
+			render: (record: { id: number }) => (
+				<Space>
+					<Button icon={<EyeTwoTone />} onClick={() => alert(`View ${record.id} `)} />
+					<Button icon={<EditTwoTone />} onClick={() => alert(`Edit ${record.id} `)} />
 				</Space>
-
 			),
 		},
 	];
 	return (
 		<AppTable
-		columns={columns}
-		scroll={{ x: 800 }} data={stockData} />
+			type="stock-statuses"
+			columns={columns}
+			scroll={{ x: 800 }}
+			data={stockData} />
 	);
 }

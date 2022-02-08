@@ -1,7 +1,4 @@
 {
-	"add-user": "Ajouter Utilisateur",
-	"add-group": "Ajouter Groupe",
-	"add-article": "Ajouter Article",
 	"about": "A propos",
 	"access-management": "Gestion des accès",
 	"administration": "Administration",
@@ -13,6 +10,7 @@
 	"box-checking": "Contrôle colis",
 	"boxes": "Colis",
 	"carriers": "Transporteurs",
+	"location": "Emplacement",
 	"cartography": "Cartographie",
 	"companies": "Sociétés",
 	"configuration": "Configuration",
@@ -51,11 +49,12 @@
 	"article-set": "Nomenclature",
 	"sets": "Nomenclatures",
 	"settings": "Paramètres",
-	"status-configuration": "Config. des états",
+	"status-config": "Config. des états",
 	"status-evolutions": "Evolution états",
 	"stock-management": "Gestion de stock",
 	"stock-statuses": "Etats de stock",
 	"users": "Utilisateurs",
 	"users-rights": "Droits utilisateurs",
-	"warning": "Alertes"
+	"warning": "Alertes",
+	"user-settings": "Mes Paramètres"
 }

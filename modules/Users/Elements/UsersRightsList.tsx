@@ -36,7 +36,10 @@ export const UsersRightsList: FC<IUsersRightsListProps> = ({ }) => {
 	];
 	return (
 		<AppTable
+		type="users-rights"
 		columns={columns}
-		scroll={{ x: 800 }} data={usersData} />
+		scroll={{ x: 800 }} 
+		data={usersData} 
+		/>
 	);
 }

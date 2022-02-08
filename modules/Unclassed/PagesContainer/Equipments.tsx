@@ -6,9 +6,6 @@ import useTranslation from 'next-translate/useTranslation';
 import { EquipmentsList } from 'modules/Unclassed/Elements/EquipmentsList'
 import styled from 'styled-components'
 
-const StyledPageContent = styled(Layout.Content)`
-	margin: 15px 30px ;
-`
 
 export interface IEquipmentsProps {
 
@@ -18,10 +15,8 @@ export const Equipments: FC<IEquipmentsProps> = ({ }: IEquipmentsProps) => {
 	let { t } = useTranslation()
 	return (
 		<>
-			<HeaderContent title={t('common:equipments')} routes={equipmentsRoutes} />
-			<StyledPageContent>
+			<HeaderContent title={t('menu:equipments')} routes={equipmentsRoutes} />
 				<EquipmentsList />
-			</StyledPageContent>
 		</>
 	);
 }

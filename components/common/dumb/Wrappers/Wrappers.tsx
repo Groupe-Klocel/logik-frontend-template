@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { Layout } from 'antd'
 
 const WrapperForm = styled.div`
 	padding: 20px;
@@ -7,9 +8,10 @@ const WrapperForm = styled.div`
 const WrapperStepContent = styled.div`
 	margin: 40px auto;
 `
-const WrapperFilter = styled.div`
+const WrapperStickyActions = styled.div`
   position:absolute;
   right:0;
+  margin-right: 15px;
   align-self:flex-end;
 `
 
@@ -46,20 +48,22 @@ const WrapperLogin = styled.div`
 
   @media only screen and (min-width: 768px) {
     width: 80vw;
-    height: 80vh;
+    height: 40vh;
   }
   @media only screen and (min-width: 1024px) {
     width: 70vw;
-    height: 50vh;
+    height:  40vh;
   }
   @media only screen and (min-width: 1280px) {
     width: 30vw;
-    height: 80vh;
+    height: 40vh;
   }
 `
 
 const PageContentWrapper = styled.div`
 	margin: 15px 30px ;
 `
-
-export { PageContentWrapper, WrapperLogin, WrapperForm, WrapperStepContent, WrapperFilter }
+ const PageTableContentWrapper = styled(Layout.Content)`
+	margin:  15px 40px 15px 15px ;
+`
+export { PageContentWrapper, PageTableContentWrapper, WrapperLogin, WrapperForm, WrapperStepContent, WrapperStickyActions }

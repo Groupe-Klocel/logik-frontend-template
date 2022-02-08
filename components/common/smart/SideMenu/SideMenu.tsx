@@ -25,14 +25,14 @@ const SideMenu: FC = () => {
 					<Menu.Item key="administration-access-management-users"><Link href='/users'>{t("users")}</Link></Menu.Item>
 					<Menu.Item key="administration-access-management-groups"><Link href='/groups'>{t("groups")}</Link></Menu.Item>
 					<SubMenu key="administration-rights" title={t("rights")}>
-						<Menu.Item key="administration-rights-group-of-users"><Link href='/group-of-users'>{t("group-of-users")}</Link></Menu.Item>
+						<Menu.Item key="administration-rights-group-of-users"><Link href='/groups-of-users'>{t("groups-of-users")}</Link></Menu.Item>
 						<Menu.Item key="administration-rights-group-rights"><Link href='/groups-rights'>{t("groups-rights")}</Link></Menu.Item>
 						<Menu.Item key="administration-rights-users-rights"><Link href='/users-rights'>{t("users-rights")}</Link></Menu.Item>
 					</SubMenu>
 				</SubMenu>
 				<SubMenu key="administration-feedbacks" title={t("feedbacks")}>
 					<Menu.Item key="administration-feedbacks-movements-config"><Link href='/movements-config'>{t("movements-config")}</Link></Menu.Item>
-					<Menu.Item key="administration-feedbacks-status-config"><Link href='/status-config'>{t("status-configuration")}</Link></Menu.Item>
+					<Menu.Item key="administration-feedbacks-status-config"><Link href='/status-config'>{t("status-config")}</Link></Menu.Item>
 					<Menu.Item key="administration-feedbacks-force-reading"><Link href='/force-reading'>{t("force-reading")}</Link></Menu.Item>
 					<Menu.Item key="administration-feedbacks-force-writing"><Link href='/force-writing'>{t("force-writing")}</Link></Menu.Item>
 					<Menu.Item key="administration-feedbacks-send-stock-image"><Link href='/send-stock-image'>{t("send-stock-image")}</Link></Menu.Item>

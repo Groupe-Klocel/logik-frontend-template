@@ -7,22 +7,17 @@ import { GroupsRightsList } from 'modules/Groups/Elements/GroupsRightsList'
 import styled from 'styled-components'
 import { LinkButton } from 'components/common/dumb/Buttons/LinkButton';
 
-const StyledPageContent = styled(Layout.Content)`
-	margin: 15px 30px ;
-`
 
 export interface IGroupsRightsProps {
 
 }
 
 export const GroupsRights: FC<IGroupsRightsProps> = ({ }: IGroupsRightsProps) => {
-	let { t } = useTranslation('common')
+	let { t } = useTranslation()
 	return (
 		<>
-			<HeaderContent title={t('groups-rights')} routes={groupsRightsRoutes} />
-			<StyledPageContent>
+			<HeaderContent title={t('menu:groups-rights')} routes={groupsRightsRoutes} />
 				<GroupsRightsList />
-			</StyledPageContent>
 		</>
 	);
 }

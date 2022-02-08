@@ -1,9 +1,10 @@
 
 import { FC } from 'react'
 import useTranslation from 'next-translate/useTranslation';
-import { Button, Row } from 'antd'
+import { Button, Space } from 'antd'
 import { locationsData } from 'fake-data/locations'
 import { AppTable } from '@components';
+import {  DeleteOutlined, EyeTwoTone , EditTwoTone} from '@ant-design/icons';
 
 export interface ILocationsListProps {
 
@@ -50,21 +51,14 @@ export const LocationsList: FC<ILocationsListProps> = ({ }) => {
 			key: 'replenish',
 		},
 		{
-			title: t("actions"),
+			title: t("actions:actions"),
 			key: 'actions',
 			render: (record: { id: number }) => (
-				<Row>
-
-					<Button
-						onClick={() => alert(`View ${record.id} `)}
-					> {t("view")} </Button>
-					< Button
-						onClick={() => alert(`Edit ${record.id} `)}
-					> {t("edit")} </Button>
-					< Button
-						onClick={() => alert(`Delete ${record.id} `)}
-					> {t("delete")} </Button>
-				</Row>
+				<Space>
+					<Button	icon={<EyeTwoTone />}	onClick={() => alert(`View ${record.id} `)}/>
+					<Button icon={<EditTwoTone />} 	onClick={() => alert(`Edit ${record.id} `)} />
+					<Button icon={<DeleteOutlined />} danger onClick={() => alert(`Delete ${record.id} `)} />
+			</Space>
 
 			),
 		},
@@ -72,7 +66,9 @@ export const LocationsList: FC<ILocationsListProps> = ({ }) => {
 
 	return (
 		<AppTable
+		type="locations"
 		columns={columns}
-		scroll={{ x: 800 }} data={locationsData} />
+		scroll={{ x: 800 }} 
+		data={locationsData} />
 	);
 }
