@@ -14,8 +14,6 @@ export interface IMainLayoutProps {
 	children?: ReactNode
 }
 
-
-
 const MainLayout: FC<IMainLayoutProps> = ({ children }: IMainLayoutProps) => {
 	// get from app context 
 	const { isSessionMenuCollapsed } = useAppState()

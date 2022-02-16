@@ -8,5 +8,7 @@
 	"please-select": "Please select {{name}}",
 	"please-select-a": "Please select a {{name}}",
 	"please-select-an": "Please select a {{name}}",
-	"please-select-your": "Please select your {{name}}"
+	"please-select-your": "Please select your {{name}}",
+	"login-success": "You are now login",
+	"error-login": "There is an error with your credentials"
 }

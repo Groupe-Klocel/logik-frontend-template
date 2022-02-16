@@ -9,12 +9,14 @@
         "fix": "yarn lint --fix && yarn format",
         "-------------------------------- DEV  ----": "----",
         "dev": "next dev",
+        "dev2": "next dev -p 80",
         "start": "next start",
         "serve": "yarn build && yarn start",
         "export": "next export",
+        "gen": "graphql-codegen --config codegen.yml",
+        "lesstocss": "gulp less",
         "-------------------------------- PROD ----": "----",
-        "build": "next build",
-        "gen": "graphql-codegen --config codegen.yml"
+        "build": "next build"
     },
     "dependencies": {
         "@ant-design/icons": "4.7.0",

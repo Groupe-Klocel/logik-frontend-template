@@ -47,19 +47,16 @@ export const AddArticleForm: FC<IAddArticleFormProps> = ({ }: IAddArticleFormPro
 
 	const steps = [
 		{
-			title: 'Info',
+			title: `${t('forms:step')} 1`,
 			key: 0,
-			content: 'First-content',
 		},
 		{
-			title: 'Info 2',
+			title: `${t('forms:step')} 2`,
 			key: 1,
-			content: 'First-content',
 		},
 		{
-			title: 'Other',
+			title: `${t('forms:step')} 3`,
 			key: 2,
-			content: 'First-content',
 		},
 	];
 
@@ -84,20 +81,20 @@ export const AddArticleForm: FC<IAddArticleFormProps> = ({ }: IAddArticleFormPro
 
 			{current === 0 ? (
 				<div style={{ textAlign: "center" }}>
-					<Button onClick={handleClickNext}>Next step</Button>
+					<Button onClick={handleClickNext}>{t('actions:next-step')}</Button>
 				</div>
 			) : (current > 0 && current < steps.length - 1 ? (
 				<div style={{ textAlign: "center" }}>
 					<Space>
-						<Button onClick={handleClickBack}>Back step</Button>
-						<Button onClick={handleClickNext}>Next step</Button>
+						<Button onClick={handleClickBack}>{t('actions:back-step')}</Button>
+						<Button onClick={handleClickNext}>{t('actions:next-step')}</Button>
 					</Space>
 				</div>
 			) : (
 				<div style={{ textAlign: "center" }}>
 						<Space>
-							<Button onClick={handleClickBack}>Back step</Button>
-							<Button onClick={handleSubmit}>Submit</Button>
+							<Button onClick={handleClickBack}>{t('actions:back-step')}</Button>
+							<Button onClick={handleSubmit}>{t('actions:submit')}</Button>
 					</Space>
 				</div>
 			)

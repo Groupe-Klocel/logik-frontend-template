@@ -3,12 +3,12 @@ import styled from 'styled-components'
 
 
 const StyledAuthLayout = styled.div`
-	background-color: #FADB14;
 	display: flex;
   align-items: center;
 	justify-content: center;
   flex-direction: column;
   height: 100vh;
+	background-color: #FADB14;
 `
 
 export interface IAuthLayoutProps {
@@ -19,9 +19,9 @@ const AuthLayout: FC<IAuthLayoutProps> = ({ children }: IAuthLayoutProps) => {
 
 
 	return (
-		<StyledAuthLayout>
-     	{children}
-		</StyledAuthLayout >
+			<StyledAuthLayout>
+     		{children}
+			</StyledAuthLayout >
 	);
 }
 

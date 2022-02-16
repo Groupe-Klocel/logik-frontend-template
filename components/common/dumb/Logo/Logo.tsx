@@ -1,14 +1,13 @@
 import { FC } from 'react'
 import Icon from '@ant-design/icons';
-import styled from 'styled-components'
 
 export interface ILogoProps {
-
+	width: number;
 }
 
-const Logo: FC<ILogoProps> = ({ }: ILogoProps) => {
+const Logo: FC<ILogoProps> = ({width }: ILogoProps) => {
 	return (
-		<Icon component={() => (<img  src="/bee-logo.svg"  width={35}/>)} />
+		<Icon component={() => (<img  src="/bee-logo.svg"  width={width}/>)} />
 	);
 }
 

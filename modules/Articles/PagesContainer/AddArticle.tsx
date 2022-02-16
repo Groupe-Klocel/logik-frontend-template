@@ -1,10 +1,8 @@
 import { HeaderContent } from '@components';
-import { Layout } from 'antd';
 import { AddArticleForm } from 'modules/Articles/Forms/AddArticleForm';
 import { addArticleRoutes } from 'modules/Articles/Static/articlesRoutes';
 import useTranslation from 'next-translate/useTranslation';
 import { FC } from 'react';
-import styled from 'styled-components';
 
 export interface IAddArticleProps {
 

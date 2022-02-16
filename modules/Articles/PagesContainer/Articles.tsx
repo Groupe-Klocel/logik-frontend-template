@@ -8,13 +8,10 @@ import { ArticlesList } from 'modules/Articles/Elements/ArticlesList';
 import { articlesSubRoutes } from 'modules/Articles/Static/articlesRoutes';
 import useTranslation from 'next-translate/useTranslation';
 import { FC, useCallback, useState, useEffect } from 'react';
-import styled from 'styled-components';
 import { HeaderContent } from '@components';
 
 
-export interface IArticlesProps {
-
-}
+export interface IArticlesProps {}
 
 const Articles: FC<IArticlesProps> = ({ }: IArticlesProps) => {
 	let { t } = useTranslation()

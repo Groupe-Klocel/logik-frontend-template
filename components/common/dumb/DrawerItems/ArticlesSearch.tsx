@@ -26,13 +26,9 @@ const ArticlesSearch: FC<IArticlesSearchProps> = ({ form }: IArticlesSearchProps
 		});
 	}
 
-	const layout = {
-		labelCol: { span: 8 },
-		wrapperCol: { span: 16 },
-	};
 
 	const tailLayout = {
-		wrapperCol: { offset: 8, span: 16 },
+		wrapperCol: { span: 14, offset: 4 },
 	};
 
 
@@ -50,11 +46,11 @@ const ArticlesSearch: FC<IArticlesSearchProps> = ({ form }: IArticlesSearchProps
 
 	return (
 		<>
-			<Form {...layout} form={form} name="control-hooks">
+			<Form form={form} name="control-hooks">
 				<Form.Item {...tailLayout}>
 					<Space>
 						<Button htmlType="button" onClick={onReset}>
-							Reset
+							{t('actions:reset')}
 						</Button>
 					</Space>
 				</Form.Item>
@@ -69,16 +65,13 @@ const ArticlesSearch: FC<IArticlesSearchProps> = ({ form }: IArticlesSearchProps
 					/>
 
 				</Form.Item>
-				<Form.Item name="name" label={t('forms:name')} >
+				<Form.Item name="name" label={t('common:name')} >
 					<Input />
 				</Form.Item>
 				<Form.Item name="additionalDescription" label={t('common:additionalDescription')} >
 					<Input />
 				</Form.Item>
 				<Form.Item name="code" label={t('forms:code')} >
-					<Input />
-				</Form.Item>
-				<Form.Item name="status" label={t('forms:status')} >
 					<Input />
 				</Form.Item>
 

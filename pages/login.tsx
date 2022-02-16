@@ -8,7 +8,6 @@ type PageComponent = FC & { layout: typeof AuthLayout }
 const LoginPage: PageComponent = () => {
 	return (
 		<>
-			<AppHead title="Bee V2" />
 			<LoginForm />
 		</>
 	)

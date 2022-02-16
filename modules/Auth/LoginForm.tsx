@@ -33,55 +33,58 @@ export const LoginForm: FC<ILoginFormProps> = ({ }: ILoginFormProps) => {
 
 
 	return (
-		<WrapperLogin>
-			<Logo />
-			<WelcomeText>
-				{welcome} Bee V2
-			</WelcomeText>
-			<StyledForm
-				form={form}
-				name="login"
-				onFinish={onFinish}
-				autoComplete="off"
-				scrollToFirstError
-			>
-				<Form.Item
-					name="username"
-					rules={[{ required: true, message: errorMessageUsername }]}
-				>
-					<Input prefix={<UserOutlined />} placeholder={username} />
-				</Form.Item>
-				<Form.Item
-					name="password"
-					rules={[{ required: true, message: errorMessagePassword }]}
-				>
-					<Input
-						prefix={<LockOutlined />}
-						type="password"
-						placeholder={password}
-					/>
-				</Form.Item>
-				<Form.Item
-					name="workspaceId"
-					rules={[{ required: true, message: errorMessagePassword }]}
-				>
-					<Input
-						type="text"
-						placeholder={workspace}
-					/>
-				</Form.Item>
-				<Form.Item>
-					<a href="">
-						{forgotPassword}
-					</a>
-				</Form.Item>
+		<div >
+			<WrapperLogin className="ant-layout">
+				<Logo width={100} />
 
-				<Form.Item>
-					<Button type="primary" htmlType="submit" >
-						{loginButton}
-					</Button>
-				</Form.Item>
-			</StyledForm>
-		</WrapperLogin>
+				<WelcomeText>
+					{welcome} Bee V2
+				</WelcomeText>
+				<StyledForm
+					form={form}
+					name="login"
+					onFinish={onFinish}
+					autoComplete="off"
+					scrollToFirstError
+				>
+					<Form.Item
+						name="username"
+						rules={[{ required: true, message: errorMessageUsername }]}
+					>
+						<Input prefix={<UserOutlined />} placeholder={username} />
+					</Form.Item>
+					<Form.Item
+						name="password"
+						rules={[{ required: true, message: errorMessagePassword }]}
+					>
+						<Input
+							prefix={<LockOutlined />}
+							type="password"
+							placeholder={password}
+						/>
+					</Form.Item>
+					<Form.Item
+						name="workspaceId"
+						rules={[{ required: true, message: errorMessagePassword }]}
+					>
+						<Input
+							type="text"
+							placeholder={workspace}
+						/>
+					</Form.Item>
+					<Form.Item>
+						<a href="">
+							{forgotPassword}
+						</a>
+					</Form.Item>
+
+					<Form.Item>
+						<Button type="primary" htmlType="submit" >
+							{loginButton}
+						</Button>
+					</Form.Item>
+				</StyledForm>
+			</WrapperLogin>
+		</div>
 	);
 }

@@ -25,9 +25,8 @@ export interface IArticlesListProps {
 const ArticlesList = ({ searchCriteria }: IArticlesListProps) => {
 	const { t } = useTranslation()
 
-	// Local State init 
 	const [articles, setArticles] = useState<IArticles | undefined>(undefined)
-
+	
 	const [pagination, setPagination] = useState<IPagination>({
 		total: undefined,
 		current: DEFAULT_PAGE_NUMBER,
@@ -64,60 +63,50 @@ const ArticlesList = ({ searchCriteria }: IArticlesListProps) => {
 			title: t("common:name"),
 			dataIndex: 'name',
 			key: 'name',
-			index: 0,
 		},
 		{
 			title: t("common:additionalDescription"),
 			dataIndex: 'additionalDescription',
 			key: 'additionalDescription',
-			index: 1,
 		},
 		{
 			title: t("forms:code"),
 			dataIndex: 'code',
 			key: 'code',
-			index: 2,
 		},
 		{
 			title: t("common:status"),
 			dataIndex: 'status',
 			key: 'status',
-			index: 3,
 		},
 		{
 			title: t("common:length"),
 			dataIndex: 'length',
 			key: 'length',
-			index: 4,
 		},
 		{
 			title: t("common:width"),
 			dataIndex: 'width',
 			key: 'width',
-			index: 5,
 		},
 		{
 			title: t("common:height"),
 			dataIndex: 'height',
 			key: 'height',
-			index: 6,
 		},
 		{
 			title: t("forms:baseUnitWeight"),
 			dataIndex: 'baseUnitWeight',
 			key: 'baseUnitWeight',
-			index: 7,
 		},
 		{
 			title: t("forms:boxWeight"),
 			dataIndex: 'boxWeight',
 			key: 'boxWeight',
-			index: 8,
 		},
 		{
 			title: t("actions:actions"),
 			key: 'actions',
-			index: 9,
 			render: (record: { id: string }) => (
 				<Space>
 					<LinkButton icon={<EyeTwoTone />} path={pathParams(record.id)} />

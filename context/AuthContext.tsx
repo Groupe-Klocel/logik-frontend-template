@@ -3,7 +3,7 @@ import { LoginMutation, LoginMutationVariables, useLoginMutation } from 'generat
 import { GraphQLClient } from 'graphql-request';
 import { useRouter } from 'next/router';
 import React, { createContext, FC, useContext, useEffect, useState, useCallback } from 'react';
-
+import useTranslation from 'next-translate/useTranslation';
 
 interface IAuthContext {
 	isAuthenticated: boolean;
@@ -19,6 +19,8 @@ const AuthContext = createContext<IAuthContext>(undefined!);
 
 export const AuthProvider: FC<OnlyChildrenType> = ({ children }: OnlyChildrenType) => {
 
+	let { t } = useTranslation()
+
 	const graphqlClient = new GraphQLClient(process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT as string);
 
 	const router = useRouter()
@@ -31,11 +33,8 @@ export const AuthProvider: FC<OnlyChildrenType> = ({ children }: OnlyChildrenTyp
 		async function loadUserFromCookie() {
 			const token = cookie.get('token')
 			if (token) {
-				console.log("Got a token in the cookie, let's see if it is valid")
 				await setHeader(token)
-				console.log("client", graphqlRequestClient)
 				const user = decodeJWT(token)
-				console.log(user)
 				if (user) setUser(user);
 			}
 			setLoading(false)
@@ -46,19 +45,17 @@ export const AuthProvider: FC<OnlyChildrenType> = ({ children }: OnlyChildrenTyp
 	const { mutate } = useLoginMutation<Error>(graphqlRequestClient, {
 		onSuccess: (data: LoginMutation, _variables: LoginMutationVariables, _context: unknown) => {
 			if (data?.login?.accessToken) {
-				console.log("Got token", data.login.accessToken)
 				cookie.set('token', data.login.accessToken)
 				// Set Bearer JWT token to the header for future request
 				setHeader(data.login.accessToken)
 				const user = decodeJWT(data.login.accessToken)
 				setUser(user)
 				router.push('/')
-				console.log("Got user", user)
-				showSuccess('You are now login')
+				showSuccess(t('messages:login-success'))
 			}
 		},
 		onError: (error) => {
-			showError('There is an error with your credentials')
+			showError('messages:error-login')
 		},
 	})
 

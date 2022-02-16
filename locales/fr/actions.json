@@ -1,5 +1,5 @@
 {
-	"action": "Action",
+  
 	"actions": "Actions",
 	"add": "Ajouter",
 	"add-a": "Ajouter un {{name}}",
@@ -13,6 +13,7 @@
 	"add-user": "Ajouter Utilisateur",
 	"add-your": "Ajouter votre {{name}}",
 	"add2": "Ajouter {{name}}",
+	"back-step":"Etape précédente",
 	"cancel": "Annuler",
 	"collapse-menu": "Fermer Menu",
 	"dark-mode": "Mode Dark",
@@ -22,6 +23,7 @@
 	"fixed": "Fixe",
 	"login": "Connexion",
 	"print": "Imprimer",
+	"next-step":"Etape suivante",
 	"reset": "Réinitialiser",
 	"save": "Enregistrer",
 	"search": "Rechercher",

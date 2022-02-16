@@ -54,7 +54,7 @@ export const articlesSubRoutes = [...articlesRoutes,
 export const addArticleRoutes = [...articlesSubRoutes,
   {
     path:'/add-article',
-    breadcrumbName: 'menu:add-article',
+    breadcrumbName: 'actions:add-article',
   }
 ]
 

@@ -8,5 +8,7 @@
 	"please-select": "Veuillez sélectionner {{name}}",
 	"please-select-a": "Veuillez sélectionner un {{name}}",
 	"please-select-an": "Veuillez sélectionner un {{name}}",
-	"please-select-your": "Veuillez sélectionner votre {{name}}"
+	"please-select-your": "Veuillez sélectionner votre {{name}}",
+	"login-success": "Vous êtes maintenant connecté",
+	"error-login": "Il y a un problème avec vos identifiants"
 }

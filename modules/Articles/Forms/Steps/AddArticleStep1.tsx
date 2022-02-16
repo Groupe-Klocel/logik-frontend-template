@@ -16,10 +16,10 @@ const AddArticleStep1: FC<IAddArticleStep1Props> = ({ }: IAddArticleStep1Props) 
 
 	const selectCompany = t('common:company')
 	const selectCompanyPlaceholder = t('messages:please-select', { name: t('common:company') })
-	const status = t('forms:status')
+	const status = t('common:status')
 	const errorMessageEmptyInput = t('messages:error-message-empty-input')
 	const description = t('common:description')
-	const additionalDescription = t('common:additional-description')
+	const additionalDescription = t('common:additionalDescription')
 
 	// END TEXTS TRANSLATION
 

@@ -86,7 +86,7 @@ const Header: FC = () => {
 	return (
 		<StyledHeader>
 			<Row wrap={false} align='middle'>
-				<StyledCol flex="10vw"><Logo /></StyledCol>
+				<StyledCol flex="10vw"><Logo width={35} /></StyledCol>
 				<StyledCol flex="0 1 auto" offset={8} >
 					<ProfileMenu username={user.username} profileMenu={profileMenuList} />
 				</StyledCol>
