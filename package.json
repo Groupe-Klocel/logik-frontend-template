@@ -29,7 +29,7 @@
         "graphql": "^16.0.1",
         "graphql-request": "^3.6.1",
         "js-cookie": "^3.0.1",
-        "next": "12.0.7",
+        "next": "12.0.9",
         "next-compose-plugins": "^2.2.1",
         "next-plugin-antd-less": "^1.8.0",
         "next-translate": "^1.2.0",
