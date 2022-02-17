@@ -44,12 +44,16 @@ const TableFilter: FC<ITableFilterProps> = forwardRef(({ columnsToFilter, visibl
 			setShowKeys(keys)
 			setFixedKeys([])
 			setCurrentFilteredColumns(columns)
-		}
+		},
 	}));
 
 
 	useEffect(() => {
-		onShowChange(showKeys);
+		if(showKeys.length ===1 && showKeys[0] === "actions"){
+			setShowKeys(visibleKeys)
+			onShowChange(visibleKeys);
+		} else	onShowChange(showKeys);
+
 		return () => { };
 	}, [onShowChange, showKeys]);
 

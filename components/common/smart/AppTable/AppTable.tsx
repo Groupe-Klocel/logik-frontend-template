@@ -1,10 +1,10 @@
-import { SettingOutlined, FileExcelOutlined , DeleteOutlined} from '@ant-design/icons';
-import { TableFilter, WrapperStickyActions , PageTableContentWrapper} from '@components';
-import { getKeys, setCustomColumnsProps, cookie, checkKeyPresenceInArray ,showError } from '@helpers';
+import { SettingOutlined, FileExcelOutlined, DeleteOutlined } from '@ant-design/icons';
+import { TableFilter, WrapperStickyActions, PageTableContentWrapper } from '@components';
+import { getKeys, setCustomColumnsProps, cookie, checkKeyPresenceInArray, showError } from '@helpers';
 import { Space, Button, Table } from 'antd';
 import { useDrawerDispatch } from 'context/DrawerContext';
 import useTranslation from 'next-translate/useTranslation';
-import { FC, useCallback, useEffect, useState, useRef , Key} from 'react';
+import { FC, useCallback, useEffect, useState, useRef, Key } from 'react';
 
 export interface IAppTableProps {
 	// Refactory to strong type
@@ -30,19 +30,19 @@ const AppTable: FC<IAppTableProps> = ({ data, columns, scroll, isLoading, pagina
 	const allColumnKeys = getKeys(columns)
 
 	const initialState = cookie.get(`${type}-filter-table`) ? JSON.parse(cookie.get(`${type}-filter-table`)!) : null
-	
+
 	if (initialState) {
-		const  storedArray =  initialState.filteredColumns
-		const inputArray  = checkKeyPresenceInArray('render', columns)
-		let updatedStoredArr = storedArray.map((a:any) => {
+		const storedArray = initialState.filteredColumns
+		const inputArray = checkKeyPresenceInArray('render', columns)
+		let updatedStoredArr = storedArray.map((a: any) => {
 			const exists = inputArray.find(b => a.key == b.key);
-  		if (exists) {
+			if (exists) {
 				a.render = exists.render;
-  		}
-  		return a;
+			}
+			return a;
 		});
 	}
-	
+
 	const [onSave, setOnSave] = useState<boolean>(false)
 	const [visibleColumnKeys, setVisibleColumnKeys] = useState<Key[]>(initialState !== null ? initialState.visibleColumnKeys : allColumnKeys);
 	const [fixedColumns, setFixedColumns] = useState<Key[]>(initialState !== null ? initialState.fixedColumns : []);
@@ -80,6 +80,7 @@ const AppTable: FC<IAppTableProps> = ({ data, columns, scroll, isLoading, pagina
 		filterDrawerRef!.current.reset(allColumnKeys, setCustomColumnsProps(columns))
 	}
 
+	
 	const handleSave = () => {
 		setOnSave(true)
 		closeDrawer()
@@ -87,11 +88,11 @@ const AppTable: FC<IAppTableProps> = ({ data, columns, scroll, isLoading, pagina
 
 	// give a deleteMutation to app table to know what data type should be deleted
 	const deleteRecords = () => {
-		if(Array.isArray(selectedRowKeys) && selectedRowKeys.length){
+		if (Array.isArray(selectedRowKeys) && selectedRowKeys.length) {
 			// trigger delete mutation
 			alert(`delete articles ${JSON.stringify(selectedRowKeys)}`);
 		} else {
-			showError(t('messages:action-impossible', {name: t('actions:delete')}))
+			showError(t('messages:action-impossible', { name: t('actions:delete') }))
 		}
 	}
 
@@ -158,7 +159,7 @@ const AppTable: FC<IAppTableProps> = ({ data, columns, scroll, isLoading, pagina
 			<WrapperStickyActions>
 				<Space direction="vertical">
 					<Button
-					 	type="primary"
+						type="primary"
 						icon={<SettingOutlined />}
 						onClick={() => openFilterDrawer()}
 					/>
@@ -166,7 +167,7 @@ const AppTable: FC<IAppTableProps> = ({ data, columns, scroll, isLoading, pagina
 					<Button icon={<FileExcelOutlined />} onClick={() => alert("trigger export")} />
 				</Space>
 			</WrapperStickyActions>
-			<Table 
+			<Table
 				rowKey='id'
 				columns={tableColumns}
 				dataSource={data}
