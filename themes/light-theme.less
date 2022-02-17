@@ -5,8 +5,14 @@
 @import '~antd/lib/style/themes/default.less';
 
 // These are shared variables that can be extracted to their own file
-@primary-color: #001529;
+@primary-color: #093452;
+@secondary-color: #fadb14;
+
+@bg-dark-9: #262630;
+@bg-dark-10: #170000;
+@bg-test: #ff1313;
 @border-radius-base: 4px;
+@txtw: #fff;
 
 // Background color for `<body>`
 @body-background: #fff;
@@ -14,14 +20,26 @@
 @component-background: #fff;
 
 // Layout
-@layout-body-background: #f0f2f5;
-@layout-header-background: #fadb14;
+@layout-body-background: @component-background;
+@layout-header-background: @secondary-color;
 @layout-header-height: 64px;
 @layout-header-padding: 0 50px;
-@layout-sider-background: @component-background;
+@layout-sider-background: @bg-dark-9;
 @layout-trigger-background-light: @component-background;
-@layout-trigger-background: #fadb14;
+@layout-trigger-background: @secondary-color;
 
-// PageHeader
+// Menu
+@dropdown-selected-color: @primary-color;
+@dropdown-menu-submenu-disabled-bg: @bg-dark-9;
+@menu-inline-submenu-bg: @bg-dark-10;
+@menu-item-color: @txtw;
+
+@menu-bg: @bg-dark-9;
+@menu-popup-bg: @bg-dark-9;
+@menu-inline-submenu-bg: @bg-dark-10;
+@menu-highlight-color: @txtw;
+@menu-highlight-danger-color: #901dfc;
+@menu-item-active-bg: @primary-color;
+
 // ---
 //@page-header-back-color: #000;

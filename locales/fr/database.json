@@ -1,0 +1,19 @@
+{
+    "id": "ID",
+    "name": "Name",
+    "baseUnitWeight": "Base Unit Weight",
+	"box-to-be-replenish": "Box To Be Replenish",
+	"boxQuantity": "Box Quantity",
+	"boxWeight": "Base Weight",
+	"code": "Code",
+	"date-type": "Date Type",
+	"family": "Family",
+	"grouping-id": "Grouping Id",
+	"permanent-product": "Permanent Product",
+	"piece-to-be-replenish": "Piece To Be Replenish",
+	"product-description": "Product Description",
+	"reference": "Reference",
+	"rot": "Rot",
+	"step":"Step",
+	"sub-family": "Sub family"
+}

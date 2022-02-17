@@ -2,6 +2,7 @@ import { LanguageType } from 'helpers/types/types';
 import Cookies from 'js-cookie';
 import { isoLangs } from './constant';
 import { message } from 'antd';
+import { CheckCircleOutlined, CloseSquareOutlined } from '@ant-design/icons';
 
 export const cookie = Cookies.withAttributes({ path: '/', secure: true, sameSite: 'strict' })
 
@@ -191,7 +192,8 @@ const showWarning = (messageText: string) => {
 //     }
 //   }
 // };
+
 const checkKeyPresenceInArray = (key:any,array:any[]) => array.filter((o) => o.hasOwnProperty(key));
 
-export { setCustomColumnsProps, checkKeyPresenceInArray, setIndex, addKeyValueToArrayObject, addKeyValueToObject, showSuccess, showWarning, showInfo, showError, decodeJWT, getMenuState, getDefaultTheme, isCookieSet, stringToBoolean, isServer, isVisible, getLanguageNameFromISOCode, getKeys };
+export {  setCustomColumnsProps, checkKeyPresenceInArray, setIndex, addKeyValueToArrayObject, addKeyValueToObject, showSuccess, showWarning, showInfo, showError, decodeJWT, getMenuState, getDefaultTheme, isCookieSet, stringToBoolean, isServer, isVisible, getLanguageNameFromISOCode, getKeys };
 

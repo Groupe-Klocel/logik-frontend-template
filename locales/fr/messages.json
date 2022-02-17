@@ -10,5 +10,6 @@
 	"please-select-an": "Veuillez sélectionner un {{name}}",
 	"please-select-your": "Veuillez sélectionner votre {{name}}",
 	"login-success": "Vous êtes maintenant connecté",
+	"filter_only_actions_visibles_warn": "Vous n'êtes pas autorisé à afficher uniquement la colonne des actions",
 	"error-login": "Il y a un problème avec vos identifiants"
 }

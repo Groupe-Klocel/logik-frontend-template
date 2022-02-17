@@ -1,5 +1,5 @@
 import { EyeInvisibleTwoTone, EyeTwoTone } from '@ant-design/icons';
-import { isVisible, MyColumnType, setCustomColumnsProps, cookie } from '@helpers';
+import { isVisible, MyColumnType, setCustomColumnsProps, showWarning } from '@helpers';
 import { Button, Space, Table } from 'antd';
 import Text from 'antd/lib/typography/Text';
 import useTranslation from 'next-translate/useTranslation';
@@ -31,7 +31,7 @@ const SortableBody = SortableContainer((props: JSX.IntrinsicAttributes & ClassAt
 
 
 
-const TableFilter: FC<ITableFilterProps> = forwardRef(({ columnsToFilter, visibleKeys, onShowChange, onSort, cookieKey , fixKeys, onFixed}: ITableFilterProps, ref) => {
+const TableFilter: FC<ITableFilterProps> = forwardRef(({ columnsToFilter, visibleKeys, onShowChange, onSort, cookieKey, fixKeys, onFixed }: ITableFilterProps, ref) => {
 	let { t } = useTranslation()
 
 
@@ -49,10 +49,11 @@ const TableFilter: FC<ITableFilterProps> = forwardRef(({ columnsToFilter, visibl
 
 
 	useEffect(() => {
-		if(showKeys.length ===1 && showKeys[0] === "actions"){
+		if (showKeys.length === 1 && showKeys[0] === "actions") {
 			setShowKeys(visibleKeys)
-			onShowChange(visibleKeys);
-		} else	onShowChange(showKeys);
+			onShowChange(visibleKeys)
+			showWarning(t('messages:filter_only_actions_visibles_warn'))
+		} else onShowChange(showKeys);
 
 		return () => { };
 	}, [onShowChange, showKeys]);

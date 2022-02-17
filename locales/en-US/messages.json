@@ -10,5 +10,6 @@
 	"please-select-an": "Please select a {{name}}",
 	"please-select-your": "Please select your {{name}}",
 	"login-success": "You are now login",
+	"filter_only_actions_visibles_warn": "You are not allow to only show actions column",
 	"error-login": "There is an error with your credentials"
 }

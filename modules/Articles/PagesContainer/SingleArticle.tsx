@@ -1,5 +1,5 @@
 import { LinkButton, ScreenSpin, DetailsList } from '@components';
-import { Layout, Space } from 'antd';
+import { Layout, Space, Button } from 'antd';
 import { articlesSubRoutes } from 'modules/Articles/Static/articlesRoutes';
 import useTranslation from 'next-translate/useTranslation';
 import { GetArticleByIdQuery, useGetArticleByIdQuery } from 'generated/graphql';
@@ -46,8 +46,8 @@ const SingleArticle: FC<ISingleArticleProps> = ({ aId, router }: ISingleArticleP
 				onBack={() => router.back()}
 				actionsRight={
 					<Space>
-						<LinkButton title={t('actions:edit')} path='/edit' type='primary' />
-						<LinkButton title={t('actions:delete')} path='/delete' />
+						<Button  onClick={()=> alert("Edit")} type='primary'>{t('actions:edit')}</Button>
+						<Button  onClick={()=> alert("Delete")}>{t('actions:delete')}</Button>
 					</Space>
 				} />
 			<StyledPageContent>
