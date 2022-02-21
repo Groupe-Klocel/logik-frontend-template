@@ -1,0 +1,15 @@
+{
+	"action-impossible": "{{name}} n'est pas possible, vous devez sélectionner un enregistrement",
+	"error-message-empty-input": "Le champ ne doit pas être vide",
+	"error-message-requiered-input": "Le champ est requis",
+	"please-enter-a": "Veuillez remplir un {{name}}",
+	"please-fill-your": "Veuillez remplir votre {{name}}",
+	"please-input": "Veuillez saisir {{name}}",
+	"please-select": "Veuillez sélectionner {{name}}",
+	"please-select-a": "Veuillez sélectionner un {{name}}",
+	"please-select-an": "Veuillez sélectionner un {{name}}",
+	"please-select-your": "Veuillez sélectionner votre {{name}}",
+	"login-success": "Vous êtes maintenant connecté",
+	"filter_only_actions_visibles_warn": "Vous n'êtes pas autorisé à afficher uniquement la colonne des actions",
+	"error-login": "Il y a un problème avec vos identifiants"
+}

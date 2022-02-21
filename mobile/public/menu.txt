@@ -1,0 +1,60 @@
+Administration
+ - Access management
+		-Users
+		-Groups
+		-Rights
+			-Group of users
+			-Groups rights
+			-Users rights
+ - Feedbacks
+		-Movements config.
+		-Status configuration
+		-Force reading
+		-Force writing
+		-Send stock image
+ - Parameters
+
+ Configuration
+	-Companies
+	-Cartography
+		-Blocs
+		-Locations
+	-Stock Statuses
+	-Articles
+		-Features
+			-Features Codes
+			-Features Types
+		-Articles
+		-Barcodes
+		-Blacklisted Barcodes
+		-Sets
+	-Packagings
+	-Carriers
+	-Equipments
+	-Return Codes
+
+Stock management
+	-Contents
+	-Purchase Orders
+	-Goods Ins
+	-Movements
+	-Cycle Counts
+		-Cycle Counts
+		-Recommended
+
+Preparation management
+	-Deliveries
+	-Boxes
+	-Rounds
+	-Box checking
+	-Manual recubing
+	-Loads
+
+Monitoring
+	-Dashboard
+	-Warning
+	-Status Evolutions
+
+About
+
+Déconnexion

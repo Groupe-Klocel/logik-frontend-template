@@ -1,0 +1,5 @@
+mutation Login($username: String!, $password: String!, $workspaceId: ID!) {
+    login(username: $username, password: $password, workspaceId: $workspaceId) {
+        accessToken
+    }
+}
