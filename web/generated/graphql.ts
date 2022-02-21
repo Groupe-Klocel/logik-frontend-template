@@ -541,6 +541,35 @@ export type GetArticleByIdQuery = {
         | undefined;
 };
 
+export type CreateArticleMutationVariables = Exact<{
+    input: CreateArticleInput;
+}>;
+
+export type CreateArticleMutation = {
+    __typename?: 'Mutation';
+    createArticle: {
+        __typename?: 'Article';
+        id?: number | null | undefined;
+        accountId: number;
+        companyId: number;
+        status: number;
+        code: string;
+        name: string;
+        length: number;
+        width: number;
+        height: number;
+        baseUnitWeight: number;
+        boxWeight: number;
+        boxQuantity: number;
+        baseUnitPicking: boolean;
+        boxPicking: boolean;
+        cubingType: number;
+        permanentProduct: boolean;
+        additionalDescription?: string | null | undefined;
+        supplierName?: string | null | undefined;
+    };
+};
+
 export type GetAllBarcodesQueryVariables = Exact<{
     filters?: InputMaybe<BarcodeSearchFilters>;
     orderBy?: InputMaybe<Scalars['String']>;
@@ -595,6 +624,28 @@ export type GetBarcodeByIdQuery = {
           }
         | null
         | undefined;
+};
+
+export type CreateBarcodeMutationVariables = Exact<{
+    input: CreateBarcodeInput;
+}>;
+
+export type CreateBarcodeMutation = {
+    __typename?: 'Mutation';
+    createBarcode: {
+        __typename?: 'Barcode';
+        id?: number | null | undefined;
+        accountId: number;
+        companyId: number;
+        articleId: number;
+        name: string;
+        rotation: string;
+        preparationMode: number;
+        flagDouble: number;
+        supplierName?: string | null | undefined;
+        supplierArticleCode?: string | null | undefined;
+        quantity?: number | null | undefined;
+    };
 };
 
 export type LoginMutationVariables = Exact<{
@@ -714,6 +765,51 @@ export const useGetArticleByIdQuery = <TData = GetArticleByIdQuery, TError = unk
         ),
         options
     );
+export const CreateArticleDocument = `
+    mutation CreateArticle($input: CreateArticleInput!) {
+  createArticle(input: $input) {
+    id
+    accountId
+    companyId
+    status
+    code
+    name
+    length
+    width
+    height
+    baseUnitWeight
+    boxWeight
+    boxQuantity
+    baseUnitPicking
+    boxPicking
+    cubingType
+    permanentProduct
+    additionalDescription
+    supplierName
+  }
+}
+    `;
+export const useCreateArticleMutation = <TError = unknown, TContext = unknown>(
+    client: GraphQLClient,
+    options?: UseMutationOptions<
+        CreateArticleMutation,
+        TError,
+        CreateArticleMutationVariables,
+        TContext
+    >,
+    headers?: RequestInit['headers']
+) =>
+    useMutation<CreateArticleMutation, TError, CreateArticleMutationVariables, TContext>(
+        'CreateArticle',
+        (variables?: CreateArticleMutationVariables) =>
+            fetcher<CreateArticleMutation, CreateArticleMutationVariables>(
+                client,
+                CreateArticleDocument,
+                variables,
+                headers
+            )(),
+        options
+    );
 export const GetAllBarcodesDocument = `
     query GetAllBarcodes($filters: BarcodeSearchFilters, $orderBy: String, $page: Int!, $itemsPerPage: Int!) {
   barcodes(
@@ -788,6 +884,44 @@ export const useGetBarcodeByIdQuery = <TData = GetBarcodeByIdQuery, TError = unk
             variables,
             headers
         ),
+        options
+    );
+export const CreateBarcodeDocument = `
+    mutation CreateBarcode($input: CreateBarcodeInput!) {
+  createBarcode(input: $input) {
+    id
+    accountId
+    companyId
+    articleId
+    name
+    rotation
+    preparationMode
+    flagDouble
+    supplierName
+    supplierArticleCode
+    quantity
+  }
+}
+    `;
+export const useCreateBarcodeMutation = <TError = unknown, TContext = unknown>(
+    client: GraphQLClient,
+    options?: UseMutationOptions<
+        CreateBarcodeMutation,
+        TError,
+        CreateBarcodeMutationVariables,
+        TContext
+    >,
+    headers?: RequestInit['headers']
+) =>
+    useMutation<CreateBarcodeMutation, TError, CreateBarcodeMutationVariables, TContext>(
+        'CreateBarcode',
+        (variables?: CreateBarcodeMutationVariables) =>
+            fetcher<CreateBarcodeMutation, CreateBarcodeMutationVariables>(
+                client,
+                CreateBarcodeDocument,
+                variables,
+                headers
+            )(),
         options
     );
 export const LoginDocument = `

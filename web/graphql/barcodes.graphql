@@ -39,3 +39,19 @@ query GetBarcodeById($id: Int!) {
         quantity
     }
 }
+
+mutation CreateBarcode($input: CreateBarcodeInput!) {
+    createBarcode(input: $input) {
+        id
+        accountId
+        companyId
+        articleId
+        name
+        rotation
+        preparationMode
+        flagDouble
+        supplierName
+        supplierArticleCode
+        quantity
+    }
+}

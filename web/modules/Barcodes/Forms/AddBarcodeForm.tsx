@@ -1,8 +1,5 @@
 import { WrapperForm } from '@components';
-import { Button, Col, Form, Input, Row, Select } from 'antd';
-import { articlesData } from 'fake-data/articles';
-import { companiesData } from 'fake-data/companies';
-import { featureTypesData } from 'fake-data/features';
+import { Button, Col, Input, Row, Select, Form } from 'antd';
 import useTranslation from 'next-translate/useTranslation';
 import { FC, useState } from 'react';
 
@@ -12,121 +9,122 @@ export interface IAddBarcodeFormProps {}
 export const AddBarcodeForm: FC<IAddBarcodeFormProps> = ({}: IAddBarcodeFormProps) => {
     let { t } = useTranslation('common');
 
+    // TEXTS TRANSLATION ( REFACTORING POSSIBLE / EXPORT / DON'T KNOW YET )
+    const selectArticle = t('common:article');
+    const selectArticlePlaceholder = t('messages:please-select', { name: t('common:article') });
+    const name = t('common:name');
+    const rotation = t('d:rotation');
+    const supplierName = t('d:supplierName');
+    const supplierArticleCode = t('d:supplierArticleCode');
+    const companyId = t('d:companyId');
+    const articleId = t('d:articleId');
+    const accountId = t('d:accountId');
+    const preparationMode = t('d:preparationMode');
+    const flagDouble = t('d:flagDouble');
+    const quantity = t('d:quantity');
+    const errorMessageEmptyInput = t('messages:error-message-empty-input');
+    const articleSelectErrorMessage = `${t('messages:error-message-select-1')} ${t(
+        'common:article'
+    )}`;
+
+    // END TEXTS TRANSLATION
+
     // TYPED SAFE ALL
+    const [form] = Form.useForm();
 
-    const [newBarcodeData, setNewBarcodeData] = useState('');
-
-    // Call api to create new group
     const onFinish = (values: any) => {
-        console.log('Success:', values);
-        setNewBarcodeData(values);
-    };
-
-    const onFinishFailed = (errorInfo: any) => {
-        console.log('Failed:', errorInfo);
+        console.log('Received values of form: ', values);
+        form.validateFields()
+            .then(() => {
+                // Here make api call of something else
+                console.log('Received values of form: ', values);
+                alert(JSON.stringify(form.getFieldsValue(), null, 4));
+            })
+            .catch((err) => console.log(err));
     };
 
     return (
         <WrapperForm>
-            <Form
-                name="basic"
-                layout="vertical"
-                onFinish={onFinish}
-                onFinishFailed={onFinishFailed}
-                autoComplete="off"
-                scrollToFirstError
-            >
-                <Form.Item
-                    label={t('select-company')}
-                    name="company"
-                    hasFeedback
-                    rules={[
-                        {
-                            required: true,
-                            message: `${t('error-message-select-1')} ${t('company')}`
-                        }
-                    ]}
-                >
-                    <Select placeholder={`${t('error-message-select-1')} ${t('company')}`}>
-                        {companiesData.map((company: any) => (
-                            <Option key={company.id} value={company.name}>
-                                {company.name}
-                            </Option>
-                        ))}
-                    </Select>
-                </Form.Item>
+            <Form form={form} onFinish={onFinish} scrollToFirstError>
+                <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
+                    <Col xs={24} xl={12}>
+                        <Form.Item
+                            label={name}
+                            name="name"
+                            rules={[{ required: true, message: errorMessageEmptyInput }]}
+                        >
+                            <Input />
+                        </Form.Item>
 
-                <Form.Item
-                    label={t('select-article')}
-                    name="select-article"
-                    hasFeedback
-                    rules={[
-                        {
-                            required: true,
-                            message: `${t('error-message-select-1')} ${t('article')}`
-                        }
-                    ]}
-                >
-                    <Select placeholder={`${t('error-message-select-1')} ${t('article')}`}>
-                        {articlesData.map((article: any) => (
-                            <Option key={article.id} value={article.name}>
-                                {article.name}
-                            </Option>
-                        ))}
-                    </Select>
-                </Form.Item>
+                        <Form.Item
+                            label={accountId}
+                            name="accountId"
+                            rules={[{ required: true, message: errorMessageEmptyInput }]}
+                        >
+                            <Input type="number" />
+                        </Form.Item>
 
-                <Form.Item
-                    label={t('barcode')}
-                    name="barcode"
-                    rules={[{ required: true, message: `${t('error-message-empty-input')}` }]}
-                >
-                    <Input />
-                </Form.Item>
+                        <Form.Item
+                            label={companyId}
+                            name="companyId"
+                            rules={[{ required: true, message: errorMessageEmptyInput }]}
+                        >
+                            <Input type="number" />
+                        </Form.Item>
 
-                <Form.Item label={t('supplier')} name="supplier">
-                    <Input />
-                </Form.Item>
+                        {/* <Form.Item
+                            label={selectArticle}
+                            name="articleId"
+                            hasFeedback
+                            rules={[{ required: true, message: articleSelectErrorMessage }]}
+                        >
+                            <Select placeholder={selectArticlePlaceholder}>
+                                {companiesData.map((article: any) => (
+                                    <Option key={article.id} value={article.name}>
+                                        {article.name}
+                                    </Option>
+                                ))}
+                            </Select>
+                        </Form.Item> */}
 
-                <Form.Item label={t('supplier-article-code')} name="supplier-article-code">
-                    <Input />
-                </Form.Item>
-
-                <Form.Item label={t('quantity')} name="quantity">
-                    <Input type="number" />
-                </Form.Item>
-
-                <Form.Item label={t('select-rotation')} name="select-rotation" hasFeedback>
-                    <Select placeholder={`${t('error-message-select-1')} ${t('rotation')}`}>
-                        {featureTypesData.map((feature: any) => (
-                            <Option key={feature.id} value={feature.name}>
-                                {feature.name}
-                            </Option>
-                        ))}
-                    </Select>
-                </Form.Item>
-
-                <Form.Item
-                    label={t('select-preparation-mode')}
-                    name="select-preparation-mode"
-                    hasFeedback
-                >
-                    <Select placeholder={`${t('error-message-select-1')} ${t('preparation-mode')}`}>
-                        {featureTypesData.map((feature: any) => (
-                            <Option key={feature.id} value={feature.name}>
-                                {feature.name}
-                            </Option>
-                        ))}
-                    </Select>
-                </Form.Item>
-
-                <Row>
-                    <Col span={24} style={{ textAlign: 'right' }}>
-                        <Button type="primary" htmlType="submit">
-                            {t('submit')}
-                        </Button>
+                        <Form.Item
+                            label={articleId}
+                            name="articleId"
+                            rules={[{ required: true, message: errorMessageEmptyInput }]}
+                        >
+                            <Input type="number" />
+                        </Form.Item>
+                        <Form.Item
+                            label={rotation}
+                            name="rotation"
+                            rules={[{ required: true, message: errorMessageEmptyInput }]}
+                        >
+                            <Input />
+                        </Form.Item>
+                    </Col>
+                    <Col xs={24} xl={12}>
+                        <Form.Item label={flagDouble} name="flagDouble">
+                            <Input type="number" />
+                        </Form.Item>
+                        <Form.Item label={preparationMode} name="preparationMode">
+                            <Input type="number" />
+                        </Form.Item>
+                        <Form.Item label={supplierName} name="supplierName">
+                            <Input />
+                        </Form.Item>
+                        <Form.Item label={supplierArticleCode} name="supplierArticleCode">
+                            <Input />
+                        </Form.Item>
+                        <Form.Item label={quantity} name="quantity">
+                            <Input type="number" />
+                        </Form.Item>
                     </Col>
                 </Row>
+                <div style={{ textAlign: 'center' }}>
+                    <Button type="primary" htmlType="submit">
+                        {t('actions:submit')}
+                    </Button>
+                </div>
             </Form>
         </WrapperForm>
     );

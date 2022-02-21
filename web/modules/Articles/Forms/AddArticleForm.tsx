@@ -30,7 +30,8 @@ export const AddArticleForm: FC<IAddArticleFormProps> = ({}: IAddArticleFormProp
         setCurrent(current - 1);
     };
 
-    const handleSubmit = () => {
+    const onFinish = (values: any) => {
+        console.log('Received values of form: ', values);
         form.validateFields()
             .then(() => {
                 // Here make api call of something else
@@ -59,34 +60,36 @@ export const AddArticleForm: FC<IAddArticleFormProps> = ({}: IAddArticleFormProp
         <WrapperForm>
             <StepsPanel currentStep={current} steps={steps} />
             <WrapperStepContent>
-                <Form form={form}>
+                <Form form={form} onFinish={onFinish} scrollToFirstError>
                     {current === 0 && <AddArticleStep1 />}
 
                     {current === 1 && <AddArticleStep2 />}
 
                     {current === 2 && <AddArticleStep3 />}
+
+                    {current === 0 ? (
+                        <div style={{ textAlign: 'center' }}>
+                            <Button onClick={handleClickNext}>{t('actions:next-step')}</Button>
+                        </div>
+                    ) : current > 0 && current < steps.length - 1 ? (
+                        <div style={{ textAlign: 'center' }}>
+                            <Space>
+                                <Button onClick={handleClickBack}>{t('actions:back-step')}</Button>
+                                <Button onClick={handleClickNext}>{t('actions:next-step')}</Button>
+                            </Space>
+                        </div>
+                    ) : (
+                        <div style={{ textAlign: 'center' }}>
+                            <Space>
+                                <Button onClick={handleClickBack}>{t('actions:back-step')}</Button>
+                                <Button type="primary" htmlType="submit">
+                                    {t('actions:submit')}
+                                </Button>
+                            </Space>
+                        </div>
+                    )}
                 </Form>
             </WrapperStepContent>
-
-            {current === 0 ? (
-                <div style={{ textAlign: 'center' }}>
-                    <Button onClick={handleClickNext}>{t('actions:next-step')}</Button>
-                </div>
-            ) : current > 0 && current < steps.length - 1 ? (
-                <div style={{ textAlign: 'center' }}>
-                    <Space>
-                        <Button onClick={handleClickBack}>{t('actions:back-step')}</Button>
-                        <Button onClick={handleClickNext}>{t('actions:next-step')}</Button>
-                    </Space>
-                </div>
-            ) : (
-                <div style={{ textAlign: 'center' }}>
-                    <Space>
-                        <Button onClick={handleClickBack}>{t('actions:back-step')}</Button>
-                        <Button onClick={handleSubmit}>{t('actions:submit')}</Button>
-                    </Space>
-                </div>
-            )}
         </WrapperForm>
     );
 };

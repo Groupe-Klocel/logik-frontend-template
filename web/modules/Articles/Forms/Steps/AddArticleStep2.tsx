@@ -1,10 +1,7 @@
 import { Form, Input, Button, Row, Col, Checkbox, Select } from 'antd';
 import { FC } from 'react';
 import useTranslation from 'next-translate/useTranslation';
-import { companiesData } from 'fake-data/companies';
-import { featureTypesData } from 'fake-data/features';
 
-const { Option } = Select;
 interface IAddArticleStep2Props {}
 
 const AddArticleStep2: FC<IAddArticleStep2Props> = () => {
@@ -12,82 +9,103 @@ const AddArticleStep2: FC<IAddArticleStep2Props> = () => {
 
     // TEXTS TRANSLATION ( REFACTORING POSSIBLE / EXPORT / DON'T KNOW YET )
 
-    const selectCompany = t('common:company');
-    const selectCompanyPlaceholder = t('messages:please-select', { name: t('common:company') });
-    const status = t('forms:status');
     const errorMessageEmptyInput = t('messages:error-message-empty-input');
-    const description = t('common:description');
-    const additionalDescription = t('common:additional-description');
-    const length = t('common:length');
-    const width = t('common:width');
-    const height = t('common:height');
-    const baseUnitWeight = t('forms:base-unit-weight');
-    const baseWeight = t('forms:base-weight');
-    const boxQuantity = t('forms:box-quantity');
-    const family = t('forms:family');
-    const subFamily = t('forms:sub-family');
-    const groupingId = t('forms:grouping-id');
-    const pieceToBeReplenish = t('forms:piece-to-be-replenish');
-    const boxToBeReplenish = t('forms:box-to-be-replenish');
-    const selectFeatureType = t('menu:feature-type');
-    const selectFeatureTypePlaceholder = t('messages:please-select', {
-        name: t('menu:feature-type')
-    });
-    const permanentProduct = t('forms:permanent-product');
-    const submit = t('actions:submit');
-    const next = t('actions:next');
+    const length = t('d:length');
+    const width = t('d:width');
+    const height = t('d:height');
+    const baseUnitWeight = t('d:baseUnitWeight');
+    const boxWeight = t('d:boxWeight');
+    const boxQuantity = t('d:boxQuantity');
+
+    const baseUnitPicking = t('d:baseUnitPicking');
+    const boxPicking = t('d:boxPicking');
+    const cubingType = t('d:cubingType');
+    const baseUnitPrice = t('d:baseUnitPrice');
+    const baseUnitRotation = t('d:baseUnitRotation');
+    const boxRotation = t('d:boxRotation');
 
     // END TEXTS TRANSLATION
 
     return (
-        <>
-            <Form.Item
-                label={length}
-                name="length"
-                rules={[{ required: true, message: errorMessageEmptyInput }]}
-            >
-                <Input type="number" />
-            </Form.Item>
+        <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
+            <Col xs={24} xl={12}>
+                <Form.Item
+                    label={length}
+                    name="length"
+                    rules={[{ required: true, message: errorMessageEmptyInput }]}
+                >
+                    <Input type="number" />
+                </Form.Item>
 
-            <Form.Item
-                label={width}
-                name="width"
-                rules={[{ required: true, message: errorMessageEmptyInput }]}
-            >
-                <Input type="number" />
-            </Form.Item>
+                <Form.Item
+                    label={width}
+                    name="width"
+                    rules={[{ required: true, message: errorMessageEmptyInput }]}
+                >
+                    <Input type="number" />
+                </Form.Item>
 
-            <Form.Item
-                label={height}
-                name="height"
-                rules={[{ required: true, message: errorMessageEmptyInput }]}
-            >
-                <Input type="number" />
-            </Form.Item>
-            <Form.Item
-                label={baseUnitWeight}
-                name="base-unit-weight"
-                rules={[{ required: true, message: errorMessageEmptyInput }]}
-            >
-                <Input type="number" />
-            </Form.Item>
+                <Form.Item
+                    label={height}
+                    name="height"
+                    rules={[{ required: true, message: errorMessageEmptyInput }]}
+                >
+                    <Input type="number" />
+                </Form.Item>
+                <Form.Item
+                    label={baseUnitWeight}
+                    name="baseUnitWeight"
+                    rules={[{ required: true, message: errorMessageEmptyInput }]}
+                >
+                    <Input type="number" />
+                </Form.Item>
 
-            <Form.Item
-                label={baseWeight}
-                name="base-weight"
-                rules={[{ required: true, message: errorMessageEmptyInput }]}
-            >
-                <Input type="number" />
-            </Form.Item>
+                <Form.Item
+                    label={boxWeight}
+                    name="boxWeight"
+                    rules={[{ required: true, message: errorMessageEmptyInput }]}
+                >
+                    <Input type="number" />
+                </Form.Item>
 
-            <Form.Item
-                label={boxQuantity}
-                name="box-quantity"
-                rules={[{ required: true, message: errorMessageEmptyInput }]}
-            >
-                <Input type="number" />
-            </Form.Item>
-        </>
+                <Form.Item
+                    label={boxQuantity}
+                    name="boxQuantity"
+                    rules={[{ required: true, message: errorMessageEmptyInput }]}
+                >
+                    <Input type="number" />
+                </Form.Item>
+            </Col>
+            <Col xs={24} xl={12}>
+                <Form.Item name="boxPicking">
+                    <Checkbox>{boxPicking}</Checkbox>
+                </Form.Item>
+
+                <Form.Item name="baseUnitPicking">
+                    <Checkbox>{baseUnitPicking}</Checkbox>
+                </Form.Item>
+
+                <Form.Item
+                    label={cubingType}
+                    name="cubingType"
+                    rules={[{ required: true, message: errorMessageEmptyInput }]}
+                >
+                    <Input type="number" />
+                </Form.Item>
+
+                <Form.Item label={baseUnitPrice} name="baseUnitPrice">
+                    <Input type="number" />
+                </Form.Item>
+
+                <Form.Item label={baseUnitRotation} name="baseUnitRotation">
+                    <Input />
+                </Form.Item>
+
+                <Form.Item label={boxRotation} name="boxRotation">
+                    <Input />
+                </Form.Item>
+            </Col>
+        </Row>
     );
 };
 

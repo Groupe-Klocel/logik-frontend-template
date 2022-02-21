@@ -1,4 +1,9 @@
-query GetAllArticles($filters: ArticleSearchFilters, $orderBy: String, $page: Int!, $itemsPerPage: Int!) {
+query GetAllArticles(
+    $filters: ArticleSearchFilters
+    $orderBy: String
+    $page: Int!
+    $itemsPerPage: Int!
+) {
     articles(filters: $filters, orderBy: $orderBy, page: $page, itemsPerPage: $itemsPerPage) {
         count
         itemsPerPage
@@ -22,7 +27,6 @@ query GetAllArticles($filters: ArticleSearchFilters, $orderBy: String, $page: In
             permanentProduct
             additionalDescription
             supplierName
-          
         }
     }
 }
@@ -59,9 +63,32 @@ query GetArticleById($id: Int!) {
         subfamily
         groupingId
         barcodes {
-              id
-              name
-              flagDouble
+            id
+            name
+            flagDouble
         }
+    }
+}
+
+mutation CreateArticle($input: CreateArticleInput!) {
+    createArticle(input: $input) {
+        id
+        accountId
+        companyId
+        status
+        code
+        name
+        length
+        width
+        height
+        baseUnitWeight
+        boxWeight
+        boxQuantity
+        baseUnitPicking
+        boxPicking
+        cubingType
+        permanentProduct
+        additionalDescription
+        supplierName
     }
 }

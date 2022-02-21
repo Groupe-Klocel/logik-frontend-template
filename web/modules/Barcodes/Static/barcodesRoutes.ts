@@ -13,7 +13,7 @@ export const addBarcodeRoutes = [
     ...barcodesRoutes,
     {
         path: '/add-barcode',
-        breadcrumbName: 'menu:add-barcode'
+        breadcrumbName: 'actions:add-barcode'
     }
 ];
 
