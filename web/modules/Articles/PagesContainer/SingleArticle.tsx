@@ -12,57 +12,65 @@ import { HeaderContent } from '@components';
 import { showError } from '@helpers';
 
 const StyledPageContent = styled(Layout.Content)`
-	margin: 15px 30px ;
-	padding: 20px
-`
+    margin: 15px 30px;
+    padding: 20px;
+`;
 
 export interface ISingleArticleProps {
-	id: string | any;
-	router: NextRouter;
+    id: string | any;
+    router: NextRouter;
 }
 
 const SingleArticle: FC<ISingleArticleProps> = ({ id, router }: ISingleArticleProps) => {
-	let { t } = useTranslation()
+    let { t } = useTranslation();
 
-	const { graphqlRequestClient } = useAuth()
+    const { graphqlRequestClient } = useAuth();
 
-	const { isLoading, data, error } = useGetArticleByIdQuery<GetArticleByIdQuery, Error>(graphqlRequestClient, {
-		id: parseInt(id),
-	})
+    const { isLoading, data, error } = useGetArticleByIdQuery<GetArticleByIdQuery, Error>(
+        graphqlRequestClient,
+        {
+            id: parseInt(id)
+        }
+    );
 
-	if (error) {
-		showError(t('messages:error-getting-data'))
-	}
+    if (error) {
+        showError(t('messages:error-getting-data'));
+    }
 
-	console.log(data)
+    console.log(data);
 
-	const breadsCrumb = [...articlesSubRoutes, {
-		breadcrumbName: `${id}`,
-	}
-	]
+    const breadsCrumb = [
+        ...articlesSubRoutes,
+        {
+            breadcrumbName: `${id}`
+        }
+    ];
 
-	return (
-		<>
-			<HeaderContent
-				title={`${t('common:article')} ${id}`}
-				routes={breadsCrumb}
-				onBack={() => router.back()}
-				actionsRight={
-					<Space>
-						<Button onClick={() => alert("Edit")} type='primary'>{t('actions:edit')}</Button>
-						<Button onClick={() => alert("Delete")}>{t('actions:delete')}</Button>
-					</Space>
-				} />
-			<StyledPageContent>
-				{data?.article && !isLoading ?
-					<ArticleDetails details={data?.article} />
-					:
-					<ScreenSpin />
-				}
-			</StyledPageContent>
-		</>
-	);
-}
+    return (
+        <>
+            <HeaderContent
+                title={`${t('common:article')} ${id}`}
+                routes={breadsCrumb}
+                onBack={() => router.back()}
+                actionsRight={
+                    <Space>
+                        <Button onClick={() => alert('Edit')} type="primary">
+                            {t('actions:edit')}
+                        </Button>
+                        <Button onClick={() => alert('Delete')}>{t('actions:delete')}</Button>
+                    </Space>
+                }
+            />
+            <StyledPageContent>
+                {data?.article && !isLoading ? (
+                    <ArticleDetails details={data?.article} />
+                ) : (
+                    <ScreenSpin />
+                )}
+            </StyledPageContent>
+        </>
+    );
+};
 
 SingleArticle.displayName = 'SingleArticle';
 

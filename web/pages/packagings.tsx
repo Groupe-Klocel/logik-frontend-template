@@ -1,19 +1,19 @@
-import { AppHead } from '@components'
-import MainLayout from 'components/layouts/MainLayout'
-import { Packagings } from 'modules/Packagings/PagesContainer/Packagings'
-import { FC } from 'react'
+import { AppHead } from '@components';
+import MainLayout from 'components/layouts/MainLayout';
+import { Packagings } from 'modules/Packagings/PagesContainer/Packagings';
+import { FC } from 'react';
 
-type PageComponent = FC & { layout: typeof MainLayout }
+type PageComponent = FC & { layout: typeof MainLayout };
 
 const PackagingsPage: PageComponent = () => {
-	return (
-		<>
-			<AppHead title="Bee V2" />
-			<Packagings />
-		</>
-	)
-}
+    return (
+        <>
+            <AppHead title="Bee V2" />
+            <Packagings />
+        </>
+    );
+};
 
-PackagingsPage.layout = MainLayout
+PackagingsPage.layout = MainLayout;
 
-export default PackagingsPage
+export default PackagingsPage;

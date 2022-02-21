@@ -1,19 +1,19 @@
-import { AppHead } from '@components'
-import MainLayout from 'components/layouts/MainLayout'
-import { FC } from 'react'
-import { Blocs } from '../modules/Cartography/PagesContainer/Blocs'
+import { AppHead } from '@components';
+import MainLayout from 'components/layouts/MainLayout';
+import { FC } from 'react';
+import { Blocs } from '../modules/Cartography/PagesContainer/Blocs';
 
-type PageComponent = FC & { layout: typeof MainLayout }
+type PageComponent = FC & { layout: typeof MainLayout };
 
 const BlocsPage: PageComponent = () => {
-	return (
-		<>
-			<AppHead title="Bee V2" />
-			<Blocs />
-		</>
-	)
-}
+    return (
+        <>
+            <AppHead title="Bee V2" />
+            <Blocs />
+        </>
+    );
+};
 
-BlocsPage.layout = MainLayout
+BlocsPage.layout = MainLayout;
 
-export default BlocsPage
+export default BlocsPage;

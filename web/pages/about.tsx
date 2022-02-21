@@ -1,17 +1,17 @@
-import { Welcome } from '@components'
-import MainLayout from 'components/layouts/MainLayout'
-import { FC } from 'react'
+import { Welcome } from '@components';
+import MainLayout from 'components/layouts/MainLayout';
+import { FC } from 'react';
 
-type PageComponent = FC & { layout: typeof MainLayout }
+type PageComponent = FC & { layout: typeof MainLayout };
 
 const AboutPage: PageComponent = () => {
-	return (
-		<>
-			<Welcome text='You are on About Page' />
-		</>
-	)
-}
+    return (
+        <>
+            <Welcome text="You are on About Page" />
+        </>
+    );
+};
 
-AboutPage.layout = MainLayout
+AboutPage.layout = MainLayout;
 
-export default AboutPage
+export default AboutPage;

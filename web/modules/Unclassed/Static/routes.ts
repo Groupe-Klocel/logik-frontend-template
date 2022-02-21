@@ -1,21 +1,19 @@
-
-// Breadcrumb Name should be the same as in the translation file 
+// Breadcrumb Name should be the same as in the translation file
 
 export const returnCodesRoutes = [
-  {
-    breadcrumbName: 'menu:return-codes',
-  }
-]
+    {
+        breadcrumbName: 'menu:return-codes'
+    }
+];
 
 export const equipmentsRoutes = [
-  {
-    breadcrumbName: 'menu:equipments',
-  }
-]
+    {
+        breadcrumbName: 'menu:equipments'
+    }
+];
 
 export const carriersRoutes = [
-  {
-    breadcrumbName: 'menu:carriers',
-  }
-]
-
+    {
+        breadcrumbName: 'menu:carriers'
+    }
+];

@@ -4,33 +4,26 @@ import { useAppDispatch, useAppState } from 'context/AppContext';
 import { FC, useCallback } from 'react';
 
 const MenuSwitch: FC = () => {
+    const { isSettingMenuCollapsed } = useAppState();
 
-	const { isSettingMenuCollapsed } = useAppState()
+    const dispatchMenu = useAppDispatch();
 
-	const dispatchMenu = useAppDispatch()
+    const switchMenuSetting = useCallback(
+        () =>
+            dispatchMenu({
+                type: 'SWITCH_MENU_SETTING',
+                isSettingMenuCollapsed: !isSettingMenuCollapsed
+            }),
+        [dispatchMenu, isSettingMenuCollapsed]
+    );
 
-	const switchMenuSetting = useCallback(
-		() => dispatchMenu({
-			type: 'SWITCH_MENU_SETTING',
-			isSettingMenuCollapsed: !isSettingMenuCollapsed
-		}),
-		[dispatchMenu, isSettingMenuCollapsed]
-	)
+    const onCollapseMenu = () => {
+        switchMenuSetting();
+    };
 
-	const onCollapseMenu = () => {
-		switchMenuSetting()
-	}
-
-
-	return (
-		<Switch
-			checked={isSettingMenuCollapsed}
-			onChange={onCollapseMenu}
-			defaultChecked
-		/>
-	);
-}
+    return <Switch checked={isSettingMenuCollapsed} onChange={onCollapseMenu} defaultChecked />;
+};
 
 MenuSwitch.displayName = 'MenuSwitch';
 
-export { MenuSwitch }
+export { MenuSwitch };

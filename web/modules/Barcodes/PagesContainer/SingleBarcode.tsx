@@ -12,56 +12,64 @@ import { HeaderContent } from '@components';
 import { showError } from '@helpers';
 
 const StyledPageContent = styled(Layout.Content)`
-	margin: 15px 30px ;
-	padding: 20px
-`
+    margin: 15px 30px;
+    padding: 20px;
+`;
 
 export interface ISingleBarcodeProps {
-	id: string | any;
-	router: NextRouter;
+    id: string | any;
+    router: NextRouter;
 }
 
 const SingleBarcode: FC<ISingleBarcodeProps> = ({ id, router }: ISingleBarcodeProps) => {
-	let { t } = useTranslation()
-	const { graphqlRequestClient } = useAuth()
+    let { t } = useTranslation();
+    const { graphqlRequestClient } = useAuth();
 
-	const { isLoading, data, error } = useGetBarcodeByIdQuery<GetBarcodeByIdQuery, Error>(graphqlRequestClient, {
-		id: parseInt(id),
-	})
+    const { isLoading, data, error } = useGetBarcodeByIdQuery<GetBarcodeByIdQuery, Error>(
+        graphqlRequestClient,
+        {
+            id: parseInt(id)
+        }
+    );
 
-	if (error) {
-		showError(t('messages:error-getting-data'))
-	}
+    if (error) {
+        showError(t('messages:error-getting-data'));
+    }
 
-	console.log(data)
+    console.log(data);
 
-	const breadsCrumb = [...barcodesRoutes, {
-		breadcrumbName: `${id}`,
-	}
-	]
+    const breadsCrumb = [
+        ...barcodesRoutes,
+        {
+            breadcrumbName: `${id}`
+        }
+    ];
 
-	return (
-		<>
-			<HeaderContent
-				title={`${t('common:barcode')} ${id}`}
-				routes={breadsCrumb}
-				onBack={() => router.back()}
-				actionsRight={
-					<Space>
-						<Button onClick={() => alert("Edit")} type='primary'>{t('actions:edit')}</Button>
-						<Button onClick={() => alert("Delete")}>{t('actions:delete')}</Button>
-					</Space>
-				} />
-		<StyledPageContent>
-				{data?.barcode && !isLoading ?
-					<BarcodeDetails details={data?.barcode} />
-					:
-					<ScreenSpin />
-				}
-			</StyledPageContent>
-		</>
-	);
-}
+    return (
+        <>
+            <HeaderContent
+                title={`${t('common:barcode')} ${id}`}
+                routes={breadsCrumb}
+                onBack={() => router.back()}
+                actionsRight={
+                    <Space>
+                        <Button onClick={() => alert('Edit')} type="primary">
+                            {t('actions:edit')}
+                        </Button>
+                        <Button onClick={() => alert('Delete')}>{t('actions:delete')}</Button>
+                    </Space>
+                }
+            />
+            <StyledPageContent>
+                {data?.barcode && !isLoading ? (
+                    <BarcodeDetails details={data?.barcode} />
+                ) : (
+                    <ScreenSpin />
+                )}
+            </StyledPageContent>
+        </>
+    );
+};
 
 SingleBarcode.displayName = 'SingleBarcode';
 

@@ -1,20 +1,19 @@
-import { AppHead } from '@components'
-import MainLayout from 'components/layouts/MainLayout'
-import { FC } from 'react'
-import { AddBarcode } from '../modules/Barcodes/PagesContainer/AddBarcode'
+import { AppHead } from '@components';
+import MainLayout from 'components/layouts/MainLayout';
+import { FC } from 'react';
+import { AddBarcode } from '../modules/Barcodes/PagesContainer/AddBarcode';
 
-type PageComponent = FC & { layout: typeof MainLayout }
+type PageComponent = FC & { layout: typeof MainLayout };
 
 const AddBarcodePage: PageComponent = () => {
+    return (
+        <>
+            <AppHead title="Bee V2" />
+            <AddBarcode />
+        </>
+    );
+};
 
-	return (
-		<>
-			<AppHead title="Bee V2" />
-			<AddBarcode />
-		</>
-	)
-}
+AddBarcodePage.layout = MainLayout;
 
-AddBarcodePage.layout = MainLayout
-
-export default AddBarcodePage
+export default AddBarcodePage;

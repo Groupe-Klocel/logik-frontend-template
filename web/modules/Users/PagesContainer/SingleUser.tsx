@@ -1,39 +1,46 @@
-import { FC } from 'react'
-import { Layout } from 'antd'
-import { HeaderContent ,LinkButton } from '@components'
-import { usersRoutes } from 'modules/Users/Static/usersRoutes'
+import { FC } from 'react';
+import { Layout } from 'antd';
+import { HeaderContent, LinkButton } from '@components';
+import { usersRoutes } from 'modules/Users/Static/usersRoutes';
 import useTranslation from 'next-translate/useTranslation';
-import styled from 'styled-components'
+import styled from 'styled-components';
 import { UserDetails } from '../Elements/UserDetails';
 
 const StyledPageContent = styled(Layout.Content)`
-	margin: 15px 30px ;
-`
+    margin: 15px 30px;
+`;
 
 export interface ISingleUserProps {
-	username: string
-	userId: string
+    username: string;
+    userId: string;
 }
 
 export const SingleUser: FC<ISingleUserProps> = ({ username, userId }: ISingleUserProps) => {
-	let { t } = useTranslation('common')
-	
-	// NEED TO FETCH SPECIFIC USER DATA BY ID TO DISPLAY USER DATA 
+    let { t } = useTranslation('common');
 
-	const singleUserRoutes = [...usersRoutes, {
-		breadcrumbName: username
-	}]
+    // NEED TO FETCH SPECIFIC USER DATA BY ID TO DISPLAY USER DATA
 
-	return (
-		<>
-			<HeaderContent title={username} routes={singleUserRoutes} actionsRight={
-				<>
-					<LinkButton title={t('new-user')} path='/new-user' />
-				</>
-			} />
-			<StyledPageContent>
-				<UserDetails />
-			</StyledPageContent>
-		</>
-	);
-}
+    const singleUserRoutes = [
+        ...usersRoutes,
+        {
+            breadcrumbName: username
+        }
+    ];
+
+    return (
+        <>
+            <HeaderContent
+                title={username}
+                routes={singleUserRoutes}
+                actionsRight={
+                    <>
+                        <LinkButton title={t('new-user')} path="/new-user" />
+                    </>
+                }
+            />
+            <StyledPageContent>
+                <UserDetails />
+            </StyledPageContent>
+        </>
+    );
+};
