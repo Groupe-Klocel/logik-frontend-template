@@ -187,5 +187,3 @@ const TableFilter: FC<ITableFilterProps> = forwardRef(({ columnsToFilter, visibl
 TableFilter.displayName = 'TableFilter'
 
 export { TableFilter };
-
-

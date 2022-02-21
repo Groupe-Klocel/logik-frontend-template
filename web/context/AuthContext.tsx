@@ -2,7 +2,7 @@ import { cookie, decodeJWT, OnlyChildrenType, showError, showSuccess } from '@he
 import { LoginMutation, LoginMutationVariables, useLoginMutation } from 'generated/graphql';
 import { GraphQLClient } from 'graphql-request';
 import { useRouter } from 'next/router';
-import React, { createContext, FC, useContext, useEffect, useState, useCallback } from 'react';
+import React, { createContext, FC, useContext, useEffect, useState } from 'react';
 import useTranslation from 'next-translate/useTranslation';
 
 interface IAuthContext {
@@ -74,6 +74,7 @@ export const AuthProvider: FC<OnlyChildrenType> = ({ children }: OnlyChildrenTyp
 	const setHeader = (token: string) => {
 		const requestHeader = {
 			"X-API-Seed": "foo",
+			"X-API-fake": "f",
 			authorization: `Bearer ${token}`,
 		};
 		const graphqlClientWithHeader = new GraphQLClient(process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT as string, {

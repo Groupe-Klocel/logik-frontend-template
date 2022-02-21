@@ -1,22 +1,22 @@
+import { FC, useCallback, useState, useEffect } from 'react';
 import { SearchOutlined } from '@ant-design/icons';
 import { HeaderContent, LinkButton } from '@components'
-import { Space, Form , Button} from 'antd';
-import { ArticlesSearch } from 'components/common/smart/DrawerItems/ArticlesSearch';
-import { useDrawerDispatch } from 'context/DrawerContext';
-import { ArticlesList } from 'modules/Articles/Elements/ArticlesList';
-import { articlesSubRoutes } from 'modules/Articles/Static/articlesRoutes';
+import { barcodesRoutes } from 'modules/Barcodes/Static/barcodesRoutes'
 import useTranslation from 'next-translate/useTranslation';
-import { FC, useCallback, useState, useEffect } from 'react';
+import { BarcodesList } from 'modules/Barcodes/Elements/BarcodesList'
+import { Space, Form, Button } from 'antd';
+import { BarcodesSearch } from 'components/common/smart/DrawerItems/BarcodesSearch';
+import { useDrawerDispatch } from 'context/DrawerContext';
 
+export interface IBarcodesProps {
 
-export interface IArticlesProps {}
+}
 
-const Articles: FC<IArticlesProps> = ({ }: IArticlesProps) => {
+const Barcodes: FC<IBarcodesProps> = ({ }: IBarcodesProps) => {
 	let { t } = useTranslation()
-
-	const [search, setSearch] = useState({});
-
+	
 	//	SEARCH DRAWER 
+	const [search, setSearch] = useState({});
 	const [formSearch] = Form.useForm();
 
 	const dispatchDrawer = useDrawerDispatch();
@@ -28,7 +28,7 @@ const Articles: FC<IArticlesProps> = ({ }: IArticlesProps) => {
 			comfirmButtonTitle: t('actions:search'),
 			comfirmButton: true,
 			submit: true,
-			content: <ArticlesSearch form={formSearch} />,
+			content: <BarcodesSearch form={formSearch} />,
 			onComfirm: () => handleSubmit(),
 		}),
 		[dispatchDrawer]
@@ -49,23 +49,22 @@ const Articles: FC<IArticlesProps> = ({ }: IArticlesProps) => {
 			})
 			.catch((err) => console.log(err));
 	};
- 
+
 	return (
 		<>
-			<HeaderContent title={t('common:articles')} routes={articlesSubRoutes}
-			actionsRight={
-				<Space>
-					<Button icon={< SearchOutlined />} onClick={() => openSearchDrawer()} />
-					<LinkButton title={t('actions:add2', { name: t('common:article') })} path='/add-article' type='primary' />
-				</Space>
+			<HeaderContent title={t('common:barcodes')} routes={barcodesRoutes} actionsRight={
+			<Space>
+				<Button icon={< SearchOutlined />} onClick={() => openSearchDrawer()} />
+				<LinkButton title={t('actions:add2', { name: t('common:barcode') })} path='/add-barcode' type='primary' />
+			</Space>
 			} />
-				<ArticlesList searchCriteria={search} />
+				<BarcodesList searchCriteria={search}/>
 		</>
 	);
 }
 
-Articles.displayName = 'Articles';
+Barcodes.displayName = 'Barcodes';
 
-export { Articles };
+export { Barcodes };
 
 	

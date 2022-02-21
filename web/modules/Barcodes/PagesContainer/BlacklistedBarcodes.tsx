@@ -1,11 +1,8 @@
 import { FC } from 'react'
-import { Layout } from 'antd'
-import { HeaderContent } from '@components'
-import { blacklistedBarcodesRoutes } from 'modules/Articles/Static/articlesRoutes'
+import { HeaderContent, LinkButton } from '@components'
+import { blacklistedBarcodesRoutes } from 'modules/Barcodes/Static/barcodesRoutes'
 import useTranslation from 'next-translate/useTranslation';
-import { BlacklistedBarcodesList } from 'modules/Articles/Elements/BlacklistedBarcodesList'
-import styled from 'styled-components'
-import { LinkButton } from 'components/common/dumb/Buttons/LinkButton';
+import { BlacklistedBarcodesList } from 'modules/Barcodes/Elements/BlacklistedBarcodesList'
 
 export interface IBlacklistedBarcodesProps {
 

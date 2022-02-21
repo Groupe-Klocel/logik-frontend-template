@@ -14,12 +14,12 @@ const AddArticleStep1: FC<IAddArticleStep1Props> = ({ }: IAddArticleStep1Props) 
 
 	// TEXTS TRANSLATION ( REFACTORING POSSIBLE / EXPORT / DON'T KNOW YET )
 
-	const selectCompany = t('common:company')
-	const selectCompanyPlaceholder = t('messages:please-select', { name: t('common:company') })
-	const status = t('common:status')
+	const selectCompany = t('d:company')
+	const selectCompanyPlaceholder = t('messages:please-select', { name: t('d:company') })
+	const status = t('d:status')
 	const errorMessageEmptyInput = t('messages:error-message-empty-input')
-	const description = t('common:description')
-	const additionalDescription = t('common:additionalDescription')
+	const description = t('d:description')
+	const additionalDescription = t('d:additionalDescription')
 
 	// END TEXTS TRANSLATION
 
@@ -49,7 +49,7 @@ const AddArticleStep1: FC<IAddArticleStep1Props> = ({ }: IAddArticleStep1Props) 
 
 			<Form.Item
 				label={additionalDescription}
-				name="additional-description"
+				name="additionalDescription"
 			>
 				<Input />
 			</Form.Item>

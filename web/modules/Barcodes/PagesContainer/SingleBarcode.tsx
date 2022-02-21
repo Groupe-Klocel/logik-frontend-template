@@ -1,9 +1,9 @@
 import { ScreenSpin } from '@components';
 import { Layout, Space, Button } from 'antd';
-import { articlesSubRoutes } from 'modules/Articles/Static/articlesRoutes';
-import { ArticleDetails } from 'modules/Articles/Elements/ArticleDetails';
+import { barcodesRoutes } from 'modules/Barcodes/Static/barcodesRoutes';
 import useTranslation from 'next-translate/useTranslation';
-import { GetArticleByIdQuery, useGetArticleByIdQuery } from 'generated/graphql';
+import { GetBarcodeByIdQuery, useGetBarcodeByIdQuery } from 'generated/graphql';
+import { BarcodeDetails } from 'modules/Barcodes/Elements/BarcodeDetails';
 import { useAuth } from 'context/AuthContext';
 import { FC } from 'react';
 import { NextRouter } from 'next/router';
@@ -16,17 +16,16 @@ const StyledPageContent = styled(Layout.Content)`
 	padding: 20px
 `
 
-export interface ISingleArticleProps {
+export interface ISingleBarcodeProps {
 	id: string | any;
 	router: NextRouter;
 }
 
-const SingleArticle: FC<ISingleArticleProps> = ({ id, router }: ISingleArticleProps) => {
+const SingleBarcode: FC<ISingleBarcodeProps> = ({ id, router }: ISingleBarcodeProps) => {
 	let { t } = useTranslation()
-
 	const { graphqlRequestClient } = useAuth()
 
-	const { isLoading, data, error } = useGetArticleByIdQuery<GetArticleByIdQuery, Error>(graphqlRequestClient, {
+	const { isLoading, data, error } = useGetBarcodeByIdQuery<GetBarcodeByIdQuery, Error>(graphqlRequestClient, {
 		id: parseInt(id),
 	})
 
@@ -36,7 +35,7 @@ const SingleArticle: FC<ISingleArticleProps> = ({ id, router }: ISingleArticlePr
 
 	console.log(data)
 
-	const breadsCrumb = [...articlesSubRoutes, {
+	const breadsCrumb = [...barcodesRoutes, {
 		breadcrumbName: `${id}`,
 	}
 	]
@@ -44,7 +43,7 @@ const SingleArticle: FC<ISingleArticleProps> = ({ id, router }: ISingleArticlePr
 	return (
 		<>
 			<HeaderContent
-				title={`${t('common:article')} ${id}`}
+				title={`${t('common:barcode')} ${id}`}
 				routes={breadsCrumb}
 				onBack={() => router.back()}
 				actionsRight={
@@ -53,9 +52,9 @@ const SingleArticle: FC<ISingleArticleProps> = ({ id, router }: ISingleArticlePr
 						<Button onClick={() => alert("Delete")}>{t('actions:delete')}</Button>
 					</Space>
 				} />
-			<StyledPageContent>
-				{data?.article && !isLoading ?
-					<ArticleDetails details={data?.article} />
+		<StyledPageContent>
+				{data?.barcode && !isLoading ?
+					<BarcodeDetails details={data?.barcode} />
 					:
 					<ScreenSpin />
 				}
@@ -64,6 +63,6 @@ const SingleArticle: FC<ISingleArticleProps> = ({ id, router }: ISingleArticlePr
 	);
 }
 
-SingleArticle.displayName = 'SingleArticle';
+SingleBarcode.displayName = 'SingleBarcode';
 
-export { SingleArticle };
+export { SingleBarcode };

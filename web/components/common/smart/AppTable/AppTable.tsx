@@ -8,24 +8,27 @@ import { FC, useCallback, useEffect, useState, useRef, Key } from 'react';
 
 export interface IAppTableProps {
 	// Refactory to strong type
-	type: string
-	data: Array<any> | undefined,
-	isLoading?: boolean,
-	columns: any[],//need to find what is wrong with this MyColumnType[],
+	type: string;
+	data: Array<any> | undefined;
+	isLoading?: boolean;
+	columns: any[];//need to find what is wrong with this MyColumnType[],
 	scroll?: {
-		x?: number,
-		y?: number,
+		x?: number;
+		y?: number;
 	},
-	pagination?: any
-	setPagination?: any
+	pagination?: any;
+	setPagination?: any;
+	stickyActions?: {
+		export?: boolean;
+		delete?: boolean;
+	} 
 }
 
 
-const AppTable: FC<IAppTableProps> = ({ data, columns, scroll, isLoading, pagination, setPagination, type }) => {
+const AppTable: FC<IAppTableProps> = ({ stickyActions, data, columns, scroll, isLoading, pagination, setPagination, type }) => {
 	let { t } = useTranslation()
 	// get filter from cookies if exist
-
-
+	
 	const filterDrawerRef = useRef() as any | undefined
 	const allColumnKeys = getKeys(columns)
 
@@ -34,15 +37,21 @@ const AppTable: FC<IAppTableProps> = ({ data, columns, scroll, isLoading, pagina
 	if (initialState) {
 		const storedArray = initialState.filteredColumns
 		const inputArray = checkKeyPresenceInArray('render', columns)
+		const titleCheck = checkKeyPresenceInArray('title', columns)
 		let updatedStoredArr = storedArray.map((a: any) => {
 			const exists = inputArray.find(b => a.key == b.key);
+			const titles = titleCheck.find(b => a.key == b.key);
 			if (exists) {
 				a.render = exists.render;
+			}
+			if(titles){
+				a.title = titles.title
 			}
 			return a;
 		});
 	}
-
+	
+	
 	const [onSave, setOnSave] = useState<boolean>(false)
 	const [visibleColumnKeys, setVisibleColumnKeys] = useState<Key[]>(initialState !== null ? initialState.visibleColumnKeys : allColumnKeys);
 	const [fixedColumns, setFixedColumns] = useState<Key[]>(initialState !== null ? initialState.fixedColumns : []);
@@ -50,6 +59,8 @@ const AppTable: FC<IAppTableProps> = ({ data, columns, scroll, isLoading, pagina
 	const [tableColumns, setTableColumns] = useState<any[]>(initialState !== null ? initialState.tableColumns : setCustomColumnsProps(columns));
 
 	const [selectedRowKeys, setSelectedRowKeys] = useState<Key[]>([]);
+	console.log('tableColumns changed: ', tableColumns);
+	console.log('filteredColumns changed: ', filteredColumns);
 
 	const rowSelection = {
 		selectedRowKeys,
@@ -156,15 +167,15 @@ const AppTable: FC<IAppTableProps> = ({ data, columns, scroll, isLoading, pagina
 
 	return (
 		<PageTableContentWrapper>
-			<WrapperStickyActions>
+					<WrapperStickyActions>
 				<Space direction="vertical">
 					<Button
 						type="primary"
 						icon={<SettingOutlined />}
 						onClick={() => openFilterDrawer()}
-					/>
-					<Button icon={<DeleteOutlined />} onClick={deleteRecords} type="primary" danger />
-					<Button icon={<FileExcelOutlined />} onClick={() => alert("trigger export")} />
+						/>
+					{stickyActions!.delete && <Button icon={<DeleteOutlined />} onClick={deleteRecords} type="primary" danger />}
+					{stickyActions!.export &&  <Button icon={<FileExcelOutlined />} onClick={() => alert("trigger export")} /> }
 				</Space>
 			</WrapperStickyActions>
 			<Table
@@ -192,5 +203,11 @@ const AppTable: FC<IAppTableProps> = ({ data, columns, scroll, isLoading, pagina
 
 AppTable.displayName = 'AppTable';
 
-export { AppTable };
+AppTable.defaultProps = {
+	stickyActions: {
+		export: false, 
+		delete: false
+	} 
+};
 
+export { AppTable };

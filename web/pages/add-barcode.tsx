@@ -1,7 +1,7 @@
 import { AppHead } from '@components'
 import MainLayout from 'components/layouts/MainLayout'
 import { FC } from 'react'
-import { AddBarcode } from '../modules/Articles/PagesContainer/AddBarcode'
+import { AddBarcode } from '../modules/Barcodes/PagesContainer/AddBarcode'
 
 type PageComponent = FC & { layout: typeof MainLayout }
 

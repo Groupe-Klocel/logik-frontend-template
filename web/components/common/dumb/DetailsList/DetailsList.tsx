@@ -4,21 +4,29 @@ import { CheckCircleOutlined, CloseSquareOutlined } from '@ant-design/icons';
 import useTranslation from 'next-translate/useTranslation';
 
 export interface IDetailsListProps {
-	details: any
+	details: any;
+	nbColumns?: {
+		xxl?: number;
+		xl?: number;
+		lg?: number;
+		md?: number;
+		sm?: number;
+		xs?: number;
+	}
 }
 
-const DetailsList: FC<IDetailsListProps> = ({ details }: IDetailsListProps) => {
-	let {t} = useTranslation()
-	return (
+const DetailsList: FC<IDetailsListProps> = ({ details, nbColumns }: IDetailsListProps) => {
+	let { t } = useTranslation()
 
+	return (
 		<Descriptions
-			column={{ xxl: 3, xl: 3, lg: 2, md: 2, sm: 2, xs: 1 }}
+			column={nbColumns}
 			size="small"
 			bordered
 		>
 			{
 				Object.keys(details).map((key) => (
-					<Descriptions.Item label={t(`database:${key}`)}>
+					<Descriptions.Item label={t(`d:${key}`)}>
 						{
 							details[key] == true ? <CheckCircleOutlined style={{ color: 'green' }} />
 								: details[key] == false ?
@@ -34,5 +42,15 @@ const DetailsList: FC<IDetailsListProps> = ({ details }: IDetailsListProps) => {
 
 DetailsList.displayName = 'DetailsList'
 
-export { DetailsList };
+DetailsList.defaultProps = {
+	nbColumns: {
+		xxl: 3,
+		xl: 3,
+		lg: 2,
+		md: 2,
+		sm: 2,
+		xs: 1
+	}
+};
 
+export { DetailsList };

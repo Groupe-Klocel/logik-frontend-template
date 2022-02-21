@@ -17,4 +17,3 @@ const ProtectRoute: any | null = ({ children }: OnlyChildrenType) => {
 ProtectRoute.displayName = 'ProtectRoute';
 
 export { ProtectRoute };
-

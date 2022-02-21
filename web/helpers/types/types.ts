@@ -48,6 +48,18 @@ export type DrawerType = {
 	onClose?: Function;
 }
 
+export type PaginationType = {
+	total: number | undefined;
+	current: number;
+	itemsPerPage: number;
+}
+
+export type DataQueryType = {
+	count: number;
+	itemsPerPage: number;
+	results: Array<any>;
+	totalPages: number;
+}
 export type DataFilterType = {
 	key: React.Key;
 	disabled: boolean;
