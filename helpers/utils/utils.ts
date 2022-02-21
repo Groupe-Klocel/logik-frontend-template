@@ -30,6 +30,7 @@ function setIndex(array: Array<any>): Array<any> {
 	return arrayWithIndex
 }
 
+
 // add key pair value to each object in an array
 function addKeyValueToArrayObject(array: Array<any>, key: string, value: any): Array<any> {
 	const newarray = array.map((object: Object) => (
@@ -129,71 +130,9 @@ const showWarning = (messageText: string) => {
 	message.warning(messageText);
 };
 
-
-// export const openDrawer = useCallback(
-//   (variables) => dispatchDrawer({
-//     type: 'OPEN_DRAWER',
-//     title: variables.title,
-//     cancelButtonTitle: variables.cancelButtonTitle,
-//     cancelButton: variables.cancelButton,
-//     content: variables.content,
-//     onCancel: variables.onCancel,
-//   }),
-//   [dispatchDrawer]
-// )
-
-// /**
-//  * @desc get table data as json
-//  * @param data
-//  * @param columns
-//  */
-// const getDataForExport = (data: any[], columns: any[]) => data?.map((record: any) => columns
-// 	.reduce((recordToDownload, column) => (
-// 		{ ...recordToDownload, [column.Header]: record[column.dataIndex] }
-// 	), {}));
-
-// /**
-//  * @desc make csv from given data
-//  * @param rows
-//  * @param filename
-//  */
-//  const createCsv = async (rows: any[], filename: string) => {
-//   const separator: string = ';';
-//   const keys: string[] = Object.keys(rows[0]);
-
-// const csvContent = `${keys.join(separator)}\n${
-//   rows.map((row) => keys.map((k) => {
-//     let cell = row[k] === null || row[k] === undefined ? '' : row[k];
-
-//     cell = cell instanceof Date
-//       ? cell.toLocaleString()
-//       : cell.toString().replace(/"/g, '""');
-
-//     if (cell.search(/("|,|\n)/g) >= 0) {
-//       cell = `"${cell}"`;
-//     }
-//     return cell;
-//   }).join(separator)).join('\n')}`;
-
-// const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-//   if (navigator.msSaveBlob) { // In case of IE 10+
-//     navigator.msSaveBlob(blob, filename);
-//   } else {
-//     const link = document.createElement('a');
-//     if (link.download !== undefined) {
-//       // Browsers that support HTML5 download attribute
-//       const url = URL.createObjectURL(blob);
-//       link.setAttribute('href', url);
-//       link.setAttribute('download', filename);
-//       link.style.visibility = 'hidden';
-//       document.body.appendChild(link);
-//       link.click();
-//       document.body.removeChild(link);
-//     }
-//   }
-// };
+const pathParams = (pathname:string, id: string) => { return { pathname: pathname , query: { id: id } } }
 
 const checkKeyPresenceInArray = (key:any,array:any[]) => array.filter((o) => o.hasOwnProperty(key));
 
-export {  setCustomColumnsProps, checkKeyPresenceInArray, setIndex, addKeyValueToArrayObject, addKeyValueToObject, showSuccess, showWarning, showInfo, showError, decodeJWT, getMenuState, getDefaultTheme, isCookieSet, stringToBoolean, isServer, isVisible, getLanguageNameFromISOCode, getKeys };
+export { pathParams, setCustomColumnsProps, checkKeyPresenceInArray, setIndex, addKeyValueToArrayObject, addKeyValueToObject, showSuccess, showWarning, showInfo, showError, decodeJWT, getMenuState, getDefaultTheme, isCookieSet, stringToBoolean, isServer, isVisible, getLanguageNameFromISOCode, getKeys };
 

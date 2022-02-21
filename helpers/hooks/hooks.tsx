@@ -16,12 +16,12 @@ const useDrawerState = (initialState: { isOpen: boolean; drawerProps: any }) => 
 	return [{ isOpen, drawerProps }, setDrawerState]
 }
 
-const useArticles = (search: any, page: number, itemsPerPage: number) => {
+const useArticles = (search: any, page: number, itemsPerPage: number, sort:string) => {
 	const { graphqlRequestClient } = useAuth()
 
 	const articles = useGetAllArticlesQuery<Partial<GetAllArticlesQuery>, Error>(graphqlRequestClient, {
 		filters: search,
-		orderBy: null,
+		orderBy: sort,
 		page: page,
 		itemsPerPage: itemsPerPage,
 	})

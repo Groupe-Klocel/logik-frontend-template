@@ -1,4 +1,4 @@
-query GetAllArticles($filters: FacetFilters, $orderBy: String, $page: Int!, $itemsPerPage: Int!) {
+query GetAllArticles($filters: ArticleSearchFilters, $orderBy: String, $page: Int!, $itemsPerPage: Int!) {
     articles(filters: $filters, orderBy: $orderBy, page: $page, itemsPerPage: $itemsPerPage) {
         count
         itemsPerPage
@@ -22,11 +22,12 @@ query GetAllArticles($filters: FacetFilters, $orderBy: String, $page: Int!, $ite
             permanentProduct
             additionalDescription
             supplierName
+          
         }
     }
 }
 
-query GetArticleById($id: ID!) {
+query GetArticleById($id: Int!) {
     article(id: $id) {
         accountId
         companyId
@@ -57,5 +58,10 @@ query GetArticleById($id: ID!) {
         family
         subfamily
         groupingId
+        barcodes {
+              id
+              name
+              flagDouble
+        }
     }
 }

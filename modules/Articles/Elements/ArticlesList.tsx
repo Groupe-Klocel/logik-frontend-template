@@ -1,6 +1,6 @@
 import { AppTable, LinkButton } from '@components';
 import { Space, Button } from 'antd'
-import { DEFAULT_ITEMS_PER_PAGE, DEFAULT_PAGE_NUMBER, useArticles } from '@helpers';
+import { DEFAULT_ITEMS_PER_PAGE, DEFAULT_PAGE_NUMBER, useArticles, pathParams, showError } from '@helpers';
 import { EyeTwoTone, DeleteOutlined } from '@ant-design/icons';
 import useTranslation from 'next-translate/useTranslation';
 import { useState, useEffect, useCallback } from 'react'
@@ -26,14 +26,14 @@ const ArticlesList = ({ searchCriteria }: IArticlesListProps) => {
 	const { t } = useTranslation()
 
 	const [articles, setArticles] = useState<IArticles | undefined>(undefined)
-	
+
 	const [pagination, setPagination] = useState<IPagination>({
 		total: undefined,
 		current: DEFAULT_PAGE_NUMBER,
 		itemsPerPage: DEFAULT_ITEMS_PER_PAGE,
 	})
 
-	const { isLoading, data, error } = useArticles(searchCriteria, pagination.current, pagination.itemsPerPage)
+	const { isLoading, data, error } = useArticles(searchCriteria, pagination.current, pagination.itemsPerPage, "id")
 
 	// make wrapper function to give child
 	const onChangePagination = useCallback((currentPage, itemsPerPage) => {
@@ -60,47 +60,47 @@ const ArticlesList = ({ searchCriteria }: IArticlesListProps) => {
 	// to refactor to be automatique when fetching data 
 	const columns = [
 		{
-			title: t("common:name"),
+			title: `${t("d:name")}`,
 			dataIndex: 'name',
 			key: 'name',
 		},
 		{
-			title: t("common:additionalDescription"),
+			title: t("d:additionalDescription"),
 			dataIndex: 'additionalDescription',
 			key: 'additionalDescription',
 		},
 		{
-			title: t("forms:code"),
+			title: t("d:code"),
 			dataIndex: 'code',
 			key: 'code',
 		},
 		{
-			title: t("common:status"),
+			title: t("d:status"),
 			dataIndex: 'status',
 			key: 'status',
 		},
 		{
-			title: t("common:length"),
+			title: t("d:length"),
 			dataIndex: 'length',
 			key: 'length',
 		},
 		{
-			title: t("common:width"),
+			title: t("d:width"),
 			dataIndex: 'width',
 			key: 'width',
 		},
 		{
-			title: t("common:height"),
+			title: t("d:height"),
 			dataIndex: 'height',
 			key: 'height',
 		},
 		{
-			title: t("forms:baseUnitWeight"),
+			title: t("d:baseUnitWeight"),
 			dataIndex: 'baseUnitWeight',
 			key: 'baseUnitWeight',
 		},
 		{
-			title: t("forms:boxWeight"),
+			title: t("d:boxWeight"),
 			dataIndex: 'boxWeight',
 			key: 'boxWeight',
 		},
@@ -109,14 +109,14 @@ const ArticlesList = ({ searchCriteria }: IArticlesListProps) => {
 			key: 'actions',
 			render: (record: { id: string }) => (
 				<Space>
-					<LinkButton icon={<EyeTwoTone />} path={pathParams(record.id)} />
+					<LinkButton icon={<EyeTwoTone />} path={pathParams('/article/[id]', record.id)} />
 					<Button icon={<DeleteOutlined />} danger onClick={() => alert(`delete article N° ${record.id}`)} />
 				</Space>
 			)
 		}
 	]
 
-	const pathParams = (id: string) => { return { pathname: '/article/[aid]', query: { aid: id } } }
+
 
 	return (
 		<>

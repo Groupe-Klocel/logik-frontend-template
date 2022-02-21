@@ -1,0 +1,8 @@
+articleId
+name
+rotation
+preparationMode
+flagDouble
+supplierArticleCode
+quantity
+	

@@ -1,7 +1,8 @@
 import { cookie, isoLangs, LanguageType } from '@helpers'
 import { Select } from 'antd'
 import { useRouter } from "next/router"
-import { FC } from 'react'
+import { FC , useCallback} from 'react'
+import { useAppDispatch, useAppState } from 'context/AppContext';
 import styled from 'styled-components'
 
 const { Option } = Select;
@@ -14,11 +15,23 @@ const LanguageSelector: FC = () => {
 	const router = useRouter()
 	const { locale } = router
 
+	const { globalLocale } = useAppState()
+
+	const dispatchLocale = useAppDispatch()
+
 	const changeLanguage = (value: any) => {
 		const newLocale: string = value
-		cookie.set('NEXT_LOCALE', newLocale)
+		selectLocaleSetting(newLocale)
 		router.push(router.asPath, router.asPath, { locale: newLocale })
 	}
+
+	const selectLocaleSetting = useCallback(
+		(newLocale) => dispatchLocale({
+			type: 'SWITCH_LOCALE',
+			globalLocale: newLocale
+		}),
+		[dispatchLocale, globalLocale]
+	)
 
 	return (
 		<StyledSelect defaultValue={locale}

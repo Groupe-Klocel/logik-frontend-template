@@ -1,7 +1,7 @@
 {
-	"locales": ["en-US", "fr"],
-	"defaultLocale": "en-US",
-	"pages": {
-		"*": ["common", "menu", "actions", "forms", "messages", "database"]
-	}
+    "locales": ["en-US", "fr"],
+    "defaultLocale": "en-US",
+    "pages": {
+        "*": ["common", "menu", "actions", "forms", "messages", "d"]
+    }
 }

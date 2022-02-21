@@ -2,7 +2,7 @@ import { SearchOutlined, FileExcelOutlined } from '@ant-design/icons';
 import { Button } from 'antd';
 import { LinkButton } from '@components';
 import { Layout, Space, Form } from 'antd';
-import { ArticlesSearch } from 'components/common/dumb/DrawerItems/ArticlesSearch';
+import { ArticlesSearch } from 'components/common/smart/DrawerItems/ArticlesSearch';
 import { useDrawerDispatch } from 'context/DrawerContext';
 import { ArticlesList } from 'modules/Articles/Elements/ArticlesList';
 import { articlesSubRoutes } from 'modules/Articles/Static/articlesRoutes';

@@ -1,6 +1,7 @@
-import { LinkButton, ScreenSpin, DetailsList } from '@components';
+import { ScreenSpin } from '@components';
 import { Layout, Space, Button } from 'antd';
 import { articlesSubRoutes } from 'modules/Articles/Static/articlesRoutes';
+import { ArticleDetails } from 'modules/Articles/Elements/ArticleDetails';
 import useTranslation from 'next-translate/useTranslation';
 import { GetArticleByIdQuery, useGetArticleByIdQuery } from 'generated/graphql';
 import { useAuth } from 'context/AuthContext';
@@ -8,6 +9,7 @@ import { FC } from 'react';
 import { NextRouter } from 'next/router';
 import styled from 'styled-components';
 import { HeaderContent } from '@components';
+import { showError } from '@helpers';
 
 const StyledPageContent = styled(Layout.Content)`
 	margin: 15px 30px ;
@@ -25,17 +27,18 @@ const SingleArticle: FC<ISingleArticleProps> = ({ aId, router }: ISingleArticleP
 	const { graphqlRequestClient } = useAuth()
 
 	const { isLoading, data, error } = useGetArticleByIdQuery<GetArticleByIdQuery, Error>(graphqlRequestClient, {
-		id: aId,
+		id: parseInt(aId),
 	})
+	
+	if(error){
+		showError(t('messages:error-getting-data'))
+	}
 
 	console.log(data)
 
 	const breadsCrumb = [...articlesSubRoutes, {
-		breadcrumbName: `${t('common:article')}`,
-	},
-	{
 		breadcrumbName: `${aId}`,
-	}
+		}
 	]
 
 	return (
@@ -52,7 +55,7 @@ const SingleArticle: FC<ISingleArticleProps> = ({ aId, router }: ISingleArticleP
 				} />
 			<StyledPageContent>
 				{data?.article && !isLoading ?
-					<DetailsList details={data?.article} />
+					<ArticleDetails details={data?.article} />
 					:
 					<ScreenSpin />
 				}

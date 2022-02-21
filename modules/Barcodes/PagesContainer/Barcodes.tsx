@@ -1,11 +1,9 @@
 import { FC } from 'react'
 import { Layout } from 'antd'
-import { HeaderContent } from '@components'
-import { barcodesRoutes } from 'modules/Articles/Static/articlesRoutes'
+import { HeaderContent, LinkButton } from '@components'
+import { barcodesRoutes } from 'modules/Barcodes/Static/barcodesRoutes'
 import useTranslation from 'next-translate/useTranslation';
-import { BarcodesList } from 'modules/Articles/Elements/BarcodesList'
-import styled from 'styled-components'
-import { LinkButton } from 'components/common/dumb/Buttons/LinkButton';
+import { BarcodesList } from 'modules/Barcodes/Elements/BarcodesList'
 
 export interface IBarcodesProps {
 

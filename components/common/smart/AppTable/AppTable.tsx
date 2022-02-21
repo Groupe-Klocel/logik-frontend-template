@@ -34,10 +34,15 @@ const AppTable: FC<IAppTableProps> = ({ data, columns, scroll, isLoading, pagina
 	if (initialState) {
 		const storedArray = initialState.filteredColumns
 		const inputArray = checkKeyPresenceInArray('render', columns)
+		const titleCheck = checkKeyPresenceInArray('title', columns)
 		let updatedStoredArr = storedArray.map((a: any) => {
 			const exists = inputArray.find(b => a.key == b.key);
+			const titles = titleCheck.find(b => a.key == b.key);
 			if (exists) {
 				a.render = exists.render;
+			}
+			if(titles){
+				a.title = titles.title
 			}
 			return a;
 		});
@@ -50,6 +55,8 @@ const AppTable: FC<IAppTableProps> = ({ data, columns, scroll, isLoading, pagina
 	const [tableColumns, setTableColumns] = useState<any[]>(initialState !== null ? initialState.tableColumns : setCustomColumnsProps(columns));
 
 	const [selectedRowKeys, setSelectedRowKeys] = useState<Key[]>([]);
+	console.log('tableColumns changed: ', tableColumns);
+	console.log('filteredColumns changed: ', filteredColumns);
 
 	const rowSelection = {
 		selectedRowKeys,

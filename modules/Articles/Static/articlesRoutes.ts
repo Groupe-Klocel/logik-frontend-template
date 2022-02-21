@@ -58,26 +58,6 @@ export const addArticleRoutes = [...articlesSubRoutes,
   }
 ]
 
-export const barcodesRoutes = [...articlesRoutes,
-  {
-    path:'/barcodes',
-    breadcrumbName: 'menu:barcodes',
-  }
-]
-
-export const addBarcodeRoutes = [...barcodesRoutes,
-  {
-    path:'/add-barcode',
-    breadcrumbName: 'menu:add-barcode',
-  }
-]
-
-export const blacklistedBarcodesRoutes = [...articlesRoutes,
-  {
-    path:'/blacklisted-barcodes',
-    breadcrumbName: 'menu:blacklisted-barcodes',
-  }
-]
 
 export const setsRoutes = [...articlesRoutes,
   {

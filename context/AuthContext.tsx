@@ -74,6 +74,7 @@ export const AuthProvider: FC<OnlyChildrenType> = ({ children }: OnlyChildrenTyp
 	const setHeader = (token: string) => {
 		const requestHeader = {
 			"X-API-Seed": "foo",
+			"X-API-fake": "f",
 			authorization: `Bearer ${token}`,
 		};
 		const graphqlClientWithHeader = new GraphQLClient(process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT as string, {
