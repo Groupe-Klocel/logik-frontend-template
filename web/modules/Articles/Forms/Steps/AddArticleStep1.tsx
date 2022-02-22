@@ -1,4 +1,4 @@
-import { Form, Input, Button, Row, Col, Select } from 'antd';
+import { Form, Input, Button, Row, Col, Select, InputNumber } from 'antd';
 import { FC } from 'react';
 import useTranslation from 'next-translate/useTranslation';
 import { companiesData } from 'fake-data/companies';
@@ -60,7 +60,7 @@ const AddArticleStep1: FC<IAddArticleStep1Props> = ({}: IAddArticleStep1Props) =
                 name="accountId"
                 rules={[{ required: true, message: errorMessageEmptyInput }]}
             >
-                <Input type="number" />
+                <InputNumber style={{ width: '100%' }} />
             </Form.Item>
 
             <Form.Item
@@ -68,7 +68,7 @@ const AddArticleStep1: FC<IAddArticleStep1Props> = ({}: IAddArticleStep1Props) =
                 name="companyId"
                 rules={[{ required: true, message: errorMessageEmptyInput }]}
             >
-                <Input type="number" />
+                <InputNumber style={{ width: '100%' }} />
             </Form.Item>
 
             <Form.Item label={supplierName} name="supplierName">

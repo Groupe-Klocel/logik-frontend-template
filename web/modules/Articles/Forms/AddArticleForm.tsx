@@ -1,5 +1,5 @@
 import { FC, useState } from 'react';
-import { Form, Input, Button, Space } from 'antd';
+import { Form, Button, Space } from 'antd';
 import { WrapperForm, StepsPanel, WrapperStepContent } from '@components';
 import { AddArticleStep1 } from './Steps/AddArticleStep1';
 import { AddArticleStep2 } from './Steps/AddArticleStep2';
@@ -18,6 +18,7 @@ export const AddArticleForm: FC<IAddArticleFormProps> = ({}: IAddArticleFormProp
     const [form] = Form.useForm();
 
     const handleClickNext = () => {
+        console.log('pass');
         form.validateFields()
             .then(() => {
                 // Here make api call of something else
@@ -30,13 +31,12 @@ export const AddArticleForm: FC<IAddArticleFormProps> = ({}: IAddArticleFormProp
         setCurrent(current - 1);
     };
 
-    const onFinish = (values: any) => {
-        console.log('Received values of form: ', values);
+    const onFinish = () => {
+        console.log('pass2');
         form.validateFields()
             .then(() => {
                 // Here make api call of something else
                 console.log(form.getFieldsValue(true));
-                alert(JSON.stringify(form.getFieldsValue(true), null, 4));
             })
             .catch((err) => console.log(err));
     };
@@ -60,36 +60,35 @@ export const AddArticleForm: FC<IAddArticleFormProps> = ({}: IAddArticleFormProp
         <WrapperForm>
             <StepsPanel currentStep={current} steps={steps} />
             <WrapperStepContent>
-                <Form form={form} onFinish={onFinish} scrollToFirstError>
+                <Form form={form} scrollToFirstError>
                     {current === 0 && <AddArticleStep1 />}
 
                     {current === 1 && <AddArticleStep2 />}
 
                     {current === 2 && <AddArticleStep3 />}
-
-                    {current === 0 ? (
-                        <div style={{ textAlign: 'center' }}>
-                            <Button onClick={handleClickNext}>{t('actions:next-step')}</Button>
-                        </div>
-                    ) : current > 0 && current < steps.length - 1 ? (
-                        <div style={{ textAlign: 'center' }}>
-                            <Space>
-                                <Button onClick={handleClickBack}>{t('actions:back-step')}</Button>
-                                <Button onClick={handleClickNext}>{t('actions:next-step')}</Button>
-                            </Space>
-                        </div>
-                    ) : (
-                        <div style={{ textAlign: 'center' }}>
-                            <Space>
-                                <Button onClick={handleClickBack}>{t('actions:back-step')}</Button>
-                                <Button type="primary" htmlType="submit">
-                                    {t('actions:submit')}
-                                </Button>
-                            </Space>
-                        </div>
-                    )}
                 </Form>
             </WrapperStepContent>
+            {current === 0 ? (
+                <div style={{ textAlign: 'center' }}>
+                    <Button onClick={handleClickNext}>{t('actions:next-step')}</Button>
+                </div>
+            ) : current > 0 && current < steps.length - 1 ? (
+                <div style={{ textAlign: 'center' }}>
+                    <Space>
+                        <Button onClick={handleClickBack}>{t('actions:back-step')}</Button>
+                        <Button onClick={handleClickNext}>{t('actions:next-step')}</Button>
+                    </Space>
+                </div>
+            ) : (
+                <div style={{ textAlign: 'center' }}>
+                    <Space>
+                        <Button onClick={handleClickBack}>{t('actions:back-step')}</Button>
+                        <Button type="primary" onClick={onFinish}>
+                            {t('actions:submit')}
+                        </Button>
+                    </Space>
+                </div>
+            )}
         </WrapperForm>
     );
 };

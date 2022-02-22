@@ -1,5 +1,5 @@
 import { WrapperForm } from '@components';
-import { Button, Col, Input, Row, Select, Form } from 'antd';
+import { Button, Col, Input, InputNumber, Row, Select, Form } from 'antd';
 import useTranslation from 'next-translate/useTranslation';
 import { FC, useState } from 'react';
 
@@ -32,20 +32,18 @@ export const AddBarcodeForm: FC<IAddBarcodeFormProps> = ({}: IAddBarcodeFormProp
     // TYPED SAFE ALL
     const [form] = Form.useForm();
 
-    const onFinish = (values: any) => {
-        console.log('Received values of form: ', values);
+    const onFinish = () => {
         form.validateFields()
             .then(() => {
                 // Here make api call of something else
-                console.log('Received values of form: ', values);
-                alert(JSON.stringify(form.getFieldsValue(), null, 4));
+                console.log(form.getFieldsValue());
             })
             .catch((err) => console.log(err));
     };
 
     return (
         <WrapperForm>
-            <Form form={form} onFinish={onFinish} scrollToFirstError>
+            <Form form={form} scrollToFirstError>
                 <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
                     <Col xs={24} xl={12}>
                         <Form.Item
@@ -61,7 +59,7 @@ export const AddBarcodeForm: FC<IAddBarcodeFormProps> = ({}: IAddBarcodeFormProp
                             name="accountId"
                             rules={[{ required: true, message: errorMessageEmptyInput }]}
                         >
-                            <Input type="number" />
+                            <InputNumber style={{ width: '100%' }} />
                         </Form.Item>
 
                         <Form.Item
@@ -69,7 +67,7 @@ export const AddBarcodeForm: FC<IAddBarcodeFormProps> = ({}: IAddBarcodeFormProp
                             name="companyId"
                             rules={[{ required: true, message: errorMessageEmptyInput }]}
                         >
-                            <Input type="number" />
+                            <InputNumber style={{ width: '100%' }} />
                         </Form.Item>
 
                         {/* <Form.Item
@@ -92,7 +90,7 @@ export const AddBarcodeForm: FC<IAddBarcodeFormProps> = ({}: IAddBarcodeFormProp
                             name="articleId"
                             rules={[{ required: true, message: errorMessageEmptyInput }]}
                         >
-                            <Input type="number" />
+                            <InputNumber style={{ width: '100%' }} />
                         </Form.Item>
                         <Form.Item
                             label={rotation}
@@ -104,10 +102,10 @@ export const AddBarcodeForm: FC<IAddBarcodeFormProps> = ({}: IAddBarcodeFormProp
                     </Col>
                     <Col xs={24} xl={12}>
                         <Form.Item label={flagDouble} name="flagDouble">
-                            <Input type="number" />
+                            <InputNumber style={{ width: '100%' }} />
                         </Form.Item>
                         <Form.Item label={preparationMode} name="preparationMode">
-                            <Input type="number" />
+                            <InputNumber style={{ width: '100%' }} />
                         </Form.Item>
                         <Form.Item label={supplierName} name="supplierName">
                             <Input />
@@ -116,16 +114,16 @@ export const AddBarcodeForm: FC<IAddBarcodeFormProps> = ({}: IAddBarcodeFormProp
                             <Input />
                         </Form.Item>
                         <Form.Item label={quantity} name="quantity">
-                            <Input type="number" />
+                            <InputNumber style={{ width: '100%' }} />
                         </Form.Item>
                     </Col>
                 </Row>
-                <div style={{ textAlign: 'center' }}>
-                    <Button type="primary" htmlType="submit">
-                        {t('actions:submit')}
-                    </Button>
-                </div>
             </Form>
+            <div style={{ textAlign: 'center' }}>
+                <Button type="primary" onClick={onFinish}>
+                    {t('actions:submit')}
+                </Button>
+            </div>
         </WrapperForm>
     );
 };

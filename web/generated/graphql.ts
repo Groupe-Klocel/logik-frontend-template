@@ -648,6 +648,15 @@ export type CreateBarcodeMutation = {
     };
 };
 
+export type DeleteBarcodeMutationVariables = Exact<{
+    id: Scalars['Int'];
+}>;
+
+export type DeleteBarcodeMutation = {
+    __typename?: 'Mutation';
+    deleteBarcode?: any | null | undefined;
+};
+
 export type LoginMutationVariables = Exact<{
     username: Scalars['String'];
     password: Scalars['String'];
@@ -919,6 +928,32 @@ export const useCreateBarcodeMutation = <TError = unknown, TContext = unknown>(
             fetcher<CreateBarcodeMutation, CreateBarcodeMutationVariables>(
                 client,
                 CreateBarcodeDocument,
+                variables,
+                headers
+            )(),
+        options
+    );
+export const DeleteBarcodeDocument = `
+    mutation DeleteBarcode($id: Int!) {
+  deleteBarcode(id: $id)
+}
+    `;
+export const useDeleteBarcodeMutation = <TError = unknown, TContext = unknown>(
+    client: GraphQLClient,
+    options?: UseMutationOptions<
+        DeleteBarcodeMutation,
+        TError,
+        DeleteBarcodeMutationVariables,
+        TContext
+    >,
+    headers?: RequestInit['headers']
+) =>
+    useMutation<DeleteBarcodeMutation, TError, DeleteBarcodeMutationVariables, TContext>(
+        'DeleteBarcode',
+        (variables?: DeleteBarcodeMutationVariables) =>
+            fetcher<DeleteBarcodeMutation, DeleteBarcodeMutationVariables>(
+                client,
+                DeleteBarcodeDocument,
                 variables,
                 headers
             )(),

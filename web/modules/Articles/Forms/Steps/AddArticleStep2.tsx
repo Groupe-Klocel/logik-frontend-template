@@ -1,4 +1,4 @@
-import { Form, Input, Button, Row, Col, Checkbox, Select } from 'antd';
+import { Form, Input, InputNumber, Button, Row, Col, Checkbox, Select } from 'antd';
 import { FC } from 'react';
 import useTranslation from 'next-translate/useTranslation';
 
@@ -34,7 +34,7 @@ const AddArticleStep2: FC<IAddArticleStep2Props> = () => {
                     name="length"
                     rules={[{ required: true, message: errorMessageEmptyInput }]}
                 >
-                    <Input type="number" />
+                    <InputNumber style={{ width: '100%' }} />
                 </Form.Item>
 
                 <Form.Item
@@ -42,7 +42,7 @@ const AddArticleStep2: FC<IAddArticleStep2Props> = () => {
                     name="width"
                     rules={[{ required: true, message: errorMessageEmptyInput }]}
                 >
-                    <Input type="number" />
+                    <InputNumber style={{ width: '100%' }} />
                 </Form.Item>
 
                 <Form.Item
@@ -50,14 +50,14 @@ const AddArticleStep2: FC<IAddArticleStep2Props> = () => {
                     name="height"
                     rules={[{ required: true, message: errorMessageEmptyInput }]}
                 >
-                    <Input type="number" />
+                    <InputNumber style={{ width: '100%' }} />
                 </Form.Item>
                 <Form.Item
                     label={baseUnitWeight}
                     name="baseUnitWeight"
                     rules={[{ required: true, message: errorMessageEmptyInput }]}
                 >
-                    <Input type="number" />
+                    <InputNumber style={{ width: '100%' }} />
                 </Form.Item>
 
                 <Form.Item
@@ -65,7 +65,7 @@ const AddArticleStep2: FC<IAddArticleStep2Props> = () => {
                     name="boxWeight"
                     rules={[{ required: true, message: errorMessageEmptyInput }]}
                 >
-                    <Input type="number" />
+                    <InputNumber style={{ width: '100%' }} />
                 </Form.Item>
 
                 <Form.Item
@@ -73,7 +73,7 @@ const AddArticleStep2: FC<IAddArticleStep2Props> = () => {
                     name="boxQuantity"
                     rules={[{ required: true, message: errorMessageEmptyInput }]}
                 >
-                    <Input type="number" />
+                    <InputNumber style={{ width: '100%' }} />
                 </Form.Item>
             </Col>
             <Col xs={24} xl={12}>
@@ -90,11 +90,11 @@ const AddArticleStep2: FC<IAddArticleStep2Props> = () => {
                     name="cubingType"
                     rules={[{ required: true, message: errorMessageEmptyInput }]}
                 >
-                    <Input type="number" />
+                    <InputNumber style={{ width: '100%' }} />
                 </Form.Item>
 
                 <Form.Item label={baseUnitPrice} name="baseUnitPrice">
-                    <Input type="number" />
+                    <InputNumber style={{ width: '100%' }} />
                 </Form.Item>
 
                 <Form.Item label={baseUnitRotation} name="baseUnitRotation">
@@ -110,4 +110,5 @@ const AddArticleStep2: FC<IAddArticleStep2Props> = () => {
 };
 
 AddArticleStep2.displayName = 'AddArticleStep2';
+
 export { AddArticleStep2 };

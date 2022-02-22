@@ -55,3 +55,7 @@ mutation CreateBarcode($input: CreateBarcodeInput!) {
         quantity
     }
 }
+
+mutation DeleteBarcode($id: Int!) {
+    deleteBarcode(id:$id)
+}

@@ -2,7 +2,13 @@ import { ScreenSpin } from '@components';
 import { Layout, Space, Button } from 'antd';
 import { barcodesRoutes } from 'modules/Barcodes/Static/barcodesRoutes';
 import useTranslation from 'next-translate/useTranslation';
-import { GetBarcodeByIdQuery, useGetBarcodeByIdQuery } from 'generated/graphql';
+import {
+    GetBarcodeByIdQuery,
+    useGetBarcodeByIdQuery,
+    useDeleteBarcodeMutation,
+    DeleteBarcodeMutation,
+    DeleteBarcodeMutationVariables
+} from 'generated/graphql';
 import { BarcodeDetails } from 'modules/Barcodes/Elements/BarcodeDetails';
 import { useAuth } from 'context/AuthContext';
 import { FC } from 'react';
@@ -24,7 +30,6 @@ export interface ISingleBarcodeProps {
 const SingleBarcode: FC<ISingleBarcodeProps> = ({ id, router }: ISingleBarcodeProps) => {
     let { t } = useTranslation();
     const { graphqlRequestClient } = useAuth();
-
     const { isLoading, data, error } = useGetBarcodeByIdQuery<GetBarcodeByIdQuery, Error>(
         graphqlRequestClient,
         {
@@ -32,11 +37,28 @@ const SingleBarcode: FC<ISingleBarcodeProps> = ({ id, router }: ISingleBarcodePr
         }
     );
 
+    const { mutate } = useDeleteBarcodeMutation<Error>(graphqlRequestClient, {
+        onSuccess: (
+            data: DeleteBarcodeMutation,
+            _variables: DeleteBarcodeMutationVariables,
+            _context: unknown
+        ) => {
+            if (data?.deleteBarcode) {
+                console.log('pass');
+            }
+        },
+        onError: (error) => {
+            showError(t('messages:error-deleting-data'));
+        }
+    });
+
+    const deleteBarcode = async ({ id }: DeleteBarcodeMutationVariables) => {
+        mutate({ id });
+    };
+
     if (error) {
         showError(t('messages:error-getting-data'));
     }
-
-    console.log(data);
 
     const breadsCrumb = [
         ...barcodesRoutes,
@@ -56,7 +78,9 @@ const SingleBarcode: FC<ISingleBarcodeProps> = ({ id, router }: ISingleBarcodePr
                         <Button onClick={() => alert('Edit')} type="primary">
                             {t('actions:edit')}
                         </Button>
-                        <Button onClick={() => alert('Delete')}>{t('actions:delete')}</Button>
+                        <Button onClick={() => deleteBarcode(parseInt(id))}>
+                            {t('actions:delete')}
+                        </Button>
                     </Space>
                 }
             />
