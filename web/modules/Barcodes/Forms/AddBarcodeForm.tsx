@@ -2,12 +2,22 @@ import { WrapperForm } from '@components';
 import { Button, Col, Input, InputNumber, Row, Select, Form } from 'antd';
 import useTranslation from 'next-translate/useTranslation';
 import { FC, useState } from 'react';
+import { useAuth } from 'context/AuthContext';
+import { useRouter } from 'next/router';
+import {
+    useCreateBarcodeMutation,
+    CreateBarcodeMutation,
+    CreateBarcodeMutationVariables
+} from 'generated/graphql';
+import { showError, showSuccess } from '@helpers';
 
 const { Option } = Select;
 export interface IAddBarcodeFormProps {}
 
 export const AddBarcodeForm: FC<IAddBarcodeFormProps> = ({}: IAddBarcodeFormProps) => {
     let { t } = useTranslation('common');
+    const { graphqlRequestClient } = useAuth();
+    const router = useRouter();
 
     // TEXTS TRANSLATION ( REFACTORING POSSIBLE / EXPORT / DON'T KNOW YET )
     const selectArticle = t('common:article');
@@ -23,20 +33,45 @@ export const AddBarcodeForm: FC<IAddBarcodeFormProps> = ({}: IAddBarcodeFormProp
     const flagDouble = t('d:flagDouble');
     const quantity = t('d:quantity');
     const errorMessageEmptyInput = t('messages:error-message-empty-input');
-    const articleSelectErrorMessage = `${t('messages:error-message-select-1')} ${t(
-        'common:article'
-    )}`;
+    // const articleSelectErrorMessage = `${t('messages:error-message-select-1')} ${t(
+    //     'common:article'
+    // )}`;
 
     // END TEXTS TRANSLATION
 
     // TYPED SAFE ALL
     const [form] = Form.useForm();
 
+    const {
+        mutate,
+        isLoading: createLoading,
+        data
+    } = useCreateBarcodeMutation<Error>(graphqlRequestClient, {
+        onSuccess: (
+            data: CreateBarcodeMutation,
+            _variables: CreateBarcodeMutationVariables,
+            _context: unknown
+        ) => {
+            if (!createLoading) {
+                router.push(`/barcode/${data.createBarcode.id}`);
+                showSuccess(t('messages:success-created'));
+            }
+        },
+        onError: (error) => {
+            showError(t('messages:error-creating-data'));
+        }
+    });
+
+    const createBarcode = ({ input }: CreateBarcodeMutationVariables) => {
+        mutate({ input });
+    };
+
     const onFinish = () => {
         form.validateFields()
             .then(() => {
                 // Here make api call of something else
-                console.log(form.getFieldsValue());
+                console.log(form.getFieldsValue(true));
+                createBarcode({ input: form.getFieldsValue(true) });
             })
             .catch((err) => console.log(err));
     };
@@ -101,10 +136,18 @@ export const AddBarcodeForm: FC<IAddBarcodeFormProps> = ({}: IAddBarcodeFormProp
                         </Form.Item>
                     </Col>
                     <Col xs={24} xl={12}>
-                        <Form.Item label={flagDouble} name="flagDouble">
+                        <Form.Item
+                            label={flagDouble}
+                            name="flagDouble"
+                            rules={[{ required: true, message: errorMessageEmptyInput }]}
+                        >
                             <InputNumber style={{ width: '100%' }} />
                         </Form.Item>
-                        <Form.Item label={preparationMode} name="preparationMode">
+                        <Form.Item
+                            label={preparationMode}
+                            name="preparationMode"
+                            rules={[{ required: true, message: errorMessageEmptyInput }]}
+                        >
                             <InputNumber style={{ width: '100%' }} />
                         </Form.Item>
                         <Form.Item label={supplierName} name="supplierName">
@@ -120,7 +163,7 @@ export const AddBarcodeForm: FC<IAddBarcodeFormProps> = ({}: IAddBarcodeFormProp
                 </Row>
             </Form>
             <div style={{ textAlign: 'center' }}>
-                <Button type="primary" onClick={onFinish}>
+                <Button type="primary" loading={createLoading} onClick={onFinish}>
                     {t('actions:submit')}
                 </Button>
             </div>

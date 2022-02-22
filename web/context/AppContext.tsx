@@ -1,7 +1,5 @@
-import { stringToBoolean } from '@helpers';
-import { cookie } from 'helpers/utils/utils';
+import { stringToBoolean, cookie } from '@helpers';
 import { createCtx } from './create-context';
-import { useRouter } from 'next/router';
 
 // init from cookies
 const menuInitialState = cookie.get('isSettingMenuCollapsed')

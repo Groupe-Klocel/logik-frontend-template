@@ -1,4 +1,4 @@
-import { ScreenSpin } from '@components';
+import { ContentSpin } from '@components';
 import { Layout, Space, Button } from 'antd';
 import { barcodesRoutes } from 'modules/Barcodes/Static/barcodesRoutes';
 import useTranslation from 'next-translate/useTranslation';
@@ -15,7 +15,7 @@ import { FC } from 'react';
 import { NextRouter } from 'next/router';
 import styled from 'styled-components';
 import { HeaderContent } from '@components';
-import { showError } from '@helpers';
+import { showError, showSuccess } from '@helpers';
 
 const StyledPageContent = styled(Layout.Content)`
     margin: 15px 30px;
@@ -37,22 +37,26 @@ const SingleBarcode: FC<ISingleBarcodeProps> = ({ id, router }: ISingleBarcodePr
         }
     );
 
-    const { mutate } = useDeleteBarcodeMutation<Error>(graphqlRequestClient, {
-        onSuccess: (
-            data: DeleteBarcodeMutation,
-            _variables: DeleteBarcodeMutationVariables,
-            _context: unknown
-        ) => {
-            if (data?.deleteBarcode) {
-                console.log('pass');
+    const { mutate, isLoading: deleteLoading } = useDeleteBarcodeMutation<Error>(
+        graphqlRequestClient,
+        {
+            onSuccess: (
+                data: DeleteBarcodeMutation,
+                _variables: DeleteBarcodeMutationVariables,
+                _context: unknown
+            ) => {
+                router.back();
+                if (!deleteLoading) {
+                    showSuccess(t('messages:success-deleted'));
+                }
+            },
+            onError: (error) => {
+                showError(t('messages:error-deleting-data'));
             }
-        },
-        onError: (error) => {
-            showError(t('messages:error-deleting-data'));
         }
-    });
+    );
 
-    const deleteBarcode = async ({ id }: DeleteBarcodeMutationVariables) => {
+    const deleteBarcode = ({ id }: DeleteBarcodeMutationVariables) => {
         mutate({ id });
     };
 
@@ -67,6 +71,7 @@ const SingleBarcode: FC<ISingleBarcodeProps> = ({ id, router }: ISingleBarcodePr
         }
     ];
 
+    console.log(parseInt(id));
     return (
         <>
             <HeaderContent
@@ -78,19 +83,20 @@ const SingleBarcode: FC<ISingleBarcodeProps> = ({ id, router }: ISingleBarcodePr
                         <Button onClick={() => alert('Edit')} type="primary">
                             {t('actions:edit')}
                         </Button>
-                        <Button onClick={() => deleteBarcode(parseInt(id))}>
+                        <Button
+                            loading={deleteLoading}
+                            onClick={() => deleteBarcode({ id: parseInt(id) })}
+                        >
                             {t('actions:delete')}
                         </Button>
                     </Space>
                 }
             />
-            <StyledPageContent>
-                {data?.barcode && !isLoading ? (
-                    <BarcodeDetails details={data?.barcode} />
-                ) : (
-                    <ScreenSpin />
-                )}
-            </StyledPageContent>
+            {data?.barcode && !isLoading ? (
+                <BarcodeDetails details={data?.barcode} />
+            ) : (
+                <ContentSpin />
+            )}
         </>
     );
 };

@@ -5,6 +5,14 @@ import { AddArticleStep1 } from './Steps/AddArticleStep1';
 import { AddArticleStep2 } from './Steps/AddArticleStep2';
 import { AddArticleStep3 } from './Steps/AddArticleStep3';
 import useTranslation from 'next-translate/useTranslation';
+import { useAuth } from 'context/AuthContext';
+import { useRouter } from 'next/router';
+import {
+    useCreateArticleMutation,
+    CreateArticleMutation,
+    CreateArticleMutationVariables
+} from 'generated/graphql';
+import { showError, showSuccess, showInfo} from '@helpers';
 
 const { Item } = Form;
 
@@ -12,8 +20,9 @@ export interface IAddArticleFormProps {}
 
 export const AddArticleForm: FC<IAddArticleFormProps> = ({}: IAddArticleFormProps) => {
     let { t } = useTranslation();
+    const { graphqlRequestClient } = useAuth();
+    const router = useRouter();
 
-    // TYPED SAFE ALL
     const [current, setCurrent] = useState(0);
     const [form] = Form.useForm();
 
@@ -31,12 +40,39 @@ export const AddArticleForm: FC<IAddArticleFormProps> = ({}: IAddArticleFormProp
         setCurrent(current - 1);
     };
 
+    const {
+        mutate,
+        isLoading: createLoading,
+        data
+    } = useCreateArticleMutation<Error>(graphqlRequestClient, {
+        onSuccess: (
+            data: CreateArticleMutation,
+            _variables: CreateArticleMutationVariables,
+            _context: unknown
+        ) => {
+            if(createLoading){
+                showInfo(t('messages:info-creating-wip'));
+            }
+            if (!createLoading) {
+                router.push(`/article/${data.createArticle.id}`);
+                showSuccess(t('messages:success-created'));
+            }
+        },
+        onError: (error) => {
+            showError(t('messages:error-creating-data'));
+        }
+    });
+
+    const createArticle = ({ input }: CreateArticleMutationVariables) => {
+        mutate({ input });
+    };
+
     const onFinish = () => {
         console.log('pass2');
         form.validateFields()
             .then(() => {
-                // Here make api call of something else
                 console.log(form.getFieldsValue(true));
+                createArticle({ input: form.getFieldsValue(true) });
             })
             .catch((err) => console.log(err));
     };
@@ -83,7 +119,7 @@ export const AddArticleForm: FC<IAddArticleFormProps> = ({}: IAddArticleFormProp
                 <div style={{ textAlign: 'center' }}>
                     <Space>
                         <Button onClick={handleClickBack}>{t('actions:back-step')}</Button>
-                        <Button type="primary" onClick={onFinish}>
+                        <Button type="primary" loading={createLoading} onClick={onFinish}>
                             {t('actions:submit')}
                         </Button>
                     </Space>

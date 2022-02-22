@@ -77,11 +77,11 @@ const AddArticleStep2: FC<IAddArticleStep2Props> = () => {
                 </Form.Item>
             </Col>
             <Col xs={24} xl={12}>
-                <Form.Item name="boxPicking">
-                    <Checkbox>{boxPicking}</Checkbox>
+                <Form.Item name="boxPicking" valuePropName="checked"  initialValue={false}>
+                    <Checkbox >{boxPicking}</Checkbox>
                 </Form.Item>
 
-                <Form.Item name="baseUnitPicking">
+                <Form.Item name="baseUnitPicking" valuePropName="checked" initialValue={false}>
                     <Checkbox>{baseUnitPicking}</Checkbox>
                 </Form.Item>
 

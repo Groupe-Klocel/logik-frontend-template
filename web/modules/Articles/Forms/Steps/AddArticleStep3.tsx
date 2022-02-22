@@ -35,8 +35,8 @@ const AddArticleStep3: FC<IAddArticleStep3Props> = () => {
             <Form.Item label={featureTypeId} name="featureTypeId">
                 <InputNumber style={{ width: '100%' }} />
             </Form.Item>
-            <Form.Item name="permanentProduct">
-                <Checkbox>{permanentProduct}</Checkbox>
+            <Form.Item name="permanentProduct" valuePropName="checked" initialValue={false}>
+                <Checkbox >{permanentProduct}</Checkbox>
             </Form.Item>
         </>
     );

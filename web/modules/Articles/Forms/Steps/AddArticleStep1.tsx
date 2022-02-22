@@ -80,7 +80,7 @@ const AddArticleStep1: FC<IAddArticleStep1Props> = ({}: IAddArticleStep1Props) =
                 name="status"
                 rules={[{ required: true, message: errorMessageEmptyInput }]}
             >
-                <Input />
+                <InputNumber style={{ width: '100%' }} />
             </Form.Item>
 
             <Form.Item
