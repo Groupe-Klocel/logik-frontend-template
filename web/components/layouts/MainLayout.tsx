@@ -47,7 +47,7 @@ const MainLayout: FC<IMainLayoutProps> = ({ children }: IMainLayoutProps) => {
                             collapsible
                             collapsed={isSessionMenuCollapsed}
                             onCollapse={onCollapseMenu}
-                            style={{ overflow: 'auto' }}
+                            className="scrollbar"
                         >
                             <SideMenu />
                         </Layout.Sider>

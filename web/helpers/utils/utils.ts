@@ -1,8 +1,7 @@
-import { LanguageType } from 'helpers/types/types';
+import { LanguageType } from '@helpers';
 import Cookies from 'js-cookie';
 import { isoLangs } from './constant';
 import { message } from 'antd';
-import { CheckCircleOutlined, CloseSquareOutlined } from '@ant-design/icons';
 
 export const cookie = Cookies.withAttributes({ path: '/', secure: true, sameSite: 'strict' });
 

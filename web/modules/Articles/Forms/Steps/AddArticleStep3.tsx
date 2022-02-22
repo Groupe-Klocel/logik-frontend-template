@@ -1,4 +1,4 @@
-import { Form, Input, Checkbox, Select } from 'antd';
+import { Form, Input, Checkbox, Select, InputNumber } from 'antd';
 import { FC } from 'react';
 import useTranslation from 'next-translate/useTranslation';
 
@@ -30,13 +30,13 @@ const AddArticleStep3: FC<IAddArticleStep3Props> = () => {
                 <Input />
             </Form.Item>
             <Form.Item label={groupingId} name="groupingId">
-                <Input type="number" />
+                <InputNumber style={{ width: '100%' }} />
             </Form.Item>
             <Form.Item label={featureTypeId} name="featureTypeId">
-                <Input type="number" />
+                <InputNumber style={{ width: '100%' }} />
             </Form.Item>
-            <Form.Item name="permanentProduct">
-                <Checkbox>{permanentProduct}</Checkbox>
+            <Form.Item name="permanentProduct" valuePropName="checked" initialValue={false}>
+                <Checkbox >{permanentProduct}</Checkbox>
             </Form.Item>
         </>
     );
