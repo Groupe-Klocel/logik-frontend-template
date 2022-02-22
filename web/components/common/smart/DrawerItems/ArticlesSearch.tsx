@@ -10,17 +10,9 @@ const ArticlesSearch: FC<IArticlesSearchProps> = ({ form }: IArticlesSearchProps
     let { t } = useTranslation();
 
     const companies = [];
-    const status = [];
     for (let i = 0; i < 10; i++) {
         const value = `${i.toString(36)}${i}`;
         companies.push({
-            value,
-            disabled: i === 10
-        });
-    }
-    for (let i = 0; i < 10; i++) {
-        const value = `${i.toString(36)}${i}`;
-        status.push({
             value,
             disabled: i === 10
         });
@@ -73,14 +65,7 @@ const ArticlesSearch: FC<IArticlesSearchProps> = ({ form }: IArticlesSearchProps
                 </Form.Item>
 
                 <Form.Item name="status" label={t('common:status')}>
-                    <Select
-                        mode="multiple"
-                        allowClear
-                        style={{ width: '100%' }}
-                        placeholder={t('actions:select')}
-                        onChange={handleStatusSelect}
-                        options={status}
-                    />
+                    <Input />
                 </Form.Item>
             </Form>
         </>

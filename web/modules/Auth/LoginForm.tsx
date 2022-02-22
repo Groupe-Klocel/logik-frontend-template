@@ -5,9 +5,9 @@ import { useAuth } from 'context/AuthContext';
 import useTranslation from 'next-translate/useTranslation';
 import { FC } from 'react';
 
-export interface ILoginFormProps {}
+export interface ILoginFormProps { }
 
-export const LoginForm: FC<ILoginFormProps> = ({}: ILoginFormProps) => {
+export const LoginForm: FC<ILoginFormProps> = ({ }: ILoginFormProps) => {
     let { t } = useTranslation('common');
     const { login } = useAuth();
     // TEXTS TRANSLATION
@@ -29,7 +29,7 @@ export const LoginForm: FC<ILoginFormProps> = ({}: ILoginFormProps) => {
         login({
             username: values.username,
             password: values.password,
-            workspaceId: values.workspaceId
+            workspaceId: process.env.NEXT_PUBLIC_WORKSPACE_ID
         });
     };
 
@@ -58,12 +58,7 @@ export const LoginForm: FC<ILoginFormProps> = ({}: ILoginFormProps) => {
                     >
                         <Input prefix={<LockOutlined />} type="password" placeholder={password} />
                     </Form.Item>
-                    <Form.Item
-                        name="workspaceId"
-                        rules={[{ required: true, message: errorMessagePassword }]}
-                    >
-                        <Input type="text" placeholder={workspace} />
-                    </Form.Item>
+
                     <Form.Item>
                         <a href="">{forgotPassword}</a>
                     </Form.Item>

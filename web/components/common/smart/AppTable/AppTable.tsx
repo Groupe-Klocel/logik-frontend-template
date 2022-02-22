@@ -26,7 +26,7 @@ export interface IAppTableProps {
     setPagination?: any;
     stickyActions?: {
         export?: boolean;
-        delete?: boolean;
+        // delete?: boolean;
     };
 }
 
@@ -80,18 +80,22 @@ const AppTable: FC<IAppTableProps> = ({
     const [tableColumns, setTableColumns] = useState<any[]>(
         initialState !== null ? initialState.tableColumns : setCustomColumnsProps(columns)
     );
+    // console.log('tableColumns changed: ', tableColumns);
+    // console.log('filteredColumns changed: ', filteredColumns);
 
-    const [selectedRowKeys, setSelectedRowKeys] = useState<Key[]>([]);
-    console.log('tableColumns changed: ', tableColumns);
-    console.log('filteredColumns changed: ', filteredColumns);
+    
+    // Make each row checkable
 
-    const rowSelection = {
-        selectedRowKeys,
-        onChange: (selectedRowKeys: Key[], record: any) => {
-            console.log('selectedRowKeys changed: ', selectedRowKeys);
-            setSelectedRowKeys(selectedRowKeys);
-        }
-    };
+    // const [selectedRowKeys, setSelectedRowKeys] = useState<Key[]>([]);
+    
+    // const rowSelection = {
+    //     selectedRowKeys,
+    //     onChange: (selectedRowKeys: Key[], record: any) => {
+    //         setSelectedRowKeys(selectedRowKeys);
+    //     }
+    // };
+
+
     // make wrapper function to give child
     const childSetVisibleColumnKeys = useCallback(
         (val) => {
@@ -128,14 +132,14 @@ const AppTable: FC<IAppTableProps> = ({
     };
 
     // give a deleteMutation to app table to know what data type should be deleted
-    const deleteRecords = () => {
-        if (Array.isArray(selectedRowKeys) && selectedRowKeys.length) {
-            // trigger delete mutation
-            alert(`delete articles ${JSON.stringify(selectedRowKeys)}`);
-        } else {
-            showError(t('messages:action-impossible', { name: t('actions:delete') }));
-        }
-    };
+    // const deleteRecords = () => {
+    //     if (Array.isArray(selectedRowKeys) && selectedRowKeys.length) {
+    //         // trigger delete mutation
+    //         alert(`delete articles ${JSON.stringify(selectedRowKeys)}`);
+    //     } else {
+    //         showError(t('messages:action-impossible', { name: t('actions:delete') }));
+    //     }
+    // };
 
     const dispatchDrawer = useDrawerDispatch();
 
@@ -210,14 +214,14 @@ const AppTable: FC<IAppTableProps> = ({
                         icon={<SettingOutlined />}
                         onClick={() => openFilterDrawer()}
                     />
-                    {stickyActions?.delete && (
+                    {/* {stickyActions?.delete && (
                         <Button
                             icon={<DeleteOutlined />}
                             onClick={deleteRecords}
                             type="primary"
                             danger
                         />
-                    )}
+                    )} */}
                     {stickyActions?.export && (
                         <Button
                             icon={<FileExcelOutlined />}
@@ -233,7 +237,7 @@ const AppTable: FC<IAppTableProps> = ({
                 scroll={scroll}
                 size="small"
                 loading={isLoading}
-                rowSelection={rowSelection}
+                // rowSelection={rowSelection}
                 pagination={
                     pagination && {
                         position: ['bottomRight'],
@@ -255,7 +259,7 @@ AppTable.displayName = 'AppTable';
 AppTable.defaultProps = {
     stickyActions: {
         export: false,
-        delete: false
+        // delete: false
     }
 };
 

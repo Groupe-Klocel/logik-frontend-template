@@ -20,7 +20,6 @@ const AddArticleStep1: FC<IAddArticleStep1Props> = ({}: IAddArticleStep1Props) =
     const supplierName = t('d:supplierName');
     const code = t('d:code');
     const companyId = t('d:companyId');
-    const accountId = t('d:accountId');
     const errorMessageEmptyInput = t('messages:error-message-empty-input');
     const additionalDescription = t('d:additionalDescription');
 
@@ -53,14 +52,6 @@ const AddArticleStep1: FC<IAddArticleStep1Props> = ({}: IAddArticleStep1Props) =
 
             <Form.Item label={additionalDescription} name="additionalDescription">
                 <Input.TextArea />
-            </Form.Item>
-
-            <Form.Item
-                label={accountId}
-                name="accountId"
-                rules={[{ required: true, message: errorMessageEmptyInput }]}
-            >
-                <InputNumber style={{ width: '100%' }} />
             </Form.Item>
 
             <Form.Item
