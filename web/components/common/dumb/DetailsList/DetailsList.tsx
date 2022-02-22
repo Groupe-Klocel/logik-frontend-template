@@ -1,38 +1,51 @@
 import { FC } from 'react';
-import { Descriptions } from 'antd'
+import { Descriptions } from 'antd';
 import { CheckCircleOutlined, CloseSquareOutlined } from '@ant-design/icons';
 import useTranslation from 'next-translate/useTranslation';
 
 export interface IDetailsListProps {
-	details: any
+    details: any;
+    nbColumns?: {
+        xxl?: number;
+        xl?: number;
+        lg?: number;
+        md?: number;
+        sm?: number;
+        xs?: number;
+    };
 }
 
-const DetailsList: FC<IDetailsListProps> = ({ details }: IDetailsListProps) => {
-	let {t} = useTranslation()
-	return (
+const DetailsList: FC<IDetailsListProps> = ({ details, nbColumns }: IDetailsListProps) => {
+    let { t } = useTranslation();
 
-		<Descriptions
-			column={{ xxl: 3, xl: 3, lg: 2, md: 2, sm: 2, xs: 1 }}
-			size="small"
-			bordered
-		>
-			{
-				Object.keys(details).map((key) => (
-					<Descriptions.Item label={t(`database:${key}`)}>
-						{
-							details[key] == true ? <CheckCircleOutlined style={{ color: 'green' }} />
-								: details[key] == false ?
-									<CloseSquareOutlined style={{ color: 'red' }} /> : details[key]
-						}
+    return (
+        <Descriptions column={nbColumns} size="small" bordered>
+            {Object.keys(details).map((key) => (
+                <Descriptions.Item label={t(`d:${key}`)}>
+                    {details[key] == true ? (
+                        <CheckCircleOutlined style={{ color: 'green' }} />
+                    ) : details[key] == false ? (
+                        <CloseSquareOutlined style={{ color: 'red' }} />
+                    ) : (
+                        details[key]
+                    )}
+                </Descriptions.Item>
+            ))}
+        </Descriptions>
+    );
+};
 
-					</Descriptions.Item>
-				))
-			}
-		</Descriptions>
-	);
-}
+DetailsList.displayName = 'DetailsList';
 
-DetailsList.displayName = 'DetailsList'
+DetailsList.defaultProps = {
+    nbColumns: {
+        xxl: 3,
+        xl: 3,
+        lg: 2,
+        md: 2,
+        sm: 2,
+        xs: 1
+    }
+};
 
 export { DetailsList };
-

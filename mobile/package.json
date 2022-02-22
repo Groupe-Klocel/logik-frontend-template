@@ -4,7 +4,7 @@
     "version": "1.0.0",
     "scripts": {
         "-------------------------------- LINT ----": "----",
-        "format": "prettier --write src/**/*.ts{,x}",
+        "format": "prettier --write src/**/*.ts{,x,graphql,js}",
         "tsc-check": "tsc -v && tsc --noEmit",
         "lint": "tsc --noEmit && eslint src/**/*.ts{,x}",
         "fix": "yarn lint --fix && yarn format",

@@ -4,149 +4,145 @@ import { blocsData } from 'fake-data/blocs';
 import useTranslation from 'next-translate/useTranslation';
 import { FC, useState } from 'react';
 
-const { Option } = Select
+const { Option } = Select;
 
-export interface IAddLocationFormProps {
+export interface IAddLocationFormProps {}
 
-}
+export const AddLocationForm: FC<IAddLocationFormProps> = ({}: IAddLocationFormProps) => {
+    let { t } = useTranslation('common');
 
-export const AddLocationForm: FC<IAddLocationFormProps> = ({ }: IAddLocationFormProps) => {
-	let { t } = useTranslation('common')
+    // TYPED SAFE ALL
 
-	// TYPED SAFE ALL 
+    const [newLocationData, setNewLocationData] = useState('');
 
-	const [newLocationData, setNewLocationData] = useState('')
+    // Call api to create new group
+    const onFinish = (values: any) => {
+        console.log('Success:', values);
+        setNewLocationData(values);
+    };
 
-	// Call api to create new group 
-	const onFinish = (values: any) => {
-		console.log('Success:', values);
-		setNewLocationData(values)
-	};
+    const onFinishFailed = (errorInfo: any) => {
+        console.log('Failed:', errorInfo);
+    };
 
-	const onFinishFailed = (errorInfo: any) => {
-		console.log('Failed:', errorInfo);
-	};
+    return (
+        <WrapperForm>
+            <Form
+                name="basic"
+                layout="vertical"
+                onFinish={onFinish}
+                onFinishFailed={onFinishFailed}
+                autoComplete="off"
+                scrollToFirstError
+            >
+                <Form.Item
+                    label={t('select-bloc')}
+                    name="select-bloc"
+                    hasFeedback
+                    rules={[
+                        { required: true, message: `${t('error-message-select-1')} ${t('bloc')}` }
+                    ]}
+                >
+                    <Select placeholder={`${t('error-message-select-1')} ${t('bloc')}`}>
+                        {blocsData.map((bloc: any) => (
+                            <Option key={bloc.id} value={bloc.name}>
+                                {bloc.name}
+                            </Option>
+                        ))}
+                    </Select>
+                </Form.Item>
 
-	return (
-		<WrapperForm>
-			<Form
-				name="basic"
-				layout="vertical"
-				onFinish={onFinish}
-				onFinishFailed={onFinishFailed}
-				autoComplete="off"
-				scrollToFirstError
-			>
-				<Form.Item
-					label={t('select-bloc')}
-					name="select-bloc"
-					hasFeedback
-					rules={[{ required: true, message: `${t('error-message-select-1')} ${t('bloc')}` }]}
-				>
-					<Select placeholder={`${t('error-message-select-1')} ${t('bloc')}`}>
-						{blocsData.map((bloc: any) =>
-							<Option key={bloc.id} value={bloc.name}>{bloc.name}</Option>
-						)}
-					</Select>
-				</Form.Item>
+                <Form.Item
+                    label={t('aisle')}
+                    name="aisle"
+                    rules={[{ required: true, message: `${t('error-message-empty-input')}` }]}
+                >
+                    <Input />
+                </Form.Item>
 
-				<Form.Item
-					label={t('aisle')}
-					name="aisle"
-					rules={[{ required: true, message: `${t('error-message-empty-input')}` }]}
-				>
-					<Input />
-				</Form.Item>
+                <Form.Item
+                    label={t('nb-aisle')}
+                    name="nb-aisle"
+                    rules={[{ required: true, message: `${t('error-message-empty-input')}` }]}
+                >
+                    <Input />
+                </Form.Item>
 
-				<Form.Item
-					label={t('nb-aisle')}
-					name="nb-aisle"
-					rules={[{ required: true, message: `${t('error-message-empty-input')}` }]}
-				>
-					<Input />
-				</Form.Item>
+                <Form.Item
+                    label={t('column')}
+                    name="column"
+                    rules={[{ required: true, message: `${t('error-message-empty-input')}` }]}
+                >
+                    <Input />
+                </Form.Item>
 
-				<Form.Item
-					label={t('column')}
-					name="column"
-					rules={[{ required: true, message: `${t('error-message-empty-input')}` }]}
-				>
-					<Input />
-				</Form.Item>
+                <Form.Item
+                    label={t('nb-column')}
+                    name="nb-column"
+                    rules={[{ required: true, message: `${t('error-message-empty-input')}` }]}
+                >
+                    <Input />
+                </Form.Item>
 
-				<Form.Item
-					label={t('nb-column')}
-					name="nb-column"
-					rules={[{ required: true, message: `${t('error-message-empty-input')}` }]}
-				>
-					<Input />
-				</Form.Item>
+                <Form.Item
+                    label={t('level')}
+                    name="level"
+                    rules={[{ required: true, message: `${t('error-message-empty-input')}` }]}
+                >
+                    <Input />
+                </Form.Item>
 
-				<Form.Item
-					label={t('level')}
-					name="level"
-					rules={[{ required: true, message: `${t('error-message-empty-input')}` }]}
-				>
-					<Input />
-				</Form.Item>
+                <Form.Item
+                    label={t('nb-level')}
+                    name="nb-level"
+                    rules={[{ required: true, message: `${t('error-message-empty-input')}` }]}
+                >
+                    <Input />
+                </Form.Item>
 
-				<Form.Item
-					label={t('nb-level')}
-					name="nb-level"
-					rules={[{ required: true, message: `${t('error-message-empty-input')}` }]}
-				>
-					<Input />
-				</Form.Item>
+                <Form.Item
+                    label={t('step')}
+                    name="step"
+                    rules={[{ required: true, message: `${t('error-message-empty-input')}` }]}
+                >
+                    <Input />
+                </Form.Item>
 
-				<Form.Item
-					label={t('step')}
-					name="step"
-					rules={[{ required: true, message: `${t('error-message-empty-input')}` }]}
-				>
-					<Input />
-				</Form.Item>
+                <Form.Item
+                    label={t('position')}
+                    name="position"
+                    rules={[{ required: true, message: `${t('error-message-empty-input')}` }]}
+                >
+                    <Input />
+                </Form.Item>
 
-				<Form.Item
-					label={t('position')}
-					name="position"
-					rules={[{ required: true, message: `${t('error-message-empty-input')}` }]}
-				>
-					<Input />
-				</Form.Item>
+                <Form.Item
+                    label={t('nb-position')}
+                    name="nb-position"
+                    rules={[{ required: true, message: `${t('error-message-empty-input')}` }]}
+                >
+                    <Input />
+                </Form.Item>
+                <Form.Item name="replenish">
+                    <Checkbox>{t('replenish')}</Checkbox>
+                </Form.Item>
 
-				<Form.Item
-					label={t('nb-position')}
-					name="nb-position"
-					rules={[{ required: true, message: `${t('error-message-empty-input')}` }]}
-				>
-					<Input />
-				</Form.Item>
-				<Form.Item name="replenish" >
-					<Checkbox>{t('replenish')}</Checkbox>
-				</Form.Item>
+                <Form.Item label={t('constraint')} name="constraint">
+                    <Input />
+                </Form.Item>
 
-				<Form.Item
-					label={t('constraint')}
-					name="constraint"
-				>
-					<Input />
-				</Form.Item>
+                <Form.Item label={t('comment')} name="comment">
+                    <Input />
+                </Form.Item>
 
-				<Form.Item
-					label={t('comment')}
-					name="comment"
-				>
-					<Input />
-				</Form.Item>
-
-				<Row>
-					<Col span={24} style={{ textAlign: 'right' }}>
-						<Button type="primary" htmlType="submit">
-							{t('submit')}
-						</Button>
-					</Col>
-				</Row>
-			</Form>
-		</WrapperForm>
-	);
-}
+                <Row>
+                    <Col span={24} style={{ textAlign: 'right' }}>
+                        <Button type="primary" htmlType="submit">
+                            {t('submit')}
+                        </Button>
+                    </Col>
+                </Row>
+            </Form>
+        </WrapperForm>
+    );
+};

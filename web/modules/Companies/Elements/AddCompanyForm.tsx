@@ -3,56 +3,49 @@ import { Button, Col, Form, InputNumber, Row, Select } from 'antd';
 import useTranslation from 'next-translate/useTranslation';
 import { FC, useState } from 'react';
 
-const { Option } = Select
+const { Option } = Select;
 
-export interface IAddCompanyFormProps {
+export interface IAddCompanyFormProps {}
 
-}
+export const AddCompanyForm: FC<IAddCompanyFormProps> = ({}: IAddCompanyFormProps) => {
+    let { t } = useTranslation('common');
 
-export const AddCompanyForm: FC<IAddCompanyFormProps> = ({ }: IAddCompanyFormProps) => {
-	let { t } = useTranslation('common')
+    //TODO FETCH GROUP'S NAME
+    // TYPED SAFE ALL
 
-	//TODO FETCH GROUP'S NAME
-	// TYPED SAFE ALL 
+    const [newCompanyData, setNewCompanyData] = useState('');
 
-	const [newCompanyData, setNewCompanyData] = useState('')
+    // Call api to create new user
+    const onFinish = (values: any) => {
+        console.log('Success:', values);
+        setNewCompanyData(values);
+    };
 
-	// Call api to create new user 
-	const onFinish = (values: any) => {
-		console.log('Success:', values);
-		setNewCompanyData(values)
-	};
+    const onFinishFailed = (errorInfo: any) => {
+        console.log('Failed:', errorInfo);
+    };
 
-	const onFinishFailed = (errorInfo: any) => {
-		console.log('Failed:', errorInfo);
-	};
-
-	return (
-		<WrapperForm>
-			<Form
-				name="basic"
-				layout="vertical"
-				onFinish={onFinish}
-				onFinishFailed={onFinishFailed}
-				autoComplete="off"
-				scrollToFirstError
-
-			>
-
-				<Form.Item
-					label={t('custom-value')}
-					name="custom-value"
-				>
-					<InputNumber />
-				</Form.Item>
-				<Row>
-					<Col span={24} style={{ textAlign: 'right' }}>
-						<Button type="primary" htmlType="submit">
-							{t('submit')}
-						</Button>
-					</Col>
-				</Row>
-			</Form>
-		</WrapperForm>
-	);
-}
+    return (
+        <WrapperForm>
+            <Form
+                name="basic"
+                layout="vertical"
+                onFinish={onFinish}
+                onFinishFailed={onFinishFailed}
+                autoComplete="off"
+                scrollToFirstError
+            >
+                <Form.Item label={t('custom-value')} name="custom-value">
+                    <InputNumber />
+                </Form.Item>
+                <Row>
+                    <Col span={24} style={{ textAlign: 'right' }}>
+                        <Button type="primary" htmlType="submit">
+                            {t('submit')}
+                        </Button>
+                    </Col>
+                </Row>
+            </Form>
+        </WrapperForm>
+    );
+};
