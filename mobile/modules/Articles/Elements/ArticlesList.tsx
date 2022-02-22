@@ -34,7 +34,7 @@ const ArticlesList = ({ searchCriteria }: IArticlesListProps) => {
 		itemsPerPage: DEFAULT_ITEMS_PER_PAGE,
 	})
 
-	const { isLoading, data, error } = useArticles(searchCriteria, pagination.current, pagination.itemsPerPage)
+	const { isLoading, data, error } = useArticles(searchCriteria, pagination.current, pagination.itemsPerPage, "id")
 
 	// make wrapper function to give child
 	const onChangePagination = useCallback((currentPage, itemsPerPage) => {

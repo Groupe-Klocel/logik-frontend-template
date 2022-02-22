@@ -72,7 +72,7 @@ export const AddArticleForm: FC<IAddArticleFormProps> = ({}: IAddArticleFormProp
         form.validateFields()
             .then(() => {
                 console.log(form.getFieldsValue(true));
-                createArticle({ input: form.getFieldsValue(true) });
+                createArticle({ input: {...form.getFieldsValue(true), accountId:1} });
             })
             .catch((err) => console.log(err));
     };

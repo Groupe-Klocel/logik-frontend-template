@@ -1,8 +1,8 @@
-import { cookie, decodeJWT, OnlyChildrenType, showError, showSuccess } from '@helpers';
+import { cookie, decodeJWT, OnlyChildrenType, showError, showSuccess, IS_FAKE, IS_SAME_SEED } from '@helpers';
 import { LoginMutation, LoginMutationVariables, useLoginMutation } from 'generated/graphql';
 import { GraphQLClient } from 'graphql-request';
 import { useRouter } from 'next/router';
-import React, { createContext, FC, useContext, useEffect, useState } from 'react';
+import { createContext, FC, useContext, useEffect, useState } from 'react';
 import useTranslation from 'next-translate/useTranslation';
 
 interface IAuthContext {
@@ -70,10 +70,29 @@ export const AuthProvider: FC<OnlyChildrenType> = ({ children }: OnlyChildrenTyp
         router.push('/login');
     };
 
+    let requestHeader
+
     const setHeader = (token: string) => {
-        const requestHeader = {
-            authorization: `Bearer ${token}`
-        };
+        if (IS_FAKE) {
+            if (IS_SAME_SEED) {
+                requestHeader = {
+                    "X-API-fake": "fake",
+                    "X-API-seed": "same",
+                    authorization: `Bearer ${token}`
+                };
+            } else {
+                requestHeader = {
+                    "X-API-fake": "fake",
+                    authorization: `Bearer ${token}`
+                };
+
+            }
+        } else {
+            requestHeader = {
+                authorization: `Bearer ${token}`
+            };
+        }
+
         const graphqlClientWithHeader = new GraphQLClient(
             process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT as string,
             {

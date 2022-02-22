@@ -21,12 +21,12 @@ const DetailsList: FC<IDetailsListProps> = ({ details, nbColumns }: IDetailsList
     return (
         <Descriptions column={nbColumns} size="small" bordered>
             {Object.keys(details).map((key) => (
-                <Descriptions.Item label={t(`d:${key}`)}>
-                    {details[key] == true ? (
+                <Descriptions.Item key={key} label={t(`d:${key}`)}>
+                    {details[key] === true ? (
                         <CheckCircleOutlined style={{ color: 'green' }} />
-                    ) : details[key] == false ? (
+                    ) : details[key] === false ? (
                         <CloseSquareOutlined style={{ color: 'red' }} />
-                    ) : details[key] == null ? "-" : (
+                    ) : details[key] === null ? "-" : (
                         details[key]
                     )}
                 </Descriptions.Item>

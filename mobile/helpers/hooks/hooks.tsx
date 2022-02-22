@@ -2,11 +2,8 @@ import { useState } from 'react';
 import { useAuth } from 'context/AuthContext';
 import {
     GetAllArticlesQuery,
-    useGetAllArticlesQuery,
-    useGetAllBarcodesQuery,
-    GetAllBarcodesQuery
+    useGetAllArticlesQuery
 } from 'generated/graphql';
-import {isEmpty} from "@helpers"
 const useDrawerState = (initialState: { isOpen: boolean; drawerProps: any }) => {
     const [isOpen, setIsOpen] = useState(initialState.isOpen);
     const [drawerProps, setDrawerProps] = useState(initialState.drawerProps);
@@ -36,20 +33,5 @@ const useArticles = (search: any, page: number, itemsPerPage: number, sort: stri
     return articles;
 };
 
-const useBarcodes = (search: any, page: number, itemsPerPage: number, sort: string) => {
-    const { graphqlRequestClient } = useAuth();
 
-    const barcodes = useGetAllBarcodesQuery<Partial<GetAllBarcodesQuery>, Error>(
-        graphqlRequestClient,
-        {
-            filters: search,
-            orderBy: sort,
-            page: page,
-            itemsPerPage: itemsPerPage
-        }
-    );
-
-    return barcodes;
-};
-
-export { useDrawerState, useArticles, useBarcodes };
+export { useDrawerState, useArticles };
