@@ -54,6 +54,9 @@ const SingleArticle: FC<ISingleArticleProps> = ({ id, router }: ISingleArticlePr
                 onBack={() => router.back()}
                 actionsRight={
                     <Space>
+                        <Button onClick={() => alert('Update box quantity')} type="primary">
+                            {t('actions:update-quantity')}
+                        </Button>
                         <Button onClick={() => alert('Edit')} type="primary">
                             {t('actions:edit')}
                         </Button>
