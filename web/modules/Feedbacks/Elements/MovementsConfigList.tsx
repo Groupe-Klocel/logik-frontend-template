@@ -2,42 +2,39 @@ import { DeleteOutlined, EyeTwoTone, EditTwoTone } from '@ant-design/icons';
 import { Button, Space } from 'antd';
 import { AppTable } from '@components';
 import { companiesData } from 'fake-data/companies';
-import useTranslation from 'next-translate/useTranslation';
 import { FC } from 'react';
 
 export interface IMovementsConfigListProps {}
 
 export const MovementsConfigList: FC<IMovementsConfigListProps> = ({}) => {
-    let { t } = useTranslation('common');
-
     const columns = [
         {
-            title: t('account'),
+            title: 'common:account',
             dataIndex: 'account',
             key: 'account'
         },
         {
-            title: t('company'),
+            title: 'common:company',
             dataIndex: 'company',
             key: 'company'
         },
         {
-            title: t('movement-code'),
+            title: 'common:movement-code',
             dataIndex: 'movement-code',
             key: 'movement-code'
         },
         {
-            title: t('feedback'),
+            title: 'common:feedback',
             dataIndex: 'feedback',
             key: 'feedback'
         },
         {
-            title: t('custom-value'),
+            title: 'common:custom-value',
             dataIndex: 'custom-value',
             key: 'custom-value'
         },
         {
-            title: t('actions:actions'),
+            title: 'actions:actions',
             key: 'actions',
             render: (record: { id: number; account: string }) => (
                 <Space>

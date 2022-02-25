@@ -2,57 +2,54 @@ import { EyeTwoTone, PrinterOutlined } from '@ant-design/icons';
 import { Button, Space } from 'antd';
 import { AppTable } from '@components';
 import { packagingsData } from 'fake-data/packagings';
-import useTranslation from 'next-translate/useTranslation';
 import { FC } from 'react';
 
 export interface IPackagingsListProps {}
 
 export const PackagingsList: FC<IPackagingsListProps> = ({}) => {
-    let { t } = useTranslation('common');
-
     const columns = [
         {
-            title: t('name'),
+            title: 'name',
             dataIndex: 'name',
             key: 'name'
         },
         {
-            title: t('description'),
+            title: 'description',
             dataIndex: 'description',
             key: 'description'
         },
         {
-            title: t('default'),
+            title: 'default',
             dataIndex: 'default',
             key: 'default'
         },
         {
-            title: t('dispatchable'),
+            title: 'dispatchable',
             dataIndex: 'dispatchable',
             key: 'dispatchable'
         },
         {
-            title: t('status'),
+            title: 'status',
             dataIndex: 'status',
             key: 'status'
         },
         {
-            title: t('length'),
+            title: 'length',
             dataIndex: 'length',
             key: 'length'
         },
         {
-            title: t('width'),
+            title: 'width',
             dataIndex: 'width',
             key: 'width'
         },
         {
-            title: t('height'),
+            title: 'height',
             dataIndex: 'height',
             key: 'height'
         },
         {
-            title: t('actions:actions'),
+            title: 'actions:actions',
             key: 'actions',
             render: (record: { id: number; name: string }) => (
                 <Space>

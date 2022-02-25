@@ -1,5 +1,4 @@
 import { FC } from 'react';
-import useTranslation from 'next-translate/useTranslation';
 import { Button, Space } from 'antd';
 import { locationsData } from 'fake-data/locations';
 import { AppTable } from '@components';
@@ -8,8 +7,6 @@ import { DeleteOutlined, EyeTwoTone, EditTwoTone } from '@ant-design/icons';
 export interface ILocationsListProps {}
 
 export const LocationsList: FC<ILocationsListProps> = ({}) => {
-    let { t } = useTranslation('common');
-
     const columns = [
         {
             title: 'Name',
@@ -47,7 +44,7 @@ export const LocationsList: FC<ILocationsListProps> = ({}) => {
             key: 'replenish'
         },
         {
-            title: t('actions:actions'),
+            title: 'actions:actions',
             key: 'actions',
             render: (record: { id: number }) => (
                 <Space>

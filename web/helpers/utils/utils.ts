@@ -19,6 +19,34 @@ function getKeys(data: Array<any>): React.Key[] {
     return keys;
 }
 
+function orderBooleanFormater(order: string) {
+    if (order === 'ascend') {
+        return true;
+    } else if (order === 'descend') {
+        return false;
+    } else return order;
+}
+
+// Purge sort array/object
+function purgeSorter(data: Array<any> | any): Array<any> | null {
+    let newSorter;
+    if (!Array.isArray(data)) {
+        if (data.order === undefined) {
+            return null;
+        } else {
+            newSorter = [data];
+        }
+    } else {
+        newSorter = data;
+    }
+
+    newSorter = newSorter.map((value) => ({
+        field: value.field,
+        ascending: orderBooleanFormater(value.order)
+    }));
+    return newSorter;
+}
+
 // Set index to each object in an array
 function setIndex(array: Array<any>): Array<any> {
     const arrayWithIndex = array.map((object: Object) => ({
@@ -33,6 +61,7 @@ function addKeyValueToArrayObject(array: Array<any>, key: string, value: any): A
     const newarray = array.map((object: Object) => addKeyValueToObject(object, key, value));
     return newarray;
 }
+
 // add key pair value to an object
 function addKeyValueToObject(object: Object, key: string, value: any): Object {
     return Object.defineProperty(object, key, {
@@ -164,9 +193,64 @@ const pathParams = (pathname: string, id: string) => {
 const checkKeyPresenceInArray = (key: any, array: any[]) =>
     array.filter((o) => o.hasOwnProperty(key));
 
+const checkValuePresenceInArray = (value: any, array: any[]) =>
+    array.some((obj) => obj.field === value);
+
+//  /**
+//  * @desc get table data as json
+//  * @param data
+//  * @param columns
+//  */
+// const getDataForExport = (data: any[], columns: any[]) => data?.map((record: any) => columns
+// 	.reduce((recordToDownload, column) => (
+// 		{ ...recordToDownload, [column.Header]: record[column.dataIndex] }
+// 	), {}));
+
+// /**
+//  * @desc make csv from given data
+//  * @param rows
+//  * @param filename
+//  */
+//  const createCsv = async (rows: any[], filename: string) => {
+//   const separator: string = ';';
+//   const keys: string[] = Object.keys(rows[0]);
+
+// const csvContent = `${keys.join(separator)}\n${
+//   rows.map((row) => keys.map((k) => {
+//     let cell = row[k] === null || row[k] === undefined ? '' : row[k];
+
+//     cell = cell instanceof Date
+//       ? cell.toLocaleString()
+//       : cell.toString().replace(/"/g, '""');
+
+//     if (cell.search(/("|,|\n)/g) >= 0) {
+//       cell = `"${cell}"`;
+//     }
+//     return cell;
+//   }).join(separator)).join('\n')}`;
+
+// const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+//   if (navigator.msSaveBlob) { // In case of IE 10+
+//     navigator.msSaveBlob(blob, filename);
+//   } else {
+//     const link = document.createElement('a');
+//     if (link.download !== undefined) {
+//       // Browsers that support HTML5 download attribute
+//       const url = URL.createObjectURL(blob);
+//       link.setAttribute('href', url);
+//       link.setAttribute('download', filename);
+//       link.style.visibility = 'hidden';
+//       document.body.appendChild(link);
+//       link.click();
+//       document.body.removeChild(link);
+//     }
+//   }
+// };
 
 export {
     isEmpty,
+    purgeSorter,
+    checkValuePresenceInArray,
     pathParams,
     setCustomColumnsProps,
     checkKeyPresenceInArray,

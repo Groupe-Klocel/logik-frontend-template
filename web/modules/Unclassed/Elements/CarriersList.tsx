@@ -2,42 +2,39 @@ import { EyeTwoTone, PrinterOutlined } from '@ant-design/icons';
 import { Button, Space } from 'antd';
 import { AppTable } from '@components';
 import { carriersData } from 'fake-data/carriers';
-import useTranslation from 'next-translate/useTranslation';
 import { FC } from 'react';
 
 export interface ICarriersListProps {}
 
 export const CarriersList: FC<ICarriersListProps> = ({}) => {
-    let { t } = useTranslation('common');
-
     const columns = [
         {
-            title: t('name'),
+            title: 'name',
             dataIndex: 'name',
             key: 'name'
         },
         {
-            title: t('code'),
+            title: 'code',
             dataIndex: 'code',
             key: 'code'
         },
         {
-            title: t('available'),
+            title: 'available',
             dataIndex: 'available',
             key: 'available'
         },
         {
-            title: t('to-be-loaded'),
+            title: 'to-be-loaded',
             dataIndex: 'to-be-loaded',
             key: 'to-be-loaded'
         },
         {
-            title: t('status'),
+            title: 'status',
             dataIndex: 'status',
             key: 'status'
         },
         {
-            title: t('actions:actions'),
+            title: 'actions:actions',
             key: 'actions',
             render: (record: { id: number; name: string }) => (
                 <Space>

@@ -1,16 +1,13 @@
 import { SettingOutlined, FileExcelOutlined, DeleteOutlined } from '@ant-design/icons';
 import { TableFilter, WrapperStickyActions, PageTableContentWrapper } from '@components';
-import {
-    getKeys,
-    setCustomColumnsProps,
-    cookie,
-    checkKeyPresenceInArray,
-    showError
-} from '@helpers';
+import { getKeys, setCustomColumnsProps, cookie, checkKeyPresenceInArray } from '@helpers';
 import { Space, Button, Table } from 'antd';
 import { useDrawerDispatch } from 'context/DrawerContext';
 import useTranslation from 'next-translate/useTranslation';
 import { FC, useCallback, useEffect, useState, useRef, Key } from 'react';
+import { useAppState } from 'context/AppContext';
+
+const { Column } = Table;
 
 export interface IAppTableProps {
     // Refactory to strong type
@@ -28,9 +25,11 @@ export interface IAppTableProps {
         export?: boolean;
         // delete?: boolean;
     };
+    onChange?: any;
 }
 
 const AppTable: FC<IAppTableProps> = ({
+    onChange,
     stickyActions,
     data,
     columns,
@@ -42,7 +41,7 @@ const AppTable: FC<IAppTableProps> = ({
 }: IAppTableProps) => {
     let { t } = useTranslation();
     // get filter from cookies if exist
-
+    const { globalLocale } = useAppState();
     const filterDrawerRef = useRef() as any | undefined;
     const allColumnKeys = getKeys(columns);
 
@@ -80,14 +79,11 @@ const AppTable: FC<IAppTableProps> = ({
     const [tableColumns, setTableColumns] = useState<any[]>(
         initialState !== null ? initialState.tableColumns : setCustomColumnsProps(columns)
     );
-    // console.log('tableColumns changed: ', tableColumns);
-    // console.log('filteredColumns changed: ', filteredColumns);
 
-    
     // Make each row checkable
 
     // const [selectedRowKeys, setSelectedRowKeys] = useState<Key[]>([]);
-    
+
     // const rowSelection = {
     //     selectedRowKeys,
     //     onChange: (selectedRowKeys: Key[], record: any) => {
@@ -95,8 +91,18 @@ const AppTable: FC<IAppTableProps> = ({
     //     }
     // };
 
+    // give a deleteMutation to app table to know what data type should be deleted
+    // const deleteRecords = () => {
+    //     if (Array.isArray(selectedRowKeys) && selectedRowKeys.length) {
+    //         // trigger delete mutation
+    //         alert(`delete articles ${JSON.stringify(selectedRowKeys)}`);
+    //     } else {
+    //         showError(t('messages:action-impossible', { name: t('actions:delete') }));
+    //     }
+    // };
 
     // make wrapper function to give child
+
     const childSetVisibleColumnKeys = useCallback(
         (val) => {
             setVisibleColumnKeys(val);
@@ -131,16 +137,6 @@ const AppTable: FC<IAppTableProps> = ({
         closeDrawer();
     };
 
-    // give a deleteMutation to app table to know what data type should be deleted
-    // const deleteRecords = () => {
-    //     if (Array.isArray(selectedRowKeys) && selectedRowKeys.length) {
-    //         // trigger delete mutation
-    //         alert(`delete articles ${JSON.stringify(selectedRowKeys)}`);
-    //     } else {
-    //         showError(t('messages:action-impossible', { name: t('actions:delete') }));
-    //     }
-    // };
-
     const dispatchDrawer = useDrawerDispatch();
 
     const closeDrawer = useCallback(
@@ -153,17 +149,16 @@ const AppTable: FC<IAppTableProps> = ({
             dispatchDrawer({
                 size: 700,
                 type: 'OPEN_DRAWER',
-                title: t('actions:filter'),
-                cancelButtonTitle: t('actions:reset'),
+                title: 'actions:filter',
+                cancelButtonTitle: 'actions:reset',
                 cancelButton: true,
                 onCancel: () => handleReset(),
-                comfirmButtonTitle: t('actions:save'),
+                comfirmButtonTitle: 'actions:save',
                 comfirmButton: true,
                 onComfirm: () => handleSave(),
                 content: (
                     <TableFilter
                         ref={filterDrawerRef}
-                        cookieKey={type}
                         columnsToFilter={filteredColumns}
                         visibleKeys={visibleColumnKeys}
                         fixKeys={fixedColumns}
@@ -232,11 +227,11 @@ const AppTable: FC<IAppTableProps> = ({
             </WrapperStickyActions>
             <Table
                 rowKey="id"
-                columns={tableColumns}
                 dataSource={data}
                 scroll={scroll}
                 size="small"
                 loading={isLoading}
+                onChange={onChange}
                 // rowSelection={rowSelection}
                 pagination={
                     pagination && {
@@ -249,7 +244,18 @@ const AppTable: FC<IAppTableProps> = ({
                         }
                     }
                 }
-            />
+            >
+                {tableColumns.map((c) => (
+                    <Column
+                        title={t(c.title)}
+                        dataIndex={c.dataIndex}
+                        key={c.key}
+                        sorter={c.sorter}
+                        showSorterTooltip={c.showSorterTooltip}
+                        render={c.render}
+                    />
+                ))}
+            </Table>
         </PageTableContentWrapper>
     );
 };
@@ -258,7 +264,7 @@ AppTable.displayName = 'AppTable';
 
 AppTable.defaultProps = {
     stickyActions: {
-        export: false,
+        export: false
         // delete: false
     }
 };

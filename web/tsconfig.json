@@ -18,7 +18,6 @@
             "@/*": ["./src/*"],
             "@components": ["./components/index.ts"],
             "@helpers": ["./helpers/index.ts"],
-            "@configs/*": ["helpers/configs/*"]
         },
         "incremental": true
     },

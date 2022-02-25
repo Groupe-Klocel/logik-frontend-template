@@ -1,22 +1,19 @@
 import { CheckCircleOutlined, CloseSquareOutlined } from '@ant-design/icons';
 import { AppTable } from '@components';
 import { usersData } from 'fake-data/users';
-import useTranslation from 'next-translate/useTranslation';
 import { FC } from 'react';
 
 export interface IGroupOfUsersListProps {}
 
 export const GroupOfUsersList: FC<IGroupOfUsersListProps> = ({}) => {
-    let { t } = useTranslation('common');
-
     const columns = [
         {
-            title: t('username'),
+            title: 'common:username',
             dataIndex: 'username',
             key: 'username'
         },
         {
-            title: t('administator'),
+            title: 'common:administator',
             key: 'admin',
             render: (record: { admin: boolean }) => {
                 return record.admin ? (
@@ -27,7 +24,7 @@ export const GroupOfUsersList: FC<IGroupOfUsersListProps> = ({}) => {
             }
         },
         {
-            title: t('operator'),
+            title: 'common:operator',
             key: 'ope',
             render: (record: { ope: boolean }) => {
                 return record.ope ? (
@@ -38,7 +35,7 @@ export const GroupOfUsersList: FC<IGroupOfUsersListProps> = ({}) => {
             }
         },
         {
-            title: t('prepers'),
+            title: 'common:prepers',
             key: 'prep',
             render: (record: { prep: boolean }) => {
                 return record.prep ? (

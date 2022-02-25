@@ -6,9 +6,9 @@ import { FC, useState } from 'react';
 
 const { Option } = Select;
 
-export interface IAddLocationFormProps {}
+export interface IAddLocationFormProps { }
 
-export const AddLocationForm: FC<IAddLocationFormProps> = ({}: IAddLocationFormProps) => {
+export const AddLocationForm: FC<IAddLocationFormProps> = ({ }: IAddLocationFormProps) => {
     let { t } = useTranslation('common');
 
     // TYPED SAFE ALL
@@ -17,12 +17,12 @@ export const AddLocationForm: FC<IAddLocationFormProps> = ({}: IAddLocationFormP
 
     // Call api to create new group
     const onFinish = (values: any) => {
-        console.log('Success:', values);
+        alert('Success');
         setNewLocationData(values);
     };
 
     const onFinishFailed = (errorInfo: any) => {
-        console.log('Failed:', errorInfo);
+        alert('Failed');
     };
 
     return (

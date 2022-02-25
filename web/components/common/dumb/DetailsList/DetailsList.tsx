@@ -26,7 +26,9 @@ const DetailsList: FC<IDetailsListProps> = ({ details, nbColumns }: IDetailsList
                         <CheckCircleOutlined style={{ color: 'green' }} />
                     ) : details[key] === false ? (
                         <CloseSquareOutlined style={{ color: 'red' }} />
-                    ) : details[key] === null ? "-" : (
+                    ) : details[key] === null ? (
+                        '-'
+                    ) : (
                         details[key]
                     )}
                 </Descriptions.Item>

@@ -1,5 +1,4 @@
 import { FC } from 'react';
-import useTranslation from 'next-translate/useTranslation';
 import { Button } from 'antd';
 import { companiesData } from 'fake-data/companies';
 import { AppTable } from '@components';
@@ -8,8 +7,6 @@ import { EyeTwoTone } from '@ant-design/icons';
 export interface ICompaniesListProps {}
 
 export const CompaniesList: FC<ICompaniesListProps> = ({}) => {
-    let { t } = useTranslation('common');
-
     const columns = [
         {
             title: 'Name',
@@ -42,7 +39,7 @@ export const CompaniesList: FC<ICompaniesListProps> = ({}) => {
             key: 'status'
         },
         {
-            title: t('actions:actions'),
+            title: 'actions:actions',
             key: 'actions',
             render: (record: { id: number }) => (
                 <Button icon={<EyeTwoTone />} onClick={() => alert(`View ${record.id} `)} />

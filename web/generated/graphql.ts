@@ -26,8 +26,6 @@ export type Scalars = {
     DateTime: any;
     /** The GenericScalar scalar type represents a generic GraphQL scalar value that could be: List or Object. */
     JSONScalar: any;
-    /** Represents NULL values */
-    Void: any;
 };
 
 export type Article = {
@@ -69,6 +67,41 @@ export type Article = {
     width: Scalars['Float'];
 };
 
+/** Field names for the Article model */
+export enum ArticleFieldName {
+    AccountId = 'accountId',
+    AdditionalDescription = 'additionalDescription',
+    Barcodes = 'barcodes',
+    BaseUnitPicking = 'baseUnitPicking',
+    BaseUnitPrice = 'baseUnitPrice',
+    BaseUnitRotation = 'baseUnitRotation',
+    BaseUnitWeight = 'baseUnitWeight',
+    BoxPicking = 'boxPicking',
+    BoxQuantity = 'boxQuantity',
+    BoxRotation = 'boxRotation',
+    BoxWeight = 'boxWeight',
+    Code = 'code',
+    CompanyId = 'companyId',
+    Created = 'created',
+    CreatedBy = 'createdBy',
+    CubingType = 'cubingType',
+    Family = 'family',
+    FeatureTypeId = 'featureTypeId',
+    GroupingId = 'groupingId',
+    Height = 'height',
+    Id = 'id',
+    Length = 'length',
+    Modified = 'modified',
+    ModifiedBy = 'modifiedBy',
+    Name = 'name',
+    PermanentProduct = 'permanentProduct',
+    Status = 'status',
+    Subfamily = 'subfamily',
+    SupplierName = 'supplierName',
+    TariffClassification = 'tariffClassification',
+    Width = 'width'
+}
+
 /** Returns a list of Article */
 export type ArticleListResult = {
     __typename?: 'ArticleListResult';
@@ -79,39 +112,44 @@ export type ArticleListResult = {
     totalPages: Scalars['Int'];
 };
 
+/** How to order the search results for Article */
+export type ArticleOrderByCriterion = {
+    ascending?: Scalars['Boolean'];
+    field: ArticleFieldName;
+};
+
 /** Attributes of Article to filter onto */
 export type ArticleSearchFilters = {
-    accountId?: InputMaybe<Scalars['String']>;
+    accountId?: InputMaybe<Scalars['Int']>;
     additionalDescription?: InputMaybe<Scalars['String']>;
-    barcodes?: InputMaybe<Scalars['String']>;
-    baseUnitPicking?: InputMaybe<Scalars['String']>;
-    baseUnitPrice?: InputMaybe<Scalars['String']>;
+    baseUnitPicking?: InputMaybe<Scalars['Boolean']>;
+    baseUnitPrice?: InputMaybe<Scalars['Float']>;
     baseUnitRotation?: InputMaybe<Scalars['String']>;
-    baseUnitWeight?: InputMaybe<Scalars['String']>;
-    boxPicking?: InputMaybe<Scalars['String']>;
-    boxQuantity?: InputMaybe<Scalars['String']>;
+    baseUnitWeight?: InputMaybe<Scalars['Float']>;
+    boxPicking?: InputMaybe<Scalars['Boolean']>;
+    boxQuantity?: InputMaybe<Scalars['Float']>;
     boxRotation?: InputMaybe<Scalars['String']>;
-    boxWeight?: InputMaybe<Scalars['String']>;
+    boxWeight?: InputMaybe<Scalars['Float']>;
     code?: InputMaybe<Scalars['String']>;
-    companyId?: InputMaybe<Scalars['String']>;
-    created?: InputMaybe<Scalars['String']>;
+    companyId?: InputMaybe<Scalars['Int']>;
+    created?: InputMaybe<Scalars['DateTime']>;
     createdBy?: InputMaybe<Scalars['String']>;
-    cubingType?: InputMaybe<Scalars['String']>;
+    cubingType?: InputMaybe<Scalars['Int']>;
     family?: InputMaybe<Scalars['String']>;
-    featureTypeId?: InputMaybe<Scalars['String']>;
+    featureTypeId?: InputMaybe<Scalars['Int']>;
     groupingId?: InputMaybe<Scalars['String']>;
-    height?: InputMaybe<Scalars['String']>;
-    id?: InputMaybe<Scalars['String']>;
-    length?: InputMaybe<Scalars['String']>;
-    modified?: InputMaybe<Scalars['String']>;
+    height?: InputMaybe<Scalars['Float']>;
+    id?: InputMaybe<Scalars['Int']>;
+    length?: InputMaybe<Scalars['Float']>;
+    modified?: InputMaybe<Scalars['DateTime']>;
     modifiedBy?: InputMaybe<Scalars['String']>;
     name?: InputMaybe<Scalars['String']>;
-    permanentProduct?: InputMaybe<Scalars['String']>;
-    status?: InputMaybe<Scalars['String']>;
+    permanentProduct?: InputMaybe<Scalars['Boolean']>;
+    status?: InputMaybe<Scalars['Int']>;
     subfamily?: InputMaybe<Scalars['String']>;
     supplierName?: InputMaybe<Scalars['String']>;
     tariffClassification?: InputMaybe<Scalars['String']>;
-    width?: InputMaybe<Scalars['String']>;
+    width?: InputMaybe<Scalars['Float']>;
 };
 
 export type Barcode = {
@@ -133,6 +171,25 @@ export type Barcode = {
     supplierName?: Maybe<Scalars['String']>;
 };
 
+/** Field names for the Barcode model */
+export enum BarcodeFieldName {
+    AccountId = 'accountId',
+    ArticleId = 'articleId',
+    CompanyId = 'companyId',
+    Created = 'created',
+    CreatedBy = 'createdBy',
+    FlagDouble = 'flagDouble',
+    Id = 'id',
+    Modified = 'modified',
+    ModifiedBy = 'modifiedBy',
+    Name = 'name',
+    PreparationMode = 'preparationMode',
+    Quantity = 'quantity',
+    Rotation = 'rotation',
+    SupplierArticleCode = 'supplierArticleCode',
+    SupplierName = 'supplierName'
+}
+
 /** Returns a list of Barcode */
 export type BarcodeListResult = {
     __typename?: 'BarcodeListResult';
@@ -143,20 +200,26 @@ export type BarcodeListResult = {
     totalPages: Scalars['Int'];
 };
 
+/** How to order the search results for Barcode */
+export type BarcodeOrderByCriterion = {
+    ascending?: Scalars['Boolean'];
+    field: BarcodeFieldName;
+};
+
 /** Attributes of Barcode to filter onto */
 export type BarcodeSearchFilters = {
-    accountId?: InputMaybe<Scalars['String']>;
-    articleId?: InputMaybe<Scalars['String']>;
-    companyId?: InputMaybe<Scalars['String']>;
-    created?: InputMaybe<Scalars['String']>;
+    accountId?: InputMaybe<Scalars['Int']>;
+    articleId?: InputMaybe<Scalars['Int']>;
+    companyId?: InputMaybe<Scalars['Int']>;
+    created?: InputMaybe<Scalars['DateTime']>;
     createdBy?: InputMaybe<Scalars['String']>;
-    flagDouble?: InputMaybe<Scalars['String']>;
-    id?: InputMaybe<Scalars['String']>;
-    modified?: InputMaybe<Scalars['String']>;
+    flagDouble?: InputMaybe<Scalars['Int']>;
+    id?: InputMaybe<Scalars['Int']>;
+    modified?: InputMaybe<Scalars['DateTime']>;
     modifiedBy?: InputMaybe<Scalars['String']>;
     name?: InputMaybe<Scalars['String']>;
-    preparationMode?: InputMaybe<Scalars['String']>;
-    quantity?: InputMaybe<Scalars['String']>;
+    preparationMode?: InputMaybe<Scalars['Int']>;
+    quantity?: InputMaybe<Scalars['Float']>;
     rotation?: InputMaybe<Scalars['String']>;
     supplierArticleCode?: InputMaybe<Scalars['String']>;
     supplierName?: InputMaybe<Scalars['String']>;
@@ -268,16 +331,6 @@ export type FacetFilters = {
     width?: InputMaybe<Scalars['String']>;
 };
 
-export type InvokeResult = {
-    __typename?: 'InvokeResult';
-    /** Path to the Python module remote storage */
-    codePath: Scalars['String'];
-    /** Input to the `handler` function */
-    event: Scalars['JSONScalar'];
-    /** Result of the function execution */
-    output: Scalars['JSONScalar'];
-};
-
 export type LoginSuccess = {
     __typename?: 'LoginSuccess';
     /** A short-lived JWT that can be used to authenticate a user onto the platform */
@@ -298,23 +351,19 @@ export type Mutation = {
     createBarcode: Barcode;
     /** Create a new Workspace */
     createWorkspace: Workspace;
+    /** Delete article */
+    deleteArticle: Scalars['Boolean'];
     /** Delete barcode */
-    deleteBarcode?: Maybe<Scalars['Void']>;
+    deleteBarcode: Scalars['Boolean'];
     /** Exports the whole Article table into a file on S3 */
     exportArticles: ExportArticlesResult;
     /** Invite a new User via email */
     inviteUser: Scalars['String'];
-    /**
-     * Executes a dynamic function on the fly, using the `event` as input.In order to execute your custom code, you must pass the code directly into the `code` argument as a string, and you must define a function named `handler` which takes a JSON-serializable value as it's only argument.For example something like:
-     *
-     * `def handler(event): return event["n"] ** 2`
-     */
-    invoke: InvokeResult;
     /** Obtain a JSON Web Token (JWT) to use in the frontend */
     login?: Maybe<LoginSuccess>;
     /** Renders a template given its filename and a context dictionary */
     renderDocument: RenderDocumentResponse;
-    /** As a WorkspaceOwner, I can reset my Workspace's users password */
+    /** As a WorkspaceOwner, I can reset my coworker's password */
     updateUser: Scalars['String'];
 };
 
@@ -329,6 +378,10 @@ export type MutationCreateBarcodeArgs = {
 export type MutationCreateWorkspaceArgs = {
     name: Scalars['String'];
     ownerEmail: Scalars['String'];
+};
+
+export type MutationDeleteArticleArgs = {
+    id: Scalars['Int'];
 };
 
 export type MutationDeleteBarcodeArgs = {
@@ -348,12 +401,6 @@ export type MutationInviteUserArgs = {
     workspaceId: Scalars['ID'];
 };
 
-export type MutationInvokeArgs = {
-    codePath: Scalars['String'];
-    event: Scalars['JSONScalar'];
-    functionName?: Scalars['String'];
-};
-
 export type MutationLoginArgs = {
     password: Scalars['String'];
     username: Scalars['String'];
@@ -366,6 +413,7 @@ export type MutationRenderDocumentArgs = {
 };
 
 export type MutationUpdateUserArgs = {
+    email: Scalars['String'];
     id: Scalars['Int'];
     password: Scalars['String'];
     username: Scalars['String'];
@@ -396,7 +444,7 @@ export type QueryArticleArgs = {
 export type QueryArticlesArgs = {
     filters?: InputMaybe<ArticleSearchFilters>;
     itemsPerPage?: Scalars['Int'];
-    orderBy?: Scalars['String'];
+    orderBy?: InputMaybe<Array<ArticleOrderByCriterion>>;
     page?: Scalars['Int'];
 };
 
@@ -407,7 +455,7 @@ export type QueryBarcodeArgs = {
 export type QueryBarcodesArgs = {
     filters?: InputMaybe<BarcodeSearchFilters>;
     itemsPerPage?: Scalars['Int'];
-    orderBy?: Scalars['String'];
+    orderBy?: InputMaybe<Array<BarcodeOrderByCriterion>>;
     page?: Scalars['Int'];
 };
 
@@ -453,7 +501,7 @@ export type Workspace = {
 
 export type GetAllArticlesQueryVariables = Exact<{
     filters?: InputMaybe<ArticleSearchFilters>;
-    orderBy?: InputMaybe<Scalars['String']>;
+    orderBy?: InputMaybe<Array<ArticleOrderByCriterion> | ArticleOrderByCriterion>;
     page: Scalars['Int'];
     itemsPerPage: Scalars['Int'];
 }>;
@@ -572,7 +620,7 @@ export type CreateArticleMutation = {
 
 export type GetAllBarcodesQueryVariables = Exact<{
     filters?: InputMaybe<BarcodeSearchFilters>;
-    orderBy?: InputMaybe<Scalars['String']>;
+    orderBy?: InputMaybe<Array<BarcodeOrderByCriterion> | BarcodeOrderByCriterion>;
     page: Scalars['Int'];
     itemsPerPage: Scalars['Int'];
 }>;
@@ -652,10 +700,7 @@ export type DeleteBarcodeMutationVariables = Exact<{
     id: Scalars['Int'];
 }>;
 
-export type DeleteBarcodeMutation = {
-    __typename?: 'Mutation';
-    deleteBarcode?: any | null | undefined;
-};
+export type DeleteBarcodeMutation = { __typename?: 'Mutation'; deleteBarcode: boolean };
 
 export type LoginMutationVariables = Exact<{
     username: Scalars['String'];
@@ -669,7 +714,7 @@ export type LoginMutation = {
 };
 
 export const GetAllArticlesDocument = `
-    query GetAllArticles($filters: ArticleSearchFilters, $orderBy: String, $page: Int!, $itemsPerPage: Int!) {
+    query GetAllArticles($filters: ArticleSearchFilters, $orderBy: [ArticleOrderByCriterion!], $page: Int!, $itemsPerPage: Int!) {
   articles(
     filters: $filters
     orderBy: $orderBy
@@ -809,7 +854,7 @@ export const useCreateArticleMutation = <TError = unknown, TContext = unknown>(
     headers?: RequestInit['headers']
 ) =>
     useMutation<CreateArticleMutation, TError, CreateArticleMutationVariables, TContext>(
-        'CreateArticle',
+        ['CreateArticle'],
         (variables?: CreateArticleMutationVariables) =>
             fetcher<CreateArticleMutation, CreateArticleMutationVariables>(
                 client,
@@ -820,7 +865,7 @@ export const useCreateArticleMutation = <TError = unknown, TContext = unknown>(
         options
     );
 export const GetAllBarcodesDocument = `
-    query GetAllBarcodes($filters: BarcodeSearchFilters, $orderBy: String, $page: Int!, $itemsPerPage: Int!) {
+    query GetAllBarcodes($filters: BarcodeSearchFilters, $orderBy: [BarcodeOrderByCriterion!], $page: Int!, $itemsPerPage: Int!) {
   barcodes(
     filters: $filters
     orderBy: $orderBy
@@ -923,7 +968,7 @@ export const useCreateBarcodeMutation = <TError = unknown, TContext = unknown>(
     headers?: RequestInit['headers']
 ) =>
     useMutation<CreateBarcodeMutation, TError, CreateBarcodeMutationVariables, TContext>(
-        'CreateBarcode',
+        ['CreateBarcode'],
         (variables?: CreateBarcodeMutationVariables) =>
             fetcher<CreateBarcodeMutation, CreateBarcodeMutationVariables>(
                 client,
@@ -949,7 +994,7 @@ export const useDeleteBarcodeMutation = <TError = unknown, TContext = unknown>(
     headers?: RequestInit['headers']
 ) =>
     useMutation<DeleteBarcodeMutation, TError, DeleteBarcodeMutationVariables, TContext>(
-        'DeleteBarcode',
+        ['DeleteBarcode'],
         (variables?: DeleteBarcodeMutationVariables) =>
             fetcher<DeleteBarcodeMutation, DeleteBarcodeMutationVariables>(
                 client,
@@ -972,7 +1017,7 @@ export const useLoginMutation = <TError = unknown, TContext = unknown>(
     headers?: RequestInit['headers']
 ) =>
     useMutation<LoginMutation, TError, LoginMutationVariables, TContext>(
-        'Login',
+        ['Login'],
         (variables?: LoginMutationVariables) =>
             fetcher<LoginMutation, LoginMutationVariables>(
                 client,

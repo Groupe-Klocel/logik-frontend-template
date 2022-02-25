@@ -1,6 +1,5 @@
 import { DeleteOutlined, EyeTwoTone, EditTwoTone } from '@ant-design/icons';
 import { FC } from 'react';
-import useTranslation from 'next-translate/useTranslation';
 import { Button, Space } from 'antd';
 import { featureCodesData } from 'fake-data/features';
 import { AppTable } from '@components';
@@ -8,26 +7,24 @@ import { AppTable } from '@components';
 export interface IFeaturesCodesListProps {}
 
 export const FeaturesCodesList: FC<IFeaturesCodesListProps> = ({}) => {
-    let { t } = useTranslation('common');
-
     const columns = [
         {
-            title: t('common:name'),
+            title: 'common:name',
             dataIndex: 'name',
             key: 'name'
         },
         {
-            title: t('common:unique'),
+            title: 'common:unique',
             dataIndex: 'unique',
             key: 'unique'
         },
         {
-            title: t('forms:date-type'),
+            title: 'forms:date-type',
             dataIndex: 'date-type',
             key: 'date-type'
         },
         {
-            title: t('actions:actions'),
+            title: 'actions:actions',
             key: 'actions',
             render: (record: { id: number }) => (
                 <Space>

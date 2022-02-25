@@ -37,8 +37,6 @@ const SingleArticle: FC<ISingleArticleProps> = ({ id, router }: ISingleArticlePr
         showError(t('messages:error-getting-data'));
     }
 
-    console.log(data);
-
     const breadsCrumb = [
         ...articlesSubRoutes,
         {

@@ -1,33 +1,30 @@
 import { AppTable } from '@components';
 import { Button } from 'antd';
 import { returnCodesData } from 'fake-data/returnCodes';
-import useTranslation from 'next-translate/useTranslation';
 import { FC } from 'react';
 import { EyeTwoTone } from '@ant-design/icons';
 
 export interface IReturnCodesListProps {}
 
 export const ReturnCodesList: FC<IReturnCodesListProps> = ({}) => {
-    let { t } = useTranslation('common');
-
     const columns = [
         {
-            title: t('name'),
+            title: 'name',
             dataIndex: 'name',
             key: 'name'
         },
         {
-            title: t('description'),
+            title: 'description',
             dataIndex: 'description',
             key: 'description'
         },
         {
-            title: t('type'),
+            title: 'type',
             dataIndex: 'type',
             key: 'type'
         },
         {
-            title: t('actions:actions'),
+            title: 'actions:actions',
             key: 'actions',
             fixed: 'right',
             render: (record: { id: number; name: string }) => (

@@ -6,7 +6,8 @@ import { useDrawerDispatch } from 'context/DrawerContext';
 import { ArticlesList } from 'modules/Articles/Elements/ArticlesList';
 import { articlesSubRoutes } from 'modules/Articles/Static/articlesRoutes';
 import useTranslation from 'next-translate/useTranslation';
-import { FC, useCallback, useState, useEffect } from 'react';
+import {showError} from '@helpers'
+import { FC, useCallback, useState } from 'react';
 
 export interface IArticlesProps {}
 
@@ -24,11 +25,14 @@ const Articles: FC<IArticlesProps> = ({}: IArticlesProps) => {
         () =>
             dispatchDrawer({
                 type: 'OPEN_DRAWER',
-                title: t('actions:search'),
-                comfirmButtonTitle: t('actions:search'),
+                title: 'actions:search',
+                comfirmButtonTitle: 'actions:search',
                 comfirmButton: true,
+                cancelButtonTitle: 'actions:reset',
+                cancelButton: true,
                 submit: true,
                 content: <ArticlesSearch form={formSearch} />,
+                onCancel: () => handleReset(),
                 onComfirm: () => handleSubmit()
             }),
         [dispatchDrawer]
@@ -39,16 +43,19 @@ const Articles: FC<IArticlesProps> = ({}: IArticlesProps) => {
         [dispatchDrawer]
     );
 
+    const handleReset = () => {
+        formSearch.resetFields();
+    };
+
     const handleSubmit = () => {
         formSearch
             .validateFields()
             .then(() => {
                 // Here make api call of something else
-                console.log(formSearch.getFieldsValue(true));
                 setSearch(formSearch.getFieldsValue(true));
                 closeDrawer();
             })
-            .catch((err) => console.log(err));
+            .catch((err) => showError(t('messages:error-getting-data')));
     };
 
     return (

@@ -65,10 +65,10 @@ const Header: FC = () => {
         () =>
             dispatchDrawer({
                 type: 'OPEN_DRAWER',
-                title: t('menu:user-settings'),
+                title: 'menu:user-settings',
                 cancelButton: false,
                 comfirmButton: true,
-                comfirmButtonTitle: t('actions:save'),
+                comfirmButtonTitle: 'actions:save',
                 content: <UserSettings />,
                 onComfirm: () => saveUserSettings()
             }),

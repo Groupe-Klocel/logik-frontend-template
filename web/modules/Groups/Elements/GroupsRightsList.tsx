@@ -1,22 +1,19 @@
 import { CheckCircleOutlined, CloseSquareOutlined } from '@ant-design/icons';
 import { AppTable } from '@components';
 import { groupsRightsData } from 'fake-data/groups';
-import useTranslation from 'next-translate/useTranslation';
 import { FC } from 'react';
 
 export interface IGroupsRightsProps {}
 
 export const GroupsRightsList: FC<IGroupsRightsProps> = ({}) => {
-    let { t } = useTranslation();
-
     const columns = [
         {
-            title: t('actions:action'),
+            title: 'actions:action',
             dataIndex: 'action',
             key: 'action'
         },
         {
-            title: t('common:administator'),
+            title: 'common:administator',
             key: 'admin',
             render: (record: { admin: boolean }) => {
                 return record.admin ? (
@@ -27,7 +24,7 @@ export const GroupsRightsList: FC<IGroupsRightsProps> = ({}) => {
             }
         },
         {
-            title: t('common:operator'),
+            title: 'common:operator',
             key: 'ope',
             render: (record: { ope: boolean }) => {
                 return record.ope ? (
@@ -38,7 +35,7 @@ export const GroupsRightsList: FC<IGroupsRightsProps> = ({}) => {
             }
         },
         {
-            title: t('common:prepers'),
+            title: 'common:prepers',
             key: 'prep',
             render: (record: { prep: boolean }) => {
                 return record.prep ? (

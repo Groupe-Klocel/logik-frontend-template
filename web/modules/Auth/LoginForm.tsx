@@ -5,9 +5,9 @@ import { useAuth } from 'context/AuthContext';
 import useTranslation from 'next-translate/useTranslation';
 import { FC } from 'react';
 
-export interface ILoginFormProps { }
+export interface ILoginFormProps {}
 
-export const LoginForm: FC<ILoginFormProps> = ({ }: ILoginFormProps) => {
+export const LoginForm: FC<ILoginFormProps> = ({}: ILoginFormProps) => {
     let { t } = useTranslation('common');
     const { login } = useAuth();
     // TEXTS TRANSLATION
