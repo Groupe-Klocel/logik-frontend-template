@@ -5,9 +5,9 @@ import { FC, useState } from 'react';
 
 const { Option } = Select;
 
-export interface IAddStockStatusFormProps {}
+export interface IAddStockStatusFormProps { }
 
-export const AddStockStatusForm: FC<IAddStockStatusFormProps> = ({}: IAddStockStatusFormProps) => {
+export const AddStockStatusForm: FC<IAddStockStatusFormProps> = ({ }: IAddStockStatusFormProps) => {
     let { t } = useTranslation('common');
 
     //TODO FETCH GROUP'S NAME
@@ -17,12 +17,12 @@ export const AddStockStatusForm: FC<IAddStockStatusFormProps> = ({}: IAddStockSt
 
     // Call api to create new user
     const onFinish = (values: any) => {
-        console.log('Success:', values);
+        alert('Success');
         setNewStockStatusData(values);
     };
 
     const onFinishFailed = (errorInfo: any) => {
-        console.log('Failed:', errorInfo);
+        alert('Failed');
     };
 
     return (

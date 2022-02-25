@@ -7,6 +7,7 @@ import { BarcodesList } from 'modules/Barcodes/Elements/BarcodesList';
 import { Space, Form, Button } from 'antd';
 import { BarcodesSearch } from 'components/common/smart/DrawerItems/BarcodesSearch';
 import { useDrawerDispatch } from 'context/DrawerContext';
+import {showError} from "@helpers"
 
 export interface IBarcodesProps {}
 
@@ -23,11 +24,14 @@ const Barcodes: FC<IBarcodesProps> = ({}: IBarcodesProps) => {
         () =>
             dispatchDrawer({
                 type: 'OPEN_DRAWER',
-                title: t('actions:search'),
-                comfirmButtonTitle: t('actions:search'),
+                title: 'actions:search',
+                comfirmButtonTitle: 'actions:search',
                 comfirmButton: true,
+                cancelButtonTitle: 'actions:reset',
+                cancelButton: true,
                 submit: true,
                 content: <BarcodesSearch form={formSearch} />,
+                onCancel: () => handleReset(),
                 onComfirm: () => handleSubmit()
             }),
         [dispatchDrawer]
@@ -38,16 +42,19 @@ const Barcodes: FC<IBarcodesProps> = ({}: IBarcodesProps) => {
         [dispatchDrawer]
     );
 
+    const handleReset = () => {
+        formSearch.resetFields();
+    };
+
     const handleSubmit = () => {
         formSearch
             .validateFields()
             .then(() => {
                 // Here make api call of something else
-                console.log(formSearch.getFieldsValue(true));
                 setSearch(formSearch.getFieldsValue(true));
                 closeDrawer();
             })
-            .catch((err) => console.log(err));
+            .catch((err) => showError(t('messages:error-getting-data')));
     };
 
     return (

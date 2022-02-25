@@ -54,7 +54,6 @@ const AppTable: FC<IAppTableProps> = ({ data, columns, scroll, isLoading, pagina
 	const rowSelection = {
 		selectedRowKeys,
 		onChange: (selectedRowKeys: Key[], record: any) => {
-			console.log('selectedRowKeys changed: ', selectedRowKeys);
 			setSelectedRowKeys(selectedRowKeys)
 		}
 	};

@@ -71,7 +71,6 @@ const SingleBarcode: FC<ISingleBarcodeProps> = ({ id, router }: ISingleBarcodePr
         }
     ];
 
-    console.log(parseInt(id));
     return (
         <>
             <HeaderContent

@@ -14,12 +14,12 @@ export const AddFeatureTypeForm: FC<IAddFeatureTypeFormProps> = ({}: IAddFeature
 
     // Call api to create new group
     const onFinish = (values: any) => {
-        console.log('Success:', values);
+        alert('Success');
         setNewFeatureTypeData(values);
     };
 
     const onFinishFailed = (errorInfo: any) => {
-        console.log('Failed:', errorInfo);
+        alert('Failed');
     };
 
     return (

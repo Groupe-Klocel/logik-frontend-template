@@ -3,9 +3,9 @@ import { Button, Checkbox, Col, Form, Input, Row } from 'antd';
 import useTranslation from 'next-translate/useTranslation';
 import { FC, useState } from 'react';
 
-export interface IAddPackagingFormProps {}
+export interface IAddPackagingFormProps { }
 
-export const AddPackagingForm: FC<IAddPackagingFormProps> = ({}: IAddPackagingFormProps) => {
+export const AddPackagingForm: FC<IAddPackagingFormProps> = ({ }: IAddPackagingFormProps) => {
     let { t } = useTranslation('common');
 
     // TYPED SAFE ALL
@@ -14,12 +14,12 @@ export const AddPackagingForm: FC<IAddPackagingFormProps> = ({}: IAddPackagingFo
 
     // Call api to create new group
     const onFinish = (values: any) => {
-        console.log('Success:', values);
+        alert('Success');
         setNewPackagingData(values);
     };
 
     const onFinishFailed = (errorInfo: any) => {
-        console.log('Failed:', errorInfo);
+        alert('Failed');
     };
 
     return (

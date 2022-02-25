@@ -2,32 +2,29 @@ import { EyeTwoTone, DeleteOutlined } from '@ant-design/icons';
 import { Button, Space } from 'antd';
 import { AppTable } from '@components';
 import { barcodesData } from 'fake-data/barcodes';
-import useTranslation from 'next-translate/useTranslation';
 import { FC } from 'react';
 
 export interface IBlacklistedBarcodesListProps {}
 
 export const BlacklistedBarcodesList: FC<IBlacklistedBarcodesListProps> = ({}) => {
-    let { t } = useTranslation();
-
     const columns = [
         {
-            title: t('common:barcode'),
+            title: 'common:barcode',
             dataIndex: 'barcode',
             key: 'barcode'
         },
         {
-            title: t('common:product'),
+            title: 'common:product',
             dataIndex: 'product',
             key: 'product'
         },
         {
-            title: t('common:description'),
+            title: 'common:description',
             dataIndex: 'description',
             key: 'description'
         },
         {
-            title: t('actions:actions'),
+            title: 'actions:actions',
             key: 'actions',
             render: (record: { id: number; name: string }) => (
                 <Space>

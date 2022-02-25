@@ -2,68 +2,65 @@ import { CaretUpOutlined, CaretDownOutlined, EyeTwoTone } from '@ant-design/icon
 import { Button, Space } from 'antd';
 import { AppTable } from '@components';
 import { equipmentsData } from 'fake-data/equipments';
-import useTranslation from 'next-translate/useTranslation';
 import { FC } from 'react';
 
 export interface IEquipmentsListProps {}
 
 export const EquipmentsList: FC<IEquipmentsListProps> = ({}) => {
-    let { t } = useTranslation('common');
-
     const columns = [
         {
-            title: t('priority'),
+            title: 'priority',
             dataIndex: 'priority',
             key: 'priority',
             fixed: 'left'
         },
         {
-            title: t('type'),
+            title: 'type',
             dataIndex: 'type',
             key: 'type'
         },
         {
-            title: t('name'),
+            title: 'name',
             dataIndex: 'name',
             key: 'name'
         },
         {
-            title: t('status'),
+            title: 'status',
             dataIndex: 'status',
             key: 'status'
         },
         {
-            title: t('available'),
+            title: 'available',
             dataIndex: 'available',
             key: 'available'
         },
         {
-            title: t('distributed'),
+            title: 'distributed',
             dataIndex: 'distributed',
             key: 'distributed'
         },
         {
-            title: t('mono-company'),
+            title: 'mono-company',
             dataIndex: 'mono-company',
             key: 'mono-company'
         },
         {
-            title: t('mono-carrier'),
+            title: 'mono-carrier',
             dataIndex: 'mono-carrier',
             key: 'mono-carrier'
         },
         {
-            title: t('nb-max-box'),
+            title: 'nb-max-box',
             dataIndex: 'nb-max-box',
             key: 'nb-max-box'
         },
         {
-            title: t('check-position'),
+            title: 'check-position',
             dataIndex: 'check-position',
             key: 'check-position'
         },
         {
-            title: t('actions:actions'),
+            title: 'actions:actions',
             key: 'actions',
             fixed: 'right',
             render: (record: { id: number; name: string }) => (

@@ -43,8 +43,6 @@ function reducer(state: State, action: Action) {
 }
 
 const saveUserSettings = (menu: boolean, theme: string) => {
-	console.log("menu", menu)
-	console.log("theme", theme)
 	cookie.set('isSettingMenuCollapsed', menu.toString())
 	cookie.set('theme', theme)
 }

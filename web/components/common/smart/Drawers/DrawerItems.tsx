@@ -1,6 +1,7 @@
 import { Button, Drawer, Space } from 'antd';
 import { useDrawerDispatch, useDrawerState } from 'context/DrawerContext';
 import React, { useCallback } from 'react';
+import useTranslation from 'next-translate/useTranslation';
 
 const DrawerItems = () => {
     const {
@@ -19,19 +20,23 @@ const DrawerItems = () => {
     const dispatch = useDrawerDispatch();
     const closeDrawer = useCallback(() => dispatch({ type: 'CLOSE_DRAWER' }), [dispatch]);
 
+    let { t } = useTranslation();
+
     return (
         <Drawer
             onClose={closeDrawer}
             visible={isOpen}
-            title={title}
+            title={t(title)}
             width={size}
             placement="right"
             extra={
                 <Space>
-                    {cancelButton ? <Button onClick={onCancel}>{cancelButtonTitle} </Button> : null}
+                    {cancelButton ? (
+                        <Button onClick={onCancel}>{t(cancelButtonTitle)} </Button>
+                    ) : null}
                     {comfirmButton ? (
                         <Button onClick={onComfirm} type="primary">
-                            {comfirmButtonTitle}{' '}
+                            {t(comfirmButtonTitle)}{' '}
                         </Button>
                     ) : null}
                 </Space>

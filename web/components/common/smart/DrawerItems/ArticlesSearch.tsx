@@ -1,4 +1,4 @@
-import { Button, Form, Input, Select, Space } from 'antd';
+import { Form, Input, InputNumber, Checkbox } from 'antd';
 import useTranslation from 'next-translate/useTranslation';
 import { FC } from 'react';
 
@@ -9,42 +9,23 @@ export interface IArticlesSearchProps {
 const ArticlesSearch: FC<IArticlesSearchProps> = ({ form }: IArticlesSearchProps) => {
     let { t } = useTranslation();
 
-    const companies = [];
-    for (let i = 0; i < 10; i++) {
-        const value = `${i.toString(36)}${i}`;
-        companies.push({
-            value,
-            disabled: i === 10
-        });
-    }
-
-    const tailLayout = {
-        wrapperCol: { span: 14, offset: 4 }
-    };
-
-    const onReset = () => {
-        form.resetFields();
-    };
-
-    function handleCompaniesSelect(value: string[]) {
-        console.log(`selected ${value}`);
-    }
-
-    function handleStatusSelect(value: string[]) {
-        console.log(`selected ${value}`);
-    }
+    // For multi selection field
+    // const companies = [];
+    // for (let i = 0; i < 10; i++) {
+    //     const value = `${i.toString(36)}${i}`;
+    //     companies.push({
+    //         value,
+    //         disabled: i === 10
+    //     });
+    // }
+    // function handleCompaniesSelect(value: string[]) {
+    //     console.log(`selected ${value}`);
+    // }
 
     return (
         <>
             <Form form={form} name="control-hooks">
-                <Form.Item {...tailLayout}>
-                    <Space>
-                        <Button htmlType="button" onClick={onReset}>
-                            {t('actions:reset')}
-                        </Button>
-                    </Space>
-                </Form.Item>
-                <Form.Item name="companyId" label={t('common:company')}>
+                {/* <Form.Item name="companyId" label={t('common:company')}>
                     <Select
                         mode="multiple"
                         allowClear
@@ -53,19 +34,18 @@ const ArticlesSearch: FC<IArticlesSearchProps> = ({ form }: IArticlesSearchProps
                         onChange={handleCompaniesSelect}
                         options={companies}
                     />
-                </Form.Item>
+                </Form.Item> */}
                 <Form.Item name="name" label={t('common:name')}>
                     <Input />
                 </Form.Item>
-                <Form.Item name="additionalDescription" label={t('common:additionalDescription')}>
+                <Form.Item name="code" label={t('d:code')}>
                     <Input />
                 </Form.Item>
-                <Form.Item name="code" label={t('forms:code')}>
-                    <Input />
+                <Form.Item name="status" label={t('d:status')}>
+                    <InputNumber style={{ width: '100%' }} />
                 </Form.Item>
-
-                <Form.Item name="status" label={t('common:status')}>
-                    <Input />
+                <Form.Item name="permanentProduct" valuePropName="checked" initialValue={false}>
+                    <Checkbox>{t('d:permanentProduct')}</Checkbox>
                 </Form.Item>
             </Form>
         </>

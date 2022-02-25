@@ -9,7 +9,7 @@ import {
     CreateBarcodeMutation,
     CreateBarcodeMutationVariables
 } from 'generated/graphql';
-import { showError, showSuccess } from '@helpers';
+import { showError, showSuccess, showInfo} from '@helpers';
 
 const { Option } = Select;
 export interface IAddBarcodeFormProps {}
@@ -52,7 +52,9 @@ export const AddBarcodeForm: FC<IAddBarcodeFormProps> = ({}: IAddBarcodeFormProp
             _variables: CreateBarcodeMutationVariables,
             _context: unknown
         ) => {
-            if (!createLoading) {
+            if (createLoading) {
+                showInfo(t('messages:info-creating-wip'));
+            } else {
                 router.push(`/barcode/${data.createBarcode.id}`);
                 showSuccess(t('messages:success-created'));
             }
@@ -70,10 +72,9 @@ export const AddBarcodeForm: FC<IAddBarcodeFormProps> = ({}: IAddBarcodeFormProp
         form.validateFields()
             .then(() => {
                 // Here make api call of something else
-                console.log(form.getFieldsValue(true));
                 createBarcode({ input: form.getFieldsValue(true) });
             })
-            .catch((err) => console.log(err));
+            .catch((err) => showError(t('messages:error-creating-data')));
     };
 
     return (

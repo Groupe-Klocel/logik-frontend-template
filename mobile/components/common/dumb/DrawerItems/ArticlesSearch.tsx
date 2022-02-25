@@ -41,11 +41,11 @@ const ArticlesSearch: FC<IArticlesSearchProps> = ({ form }: IArticlesSearchProps
 	};
 
 	function handleCompaniesSelect(value: string[]) {
-		console.log(`selected ${value}`);
+		alert(`selected ${value}`);
 	}
 
 	function handleStatusSelect(value: string[]) {
-		console.log(`selected ${value}`);
+		alert(`selected ${value}`);
 	}
 
 	return (

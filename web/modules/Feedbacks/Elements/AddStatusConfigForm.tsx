@@ -7,11 +7,11 @@ import { FC, useState } from 'react';
 
 const { Option } = Select;
 
-export interface IAddStatusConfigFormProps {}
+export interface IAddStatusConfigFormProps { }
 
 export const AddStatusConfigForm: FC<
     IAddStatusConfigFormProps
-> = ({}: IAddStatusConfigFormProps) => {
+> = ({ }: IAddStatusConfigFormProps) => {
     let { t } = useTranslation('common');
 
     //TODO FETCH GROUP'S NAME
@@ -21,12 +21,12 @@ export const AddStatusConfigForm: FC<
 
     // Call api to create new user
     const onFinish = (values: any) => {
-        console.log('Success:', values);
+        alert('Success');
         setNewStatusConfigData(values);
     };
 
     const onFinishFailed = (errorInfo: any) => {
-        console.log('Failed:', errorInfo);
+        alert('Failed');
     };
 
     return (

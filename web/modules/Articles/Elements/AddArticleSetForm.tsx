@@ -17,12 +17,12 @@ export const AddArticleSetForm: FC<IAddArticleSetFormProps> = ({}: IAddArticleSe
 
     // Call api to create new group
     const onFinish = (values: any) => {
-        console.log('Success:', values);
+        alert(`Success`);
         setNewArticleSetData(values);
     };
 
     const onFinishFailed = (errorInfo: any) => {
-        console.log('Failed:', errorInfo);
+        alert('Failed');
     };
 
     return (
