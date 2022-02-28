@@ -1,0 +1,44 @@
+# YAML config to deploy this monorepo via AWS Amplify which is the default hosting provider suggested by Klocel
+# https://docs.aws.amazon.com/amplify/latest/userguide/monorepo-configuration.html#monorepo-yml-syntax
+
+version: 1
+applications:
+  - appRoot: web
+    env:
+      variables: {}
+    frontend:
+      phases:
+        preBuild:
+          commands:
+            - yarn
+        build:
+          commands:
+            - yarn run lesstocss
+            - yarn run build
+      artifacts:
+        baseDirectory: .next
+        files:
+          - "**/*"
+      cache:
+        paths:
+          - node_modules/**/*
+          - .next/cache/**/*
+  - appRoot: mobile
+    env:
+      variables: {}
+    frontend:
+      phases:
+        preBuild:
+          commands:
+            - yarn
+        build:
+          commands:
+            - yarn run build
+      artifacts:
+        baseDirectory: .next
+        files:
+          - "**/*"
+      cache:
+        paths:
+          - node_modules/**/*
+          - .next/cache/**/*
