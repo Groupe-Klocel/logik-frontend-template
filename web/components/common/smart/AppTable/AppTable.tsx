@@ -5,7 +5,6 @@ import { Space, Button, Table } from 'antd';
 import { useDrawerDispatch } from 'context/DrawerContext';
 import useTranslation from 'next-translate/useTranslation';
 import { FC, useCallback, useEffect, useState, useRef, Key } from 'react';
-import { useAppState } from 'context/AppContext';
 
 const { Column } = Table;
 
@@ -41,7 +40,6 @@ const AppTable: FC<IAppTableProps> = ({
 }: IAppTableProps) => {
     let { t } = useTranslation();
     // get filter from cookies if exist
-    const { globalLocale } = useAppState();
     const filterDrawerRef = useRef() as any | undefined;
     const allColumnKeys = getKeys(columns);
 
@@ -66,6 +64,7 @@ const AppTable: FC<IAppTableProps> = ({
         });
     }
 
+    
     const [onSave, setOnSave] = useState<boolean>(false);
     const [visibleColumnKeys, setVisibleColumnKeys] = useState<Key[]>(
         initialState !== null ? initialState.visibleColumnKeys : allColumnKeys
@@ -103,6 +102,7 @@ const AppTable: FC<IAppTableProps> = ({
 
     // make wrapper function to give child
 
+
     const childSetVisibleColumnKeys = useCallback(
         (val) => {
             setVisibleColumnKeys(val);
@@ -125,6 +125,10 @@ const AppTable: FC<IAppTableProps> = ({
         },
         [setFilteredColumns]
     );
+
+    const handlePaginationChange = (page: number, pageSize: number) => {
+        setPagination(page, pageSize);
+    }
 
     const handleReset = () => {
         setVisibleColumnKeys(allColumnKeys);
@@ -181,7 +185,7 @@ const AppTable: FC<IAppTableProps> = ({
             }
         }
 
-        return () => {};
+        return () => { };
     }, [visibleColumnKeys, filteredColumns]);
 
     useEffect(() => {
@@ -197,7 +201,7 @@ const AppTable: FC<IAppTableProps> = ({
             );
         }
         setOnSave(false);
-        return () => {};
+        return () => { };
     }, [onSave]);
 
     return (
@@ -223,6 +227,7 @@ const AppTable: FC<IAppTableProps> = ({
                             onClick={() => alert('trigger export')}
                         />
                     )}
+
                 </Space>
             </WrapperStickyActions>
             <Table
@@ -240,7 +245,7 @@ const AppTable: FC<IAppTableProps> = ({
                         current: pagination.current,
                         pageSize: pagination.itemsPerPage,
                         onChange: (page, pageSize) => {
-                            setPagination(page, pageSize);
+                            handlePaginationChange(page, pageSize);
                         }
                     }
                 }

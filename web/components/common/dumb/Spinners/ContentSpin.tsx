@@ -6,7 +6,7 @@ const StyledSpinWrapper = styled.div`
     display: flex;
     justify-content: center; // centers in the flex direction and the default flex-direction is row
     align-items: center; // centers perpendicular to the flex direction
-    height: 70%;
+    height: 60vh;
 `;
 
 const ContentSpin: FC = () => {
