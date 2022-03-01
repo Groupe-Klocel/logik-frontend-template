@@ -47,6 +47,12 @@ function purgeSorter(data: Array<any> | any): Array<any> | null {
     return newSorter;
 }
 
+const orberByFormater = (sorter: any) => {
+    let newSorter = purgeSorter(sorter);
+    return newSorter;
+};
+
+
 // Set index to each object in an array
 function setIndex(array: Array<any>): Array<any> {
     const arrayWithIndex = array.map((object: Object) => ({
@@ -249,6 +255,7 @@ const checkValuePresenceInArray = (value: any, array: any[]) =>
 
 export {
     isEmpty,
+    orberByFormater,
     purgeSorter,
     checkValuePresenceInArray,
     pathParams,

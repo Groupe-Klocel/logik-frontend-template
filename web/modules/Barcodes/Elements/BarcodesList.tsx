@@ -9,7 +9,7 @@ import {
     pathParams,
     DataQueryType,
     PaginationType,
-    purgeSorter
+    orberByFormater
 } from '@helpers';
 
 export interface IBarcodesListProps {
@@ -57,11 +57,6 @@ const BarcodesList = ({ searchCriteria }: IBarcodesListProps) => {
             });
         }
     }, [data]);
-
-    const orberByFormater = (sorter: any) => {
-        let newSorter = purgeSorter(sorter);
-        return newSorter;
-    };
 
     const handleTableChange = async (_pagination: any, _filter: any, sorter: any) => {
         await setSort(orberByFormater(sorter));
@@ -135,7 +130,7 @@ const BarcodesList = ({ searchCriteria }: IBarcodesListProps) => {
             key: 'actions',
             render: (record: { id: string }) => (
                 <Space>
-                  <LinkButton
+                    <LinkButton
                         icon={<EyeTwoTone />}
                         path={pathParams('/barcode/[id]', record.id)}
                     />

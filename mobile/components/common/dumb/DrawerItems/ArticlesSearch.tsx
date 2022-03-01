@@ -69,16 +69,16 @@ const ArticlesSearch: FC<IArticlesSearchProps> = ({ form }: IArticlesSearchProps
 					/>
 
 				</Form.Item>
-				<Form.Item name="name" label={t('forms:name')} >
+				<Form.Item name="name" label={t('d:name')} >
 					<Input />
 				</Form.Item>
 				<Form.Item name="additionalDescription" label={t('common:additionalDescription')} >
 					<Input />
 				</Form.Item>
-				<Form.Item name="code" label={t('forms:code')} >
+				<Form.Item name="code" label={t('d:code')} >
 					<Input />
 				</Form.Item>
-				<Form.Item name="status" label={t('forms:status')} >
+				<Form.Item name="status" label={t('d:status')} >
 					<Input />
 				</Form.Item>
 

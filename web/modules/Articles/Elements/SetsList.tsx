@@ -4,9 +4,9 @@ import { AppTable } from '@components';
 import { setsData } from 'fake-data/sets';
 import { FC } from 'react';
 
-export interface ISetsListProps {}
+export interface ISetsListProps { }
 
-export const SetsList: FC<ISetsListProps> = ({}) => {
+export const SetsList: FC<ISetsListProps> = ({ }) => {
     const columns = [
         {
             title: 'common:company',
@@ -24,7 +24,7 @@ export const SetsList: FC<ISetsListProps> = ({}) => {
             key: 'article'
         },
         {
-            title: 'forms:product-description',
+            title: 'd:productDescription',
             dataIndex: 'product-description',
             key: 'product-description'
         },

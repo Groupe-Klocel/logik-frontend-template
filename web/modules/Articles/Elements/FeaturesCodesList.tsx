@@ -4,9 +4,9 @@ import { Button, Space } from 'antd';
 import { featureCodesData } from 'fake-data/features';
 import { AppTable } from '@components';
 
-export interface IFeaturesCodesListProps {}
+export interface IFeaturesCodesListProps { }
 
-export const FeaturesCodesList: FC<IFeaturesCodesListProps> = ({}) => {
+export const FeaturesCodesList: FC<IFeaturesCodesListProps> = ({ }) => {
     const columns = [
         {
             title: 'common:name',
@@ -19,7 +19,7 @@ export const FeaturesCodesList: FC<IFeaturesCodesListProps> = ({}) => {
             key: 'unique'
         },
         {
-            title: 'forms:date-type',
+            title: 'd:dateType',
             dataIndex: 'date-type',
             key: 'date-type'
         },

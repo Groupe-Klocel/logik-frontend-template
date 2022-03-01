@@ -75,15 +75,15 @@ export const AddArticleForm: FC<IAddArticleFormProps> = ({}: IAddArticleFormProp
 
     const steps = [
         {
-            title: `${t('forms:step')} 1`,
+            title: `${t('common:step')} 1`,
             key: 0
         },
         {
-            title: `${t('forms:step')} 2`,
+            title: `${t('common:step')} 2`,
             key: 1
         },
         {
-            title: `${t('forms:step')} 3`,
+            title: `${t('common:step')} 3`,
             key: 2
         }
     ];

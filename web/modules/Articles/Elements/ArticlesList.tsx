@@ -7,7 +7,7 @@ import {
     pathParams,
     DataQueryType,
     PaginationType,
-    purgeSorter
+    orberByFormater
 } from '@helpers';
 import { EyeTwoTone, DeleteOutlined } from '@ant-design/icons';
 import { useState, useEffect, useCallback } from 'react';
@@ -17,7 +17,7 @@ export interface IArticlesListProps {
 }
 
 const ArticlesList = ({ searchCriteria }: IArticlesListProps) => {
-    const stickyActions = { export: true  };
+    const stickyActions = { export: true };
     const [articles, setArticles] = useState<DataQueryType>();
 
     const [sort, setSort] = useState<any>(null);
@@ -27,7 +27,7 @@ const ArticlesList = ({ searchCriteria }: IArticlesListProps) => {
         current: DEFAULT_PAGE_NUMBER,
         itemsPerPage: DEFAULT_ITEMS_PER_PAGE
     });
-    
+
     const { isLoading, data, error } = useArticles(
         searchCriteria,
         pagination.current,
@@ -39,19 +39,19 @@ const ArticlesList = ({ searchCriteria }: IArticlesListProps) => {
 
     // make wrapper function to give child
     const onChangePagination = useCallback(
-         (currentPage, itemsPerPage) => {
+        (currentPage, itemsPerPage) => {
             // Re fetch data for new current page or items per page
-                setPagination({
-                    total: articles?.count,
-                    current: currentPage,
-                    itemsPerPage: itemsPerPage
-                });
+            setPagination({
+                total: articles?.count,
+                current: currentPage,
+                itemsPerPage: itemsPerPage
+            });
         },
         [setPagination, articles]
     );
 
     // For pagination
-    useEffect( () => {
+    useEffect(() => {
         if (data) {
             setArticles(data?.articles);
             setPagination({
@@ -60,11 +60,6 @@ const ArticlesList = ({ searchCriteria }: IArticlesListProps) => {
             });
         }
     }, [data]);
-
-    const orberByFormater = (sorter: any) => {
-        let newSorter = purgeSorter(sorter);
-        return newSorter;
-    };
 
     const handleTableChange = async (_pagination: any, _filter: any, sorter: any) => {
         await setSort(orberByFormater(sorter));
@@ -150,22 +145,22 @@ const ArticlesList = ({ searchCriteria }: IArticlesListProps) => {
 
     return (
         <>
-                {articles ? (
-                   <AppTable
-                   type="articles"
-                   columns={columns}
-                   data={articles!.results}
-                   scroll={{ x: 800 }}
-                   pagination={pagination}
-                   isLoading={isLoading}
-                   setPagination={onChangePagination}
-                   stickyActions={stickyActions}
-                   onChange={handleTableChange}
-               />
-                ) : (
-                    <ContentSpin />
-                )}
-           
+            {articles ? (
+                <AppTable
+                    type="articles"
+                    columns={columns}
+                    data={articles!.results}
+                    scroll={{ x: 800 }}
+                    pagination={pagination}
+                    isLoading={isLoading}
+                    setPagination={onChangePagination}
+                    stickyActions={stickyActions}
+                    onChange={handleTableChange}
+                />
+            ) : (
+                <ContentSpin />
+            )}
+
         </>
     );
 };
