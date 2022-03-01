@@ -1,6 +1,6 @@
 query GetAllBarcodes(
     $filters: BarcodeSearchFilters
-    $orderBy: String
+    $orderBy: [BarcodeOrderByCriterion!]
     $page: Int!
     $itemsPerPage: Int!
 ) {

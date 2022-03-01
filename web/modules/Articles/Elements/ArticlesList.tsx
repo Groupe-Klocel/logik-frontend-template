@@ -33,7 +33,9 @@ const ArticlesList = ({ searchCriteria }: IArticlesListProps) => {
         searchCriteria,
         pagination.current,
         pagination.itemsPerPage,
-        'id'
+        [
+            {"field": "id", "ascending": true}
+        ]
     );
 
     // make wrapper function to give child

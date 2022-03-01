@@ -33,18 +33,31 @@ const SingleArticle: FC<ISingleArticleProps> = ({ id, router }: ISingleArticlePr
         }
     );
 
+
     if (error) {
         showError(t('messages:error-getting-data'));
     }
 
-    console.log(data);
-
+ 
     const breadsCrumb = [
         ...articlesSubRoutes,
         {
             breadcrumbName: `${id}`
         }
     ];
+
+    const updateBoxQuantity = async () => {
+        const res  = await fetch(`/api/article/update-quantity/${id}`);
+        if (!res.ok) {
+            const message = t('An error has occured: ') + res.status;
+            console.log(message);
+            // throw new Error(message);
+        }
+        const qntData = await res.json();
+        console.log(qntData);
+        if(data?.article)
+            data.article.boxQuantity = qntData.quantity;        
+    }
 
     return (
         <>
@@ -54,7 +67,7 @@ const SingleArticle: FC<ISingleArticleProps> = ({ id, router }: ISingleArticlePr
                 onBack={() => router.back()}
                 actionsRight={
                     <Space>
-                        <Button onClick={() => alert('Update box quantity')} type="primary">
+                        <Button onClick={updateBoxQuantity} type="primary">
                             {t('actions:update-quantity')}
                         </Button>
                         <Button onClick={() => alert('Edit')} type="primary">
@@ -65,7 +78,7 @@ const SingleArticle: FC<ISingleArticleProps> = ({ id, router }: ISingleArticlePr
                 }
             />
             <StyledPageContent>
-                {data?.article && !isLoading ? (
+                {data && !isLoading ? (
                     <ArticleDetails details={data?.article} />
                 ) : (
                     <ScreenSpin />

@@ -21,7 +21,7 @@ const useDrawerState = (initialState: { isOpen: boolean; drawerProps: any }) => 
     return [{ isOpen, drawerProps }, setDrawerState];
 };
 
-const useArticles = (search: any, page: number, itemsPerPage: number, sort: string) => {
+const useArticles = (search: any, page: number, itemsPerPage: number, sort: any) => {
     const { graphqlRequestClient } = useAuth();
     const articles = useGetAllArticlesQuery<Partial<GetAllArticlesQuery>, Error>(
         graphqlRequestClient,
@@ -36,7 +36,7 @@ const useArticles = (search: any, page: number, itemsPerPage: number, sort: stri
     return articles;
 };
 
-const useBarcodes = (search: any, page: number, itemsPerPage: number, sort: string) => {
+const useBarcodes = (search: any, page: number, itemsPerPage: number, sort: any) => {
     const { graphqlRequestClient } = useAuth();
 
     const barcodes = useGetAllBarcodesQuery<Partial<GetAllBarcodesQuery>, Error>(

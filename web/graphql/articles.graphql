@@ -1,6 +1,6 @@
 query GetAllArticles(
     $filters: ArticleSearchFilters
-    $orderBy: String
+    $orderBy: [ArticleOrderByCriterion!]
     $page: Int!
     $itemsPerPage: Int!
 ) {

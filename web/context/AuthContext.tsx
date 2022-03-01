@@ -58,7 +58,7 @@ export const AuthProvider: FC<OnlyChildrenType> = ({ children }: OnlyChildrenTyp
         }
     });
 
-    const login = async ({ username, password, workspaceId }: LoginMutationVariables) => {
+    const login = async ({ username, password, workspaceId='demo' }: LoginMutationVariables) => {
         mutate({ username, password, workspaceId });
     };
 
