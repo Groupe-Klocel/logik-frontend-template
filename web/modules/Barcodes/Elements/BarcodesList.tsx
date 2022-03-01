@@ -1,6 +1,5 @@
-import { AppTable, LinkButton } from '@components';
+import { AppTable, LinkButton, ContentSpin } from '@components';
 import { Button, Space } from 'antd';
-import { barcodesData } from 'fake-data/barcodes';
 import { EyeTwoTone, PrinterOutlined } from '@ant-design/icons';
 import { useState, useEffect, useCallback } from 'react';
 import {
@@ -8,7 +7,6 @@ import {
     DEFAULT_PAGE_NUMBER,
     useBarcodes,
     pathParams,
-    showError,
     DataQueryType,
     PaginationType,
     purgeSorter
@@ -19,7 +17,7 @@ export interface IBarcodesListProps {
 }
 
 const BarcodesList = ({ searchCriteria }: IBarcodesListProps) => {
-    const [barcodes, setBarcodes] = useState<DataQueryType | undefined>(undefined);
+    const [barcodes, setBarcodes] = useState<DataQueryType>();
 
     const [sort, setSort] = useState<any>(null);
 
@@ -41,12 +39,12 @@ const BarcodesList = ({ searchCriteria }: IBarcodesListProps) => {
         (currentPage, itemsPerPage) => {
             // Re fetch data for new current page or items per page
             setPagination({
-                ...pagination,
+                total: barcodes?.count,
                 current: currentPage,
                 itemsPerPage: itemsPerPage
             });
         },
-        [setPagination]
+        [setPagination, barcodes]
     );
 
     // For pagination
@@ -71,7 +69,7 @@ const BarcodesList = ({ searchCriteria }: IBarcodesListProps) => {
 
     const columns = [
         {
-            title: 'common:name',
+            title: 'd:name',
             dataIndex: 'name',
             key: 'name',
             sorter: {
@@ -135,15 +133,15 @@ const BarcodesList = ({ searchCriteria }: IBarcodesListProps) => {
         {
             title: 'actions:actions',
             key: 'actions',
-            render: (record: { id: string; name: string }) => (
+            render: (record: { id: string }) => (
                 <Space>
-                    <LinkButton
+                  <LinkButton
                         icon={<EyeTwoTone />}
                         path={pathParams('/barcode/[id]', record.id)}
                     />
                     <Button
                         icon={<PrinterOutlined />}
-                        onClick={() => alert(`Print ${record.id} - ${record.name}`)}
+                        onClick={() => alert(`Print ${record.id} `)}
                     />
                 </Space>
             )
@@ -152,16 +150,19 @@ const BarcodesList = ({ searchCriteria }: IBarcodesListProps) => {
 
     return (
         <>
-            {barcodes && (
+            {barcodes ? (
                 <AppTable
                     type="barcodes"
                     columns={columns}
                     data={barcodes!.results}
                     scroll={{ x: 800 }}
+                    isLoading={isLoading}
                     pagination={pagination}
                     setPagination={onChangePagination}
                     onChange={handleTableChange}
                 />
+            ) : (
+                <ContentSpin />
             )}
         </>
     );

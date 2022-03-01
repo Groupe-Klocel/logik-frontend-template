@@ -1,4 +1,4 @@
-import { AppTable, LinkButton } from '@components';
+import { AppTable, LinkButton, ContentSpin } from '@components';
 import { Space, Button } from 'antd';
 import {
     DEFAULT_ITEMS_PER_PAGE,
@@ -17,8 +17,8 @@ export interface IArticlesListProps {
 }
 
 const ArticlesList = ({ searchCriteria }: IArticlesListProps) => {
-    const stickyActions = { export: true, delete: false };
-    const [articles, setArticles] = useState<DataQueryType | undefined>(undefined);
+    const stickyActions = { export: true  };
+    const [articles, setArticles] = useState<DataQueryType>();
 
     const [sort, setSort] = useState<any>(null);
 
@@ -27,7 +27,7 @@ const ArticlesList = ({ searchCriteria }: IArticlesListProps) => {
         current: DEFAULT_PAGE_NUMBER,
         itemsPerPage: DEFAULT_ITEMS_PER_PAGE
     });
-
+    
     const { isLoading, data, error } = useArticles(
         searchCriteria,
         pagination.current,
@@ -35,26 +35,28 @@ const ArticlesList = ({ searchCriteria }: IArticlesListProps) => {
         sort
     );
 
+
+
     // make wrapper function to give child
     const onChangePagination = useCallback(
-        (currentPage, itemsPerPage) => {
+         (currentPage, itemsPerPage) => {
             // Re fetch data for new current page or items per page
-            setPagination({
-                ...pagination,
-                current: currentPage,
-                itemsPerPage: itemsPerPage
-            });
+                setPagination({
+                    total: articles?.count,
+                    current: currentPage,
+                    itemsPerPage: itemsPerPage
+                });
         },
-        [setPagination]
+        [setPagination, articles]
     );
 
     // For pagination
-    useEffect(() => {
+    useEffect( () => {
         if (data) {
             setArticles(data?.articles);
             setPagination({
                 ...pagination,
-                total: data?.articles?.count
+                total: data?.articles?.count,
             });
         }
     }, [data]);
@@ -148,18 +150,22 @@ const ArticlesList = ({ searchCriteria }: IArticlesListProps) => {
 
     return (
         <>
-            {articles && (
-                <AppTable
-                    type="articles"
-                    columns={columns}
-                    data={articles!.results}
-                    scroll={{ x: 800 }}
-                    pagination={pagination}
-                    setPagination={onChangePagination}
-                    stickyActions={stickyActions}
-                    onChange={handleTableChange}
-                />
-            )}
+                {articles ? (
+                   <AppTable
+                   type="articles"
+                   columns={columns}
+                   data={articles!.results}
+                   scroll={{ x: 800 }}
+                   pagination={pagination}
+                   isLoading={isLoading}
+                   setPagination={onChangePagination}
+                   stickyActions={stickyActions}
+                   onChange={handleTableChange}
+               />
+                ) : (
+                    <ContentSpin />
+                )}
+           
         </>
     );
 };
