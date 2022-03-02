@@ -9,7 +9,7 @@ import {
     CreateBarcodeMutation,
     CreateBarcodeMutationVariables
 } from 'generated/graphql';
-import { showError, showSuccess, showInfo} from '@helpers';
+import { showError, showSuccess, showInfo } from '@helpers';
 
 const { Option } = Select;
 export interface IAddBarcodeFormProps {}

@@ -3,9 +3,9 @@ import { Button, Checkbox, Col, Form, Input, Row } from 'antd';
 import useTranslation from 'next-translate/useTranslation';
 import { FC, useState } from 'react';
 
-export interface IAddPackagingFormProps { }
+export interface IAddPackagingFormProps {}
 
-export const AddPackagingForm: FC<IAddPackagingFormProps> = ({ }: IAddPackagingFormProps) => {
+export const AddPackagingForm: FC<IAddPackagingFormProps> = ({}: IAddPackagingFormProps) => {
     let { t } = useTranslation('common');
 
     // TYPED SAFE ALL

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Layout } from 'antd';
+import { Layout, Input } from 'antd';
 
 const WrapperForm = styled.div`
     padding: 20px;
@@ -15,7 +15,13 @@ const WrapperStickyActions = styled.div`
     align-self: flex-end;
 `;
 
+const InputWrapper = styled(Input)`
+    background-color: white;
+    color: black;
+`;
+
 const WrapperLogin = styled.div`
+    background-color: white;
     display: flex;
     align-items: center;
     justify-items: center;
@@ -65,5 +71,6 @@ export {
     WrapperLogin,
     WrapperForm,
     WrapperStepContent,
-    WrapperStickyActions
+    WrapperStickyActions,
+    InputWrapper
 };

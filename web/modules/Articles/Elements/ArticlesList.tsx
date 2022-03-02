@@ -7,8 +7,19 @@ import {
     pathParams,
     DataQueryType,
     PaginationType,
-    orberByFormater
+    orberByFormater,
+    showInfo,
+    showError,
+    showSuccess
 } from '@helpers';
+import { useAuth } from 'context/AuthContext';
+import useTranslation from 'next-translate/useTranslation';
+import {
+    ExportArticlesMutationVariables,
+    ExportArticlesMutation,
+    useExportArticlesMutation,
+    ExportFormat
+} from 'generated/graphql';
 import { EyeTwoTone, DeleteOutlined } from '@ant-design/icons';
 import { useState, useEffect, useCallback } from 'react';
 
@@ -17,7 +28,9 @@ export interface IArticlesListProps {
 }
 
 const ArticlesList = ({ searchCriteria }: IArticlesListProps) => {
-    const stickyActions = { export: true };
+    let { t } = useTranslation();
+    const { graphqlRequestClient } = useAuth();
+
     const [articles, setArticles] = useState<DataQueryType>();
 
     const [sort, setSort] = useState<any>(null);
@@ -35,7 +48,48 @@ const ArticlesList = ({ searchCriteria }: IArticlesListProps) => {
         sort
     );
 
+    // EXPORT ARTICLES SECTION
+    const {
+        mutate,
+        isLoading: exportLoading,
+        data: exportData
+    } = useExportArticlesMutation<Error>(graphqlRequestClient, {
+        onSuccess: (
+            data: ExportArticlesMutation,
+            _variables: ExportArticlesMutationVariables,
+            _context: unknown
+        ) => {
+            showSuccess(t('messages:success-exported'));
+        },
+        onError: (error) => {
+            showError(t('messages:error-exporting-data'));
+        }
+    });
 
+    const exportArticles = () => {
+        mutate({
+            format: ExportFormat.Csv,
+            compression: null,
+            separator: ',',
+            orderBy: sort,
+            filters: searchCriteria
+        });
+    };
+
+    useEffect(() => {
+        if (exportLoading) {
+            showInfo(t('messages:info-export-wip'));
+        }
+    }, [exportLoading]);
+
+    // END EXPORT
+
+    const stickyActions = {
+        export: {
+            active: true,
+            function: () => exportArticles()
+        }
+    };
 
     // make wrapper function to give child
     const onChangePagination = useCallback(
@@ -56,7 +110,7 @@ const ArticlesList = ({ searchCriteria }: IArticlesListProps) => {
             setArticles(data?.articles);
             setPagination({
                 ...pagination,
-                total: data?.articles?.count,
+                total: data?.articles?.count
             });
         }
     }, [data]);
@@ -145,7 +199,7 @@ const ArticlesList = ({ searchCriteria }: IArticlesListProps) => {
 
     return (
         <>
-            {articles ? (
+            {articles && !exportLoading ? (
                 <AppTable
                     type="articles"
                     columns={columns}
@@ -160,7 +214,6 @@ const ArticlesList = ({ searchCriteria }: IArticlesListProps) => {
             ) : (
                 <ContentSpin />
             )}
-
         </>
     );
 };

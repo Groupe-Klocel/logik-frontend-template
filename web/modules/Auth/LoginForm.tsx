@@ -15,7 +15,6 @@ export const LoginForm: FC<ILoginFormProps> = ({}: ILoginFormProps) => {
     const welcome = t('welcome');
     const username = t('username');
     const password = t('password');
-    const workspace = t('workspace');
     const forgotPassword = t('forgot-password');
     const loginButton = t('actions:login');
     const errorMessageUsername = t('messages:error-message-empty-input');
@@ -35,7 +34,7 @@ export const LoginForm: FC<ILoginFormProps> = ({}: ILoginFormProps) => {
 
     return (
         <div>
-            <WrapperLogin className="ant-layout">
+            <WrapperLogin className="login">
                 <Logo width={100} />
 
                 <WelcomeText>{welcome} Bee V2</WelcomeText>
@@ -56,7 +55,12 @@ export const LoginForm: FC<ILoginFormProps> = ({}: ILoginFormProps) => {
                         name="password"
                         rules={[{ required: true, message: errorMessagePassword }]}
                     >
-                        <Input prefix={<LockOutlined />} type="password" placeholder={password} />
+                        <Input
+                            style={{ color: '#000' }}
+                            prefix={<LockOutlined />}
+                            type="password"
+                            placeholder={password}
+                        />
                     </Form.Item>
 
                     <Form.Item>

@@ -6,11 +6,11 @@ import { FC, useState } from 'react';
 
 const { Option } = Select;
 
-export interface IAddMovementsConfigFormProps { }
+export interface IAddMovementsConfigFormProps {}
 
 export const AddMovementsConfigForm: FC<
     IAddMovementsConfigFormProps
-> = ({ }: IAddMovementsConfigFormProps) => {
+> = ({}: IAddMovementsConfigFormProps) => {
     let { t } = useTranslation('common');
 
     //TODO FETCH GROUP'S NAME
@@ -42,7 +42,7 @@ export const AddMovementsConfigForm: FC<
                     label={t('select-company')}
                     name="company"
                     hasFeedback
-                // rules={[{ required: true, message: `${t('error-message-select-1')} ${t('company')}`}]}
+                    // rules={[{ required: true, message: `${t('error-message-select-1')} ${t('company')}`}]}
                 >
                     <Select placeholder={`${t('error-message-select-1')} ${t('company')}`}>
                         {companiesData.map((company: any) => (

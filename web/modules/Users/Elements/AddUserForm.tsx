@@ -7,9 +7,9 @@ import { FC, useState } from 'react';
 
 const { Option } = Select;
 
-export interface IAddUserFormProps { }
+export interface IAddUserFormProps {}
 
-export const AddUserForm: FC<IAddUserFormProps> = ({ }: IAddUserFormProps) => {
+export const AddUserForm: FC<IAddUserFormProps> = ({}: IAddUserFormProps) => {
     let { t } = useTranslation();
 
     // TEXTS TRANSLATION ( REFACTORING POSSIBLE / EXPORT / DON'T KNOW YET )

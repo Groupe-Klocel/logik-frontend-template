@@ -27,7 +27,6 @@ export interface ISingleBarcodeProps {
     router: NextRouter;
 }
 
-
 const SingleBarcode: FC<ISingleBarcodeProps> = ({ id, router }: ISingleBarcodeProps) => {
     let { t } = useTranslation();
     const { graphqlRequestClient } = useAuth();
@@ -92,15 +91,13 @@ const SingleBarcode: FC<ISingleBarcodeProps> = ({ id, router }: ISingleBarcodePr
                     </Space>
                 }
             />
-        <StyledPageContent>
-
-            {data?.barcode && !isLoading ? (
-                <BarcodeDetails details={data?.barcode} />
-            ) : (
-                <ContentSpin />
-            )}
-        </StyledPageContent>
-
+            <StyledPageContent>
+                {data?.barcode && !isLoading ? (
+                    <BarcodeDetails details={data?.barcode} />
+                ) : (
+                    <ContentSpin />
+                )}
+            </StyledPageContent>
         </>
     );
 };

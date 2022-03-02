@@ -5,9 +5,9 @@ import { FC, useState } from 'react';
 
 const { Option } = Select;
 
-export interface IAddCompanyFormProps { }
+export interface IAddCompanyFormProps {}
 
-export const AddCompanyForm: FC<IAddCompanyFormProps> = ({ }: IAddCompanyFormProps) => {
+export const AddCompanyForm: FC<IAddCompanyFormProps> = ({}: IAddCompanyFormProps) => {
     let { t } = useTranslation('common');
 
     //TODO FETCH GROUP'S NAME

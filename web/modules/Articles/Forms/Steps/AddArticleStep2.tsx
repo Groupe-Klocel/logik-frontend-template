@@ -34,7 +34,7 @@ const AddArticleStep2: FC<IAddArticleStep2Props> = () => {
                     name="length"
                     rules={[{ required: true, message: errorMessageEmptyInput }]}
                 >
-                    <InputNumber style={{ width: '100%' }} precision={2}  />
+                    <InputNumber style={{ width: '100%' }} precision={2} />
                 </Form.Item>
 
                 <Form.Item
@@ -42,7 +42,7 @@ const AddArticleStep2: FC<IAddArticleStep2Props> = () => {
                     name="width"
                     rules={[{ required: true, message: errorMessageEmptyInput }]}
                 >
-                    <InputNumber style={{ width: '100%' }}  precision={2} />
+                    <InputNumber style={{ width: '100%' }} precision={2} />
                 </Form.Item>
 
                 <Form.Item
@@ -50,14 +50,14 @@ const AddArticleStep2: FC<IAddArticleStep2Props> = () => {
                     name="height"
                     rules={[{ required: true, message: errorMessageEmptyInput }]}
                 >
-                    <InputNumber style={{ width: '100%' }} precision={2}  />
+                    <InputNumber style={{ width: '100%' }} precision={2} />
                 </Form.Item>
                 <Form.Item
                     label={baseUnitWeight}
                     name="baseUnitWeight"
                     rules={[{ required: true, message: errorMessageEmptyInput }]}
                 >
-                    <InputNumber style={{ width: '100%' }} precision={2}  />
+                    <InputNumber style={{ width: '100%' }} precision={2} />
                 </Form.Item>
 
                 <Form.Item
@@ -65,7 +65,7 @@ const AddArticleStep2: FC<IAddArticleStep2Props> = () => {
                     name="boxWeight"
                     rules={[{ required: true, message: errorMessageEmptyInput }]}
                 >
-                    <InputNumber style={{ width: '100%' }}  precision={2} />
+                    <InputNumber style={{ width: '100%' }} precision={2} />
                 </Form.Item>
 
                 <Form.Item

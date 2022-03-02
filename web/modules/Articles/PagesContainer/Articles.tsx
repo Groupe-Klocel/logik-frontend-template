@@ -6,7 +6,7 @@ import { useDrawerDispatch } from 'context/DrawerContext';
 import { ArticlesList } from 'modules/Articles/Elements/ArticlesList';
 import { articlesSubRoutes } from 'modules/Articles/Static/articlesRoutes';
 import useTranslation from 'next-translate/useTranslation';
-import {showError} from '@helpers'
+import { showError } from '@helpers';
 import { FC, useCallback, useState } from 'react';
 
 export interface IArticlesProps {}

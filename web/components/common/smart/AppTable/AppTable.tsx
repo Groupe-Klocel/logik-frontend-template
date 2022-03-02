@@ -21,7 +21,7 @@ export interface IAppTableProps {
     pagination?: any;
     setPagination?: any;
     stickyActions?: {
-        export?: boolean;
+        export?: any;
         // delete?: boolean;
     };
     onChange?: any;
@@ -64,7 +64,6 @@ const AppTable: FC<IAppTableProps> = ({
         });
     }
 
-    
     const [onSave, setOnSave] = useState<boolean>(false);
     const [visibleColumnKeys, setVisibleColumnKeys] = useState<Key[]>(
         initialState !== null ? initialState.visibleColumnKeys : allColumnKeys
@@ -102,7 +101,6 @@ const AppTable: FC<IAppTableProps> = ({
 
     // make wrapper function to give child
 
-
     const childSetVisibleColumnKeys = useCallback(
         (val) => {
             setVisibleColumnKeys(val);
@@ -128,7 +126,7 @@ const AppTable: FC<IAppTableProps> = ({
 
     const handlePaginationChange = (page: number, pageSize: number) => {
         setPagination(page, pageSize);
-    }
+    };
 
     const handleReset = () => {
         setVisibleColumnKeys(allColumnKeys);
@@ -185,7 +183,7 @@ const AppTable: FC<IAppTableProps> = ({
             }
         }
 
-        return () => { };
+        return () => {};
     }, [visibleColumnKeys, filteredColumns]);
 
     useEffect(() => {
@@ -201,7 +199,7 @@ const AppTable: FC<IAppTableProps> = ({
             );
         }
         setOnSave(false);
-        return () => { };
+        return () => {};
     }, [onSave]);
 
     return (
@@ -221,13 +219,12 @@ const AppTable: FC<IAppTableProps> = ({
                             danger
                         />
                     )} */}
-                    {stickyActions?.export && (
+                    {stickyActions?.export.active && (
                         <Button
                             icon={<FileExcelOutlined />}
-                            onClick={() => alert('trigger export')}
+                            onClick={stickyActions?.export.function}
                         />
                     )}
-
                 </Space>
             </WrapperStickyActions>
             <Table
@@ -269,7 +266,9 @@ AppTable.displayName = 'AppTable';
 
 AppTable.defaultProps = {
     stickyActions: {
-        export: false
+        export: {
+            active: false
+        }
         // delete: false
     }
 };

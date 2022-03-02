@@ -3,9 +3,9 @@ import { Button, Col, Form, Input, Row } from 'antd';
 import useTranslation from 'next-translate/useTranslation';
 import { FC, useState } from 'react';
 
-export interface IAddGroupFormProps { }
+export interface IAddGroupFormProps {}
 
-export const AddGroupForm: FC<IAddGroupFormProps> = ({ }: IAddGroupFormProps) => {
+export const AddGroupForm: FC<IAddGroupFormProps> = ({}: IAddGroupFormProps) => {
     let { t } = useTranslation('common');
 
     // TYPED SAFE ALL

@@ -5,9 +5,9 @@ import { FC, useState } from 'react';
 
 const { Option } = Select;
 
-export interface IAddStockStatusFormProps { }
+export interface IAddStockStatusFormProps {}
 
-export const AddStockStatusForm: FC<IAddStockStatusFormProps> = ({ }: IAddStockStatusFormProps) => {
+export const AddStockStatusForm: FC<IAddStockStatusFormProps> = ({}: IAddStockStatusFormProps) => {
     let { t } = useTranslation('common');
 
     //TODO FETCH GROUP'S NAME

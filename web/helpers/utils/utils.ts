@@ -52,7 +52,6 @@ const orberByFormater = (sorter: any) => {
     return newSorter;
 };
 
-
 // Set index to each object in an array
 function setIndex(array: Array<any>): Array<any> {
     const arrayWithIndex = array.map((object: Object) => ({

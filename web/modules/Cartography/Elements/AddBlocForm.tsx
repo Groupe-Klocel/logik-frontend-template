@@ -3,9 +3,9 @@ import { Button, Checkbox, Col, Form, Input, Row } from 'antd';
 import useTranslation from 'next-translate/useTranslation';
 import { FC, useState } from 'react';
 
-export interface IAddBlocFormProps { }
+export interface IAddBlocFormProps {}
 
-export const AddBlocForm: FC<IAddBlocFormProps> = ({ }: IAddBlocFormProps) => {
+export const AddBlocForm: FC<IAddBlocFormProps> = ({}: IAddBlocFormProps) => {
     let { t } = useTranslation('common');
 
     // TYPED SAFE ALL

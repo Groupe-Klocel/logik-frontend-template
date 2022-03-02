@@ -7,7 +7,7 @@ import { BarcodesList } from 'modules/Barcodes/Elements/BarcodesList';
 import { Space, Form, Button } from 'antd';
 import { BarcodesSearch } from 'components/common/smart/DrawerItems/BarcodesSearch';
 import { useDrawerDispatch } from 'context/DrawerContext';
-import {showError} from "@helpers"
+import { showError } from '@helpers';
 
 export interface IBarcodesProps {}
 

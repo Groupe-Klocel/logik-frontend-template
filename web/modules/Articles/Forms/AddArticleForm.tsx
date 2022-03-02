@@ -51,7 +51,7 @@ export const AddArticleForm: FC<IAddArticleFormProps> = ({}: IAddArticleFormProp
         ) => {
             if (createLoading) {
                 showInfo(t('messages:info-creating-wip'));
-            }else {
+            } else {
                 router.push(`/article/${data.createArticle.id}`);
                 showSuccess(t('messages:success-created'));
             }

@@ -92,3 +92,10 @@ mutation CreateArticle($input: CreateArticleInput!) {
         supplierName
     }
 }
+
+mutation ExportArticles($format: ExportFormat, $compression:ExportCompression ,$separator:String,$orderBy:[ArticleOrderByCriterion!],$filters: ArticleSearchFilters) {
+    exportArticles(format:$format,compression:$compression,separator:$separator,orderBy:$orderBy,filters:$filters)
+  {
+    url
+  }
+}
