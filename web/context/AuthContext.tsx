@@ -1,4 +1,12 @@
-import { cookie, decodeJWT, OnlyChildrenType, showError, showSuccess, IS_FAKE, IS_SAME_SEED } from '@helpers';
+import {
+    cookie,
+    decodeJWT,
+    OnlyChildrenType,
+    showError,
+    showSuccess,
+    IS_FAKE,
+    IS_SAME_SEED
+} from '@helpers';
 import { LoginMutation, LoginMutationVariables, useLoginMutation } from 'generated/graphql';
 import { GraphQLClient } from 'graphql-request';
 import { useRouter } from 'next/router';
@@ -70,22 +78,21 @@ export const AuthProvider: FC<OnlyChildrenType> = ({ children }: OnlyChildrenTyp
         router.push('/login');
     };
 
-    let requestHeader
+    let requestHeader;
 
     const setHeader = (token: string) => {
         if (IS_FAKE) {
             if (IS_SAME_SEED) {
                 requestHeader = {
-                    "X-API-fake": "fake",
-                    "X-API-seed": "same",
+                    'X-API-fake': 'fake',
+                    'X-API-seed': 'same',
                     authorization: `Bearer ${token}`
                 };
             } else {
                 requestHeader = {
-                    "X-API-fake": "fake",
+                    'X-API-fake': 'fake',
                     authorization: `Bearer ${token}`
                 };
-
             }
         } else {
             requestHeader = {

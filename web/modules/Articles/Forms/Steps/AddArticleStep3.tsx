@@ -36,7 +36,7 @@ const AddArticleStep3: FC<IAddArticleStep3Props> = () => {
                 <InputNumber style={{ width: '100%' }} />
             </Form.Item>
             <Form.Item name="permanentProduct" valuePropName="checked" initialValue={false}>
-                <Checkbox >{permanentProduct}</Checkbox>
+                <Checkbox>{permanentProduct}</Checkbox>
             </Form.Item>
         </>
     );

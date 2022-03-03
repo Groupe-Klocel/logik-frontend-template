@@ -7,9 +7,9 @@ import { FC, useState } from 'react';
 
 const { Option } = Select;
 
-export interface IAddUserFormProps {}
+export interface IAddUserFormProps { }
 
-export const AddUserForm: FC<IAddUserFormProps> = ({}: IAddUserFormProps) => {
+export const AddUserForm: FC<IAddUserFormProps> = ({ }: IAddUserFormProps) => {
     let { t } = useTranslation();
 
     // TEXTS TRANSLATION ( REFACTORING POSSIBLE / EXPORT / DON'T KNOW YET )
@@ -28,12 +28,12 @@ export const AddUserForm: FC<IAddUserFormProps> = ({}: IAddUserFormProps) => {
 
     // Call api to create new user
     const onFinish = (values: any) => {
-        console.log('Success:', values);
+        alert('Success');
         setNewUserData(values);
     };
 
     const onFinishFailed = (errorInfo: any) => {
-        console.log('Failed:', errorInfo);
+        alert('Failed');
     };
 
     return (

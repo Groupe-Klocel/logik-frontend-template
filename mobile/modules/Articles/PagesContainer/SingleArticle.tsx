@@ -25,7 +25,6 @@ const SingleArticle: FC<ISingleArticleProps> = ({ aId, router }: ISingleArticleP
 	const { graphqlRequestClient } = useAuth()
 
 	aId = parseInt(aId);
-	console.log(typeof(aId))
 
 	const { isLoading, data, error } = useGetArticleByIdQuery<GetArticleByIdQuery, Error>(graphqlRequestClient, {
 		id: aId,

@@ -5,9 +5,9 @@ import { FC, useState } from 'react';
 
 const { Option } = Select;
 
-export interface IAddCompanyFormProps {}
+export interface IAddCompanyFormProps { }
 
-export const AddCompanyForm: FC<IAddCompanyFormProps> = ({}: IAddCompanyFormProps) => {
+export const AddCompanyForm: FC<IAddCompanyFormProps> = ({ }: IAddCompanyFormProps) => {
     let { t } = useTranslation('common');
 
     //TODO FETCH GROUP'S NAME
@@ -17,12 +17,12 @@ export const AddCompanyForm: FC<IAddCompanyFormProps> = ({}: IAddCompanyFormProp
 
     // Call api to create new user
     const onFinish = (values: any) => {
-        console.log('Success:', values);
+        alert('Success');
         setNewCompanyData(values);
     };
 
     const onFinishFailed = (errorInfo: any) => {
-        console.log('Failed:', errorInfo);
+        alert('Failed');
     };
 
     return (

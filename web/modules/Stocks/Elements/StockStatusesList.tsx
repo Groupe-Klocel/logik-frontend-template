@@ -2,37 +2,34 @@ import { DeleteOutlined, EyeTwoTone, EditTwoTone } from '@ant-design/icons';
 import { Button, Space } from 'antd';
 import { AppTable } from '@components';
 import { stockData } from 'fake-data/stock';
-import useTranslation from 'next-translate/useTranslation';
 import { FC } from 'react';
 
 export interface IStockStatusesListProps {}
 
 export const StockStatusesList: FC<IStockStatusesListProps> = ({}) => {
-    let { t } = useTranslation('common');
-
     const columns = [
         {
-            title: t('name'),
+            title: 'name',
             dataIndex: 'name',
             key: 'name'
         },
         {
-            title: t('value'),
+            title: 'value',
             dataIndex: 'value',
             key: 'value'
         },
         {
-            title: t('system'),
+            title: 'system',
             dataIndex: 'system',
             key: 'system'
         },
         {
-            title: t('comment'),
+            title: 'comment',
             dataIndex: 'comment',
             key: 'comment'
         },
         {
-            title: t('actions:actions'),
+            title: 'actions:actions',
             key: 'actions',
             render: (record: { id: number }) => (
                 <Space>

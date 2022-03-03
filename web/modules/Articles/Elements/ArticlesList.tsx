@@ -1,16 +1,15 @@
-import { AppTable, LinkButton } from '@components';
+import { AppTable, LinkButton, ContentSpin } from '@components';
 import { Space, Button } from 'antd';
 import {
     DEFAULT_ITEMS_PER_PAGE,
     DEFAULT_PAGE_NUMBER,
     useArticles,
     pathParams,
-    showError,
     DataQueryType,
-    PaginationType
+    PaginationType,
+    purgeSorter
 } from '@helpers';
 import { EyeTwoTone, DeleteOutlined } from '@ant-design/icons';
-import useTranslation from 'next-translate/useTranslation';
 import { useState, useEffect, useCallback } from 'react';
 
 export interface IArticlesListProps {
@@ -18,99 +17,120 @@ export interface IArticlesListProps {
 }
 
 const ArticlesList = ({ searchCriteria }: IArticlesListProps) => {
-    const { t } = useTranslation();
+    const stickyActions = { export: true  };
+    const [articles, setArticles] = useState<DataQueryType>();
 
-    const stickyActions = { export: true, delete: false };
-    const [articles, setArticles] = useState<DataQueryType | undefined>(undefined);
+    const [sort, setSort] = useState<any>(null);
 
     const [pagination, setPagination] = useState<PaginationType>({
         total: undefined,
         current: DEFAULT_PAGE_NUMBER,
         itemsPerPage: DEFAULT_ITEMS_PER_PAGE
     });
-
+    
     const { isLoading, data, error } = useArticles(
         searchCriteria,
         pagination.current,
         pagination.itemsPerPage,
-        [
-            {"field": "id", "ascending": true}
-        ]
+        sort
     );
+
+
 
     // make wrapper function to give child
     const onChangePagination = useCallback(
-        (currentPage, itemsPerPage) => {
+         (currentPage, itemsPerPage) => {
             // Re fetch data for new current page or items per page
-            setPagination({
-                ...pagination,
-                current: currentPage,
-                itemsPerPage: itemsPerPage
-            });
+                setPagination({
+                    total: articles?.count,
+                    current: currentPage,
+                    itemsPerPage: itemsPerPage
+                });
         },
-        [setPagination]
+        [setPagination, articles]
     );
 
     // For pagination
-    useEffect(() => {
+    useEffect( () => {
         if (data) {
             setArticles(data?.articles);
             setPagination({
                 ...pagination,
-                total: data?.articles?.count
+                total: data?.articles?.count,
             });
         }
     }, [data]);
 
+    const orberByFormater = (sorter: any) => {
+        let newSorter = purgeSorter(sorter);
+        return newSorter;
+    };
+
+    const handleTableChange = async (_pagination: any, _filter: any, sorter: any) => {
+        await setSort(orberByFormater(sorter));
+    };
+
     // to refactor to be automatique when fetching data
     const columns = [
         {
-            title: `${t('d:name')}`,
+            title: 'd:name',
             dataIndex: 'name',
-            key: 'name'
+            key: 'name',
+            sorter: {
+                multiple: 1
+            },
+            showSorterTooltip: false
         },
         {
-            title: t('d:additionalDescription'),
+            title: 'd:additionalDescription',
             dataIndex: 'additionalDescription',
-            key: 'additionalDescription'
+            key: 'additionalDescription',
+            sorter: {
+                multiple: 2
+            },
+            showSorterTooltip: false
         },
         {
-            title: t('d:code'),
+            title: 'd:code',
             dataIndex: 'code',
-            key: 'code'
+            key: 'code',
+            sorter: {
+                multiple: 3
+            },
+            showSorterTooltip: false
         },
         {
-            title: t('d:status'),
+            title: 'd:status',
             dataIndex: 'status',
             key: 'status'
         },
         {
-            title: t('d:length'),
+            title: 'd:length',
             dataIndex: 'length',
             key: 'length'
         },
         {
-            title: t('d:width'),
+            title: 'd:width',
             dataIndex: 'width',
             key: 'width'
         },
         {
-            title: t('d:height'),
+            title: 'd:height',
             dataIndex: 'height',
             key: 'height'
         },
         {
-            title: t('d:baseUnitWeight'),
+            title: 'd:baseUnitWeight',
             dataIndex: 'baseUnitWeight',
             key: 'baseUnitWeight'
         },
         {
-            title: t('d:boxWeight'),
+            title: 'd:boxWeight',
             dataIndex: 'boxWeight',
             key: 'boxWeight'
         },
         {
-            title: t('actions:actions'),
+            title: 'actions:actions',
             key: 'actions',
             render: (record: { id: string }) => (
                 <Space>
@@ -130,17 +150,22 @@ const ArticlesList = ({ searchCriteria }: IArticlesListProps) => {
 
     return (
         <>
-            {articles && (
-                <AppTable
-                    type="articles"
-                    columns={columns}
-                    data={articles!.results}
-                    scroll={{ x: 800 }}
-                    pagination={pagination}
-                    setPagination={onChangePagination}
-                    stickyActions={stickyActions}
-                />
-            )}
+                {articles ? (
+                   <AppTable
+                   type="articles"
+                   columns={columns}
+                   data={articles!.results}
+                   scroll={{ x: 800 }}
+                   pagination={pagination}
+                   isLoading={isLoading}
+                   setPagination={onChangePagination}
+                   stickyActions={stickyActions}
+                   onChange={handleTableChange}
+               />
+                ) : (
+                    <ContentSpin />
+                )}
+           
         </>
     );
 };

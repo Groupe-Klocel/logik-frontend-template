@@ -9,24 +9,9 @@ export interface IBarcodesSearchProps {
 const BarcodesSearch: FC<IBarcodesSearchProps> = ({ form }: IBarcodesSearchProps) => {
     let { t } = useTranslation();
 
-    const tailLayout = {
-        wrapperCol: { span: 14, offset: 4 }
-    };
-
-    const onReset = () => {
-        form.resetFields();
-    };
-
     return (
         <>
             <Form form={form} name="control-hooks">
-                <Form.Item {...tailLayout}>
-                    <Space>
-                        <Button htmlType="button" onClick={onReset}>
-                            {t('actions:reset')}
-                        </Button>
-                    </Space>
-                </Form.Item>
                 <Form.Item name="name" label={t('common:name')}>
                     <Input />
                 </Form.Item>

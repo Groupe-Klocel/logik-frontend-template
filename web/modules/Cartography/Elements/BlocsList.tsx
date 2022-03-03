@@ -1,6 +1,5 @@
 import { FC } from 'react';
 import { DeleteOutlined, EyeTwoTone, EditTwoTone } from '@ant-design/icons';
-import useTranslation from 'next-translate/useTranslation';
 import { Button, Space } from 'antd';
 import { blocsData } from 'fake-data/blocs';
 import { AppTable } from '@components';
@@ -8,8 +7,6 @@ import { AppTable } from '@components';
 export interface IBlocsListProps {}
 
 export const BlocsList: FC<IBlocsListProps> = ({}) => {
-    let { t } = useTranslation('common');
-
     const columns = [
         {
             title: 'Name',
@@ -37,7 +34,7 @@ export const BlocsList: FC<IBlocsListProps> = ({}) => {
             key: 'warehouse-code'
         },
         {
-            title: t('actions:actions'),
+            title: 'actions:actions',
             key: 'actions',
             render: (record: { id: number }) => (
                 <Space>

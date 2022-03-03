@@ -9,7 +9,6 @@ type PageComponent = FC & { layout: typeof MainLayout };
 const ArticlePage: PageComponent = () => {
     const router = useRouter();
     const { id } = router.query;
-
     return (
         <>
             <AppHead title="Bee V2" />

@@ -1,6 +1,5 @@
 import { FC } from 'react';
 import { DeleteOutlined, EyeTwoTone, EditTwoTone } from '@ant-design/icons';
-import useTranslation from 'next-translate/useTranslation';
 import { Button, Space } from 'antd';
 import { featureTypesData } from 'fake-data/features';
 import { AppTable } from '@components';
@@ -8,16 +7,14 @@ import { AppTable } from '@components';
 export interface IFeaturesTypesListProps {}
 
 export const FeaturesTypesList: FC<IFeaturesTypesListProps> = ({}) => {
-    let { t } = useTranslation();
-
     const columns = [
         {
-            title: t('common:name'),
+            title: 'common:name',
             dataIndex: 'name',
             key: 'name'
         },
         {
-            title: t('actions:actions'),
+            title: 'actions:actions',
             key: 'actions',
             render: (record: { id: number }) => (
                 <Space>

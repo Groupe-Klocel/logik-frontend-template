@@ -17,7 +17,6 @@ const ArticleGet: PageComponent = () => {
     console.log(values)
     const aId = values["article-id"]
     router.push(`/article/${aId}`)
-  
   }
 	return (
 		<>

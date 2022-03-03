@@ -12,7 +12,7 @@ import {
     CreateArticleMutation,
     CreateArticleMutationVariables
 } from 'generated/graphql';
-import { showError, showSuccess, showInfo} from '@helpers';
+import { showError, showSuccess, showInfo } from '@helpers';
 
 const { Item } = Form;
 
@@ -27,7 +27,6 @@ export const AddArticleForm: FC<IAddArticleFormProps> = ({}: IAddArticleFormProp
     const [form] = Form.useForm();
 
     const handleClickNext = () => {
-        console.log('pass');
         form.validateFields()
             .then(() => {
                 // Here make api call of something else
@@ -50,10 +49,9 @@ export const AddArticleForm: FC<IAddArticleFormProps> = ({}: IAddArticleFormProp
             _variables: CreateArticleMutationVariables,
             _context: unknown
         ) => {
-            if(createLoading){
+            if (createLoading) {
                 showInfo(t('messages:info-creating-wip'));
-            }
-            if (!createLoading) {
+            }else {
                 router.push(`/article/${data.createArticle.id}`);
                 showSuccess(t('messages:success-created'));
             }
@@ -68,13 +66,11 @@ export const AddArticleForm: FC<IAddArticleFormProps> = ({}: IAddArticleFormProp
     };
 
     const onFinish = () => {
-        console.log('pass2');
         form.validateFields()
             .then(() => {
-                console.log(form.getFieldsValue(true));
-                createArticle({ input: {...form.getFieldsValue(true), accountId:1} });
+                createArticle({ input: { ...form.getFieldsValue(true), accountId: 1 } });
             })
-            .catch((err) => console.log(err));
+            .catch((err) => showError(t('messages:error-creating-data')));
     };
 
     const steps = [

@@ -2,47 +2,44 @@ import { DeleteOutlined, EyeTwoTone, EditTwoTone } from '@ant-design/icons';
 import { Button, Space } from 'antd';
 import { AppTable } from '@components';
 import { companiesData } from 'fake-data/companies';
-import useTranslation from 'next-translate/useTranslation';
 import { FC } from 'react';
 
 export interface IStatusConfigListProps {}
 
 export const StatusConfigList: FC<IStatusConfigListProps> = ({}) => {
-    let { t } = useTranslation('common');
-
     const columns = [
         {
-            title: t('account'),
+            title: 'account',
             dataIndex: 'account',
             key: 'account'
         },
         {
-            title: t('company'),
+            title: 'company',
             dataIndex: 'company',
             key: 'company'
         },
         {
-            title: t('object-type'),
+            title: 'object-type',
             dataIndex: 'object-type',
             key: 'object-type'
         },
         {
-            title: t('status-code'),
+            title: 'status-code',
             dataIndex: 'status-code',
             key: 'status-code'
         },
         {
-            title: t('feedback'),
+            title: 'feedback',
             dataIndex: 'feedback',
             key: 'feedback'
         },
         {
-            title: t('custom-value'),
+            title: 'custom-value',
             dataIndex: 'custom-value',
             key: 'custom-value'
         },
         {
-            title: t('actions:actions'),
+            title: 'actions:actions',
             key: 'actions',
             render: (record: { id: number; account: string }) => (
                 <Space>

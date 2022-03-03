@@ -1,4 +1,4 @@
-import { ScreenSpin } from '@components';
+import { ContentSpin } from '@components';
 import { Layout, Space, Button } from 'antd';
 import { articlesSubRoutes } from 'modules/Articles/Static/articlesRoutes';
 import { ArticleDetails } from 'modules/Articles/Elements/ArticleDetails';
@@ -38,7 +38,6 @@ const SingleArticle: FC<ISingleArticleProps> = ({ id, router }: ISingleArticlePr
         showError(t('messages:error-getting-data'));
     }
 
- 
     const breadsCrumb = [
         ...articlesSubRoutes,
         {
@@ -81,7 +80,7 @@ const SingleArticle: FC<ISingleArticleProps> = ({ id, router }: ISingleArticlePr
                 {data && !isLoading ? (
                     <ArticleDetails details={data?.article} />
                 ) : (
-                    <ScreenSpin />
+                    <ContentSpin />
                 )}
             </StyledPageContent>
         </>

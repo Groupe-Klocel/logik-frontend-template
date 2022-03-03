@@ -15,6 +15,7 @@
 	"error-login": "There is an error with your credentials",
 	"error-deleting-data": "There is an error deleting this element",
 	"error-getting-data": "There is an error getting all elements",
+	"error-creating-data": "There is an error creating this element",
 	"success-deleted": "The element has been successfully deleted",
 	"success-created": "The element has been successfully created"
 }

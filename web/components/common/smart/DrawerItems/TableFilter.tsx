@@ -28,7 +28,6 @@ export interface ITableFilterProps {
     onShowChange: Function;
     onSort: Function;
     onFixed: Function;
-    cookieKey: string;
 }
 
 interface Iindex {
@@ -54,15 +53,7 @@ const SortableBody = SortableContainer(
 
 const TableFilter: FC<ITableFilterProps> = forwardRef(
     (
-        {
-            columnsToFilter,
-            visibleKeys,
-            onShowChange,
-            onSort,
-            cookieKey,
-            fixKeys,
-            onFixed
-        }: ITableFilterProps,
+        { columnsToFilter, visibleKeys, onShowChange, onSort, fixKeys, onFixed }: ITableFilterProps,
         ref
     ) => {
         let { t } = useTranslation();
@@ -160,7 +151,7 @@ const TableFilter: FC<ITableFilterProps> = forwardRef(
                             }
                             onClick={() => handleVisibleChange(record.key)}
                         />
-                        <Text>{record.title}</Text>
+                        <Text>{t(record.title)}</Text>
                     </Space>
                 )
             },
