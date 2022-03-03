@@ -93,9 +93,24 @@ mutation CreateArticle($input: CreateArticleInput!) {
     }
 }
 
-mutation ExportArticles($format: ExportFormat, $compression:ExportCompression ,$separator:String,$orderBy:[ArticleOrderByCriterion!],$filters: ArticleSearchFilters) {
-    exportArticles(format:$format,compression:$compression,separator:$separator,orderBy:$orderBy,filters:$filters)
-  {
-    url
-  }
+mutation ExportArticles(
+    $format: ExportFormat
+    $compression: ExportCompression
+    $separator: String
+    $orderBy: [ArticleOrderByCriterion!]
+    $filters: ArticleSearchFilters
+) {
+    exportArticles(
+        format: $format
+        compression: $compression
+        separator: $separator
+        orderBy: $orderBy
+        filters: $filters
+    ) {
+        url
+    }
+}
+
+mutation DeleteArticle($id: Int!) {
+    deleteArticle(id: $id)
 }

@@ -19,6 +19,9 @@
 	"success-deleted": "L'élément a été supprimé avec succès",
 	"success-created": "L'élément a été créé avec succès",
 	"success-exported": "Les éléments ont été exporté avec succès",
-	"info-export-wip": "Export en cours"
+	"info-export-wip": "Export en cours",
+	"info-create-wip": "Création en cours",
+	"info-delete-wip": "Suppression en cours"
+
 
 }

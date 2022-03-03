@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC, useState, useEffect } from 'react';
 import { Form, Button, Space } from 'antd';
 import { WrapperForm, StepsPanel, WrapperStepContent } from '@components';
 import { AddArticleStep1 } from './Steps/AddArticleStep1';
@@ -49,12 +49,8 @@ export const AddArticleForm: FC<IAddArticleFormProps> = ({}: IAddArticleFormProp
             _variables: CreateArticleMutationVariables,
             _context: unknown
         ) => {
-            if (createLoading) {
-                showInfo(t('messages:info-creating-wip'));
-            } else {
-                router.push(`/article/${data.createArticle.id}`);
-                showSuccess(t('messages:success-created'));
-            }
+            router.push(`/article/${data.createArticle.id}`);
+            showSuccess(t('messages:success-created'));
         },
         onError: (error) => {
             showError(t('messages:error-creating-data'));
@@ -87,6 +83,12 @@ export const AddArticleForm: FC<IAddArticleFormProps> = ({}: IAddArticleFormProp
             key: 2
         }
     ];
+
+    useEffect(() => {
+        if (createLoading) {
+            showInfo(t('messages:info-create-wip'));
+        }
+    }, [createLoading]);
 
     return (
         <WrapperForm>

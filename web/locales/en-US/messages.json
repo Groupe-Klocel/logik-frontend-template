@@ -20,5 +20,8 @@
 	"success-deleted": "The element has been successfully deleted",
 	"success-created": "The element has been successfully created",
 	"success-exported": "The element has been successfully exported",
-	"info-export-wip": "Export in progress"
+	"info-export-wip": "Export in progress",
+	"info-create-wip": "Creation in progress",
+	"info-delete-wip": "Delete in progress"
+
 }

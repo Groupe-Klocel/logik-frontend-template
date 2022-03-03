@@ -1,7 +1,7 @@
 import { WrapperForm } from '@components';
 import { Button, Col, Input, InputNumber, Row, Select, Form } from 'antd';
 import useTranslation from 'next-translate/useTranslation';
-import { FC, useState } from 'react';
+import { FC, useState , useEffect} from 'react';
 import { useAuth } from 'context/AuthContext';
 import { useRouter } from 'next/router';
 import {
@@ -52,9 +52,6 @@ export const AddBarcodeForm: FC<IAddBarcodeFormProps> = ({}: IAddBarcodeFormProp
             _variables: CreateBarcodeMutationVariables,
             _context: unknown
         ) => {
-            if (createLoading) {
-                showInfo(t('messages:info-creating-wip'));
-            } else {
                 router.push(`/barcode/${data.createBarcode.id}`);
                 showSuccess(t('messages:success-created'));
             }
@@ -77,6 +74,11 @@ export const AddBarcodeForm: FC<IAddBarcodeFormProps> = ({}: IAddBarcodeFormProp
             .catch((err) => showError(t('messages:error-creating-data')));
     };
 
+    useEffect(() => {
+        if (createLoading) {
+            showInfo(t('messages:info-create-wip'));
+        }
+    }, [createLoading]);
     return (
         <WrapperForm>
             <Form form={form} scrollToFirstError>
