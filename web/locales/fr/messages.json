@@ -13,8 +13,15 @@
 	"filter_only_actions_visibles_warn": "Vous n'êtes pas autorisé à afficher uniquement la colonne des actions",
 	"error-login": "Il y a un problème avec vos identifiants",
 	"error-deleting-data": "Une erreur s'est produite lors de la suppression de cet élément",
+	"error-exporting-data": "Une erreur s'est produite lors de l'export des éléments",
 	"error-creating-data": "Une erreur s'est produite lors de la création de cet élément",
 	"error-getting-data": "Il y a une erreur pour obtenir tous les éléments",
 	"success-deleted": "L'élément a été supprimé avec succès",
-	"success-created": "L'élément a été créé avec succès"
+	"success-created": "L'élément a été créé avec succès",
+	"success-exported": "Les éléments ont été exporté avec succès",
+	"info-export-wip": "Export en cours",
+	"info-create-wip": "Création en cours",
+	"info-delete-wip": "Suppression en cours"
+
+
 }

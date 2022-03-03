@@ -11,7 +11,7 @@ import {
 } from 'generated/graphql';
 import { BarcodeDetails } from 'modules/Barcodes/Elements/BarcodeDetails';
 import { useAuth } from 'context/AuthContext';
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import { NextRouter } from 'next/router';
 import styled from 'styled-components';
 import { HeaderContent } from '@components';
@@ -26,7 +26,6 @@ export interface ISingleBarcodeProps {
     id: string | any;
     router: NextRouter;
 }
-
 
 const SingleBarcode: FC<ISingleBarcodeProps> = ({ id, router }: ISingleBarcodeProps) => {
     let { t } = useTranslation();
@@ -51,7 +50,7 @@ const SingleBarcode: FC<ISingleBarcodeProps> = ({ id, router }: ISingleBarcodePr
                     showSuccess(t('messages:success-deleted'));
                 }
             },
-            onError: (error) => {
+            onError: () => {
                 showError(t('messages:error-deleting-data'));
             }
         }
@@ -61,16 +60,18 @@ const SingleBarcode: FC<ISingleBarcodeProps> = ({ id, router }: ISingleBarcodePr
         mutate({ id });
     };
 
-    if (error) {
-        showError(t('messages:error-getting-data'));
-    }
-
     const breadsCrumb = [
         ...barcodesRoutes,
         {
             breadcrumbName: `${id}`
         }
     ];
+
+    useEffect(() => {
+        if (error) {
+            showError(t('messages:error-getting-data'));
+        }
+    }, [error]);
 
     return (
         <>
@@ -92,15 +93,13 @@ const SingleBarcode: FC<ISingleBarcodeProps> = ({ id, router }: ISingleBarcodePr
                     </Space>
                 }
             />
-        <StyledPageContent>
-
-            {data?.barcode && !isLoading ? (
-                <BarcodeDetails details={data?.barcode} />
-            ) : (
-                <ContentSpin />
-            )}
-        </StyledPageContent>
-
+            <StyledPageContent>
+                {data?.barcode && !isLoading ? (
+                    <BarcodeDetails details={data?.barcode} />
+                ) : (
+                    <ContentSpin />
+                )}
+            </StyledPageContent>
         </>
     );
 };

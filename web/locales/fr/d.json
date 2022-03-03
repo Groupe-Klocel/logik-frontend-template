@@ -35,5 +35,8 @@
 	"preparationMode": "Mode de préparation",
 	"flagDouble": "Double drapeau",
 	"supplierArticleCode": "Code Article Fournisseur",
-	"quantity": "Quantité"
+	"quantity": "Quantité",
+	"productDescription":"Description Produit",
+	"dateType": "Type Date"
+
 }

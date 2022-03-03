@@ -271,15 +271,6 @@ export type Document = {
   url: Scalars['String'];
 };
 
-export type ExportArticlesResult = {
-  __typename?: 'ExportArticlesResult';
-  compression?: Maybe<ExportCompression>;
-  format: ExportFormat;
-  separator?: Maybe<Scalars['String']>;
-  /** URL to download the exported file */
-  url: Scalars['String'];
-};
-
 /** Compression of the exported file */
 export enum ExportCompression {
   Gzip = 'GZIP'
@@ -292,38 +283,13 @@ export enum ExportFormat {
   Xlsx = 'XLSX'
 }
 
-/** Facets that you can filter on during an Article search or export */
-export type FacetFilters = {
-  accountId?: InputMaybe<Scalars['String']>;
-  additionalDescription?: InputMaybe<Scalars['String']>;
-  baseUnitPicking?: InputMaybe<Scalars['String']>;
-  baseUnitPrice?: InputMaybe<Scalars['String']>;
-  baseUnitRotation?: InputMaybe<Scalars['String']>;
-  baseUnitWeight?: InputMaybe<Scalars['String']>;
-  boxPicking?: InputMaybe<Scalars['String']>;
-  boxQuantity?: InputMaybe<Scalars['String']>;
-  boxRotation?: InputMaybe<Scalars['String']>;
-  boxWeight?: InputMaybe<Scalars['String']>;
-  code?: InputMaybe<Scalars['String']>;
-  companyId?: InputMaybe<Scalars['String']>;
-  created?: InputMaybe<Scalars['String']>;
-  createdBy?: InputMaybe<Scalars['String']>;
-  cubingType?: InputMaybe<Scalars['String']>;
-  family?: InputMaybe<Scalars['String']>;
-  featureTypeId?: InputMaybe<Scalars['String']>;
-  groupingId?: InputMaybe<Scalars['String']>;
-  height?: InputMaybe<Scalars['String']>;
-  id?: InputMaybe<Scalars['String']>;
-  length?: InputMaybe<Scalars['String']>;
-  modified?: InputMaybe<Scalars['String']>;
-  modifiedBy?: InputMaybe<Scalars['String']>;
-  name?: InputMaybe<Scalars['String']>;
-  permanentProduct?: InputMaybe<Scalars['String']>;
-  status?: InputMaybe<Scalars['String']>;
-  subfamily?: InputMaybe<Scalars['String']>;
-  supplierName?: InputMaybe<Scalars['String']>;
-  tariffClassification?: InputMaybe<Scalars['String']>;
-  width?: InputMaybe<Scalars['String']>;
+export type ExportResult = {
+  __typename?: 'ExportResult';
+  compression?: Maybe<ExportCompression>;
+  format: ExportFormat;
+  separator?: Maybe<Scalars['String']>;
+  /** URL to download the exported file */
+  url: Scalars['String'];
 };
 
 export type LoginSuccess = {
@@ -350,8 +316,10 @@ export type Mutation = {
   deleteArticle: Scalars['Boolean'];
   /** Delete barcode */
   deleteBarcode: Scalars['Boolean'];
-  /** Exports the whole Article table into a file on S3 */
-  exportArticles: ExportArticlesResult;
+  /** Exports Articles into a file */
+  exportArticles: ExportResult;
+  /** Exports Barcodes into a file */
+  exportBarcodes: ExportResult;
   /** Invite a new User via email */
   inviteUser: Scalars['String'];
   /** Obtain a JSON Web Token (JWT) to use in the frontend */
@@ -391,8 +359,18 @@ export type MutationDeleteBarcodeArgs = {
 
 export type MutationExportArticlesArgs = {
   compression?: InputMaybe<ExportCompression>;
-  filters?: InputMaybe<FacetFilters>;
+  filters?: InputMaybe<ArticleSearchFilters>;
   format?: InputMaybe<ExportFormat>;
+  orderBy?: InputMaybe<Array<ArticleOrderByCriterion>>;
+  separator?: InputMaybe<Scalars['String']>;
+};
+
+
+export type MutationExportBarcodesArgs = {
+  compression?: InputMaybe<ExportCompression>;
+  filters?: InputMaybe<BarcodeSearchFilters>;
+  format?: InputMaybe<ExportFormat>;
+  orderBy?: InputMaybe<Array<BarcodeOrderByCriterion>>;
   separator?: InputMaybe<Scalars['String']>;
 };
 
@@ -422,12 +400,6 @@ export type MutationUpdateUserArgs = {
   id: Scalars['Int'];
   password: Scalars['String'];
   username: Scalars['String'];
-};
-
-export type Permission = {
-  __typename?: 'Permission';
-  model: Scalars['String'];
-  role: Role;
 };
 
 export type Query = {
@@ -470,11 +442,6 @@ export type QueryBarcodesArgs = {
 
 export type RenderDocumentResponse = Document | MissingContext | TemplateDoesNotExist | TemplateError;
 
-export enum Role {
-  Read = 'READ',
-  Write = 'WRITE'
-}
-
 export type TemplateDoesNotExist = {
   __typename?: 'TemplateDoesNotExist';
   message: Scalars['String'];
@@ -490,7 +457,6 @@ export type User = {
   __typename?: 'User';
   createdAt?: Maybe<Scalars['DateTime']>;
   email?: Maybe<Scalars['String']>;
-  permissions: Array<Permission>;
   username: Scalars['String'];
   workspace: Workspace;
 };
@@ -527,6 +493,24 @@ export type CreateArticleMutationVariables = Exact<{
 
 
 export type CreateArticleMutation = { __typename?: 'Mutation', createArticle: { __typename?: 'Article', id?: number | null | undefined, accountId: number, companyId: number, status: number, code: string, name: string, length: number, width: number, height: number, baseUnitWeight: number, boxWeight: number, boxQuantity: number, baseUnitPicking: boolean, boxPicking: boolean, cubingType: number, permanentProduct: boolean, additionalDescription?: string | null | undefined, supplierName?: string | null | undefined } };
+
+export type ExportArticlesMutationVariables = Exact<{
+  format?: InputMaybe<ExportFormat>;
+  compression?: InputMaybe<ExportCompression>;
+  separator?: InputMaybe<Scalars['String']>;
+  orderBy?: InputMaybe<Array<ArticleOrderByCriterion> | ArticleOrderByCriterion>;
+  filters?: InputMaybe<ArticleSearchFilters>;
+}>;
+
+
+export type ExportArticlesMutation = { __typename?: 'Mutation', exportArticles: { __typename?: 'ExportResult', url: string } };
+
+export type DeleteArticleMutationVariables = Exact<{
+  id: Scalars['Int'];
+}>;
+
+
+export type DeleteArticleMutation = { __typename?: 'Mutation', deleteArticle: boolean };
 
 export type GetAllBarcodesQueryVariables = Exact<{
   filters?: InputMaybe<BarcodeSearchFilters>;
@@ -706,6 +690,50 @@ export const useCreateArticleMutation = <
     useMutation<CreateArticleMutation, TError, CreateArticleMutationVariables, TContext>(
       ['CreateArticle'],
       (variables?: CreateArticleMutationVariables) => fetcher<CreateArticleMutation, CreateArticleMutationVariables>(client, CreateArticleDocument, variables, headers)(),
+      options
+    );
+export const ExportArticlesDocument = `
+    mutation ExportArticles($format: ExportFormat, $compression: ExportCompression, $separator: String, $orderBy: [ArticleOrderByCriterion!], $filters: ArticleSearchFilters) {
+  exportArticles(
+    format: $format
+    compression: $compression
+    separator: $separator
+    orderBy: $orderBy
+    filters: $filters
+  ) {
+    url
+  }
+}
+    `;
+export const useExportArticlesMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<ExportArticlesMutation, TError, ExportArticlesMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<ExportArticlesMutation, TError, ExportArticlesMutationVariables, TContext>(
+      ['ExportArticles'],
+      (variables?: ExportArticlesMutationVariables) => fetcher<ExportArticlesMutation, ExportArticlesMutationVariables>(client, ExportArticlesDocument, variables, headers)(),
+      options
+    );
+export const DeleteArticleDocument = `
+    mutation DeleteArticle($id: Int!) {
+  deleteArticle(id: $id)
+}
+    `;
+export const useDeleteArticleMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<DeleteArticleMutation, TError, DeleteArticleMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<DeleteArticleMutation, TError, DeleteArticleMutationVariables, TContext>(
+      ['DeleteArticle'],
+      (variables?: DeleteArticleMutationVariables) => fetcher<DeleteArticleMutation, DeleteArticleMutationVariables>(client, DeleteArticleDocument, variables, headers)(),
       options
     );
 export const GetAllBarcodesDocument = `

@@ -1,5 +1,4 @@
 export * from './common/dumb/AppContent/AppContent';
-export * from './common/dumb/Buttons/DrawerButton';
 export * from './common/dumb/Buttons/LinkButton';
 export * from './common/dumb/Forms/Forms';
 export * from './common/dumb/GlobalBreadcrumb/GlobalBreadcrumb';
@@ -15,8 +14,8 @@ export * from './common/dumb/Wrappers/Wrappers';
 export * from './common/smart/AppHead/AppHead';
 export * from './common/smart/AppTable/AppTable';
 export * from './common/smart/Drawers/DrawerItems';
-export * from './common/smart/DrawerItems/ArticlesSearch';
-export * from './common/smart/DrawerItems/BarcodesSearch';
+export * from '../modules/Articles/Forms/ArticlesSearch';
+export * from '../modules/Barcodes/Forms/BarcodesSearch';
 export * from './common/smart/DrawerItems/TableFilter';
 export * from './common/smart/DrawerItems/UserSettings';
 export * from './common/smart/ProtectRoute/ProtectRoute';

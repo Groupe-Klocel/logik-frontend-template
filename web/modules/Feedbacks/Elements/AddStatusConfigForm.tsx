@@ -7,11 +7,11 @@ import { FC, useState } from 'react';
 
 const { Option } = Select;
 
-export interface IAddStatusConfigFormProps { }
+export interface IAddStatusConfigFormProps {}
 
 export const AddStatusConfigForm: FC<
     IAddStatusConfigFormProps
-> = ({ }: IAddStatusConfigFormProps) => {
+> = ({}: IAddStatusConfigFormProps) => {
     let { t } = useTranslation('common');
 
     //TODO FETCH GROUP'S NAME

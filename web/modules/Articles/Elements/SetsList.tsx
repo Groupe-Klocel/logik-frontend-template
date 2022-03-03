@@ -24,7 +24,7 @@ export const SetsList: FC<ISetsListProps> = ({}) => {
             key: 'article'
         },
         {
-            title: 'forms:product-description',
+            title: 'd:productDescription',
             dataIndex: 'product-description',
             key: 'product-description'
         },

@@ -19,7 +19,6 @@ export const Users: FC<IUsersProps> = ({}: IUsersProps) => {
                 routes={usersRoutes}
                 actionsRight={
                     <Space>
-                        {/* <DrawerButton icon={< SearchOutlined />} onClick={() => setDrawerOptions({ isOpen: true, drawerProps: searchDrawerProps })} title={t('actions:search')} /> */}
                         <LinkButton
                             title={t('actions:add2', { name: t('common:user') })}
                             path="/add-user"

@@ -19,7 +19,7 @@ export const FeaturesCodesList: FC<IFeaturesCodesListProps> = ({}) => {
             key: 'unique'
         },
         {
-            title: 'forms:date-type',
+            title: 'd:dateType',
             dataIndex: 'date-type',
             key: 'date-type'
         },

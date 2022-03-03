@@ -6,9 +6,9 @@ import { FC, useState } from 'react';
 
 const { Option } = Select;
 
-export interface IAddLocationFormProps { }
+export interface IAddLocationFormProps {}
 
-export const AddLocationForm: FC<IAddLocationFormProps> = ({ }: IAddLocationFormProps) => {
+export const AddLocationForm: FC<IAddLocationFormProps> = ({}: IAddLocationFormProps) => {
     let { t } = useTranslation('common');
 
     // TYPED SAFE ALL
