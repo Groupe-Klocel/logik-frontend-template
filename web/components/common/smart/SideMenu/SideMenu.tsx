@@ -19,7 +19,7 @@ const SideMenu: FC = () => {
     let { t } = useTranslation('menu');
     const { logout } = useAuth();
     return (
-        <Menu mode="inline">
+        <Menu mode="inline" className="menu">
             <SubMenu icon={<AuditOutlined />} key="administration" title={t('administration')}>
                 <SubMenu key="administration-access-management" title={t('access-management')}>
                     <Menu.Item key="administration-access-management-users">
@@ -187,6 +187,7 @@ const SideMenu: FC = () => {
             <Menu.Item icon={<ExportOutlined />} key="logout" onClick={() => logout()}>
                 {t('logout')}
             </Menu.Item>
+            <Menu.Item /> {/* Need an empty item for scroll behavior */}
         </Menu>
     );
 };
