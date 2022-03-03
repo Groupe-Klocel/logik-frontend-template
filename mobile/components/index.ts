@@ -1,5 +1,4 @@
 export * from './common/dumb/AppContent/AppContent'
-export * from './common/dumb/Buttons/DrawerButton'
 export * from './common/dumb/Buttons/LinkButton'
 export * from './common/dumb/DrawerItems/ArticlesSearch'
 export * from './common/dumb/DrawerItems/TableFilter'
