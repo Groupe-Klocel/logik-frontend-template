@@ -22,6 +22,6 @@
 	"success-exported": "The element has been successfully exported",
 	"info-export-wip": "Export in progress",
 	"info-create-wip": "Creation in progress",
-	"info-delete-wip": "Delete in progress"
-
+	"info-delete-wip": "Delete in progress",
+	"success-update-box-quantity": "Box quantity updated successfully"
 }
