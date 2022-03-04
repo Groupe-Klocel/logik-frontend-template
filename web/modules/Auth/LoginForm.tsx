@@ -28,7 +28,7 @@ export const LoginForm: FC<ILoginFormProps> = ({}: ILoginFormProps) => {
         login({
             username: values.username,
             password: values.password,
-            workspaceId: process.env.NEXT_PUBLIC_WORKSPACE_ID
+            warehouseId: process.env.NEXT_PUBLIC_WAREHOUSE_ID
         });
     };
 
