@@ -1,7 +1,7 @@
 import { WrapperForm } from '@components';
 import { Button, Col, Input, InputNumber, Row, Select, Form } from 'antd';
 import useTranslation from 'next-translate/useTranslation';
-import { FC, useState , useEffect} from 'react';
+import { FC, useState, useEffect } from 'react';
 import { useAuth } from 'context/AuthContext';
 import { useRouter } from 'next/router';
 import {
@@ -12,9 +12,9 @@ import {
 import { showError, showSuccess, showInfo } from '@helpers';
 
 const { Option } = Select;
-export interface IAddBarcodeFormProps {}
+export interface IAddBarcodeFormProps { }
 
-export const AddBarcodeForm: FC<IAddBarcodeFormProps> = ({}: IAddBarcodeFormProps) => {
+export const AddBarcodeForm: FC<IAddBarcodeFormProps> = ({ }: IAddBarcodeFormProps) => {
     let { t } = useTranslation('common');
     const { graphqlRequestClient } = useAuth();
     const router = useRouter();
@@ -52,13 +52,13 @@ export const AddBarcodeForm: FC<IAddBarcodeFormProps> = ({}: IAddBarcodeFormProp
             _variables: CreateBarcodeMutationVariables,
             _context: unknown
         ) => {
-                router.push(`/barcode/${data.createBarcode.id}`);
-                showSuccess(t('messages:success-created'));
-            }
+            router.push(`/barcode/${data.createBarcode.id}`);
+            showSuccess(t('messages:success-created'));
         },
         onError: (error) => {
             showError(t('messages:error-creating-data'));
         }
+
     });
 
     const createBarcode = ({ input }: CreateBarcodeMutationVariables) => {
