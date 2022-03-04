@@ -15,7 +15,7 @@
         "serve": "yarn build && yarn start",
         "export": "next export",
         "gen": "graphql-codegen --config codegen.yml",
-        "lesstocss": "gulp less",
+        "ltc": "gulp less",
         "-------------------------------- PROD ----": "----",
         "build": "next build"
     },

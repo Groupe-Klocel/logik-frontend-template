@@ -27,6 +27,9 @@ input::-webkit-input-placeholder {
   color: rgba(0, 0, 0, 0.65) !important;
 } 
 
+.ant-layout-sider-children > ul {
+    border: 1px;
+}
 .sortableHelper {
     z-index: 2000;
 }
