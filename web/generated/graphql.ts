@@ -19,8 +19,8 @@ export type Scalars = {
   Float: number;
   /** Date with time (isoformat) */
   DateTime: any;
-  /** The GenericScalar scalar type represents a generic GraphQL scalar value that could be: List or Object. */
-  JSONScalar: any;
+  /** The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf). */
+  JSON: any;
 };
 
 export type Article = {
@@ -60,6 +60,41 @@ export type Article = {
   tariffClassification?: Maybe<Scalars['String']>;
   /** Width in centimeters (cm) */
   width: Scalars['Float'];
+};
+
+/** Filters to apply before the data export is made */
+export type ArticleExportFilters = {
+  accountId?: InputMaybe<Scalars['Int']>;
+  additionalDescription?: InputMaybe<Scalars['String']>;
+  baseUnitPicking?: InputMaybe<Scalars['Boolean']>;
+  baseUnitPrice?: InputMaybe<Scalars['Float']>;
+  baseUnitRotation?: InputMaybe<Scalars['String']>;
+  /** Weight in kilograms (kg) */
+  baseUnitWeight?: InputMaybe<Scalars['Float']>;
+  boxPicking?: InputMaybe<Scalars['Boolean']>;
+  boxQuantity?: InputMaybe<Scalars['Float']>;
+  boxRotation?: InputMaybe<Scalars['String']>;
+  boxWeight?: InputMaybe<Scalars['Float']>;
+  code?: InputMaybe<Scalars['String']>;
+  companyId?: InputMaybe<Scalars['Int']>;
+  createdBy?: InputMaybe<Scalars['String']>;
+  cubingType?: InputMaybe<Scalars['Int']>;
+  family?: InputMaybe<Scalars['String']>;
+  featureTypeId?: InputMaybe<Scalars['Int']>;
+  groupingId?: InputMaybe<Scalars['String']>;
+  /** Height in centimeters (cm) */
+  height?: InputMaybe<Scalars['Float']>;
+  /** Length in centimeters (cm) */
+  length?: InputMaybe<Scalars['Float']>;
+  modifiedBy?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
+  permanentProduct?: InputMaybe<Scalars['Boolean']>;
+  status?: InputMaybe<Scalars['Int']>;
+  subfamily?: InputMaybe<Scalars['String']>;
+  supplierName?: InputMaybe<Scalars['String']>;
+  tariffClassification?: InputMaybe<Scalars['String']>;
+  /** Width in centimeters (cm) */
+  width?: InputMaybe<Scalars['Float']>;
 };
 
 /** Field names for the Article model */
@@ -120,6 +155,7 @@ export type ArticleSearchFilters = {
   baseUnitPicking?: InputMaybe<Scalars['Boolean']>;
   baseUnitPrice?: InputMaybe<Scalars['Float']>;
   baseUnitRotation?: InputMaybe<Scalars['String']>;
+  /** Weight in kilograms (kg) */
   baseUnitWeight?: InputMaybe<Scalars['Float']>;
   boxPicking?: InputMaybe<Scalars['Boolean']>;
   boxQuantity?: InputMaybe<Scalars['Float']>;
@@ -127,16 +163,15 @@ export type ArticleSearchFilters = {
   boxWeight?: InputMaybe<Scalars['Float']>;
   code?: InputMaybe<Scalars['String']>;
   companyId?: InputMaybe<Scalars['Int']>;
-  created?: InputMaybe<Scalars['DateTime']>;
   createdBy?: InputMaybe<Scalars['String']>;
   cubingType?: InputMaybe<Scalars['Int']>;
   family?: InputMaybe<Scalars['String']>;
   featureTypeId?: InputMaybe<Scalars['Int']>;
   groupingId?: InputMaybe<Scalars['String']>;
+  /** Height in centimeters (cm) */
   height?: InputMaybe<Scalars['Float']>;
-  id?: InputMaybe<Scalars['Int']>;
+  /** Length in centimeters (cm) */
   length?: InputMaybe<Scalars['Float']>;
-  modified?: InputMaybe<Scalars['DateTime']>;
   modifiedBy?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
   permanentProduct?: InputMaybe<Scalars['Boolean']>;
@@ -144,6 +179,7 @@ export type ArticleSearchFilters = {
   subfamily?: InputMaybe<Scalars['String']>;
   supplierName?: InputMaybe<Scalars['String']>;
   tariffClassification?: InputMaybe<Scalars['String']>;
+  /** Width in centimeters (cm) */
   width?: InputMaybe<Scalars['Float']>;
 };
 
@@ -164,6 +200,22 @@ export type Barcode = {
   rotation: Scalars['String'];
   supplierArticleCode?: Maybe<Scalars['String']>;
   supplierName?: Maybe<Scalars['String']>;
+};
+
+/** Filters to apply before the data export is made */
+export type BarcodeExportFilters = {
+  accountId?: InputMaybe<Scalars['Int']>;
+  articleId?: InputMaybe<Scalars['Int']>;
+  companyId?: InputMaybe<Scalars['Int']>;
+  createdBy?: InputMaybe<Scalars['String']>;
+  flagDouble?: InputMaybe<Scalars['Int']>;
+  modifiedBy?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
+  preparationMode?: InputMaybe<Scalars['Int']>;
+  quantity?: InputMaybe<Scalars['Float']>;
+  rotation?: InputMaybe<Scalars['String']>;
+  supplierArticleCode?: InputMaybe<Scalars['String']>;
+  supplierName?: InputMaybe<Scalars['String']>;
 };
 
 /** Field names for the Barcode model */
@@ -206,11 +258,8 @@ export type BarcodeSearchFilters = {
   accountId?: InputMaybe<Scalars['Int']>;
   articleId?: InputMaybe<Scalars['Int']>;
   companyId?: InputMaybe<Scalars['Int']>;
-  created?: InputMaybe<Scalars['DateTime']>;
   createdBy?: InputMaybe<Scalars['String']>;
   flagDouble?: InputMaybe<Scalars['Int']>;
-  id?: InputMaybe<Scalars['Int']>;
-  modified?: InputMaybe<Scalars['DateTime']>;
   modifiedBy?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
   preparationMode?: InputMaybe<Scalars['Int']>;
@@ -223,7 +272,6 @@ export type BarcodeSearchFilters = {
 export type CreateArticleInput = {
   accountId: Scalars['Int'];
   additionalDescription?: InputMaybe<Scalars['String']>;
-  barcodes?: InputMaybe<Array<CreateBarcodeInput>>;
   baseUnitPicking: Scalars['Boolean'];
   baseUnitPrice?: InputMaybe<Scalars['Float']>;
   baseUnitRotation?: InputMaybe<Scalars['String']>;
@@ -235,6 +283,7 @@ export type CreateArticleInput = {
   boxWeight: Scalars['Float'];
   code: Scalars['String'];
   companyId: Scalars['Int'];
+  createdBy?: InputMaybe<Scalars['String']>;
   cubingType: Scalars['Int'];
   family?: InputMaybe<Scalars['String']>;
   featureTypeId?: InputMaybe<Scalars['Int']>;
@@ -243,6 +292,7 @@ export type CreateArticleInput = {
   height: Scalars['Float'];
   /** Length in centimeters (cm) */
   length: Scalars['Float'];
+  modifiedBy?: InputMaybe<Scalars['String']>;
   name: Scalars['String'];
   permanentProduct: Scalars['Boolean'];
   status: Scalars['Int'];
@@ -257,7 +307,9 @@ export type CreateBarcodeInput = {
   accountId: Scalars['Int'];
   articleId: Scalars['Int'];
   companyId: Scalars['Int'];
+  createdBy?: InputMaybe<Scalars['String']>;
   flagDouble: Scalars['Int'];
+  modifiedBy?: InputMaybe<Scalars['String']>;
   name: Scalars['String'];
   preparationMode: Scalars['Int'];
   quantity?: InputMaybe<Scalars['Float']>;
@@ -304,30 +356,47 @@ export type MissingContext = {
   message: Scalars['String'];
 };
 
+export enum Mode {
+  Read = 'READ',
+  Write = 'WRITE'
+}
+
 export type Mutation = {
   __typename?: 'Mutation';
   /** Create article */
   createArticle: Article;
   /** Create barcode */
   createBarcode: Barcode;
-  /** Create a new Workspace */
-  createWorkspace: Workspace;
+  /** As an Integrator, I can create a ClientOrganization */
+  createClientOrganization: Organization;
+  /** Create an IntegratorOrganization */
+  createIntegratorOrganization: Organization;
+  /** As an Integrator, I can invite a fellow Integrator */
+  createIntegratorUser: User;
+  /** Create a new Role */
+  createRole: Role;
+  /** Create a new Warehouse */
+  createWarehouse: Warehouse;
   /** Delete article */
   deleteArticle: Scalars['Boolean'];
   /** Delete barcode */
   deleteBarcode: Scalars['Boolean'];
+  deleteUser: Scalars['Boolean'];
+  deleteWarehouse: Scalars['Boolean'];
   /** Exports Articles into a file */
   exportArticles: ExportResult;
   /** Exports Barcodes into a file */
   exportBarcodes: ExportResult;
-  /** Invite a new User via email */
-  inviteUser: Scalars['String'];
+  /** As an Integrator, I can invite a ClientUser */
+  inviteClientUser: Scalars['Boolean'];
   /** Obtain a JSON Web Token (JWT) to use in the frontend */
   login?: Maybe<LoginSuccess>;
   /** Renders a template given its filename and a context dictionary */
   renderDocument: RenderDocumentResponse;
-  /** As a WorkspaceOwner, I can reset my coworker's password */
-  updateUser: Scalars['String'];
+  /** Update article */
+  updateArticle?: Maybe<Article>;
+  /** Update barcode */
+  updateBarcode?: Maybe<Barcode>;
 };
 
 
@@ -341,25 +410,59 @@ export type MutationCreateBarcodeArgs = {
 };
 
 
-export type MutationCreateWorkspaceArgs = {
+export type MutationCreateClientOrganizationArgs = {
   name: Scalars['String'];
-  ownerEmail: Scalars['String'];
+};
+
+
+export type MutationCreateIntegratorOrganizationArgs = {
+  name: Scalars['String'];
+};
+
+
+export type MutationCreateIntegratorUserArgs = {
+  email: Scalars['String'];
+  organizationId: Scalars['String'];
+  password: Scalars['String'];
+  roleId: Scalars['String'];
+};
+
+
+export type MutationCreateRoleArgs = {
+  name: Scalars['String'];
+  permissions: Array<PermissionInput>;
+};
+
+
+export type MutationCreateWarehouseArgs = {
+  name: Scalars['String'];
+  organizationId: Scalars['ID'];
 };
 
 
 export type MutationDeleteArticleArgs = {
-  id: Scalars['Int'];
+  id: Scalars['ID'];
 };
 
 
 export type MutationDeleteBarcodeArgs = {
-  id: Scalars['Int'];
+  id: Scalars['ID'];
+};
+
+
+export type MutationDeleteUserArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type MutationDeleteWarehouseArgs = {
+  id: Scalars['ID'];
 };
 
 
 export type MutationExportArticlesArgs = {
   compression?: InputMaybe<ExportCompression>;
-  filters?: InputMaybe<ArticleSearchFilters>;
+  filters?: InputMaybe<ArticleExportFilters>;
   format?: InputMaybe<ExportFormat>;
   orderBy?: InputMaybe<Array<ArticleOrderByCriterion>>;
   separator?: InputMaybe<Scalars['String']>;
@@ -368,38 +471,70 @@ export type MutationExportArticlesArgs = {
 
 export type MutationExportBarcodesArgs = {
   compression?: InputMaybe<ExportCompression>;
-  filters?: InputMaybe<BarcodeSearchFilters>;
+  filters?: InputMaybe<BarcodeExportFilters>;
   format?: InputMaybe<ExportFormat>;
   orderBy?: InputMaybe<Array<BarcodeOrderByCriterion>>;
   separator?: InputMaybe<Scalars['String']>;
 };
 
 
-export type MutationInviteUserArgs = {
-  email: Scalars['String'];
-  role: Scalars['String'];
-  workspaceId: Scalars['ID'];
+export type MutationInviteClientUserArgs = {
+  clientOrganizationId: Scalars['ID'];
+  email?: InputMaybe<Scalars['String']>;
+  password: Scalars['String'];
+  username: Scalars['String'];
 };
 
 
 export type MutationLoginArgs = {
   password: Scalars['String'];
   username: Scalars['String'];
-  workspaceId: Scalars['ID'];
+  warehouseId: Scalars['ID'];
 };
 
 
 export type MutationRenderDocumentArgs = {
-  context: Scalars['JSONScalar'];
+  context: Scalars['JSON'];
   templateFilename: Scalars['String'];
 };
 
 
-export type MutationUpdateUserArgs = {
-  email: Scalars['String'];
-  id: Scalars['Int'];
-  password: Scalars['String'];
-  username: Scalars['String'];
+export type MutationUpdateArticleArgs = {
+  id: Scalars['ID'];
+  input: UpdateArticleInput;
+};
+
+
+export type MutationUpdateBarcodeArgs = {
+  id: Scalars['ID'];
+  input: UpdateBarcodeInput;
+};
+
+export type Organization = {
+  __typename?: 'Organization';
+  /** Access key to be used when accessing your storage space via an GUI such as FileZilla, Cyberduck... */
+  awsAccessKeyId?: Maybe<Scalars['String']>;
+  /** Secret to use in conjunction with the `aws_access_key_id` */
+  awsSecretAccessKey?: Maybe<Scalars['String']>;
+  /** This is your warehouse's auto-generated unique identifier. It can't be changed. */
+  id: Scalars['String'];
+  name: Scalars['String'];
+  /** Organization that manages this one (e.g. integrator org to its client) */
+  parentOrganizationId?: Maybe<Scalars['String']>;
+};
+
+export type PermissionInput = {
+  mode: Mode;
+  table: Table;
+};
+
+export type PermissionType = {
+  __typename?: 'PermissionType';
+  /** This is your warehouse's auto-generated unique identifier. It can't be changed. */
+  id: Scalars['String'];
+  mode: Mode;
+  roleId: Scalars['String'];
+  table: Table;
 };
 
 export type Query = {
@@ -412,6 +547,11 @@ export type Query = {
   barcode?: Maybe<Barcode>;
   /** List multiple barcodes */
   barcodes: BarcodeListResult;
+  /** List organizations */
+  organizations: Array<Organization>;
+  users: UserListResult;
+  /** List warehouses */
+  warehouses: Array<Warehouse>;
 };
 
 
@@ -440,7 +580,30 @@ export type QueryBarcodesArgs = {
   page?: Scalars['Int'];
 };
 
+
+export type QueryUsersArgs = {
+  filters?: InputMaybe<UserSearchFilters>;
+  itemsPerPage?: Scalars['Int'];
+  orderBy?: InputMaybe<Array<UserOrderByCriterion>>;
+  page?: Scalars['Int'];
+};
+
 export type RenderDocumentResponse = Document | MissingContext | TemplateDoesNotExist | TemplateError;
+
+export type Role = {
+  __typename?: 'Role';
+  id: Scalars['String'];
+  name: Scalars['String'];
+  permissions: Array<PermissionType>;
+};
+
+export enum Table {
+  Article = 'ARTICLE',
+  Barcode = 'BARCODE',
+  Organization = 'ORGANIZATION',
+  Permission = 'PERMISSION',
+  User = 'USER'
+}
 
 export type TemplateDoesNotExist = {
   __typename?: 'TemplateDoesNotExist';
@@ -453,21 +616,109 @@ export type TemplateError = {
   message: Scalars['String'];
 };
 
-export type User = {
-  __typename?: 'User';
-  createdAt?: Maybe<Scalars['DateTime']>;
-  email?: Maybe<Scalars['String']>;
-  username: Scalars['String'];
-  workspace: Workspace;
+/** Values to update the existing record with */
+export type UpdateArticleInput = {
+  accountId?: InputMaybe<Scalars['Int']>;
+  additionalDescription?: InputMaybe<Scalars['String']>;
+  baseUnitPicking?: InputMaybe<Scalars['Boolean']>;
+  baseUnitPrice?: InputMaybe<Scalars['Float']>;
+  baseUnitRotation?: InputMaybe<Scalars['String']>;
+  /** Weight in kilograms (kg) */
+  baseUnitWeight?: InputMaybe<Scalars['Float']>;
+  boxPicking?: InputMaybe<Scalars['Boolean']>;
+  boxQuantity?: InputMaybe<Scalars['Float']>;
+  boxRotation?: InputMaybe<Scalars['String']>;
+  boxWeight?: InputMaybe<Scalars['Float']>;
+  code?: InputMaybe<Scalars['String']>;
+  companyId?: InputMaybe<Scalars['Int']>;
+  createdBy?: InputMaybe<Scalars['String']>;
+  cubingType?: InputMaybe<Scalars['Int']>;
+  family?: InputMaybe<Scalars['String']>;
+  featureTypeId?: InputMaybe<Scalars['Int']>;
+  groupingId?: InputMaybe<Scalars['String']>;
+  /** Height in centimeters (cm) */
+  height?: InputMaybe<Scalars['Float']>;
+  /** Length in centimeters (cm) */
+  length?: InputMaybe<Scalars['Float']>;
+  modifiedBy?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
+  permanentProduct?: InputMaybe<Scalars['Boolean']>;
+  status?: InputMaybe<Scalars['Int']>;
+  subfamily?: InputMaybe<Scalars['String']>;
+  supplierName?: InputMaybe<Scalars['String']>;
+  tariffClassification?: InputMaybe<Scalars['String']>;
+  /** Width in centimeters (cm) */
+  width?: InputMaybe<Scalars['Float']>;
 };
 
-export type Workspace = {
-  __typename?: 'Workspace';
-  /** This is your workspace's auto-generated unique identifier. It can't be changed. */
+/** Values to update the existing record with */
+export type UpdateBarcodeInput = {
+  accountId?: InputMaybe<Scalars['Int']>;
+  articleId?: InputMaybe<Scalars['Int']>;
+  companyId?: InputMaybe<Scalars['Int']>;
+  createdBy?: InputMaybe<Scalars['String']>;
+  flagDouble?: InputMaybe<Scalars['Int']>;
+  modifiedBy?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
+  preparationMode?: InputMaybe<Scalars['Int']>;
+  quantity?: InputMaybe<Scalars['Float']>;
+  rotation?: InputMaybe<Scalars['String']>;
+  supplierArticleCode?: InputMaybe<Scalars['String']>;
+  supplierName?: InputMaybe<Scalars['String']>;
+};
+
+export type User = {
+  __typename?: 'User';
+  email?: Maybe<Scalars['String']>;
+  /** This is your warehouse's auto-generated unique identifier. It can't be changed. */
   id: Scalars['String'];
+  organizationId: Scalars['String'];
+  roleId: Scalars['String'];
+  username: Scalars['String'];
+};
+
+/** Field names for the User model */
+export enum UserFieldName {
+  Email = 'email',
+  Id = 'id',
+  OrganizationId = 'organizationId',
+  Password = 'password',
+  RoleId = 'roleId',
+  Username = 'username'
+}
+
+/** Returns a list of User */
+export type UserListResult = {
+  __typename?: 'UserListResult';
+  count: Scalars['Int'];
+  itemsPerPage: Scalars['Int'];
+  page: Scalars['Int'];
+  results: Array<User>;
+  totalPages: Scalars['Int'];
+};
+
+/** How to order the search results for User */
+export type UserOrderByCriterion = {
+  ascending?: Scalars['Boolean'];
+  field: UserFieldName;
+};
+
+/** Attributes of User to filter onto */
+export type UserSearchFilters = {
+  email?: InputMaybe<Scalars['String']>;
+  organizationId?: InputMaybe<Scalars['String']>;
+  roleId?: InputMaybe<Scalars['String']>;
+  username?: InputMaybe<Scalars['String']>;
+};
+
+export type Warehouse = {
+  __typename?: 'Warehouse';
+  /** This is your warehouse's auto-generated unique identifier. It can't be changed. */
+  id: Scalars['String'];
+  /** Name of the Warehouse (e.g. `Roubaix (prod)`) */
   name: Scalars['String'];
-  owner?: Maybe<User>;
-  slug: Scalars['String'];
+  /** ID of the IntegratorOrganization that manages this Warehouse */
+  organizationId: Scalars['String'];
 };
 
 export type GetAllArticlesQueryVariables = Exact<{
@@ -499,14 +750,14 @@ export type ExportArticlesMutationVariables = Exact<{
   compression?: InputMaybe<ExportCompression>;
   separator?: InputMaybe<Scalars['String']>;
   orderBy?: InputMaybe<Array<ArticleOrderByCriterion> | ArticleOrderByCriterion>;
-  filters?: InputMaybe<ArticleSearchFilters>;
+  filters?: InputMaybe<ArticleExportFilters>;
 }>;
 
 
 export type ExportArticlesMutation = { __typename?: 'Mutation', exportArticles: { __typename?: 'ExportResult', url: string } };
 
 export type DeleteArticleMutationVariables = Exact<{
-  id: Scalars['Int'];
+  id: Scalars['ID'];
 }>;
 
 
@@ -537,7 +788,7 @@ export type CreateBarcodeMutationVariables = Exact<{
 export type CreateBarcodeMutation = { __typename?: 'Mutation', createBarcode: { __typename?: 'Barcode', id?: number | null | undefined, accountId: number, companyId: number, articleId: number, name: string, rotation: string, preparationMode: number, flagDouble: number, supplierName?: string | null | undefined, supplierArticleCode?: string | null | undefined, quantity?: number | null | undefined } };
 
 export type DeleteBarcodeMutationVariables = Exact<{
-  id: Scalars['Int'];
+  id: Scalars['ID'];
 }>;
 
 
@@ -546,7 +797,7 @@ export type DeleteBarcodeMutation = { __typename?: 'Mutation', deleteBarcode: bo
 export type LoginMutationVariables = Exact<{
   username: Scalars['String'];
   password: Scalars['String'];
-  workspaceId: Scalars['ID'];
+  warehouseId: Scalars['ID'];
 }>;
 
 
@@ -693,7 +944,7 @@ export const useCreateArticleMutation = <
       options
     );
 export const ExportArticlesDocument = `
-    mutation ExportArticles($format: ExportFormat, $compression: ExportCompression, $separator: String, $orderBy: [ArticleOrderByCriterion!], $filters: ArticleSearchFilters) {
+    mutation ExportArticles($format: ExportFormat, $compression: ExportCompression, $separator: String, $orderBy: [ArticleOrderByCriterion!], $filters: ArticleExportFilters) {
   exportArticles(
     format: $format
     compression: $compression
@@ -719,7 +970,7 @@ export const useExportArticlesMutation = <
       options
     );
 export const DeleteArticleDocument = `
-    mutation DeleteArticle($id: Int!) {
+    mutation DeleteArticle($id: ID!) {
   deleteArticle(id: $id)
 }
     `;
@@ -839,7 +1090,7 @@ export const useCreateBarcodeMutation = <
       options
     );
 export const DeleteBarcodeDocument = `
-    mutation DeleteBarcode($id: Int!) {
+    mutation DeleteBarcode($id: ID!) {
   deleteBarcode(id: $id)
 }
     `;
@@ -857,8 +1108,8 @@ export const useDeleteBarcodeMutation = <
       options
     );
 export const LoginDocument = `
-    mutation Login($username: String!, $password: String!, $workspaceId: ID!) {
-  login(username: $username, password: $password, workspaceId: $workspaceId) {
+    mutation Login($username: String!, $password: String!, $warehouseId: ID!) {
+  login(username: $username, password: $password, warehouseId: $warehouseId) {
     accessToken
   }
 }
