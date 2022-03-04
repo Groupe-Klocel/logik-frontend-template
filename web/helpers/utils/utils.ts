@@ -77,6 +77,7 @@ function addKeyValueToObject(object: Object, key: string, value: any): Object {
     });
 }
 
+// First if statement disable fixed columns except the 2 first and last columns
 function setCustomColumnsProps(columnsToInitialize: any): any {
     let temp = setIndex(columnsToInitialize);
     temp = temp.map((object) => {
