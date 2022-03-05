@@ -107,7 +107,7 @@ const SingleArticle: FC<ISingleArticleProps> = ({ id, router }: ISingleArticlePr
                         </Button>
                         <Button
                             loading={deleteLoading}
-                            onClick={() => deleteArticle({ id: parseInt(id) })}
+                            onClick={() => deleteArticle({ id: id })}
                         >
                             {t('actions:delete')}
                         </Button>
