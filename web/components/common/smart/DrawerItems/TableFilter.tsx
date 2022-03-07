@@ -61,7 +61,7 @@ const TableFilter: FC<ITableFilterProps> = forwardRef(
         const [fixedKeys, setFixedKeys] = useState<Key[]>(fixKeys);
         const [currentFilteredColumns, setCurrentFilteredColumns] = useState(columnsToFilter);
 
-        console.log("currentFilteredColumns",currentFilteredColumns)
+        console.log('currentFilteredColumns', currentFilteredColumns);
         useImperativeHandle(ref, () => ({
             reset(keys: any, columns: any) {
                 setShowKeys(keys);

@@ -150,7 +150,6 @@ const BarcodesList = ({ searchCriteria }: IBarcodesListProps) => {
                     type="barcodes"
                     columns={columns}
                     data={barcodes!.results}
-                    scroll={{ x: 800 }}
                     isLoading={isLoading}
                     pagination={pagination}
                     setPagination={onChangePagination}

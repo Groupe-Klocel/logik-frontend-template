@@ -33,6 +33,7 @@ query GetAllArticles(
 
 query GetArticleById($id: Int!) {
     article(id: $id) {
+        id
         accountId
         companyId
         status

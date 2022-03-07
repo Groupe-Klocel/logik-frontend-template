@@ -7,9 +7,6 @@ import {
     GetAllBarcodesQuery
 } from 'generated/graphql';
 
-
-
-
 const useArticles = (search: any, page: number, itemsPerPage: number, sort: any) => {
     const { graphqlRequestClient } = useAuth();
 

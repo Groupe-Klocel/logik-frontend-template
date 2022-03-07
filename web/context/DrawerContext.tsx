@@ -36,7 +36,7 @@ function reducer(state: State, action: Action) {
             return {
                 ...state,
                 isOpen: false,
-                content:null,
+                content: null
             };
         default:
             return state;

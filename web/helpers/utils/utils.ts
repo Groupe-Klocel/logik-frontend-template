@@ -99,8 +99,6 @@ function isVisible(value: React.Key, list: Array<any>) {
     return list.includes(value);
 }
 
-const isServer = () => typeof window === 'undefined';
-
 // need to set Domain for safety
 
 function stringToBoolean(string: String | undefined) {
@@ -202,8 +200,6 @@ const checkKeyPresenceInArray = (key: any, array: any[]) =>
 const checkValuePresenceInArray = (value: any, array: any[]) =>
     array.some((obj) => obj.field === value);
 
-
-
 export {
     isEmpty,
     orberByFormater,
@@ -224,7 +220,6 @@ export {
     getDefaultTheme,
     isCookieSet,
     stringToBoolean,
-    isServer,
     isVisible,
     getLanguageNameFromISOCode,
     getKeys

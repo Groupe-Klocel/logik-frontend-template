@@ -4,7 +4,8 @@ import { articlesSubRoutes } from 'modules/Articles/Static/articlesRoutes';
 import { ArticleDetails } from 'modules/Articles/Elements/ArticleDetails';
 import useTranslation from 'next-translate/useTranslation';
 import {
-    GetArticleByIdQuery, useGetArticleByIdQuery,
+    GetArticleByIdQuery,
+    useGetArticleByIdQuery,
     useDeleteArticleMutation,
     DeleteArticleMutation,
     DeleteArticleMutationVariables
@@ -38,14 +39,12 @@ const SingleArticle: FC<ISingleArticleProps> = ({ id, router }: ISingleArticlePr
         }
     );
 
-
     const breadsCrumb = [
         ...articlesSubRoutes,
         {
             breadcrumbName: `${id}`
         }
     ];
-
 
     const { mutate, isLoading: deleteLoading } = useDeleteArticleMutation<Error>(
         graphqlRequestClient,
@@ -70,12 +69,11 @@ const SingleArticle: FC<ISingleArticleProps> = ({ id, router }: ISingleArticlePr
         mutate({ id });
     };
 
-
     useEffect(() => {
         if (error) {
             showError(t('messages:error-getting-data'));
         }
-    }, [error])
+    }, [error]);
 
     const updateBoxQuantity = async () => {
         const res = await fetch(`/api/article/update-quantity/${id}`);
@@ -86,10 +84,8 @@ const SingleArticle: FC<ISingleArticleProps> = ({ id, router }: ISingleArticlePr
         }
         const qntData = await res.json();
         console.log(qntData);
-        if (data?.article)
-            data.article.boxQuantity = qntData.quantity;
-    }
-
+        if (data?.article) data.article.boxQuantity = qntData.quantity;
+    };
 
     return (
         <>
@@ -105,21 +101,14 @@ const SingleArticle: FC<ISingleArticleProps> = ({ id, router }: ISingleArticlePr
                         <Button onClick={() => alert('Edit')} type="primary">
                             {t('actions:edit')}
                         </Button>
-                        <Button
-                            loading={deleteLoading}
-                            onClick={() => deleteArticle({ id: id })}
-                        >
+                        <Button loading={deleteLoading} onClick={() => deleteArticle({ id: id })}>
                             {t('actions:delete')}
                         </Button>
                     </Space>
                 }
             />
             <StyledPageContent>
-                {data && !isLoading ? (
-                    <ArticleDetails details={data?.article} />
-                ) : (
-                    <ContentSpin />
-                )}
+                {data && !isLoading ? <ArticleDetails details={data?.article} /> : <ContentSpin />}
             </StyledPageContent>
         </>
     );

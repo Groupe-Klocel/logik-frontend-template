@@ -61,7 +61,6 @@ const SideMenu: FC = () => {
                     <Link href="/settings">{t('settings')}</Link>
                 </Menu.Item>
             </SubMenu>
-
             <SubMenu key="configuration" icon={<SettingOutlined />} title={t('configuration')}>
                 <Menu.Item key="configuration-companies">
                     <Link href="/companies">{t('companies')}</Link>
@@ -116,7 +115,6 @@ const SideMenu: FC = () => {
                     <Link href="/return-codes">{t('return-codes')}</Link>
                 </Menu.Item>
             </SubMenu>
-
             <SubMenu
                 icon={<ApartmentOutlined />}
                 key="stock-management"
@@ -143,7 +141,6 @@ const SideMenu: FC = () => {
                     </Menu.Item>
                 </SubMenu>
             </SubMenu>
-
             <SubMenu
                 icon={<HourglassOutlined />}
                 key="preparation-management"
@@ -168,7 +165,6 @@ const SideMenu: FC = () => {
                     <Link href="/loads">{t('loads')}</Link>
                 </Menu.Item>
             </SubMenu>
-
             <SubMenu icon={<SlidersOutlined />} key="monitoring" title={t('monitoring')}>
                 <Menu.Item key="monitoring-dashboard">
                     <Link href="/dashboard">{t('dashboard')}</Link>
@@ -180,7 +176,6 @@ const SideMenu: FC = () => {
                     <Link href="/status-evolutions">{t('status-evolutions')}</Link>
                 </Menu.Item>
             </SubMenu>
-
             <Menu.Item icon={<QuestionCircleOutlined />} key="about">
                 <Link href="/about">{t('about')}</Link>
             </Menu.Item>

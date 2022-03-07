@@ -14,7 +14,7 @@ const Articles: FC<IArticlesProps> = ({}: IArticlesProps) => {
     let { t } = useTranslation();
 
     const [search, setSearch] = useState({});
-
+    console.log(search);
     //	SEARCH DRAWER
     const [formSearch] = Form.useForm();
 

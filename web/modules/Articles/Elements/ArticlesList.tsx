@@ -204,7 +204,6 @@ const ArticlesList = ({ searchCriteria }: IArticlesListProps) => {
                     type="articles"
                     columns={columns}
                     data={articles!.results}
-                    scroll={{ x: 800 }}
                     pagination={pagination}
                     isLoading={isLoading}
                     setPagination={onChangePagination}

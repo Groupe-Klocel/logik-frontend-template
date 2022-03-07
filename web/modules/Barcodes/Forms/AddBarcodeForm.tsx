@@ -12,9 +12,9 @@ import {
 import { showError, showSuccess, showInfo } from '@helpers';
 
 const { Option } = Select;
-export interface IAddBarcodeFormProps { }
+export interface IAddBarcodeFormProps {}
 
-export const AddBarcodeForm: FC<IAddBarcodeFormProps> = ({ }: IAddBarcodeFormProps) => {
+export const AddBarcodeForm: FC<IAddBarcodeFormProps> = ({}: IAddBarcodeFormProps) => {
     let { t } = useTranslation('common');
     const { graphqlRequestClient } = useAuth();
     const router = useRouter();
@@ -58,7 +58,6 @@ export const AddBarcodeForm: FC<IAddBarcodeFormProps> = ({ }: IAddBarcodeFormPro
         onError: (error) => {
             showError(t('messages:error-creating-data'));
         }
-
     });
 
     const createBarcode = ({ input }: CreateBarcodeMutationVariables) => {
