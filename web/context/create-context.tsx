@@ -17,6 +17,7 @@ export function createCtx<S, A>(defaultValue: S, reducer: Reducer<S, A>) {
     function Provider({ children }: React.PropsWithChildren<{}>) {
         const [state, dispatch] = React.useReducer(reducer, defaultValue);
 
+        console.log(state)
         const contextValue = useMemo(() => {
             return { state, dispatch };
         }, [state, dispatch]);

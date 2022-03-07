@@ -62,11 +62,6 @@ query GetArticleById($id: Int!) {
         family
         subfamily
         groupingId
-        barcodes {
-            id
-            name
-            flagDouble
-        }
     }
 }
 

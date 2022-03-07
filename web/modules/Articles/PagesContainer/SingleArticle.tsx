@@ -78,7 +78,7 @@ const SingleArticle: FC<ISingleArticleProps> = ({ id, router }: ISingleArticlePr
     }, [error])
 
     const updateBoxQuantity = async () => {
-        const res  = await fetch(`/api/article/update-quantity/${id}`);
+        const res = await fetch(`/api/article/update-quantity/${id}`);
         if (!res.ok) {
             const message = t('An error has occured: ') + res.status;
             console.log(message);
@@ -86,8 +86,8 @@ const SingleArticle: FC<ISingleArticleProps> = ({ id, router }: ISingleArticlePr
         }
         const qntData = await res.json();
         console.log(qntData);
-        if(data?.article)
-            data.article.boxQuantity = qntData.quantity;        
+        if (data?.article)
+            data.article.boxQuantity = qntData.quantity;
     }
 
 
@@ -107,7 +107,7 @@ const SingleArticle: FC<ISingleArticleProps> = ({ id, router }: ISingleArticlePr
                         </Button>
                         <Button
                             loading={deleteLoading}
-                            onClick={() => deleteArticle({ id: parseInt(id) })}
+                            onClick={() => deleteArticle({ id: id })}
                         >
                             {t('actions:delete')}
                         </Button>

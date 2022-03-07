@@ -61,7 +61,7 @@ const ArticlesList = ({ searchCriteria }: IArticlesListProps) => {
         ) => {
             showSuccess(t('messages:success-exported'));
         },
-        onError: (error) => {
+        onError: () => {
             showError(t('messages:error-exporting-data'));
         }
     });
