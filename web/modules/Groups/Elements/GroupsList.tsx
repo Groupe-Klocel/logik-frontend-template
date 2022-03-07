@@ -9,7 +9,7 @@ export interface GroupsListProps {}
 export const GroupsList: FC<GroupsListProps> = ({}) => {
     const columns = [
         {
-            title: 'common:name',
+            title: 'd:name',
             dataIndex: 'name',
             key: 'name'
         },
@@ -36,5 +36,5 @@ export const GroupsList: FC<GroupsListProps> = ({}) => {
             )
         }
     ];
-    return <AppTable type="groups" columns={columns} scroll={{ x: 800 }} data={groupsData} />;
+    return <AppTable type="groups" columns={columns} data={groupsData} />;
 };

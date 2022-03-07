@@ -9,27 +9,22 @@ export interface ICarriersListProps {}
 export const CarriersList: FC<ICarriersListProps> = ({}) => {
     const columns = [
         {
-            title: 'name',
+            title: 'd:name',
             dataIndex: 'name',
             key: 'name'
         },
         {
-            title: 'code',
+            title: 'd:code',
             dataIndex: 'code',
             key: 'code'
         },
         {
-            title: 'available',
+            title: 'd:available',
             dataIndex: 'available',
             key: 'available'
         },
         {
-            title: 'to-be-loaded',
-            dataIndex: 'to-be-loaded',
-            key: 'to-be-loaded'
-        },
-        {
-            title: 'status',
+            title: 'd:status',
             dataIndex: 'status',
             key: 'status'
         },
@@ -50,5 +45,5 @@ export const CarriersList: FC<ICarriersListProps> = ({}) => {
             )
         }
     ];
-    return <AppTable type="carriers" columns={columns} scroll={{ x: 800 }} data={carriersData} />;
+    return <AppTable type="carriers" columns={columns} data={carriersData} />;
 };

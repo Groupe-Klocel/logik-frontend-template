@@ -20,6 +20,7 @@ export const MovementsConfig: FC<IMovementsConfigProps> = ({}: IMovementsConfigP
                     <LinkButton
                         title={t('actions:add-movements-config-feedback')}
                         path="/add-movements-config-feedback"
+                        type="primary"
                     />
                 }
             />

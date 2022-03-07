@@ -9,22 +9,22 @@ export interface IStockStatusesListProps {}
 export const StockStatusesList: FC<IStockStatusesListProps> = ({}) => {
     const columns = [
         {
-            title: 'name',
+            title: 'd:name',
             dataIndex: 'name',
             key: 'name'
         },
         {
-            title: 'value',
+            title: 'd:value',
             dataIndex: 'value',
             key: 'value'
         },
         {
-            title: 'system',
+            title: 'd:system',
             dataIndex: 'system',
             key: 'system'
         },
         {
-            title: 'comment',
+            title: 'd:comment',
             dataIndex: 'comment',
             key: 'comment'
         },
@@ -39,7 +39,5 @@ export const StockStatusesList: FC<IStockStatusesListProps> = ({}) => {
             )
         }
     ];
-    return (
-        <AppTable type="stock-statuses" columns={columns} scroll={{ x: 800 }} data={stockData} />
-    );
+    return <AppTable type="stock-statuses" columns={columns} data={stockData} />;
 };

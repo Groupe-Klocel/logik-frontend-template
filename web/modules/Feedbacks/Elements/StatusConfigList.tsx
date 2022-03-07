@@ -9,34 +9,19 @@ export interface IStatusConfigListProps {}
 export const StatusConfigList: FC<IStatusConfigListProps> = ({}) => {
     const columns = [
         {
-            title: 'account',
+            title: 'common:account',
             dataIndex: 'account',
             key: 'account'
         },
         {
-            title: 'company',
+            title: 'common:company',
             dataIndex: 'company',
             key: 'company'
         },
         {
-            title: 'object-type',
-            dataIndex: 'object-type',
-            key: 'object-type'
-        },
-        {
-            title: 'status-code',
-            dataIndex: 'status-code',
-            key: 'status-code'
-        },
-        {
-            title: 'feedback',
+            title: 'common:feedback',
             dataIndex: 'feedback',
             key: 'feedback'
-        },
-        {
-            title: 'custom-value',
-            dataIndex: 'custom-value',
-            key: 'custom-value'
         },
         {
             title: 'actions:actions',
@@ -60,7 +45,5 @@ export const StatusConfigList: FC<IStatusConfigListProps> = ({}) => {
             )
         }
     ];
-    return (
-        <AppTable type="status-config" columns={columns} scroll={{ x: 800 }} data={companiesData} />
-    );
+    return <AppTable type="status-config" columns={columns} data={companiesData} />;
 };

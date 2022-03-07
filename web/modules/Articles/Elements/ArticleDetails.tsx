@@ -9,7 +9,7 @@ import {
     DEFAULT_PAGE_NUMBER
 } from '@helpers';
 import useTranslation from 'next-translate/useTranslation';
-import { Divider, Table, Typography } from 'antd';
+import { Divider, Typography } from 'antd';
 import { useState, useEffect, useCallback } from 'react';
 
 const { Title } = Typography;
@@ -21,7 +21,6 @@ export interface IArticleDetailsProps {
 const ArticleDetails = ({ details }: IArticleDetailsProps) => {
     const { t } = useTranslation();
 
-    console.log('details', details);
     const [barcodes, setBarcodes] = useState<DataQueryType>();
 
     const [pagination, setPagination] = useState<PaginationType>({

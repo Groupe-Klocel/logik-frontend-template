@@ -46,12 +46,5 @@ export const GroupsRightsList: FC<IGroupsRightsProps> = ({}) => {
             }
         }
     ];
-    return (
-        <AppTable
-            type="groups-rights"
-            columns={columns}
-            scroll={{ x: 800 }}
-            data={groupsRightsData}
-        />
-    );
+    return <AppTable type="groups-rights" columns={columns} data={groupsRightsData} />;
 };

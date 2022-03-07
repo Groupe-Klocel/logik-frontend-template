@@ -9,55 +9,35 @@ export interface IEquipmentsListProps {}
 export const EquipmentsList: FC<IEquipmentsListProps> = ({}) => {
     const columns = [
         {
-            title: 'priority',
+            title: 'd:priority',
             dataIndex: 'priority',
             key: 'priority',
             fixed: 'left'
         },
         {
-            title: 'type',
+            title: 'd:type',
             dataIndex: 'type',
             key: 'type'
         },
         {
-            title: 'name',
+            title: 'd:name',
             dataIndex: 'name',
             key: 'name'
         },
         {
-            title: 'status',
+            title: 'd:status',
             dataIndex: 'status',
             key: 'status'
         },
         {
-            title: 'available',
+            title: 'd:available',
             dataIndex: 'available',
             key: 'available'
         },
         {
-            title: 'distributed',
+            title: 'd:distributed',
             dataIndex: 'distributed',
             key: 'distributed'
-        },
-        {
-            title: 'mono-company',
-            dataIndex: 'mono-company',
-            key: 'mono-company'
-        },
-        {
-            title: 'mono-carrier',
-            dataIndex: 'mono-carrier',
-            key: 'mono-carrier'
-        },
-        {
-            title: 'nb-max-box',
-            dataIndex: 'nb-max-box',
-            key: 'nb-max-box'
-        },
-        {
-            title: 'check-position',
-            dataIndex: 'check-position',
-            key: 'check-position'
         },
         {
             title: 'actions:actions',
@@ -76,6 +56,6 @@ export const EquipmentsList: FC<IEquipmentsListProps> = ({}) => {
         }
     ];
     return (
-        <AppTable type="equipments" columns={columns} data={equipmentsData} scroll={{ x: 800 }} />
+        <AppTable type="equipments" columns={columns} data={equipmentsData} />
     );
 };

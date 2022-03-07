@@ -16,7 +16,9 @@ export const Groups: FC<IGroupsProps> = ({}: IGroupsProps) => {
             <HeaderContent
                 title={t('menu:groups')}
                 routes={groupsRoutes}
-                actionsRight={<LinkButton title={t('menu:add-group')} path="/add-group" />}
+                actionsRight={
+                    <LinkButton title={t('menu:add-group')} path="/add-group" type="primary" />
+                }
             />
             <GroupsList />
         </>

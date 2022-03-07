@@ -20,6 +20,7 @@ export const Locations: FC<ILocationsProps> = ({}: ILocationsProps) => {
                     <LinkButton
                         title={t('actions:add2', { name: t('menu:location') })}
                         path="/add-location"
+                        type="primary"
                     />
                 }
             />

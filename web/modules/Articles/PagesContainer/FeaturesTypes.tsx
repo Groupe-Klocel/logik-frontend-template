@@ -20,6 +20,7 @@ export const FeaturesTypes: FC<IFeaturesTypesProps> = ({}: IFeaturesTypesProps) 
                     <LinkButton
                         title={t('actions:add2', { name: t('menu:feature-type') })}
                         path="/add-feature-type"
+                        type="primary"
                     />
                 }
             />

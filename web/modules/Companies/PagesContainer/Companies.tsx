@@ -20,6 +20,7 @@ export const Companies: FC<ICompaniesProps> = ({}: ICompaniesProps) => {
                     <LinkButton
                         title={t('actions:add2', { name: t('common:company') })}
                         path="/add-company"
+                        type="primary"
                     />
                 }
             />

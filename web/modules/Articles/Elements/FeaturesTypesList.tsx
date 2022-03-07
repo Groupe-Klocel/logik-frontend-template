@@ -9,7 +9,7 @@ export interface IFeaturesTypesListProps {}
 export const FeaturesTypesList: FC<IFeaturesTypesListProps> = ({}) => {
     const columns = [
         {
-            title: 'common:name',
+            title: 'd:name',
             dataIndex: 'name',
             key: 'name'
         },
@@ -30,12 +30,5 @@ export const FeaturesTypesList: FC<IFeaturesTypesListProps> = ({}) => {
         }
     ];
 
-    return (
-        <AppTable
-            type="features-types"
-            columns={columns}
-            scroll={{ x: 800 }}
-            data={featureTypesData}
-        />
-    );
+    return <AppTable type="features-types" columns={columns} data={featureTypesData} />;
 };

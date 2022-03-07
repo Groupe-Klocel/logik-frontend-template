@@ -17,7 +17,11 @@ export const Packagings: FC<IPackagingsProps> = ({}: IPackagingsProps) => {
                 title={t('menu:packagings')}
                 routes={packagingsRoutes}
                 actionsRight={
-                    <LinkButton title={t('actions:add-packaging')} path="/add-packaging" />
+                    <LinkButton
+                        title={t('actions:add-packaging')}
+                        path="/add-packaging"
+                        type="primary"
+                    />
                 }
             />
             <PackagingsList />

@@ -20,6 +20,7 @@ export const StatusConfig: FC<IStatusConfigProps> = ({}: IStatusConfigProps) => 
                     <LinkButton
                         title={t('actions:add-status-config-feedback')}
                         path="/add-status-config-feedback"
+                        type="primary"
                     />
                 }
             />

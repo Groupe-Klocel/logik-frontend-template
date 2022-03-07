@@ -19,7 +19,7 @@ export const BlacklistedBarcodesList: FC<IBlacklistedBarcodesListProps> = ({}) =
             key: 'product'
         },
         {
-            title: 'common:description',
+            title: 'd:description',
             dataIndex: 'description',
             key: 'description'
         },
@@ -41,12 +41,5 @@ export const BlacklistedBarcodesList: FC<IBlacklistedBarcodesListProps> = ({}) =
             )
         }
     ];
-    return (
-        <AppTable
-            type="blacklisted-barcodes"
-            columns={columns}
-            scroll={{ x: 800 }}
-            data={barcodesData}
-        />
-    );
+    return <AppTable type="blacklisted-barcodes" columns={columns} data={barcodesData} />;
 };

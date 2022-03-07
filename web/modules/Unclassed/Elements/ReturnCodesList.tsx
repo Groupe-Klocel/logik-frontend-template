@@ -9,17 +9,17 @@ export interface IReturnCodesListProps {}
 export const ReturnCodesList: FC<IReturnCodesListProps> = ({}) => {
     const columns = [
         {
-            title: 'name',
+            title: 'd:name',
             dataIndex: 'name',
             key: 'name'
         },
         {
-            title: 'description',
+            title: 'd:description',
             dataIndex: 'description',
             key: 'description'
         },
         {
-            title: 'type',
+            title: 'd:type',
             dataIndex: 'type',
             key: 'type'
         },
@@ -39,7 +39,6 @@ export const ReturnCodesList: FC<IReturnCodesListProps> = ({}) => {
         <AppTable
             type="return-codes"
             columns={columns}
-            scroll={{ x: 800 }}
             data={returnCodesData}
         />
     );

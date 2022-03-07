@@ -20,6 +20,7 @@ export const Blocs: FC<IBlocsProps> = ({}: IBlocsProps) => {
                     <LinkButton
                         title={t('actions:add2', { name: t('menu:bloc') })}
                         path="/add-bloc"
+                        type="primary"
                     />
                 }
             />

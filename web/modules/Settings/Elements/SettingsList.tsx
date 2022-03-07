@@ -14,17 +14,17 @@ export const SettingsList: FC<ISettingsListProps> = ({}) => {
             key: 'param-category'
         },
         {
-            title: 'common:name',
+            title: 'd:name',
             dataIndex: 'name',
             key: 'name'
         },
         {
-            title: 'common:value',
+            title: 'd:value',
             dataIndex: 'value',
             key: 'value'
         },
         {
-            title: 'common:system',
+            title: 'd:system',
             dataIndex: 'system',
             key: 'system'
         },
@@ -36,5 +36,5 @@ export const SettingsList: FC<ISettingsListProps> = ({}) => {
             )
         }
     ];
-    return <AppTable type="settings" columns={columns} scroll={{ x: 800 }} data={settingsData} />;
+    return <AppTable type="settings" columns={columns} data={settingsData} />;
 };

@@ -17,7 +17,8 @@ export const StockStatuses: FC<IStockStatusesProps> = ({}: IStockStatusesProps) 
                 title={t('menu:stock-statuses')}
                 routes={stocksRoutes}
                 actionsRight={
-                    <LinkButton title={t('actions:add-stock-status')} path="/add-stock-status" />
+                    <LinkButton title={t('actions:add-stock-status')} path="/add-stock-status" type="primary"
+                    />
                 }
             />
             <StockStatusesList />

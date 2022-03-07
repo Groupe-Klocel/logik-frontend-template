@@ -20,6 +20,7 @@ export const Sets: FC<ISetsProps> = ({}: ISetsProps) => {
                     <LinkButton
                         title={t('actions:add2', { name: t('menu:article-set') })}
                         path="/add-article-set"
+                        type="primary"
                     />
                 }
             />

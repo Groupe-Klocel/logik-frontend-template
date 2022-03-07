@@ -9,32 +9,32 @@ export interface ICompaniesListProps {}
 export const CompaniesList: FC<ICompaniesListProps> = ({}) => {
     const columns = [
         {
-            title: 'Name',
+            title: 'd:name',
             dataIndex: 'name',
             key: 'name'
         },
         {
-            title: 'Address',
+            title: 'common:address',
             dataIndex: 'address',
             key: 'address'
         },
         {
-            title: 'Postal Code',
+            title: 'common:postalCode',
             dataIndex: 'postal-code',
             key: 'postal-code'
         },
         {
-            title: 'City',
+            title: 'common:city',
             dataIndex: 'city',
             key: 'city'
         },
         {
-            title: 'Country',
+            title: 'common:country',
             dataIndex: 'country',
             key: 'country'
         },
         {
-            title: 'Status',
+            title: 'd:status',
             dataIndex: 'status',
             key: 'status'
         },
@@ -46,5 +46,5 @@ export const CompaniesList: FC<ICompaniesListProps> = ({}) => {
             )
         }
     ];
-    return <AppTable type="companies" columns={columns} scroll={{ x: 800 }} data={companiesData} />;
+    return <AppTable type="companies" columns={columns} data={companiesData} />;
 };
