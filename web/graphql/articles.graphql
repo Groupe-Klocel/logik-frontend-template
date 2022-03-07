@@ -62,11 +62,6 @@ query GetArticleById($id: Int!) {
         family
         subfamily
         groupingId
-        barcodes {
-            id
-            name
-            flagDouble
-        }
     }
 }
 
@@ -98,7 +93,7 @@ mutation ExportArticles(
     $compression: ExportCompression
     $separator: String
     $orderBy: [ArticleOrderByCriterion!]
-    $filters: ArticleSearchFilters
+    $filters: ArticleExportFilters
 ) {
     exportArticles(
         format: $format
@@ -111,6 +106,6 @@ mutation ExportArticles(
     }
 }
 
-mutation DeleteArticle($id: Int!) {
+mutation DeleteArticle($id: ID!) {
     deleteArticle(id: $id)
 }

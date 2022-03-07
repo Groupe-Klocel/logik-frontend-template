@@ -78,6 +78,7 @@ const AppTable: FC<IAppTableProps> = ({
         initialState !== null ? initialState.tableColumns : setCustomColumnsProps(columns)
     );
 
+    console.log('filteredColumns',filteredColumns)
     // Make each row checkable
 
     // const [selectedRowKeys, setSelectedRowKeys] = useState<Key[]>([]);
@@ -170,7 +171,7 @@ const AppTable: FC<IAppTableProps> = ({
                     />
                 )
             }),
-        [dispatchDrawer, visibleColumnKeys]
+        [visibleColumnKeys, filteredColumns]
     );
 
     useEffect(() => {
@@ -196,8 +197,9 @@ const AppTable: FC<IAppTableProps> = ({
                     visibleColumnKeys: visibleColumnKeys,
                     fixedColumns: fixedColumns
                 })
-            );
-        }
+                );
+                console.log(cookie.get(`${type}-filter-table`))
+            }
         setOnSave(false);
         return () => {};
     }, [onSave]);
@@ -252,6 +254,8 @@ const AppTable: FC<IAppTableProps> = ({
                         title={t(c.title)}
                         dataIndex={c.dataIndex}
                         key={c.key}
+                        fixed={c.fixed}
+                        width={c.width}
                         sorter={c.sorter}
                         showSorterTooltip={c.showSorterTooltip}
                         render={c.render}

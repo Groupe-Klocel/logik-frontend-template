@@ -86,7 +86,7 @@ const SingleBarcode: FC<ISingleBarcodeProps> = ({ id, router }: ISingleBarcodePr
                         </Button>
                         <Button
                             loading={deleteLoading}
-                            onClick={() => deleteBarcode({ id: parseInt(id) })}
+                            onClick={() => deleteBarcode({ id: id })}
                         >
                             {t('actions:delete')}
                         </Button>
