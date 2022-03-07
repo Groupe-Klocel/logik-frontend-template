@@ -2,11 +2,9 @@ import { EyeTwoTone, PrinterOutlined } from '@ant-design/icons';
 import { Button, Space } from 'antd';
 import { AppTable } from '@components';
 import { carriersData } from 'fake-data/carriers';
-import { FC } from 'react';
 
-export interface ICarriersListProps {}
 
-export const CarriersList: FC<ICarriersListProps> = ({}) => {
+export const CarriersList = ()  => {
     const columns = [
         {
             title: 'd:name',

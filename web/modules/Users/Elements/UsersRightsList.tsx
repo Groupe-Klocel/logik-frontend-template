@@ -2,11 +2,9 @@ import { LockOutlined } from '@ant-design/icons';
 import { AppTable } from '@components';
 import { Button } from 'antd';
 import { usersData } from 'fake-data/users';
-import { FC } from 'react';
 
-export interface IUsersRightsListProps {}
 
-export const UsersRightsList: FC<IUsersRightsListProps> = ({}) => {
+export const UsersRightsList = ()  => {
     const columns = [
         {
             title: 'common:username',

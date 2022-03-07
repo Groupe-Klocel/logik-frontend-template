@@ -26,7 +26,7 @@ interface IAuthContext {
 const AuthContext = createContext<IAuthContext>(undefined!);
 
 export const AuthProvider: FC<OnlyChildrenType> = ({ children }: OnlyChildrenType) => {
-    let { t } = useTranslation();
+    const { t } = useTranslation();
 
     const graphqlClient = new GraphQLClient(process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT as string);
 

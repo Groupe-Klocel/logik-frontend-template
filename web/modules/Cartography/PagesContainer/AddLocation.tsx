@@ -1,4 +1,3 @@
-import { FC } from 'react';
 import { Layout } from 'antd';
 import { HeaderContent } from '@components';
 import { addLocationRoutes } from 'modules/Cartography/Static/cartographyRoutes';
@@ -10,10 +9,9 @@ const StyledPageContent = styled(Layout.Content)`
     margin: 15px 30px;
 `;
 
-export interface IAddLocationProps {}
 
-export const AddLocation: FC<IAddLocationProps> = ({}: IAddLocationProps) => {
-    let { t } = useTranslation('actions');
+export const AddLocation = () => {
+    const { t } = useTranslation('actions');
     return (
         <>
             <HeaderContent title={t('add2', { name: 'Location' })} routes={addLocationRoutes} />

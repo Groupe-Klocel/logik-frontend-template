@@ -16,7 +16,7 @@ import React, { FC } from 'react';
 const { SubMenu } = Menu;
 
 const SideMenu: FC = () => {
-    let { t } = useTranslation('menu');
+    const { t } = useTranslation('menu');
     const { logout } = useAuth();
     return (
         <Menu mode="inline" className="menu">

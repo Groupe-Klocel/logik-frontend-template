@@ -2,11 +2,9 @@ import { EyeTwoTone, PrinterOutlined } from '@ant-design/icons';
 import { Button, Space } from 'antd';
 import { AppTable } from '@components';
 import { packagingsData } from 'fake-data/packagings';
-import { FC } from 'react';
 
-export interface IPackagingsListProps {}
 
-export const PackagingsList: FC<IPackagingsListProps> = ({}) => {
+export const PackagingsList = ()  => {
     const columns = [
         {
             title: 'd:name',

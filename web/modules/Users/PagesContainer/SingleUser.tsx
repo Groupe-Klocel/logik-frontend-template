@@ -16,7 +16,7 @@ export interface ISingleUserProps {
 }
 
 export const SingleUser: FC<ISingleUserProps> = ({ username, userId }: ISingleUserProps) => {
-    let { t } = useTranslation('common');
+    const { t } = useTranslation('common');
 
     // NEED TO FETCH SPECIFIC USER DATA BY ID TO DISPLAY USER DATA
 

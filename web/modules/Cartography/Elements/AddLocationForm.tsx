@@ -2,14 +2,13 @@ import { WrapperForm } from '@components';
 import { Button, Checkbox, Col, Form, Input, Row, Select } from 'antd';
 import { blocsData } from 'fake-data/blocs';
 import useTranslation from 'next-translate/useTranslation';
-import { FC, useState } from 'react';
+import { useState } from 'react';
 
 const { Option } = Select;
 
-export interface IAddLocationFormProps {}
 
-export const AddLocationForm: FC<IAddLocationFormProps> = ({}: IAddLocationFormProps) => {
-    let { t } = useTranslation('common');
+export const AddLocationForm = () => {
+    const { t } = useTranslation('common');
 
     // TYPED SAFE ALL
 

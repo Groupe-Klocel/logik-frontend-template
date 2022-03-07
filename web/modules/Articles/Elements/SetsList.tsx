@@ -2,11 +2,9 @@ import { DeleteOutlined, EyeTwoTone, EditTwoTone } from '@ant-design/icons';
 import { Button, Space } from 'antd';
 import { AppTable } from '@components';
 import { setsData } from 'fake-data/sets';
-import { FC } from 'react';
 
-export interface ISetsListProps {}
 
-export const SetsList: FC<ISetsListProps> = ({}) => {
+export const SetsList = () => {
     const columns = [
         {
             title: 'common:company',

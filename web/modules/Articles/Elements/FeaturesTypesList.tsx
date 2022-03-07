@@ -1,12 +1,10 @@
-import { FC } from 'react';
 import { DeleteOutlined, EyeTwoTone, EditTwoTone } from '@ant-design/icons';
 import { Button, Space } from 'antd';
 import { featureTypesData } from 'fake-data/features';
 import { AppTable } from '@components';
 
-export interface IFeaturesTypesListProps {}
 
-export const FeaturesTypesList: FC<IFeaturesTypesListProps> = ({}) => {
+export const FeaturesTypesList = () => {
     const columns = [
         {
             title: 'd:name',

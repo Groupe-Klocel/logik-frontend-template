@@ -48,7 +48,7 @@ function purgeSorter(data: Array<any> | any): Array<any> | null {
 }
 
 const orberByFormater = (sorter: any) => {
-    let newSorter = purgeSorter(sorter);
+    const newSorter = purgeSorter(sorter);
     return newSorter;
 };
 
@@ -101,7 +101,7 @@ function isVisible(value: React.Key, list: Array<any>) {
 
 // need to set Domain for safety
 
-function stringToBoolean(string: String | undefined) {
+function stringToBoolean(string: string | undefined) {
     switch (string?.toLowerCase()) {
         case 'false':
         case 'no':
@@ -133,7 +133,7 @@ function getDefaultTheme() {
 }
 
 // handle mismatch when menu is open by the user but not set as default and user settings menu is set to true
-function getMenuState(isSettingMenuCollapsed: Boolean) {
+function getMenuState(isSettingMenuCollapsed: boolean) {
     let menuState;
     if (
         isSettingMenuCollapsed === false &&
@@ -159,10 +159,10 @@ function isEmpty(object: Object) {
     return true;
 }
 
-function decodeJWT(token: String) {
-    var base64Url = token.split('.')[1];
-    var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-    var jsonPayload = decodeURIComponent(
+function decodeJWT(token: string) {
+    const base64Url = token.split('.')[1];
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    const jsonPayload = decodeURIComponent(
         atob(base64)
             .split('')
             .map(function (c) {

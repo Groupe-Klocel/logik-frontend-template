@@ -1,12 +1,10 @@
 import { AppTable } from '@components';
 import { Button } from 'antd';
 import { returnCodesData } from 'fake-data/returnCodes';
-import { FC } from 'react';
 import { EyeTwoTone } from '@ant-design/icons';
 
-export interface IReturnCodesListProps {}
 
-export const ReturnCodesList: FC<IReturnCodesListProps> = ({}) => {
+export const ReturnCodesList = ()  => {
     const columns = [
         {
             title: 'd:name',

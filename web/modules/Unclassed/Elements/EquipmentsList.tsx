@@ -2,11 +2,9 @@ import { CaretUpOutlined, CaretDownOutlined, EyeTwoTone } from '@ant-design/icon
 import { Button, Space } from 'antd';
 import { AppTable } from '@components';
 import { equipmentsData } from 'fake-data/equipments';
-import { FC } from 'react';
 
-export interface IEquipmentsListProps {}
 
-export const EquipmentsList: FC<IEquipmentsListProps> = ({}) => {
+export const EquipmentsList = ()  => {
     const columns = [
         {
             title: 'd:priority',

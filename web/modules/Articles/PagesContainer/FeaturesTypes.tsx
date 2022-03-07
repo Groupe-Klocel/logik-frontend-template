@@ -1,16 +1,12 @@
-import { FC } from 'react';
-import { Layout } from 'antd';
 import { HeaderContent } from '@components';
 import { featuresTypesRoutes } from 'modules/Articles/Static/articlesRoutes';
 import useTranslation from 'next-translate/useTranslation';
 import { FeaturesTypesList } from 'modules/Articles/Elements/FeaturesTypesList';
-import styled from 'styled-components';
 import { LinkButton } from 'components/common/dumb/Buttons/LinkButton';
 
-export interface IFeaturesTypesProps {}
 
-export const FeaturesTypes: FC<IFeaturesTypesProps> = ({}: IFeaturesTypesProps) => {
-    let { t } = useTranslation();
+export const FeaturesTypes = () => {
+    const { t } = useTranslation();
     return (
         <>
             <HeaderContent

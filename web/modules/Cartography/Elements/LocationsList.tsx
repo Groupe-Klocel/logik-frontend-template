@@ -1,12 +1,10 @@
-import { FC } from 'react';
 import { Button, Space } from 'antd';
 import { locationsData } from 'fake-data/locations';
 import { AppTable } from '@components';
 import { DeleteOutlined, EyeTwoTone, EditTwoTone } from '@ant-design/icons';
 
-export interface ILocationsListProps {}
 
-export const LocationsList: FC<ILocationsListProps> = ({}) => {
+export const LocationsList = ()  => {
     const columns = [
         {
             title: 'd:name',

@@ -28,7 +28,7 @@ export interface ISingleBarcodeProps {
 }
 
 const SingleBarcode: FC<ISingleBarcodeProps> = ({ id, router }: ISingleBarcodeProps) => {
-    let { t } = useTranslation();
+    const { t } = useTranslation();
     const { graphqlRequestClient } = useAuth();
     const { isLoading, data, error } = useGetBarcodeByIdQuery<GetBarcodeByIdQuery, Error>(
         graphqlRequestClient,

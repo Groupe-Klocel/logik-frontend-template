@@ -1,14 +1,11 @@
-import { Form, Input, Button, Row, Col, Select, InputNumber } from 'antd';
-import { FC } from 'react';
+import { Form, Input, Select, InputNumber } from 'antd';
 import useTranslation from 'next-translate/useTranslation';
-import { companiesData } from 'fake-data/companies';
 
 const { Option } = Select;
 
-interface IAddArticleStep1Props {}
 
-const AddArticleStep1: FC<IAddArticleStep1Props> = ({}: IAddArticleStep1Props) => {
-    let { t } = useTranslation();
+const AddArticleStep1 = () => {
+    const { t } = useTranslation();
 
     // TEXTS TRANSLATION ( REFACTORING POSSIBLE / EXPORT / DON'T KNOW YET )
 

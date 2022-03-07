@@ -1,11 +1,9 @@
 import { CheckCircleOutlined, CloseSquareOutlined } from '@ant-design/icons';
 import { AppTable } from '@components';
 import { usersData } from 'fake-data/users';
-import { FC } from 'react';
 
-export interface IGroupOfUsersListProps {}
 
-export const GroupOfUsersList: FC<IGroupOfUsersListProps> = ({}) => {
+export const GroupOfUsersList = ()  => {
     const columns = [
         {
             title: 'common:username',

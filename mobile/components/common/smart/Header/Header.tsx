@@ -31,7 +31,7 @@ const StyledCol = styled(Col)`
 `
 
 const Header: FC = () => {
-	let { t } = useTranslation()
+	const { t } = useTranslation()
 	const { user, logout } = useAuth()
 	const { switcher } = useThemeSwitcher();
 
@@ -93,14 +93,14 @@ const Header: FC = () => {
 
 	return (
 		<StyledHeader>
-			<Row wrap={false} align='middle' style={{height: '53px'}}>
+			<Row wrap={false} align='middle' style={{ height: '53px' }}>
 				<Link href='/'><StyledCol><MenuOutlined /></StyledCol></Link>
-				<StyledCol flex="auto"><Logo title='BEE 2.0'/></StyledCol>
+				<StyledCol flex="auto"><Logo title='BEE 2.0' /></StyledCol>
 				<StyledCol>
 					<Typography>{user.username.toUpperCase()}</Typography>
 				</StyledCol>
 				<StyledCol>
-					<Button type='text' icon={<LogoutOutlined />} onClick={() => logout()}/>					
+					<Button type='text' icon={<LogoutOutlined />} onClick={() => logout()} />
 				</StyledCol>
 			</Row>
 		</StyledHeader>

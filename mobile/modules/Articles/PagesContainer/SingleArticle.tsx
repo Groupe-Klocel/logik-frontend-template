@@ -20,7 +20,7 @@ export interface ISingleArticleProps {
 }
 
 const SingleArticle: FC<ISingleArticleProps> = ({ aId, router }: ISingleArticleProps) => {
-	let { t } = useTranslation()
+	const { t } = useTranslation()
 
 	const { graphqlRequestClient } = useAuth()
 
@@ -47,11 +47,11 @@ const SingleArticle: FC<ISingleArticleProps> = ({ aId, router }: ISingleArticleP
 			/>
 			<Page>
 				{/* <StyledPageContent> */}
-					{data?.article && !isLoading ?
-						<DetailsList details={data?.article} />
-						:
-						<ScreenSpin />
-					}
+				{data?.article && !isLoading ?
+					<DetailsList details={data?.article} />
+					:
+					<ScreenSpin />
+				}
 				{/* </StyledPageContent> */}
 			</Page>
 		</>

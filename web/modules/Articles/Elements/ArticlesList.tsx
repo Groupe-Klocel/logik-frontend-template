@@ -28,7 +28,7 @@ export interface IArticlesListProps {
 }
 
 const ArticlesList = ({ searchCriteria }: IArticlesListProps) => {
-    let { t } = useTranslation();
+    const { t } = useTranslation();
     const { graphqlRequestClient } = useAuth();
 
     const [articles, setArticles] = useState<DataQueryType>();

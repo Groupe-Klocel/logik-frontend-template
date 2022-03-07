@@ -16,7 +16,7 @@ export interface IDetailsListProps {
 }
 
 const DetailsList: FC<IDetailsListProps> = ({ details, nbColumns }: IDetailsListProps) => {
-    let { t } = useTranslation();
+    const { t } = useTranslation();
 
     return (
         <Descriptions column={nbColumns} size="small" bordered>

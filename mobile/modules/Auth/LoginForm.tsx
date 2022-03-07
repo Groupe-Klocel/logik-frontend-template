@@ -10,7 +10,7 @@ export interface ILoginFormProps {
 }
 
 export const LoginForm: FC<ILoginFormProps> = ({ }: ILoginFormProps) => {
-	let { t } = useTranslation('common')
+	const { t } = useTranslation('common')
 	const { login } = useAuth()
 	// TEXTS TRANSLATION
 
@@ -28,13 +28,13 @@ export const LoginForm: FC<ILoginFormProps> = ({ }: ILoginFormProps) => {
 	const [form] = Form.useForm();
 
 	const onFinish = (values: any) => {
-		login({ username: values.username, password: values.password})
+		login({ username: values.username, password: values.password })
 	};
 
 
 	return (
 		<WrapperLogin>
-			<Logo title="Bee 2.0"/>
+			<Logo title="Bee 2.0" />
 			<WelcomeText>
 				{welcome}
 			</WelcomeText>
@@ -49,9 +49,9 @@ export const LoginForm: FC<ILoginFormProps> = ({ }: ILoginFormProps) => {
 					name="username"
 					rules={[{ required: true, message: errorMessageUsername }]}
 				>
-					<Input 
-						prefix={<UserOutlined /> } 
-						style={{height:'50px',  fontSize: '16px'}} 
+					<Input
+						prefix={<UserOutlined />}
+						style={{ height: '50px', fontSize: '16px' }}
 						placeholder={username} />
 				</Form.Item>
 				<Form.Item
@@ -62,14 +62,14 @@ export const LoginForm: FC<ILoginFormProps> = ({ }: ILoginFormProps) => {
 						prefix={<LockOutlined />}
 						type="password"
 						placeholder={password}
-						style={{height:'50px',  fontSize:'16px'}}/>
+						style={{ height: '50px', fontSize: '16px' }} />
 				</Form.Item>
 				<Form.Item>
-					<Button 
-						type="primary" 
-						htmlType="submit" 
+					<Button
+						type="primary"
+						htmlType="submit"
 						block
-						style={{height:'50px', fontSize:'16px'}}
+						style={{ height: '50px', fontSize: '16px' }}
 					>
 						{loginButton}
 					</Button>

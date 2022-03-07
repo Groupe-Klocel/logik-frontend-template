@@ -1,12 +1,10 @@
-import { FC } from 'react';
 import { Button } from 'antd';
 import { companiesData } from 'fake-data/companies';
 import { AppTable } from '@components';
 import { EyeTwoTone } from '@ant-design/icons';
 
-export interface ICompaniesListProps {}
 
-export const CompaniesList: FC<ICompaniesListProps> = ({}) => {
+export const CompaniesList = ()  => {
     const columns = [
         {
             title: 'd:name',

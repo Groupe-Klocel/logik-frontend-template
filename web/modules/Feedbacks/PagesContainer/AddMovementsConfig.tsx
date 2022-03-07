@@ -1,4 +1,3 @@
-import { FC } from 'react';
 import { Layout } from 'antd';
 import { HeaderContent } from '@components';
 import { addMovementsConfigRoutes } from 'modules/Feedbacks/Static/feedbacksRoutes';
@@ -10,10 +9,9 @@ const StyledPageContent = styled(Layout.Content)`
     margin: 15px 30px;
 `;
 
-export interface IAddMovementsConfigProps {}
 
-export const AddMovementsConfig: FC<IAddMovementsConfigProps> = ({}: IAddMovementsConfigProps) => {
-    let { t } = useTranslation('actions');
+export const AddMovementsConfig = ()  => {
+    const { t } = useTranslation('actions');
     return (
         <>
             <HeaderContent

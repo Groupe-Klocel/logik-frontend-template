@@ -1,12 +1,10 @@
 import { AppTable } from '@components';
 import { Button, Space } from 'antd';
 import { groupsData } from 'fake-data/groups';
-import { FC } from 'react';
 import { DeleteOutlined, EyeTwoTone, EditTwoTone } from '@ant-design/icons';
 
-export interface GroupsListProps {}
 
-export const GroupsList: FC<GroupsListProps> = ({}) => {
+export const GroupsList = ()  => {
     const columns = [
         {
             title: 'd:name',

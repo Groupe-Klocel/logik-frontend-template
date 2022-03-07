@@ -1,7 +1,7 @@
 import { WrapperForm } from '@components';
 import { Button, Col, Input, InputNumber, Row, Select, Form } from 'antd';
 import useTranslation from 'next-translate/useTranslation';
-import { FC, useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useAuth } from 'context/AuthContext';
 import { useRouter } from 'next/router';
 import {
@@ -12,10 +12,9 @@ import {
 import { showError, showSuccess, showInfo } from '@helpers';
 
 const { Option } = Select;
-export interface IAddBarcodeFormProps {}
 
-export const AddBarcodeForm: FC<IAddBarcodeFormProps> = ({}: IAddBarcodeFormProps) => {
-    let { t } = useTranslation('common');
+export const AddBarcodeForm = () => {
+    const { t } = useTranslation('common');
     const { graphqlRequestClient } = useAuth();
     const router = useRouter();
 

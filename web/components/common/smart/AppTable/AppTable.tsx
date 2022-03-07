@@ -1,4 +1,4 @@
-import { SettingOutlined, FileExcelOutlined, DeleteOutlined } from '@ant-design/icons';
+import { SettingOutlined, FileExcelOutlined } from '@ant-design/icons';
 import { TableFilter, WrapperStickyActions, PageTableContentWrapper } from '@components';
 import { getKeys, setCustomColumnsProps, checkKeyPresenceInArray } from '@helpers';
 import { Space, Button, Table } from 'antd';
@@ -40,7 +40,7 @@ const AppTable: FC<IAppTableProps> = ({
     setPagination,
     type
 }: IAppTableProps) => {
-    let { t } = useTranslation();
+    const { t } = useTranslation();
     // get filter from cookies if exist
     const filterDrawerRef = useRef() as any | undefined;
     const allColumnKeys = getKeys(columns);
@@ -57,7 +57,7 @@ const AppTable: FC<IAppTableProps> = ({
         const storedArray = initialState.filteredColumns;
         const inputArray = checkKeyPresenceInArray('render', columns);
         const titleCheck = checkKeyPresenceInArray('title', columns);
-        let updatedStoredArr = storedArray.map((a: any) => {
+        const updatedStoredArr = storedArray.map((a: any) => {
             const exists = inputArray.find((b) => a.key == b.key);
             const titles = titleCheck.find((b) => a.key == b.key);
             if (exists) {
@@ -190,7 +190,7 @@ const AppTable: FC<IAppTableProps> = ({
             }
         }
 
-        return () => {};
+        return () => { };
     }, [visibleColumnKeys, filteredColumns]);
 
     useEffect(() => {
@@ -204,7 +204,7 @@ const AppTable: FC<IAppTableProps> = ({
             localStorage.setItem(`${type}-filter-table`, news);
         }
         setOnSave(false);
-        return () => {};
+        return () => { };
     }, [onSave]);
 
     return (

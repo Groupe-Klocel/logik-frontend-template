@@ -6,7 +6,7 @@ import useTranslation from 'next-translate/useTranslation';
 type PageComponent = FC & { layout: typeof MainLayout };
 
 const HomePage: PageComponent = () => {
-    let { t } = useTranslation();
+    const { t } = useTranslation();
 
     return (
         <>

@@ -2,11 +2,9 @@ import { DeleteOutlined, EyeTwoTone, EditTwoTone } from '@ant-design/icons';
 import { Button, Space } from 'antd';
 import { AppTable } from '@components';
 import { companiesData } from 'fake-data/companies';
-import { FC } from 'react';
 
-export interface IMovementsConfigListProps {}
 
-export const MovementsConfigList: FC<IMovementsConfigListProps> = ({}) => {
+export const MovementsConfigList = ()  => {
     const columns = [
         {
             title: 'common:account',

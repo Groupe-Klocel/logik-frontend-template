@@ -2,7 +2,6 @@ import { GlobalBreadcrumb } from '@components';
 import { BreadcrumbType } from '@helpers';
 import { PageHeader } from 'antd';
 import { FC, ReactNode } from 'react';
-import styled from 'styled-components';
 
 export interface IHeaderContentProps {
     children?: ReactNode;

@@ -28,7 +28,7 @@ export interface ISingleArticleProps {
 }
 
 const SingleArticle: FC<ISingleArticleProps> = ({ id, router }: ISingleArticleProps) => {
-    let { t } = useTranslation();
+    const { t } = useTranslation();
 
     const { graphqlRequestClient } = useAuth();
 

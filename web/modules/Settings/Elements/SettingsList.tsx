@@ -1,12 +1,10 @@
-import { FC } from 'react';
 import { Button } from 'antd';
 import { settingsData } from 'fake-data/settings';
 import { AppTable } from '@components';
 import { EyeTwoTone } from '@ant-design/icons';
 
-export interface ISettingsListProps {}
 
-export const SettingsList: FC<ISettingsListProps> = ({}) => {
+export const SettingsList = () => {
     const columns = [
         {
             title: 'common:param-category',

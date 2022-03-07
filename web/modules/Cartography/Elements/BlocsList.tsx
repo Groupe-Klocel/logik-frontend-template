@@ -1,12 +1,10 @@
-import { FC } from 'react';
 import { DeleteOutlined, EyeTwoTone, EditTwoTone } from '@ant-design/icons';
 import { Button, Space } from 'antd';
 import { blocsData } from 'fake-data/blocs';
 import { AppTable } from '@components';
 
-export interface IBlocsListProps {}
 
-export const BlocsList: FC<IBlocsListProps> = ({}) => {
+export const BlocsList = () => {
     const columns = [
         {
             title: 'd:name',

@@ -1,12 +1,10 @@
-import { DeleteOutlined, EyeTwoTone, EditTwoTone } from '@ant-design/icons';
+import { EyeTwoTone, EditTwoTone } from '@ant-design/icons';
 import { Button, Space } from 'antd';
 import { AppTable } from '@components';
 import { stockData } from 'fake-data/stock';
-import { FC } from 'react';
 
-export interface IStockStatusesListProps {}
 
-export const StockStatusesList: FC<IStockStatusesListProps> = ({}) => {
+export const StockStatusesList = () => {
     const columns = [
         {
             title: 'd:name',

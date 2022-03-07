@@ -1,16 +1,13 @@
-import { PageContentWrapper } from '@components';
 import { Space } from 'antd';
 import { LinkButton } from 'components/common/dumb/Buttons/LinkButton';
 import { UsersList } from 'modules/Users/Elements/UsersList';
 import { usersRoutes } from 'modules/Users/Static/usersRoutes';
 import useTranslation from 'next-translate/useTranslation';
-import { FC } from 'react';
 import { HeaderContent } from '@components';
 
-export interface IUsersProps {}
 
-export const Users: FC<IUsersProps> = ({}: IUsersProps) => {
-    let { t } = useTranslation();
+export const Users = ()  => {
+    const { t } = useTranslation();
 
     return (
         <>

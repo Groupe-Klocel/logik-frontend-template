@@ -1,4 +1,4 @@
-import { FC, useCallback, useState, useEffect } from 'react';
+import { useCallback, useState } from 'react';
 import { SearchOutlined } from '@ant-design/icons';
 import { HeaderContent, LinkButton } from '@components';
 import { barcodesRoutes } from 'modules/Barcodes/Static/barcodesRoutes';
@@ -9,10 +9,9 @@ import { BarcodesSearch } from 'modules/Barcodes/Forms/BarcodesSearch';
 import { useDrawerDispatch } from 'context/DrawerContext';
 import { showError } from '@helpers';
 
-export interface IBarcodesProps {}
 
-const Barcodes: FC<IBarcodesProps> = ({}: IBarcodesProps) => {
-    let { t } = useTranslation();
+const Barcodes = () => {
+    const { t } = useTranslation();
 
     //	SEARCH DRAWER
     const [search, setSearch] = useState({});

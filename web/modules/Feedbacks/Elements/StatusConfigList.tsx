@@ -2,11 +2,9 @@ import { DeleteOutlined, EyeTwoTone, EditTwoTone } from '@ant-design/icons';
 import { Button, Space } from 'antd';
 import { AppTable } from '@components';
 import { companiesData } from 'fake-data/companies';
-import { FC } from 'react';
 
-export interface IStatusConfigListProps {}
 
-export const StatusConfigList: FC<IStatusConfigListProps> = ({}) => {
+export const StatusConfigList = () => {
     const columns = [
         {
             title: 'common:account',

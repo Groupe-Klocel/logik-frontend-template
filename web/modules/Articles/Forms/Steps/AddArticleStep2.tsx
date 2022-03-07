@@ -1,11 +1,9 @@
-import { Form, Input, InputNumber, Button, Row, Col, Checkbox, Select } from 'antd';
-import { FC } from 'react';
+import { Form, Input, InputNumber, Row, Col, Checkbox } from 'antd';
 import useTranslation from 'next-translate/useTranslation';
 
-interface IAddArticleStep2Props {}
 
-const AddArticleStep2: FC<IAddArticleStep2Props> = () => {
-    let { t } = useTranslation();
+const AddArticleStep2 = () => {
+    const { t } = useTranslation();
 
     // TEXTS TRANSLATION ( REFACTORING POSSIBLE / EXPORT / DON'T KNOW YET )
 
