@@ -110,3 +110,32 @@ mutation ExportArticles(
 mutation DeleteArticle($id: ID!) {
     deleteArticle(id: $id)
 }
+
+mutation UpdateArticle(
+    $id: ID!
+    $input: UpdateArticleInput!
+) {
+    updateArticle(
+        id: $id
+        input: $input
+    ) {
+        id
+        accountId
+        companyId
+        status
+        code
+        name
+        length
+        width
+        height
+        baseUnitWeight
+        boxWeight
+        boxQuantity
+        baseUnitPicking
+        boxPicking
+        cubingType
+        permanentProduct
+        additionalDescription
+        supplierName
+    }
+}

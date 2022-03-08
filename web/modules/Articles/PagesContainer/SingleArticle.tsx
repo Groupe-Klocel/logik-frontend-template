@@ -11,11 +11,12 @@ import {
     DeleteArticleMutationVariables
 } from 'generated/graphql';
 import { useAuth } from 'context/AuthContext';
-import { FC, useEffect } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { NextRouter } from 'next/router';
 import styled from 'styled-components';
 import { HeaderContent } from '@components';
 import { showError, showSuccess } from '@helpers';
+import { EditArticleForm } from '../Forms/EditArticleForm';
 
 const StyledPageContent = styled(Layout.Content)`
     margin: 15px 30px;
@@ -31,6 +32,8 @@ const SingleArticle: FC<ISingleArticleProps> = ({ id, router }: ISingleArticlePr
     const { t } = useTranslation();
 
     const { graphqlRequestClient } = useAuth();
+
+    const [showModal, setShowModal] = useState(false);
 
     const { isLoading, data, error } = useGetArticleByIdQuery<GetArticleByIdQuery, Error>(
         graphqlRequestClient,
@@ -98,7 +101,7 @@ const SingleArticle: FC<ISingleArticleProps> = ({ id, router }: ISingleArticlePr
                         <Button onClick={updateBoxQuantity} type="primary">
                             {t('actions:update-quantity')}
                         </Button>
-                        <Button onClick={() => alert('Edit')} type="primary">
+                        <Button onClick={() => setShowModal(true)} type="primary">
                             {t('actions:edit')}
                         </Button>
                         <Button loading={deleteLoading} onClick={() => deleteArticle({ id: id })}>
@@ -110,6 +113,7 @@ const SingleArticle: FC<ISingleArticleProps> = ({ id, router }: ISingleArticlePr
             <StyledPageContent>
                 {data && !isLoading ? <ArticleDetails details={data?.article} /> : <ContentSpin />}
             </StyledPageContent>
+            <EditArticleForm articleId={id} details={data?.article} showModal={showModal} setShowModal={setShowModal}/>
         </>
     );
 };
