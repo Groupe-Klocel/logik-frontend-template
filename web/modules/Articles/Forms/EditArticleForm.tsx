@@ -1,6 +1,6 @@
 import { FC, useEffect } from 'react';
-import { Form, Modal } from 'antd';
-import { WrapperForm, WrapperStepContent } from '@components';
+import { Button, Form, Modal, Space } from 'antd';
+import { StyledForm, WrapperForm, WrapperStepContent } from '@components';
 import { AddArticleStep1 } from './Steps/AddArticleStep1';
 import { AddArticleStep2 } from './Steps/AddArticleStep2';
 import { AddArticleStep3 } from './Steps/AddArticleStep3';
@@ -19,11 +19,9 @@ const { Item } = Form;
 export interface IEditArticleFormProps {
   articleId: string,
   details: any,
-  showModal: boolean,
-  setShowModal: (b: boolean) => void;
 }
 
-export const EditArticleForm: FC<IEditArticleFormProps> = ({articleId, details, showModal, setShowModal}: IEditArticleFormProps) => {
+export const EditArticleForm: FC<IEditArticleFormProps> = ({articleId, details}: IEditArticleFormProps) => {
     let { t } = useTranslation();
     const { graphqlRequestClient } = useAuth();
     const router = useRouter();
@@ -55,14 +53,17 @@ export const EditArticleForm: FC<IEditArticleFormProps> = ({articleId, details, 
     const onFinish = () => {
         form.validateFields()
             .then(() => {
-              console.log(form.getFieldsValue(true));
-              updateArticle({ id: articleId, input: { ...form.getFieldsValue(true), accountId: 1 } });
-              setShowModal(false);
+              updateArticle({ id: parseInt(articleId), input: { ...form.getFieldsValue(true), accountId: 1 } });
             })
             .catch((err) => showError(t('messages:error-update-data')));
     };
-    form.setFieldsValue(details);
-    console.log(details);
+    let tmp_details = {...details};
+    delete tmp_details['id'];
+    delete tmp_details['created'];
+    delete tmp_details['modified'];
+    
+    form.setFieldsValue(tmp_details);
+    console.log(tmp_details);
     useEffect(() => {
         if (updateLoading) {
             showInfo(t('messages:info-update-wip'));
@@ -70,26 +71,22 @@ export const EditArticleForm: FC<IEditArticleFormProps> = ({articleId, details, 
     }, [updateLoading]);
 
     return (
-      <Modal 
-        title='Edit Article'
-        className='edit-modal'
-        visible={showModal}
-        centered
-        onOk={onFinish}
-        onCancel={() => setShowModal(false)}
-        width={'100vw'}
-        wrapClassName={'edit-article-modal'}
-        okText={'Update'}
-      >
-        <WrapperForm>
-            <WrapperStepContent>
-              <Form form={form} scrollToFirstError>
-                <AddArticleStep1/>
-                <AddArticleStep2/>
-                <AddArticleStep3/>
-              </Form>
-            </WrapperStepContent>
-        </WrapperForm>
-      </Modal>
+      <StyledForm>
+        <Form form={form} scrollToFirstError>
+          	<AddArticleStep1/>
+          	<AddArticleStep2/>
+          	<AddArticleStep3/>
+			<div style={{ textAlign: 'right' }}>
+				<Space>
+					<Button onClick={()=> onFinish()} type="primary">
+						{t('actions:update')}
+					</Button>
+					<Button onClick={() => router.back()}>
+						{t('actions:cancel')}
+					</Button>
+				</Space>
+			</div>
+        </Form>
+      </StyledForm>
     );
 };
