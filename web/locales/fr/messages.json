@@ -21,7 +21,6 @@
 	"success-exported": "Les éléments ont été exporté avec succès",
 	"info-export-wip": "Export en cours",
 	"info-create-wip": "Création en cours",
-	"info-delete-wip": "Suppression en cours"
-
-
+	"info-delete-wip": "Suppression en cours",
+	"success-update-box-quantity": "La quantité a été mise à jour"
 }
