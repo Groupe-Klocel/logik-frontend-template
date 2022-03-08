@@ -1,7 +1,6 @@
 import { Form, Input, InputNumber, Row, Col, Checkbox } from 'antd';
 import useTranslation from 'next-translate/useTranslation';
 
-
 const AddArticleStep2 = () => {
     const { t } = useTranslation();
 

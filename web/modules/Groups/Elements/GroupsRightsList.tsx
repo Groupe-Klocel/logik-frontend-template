@@ -2,8 +2,7 @@ import { CheckCircleOutlined, CloseSquareOutlined } from '@ant-design/icons';
 import { AppTable } from '@components';
 import { groupsRightsData } from 'fake-data/groups';
 
-
-export const GroupsRightsList = ()  => {
+export const GroupsRightsList = () => {
     const columns = [
         {
             title: 'actions:action',

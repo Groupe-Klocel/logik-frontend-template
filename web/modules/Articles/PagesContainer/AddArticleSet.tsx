@@ -3,7 +3,6 @@ import { addArticleSetRoutes } from 'modules/Articles/Static/articlesRoutes';
 import useTranslation from 'next-translate/useTranslation';
 import { AddArticleSetForm } from 'modules/Articles/Elements/AddArticleSetForm';
 
-
 export const AddArticleSet = () => {
     const { t } = useTranslation('actions');
     return (

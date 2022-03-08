@@ -3,7 +3,6 @@ import { Button, Space } from 'antd';
 import { blocsData } from 'fake-data/blocs';
 import { AppTable } from '@components';
 
-
 export const BlocsList = () => {
     const columns = [
         {

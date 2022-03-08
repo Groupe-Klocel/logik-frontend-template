@@ -4,7 +4,6 @@ import { Button, Form, Input } from 'antd';
 import { useAuth } from 'context/AuthContext';
 import useTranslation from 'next-translate/useTranslation';
 
-
 export const LoginForm = () => {
     const { t } = useTranslation('common');
     const { login } = useAuth();

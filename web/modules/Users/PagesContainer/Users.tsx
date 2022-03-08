@@ -5,8 +5,7 @@ import { usersRoutes } from 'modules/Users/Static/usersRoutes';
 import useTranslation from 'next-translate/useTranslation';
 import { HeaderContent } from '@components';
 
-
-export const Users = ()  => {
+export const Users = () => {
     const { t } = useTranslation();
 
     return (

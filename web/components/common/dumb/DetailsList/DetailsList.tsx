@@ -1,5 +1,6 @@
 import { FC } from 'react';
 import { Descriptions } from 'antd';
+import { formatDigits, isFloat } from '@helpers';
 import { CheckCircleOutlined, CloseSquareOutlined } from '@ant-design/icons';
 import useTranslation from 'next-translate/useTranslation';
 
@@ -28,6 +29,8 @@ const DetailsList: FC<IDetailsListProps> = ({ details, nbColumns }: IDetailsList
                         <CloseSquareOutlined style={{ color: 'red' }} />
                     ) : details[key] === null ? (
                         '-'
+                    ) : isFloat(details[key]) ? (
+                        formatDigits(details[key])
                     ) : (
                         details[key]
                     )}

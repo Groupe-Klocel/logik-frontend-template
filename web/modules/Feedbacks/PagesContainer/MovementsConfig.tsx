@@ -4,8 +4,7 @@ import useTranslation from 'next-translate/useTranslation';
 import { LinkButton } from 'components/common/dumb/Buttons/LinkButton';
 import { MovementsConfigList } from 'modules/Feedbacks/Elements/MovementsConfigList';
 
-
-export const MovementsConfig = ()  => {
+export const MovementsConfig = () => {
     const { t } = useTranslation();
     return (
         <>

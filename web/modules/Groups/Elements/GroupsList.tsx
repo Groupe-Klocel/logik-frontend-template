@@ -3,8 +3,7 @@ import { Button, Space } from 'antd';
 import { groupsData } from 'fake-data/groups';
 import { DeleteOutlined, EyeTwoTone, EditTwoTone } from '@ant-design/icons';
 
-
-export const GroupsList = ()  => {
+export const GroupsList = () => {
     const columns = [
         {
             title: 'd:name',

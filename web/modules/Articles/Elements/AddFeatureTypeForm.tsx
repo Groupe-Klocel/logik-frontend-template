@@ -3,8 +3,7 @@ import { Button, Col, Form, Input, Row } from 'antd';
 import useTranslation from 'next-translate/useTranslation';
 import { useState } from 'react';
 
-
-export const AddFeatureTypeForm= () => {
+export const AddFeatureTypeForm = () => {
     const { t } = useTranslation('common');
 
     // TYPED SAFE ALL

@@ -3,8 +3,7 @@ import { groupOfUsersRoutes } from 'modules/Groups/Static/groupsRoutes';
 import useTranslation from 'next-translate/useTranslation';
 import { GroupOfUsersList } from 'modules/Groups/Elements/GroupOfUsersList';
 
-
-export const GroupOfUsers = ()  => {
+export const GroupOfUsers = () => {
     const { t } = useTranslation();
     return (
         <>

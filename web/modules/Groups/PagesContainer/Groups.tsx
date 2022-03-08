@@ -4,8 +4,7 @@ import useTranslation from 'next-translate/useTranslation';
 import { GroupsList } from 'modules/Groups/Elements/GroupsList';
 import { LinkButton } from 'components/common/dumb/Buttons/LinkButton';
 
-
-export const Groups = ()  => {
+export const Groups = () => {
     const { t } = useTranslation();
     return (
         <>

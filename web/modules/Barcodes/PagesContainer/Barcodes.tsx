@@ -9,7 +9,6 @@ import { BarcodesSearch } from 'modules/Barcodes/Forms/BarcodesSearch';
 import { useDrawerDispatch } from 'context/DrawerContext';
 import { showError } from '@helpers';
 
-
 const Barcodes = () => {
     const { t } = useTranslation();
 

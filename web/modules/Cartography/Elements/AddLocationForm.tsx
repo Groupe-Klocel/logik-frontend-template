@@ -6,7 +6,6 @@ import { useState } from 'react';
 
 const { Option } = Select;
 
-
 export const AddLocationForm = () => {
     const { t } = useTranslation('common');
 

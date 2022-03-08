@@ -3,7 +3,6 @@ import { Button, Space } from 'antd';
 import { AppTable } from '@components';
 import { setsData } from 'fake-data/sets';
 
-
 export const SetsList = () => {
     const columns = [
         {

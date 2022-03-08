@@ -3,8 +3,7 @@ import { groupsRightsRoutes } from 'modules/Groups/Static/groupsRoutes';
 import useTranslation from 'next-translate/useTranslation';
 import { GroupsRightsList } from 'modules/Groups/Elements/GroupsRightsList';
 
-
-export const GroupsRights = ()  => {
+export const GroupsRights = () => {
     const { t } = useTranslation();
     return (
         <>

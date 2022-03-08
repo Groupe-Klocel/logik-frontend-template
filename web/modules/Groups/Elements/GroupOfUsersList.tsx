@@ -2,8 +2,7 @@ import { CheckCircleOutlined, CloseSquareOutlined } from '@ant-design/icons';
 import { AppTable } from '@components';
 import { usersData } from 'fake-data/users';
 
-
-export const GroupOfUsersList = ()  => {
+export const GroupOfUsersList = () => {
     const columns = [
         {
             title: 'common:username',

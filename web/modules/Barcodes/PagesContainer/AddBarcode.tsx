@@ -3,7 +3,6 @@ import { addBarcodeRoutes } from 'modules/Barcodes/Static/barcodesRoutes';
 import useTranslation from 'next-translate/useTranslation';
 import { AddBarcodeForm } from 'modules/Barcodes/Forms/AddBarcodeForm';
 
-
 export const AddBarcode = () => {
     const { t } = useTranslation('actions');
     return (
