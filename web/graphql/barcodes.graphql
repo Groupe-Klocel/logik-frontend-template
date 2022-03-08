@@ -56,6 +56,6 @@ mutation CreateBarcode($input: CreateBarcodeInput!) {
     }
 }
 
-mutation DeleteBarcode($id: ID!) {
+mutation DeleteBarcode($id: Int!) {
     deleteBarcode(id: $id)
 }

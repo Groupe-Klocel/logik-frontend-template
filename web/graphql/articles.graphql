@@ -107,6 +107,6 @@ mutation ExportArticles(
     }
 }
 
-mutation DeleteArticle($id: ID!) {
+mutation DeleteArticle($id: Int!) {
     deleteArticle(id: $id)
 }
