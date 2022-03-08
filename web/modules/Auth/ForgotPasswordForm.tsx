@@ -5,7 +5,7 @@ import { useAuth } from 'context/AuthContext';
 import useTranslation from 'next-translate/useTranslation';
 
 
-export const LoginForm = () => {
+export const ForgotPasswordForm = () => {
     const { t } = useTranslation('common');
     const { login } = useAuth();
     // TEXTS TRANSLATION
@@ -14,7 +14,7 @@ export const LoginForm = () => {
     const username = t('username');
     const password = t('password');
     const forgotPassword = t('forgot-password');
-    const loginButton = t('actions:login');
+    const submitButton = t('actions:submit');
     const errorMessageUsername = t('messages:error-message-empty-input');
     const errorMessagePassword = t('messages:error-message-empty-input');
 
@@ -35,7 +35,7 @@ export const LoginForm = () => {
             <WrapperLogin className="login">
                 <Logo width={100} />
 
-                <WelcomeText>{welcome} Bee V2</WelcomeText>
+                {/* <WelcomeText>{welcome} Bee V2</WelcomeText> */}
                 <StyledForm
                     form={form}
                     name="login"
@@ -49,25 +49,9 @@ export const LoginForm = () => {
                     >
                         <Input prefix={<UserOutlined />} placeholder={username} />
                     </Form.Item>
-                    <Form.Item
-                        name="password"
-                        rules={[{ required: true, message: errorMessagePassword }]}
-                    >
-                        <Input
-                            style={{ color: '#000' }}
-                            prefix={<LockOutlined />}
-                            type="password"
-                            placeholder={password}
-                        />
-                    </Form.Item>
-
-                    <Form.Item>
-                        <a href="/forgot-password">{forgotPassword}</a>
-                    </Form.Item>
-
                     <Form.Item>
                         <Button type="primary" htmlType="submit">
-                            {loginButton}
+                            {submitButton}
                         </Button>
                     </Form.Item>
                 </StyledForm>
