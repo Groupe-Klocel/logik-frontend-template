@@ -2,49 +2,47 @@ import { EyeTwoTone, PrinterOutlined } from '@ant-design/icons';
 import { Button, Space } from 'antd';
 import { AppTable } from '@components';
 import { packagingsData } from 'fake-data/packagings';
-import { FC } from 'react';
 
-export interface IPackagingsListProps {}
 
-export const PackagingsList: FC<IPackagingsListProps> = ({}) => {
+export const PackagingsList = ()  => {
     const columns = [
         {
-            title: 'name',
+            title: 'd:name',
             dataIndex: 'name',
             key: 'name'
         },
         {
-            title: 'description',
+            title: 'd:description',
             dataIndex: 'description',
             key: 'description'
         },
         {
-            title: 'default',
+            title: 'd:default',
             dataIndex: 'default',
             key: 'default'
         },
         {
-            title: 'dispatchable',
+            title: 'd:dispatchable',
             dataIndex: 'dispatchable',
             key: 'dispatchable'
         },
         {
-            title: 'status',
+            title: 'd:status',
             dataIndex: 'status',
             key: 'status'
         },
         {
-            title: 'length',
+            title: 'd:length',
             dataIndex: 'length',
             key: 'length'
         },
         {
-            title: 'width',
+            title: 'd:width',
             dataIndex: 'width',
             key: 'width'
         },
         {
-            title: 'height',
+            title: 'd:height',
             dataIndex: 'height',
             key: 'height'
         },
@@ -65,7 +63,5 @@ export const PackagingsList: FC<IPackagingsListProps> = ({}) => {
             )
         }
     ];
-    return (
-        <AppTable type="packagings" columns={columns} data={packagingsData} scroll={{ x: 800 }} />
-    );
+    return <AppTable type="packagings" columns={columns} data={packagingsData} />;
 };

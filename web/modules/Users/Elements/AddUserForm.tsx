@@ -3,14 +3,13 @@ import { GroupType } from '@helpers';
 import { Button, Col, Form, Input, Row, Select } from 'antd';
 import { groupsData } from 'fake-data/groups';
 import useTranslation from 'next-translate/useTranslation';
-import { FC, useState } from 'react';
+import { useState } from 'react';
 
 const { Option } = Select;
 
-export interface IAddUserFormProps {}
 
-export const AddUserForm: FC<IAddUserFormProps> = ({}: IAddUserFormProps) => {
-    let { t } = useTranslation();
+export const AddUserForm = () => {
+    const { t } = useTranslation();
 
     // TEXTS TRANSLATION ( REFACTORING POSSIBLE / EXPORT / DON'T KNOW YET )
     const username = t('common:username');

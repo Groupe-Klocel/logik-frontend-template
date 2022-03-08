@@ -1,7 +1,5 @@
-import { FC } from 'react';
 
-export interface IUserDetailsProps {}
 
-export const UserDetails: FC<IUserDetailsProps> = ({}: IUserDetailsProps) => {
+export const UserDetails = ()  => {
     return <div>UserDetails</div>;
 };

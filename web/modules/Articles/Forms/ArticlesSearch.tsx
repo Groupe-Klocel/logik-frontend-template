@@ -7,7 +7,7 @@ export interface IArticlesSearchProps {
 }
 
 const ArticlesSearch: FC<IArticlesSearchProps> = ({ form }: IArticlesSearchProps) => {
-    let { t } = useTranslation();
+    const { t } = useTranslation();
 
     // For multi selection field
     // const companies = [];

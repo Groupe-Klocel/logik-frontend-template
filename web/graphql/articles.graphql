@@ -33,6 +33,7 @@ query GetAllArticles(
 
 query GetArticleById($id: Int!) {
     article(id: $id) {
+        id
         accountId
         companyId
         status
@@ -62,11 +63,6 @@ query GetArticleById($id: Int!) {
         family
         subfamily
         groupingId
-        barcodes {
-            id
-            name
-            flagDouble
-        }
     }
 }
 

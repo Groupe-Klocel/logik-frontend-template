@@ -7,7 +7,7 @@ export interface IArticlesSearchProps {
 }
 
 const ArticlesSearch: FC<IArticlesSearchProps> = ({ form }: IArticlesSearchProps) => {
-	let { t } = useTranslation()
+	const { t } = useTranslation()
 
 	const companies = [];
 	const status = [];

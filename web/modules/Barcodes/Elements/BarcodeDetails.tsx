@@ -1,8 +1,6 @@
-import { DetailsList, LinkButton } from '@components';
-import { EyeTwoTone } from '@ant-design/icons';
-import { pathParams } from '@helpers';
+import { DetailsList } from '@components';
 import useTranslation from 'next-translate/useTranslation';
-import { Divider, Table, Typography } from 'antd';
+import { Typography } from 'antd';
 
 const { Title } = Typography;
 

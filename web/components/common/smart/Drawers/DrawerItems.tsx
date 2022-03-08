@@ -20,7 +20,7 @@ const DrawerItems = () => {
     const dispatch = useDrawerDispatch();
     const closeDrawer = useCallback(() => dispatch({ type: 'CLOSE_DRAWER' }), [dispatch]);
 
-    let { t } = useTranslation();
+    const { t } = useTranslation();
 
     return (
         <Drawer

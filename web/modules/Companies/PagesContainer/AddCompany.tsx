@@ -1,4 +1,3 @@
-import { FC } from 'react';
 import { Layout } from 'antd';
 import { HeaderContent } from '@components';
 import { addCompanyRoutes } from 'modules/Companies/Static/companiesRoutes';
@@ -10,10 +9,9 @@ const StyledPageContent = styled(Layout.Content)`
     margin: 15px 30px;
 `;
 
-export interface IAddCompanyProps {}
 
-export const AddCompany: FC<IAddCompanyProps> = ({}: IAddCompanyProps) => {
-    let { t } = useTranslation('actions');
+export const AddCompany = ()  => {
+    const { t } = useTranslation('actions');
     return (
         <>
             <HeaderContent

@@ -3,12 +3,10 @@ import { Logo, StyledForm, WelcomeText, WrapperLogin } from '@components';
 import { Button, Form, Input } from 'antd';
 import { useAuth } from 'context/AuthContext';
 import useTranslation from 'next-translate/useTranslation';
-import { FC } from 'react';
 
-export interface ILoginFormProps {}
 
-export const LoginForm: FC<ILoginFormProps> = ({}: ILoginFormProps) => {
-    let { t } = useTranslation('common');
+export const LoginForm = () => {
+    const { t } = useTranslation('common');
     const { login } = useAuth();
     // TEXTS TRANSLATION
 

@@ -27,7 +27,6 @@ export type Article = {
   __typename?: 'Article';
   accountId: Scalars['Int'];
   additionalDescription?: Maybe<Scalars['String']>;
-  barcodes?: Maybe<Array<Barcode>>;
   baseUnitPicking: Scalars['Boolean'];
   baseUnitPrice?: Maybe<Scalars['Float']>;
   baseUnitRotation?: Maybe<Scalars['String']>;
@@ -101,7 +100,6 @@ export type ArticleExportFilters = {
 export enum ArticleFieldName {
   AccountId = 'accountId',
   AdditionalDescription = 'additionalDescription',
-  Barcodes = 'barcodes',
   BaseUnitPicking = 'baseUnitPicking',
   BaseUnitPrice = 'baseUnitPrice',
   BaseUnitRotation = 'baseUnitRotation',
@@ -516,8 +514,8 @@ export type Organization = {
   awsAccessKeyId?: Maybe<Scalars['String']>;
   /** Secret to use in conjunction with the `aws_access_key_id` */
   awsSecretAccessKey?: Maybe<Scalars['String']>;
-  /** This is your warehouse's auto-generated unique identifier. It can't be changed. */
-  id: Scalars['String'];
+  /** String-based unique identifier. */
+  id?: Maybe<Scalars['String']>;
   name: Scalars['String'];
   /** Organization that manages this one (e.g. integrator org to its client) */
   parentOrganizationId?: Maybe<Scalars['String']>;
@@ -530,8 +528,8 @@ export type PermissionInput = {
 
 export type PermissionType = {
   __typename?: 'PermissionType';
-  /** This is your warehouse's auto-generated unique identifier. It can't be changed. */
-  id: Scalars['String'];
+  /** String-based unique identifier. */
+  id?: Maybe<Scalars['String']>;
   mode: Mode;
   roleId: Scalars['String'];
   table: Table;
@@ -670,9 +668,10 @@ export type UpdateBarcodeInput = {
 export type User = {
   __typename?: 'User';
   email?: Maybe<Scalars['String']>;
-  /** This is your warehouse's auto-generated unique identifier. It can't be changed. */
-  id: Scalars['String'];
+  /** String-based unique identifier. */
+  id?: Maybe<Scalars['String']>;
   organizationId: Scalars['String'];
+  password: Scalars['String'];
   roleId: Scalars['String'];
   username: Scalars['String'];
 };
@@ -713,8 +712,8 @@ export type UserSearchFilters = {
 
 export type Warehouse = {
   __typename?: 'Warehouse';
-  /** This is your warehouse's auto-generated unique identifier. It can't be changed. */
-  id: Scalars['String'];
+  /** String-based unique identifier. */
+  id?: Maybe<Scalars['String']>;
   /** Name of the Warehouse (e.g. `Roubaix (prod)`) */
   name: Scalars['String'];
   /** ID of the IntegratorOrganization that manages this Warehouse */
@@ -736,7 +735,7 @@ export type GetArticleByIdQueryVariables = Exact<{
 }>;
 
 
-export type GetArticleByIdQuery = { __typename?: 'Query', article?: { __typename?: 'Article', accountId: number, companyId: number, status: number, code: string, name: string, length: number, width: number, height: number, baseUnitWeight: number, boxWeight: number, boxQuantity: number, baseUnitPicking: boolean, boxPicking: boolean, cubingType: number, permanentProduct: boolean, additionalDescription?: string | null | undefined, supplierName?: string | null | undefined, baseUnitPrice?: number | null | undefined, baseUnitRotation?: string | null | undefined, boxRotation?: string | null | undefined, featureTypeId?: number | null | undefined, created?: any | null | undefined, createdBy?: string | null | undefined, modified?: any | null | undefined, modifiedBy?: string | null | undefined, tariffClassification?: string | null | undefined, family?: string | null | undefined, subfamily?: string | null | undefined, groupingId?: string | null | undefined, barcodes?: Array<{ __typename?: 'Barcode', id?: number | null | undefined, name: string, flagDouble: number }> | null | undefined } | null | undefined };
+export type GetArticleByIdQuery = { __typename?: 'Query', article?: { __typename?: 'Article', id?: number | null | undefined, accountId: number, companyId: number, status: number, code: string, name: string, length: number, width: number, height: number, baseUnitWeight: number, boxWeight: number, boxQuantity: number, baseUnitPicking: boolean, boxPicking: boolean, cubingType: number, permanentProduct: boolean, additionalDescription?: string | null | undefined, supplierName?: string | null | undefined, baseUnitPrice?: number | null | undefined, baseUnitRotation?: string | null | undefined, boxRotation?: string | null | undefined, featureTypeId?: number | null | undefined, created?: any | null | undefined, createdBy?: string | null | undefined, modified?: any | null | undefined, modifiedBy?: string | null | undefined, tariffClassification?: string | null | undefined, family?: string | null | undefined, subfamily?: string | null | undefined, groupingId?: string | null | undefined } | null | undefined };
 
 export type CreateArticleMutationVariables = Exact<{
   input: CreateArticleInput;
@@ -855,6 +854,7 @@ export const useGetAllArticlesQuery = <
 export const GetArticleByIdDocument = `
     query GetArticleById($id: Int!) {
   article(id: $id) {
+    id
     accountId
     companyId
     status
@@ -884,11 +884,6 @@ export const GetArticleByIdDocument = `
     family
     subfamily
     groupingId
-    barcodes {
-      id
-      name
-      flagDouble
-    }
   }
 }
     `;

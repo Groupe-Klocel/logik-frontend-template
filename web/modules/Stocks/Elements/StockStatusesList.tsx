@@ -1,30 +1,28 @@
-import { DeleteOutlined, EyeTwoTone, EditTwoTone } from '@ant-design/icons';
+import { EyeTwoTone, EditTwoTone } from '@ant-design/icons';
 import { Button, Space } from 'antd';
 import { AppTable } from '@components';
 import { stockData } from 'fake-data/stock';
-import { FC } from 'react';
 
-export interface IStockStatusesListProps {}
 
-export const StockStatusesList: FC<IStockStatusesListProps> = ({}) => {
+export const StockStatusesList = () => {
     const columns = [
         {
-            title: 'name',
+            title: 'd:name',
             dataIndex: 'name',
             key: 'name'
         },
         {
-            title: 'value',
+            title: 'd:value',
             dataIndex: 'value',
             key: 'value'
         },
         {
-            title: 'system',
+            title: 'd:system',
             dataIndex: 'system',
             key: 'system'
         },
         {
-            title: 'comment',
+            title: 'd:comment',
             dataIndex: 'comment',
             key: 'comment'
         },
@@ -39,7 +37,5 @@ export const StockStatusesList: FC<IStockStatusesListProps> = ({}) => {
             )
         }
     ];
-    return (
-        <AppTable type="stock-statuses" columns={columns} scroll={{ x: 800 }} data={stockData} />
-    );
+    return <AppTable type="stock-statuses" columns={columns} data={stockData} />;
 };

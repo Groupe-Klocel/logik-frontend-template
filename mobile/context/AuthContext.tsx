@@ -19,7 +19,7 @@ const AuthContext = createContext<IAuthContext>(undefined!);
 
 export const AuthProvider: FC<OnlyChildrenType> = ({ children }: OnlyChildrenType) => {
 
-	let { t } = useTranslation()
+	const { t } = useTranslation()
 
 	const graphqlClient = new GraphQLClient(process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT as string);
 
@@ -59,8 +59,8 @@ export const AuthProvider: FC<OnlyChildrenType> = ({ children }: OnlyChildrenTyp
 		},
 	})
 
-	const login = async ({ username, password, workspaceId="any" }: LoginMutationVariables) => {
-		mutate({ username, password, workspaceId })
+	const login = async ({ username, password, warehouseId = "any" }: LoginMutationVariables) => {
+		mutate({ username, password, warehouseId })
 	}
 
 	const logout = () => {

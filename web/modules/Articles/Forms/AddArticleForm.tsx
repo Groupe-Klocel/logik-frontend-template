@@ -1,4 +1,4 @@
-import { FC, useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Form, Button, Space } from 'antd';
 import { WrapperForm, StepsPanel, WrapperStepContent } from '@components';
 import { AddArticleStep1 } from './Steps/AddArticleStep1';
@@ -16,10 +16,9 @@ import { showError, showSuccess, showInfo } from '@helpers';
 
 const { Item } = Form;
 
-export interface IAddArticleFormProps {}
 
-export const AddArticleForm: FC<IAddArticleFormProps> = ({}: IAddArticleFormProps) => {
-    let { t } = useTranslation();
+export const AddArticleForm = () => {
+    const { t } = useTranslation();
     const { graphqlRequestClient } = useAuth();
     const router = useRouter();
 

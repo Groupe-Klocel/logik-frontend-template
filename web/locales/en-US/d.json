@@ -1,6 +1,7 @@
 {
     "id": "ID",
     "accountId": "Account ID ",
+    "available":"Available",
     "companyId": "Company ID",
     "status": "Status",
     "code": "Code",
@@ -37,5 +38,19 @@
     "supplierArticleCode": "Supplier Article Code",
     "quantity": "Quantity",
     "productDescription": "Product Description",
-    "dateType": "Date Type"
+    "dateType": "Date Type",
+    "value": "Value",
+    "comment": "Comment",
+    "system": "System",
+    "description": "Description",
+	"default": "Default",
+	"dispatchable": "Dispatchable",
+	"bloc": "Bloc",
+    "aisle": "Aisle",
+    "level": "Level",
+    "position": "Position",
+	"replenish": "replenish",
+	"masse": "Masse"
+
+
 }

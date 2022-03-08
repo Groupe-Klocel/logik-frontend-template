@@ -7,7 +7,7 @@ import {
 	QuestionCircleOutlined, SettingOutlined,
 	SlidersOutlined
 } from '@ant-design/icons';
-import {useAuth} from 'context/AuthContext'
+import { useAuth } from 'context/AuthContext'
 import { Menu } from 'antd';
 import useTranslation from 'next-translate/useTranslation';
 import Link from 'next/link';
@@ -16,7 +16,7 @@ import React, { FC } from 'react';
 const { SubMenu } = Menu;
 
 const SideMenu: FC = () => {
-	let { t } = useTranslation('menu')
+	const { t } = useTranslation('menu')
 	const { logout } = useAuth()
 	return (
 		<Menu mode="inline">

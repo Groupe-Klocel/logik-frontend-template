@@ -1,15 +1,13 @@
 import { AppTable } from '@components';
 import { Button, Space } from 'antd';
 import { groupsData } from 'fake-data/groups';
-import { FC } from 'react';
 import { DeleteOutlined, EyeTwoTone, EditTwoTone } from '@ant-design/icons';
 
-export interface GroupsListProps {}
 
-export const GroupsList: FC<GroupsListProps> = ({}) => {
+export const GroupsList = ()  => {
     const columns = [
         {
-            title: 'common:name',
+            title: 'd:name',
             dataIndex: 'name',
             key: 'name'
         },
@@ -36,5 +34,5 @@ export const GroupsList: FC<GroupsListProps> = ({}) => {
             )
         }
     ];
-    return <AppTable type="groups" columns={columns} scroll={{ x: 800 }} data={groupsData} />;
+    return <AppTable type="groups" columns={columns} data={groupsData} />;
 };

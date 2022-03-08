@@ -1,12 +1,9 @@
-import { FC } from 'react';
 import { Button } from 'antd';
 import { usersData } from 'fake-data/users';
 import { AppTable } from '@components';
 import { EyeTwoTone } from '@ant-design/icons';
 
-export interface IUsersListProps {}
-
-export const UsersList: FC<IUsersListProps> = ({}) => {
+export const UsersList = ()  => {
     const columns = [
         {
             title: 'common:username',

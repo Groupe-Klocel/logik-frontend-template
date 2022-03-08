@@ -2,11 +2,9 @@ import { DeleteOutlined, EyeTwoTone, EditTwoTone } from '@ant-design/icons';
 import { Button, Space } from 'antd';
 import { AppTable } from '@components';
 import { companiesData } from 'fake-data/companies';
-import { FC } from 'react';
 
-export interface IMovementsConfigListProps {}
 
-export const MovementsConfigList: FC<IMovementsConfigListProps> = ({}) => {
+export const MovementsConfigList = ()  => {
     const columns = [
         {
             title: 'common:account',
@@ -19,19 +17,9 @@ export const MovementsConfigList: FC<IMovementsConfigListProps> = ({}) => {
             key: 'company'
         },
         {
-            title: 'common:movement-code',
-            dataIndex: 'movement-code',
-            key: 'movement-code'
-        },
-        {
             title: 'common:feedback',
             dataIndex: 'feedback',
             key: 'feedback'
-        },
-        {
-            title: 'common:custom-value',
-            dataIndex: 'custom-value',
-            key: 'custom-value'
         },
         {
             title: 'actions:actions',
@@ -55,12 +43,5 @@ export const MovementsConfigList: FC<IMovementsConfigListProps> = ({}) => {
             )
         }
     ];
-    return (
-        <AppTable
-            type="movements-config"
-            columns={columns}
-            scroll={{ x: 800 }}
-            data={companiesData}
-        />
-    );
+    return <AppTable type="movements-config" columns={columns} data={companiesData} />;
 };

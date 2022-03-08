@@ -3,16 +3,13 @@ import { GroupType } from '@helpers';
 import { Button, Checkbox, Col, Form, InputNumber, Row, Select } from 'antd';
 import { groupsData } from 'fake-data/groups';
 import useTranslation from 'next-translate/useTranslation';
-import { FC, useState } from 'react';
+import { useState } from 'react';
 
 const { Option } = Select;
 
-export interface IAddStatusConfigFormProps {}
 
-export const AddStatusConfigForm: FC<
-    IAddStatusConfigFormProps
-> = ({}: IAddStatusConfigFormProps) => {
-    let { t } = useTranslation('common');
+export const AddStatusConfigForm = ()  => {
+    const { t } = useTranslation('common');
 
     //TODO FETCH GROUP'S NAME
     // TYPED SAFE ALL

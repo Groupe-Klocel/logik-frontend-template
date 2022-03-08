@@ -31,8 +31,8 @@ const SortableBody = SortableContainer((props: JSX.IntrinsicAttributes & ClassAt
 
 
 
-const TableFilter: FC<ITableFilterProps> = forwardRef(({ columnsToFilter, visibleKeys, onShowChange, onSort, cookieKey , fixKeys, onFixed}: ITableFilterProps, ref) => {
-	let { t } = useTranslation()
+const TableFilter: FC<ITableFilterProps> = forwardRef(({ columnsToFilter, visibleKeys, onShowChange, onSort, cookieKey, fixKeys, onFixed }: ITableFilterProps, ref) => {
+	const { t } = useTranslation()
 
 
 	const [showKeys, setShowKeys] = useState(visibleKeys);

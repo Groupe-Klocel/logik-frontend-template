@@ -1,4 +1,3 @@
-import { FC } from 'react';
 import { Layout } from 'antd';
 import { HeaderContent } from '@components';
 import { addPackagingRoutes } from 'modules/Packagings/Static/packagingsRoutes';
@@ -10,10 +9,9 @@ const StyledPageContent = styled(Layout.Content)`
     margin: 15px 30px;
 `;
 
-export interface IAddPackagingProps {}
 
-export const AddPackaging: FC<IAddPackagingProps> = ({}: IAddPackagingProps) => {
-    let { t } = useTranslation('actions');
+export const AddPackaging = ()  => {
+    const { t } = useTranslation('actions');
     return (
         <>
             <HeaderContent title={t('add-packaging')} routes={addPackagingRoutes} />
