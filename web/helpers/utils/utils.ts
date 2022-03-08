@@ -176,8 +176,17 @@ function isFloat(value: any) {
     return false;
   }
 
+function isNumber(value: any) {
+    if (typeof value === 'number' ||
+      !Number.isNaN(value)   ) {
+      return true;
+    }
+  
+    return false;
+  }
+
   function formatDigitsForData (data:any) {
-    data.map((object: any) => {
+    return data.map((object: any) => {
          Object.keys(object).map((key) => {
             if (isFloat(object[key])) {
                 object[key] = formatDigits(object[key])
@@ -230,6 +239,7 @@ const checkValuePresenceInArray = (value: any, array: any[]) =>
     array.some((obj) => obj.field === value);
 
 export {
+    isNumber,
     formatDigitsForData,
     isFloat,
     formatDigits,

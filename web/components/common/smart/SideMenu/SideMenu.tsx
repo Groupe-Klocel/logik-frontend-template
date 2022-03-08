@@ -182,7 +182,7 @@ const SideMenu: FC = () => {
             <Menu.Item icon={<ExportOutlined />} key="logout" onClick={() => logout()}>
                 {t('logout')}
             </Menu.Item>
-            <Menu.Item /> {/* Need an empty item for scroll behavior */}
+            <Menu.Item key="end" /> {/* Need an empty item for scroll behavior */}
         </Menu>
     );
 };

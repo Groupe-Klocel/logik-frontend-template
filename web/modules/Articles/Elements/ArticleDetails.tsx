@@ -52,27 +52,27 @@ const ArticleDetails = ({ details }: IArticleDetailsProps) => {
     // Remove barcodes from all other details
     const barcodeColumns = [
         {
-            title: t('d:id'),
+            title: 'd:id',
             dataIndex: 'id',
             key: 'id'
         },
         {
-            title: t('d:name'),
+            title: 'd:name',
             dataIndex: 'name',
             key: 'name'
         },
         {
-            title: t('d:articleId'),
+            title: 'd:articleId',
             dataIndex: 'articleId',
             key: 'articleId'
         },
         {
-            title: t('d:flagDouble'),
+            title: 'd:flagDouble',
             dataIndex: 'flagDouble',
             key: 'flagDouble'
         },
         {
-            title: t('actions:actions'),
+            title: 'actions:actions',
             key: 'actions',
             render: (record: { id: string }) => (
                 <LinkButton icon={<EyeTwoTone />} path={pathParams('/barcode/[id]', record.id)} />
