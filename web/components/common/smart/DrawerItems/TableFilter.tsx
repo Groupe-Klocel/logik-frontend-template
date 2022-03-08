@@ -74,17 +74,17 @@ const TableFilter: FC<ITableFilterProps> = forwardRef(
                 showWarning(t('messages:filter_only_actions_visibles_warn'));
             } else onShowChange(showKeys);
 
-            return () => { };
+            return () => {};
         }, [onShowChange, showKeys]);
 
         useEffect(() => {
             onSort(currentFilteredColumns);
-            return () => { };
+            return () => {};
         }, [onSort, currentFilteredColumns]);
 
         useEffect(() => {
             onFixed(fixedKeys);
-            return () => { };
+            return () => {};
         }, [onFixed, fixedKeys]);
 
         async function handleVisibleChange(key: Key) {

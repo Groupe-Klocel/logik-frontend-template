@@ -3,7 +3,6 @@ import { addFeatureCodeRoutes } from 'modules/Articles/Static/articlesRoutes';
 import useTranslation from 'next-translate/useTranslation';
 import { AddFeatureCodeForm } from 'modules/Articles/Elements/AddFeatureCodeForm';
 
-
 export const AddFeatureCode = () => {
     const { t } = useTranslation('actions');
     return (

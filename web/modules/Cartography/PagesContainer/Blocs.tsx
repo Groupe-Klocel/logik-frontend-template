@@ -4,8 +4,7 @@ import useTranslation from 'next-translate/useTranslation';
 import { BlocsList } from 'modules/Cartography/Elements/BlocsList';
 import { LinkButton } from 'components/common/dumb/Buttons/LinkButton';
 
-
-export const Blocs = ()  => {
+export const Blocs = () => {
     const { t } = useTranslation();
     return (
         <>

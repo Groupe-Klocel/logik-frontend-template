@@ -3,8 +3,7 @@ import { AppTable } from '@components';
 import { Button } from 'antd';
 import { usersData } from 'fake-data/users';
 
-
-export const UsersRightsList = ()  => {
+export const UsersRightsList = () => {
     const columns = [
         {
             title: 'common:username',

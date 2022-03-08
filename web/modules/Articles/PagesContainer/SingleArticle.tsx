@@ -98,8 +98,6 @@ const SingleArticle: FC<ISingleArticleProps> = ({ id, router }: ISingleArticlePr
         setIsCalculating(false);
     }
 
-
-
     return (
         <>
             <HeaderContent
@@ -114,7 +112,10 @@ const SingleArticle: FC<ISingleArticleProps> = ({ id, router }: ISingleArticlePr
                         <Button onClick={() => router.push(`/article/edit/${id}`)} type="primary">
                             {t('actions:edit')}
                         </Button>
-                        <Button loading={deleteLoading} onClick={() => deleteArticle({ id: id })}>
+                        <Button
+                            loading={deleteLoading}
+                            onClick={() => deleteArticle({ id: parseInt(id) })}
+                        >
                             {t('actions:delete')}
                         </Button>
                     </Space>

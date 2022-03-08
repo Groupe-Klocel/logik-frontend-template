@@ -4,7 +4,6 @@ import useTranslation from 'next-translate/useTranslation';
 import { SetsList } from 'modules/Articles/Elements/SetsList';
 import { LinkButton } from 'components/common/dumb/Buttons/LinkButton';
 
-
 export const Sets = () => {
     const { t } = useTranslation();
     return (

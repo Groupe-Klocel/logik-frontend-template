@@ -1,9 +1,8 @@
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
-import { Logo, StyledForm, WelcomeText, WrapperLogin } from '@components';
+import { Logo, StyledForm, WelcomeText, WrapperLogin , LinkButton} from '@components';
 import { Button, Form, Input } from 'antd';
 import { useAuth } from 'context/AuthContext';
 import useTranslation from 'next-translate/useTranslation';
-
 
 export const LoginForm = () => {
     const { t } = useTranslation('common');
@@ -15,8 +14,7 @@ export const LoginForm = () => {
     const password = t('password');
     const forgotPassword = t('forgot-password');
     const loginButton = t('actions:login');
-    const errorMessageUsername = t('messages:error-message-empty-input');
-    const errorMessagePassword = t('messages:error-message-empty-input');
+    const errorEmptyMessage = t('messages:error-message-empty-input');
 
     // END TEXTS TRANSLATION
 
@@ -25,9 +23,7 @@ export const LoginForm = () => {
     const onFinish = (values: any) => {
         login({
             username: values.username,
-            password: values.password,
-            warehouseId: process.env.NEXT_PUBLIC_WAREHOUSE_ID
-        });
+            password: values.password        });
     };
 
     return (
@@ -45,13 +41,13 @@ export const LoginForm = () => {
                 >
                     <Form.Item
                         name="username"
-                        rules={[{ required: true, message: errorMessageUsername }]}
+                        rules={[{ required: true, message: errorEmptyMessage }]}
                     >
                         <Input prefix={<UserOutlined />} placeholder={username} />
                     </Form.Item>
                     <Form.Item
                         name="password"
-                        rules={[{ required: true, message: errorMessagePassword }]}
+                        rules={[{ required: true, message: errorEmptyMessage }]}
                     >
                         <Input
                             style={{ color: '#000' }}
@@ -62,7 +58,11 @@ export const LoginForm = () => {
                     </Form.Item>
 
                     <Form.Item>
-                        <a href="/forgot-password">{forgotPassword}</a>
+                    <LinkButton
+                            title={forgotPassword}
+                            path="/forgot-password"
+                            type="link"
+                        />
                     </Form.Item>
 
                     <Form.Item>

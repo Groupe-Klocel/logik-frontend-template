@@ -8,7 +8,6 @@ import useTranslation from 'next-translate/useTranslation';
 import { showError } from '@helpers';
 import { useCallback, useState } from 'react';
 
-
 const Articles = () => {
     const { t } = useTranslation();
 
@@ -22,6 +21,7 @@ const Articles = () => {
     const openSearchDrawer = useCallback(
         () =>
             dispatchDrawer({
+                size:450,
                 type: 'OPEN_DRAWER',
                 title: 'actions:search',
                 comfirmButtonTitle: 'actions:search',

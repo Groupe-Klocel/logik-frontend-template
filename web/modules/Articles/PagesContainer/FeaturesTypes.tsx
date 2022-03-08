@@ -4,7 +4,6 @@ import useTranslation from 'next-translate/useTranslation';
 import { FeaturesTypesList } from 'modules/Articles/Elements/FeaturesTypesList';
 import { LinkButton } from 'components/common/dumb/Buttons/LinkButton';
 
-
 export const FeaturesTypes = () => {
     const { t } = useTranslation();
     return (

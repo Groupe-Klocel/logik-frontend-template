@@ -3,8 +3,7 @@ import { Button, Space } from 'antd';
 import { AppTable } from '@components';
 import { packagingsData } from 'fake-data/packagings';
 
-
-export const PackagingsList = ()  => {
+export const PackagingsList = () => {
     const columns = [
         {
             title: 'd:name',

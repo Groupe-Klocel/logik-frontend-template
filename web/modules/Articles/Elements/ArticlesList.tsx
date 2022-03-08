@@ -199,7 +199,7 @@ const ArticlesList = ({ searchCriteria }: IArticlesListProps) => {
 
     return (
         <>
-            {articles && !exportLoading ? (
+            {articles ? (
                 <AppTable
                     type="articles"
                     columns={columns}

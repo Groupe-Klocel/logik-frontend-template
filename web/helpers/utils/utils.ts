@@ -152,6 +152,7 @@ function getMenuState(isSettingMenuCollapsed: boolean) {
     return menuState;
 }
 
+
 function isEmpty(object: Object) {
     for (const property in object) {
         return false;
@@ -159,6 +160,43 @@ function isEmpty(object: Object) {
     return true;
 }
 
+
+function formatDigits (x: number) {
+    return x.toFixed(2);
+}
+
+function isFloat(value: any) {
+    if (typeof value === 'number' &&
+      !Number.isNaN(value) &&
+      !Number.isInteger(value)
+    ) {
+      return true;
+    }
+  
+    return false;
+  }
+
+function isNumber(value: any) {
+    if (typeof value === 'number' ||
+      !Number.isNaN(value)   ) {
+      return true;
+    }
+  
+    return false;
+  }
+
+  function formatDigitsForData (data:any) {
+    return data.map((object: any) => {
+         Object.keys(object).map((key) => {
+            if (isFloat(object[key])) {
+                object[key] = formatDigits(object[key])
+            }
+          })
+        }          
+    )
+ }
+
+ 
 function decodeJWT(token: string) {
     const base64Url = token.split('.')[1];
     const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
@@ -201,6 +239,10 @@ const checkValuePresenceInArray = (value: any, array: any[]) =>
     array.some((obj) => obj.field === value);
 
 export {
+    isNumber,
+    formatDigitsForData,
+    isFloat,
+    formatDigits,
     isEmpty,
     orberByFormater,
     purgeSorter,

@@ -1,6 +1,11 @@
 import { SettingOutlined, FileExcelOutlined } from '@ant-design/icons';
 import { TableFilter, WrapperStickyActions, PageTableContentWrapper } from '@components';
-import { getKeys, setCustomColumnsProps, checkKeyPresenceInArray } from '@helpers';
+import {
+    getKeys,
+    setCustomColumnsProps,
+    checkKeyPresenceInArray,
+    formatDigitsForData
+} from '@helpers';
 import { Space, Button, Table } from 'antd';
 import { useDrawerDispatch } from 'context/DrawerContext';
 import useTranslation from 'next-translate/useTranslation';
@@ -46,6 +51,10 @@ const AppTable: FC<IAppTableProps> = ({
     const allColumnKeys = getKeys(columns);
 
     let initialState;
+
+    if( data) {
+        formatDigitsForData(data)
+    }
 
     if (typeof window !== 'undefined') {
         initialState = localStorage.getItem(`${type}-filter-table`)
@@ -190,7 +199,7 @@ const AppTable: FC<IAppTableProps> = ({
             }
         }
 
-        return () => { };
+        return () => {};
     }, [visibleColumnKeys, filteredColumns]);
 
     useEffect(() => {
@@ -204,8 +213,9 @@ const AppTable: FC<IAppTableProps> = ({
             localStorage.setItem(`${type}-filter-table`, news);
         }
         setOnSave(false);
-        return () => { };
+        return () => {};
     }, [onSave]);
+
 
     return (
         <PageTableContentWrapper>

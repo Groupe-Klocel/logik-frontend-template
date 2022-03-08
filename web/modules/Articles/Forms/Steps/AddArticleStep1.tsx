@@ -3,7 +3,6 @@ import useTranslation from 'next-translate/useTranslation';
 
 const { Option } = Select;
 
-
 const AddArticleStep1 = () => {
     const { t } = useTranslation();
 

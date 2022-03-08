@@ -3,8 +3,7 @@ import { locationsData } from 'fake-data/locations';
 import { AppTable } from '@components';
 import { DeleteOutlined, EyeTwoTone, EditTwoTone } from '@ant-design/icons';
 
-
-export const LocationsList = ()  => {
+export const LocationsList = () => {
     const columns = [
         {
             title: 'd:name',

@@ -9,8 +9,7 @@ const StyledPageContent = styled(Layout.Content)`
     margin: 15px 30px;
 `;
 
-
-export const AddStatusConfig = ()  => {
+export const AddStatusConfig = () => {
     const { t } = useTranslation('actions');
     return (
         <>

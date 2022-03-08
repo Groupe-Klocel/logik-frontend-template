@@ -1,11 +1,10 @@
 import { FC } from 'react';
 import AuthLayout from '../components/layouts/AuthLayout';
-import { ForgotPasswordForm } from 'modules/Auth/ForgotPasswordForm';
-
+import { ForgotPasswordForm } from '../modules/Auth/ForgotPasswordForm';
 
 type PageComponent = FC & { layout: typeof AuthLayout };
 
-const LoginPage: PageComponent = () => {
+const ForgotPasswordPage: PageComponent = () => {
     return (
         <>
             <ForgotPasswordForm />
@@ -13,6 +12,6 @@ const LoginPage: PageComponent = () => {
     );
 };
 
-LoginPage.layout = AuthLayout;
+ForgotPasswordPage.layout = AuthLayout;
 
-export default LoginPage;
+export default ForgotPasswordPage;

@@ -3,8 +3,7 @@ import { Button } from 'antd';
 import { returnCodesData } from 'fake-data/returnCodes';
 import { EyeTwoTone } from '@ant-design/icons';
 
-
-export const ReturnCodesList = ()  => {
+export const ReturnCodesList = () => {
     const columns = [
         {
             title: 'd:name',
@@ -33,11 +32,5 @@ export const ReturnCodesList = ()  => {
             )
         }
     ];
-    return (
-        <AppTable
-            type="return-codes"
-            columns={columns}
-            data={returnCodesData}
-        />
-    );
+    return <AppTable type="return-codes" columns={columns} data={returnCodesData} />;
 };

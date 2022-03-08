@@ -3,7 +3,6 @@ import { Button, Space } from 'antd';
 import { featureTypesData } from 'fake-data/features';
 import { AppTable } from '@components';
 
-
 export const FeaturesTypesList = () => {
     const columns = [
         {

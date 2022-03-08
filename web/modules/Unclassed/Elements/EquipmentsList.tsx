@@ -3,8 +3,7 @@ import { Button, Space } from 'antd';
 import { AppTable } from '@components';
 import { equipmentsData } from 'fake-data/equipments';
 
-
-export const EquipmentsList = ()  => {
+export const EquipmentsList = () => {
     const columns = [
         {
             title: 'd:priority',
@@ -53,7 +52,5 @@ export const EquipmentsList = ()  => {
             )
         }
     ];
-    return (
-        <AppTable type="equipments" columns={columns} data={equipmentsData} />
-    );
+    return <AppTable type="equipments" columns={columns} data={equipmentsData} />;
 };

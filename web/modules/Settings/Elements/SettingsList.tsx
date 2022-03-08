@@ -3,7 +3,6 @@ import { settingsData } from 'fake-data/settings';
 import { AppTable } from '@components';
 import { EyeTwoTone } from '@ant-design/icons';
 
-
 export const SettingsList = () => {
     const columns = [
         {

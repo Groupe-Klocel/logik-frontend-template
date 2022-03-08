@@ -7,7 +7,6 @@ import { useState } from 'react';
 
 const { Option } = Select;
 
-
 export const AddUserForm = () => {
     const { t } = useTranslation();
 

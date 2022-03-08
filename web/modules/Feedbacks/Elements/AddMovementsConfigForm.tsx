@@ -6,8 +6,7 @@ import { useState } from 'react';
 
 const { Option } = Select;
 
-
-export const AddMovementsConfigForm = ()  => {
+export const AddMovementsConfigForm = () => {
     const { t } = useTranslation('common');
 
     //TODO FETCH GROUP'S NAME
@@ -39,7 +38,7 @@ export const AddMovementsConfigForm = ()  => {
                     label={t('select-company')}
                     name="company"
                     hasFeedback
-                // rules={[{ required: true, message: `${t('error-message-select-1')} ${t('company')}`}]}
+                    // rules={[{ required: true, message: `${t('error-message-select-1')} ${t('company')}`}]}
                 >
                     <Select placeholder={`${t('error-message-select-1')} ${t('company')}`}>
                         {companiesData.map((company: any) => (

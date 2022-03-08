@@ -4,8 +4,7 @@ import useTranslation from 'next-translate/useTranslation';
 import { StatusConfigList } from 'modules/Feedbacks/Elements/StatusConfigList';
 import { LinkButton } from 'components/common/dumb/Buttons/LinkButton';
 
-
-export const StatusConfig = ()  => {
+export const StatusConfig = () => {
     const { t } = useTranslation();
     return (
         <>
