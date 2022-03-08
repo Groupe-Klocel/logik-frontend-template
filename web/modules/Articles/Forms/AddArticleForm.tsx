@@ -16,7 +16,6 @@ import { showError, showSuccess, showInfo } from '@helpers';
 
 const { Item } = Form;
 
-
 export const AddArticleForm = () => {
     const { t } = useTranslation();
     const { graphqlRequestClient } = useAuth();

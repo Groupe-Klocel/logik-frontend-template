@@ -4,8 +4,7 @@ import useTranslation from 'next-translate/useTranslation';
 import { PackagingsList } from 'modules/Packagings/Elements/PackagingsList';
 import { LinkButton } from 'components/common/dumb/Buttons/LinkButton';
 
-
-export const Packagings = ()  => {
+export const Packagings = () => {
     const { t } = useTranslation();
     return (
         <>

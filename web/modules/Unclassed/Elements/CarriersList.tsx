@@ -3,8 +3,7 @@ import { Button, Space } from 'antd';
 import { AppTable } from '@components';
 import { carriersData } from 'fake-data/carriers';
 
-
-export const CarriersList = ()  => {
+export const CarriersList = () => {
     const columns = [
         {
             title: 'd:name',

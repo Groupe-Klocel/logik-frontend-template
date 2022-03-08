@@ -3,8 +3,7 @@ import { companiesData } from 'fake-data/companies';
 import { AppTable } from '@components';
 import { EyeTwoTone } from '@ant-design/icons';
 
-
-export const CompaniesList = ()  => {
+export const CompaniesList = () => {
     const columns = [
         {
             title: 'd:name',

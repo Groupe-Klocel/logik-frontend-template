@@ -3,7 +3,6 @@ import { Button, Space } from 'antd';
 import { AppTable } from '@components';
 import { barcodesData } from 'fake-data/barcodes';
 
-
 export const BlacklistedBarcodesList = () => {
     const columns = [
         {

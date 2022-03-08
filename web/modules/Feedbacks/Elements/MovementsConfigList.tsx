@@ -3,8 +3,7 @@ import { Button, Space } from 'antd';
 import { AppTable } from '@components';
 import { companiesData } from 'fake-data/companies';
 
-
-export const MovementsConfigList = ()  => {
+export const MovementsConfigList = () => {
     const columns = [
         {
             title: 'common:account',

@@ -3,7 +3,6 @@ import { Button, Space } from 'antd';
 import { AppTable } from '@components';
 import { companiesData } from 'fake-data/companies';
 
-
 export const StatusConfigList = () => {
     const columns = [
         {

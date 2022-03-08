@@ -8,7 +8,6 @@ import useTranslation from 'next-translate/useTranslation';
 import { showError } from '@helpers';
 import { useCallback, useState } from 'react';
 
-
 const Articles = () => {
     const { t } = useTranslation();
 

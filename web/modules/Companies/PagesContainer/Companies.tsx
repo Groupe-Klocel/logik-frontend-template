@@ -4,7 +4,6 @@ import useTranslation from 'next-translate/useTranslation';
 import { CompaniesList } from 'modules/Companies/Elements/CompaniesList';
 import { LinkButton } from 'components/common/dumb/Buttons/LinkButton';
 
-
 export const Companies = () => {
     const { t } = useTranslation();
     return (

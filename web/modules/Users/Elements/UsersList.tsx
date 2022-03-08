@@ -3,7 +3,7 @@ import { usersData } from 'fake-data/users';
 import { AppTable } from '@components';
 import { EyeTwoTone } from '@ant-design/icons';
 
-export const UsersList = ()  => {
+export const UsersList = () => {
     const columns = [
         {
             title: 'common:username',

@@ -7,8 +7,7 @@ import { useState } from 'react';
 
 const { Option } = Select;
 
-
-export const AddStatusConfigForm = ()  => {
+export const AddStatusConfigForm = () => {
     const { t } = useTranslation('common');
 
     //TODO FETCH GROUP'S NAME

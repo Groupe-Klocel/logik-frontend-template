@@ -84,13 +84,10 @@ const SingleArticle: FC<ISingleArticleProps> = ({ id, router }: ISingleArticlePr
         }
         const qntData = await res.json();
         console.log(qntData);
-      
-        if(data?.article)
-            data.article.boxQuantity = qntData.quantity;
-            showSuccess(t('messages:success-update-box-quantity'));        
-    }
 
-
+        if (data?.article) data.article.boxQuantity = qntData.quantity;
+        showSuccess(t('messages:success-update-box-quantity'));
+    };
 
     return (
         <>
@@ -106,7 +103,10 @@ const SingleArticle: FC<ISingleArticleProps> = ({ id, router }: ISingleArticlePr
                         <Button onClick={() => alert('Edit')} type="primary">
                             {t('actions:edit')}
                         </Button>
-                        <Button loading={deleteLoading} onClick={() => deleteArticle({ id: id })}>
+                        <Button
+                            loading={deleteLoading}
+                            onClick={() => deleteArticle({ id: parseInt(id) })}
+                        >
                             {t('actions:delete')}
                         </Button>
                     </Space>
