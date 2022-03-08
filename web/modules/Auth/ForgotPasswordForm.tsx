@@ -10,10 +10,10 @@ export const ForgotPasswordForm = () => {
     const { login } = useAuth();
     // TEXTS TRANSLATION
 
-    const welcome = t('welcome');
-    const username = t('username');
+    const forgotpassword = t('forgot-password');
+    const username = t('Email');
     const password = t('password');
-    const forgotPassword = t('forgot-password');
+    const rpassword = t('re-enter-password');
     const submitButton = t('actions:submit');
     const errorMessageUsername = t('messages:error-message-empty-input');
     const errorMessagePassword = t('messages:error-message-empty-input');
@@ -35,19 +35,31 @@ export const ForgotPasswordForm = () => {
             <WrapperLogin className="login">
                 <Logo width={100} />
 
-                {/* <WelcomeText>{welcome} Bee V2</WelcomeText> */}
+                <WelcomeText>{forgotpassword}</WelcomeText>
                 <StyledForm
                     form={form}
-                    name="login"
+                    name="forgotpassword"
                     onFinish={onFinish}
                     autoComplete="off"
                     scrollToFirstError
                 >
                     <Form.Item
-                        name="username"
+                        name="email"
                         rules={[{ required: true, message: errorMessageUsername }]}
                     >
                         <Input prefix={<UserOutlined />} placeholder={username} />
+                    </Form.Item>
+                    <Form.Item
+                        name="password"
+                        rules={[{ required: true, message: errorMessageUsername }]}
+                    >
+                        <Input prefix={<LockOutlined />} placeholder={password} />
+                    </Form.Item>
+                    <Form.Item
+                        name="rpassword"
+                        rules={[{ required: true, message: errorMessageUsername }]}
+                    >
+                        <Input prefix={<LockOutlined />} placeholder={rpassword} />
                     </Form.Item>
                     <Form.Item>
                         <Button type="primary" htmlType="submit">
