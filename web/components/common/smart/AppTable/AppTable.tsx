@@ -52,6 +52,10 @@ const AppTable: FC<IAppTableProps> = ({
 
     let initialState;
 
+    if( data) {
+        formatDigitsForData(data)
+    }
+
     if (typeof window !== 'undefined') {
         initialState = localStorage.getItem(`${type}-filter-table`)
             ? JSON.parse(localStorage.getItem(`${type}-filter-table`)!)
@@ -212,10 +216,6 @@ const AppTable: FC<IAppTableProps> = ({
         return () => {};
     }, [onSave]);
 
-    useEffect(() => {
-        formatDigitsForData(data);
-        return () => {};
-    }, []);
 
     return (
         <PageTableContentWrapper>

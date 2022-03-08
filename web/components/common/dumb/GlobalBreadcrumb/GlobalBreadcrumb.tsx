@@ -1,4 +1,4 @@
-import { BreadcrumbType } from '@helpers';
+import { BreadcrumbType,isNumber } from '@helpers';
 import { Breadcrumb } from 'antd';
 import useTranslation from 'next-translate/useTranslation';
 import Link from 'next/link';
@@ -11,15 +11,22 @@ export interface IBreadcrumbProps {
 const GlobalBreadcrumb: FC<IBreadcrumbProps> = ({ routes }: IBreadcrumbProps) => {
     const { t } = useTranslation();
 
+    console.log(isNumber(5))
     return (
         <Breadcrumb>
             {routes.map((item, index) => {
                 return item.path ? (
                     <Breadcrumb.Item key={index}>
-                        <Link href={item.path}>{t(item.breadcrumbName)}</Link>
+                        <Link href={item.path}>{
+                            isNumber(item.breadcrumbName) ? item.breadcrumbName : 
+                        t(item.breadcrumbName) 
+                        }</Link>
                     </Breadcrumb.Item>
                 ) : (
-                    <Breadcrumb.Item key={index}>{t(item.breadcrumbName)}</Breadcrumb.Item>
+                    <Breadcrumb.Item key={index}>{
+                          isNumber(item.breadcrumbName) ? item.breadcrumbName : 
+                        t(item.breadcrumbName)
+                    }</Breadcrumb.Item>
                 );
             })}
         </Breadcrumb>
