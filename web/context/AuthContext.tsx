@@ -17,6 +17,8 @@ interface IAuthContext {
     isAuthenticated: boolean;
     user?: any;
     login: Function;
+    forgotPassword: Function;
+    resetPassword: Function;
     loading: boolean;
     logout: Function;
     graphqlRequestClient: any;
@@ -59,15 +61,25 @@ export const AuthProvider: FC<OnlyChildrenType> = ({ children }: OnlyChildrenTyp
                 setUser(user);
                 router.push('/');
                 showSuccess(t('messages:login-success'));
+            } else {
+                showError(t('messages:error-login'));
             }
         },
         onError: (error) => {
-            showError('messages:error-login');
+            showError(t('messages:error-login'));
         }
     });
 
-    const login = async ({ username, password, warehouseId = 'demo' }: LoginMutationVariables) => {
-        mutate({ username, password, warehouseId });
+    const login = async ({ username, password, warehouseId = process.env.NEXT_PUBLIC_WAREHOUSE_ID as string}: LoginMutationVariables) => {
+        mutate({ username, password , warehouseId});
+    };
+
+    const forgotPassword = async ({ username, warehouseId = process.env.NEXT_PUBLIC_WAREHOUSE_ID }: any) => {
+        console.log("FORTGOT PASSWORD CHECK")
+    };
+
+    const resetPassword = async ({ username, password, comfirmPassword, warehouseId = process.env.NEXT_PUBLIC_WAREHOUSE_ID }: any) => {
+        console.log("RESET PASSWORD CHECK")
     };
 
     const logout = () => {
@@ -111,7 +123,7 @@ export const AuthProvider: FC<OnlyChildrenType> = ({ children }: OnlyChildrenTyp
 
     return (
         <AuthContext.Provider
-            value={{ isAuthenticated: !!user, user, login, loading, logout, graphqlRequestClient }}
+            value={{ isAuthenticated: !!user, user, login, loading, logout, graphqlRequestClient, forgotPassword, resetPassword }}
         >
             {children}
         </AuthContext.Provider>

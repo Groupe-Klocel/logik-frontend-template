@@ -22,5 +22,6 @@
 	"info-export-wip": "Export en cours",
 	"info-create-wip": "Création en cours",
 	"info-delete-wip": "Suppression en cours",
+	"error-message-wrong-password": "Les deux mots de passe que vous avez saisis ne correspondent pas !",
 	"success-update-box-quantity": "La quantité a été mise à jour"
 }

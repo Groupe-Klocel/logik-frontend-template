@@ -22,6 +22,7 @@ const Articles = () => {
     const openSearchDrawer = useCallback(
         () =>
             dispatchDrawer({
+                size:450,
                 type: 'OPEN_DRAWER',
                 title: 'actions:search',
                 comfirmButtonTitle: 'actions:search',

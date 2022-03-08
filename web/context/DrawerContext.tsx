@@ -1,7 +1,7 @@
 import { createCtx } from './create-context';
 
 const initialState = {
-    size: 200,
+    size: 700,
     isOpen: false,
     content: null,
     title: '',

@@ -23,5 +23,6 @@
 	"info-export-wip": "Export in progress",
 	"info-create-wip": "Creation in progress",
 	"info-delete-wip": "Delete in progress",
+	"error-message-wrong-password": "The two passwords that you entered do not match!",
 	"success-update-box-quantity": "The quantity has been updated successfully"
 }
