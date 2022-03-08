@@ -3,7 +3,7 @@ import { ComponentType, ReactElement, ReactNode } from 'react';
 
 //import SecondaryLayout from '../layouts/secondarylayout'
 
-export type PageWithMainLayoutType<Props> = NextPage<Props> & {
+export type PageWithMainLayoutType<Props = {}> = NextPage<Props> & {
     getLayout?: (page: ReactElement) => ReactNode;
     layout?: ComponentType;
 };

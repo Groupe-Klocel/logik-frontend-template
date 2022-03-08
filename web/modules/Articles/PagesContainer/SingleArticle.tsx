@@ -87,8 +87,13 @@ const SingleArticle: FC<ISingleArticleProps> = ({ id, router }: ISingleArticlePr
         }
         const qntData = await res.json();
         console.log(qntData);
-        if (data?.article) data.article.boxQuantity = qntData.quantity;
-    };
+      
+        if(data?.article)
+            data.article.boxQuantity = qntData.quantity;
+            showSuccess(t('messages:success-update-box-quantity'));        
+    }
+
+
 
     return (
         <>

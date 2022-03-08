@@ -161,6 +161,7 @@ export type ArticleSearchFilters = {
   boxWeight?: InputMaybe<Scalars['Float']>;
   code?: InputMaybe<Scalars['String']>;
   companyId?: InputMaybe<Scalars['Int']>;
+  created?: InputMaybe<Scalars['DateTime']>;
   createdBy?: InputMaybe<Scalars['String']>;
   cubingType?: InputMaybe<Scalars['Int']>;
   family?: InputMaybe<Scalars['String']>;
@@ -168,8 +169,10 @@ export type ArticleSearchFilters = {
   groupingId?: InputMaybe<Scalars['String']>;
   /** Height in centimeters (cm) */
   height?: InputMaybe<Scalars['Float']>;
+  id?: InputMaybe<Scalars['Int']>;
   /** Length in centimeters (cm) */
   length?: InputMaybe<Scalars['Float']>;
+  modified?: InputMaybe<Scalars['DateTime']>;
   modifiedBy?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
   permanentProduct?: InputMaybe<Scalars['Boolean']>;
@@ -256,8 +259,11 @@ export type BarcodeSearchFilters = {
   accountId?: InputMaybe<Scalars['Int']>;
   articleId?: InputMaybe<Scalars['Int']>;
   companyId?: InputMaybe<Scalars['Int']>;
+  created?: InputMaybe<Scalars['DateTime']>;
   createdBy?: InputMaybe<Scalars['String']>;
   flagDouble?: InputMaybe<Scalars['Int']>;
+  id?: InputMaybe<Scalars['Int']>;
+  modified?: InputMaybe<Scalars['DateTime']>;
   modifiedBy?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
   preparationMode?: InputMaybe<Scalars['Int']>;
@@ -365,20 +371,20 @@ export type Mutation = {
   createArticle: Article;
   /** Create barcode */
   createBarcode: Barcode;
-  /** As an Integrator, I can create a ClientOrganization */
-  createClientOrganization: Organization;
   /** Create an IntegratorOrganization */
   createIntegratorOrganization: Organization;
   /** As an Integrator, I can invite a fellow Integrator */
   createIntegratorUser: User;
   /** Create a new Role */
-  createRole: Role;
+  createRole: RoleType;
   /** Create a new Warehouse */
   createWarehouse: Warehouse;
   /** Delete article */
   deleteArticle: Scalars['Boolean'];
   /** Delete barcode */
   deleteBarcode: Scalars['Boolean'];
+  deleteOrganization: Scalars['Boolean'];
+  deleteRole: Scalars['Boolean'];
   deleteUser: Scalars['Boolean'];
   deleteWarehouse: Scalars['Boolean'];
   /** Exports Articles into a file */
@@ -395,6 +401,7 @@ export type Mutation = {
   updateArticle?: Maybe<Article>;
   /** Update barcode */
   updateBarcode?: Maybe<Barcode>;
+  updateUser?: Maybe<User>;
 };
 
 
@@ -407,10 +414,6 @@ export type MutationCreateBarcodeArgs = {
   input: CreateBarcodeInput;
 };
 
-
-export type MutationCreateClientOrganizationArgs = {
-  name: Scalars['String'];
-};
 
 
 export type MutationCreateIntegratorOrganizationArgs = {
@@ -439,22 +442,32 @@ export type MutationCreateWarehouseArgs = {
 
 
 export type MutationDeleteArticleArgs = {
-  id: Scalars['ID'];
+  id: Scalars['Int'];
 };
 
 
 export type MutationDeleteBarcodeArgs = {
-  id: Scalars['ID'];
+  id: Scalars['Int'];
+};
+
+
+export type MutationDeleteOrganizationArgs = {
+  id: Scalars['String'];
+};
+
+
+export type MutationDeleteRoleArgs = {
+  id: Scalars['String'];
 };
 
 
 export type MutationDeleteUserArgs = {
-  id: Scalars['ID'];
+  id: Scalars['String'];
 };
 
 
 export type MutationDeleteWarehouseArgs = {
-  id: Scalars['ID'];
+  id: Scalars['String'];
 };
 
 
@@ -498,14 +511,20 @@ export type MutationRenderDocumentArgs = {
 
 
 export type MutationUpdateArticleArgs = {
-  id: Scalars['ID'];
+  id: Scalars['Int'];
   input: UpdateArticleInput;
 };
 
 
 export type MutationUpdateBarcodeArgs = {
-  id: Scalars['ID'];
+  id: Scalars['Int'];
   input: UpdateBarcodeInput;
+};
+
+
+export type MutationUpdateUserArgs = {
+  id: Scalars['String'];
+  input: UpdateUserInput;
 };
 
 export type Organization = {
@@ -519,6 +538,44 @@ export type Organization = {
   name: Scalars['String'];
   /** Organization that manages this one (e.g. integrator org to its client) */
   parentOrganizationId?: Maybe<Scalars['String']>;
+};
+
+/** Field names for the Organization model */
+export enum OrganizationFieldName {
+  AwsAccessKeyId = 'awsAccessKeyId',
+  AwsSecretAccessKey = 'awsSecretAccessKey',
+  Id = 'id',
+  Name = 'name',
+  ParentOrganizationId = 'parentOrganizationId'
+}
+
+/** Returns a list of Organization */
+export type OrganizationListResult = {
+  __typename?: 'OrganizationListResult';
+  count: Scalars['Int'];
+  itemsPerPage: Scalars['Int'];
+  page: Scalars['Int'];
+  results: Array<Organization>;
+  totalPages: Scalars['Int'];
+};
+
+/** How to order the search results for Organization */
+export type OrganizationOrderByCriterion = {
+  ascending?: Scalars['Boolean'];
+  field: OrganizationFieldName;
+};
+
+/** Attributes of Organization to filter onto */
+export type OrganizationSearchFilters = {
+  /** Access key to be used when accessing your storage space via an GUI such as FileZilla, Cyberduck... */
+  awsAccessKeyId?: InputMaybe<Scalars['String']>;
+  /** Secret to use in conjunction with the `aws_access_key_id` */
+  awsSecretAccessKey?: InputMaybe<Scalars['String']>;
+  /** String-based unique identifier. */
+  id?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
+  /** Organization that manages this one (e.g. integrator org to its client) */
+  parentOrganizationId?: InputMaybe<Scalars['String']>;
 };
 
 export type PermissionInput = {
@@ -545,11 +602,11 @@ export type Query = {
   barcode?: Maybe<Barcode>;
   /** List multiple barcodes */
   barcodes: BarcodeListResult;
-  /** List organizations */
-  organizations: Array<Organization>;
+  organizations: OrganizationListResult;
+  /** List roles */
+  roles: Array<RoleType>;
   users: UserListResult;
-  /** List warehouses */
-  warehouses: Array<Warehouse>;
+  warehouses: WarehouseListResult;
 };
 
 
@@ -579,6 +636,14 @@ export type QueryBarcodesArgs = {
 };
 
 
+export type QueryOrganizationsArgs = {
+  filters?: InputMaybe<OrganizationSearchFilters>;
+  itemsPerPage?: Scalars['Int'];
+  orderBy?: InputMaybe<Array<OrganizationOrderByCriterion>>;
+  page?: Scalars['Int'];
+};
+
+
 export type QueryUsersArgs = {
   filters?: InputMaybe<UserSearchFilters>;
   itemsPerPage?: Scalars['Int'];
@@ -586,11 +651,20 @@ export type QueryUsersArgs = {
   page?: Scalars['Int'];
 };
 
+
+export type QueryWarehousesArgs = {
+  filters?: InputMaybe<WarehouseSearchFilters>;
+  itemsPerPage?: Scalars['Int'];
+  orderBy?: InputMaybe<Array<WarehouseOrderByCriterion>>;
+  page?: Scalars['Int'];
+};
+
 export type RenderDocumentResponse = Document | MissingContext | TemplateDoesNotExist | TemplateError;
 
-export type Role = {
-  __typename?: 'Role';
-  id: Scalars['String'];
+export type RoleType = {
+  __typename?: 'RoleType';
+  /** String-based unique identifier. */
+  id?: Maybe<Scalars['String']>;
   name: Scalars['String'];
   permissions: Array<PermissionType>;
 };
@@ -665,6 +739,14 @@ export type UpdateBarcodeInput = {
   supplierName?: InputMaybe<Scalars['String']>;
 };
 
+/** Values to update the existing record with */
+export type UpdateUserInput = {
+  email?: InputMaybe<Scalars['String']>;
+  organizationId?: InputMaybe<Scalars['String']>;
+  roleId?: InputMaybe<Scalars['String']>;
+  username?: InputMaybe<Scalars['String']>;
+};
+
 export type User = {
   __typename?: 'User';
   email?: Maybe<Scalars['String']>;
@@ -705,7 +787,10 @@ export type UserOrderByCriterion = {
 /** Attributes of User to filter onto */
 export type UserSearchFilters = {
   email?: InputMaybe<Scalars['String']>;
+  /** String-based unique identifier. */
+  id?: InputMaybe<Scalars['String']>;
   organizationId?: InputMaybe<Scalars['String']>;
+  password?: InputMaybe<Scalars['String']>;
   roleId?: InputMaybe<Scalars['String']>;
   username?: InputMaybe<Scalars['String']>;
 };
@@ -718,6 +803,39 @@ export type Warehouse = {
   name: Scalars['String'];
   /** ID of the IntegratorOrganization that manages this Warehouse */
   organizationId: Scalars['String'];
+};
+
+/** Field names for the Warehouse model */
+export enum WarehouseFieldName {
+  Id = 'id',
+  Name = 'name',
+  OrganizationId = 'organizationId'
+}
+
+/** Returns a list of Warehouse */
+export type WarehouseListResult = {
+  __typename?: 'WarehouseListResult';
+  count: Scalars['Int'];
+  itemsPerPage: Scalars['Int'];
+  page: Scalars['Int'];
+  results: Array<Warehouse>;
+  totalPages: Scalars['Int'];
+};
+
+/** How to order the search results for Warehouse */
+export type WarehouseOrderByCriterion = {
+  ascending?: Scalars['Boolean'];
+  field: WarehouseFieldName;
+};
+
+/** Attributes of Warehouse to filter onto */
+export type WarehouseSearchFilters = {
+  /** String-based unique identifier. */
+  id?: InputMaybe<Scalars['String']>;
+  /** Name of the Warehouse (e.g. `Roubaix (prod)`) */
+  name?: InputMaybe<Scalars['String']>;
+  /** ID of the IntegratorOrganization that manages this Warehouse */
+  organizationId?: InputMaybe<Scalars['String']>;
 };
 
 export type GetAllArticlesQueryVariables = Exact<{
@@ -756,19 +874,11 @@ export type ExportArticlesMutationVariables = Exact<{
 export type ExportArticlesMutation = { __typename?: 'Mutation', exportArticles: { __typename?: 'ExportResult', url: string } };
 
 export type DeleteArticleMutationVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['Int'];
 }>;
 
 
 export type DeleteArticleMutation = { __typename?: 'Mutation', deleteArticle: boolean };
-
-export type UpdateArticleMutationVariables = Exact<{
-  id: Scalars['ID'];
-  input: UpdateArticleInput;
-}>;
-
-
-export type UpdateArticleMutation = { __typename?: 'Mutation', updateArticle?: { __typename?: 'Article', id?: number | null | undefined, accountId: number, companyId: number, status: number, code: string, name: string, length: number, width: number, height: number, baseUnitWeight: number, boxWeight: number, boxQuantity: number, baseUnitPicking: boolean, boxPicking: boolean, cubingType: number, permanentProduct: boolean, additionalDescription?: string | null | undefined, supplierName?: string | null | undefined } | null | undefined };
 
 export type GetAllBarcodesQueryVariables = Exact<{
   filters?: InputMaybe<BarcodeSearchFilters>;
@@ -795,7 +905,7 @@ export type CreateBarcodeMutationVariables = Exact<{
 export type CreateBarcodeMutation = { __typename?: 'Mutation', createBarcode: { __typename?: 'Barcode', id?: number | null | undefined, accountId: number, companyId: number, articleId: number, name: string, rotation: string, preparationMode: number, flagDouble: number, supplierName?: string | null | undefined, supplierArticleCode?: string | null | undefined, quantity?: number | null | undefined } };
 
 export type DeleteBarcodeMutationVariables = Exact<{
-  id: Scalars['ID'];
+  id: Scalars['Int'];
 }>;
 
 
@@ -973,7 +1083,7 @@ export const useExportArticlesMutation = <
       options
     );
 export const DeleteArticleDocument = `
-    mutation DeleteArticle($id: ID!) {
+    mutation DeleteArticle($id: Int!) {
   deleteArticle(id: $id)
 }
     `;
@@ -988,43 +1098,6 @@ export const useDeleteArticleMutation = <
     useMutation<DeleteArticleMutation, TError, DeleteArticleMutationVariables, TContext>(
       ['DeleteArticle'],
       (variables?: DeleteArticleMutationVariables) => fetcher<DeleteArticleMutation, DeleteArticleMutationVariables>(client, DeleteArticleDocument, variables, headers)(),
-      options
-    );
-export const UpdateArticleDocument = `
-    mutation UpdateArticle($id: ID!, $input: UpdateArticleInput!) {
-  updateArticle(id: $id, input: $input) {
-    id
-    accountId
-    companyId
-    status
-    code
-    name
-    length
-    width
-    height
-    baseUnitWeight
-    boxWeight
-    boxQuantity
-    baseUnitPicking
-    boxPicking
-    cubingType
-    permanentProduct
-    additionalDescription
-    supplierName
-  }
-}
-    `;
-export const useUpdateArticleMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(
-      client: GraphQLClient,
-      options?: UseMutationOptions<UpdateArticleMutation, TError, UpdateArticleMutationVariables, TContext>,
-      headers?: RequestInit['headers']
-    ) =>
-    useMutation<UpdateArticleMutation, TError, UpdateArticleMutationVariables, TContext>(
-      ['UpdateArticle'],
-      (variables?: UpdateArticleMutationVariables) => fetcher<UpdateArticleMutation, UpdateArticleMutationVariables>(client, UpdateArticleDocument, variables, headers)(),
       options
     );
 export const GetAllBarcodesDocument = `
@@ -1130,7 +1203,7 @@ export const useCreateBarcodeMutation = <
       options
     );
 export const DeleteBarcodeDocument = `
-    mutation DeleteBarcode($id: ID!) {
+    mutation DeleteBarcode($id: Int!) {
   deleteBarcode(id: $id)
 }
     `;
