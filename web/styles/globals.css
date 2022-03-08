@@ -75,3 +75,25 @@ input::-webkit-input-placeholder {
         flex-direction: column;
     }
 }
+
+.edit-article-modal {
+    width: 50%;
+    margin: 0 auto;
+    top: 0;
+}
+
+
+.edit-article-modal .ant-modal {
+    width: 100% !important;
+}
+
+.edit-article-modal .ant-modal-body {
+    display: inline-block;
+    width: 100%;
+}
+.edit-article-modal .ant-modal-footer {
+    margin-top: 50px;
+}
+/* .ant-modal-body {
+height: calc(100vh - 110px);
+} */

@@ -11,7 +11,7 @@ import {
     DeleteArticleMutationVariables
 } from 'generated/graphql';
 import { useAuth } from 'context/AuthContext';
-import { FC, useEffect } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { NextRouter } from 'next/router';
 import styled from 'styled-components';
 import { HeaderContent } from '@components';
@@ -31,6 +31,8 @@ const SingleArticle: FC<ISingleArticleProps> = ({ id, router }: ISingleArticlePr
     const { t } = useTranslation();
 
     const { graphqlRequestClient } = useAuth();
+
+    const [isCalculating, setIsCalculating] = useState(false);
 
     const { isLoading, data, error } = useGetArticleByIdQuery<GetArticleByIdQuery, Error>(
         graphqlRequestClient,
@@ -76,18 +78,25 @@ const SingleArticle: FC<ISingleArticleProps> = ({ id, router }: ISingleArticlePr
     }, [error]);
 
     const updateBoxQuantity = async () => {
+        setIsCalculating(true);
         const res = await fetch(`/api/article/update-quantity/${id}`);
         if (!res.ok) {
             const message = t('An error has occured: ') + res.status;
             console.log(message);
-            // throw new Error(message);
+            showError(t('messsage:failed-update-box-quantity'));
+            setIsCalculating(false);
         }
         const qntData = await res.json();
         console.log(qntData);
-
-        if (data?.article) data.article.boxQuantity = qntData.quantity;
-        showSuccess(t('messages:success-update-box-quantity'));
-    };
+      
+        if(data?.article){
+            data.article.boxQuantity = qntData.quantity;
+            // router.reload();
+            showSuccess(t('messages:success-update-box-quantity'));
+            // forceUpdate();
+        }
+        setIsCalculating(false);
+    }
 
     return (
         <>
@@ -100,7 +109,7 @@ const SingleArticle: FC<ISingleArticleProps> = ({ id, router }: ISingleArticlePr
                         <Button onClick={updateBoxQuantity} type="primary">
                             {t('actions:update-quantity')}
                         </Button>
-                        <Button onClick={() => alert('Edit')} type="primary">
+                        <Button onClick={() => router.push(`/article/edit/${id}`)} type="primary">
                             {t('actions:edit')}
                         </Button>
                         <Button
@@ -113,7 +122,7 @@ const SingleArticle: FC<ISingleArticleProps> = ({ id, router }: ISingleArticlePr
                 }
             />
             <StyledPageContent>
-                {data && !isLoading ? <ArticleDetails details={data?.article} /> : <ContentSpin />}
+                {data && !isLoading && !isCalculating? <ArticleDetails details={data?.article} /> : <ContentSpin />}
             </StyledPageContent>
         </>
     );
