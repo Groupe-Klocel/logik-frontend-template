@@ -1,6 +1,6 @@
-import { SettingOutlined, FileExcelOutlined, DeleteOutlined } from '@ant-design/icons';
+import { SettingOutlined, FileExcelOutlined } from '@ant-design/icons';
 import { TableFilter, WrapperStickyActions, PageTableContentWrapper } from '@components';
-import { getKeys, setCustomColumnsProps, cookie, checkKeyPresenceInArray } from '@helpers';
+import { getKeys, setCustomColumnsProps, checkKeyPresenceInArray } from '@helpers';
 import { Space, Button, Table } from 'antd';
 import { useDrawerDispatch } from 'context/DrawerContext';
 import useTranslation from 'next-translate/useTranslation';
@@ -15,8 +15,8 @@ export interface IAppTableProps {
     isLoading?: boolean;
     columns: any[]; //need to find what is wrong with this MyColumnType[],
     scroll?: {
-        x?: number;
-        y?: number;
+        x?: number | string;
+        y?: number | string;
     };
     pagination?: any;
     setPagination?: any;
@@ -24,12 +24,14 @@ export interface IAppTableProps {
         export?: any;
         // delete?: boolean;
     };
+    filter?: boolean;
     onChange?: any;
 }
 
 const AppTable: FC<IAppTableProps> = ({
     onChange,
     stickyActions,
+    filter,
     data,
     columns,
     scroll,
@@ -38,20 +40,24 @@ const AppTable: FC<IAppTableProps> = ({
     setPagination,
     type
 }: IAppTableProps) => {
-    let { t } = useTranslation();
+    const { t } = useTranslation();
     // get filter from cookies if exist
     const filterDrawerRef = useRef() as any | undefined;
     const allColumnKeys = getKeys(columns);
 
-    const initialState = cookie.get(`${type}-filter-table`)
-        ? JSON.parse(cookie.get(`${type}-filter-table`)!)
-        : null;
+    let initialState;
+
+    if (typeof window !== 'undefined') {
+        initialState = localStorage.getItem(`${type}-filter-table`)
+            ? JSON.parse(localStorage.getItem(`${type}-filter-table`)!)
+            : null;
+    }
 
     if (initialState) {
         const storedArray = initialState.filteredColumns;
         const inputArray = checkKeyPresenceInArray('render', columns);
         const titleCheck = checkKeyPresenceInArray('title', columns);
-        let updatedStoredArr = storedArray.map((a: any) => {
+        const updatedStoredArr = storedArray.map((a: any) => {
             const exists = inputArray.find((b) => a.key == b.key);
             const titles = titleCheck.find((b) => a.key == b.key);
             if (exists) {
@@ -65,6 +71,7 @@ const AppTable: FC<IAppTableProps> = ({
     }
 
     const [onSave, setOnSave] = useState<boolean>(false);
+
     const [visibleColumnKeys, setVisibleColumnKeys] = useState<Key[]>(
         initialState !== null ? initialState.visibleColumnKeys : allColumnKeys
     );
@@ -170,7 +177,7 @@ const AppTable: FC<IAppTableProps> = ({
                     />
                 )
             }),
-        [dispatchDrawer, visibleColumnKeys]
+        [dispatchDrawer, visibleColumnKeys, filteredColumns]
     );
 
     useEffect(() => {
@@ -183,34 +190,27 @@ const AppTable: FC<IAppTableProps> = ({
             }
         }
 
-        return () => {};
+        return () => { };
     }, [visibleColumnKeys, filteredColumns]);
 
     useEffect(() => {
         if (onSave) {
-            cookie.set(
-                `${type}-filter-table`,
-                JSON.stringify({
-                    filteredColumns: filteredColumns,
-                    tableColumns: tableColumns,
-                    visibleColumnKeys: visibleColumnKeys,
-                    fixedColumns: fixedColumns
-                })
-            );
+            const news = JSON.stringify({
+                filteredColumns: filteredColumns,
+                tableColumns: tableColumns,
+                visibleColumnKeys: visibleColumnKeys,
+                fixedColumns: fixedColumns
+            });
+            localStorage.setItem(`${type}-filter-table`, news);
         }
         setOnSave(false);
-        return () => {};
+        return () => { };
     }, [onSave]);
 
     return (
         <PageTableContentWrapper>
             <WrapperStickyActions>
                 <Space direction="vertical">
-                    <Button
-                        type="primary"
-                        icon={<SettingOutlined />}
-                        onClick={() => openFilterDrawer()}
-                    />
                     {/* {stickyActions?.delete && (
                         <Button
                             icon={<DeleteOutlined />}
@@ -219,6 +219,13 @@ const AppTable: FC<IAppTableProps> = ({
                             danger
                         />
                     )} */}
+                    {filter && (
+                        <Button
+                            type="primary"
+                            icon={<SettingOutlined />}
+                            onClick={() => openFilterDrawer()}
+                        />
+                    )}
                     {stickyActions?.export.active && (
                         <Button
                             icon={<FileExcelOutlined />}
@@ -252,6 +259,8 @@ const AppTable: FC<IAppTableProps> = ({
                         title={t(c.title)}
                         dataIndex={c.dataIndex}
                         key={c.key}
+                        fixed={c.fixed}
+                        width={c.width}
                         sorter={c.sorter}
                         showSorterTooltip={c.showSorterTooltip}
                         render={c.render}
@@ -270,7 +279,9 @@ AppTable.defaultProps = {
             active: false
         }
         // delete: false
-    }
+    },
+    filter: true,
+    scroll: { x: '100%' }
 };
 
 export { AppTable };

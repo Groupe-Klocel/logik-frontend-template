@@ -1,8 +1,16 @@
-import { DetailsList, LinkButton } from '@components';
+import { DetailsList, LinkButton, ContentSpin, AppTable } from '@components';
 import { EyeTwoTone } from '@ant-design/icons';
-import { pathParams } from '@helpers';
+import {
+    pathParams,
+    useBarcodes,
+    DataQueryType,
+    PaginationType,
+    DEFAULT_ITEMS_PER_PAGE,
+    DEFAULT_PAGE_NUMBER
+} from '@helpers';
 import useTranslation from 'next-translate/useTranslation';
-import { Divider, Table, Typography } from 'antd';
+import { Divider, Typography } from 'antd';
+import { useState, useEffect, useCallback } from 'react';
 
 const { Title } = Typography;
 
@@ -13,8 +21,35 @@ export interface IArticleDetailsProps {
 const ArticleDetails = ({ details }: IArticleDetailsProps) => {
     const { t } = useTranslation();
 
+    const [barcodes, setBarcodes] = useState<DataQueryType>();
+
+    const [pagination, setPagination] = useState<PaginationType>({
+        total: undefined,
+        current: DEFAULT_PAGE_NUMBER,
+        itemsPerPage: DEFAULT_ITEMS_PER_PAGE
+    });
+
+    const { isLoading, data, error } = useBarcodes(
+        { articleId: parseInt(details.id) },
+        pagination.current,
+        pagination.itemsPerPage,
+        null
+    );
+
+    // make wrapper function to give child
+    const onChangePagination = useCallback(
+        (currentPage, itemsPerPage) => {
+            // Re fetch data for new current page or items per page
+            setPagination({
+                total: barcodes?.count,
+                current: currentPage,
+                itemsPerPage: itemsPerPage
+            });
+        },
+        [setPagination, barcodes]
+    );
+
     // Remove barcodes from all other details
-    const { barcodes, ...adetails } = details;
     const barcodeColumns = [
         {
             title: t('d:id'),
@@ -22,9 +57,14 @@ const ArticleDetails = ({ details }: IArticleDetailsProps) => {
             key: 'id'
         },
         {
-            title: t('common:name'),
+            title: t('d:name'),
             dataIndex: 'name',
             key: 'name'
+        },
+        {
+            title: t('d:articleId'),
+            dataIndex: 'articleId',
+            key: 'articleId'
         },
         {
             title: t('d:flagDouble'),
@@ -40,12 +80,35 @@ const ArticleDetails = ({ details }: IArticleDetailsProps) => {
         }
     ];
 
+    // For pagination
+    useEffect(() => {
+        if (data) {
+            setBarcodes(data?.barcodes);
+            setPagination({
+                ...pagination,
+                total: data?.barcodes?.count
+            });
+        }
+    }, [data]);
+
     return (
         <>
-            <DetailsList details={adetails} />
+            <DetailsList details={details} />
             <Divider />
             <Title level={4}>{t('common:associated', { name: t('common:barcodes') })}</Title>
-            <Table size="small" rowKey="id" dataSource={barcodes} columns={barcodeColumns} />
+            {barcodes ? (
+                <AppTable
+                    type="associatedBarcodes"
+                    columns={barcodeColumns}
+                    data={barcodes!.results}
+                    pagination={pagination}
+                    isLoading={isLoading}
+                    setPagination={onChangePagination}
+                    filter={false}
+                />
+            ) : (
+                <ContentSpin />
+            )}
         </>
     );
 };

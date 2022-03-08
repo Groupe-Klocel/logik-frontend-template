@@ -1,4 +1,3 @@
-import { FC } from 'react';
 import { Layout } from 'antd';
 import { HeaderContent } from '@components';
 import { addStatusConfigRoutes } from 'modules/Feedbacks/Static/feedbacksRoutes';
@@ -10,10 +9,9 @@ const StyledPageContent = styled(Layout.Content)`
     margin: 15px 30px;
 `;
 
-export interface IAddStatusConfigProps {}
 
-export const AddStatusConfig: FC<IAddStatusConfigProps> = ({}: IAddStatusConfigProps) => {
-    let { t } = useTranslation('actions');
+export const AddStatusConfig = ()  => {
+    const { t } = useTranslation('actions');
     return (
         <>
             <HeaderContent title={t('add-status-config-feedback')} routes={addStatusConfigRoutes} />

@@ -2,11 +2,9 @@ import { EyeTwoTone, DeleteOutlined } from '@ant-design/icons';
 import { Button, Space } from 'antd';
 import { AppTable } from '@components';
 import { barcodesData } from 'fake-data/barcodes';
-import { FC } from 'react';
 
-export interface IBlacklistedBarcodesListProps {}
 
-export const BlacklistedBarcodesList: FC<IBlacklistedBarcodesListProps> = ({}) => {
+export const BlacklistedBarcodesList = () => {
     const columns = [
         {
             title: 'common:barcode',
@@ -19,7 +17,7 @@ export const BlacklistedBarcodesList: FC<IBlacklistedBarcodesListProps> = ({}) =
             key: 'product'
         },
         {
-            title: 'common:description',
+            title: 'd:description',
             dataIndex: 'description',
             key: 'description'
         },
@@ -41,12 +39,5 @@ export const BlacklistedBarcodesList: FC<IBlacklistedBarcodesListProps> = ({}) =
             )
         }
     ];
-    return (
-        <AppTable
-            type="blacklisted-barcodes"
-            columns={columns}
-            scroll={{ x: 800 }}
-            data={barcodesData}
-        />
-    );
+    return <AppTable type="blacklisted-barcodes" columns={columns} data={barcodesData} />;
 };

@@ -1,12 +1,11 @@
 import { WrapperForm } from '@components';
 import { Button, Col, Form, Input, Row } from 'antd';
 import useTranslation from 'next-translate/useTranslation';
-import { FC, useState } from 'react';
+import { useState } from 'react';
 
-export interface IAddFeatureTypeFormProps {}
 
-export const AddFeatureTypeForm: FC<IAddFeatureTypeFormProps> = ({}: IAddFeatureTypeFormProps) => {
-    let { t } = useTranslation('common');
+export const AddFeatureTypeForm= () => {
+    const { t } = useTranslation('common');
 
     // TYPED SAFE ALL
 

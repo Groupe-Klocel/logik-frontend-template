@@ -1,4 +1,4 @@
-import { cookie, isoLangs, LanguageType } from '@helpers';
+import { isoLangs, LanguageType } from '@helpers';
 import { Select } from 'antd';
 import { useRouter } from 'next/router';
 import { FC, useCallback } from 'react';

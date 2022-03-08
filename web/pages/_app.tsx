@@ -9,7 +9,7 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { Fragment, useEffect } from 'react';
 import { ThemeSwitcherProvider } from 'react-css-theme-switcher';
-import { QueryCache, QueryClient, QueryClientProvider } from 'react-query';
+import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import '../styles/globals.css';
 

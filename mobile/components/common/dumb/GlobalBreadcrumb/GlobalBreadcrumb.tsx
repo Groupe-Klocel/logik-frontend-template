@@ -9,7 +9,7 @@ export interface IBreadcrumbProps {
 }
 
 const GlobalBreadcrumb: FC<IBreadcrumbProps> = ({ routes }: IBreadcrumbProps) => {
-	let { t } = useTranslation()
+	const { t } = useTranslation()
 
 	return (
 		<Breadcrumb>

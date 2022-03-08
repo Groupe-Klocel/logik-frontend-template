@@ -3,13 +3,12 @@ import { Button, Col, Form, Input, Row, Select } from 'antd';
 import { articlesData } from 'fake-data/articles';
 import { companiesData } from 'fake-data/companies';
 import useTranslation from 'next-translate/useTranslation';
-import { FC, useState } from 'react';
+import { useState } from 'react';
 
 const { Option } = Select;
-export interface IAddArticleSetFormProps {}
 
-export const AddArticleSetForm: FC<IAddArticleSetFormProps> = ({}: IAddArticleSetFormProps) => {
-    let { t } = useTranslation();
+export const AddArticleSetForm = () => {
+    const { t } = useTranslation();
 
     // TYPED SAFE ALL
 

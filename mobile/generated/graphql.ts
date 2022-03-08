@@ -346,7 +346,7 @@ export type MutationExportArticlesArgs = {
 export type MutationInviteUserArgs = {
   email: Scalars['String'];
   role: Scalars['String'];
-  workspaceId: Scalars['ID'];
+  warehouseId: Scalars['ID'];
 };
 
 
@@ -360,7 +360,7 @@ export type MutationInvokeArgs = {
 export type MutationLoginArgs = {
   password: Scalars['String'];
   username: Scalars['String'];
-  workspaceId: Scalars['ID'];
+  warehouseId: Scalars['ID'];
 };
 
 
@@ -476,7 +476,7 @@ export type GetArticleByIdQuery = { __typename?: 'Query', article?: { __typename
 export type LoginMutationVariables = Exact<{
   username: Scalars['String'];
   password: Scalars['String'];
-  workspaceId: Scalars['ID'];
+  warehouseId: Scalars['ID'];
 }>;
 
 
@@ -518,19 +518,19 @@ export const GetAllArticlesDocument = `
 }
     `;
 export const useGetAllArticlesQuery = <
-      TData = GetAllArticlesQuery,
-      TError = unknown
-    >(
-      client: GraphQLClient,
-      variables: GetAllArticlesQueryVariables,
-      options?: UseQueryOptions<GetAllArticlesQuery, TError, TData>,
-      headers?: RequestInit['headers']
-    ) =>
-    useQuery<GetAllArticlesQuery, TError, TData>(
-      ['GetAllArticles', variables],
-      fetcher<GetAllArticlesQuery, GetAllArticlesQueryVariables>(client, GetAllArticlesDocument, variables, headers),
-      options
-    );
+  TData = GetAllArticlesQuery,
+  TError = unknown
+>(
+  client: GraphQLClient,
+  variables: GetAllArticlesQueryVariables,
+  options?: UseQueryOptions<GetAllArticlesQuery, TError, TData>,
+  headers?: RequestInit['headers']
+) =>
+  useQuery<GetAllArticlesQuery, TError, TData>(
+    ['GetAllArticles', variables],
+    fetcher<GetAllArticlesQuery, GetAllArticlesQueryVariables>(client, GetAllArticlesDocument, variables, headers),
+    options
+  );
 export const GetArticleByIdDocument = `
     query GetArticleById($id: Int!) {
   article(id: $id) {
@@ -567,36 +567,36 @@ export const GetArticleByIdDocument = `
 }
     `;
 export const useGetArticleByIdQuery = <
-      TData = GetArticleByIdQuery,
-      TError = unknown
-    >(
-      client: GraphQLClient,
-      variables: GetArticleByIdQueryVariables,
-      options?: UseQueryOptions<GetArticleByIdQuery, TError, TData>,
-      headers?: RequestInit['headers']
-    ) =>
-    useQuery<GetArticleByIdQuery, TError, TData>(
-      ['GetArticleById', variables],
-      fetcher<GetArticleByIdQuery, GetArticleByIdQueryVariables>(client, GetArticleByIdDocument, variables, headers),
-      options
-    );
+  TData = GetArticleByIdQuery,
+  TError = unknown
+>(
+  client: GraphQLClient,
+  variables: GetArticleByIdQueryVariables,
+  options?: UseQueryOptions<GetArticleByIdQuery, TError, TData>,
+  headers?: RequestInit['headers']
+) =>
+  useQuery<GetArticleByIdQuery, TError, TData>(
+    ['GetArticleById', variables],
+    fetcher<GetArticleByIdQuery, GetArticleByIdQueryVariables>(client, GetArticleByIdDocument, variables, headers),
+    options
+  );
 export const LoginDocument = `
-    mutation Login($username: String!, $password: String!, $workspaceId: ID!) {
-  login(username: $username, password: $password, workspaceId: $workspaceId) {
+    mutation Login($username: String!, $password: String!, $warehouseId: ID!) {
+  login(username: $username, password: $password, warehouseId: $warehouseId) {
     accessToken
   }
 }
     `;
 export const useLoginMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(
-      client: GraphQLClient,
-      options?: UseMutationOptions<LoginMutation, TError, LoginMutationVariables, TContext>,
-      headers?: RequestInit['headers']
-    ) =>
-    useMutation<LoginMutation, TError, LoginMutationVariables, TContext>(
-      'Login',
-      (variables?: LoginMutationVariables) => fetcher<LoginMutation, LoginMutationVariables>(client, LoginDocument, variables, headers)(),
-      options
-    );
+  TError = unknown,
+  TContext = unknown
+>(
+  client: GraphQLClient,
+  options?: UseMutationOptions<LoginMutation, TError, LoginMutationVariables, TContext>,
+  headers?: RequestInit['headers']
+) =>
+  useMutation<LoginMutation, TError, LoginMutationVariables, TContext>(
+    'Login',
+    (variables?: LoginMutationVariables) => fetcher<LoginMutation, LoginMutationVariables>(client, LoginDocument, variables, headers)(),
+    options
+  );

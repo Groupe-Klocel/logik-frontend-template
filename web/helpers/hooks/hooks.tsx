@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useAuth } from 'context/AuthContext';
 import {
     GetAllArticlesQuery,
@@ -6,8 +5,6 @@ import {
     useGetAllBarcodesQuery,
     GetAllBarcodesQuery
 } from 'generated/graphql';
-
-
 
 const useArticles = (search: any, page: number, itemsPerPage: number, sort: any) => {
     const { graphqlRequestClient } = useAuth();

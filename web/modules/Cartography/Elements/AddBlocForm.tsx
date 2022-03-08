@@ -1,12 +1,11 @@
 import { WrapperForm } from '@components';
 import { Button, Checkbox, Col, Form, Input, Row } from 'antd';
 import useTranslation from 'next-translate/useTranslation';
-import { FC, useState } from 'react';
+import { useState } from 'react';
 
-export interface IAddBlocFormProps {}
 
-export const AddBlocForm: FC<IAddBlocFormProps> = ({}: IAddBlocFormProps) => {
-    let { t } = useTranslation('common');
+export const AddBlocForm = () => {
+    const { t } = useTranslation('common');
 
     // TYPED SAFE ALL
 

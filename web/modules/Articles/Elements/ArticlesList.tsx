@@ -28,7 +28,7 @@ export interface IArticlesListProps {
 }
 
 const ArticlesList = ({ searchCriteria }: IArticlesListProps) => {
-    let { t } = useTranslation();
+    const { t } = useTranslation();
     const { graphqlRequestClient } = useAuth();
 
     const [articles, setArticles] = useState<DataQueryType>();
@@ -61,7 +61,7 @@ const ArticlesList = ({ searchCriteria }: IArticlesListProps) => {
         ) => {
             showSuccess(t('messages:success-exported'));
         },
-        onError: (error) => {
+        onError: () => {
             showError(t('messages:error-exporting-data'));
         }
     });
@@ -204,7 +204,6 @@ const ArticlesList = ({ searchCriteria }: IArticlesListProps) => {
                     type="articles"
                     columns={columns}
                     data={articles!.results}
-                    scroll={{ x: 800 }}
                     pagination={pagination}
                     isLoading={isLoading}
                     setPagination={onChangePagination}

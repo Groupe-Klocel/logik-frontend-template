@@ -7,7 +7,6 @@ import { useDrawerDispatch } from 'context/DrawerContext';
 import useTranslation from 'next-translate/useTranslation';
 import { FC, useCallback, useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { cookie } from '@helpers';
 import { useThemeSwitcher } from 'react-css-theme-switcher';
 
 const StyledHeader = styled(Layout.Header)`
@@ -22,7 +21,7 @@ const StyledCol = styled(Col)`
 `;
 
 const Header: FC = () => {
-    let { t } = useTranslation();
+    const { t } = useTranslation();
     const { user } = useAuth();
     const { switcher } = useThemeSwitcher();
 

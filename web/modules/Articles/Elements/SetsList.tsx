@@ -2,11 +2,9 @@ import { DeleteOutlined, EyeTwoTone, EditTwoTone } from '@ant-design/icons';
 import { Button, Space } from 'antd';
 import { AppTable } from '@components';
 import { setsData } from 'fake-data/sets';
-import { FC } from 'react';
 
-export interface ISetsListProps {}
 
-export const SetsList: FC<ISetsListProps> = ({}) => {
+export const SetsList = () => {
     const columns = [
         {
             title: 'common:company',
@@ -14,7 +12,7 @@ export const SetsList: FC<ISetsListProps> = ({}) => {
             key: 'company'
         },
         {
-            title: 'common:name',
+            title: 'd:name',
             dataIndex: 'name',
             key: 'name'
         },
@@ -24,7 +22,7 @@ export const SetsList: FC<ISetsListProps> = ({}) => {
             key: 'article'
         },
         {
-            title: 'd:productDescription',
+            title: 'd:description',
             dataIndex: 'product-description',
             key: 'product-description'
         },
@@ -44,5 +42,5 @@ export const SetsList: FC<ISetsListProps> = ({}) => {
             )
         }
     ];
-    return <AppTable type="sets" columns={columns} scroll={{ x: 800 }} data={setsData} />;
+    return <AppTable type="sets" columns={columns} data={setsData} />;
 };

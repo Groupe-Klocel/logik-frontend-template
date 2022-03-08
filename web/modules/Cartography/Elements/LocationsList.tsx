@@ -1,45 +1,43 @@
-import { FC } from 'react';
 import { Button, Space } from 'antd';
 import { locationsData } from 'fake-data/locations';
 import { AppTable } from '@components';
 import { DeleteOutlined, EyeTwoTone, EditTwoTone } from '@ant-design/icons';
 
-export interface ILocationsListProps {}
 
-export const LocationsList: FC<ILocationsListProps> = ({}) => {
+export const LocationsList = ()  => {
     const columns = [
         {
-            title: 'Name',
+            title: 'd:name',
             dataIndex: 'name',
             key: 'name'
         },
         {
-            title: 'Bloc',
+            title: 'd:bloc',
             dataIndex: 'bloc',
             key: 'bloc'
         },
         {
-            title: 'Aisle',
+            title: 'd:aisle',
             dataIndex: 'aisle',
             key: 'aisle'
         },
         {
-            title: 'Column',
+            title: 'commom:column',
             dataIndex: 'column',
             key: 'column'
         },
         {
-            title: 'Level',
+            title: 'd:level',
             dataIndex: 'level',
             key: 'level'
         },
         {
-            title: 'Position',
+            title: 'd:position',
             dataIndex: 'position',
             key: 'position'
         },
         {
-            title: 'Replenish',
+            title: 'd:replenish',
             dataIndex: 'replenish',
             key: 'replenish'
         },
@@ -60,5 +58,5 @@ export const LocationsList: FC<ILocationsListProps> = ({}) => {
         }
     ];
 
-    return <AppTable type="locations" columns={columns} scroll={{ x: 800 }} data={locationsData} />;
+    return <AppTable type="locations" columns={columns} data={locationsData} />;
 };

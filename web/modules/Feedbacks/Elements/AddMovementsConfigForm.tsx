@@ -2,16 +2,13 @@ import { WrapperForm } from '@components';
 import { Button, Checkbox, Col, Form, InputNumber, Row, Select } from 'antd';
 import { companiesData } from 'fake-data/companies';
 import useTranslation from 'next-translate/useTranslation';
-import { FC, useState } from 'react';
+import { useState } from 'react';
 
 const { Option } = Select;
 
-export interface IAddMovementsConfigFormProps {}
 
-export const AddMovementsConfigForm: FC<
-    IAddMovementsConfigFormProps
-> = ({}: IAddMovementsConfigFormProps) => {
-    let { t } = useTranslation('common');
+export const AddMovementsConfigForm = ()  => {
+    const { t } = useTranslation('common');
 
     //TODO FETCH GROUP'S NAME
     // TYPED SAFE ALL
@@ -42,7 +39,7 @@ export const AddMovementsConfigForm: FC<
                     label={t('select-company')}
                     name="company"
                     hasFeedback
-                    // rules={[{ required: true, message: `${t('error-message-select-1')} ${t('company')}`}]}
+                // rules={[{ required: true, message: `${t('error-message-select-1')} ${t('company')}`}]}
                 >
                     <Select placeholder={`${t('error-message-select-1')} ${t('company')}`}>
                         {companiesData.map((company: any) => (

@@ -1,7 +1,5 @@
-import Icon from '@ant-design/icons';
-import { cookie, stringToBoolean } from '@helpers';
 import { Switch } from 'antd';
-import { FC, useState, useCallback } from 'react';
+import { FC, useCallback } from 'react';
 import { useThemeSwitcher } from 'react-css-theme-switcher';
 import { useAppDispatch, useAppState } from 'context/AppContext';
 

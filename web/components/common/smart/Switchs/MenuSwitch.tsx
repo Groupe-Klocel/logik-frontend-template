@@ -1,4 +1,3 @@
-import { getMenuState } from '@helpers';
 import { Switch } from 'antd';
 import { useAppDispatch, useAppState } from 'context/AppContext';
 import { FC, useCallback } from 'react';

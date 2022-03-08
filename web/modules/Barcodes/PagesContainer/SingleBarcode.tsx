@@ -28,7 +28,7 @@ export interface ISingleBarcodeProps {
 }
 
 const SingleBarcode: FC<ISingleBarcodeProps> = ({ id, router }: ISingleBarcodeProps) => {
-    let { t } = useTranslation();
+    const { t } = useTranslation();
     const { graphqlRequestClient } = useAuth();
     const { isLoading, data, error } = useGetBarcodeByIdQuery<GetBarcodeByIdQuery, Error>(
         graphqlRequestClient,
@@ -84,10 +84,7 @@ const SingleBarcode: FC<ISingleBarcodeProps> = ({ id, router }: ISingleBarcodePr
                         <Button onClick={() => alert('Edit')} type="primary">
                             {t('actions:edit')}
                         </Button>
-                        <Button
-                            loading={deleteLoading}
-                            onClick={() => deleteBarcode({ id: parseInt(id) })}
-                        >
+                        <Button loading={deleteLoading} onClick={() => deleteBarcode({ id: id })}>
                             {t('actions:delete')}
                         </Button>
                     </Space>

@@ -1,12 +1,11 @@
 import { WrapperForm } from '@components';
 import { Button, Checkbox, Col, Form, Input, Row } from 'antd';
 import useTranslation from 'next-translate/useTranslation';
-import { FC, useState } from 'react';
+import { useState } from 'react';
 
-export interface IAddPackagingFormProps {}
 
-export const AddPackagingForm: FC<IAddPackagingFormProps> = ({}: IAddPackagingFormProps) => {
-    let { t } = useTranslation('common');
+export const AddPackagingForm = () => {
+    const { t } = useTranslation('common');
 
     // TYPED SAFE ALL
 

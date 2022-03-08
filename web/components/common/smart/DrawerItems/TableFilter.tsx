@@ -9,12 +9,9 @@ import {
     useEffect,
     useState,
     forwardRef,
-    useRef,
     useImperativeHandle,
     ClassAttributes,
-    HTMLAttributes,
-    Component,
-    ReactNode
+    HTMLAttributes
 } from 'react';
 import { SortableContainer, SortableElement, SortableHandle } from 'react-sortable-hoc';
 import { arrayMoveImmutable } from 'array-move';
@@ -56,12 +53,12 @@ const TableFilter: FC<ITableFilterProps> = forwardRef(
         { columnsToFilter, visibleKeys, onShowChange, onSort, fixKeys, onFixed }: ITableFilterProps,
         ref
     ) => {
-        let { t } = useTranslation();
-
+        const { t } = useTranslation();
         const [showKeys, setShowKeys] = useState(visibleKeys);
         const [fixedKeys, setFixedKeys] = useState<Key[]>(fixKeys);
         const [currentFilteredColumns, setCurrentFilteredColumns] = useState(columnsToFilter);
 
+        console.log('currentFilteredColumns', currentFilteredColumns);
         useImperativeHandle(ref, () => ({
             reset(keys: any, columns: any) {
                 setShowKeys(keys);
@@ -77,17 +74,17 @@ const TableFilter: FC<ITableFilterProps> = forwardRef(
                 showWarning(t('messages:filter_only_actions_visibles_warn'));
             } else onShowChange(showKeys);
 
-            return () => {};
+            return () => { };
         }, [onShowChange, showKeys]);
 
         useEffect(() => {
             onSort(currentFilteredColumns);
-            return () => {};
+            return () => { };
         }, [onSort, currentFilteredColumns]);
 
         useEffect(() => {
             onFixed(fixedKeys);
-            return () => {};
+            return () => { };
         }, [onFixed, fixedKeys]);
 
         async function handleVisibleChange(key: Key) {

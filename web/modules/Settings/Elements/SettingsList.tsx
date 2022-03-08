@@ -1,12 +1,10 @@
-import { FC } from 'react';
 import { Button } from 'antd';
 import { settingsData } from 'fake-data/settings';
 import { AppTable } from '@components';
 import { EyeTwoTone } from '@ant-design/icons';
 
-export interface ISettingsListProps {}
 
-export const SettingsList: FC<ISettingsListProps> = ({}) => {
+export const SettingsList = () => {
     const columns = [
         {
             title: 'common:param-category',
@@ -14,17 +12,17 @@ export const SettingsList: FC<ISettingsListProps> = ({}) => {
             key: 'param-category'
         },
         {
-            title: 'common:name',
+            title: 'd:name',
             dataIndex: 'name',
             key: 'name'
         },
         {
-            title: 'common:value',
+            title: 'd:value',
             dataIndex: 'value',
             key: 'value'
         },
         {
-            title: 'common:system',
+            title: 'd:system',
             dataIndex: 'system',
             key: 'system'
         },
@@ -36,5 +34,5 @@ export const SettingsList: FC<ISettingsListProps> = ({}) => {
             )
         }
     ];
-    return <AppTable type="settings" columns={columns} scroll={{ x: 800 }} data={settingsData} />;
+    return <AppTable type="settings" columns={columns} data={settingsData} />;
 };

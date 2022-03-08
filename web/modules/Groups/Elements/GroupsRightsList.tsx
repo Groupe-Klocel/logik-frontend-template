@@ -1,11 +1,9 @@
 import { CheckCircleOutlined, CloseSquareOutlined } from '@ant-design/icons';
 import { AppTable } from '@components';
 import { groupsRightsData } from 'fake-data/groups';
-import { FC } from 'react';
 
-export interface IGroupsRightsProps {}
 
-export const GroupsRightsList: FC<IGroupsRightsProps> = ({}) => {
+export const GroupsRightsList = ()  => {
     const columns = [
         {
             title: 'actions:action',
@@ -46,12 +44,5 @@ export const GroupsRightsList: FC<IGroupsRightsProps> = ({}) => {
             }
         }
     ];
-    return (
-        <AppTable
-            type="groups-rights"
-            columns={columns}
-            scroll={{ x: 800 }}
-            data={groupsRightsData}
-        />
-    );
+    return <AppTable type="groups-rights" columns={columns} data={groupsRightsData} />;
 };

@@ -6,15 +6,14 @@ import { ArticlesList } from 'modules/Articles/Elements/ArticlesList';
 import { articlesSubRoutes } from 'modules/Articles/Static/articlesRoutes';
 import useTranslation from 'next-translate/useTranslation';
 import { showError } from '@helpers';
-import { FC, useCallback, useState } from 'react';
+import { useCallback, useState } from 'react';
 
-export interface IArticlesProps {}
 
-const Articles: FC<IArticlesProps> = ({}: IArticlesProps) => {
-    let { t } = useTranslation();
+const Articles = () => {
+    const { t } = useTranslation();
 
     const [search, setSearch] = useState({});
-
+    console.log(search);
     //	SEARCH DRAWER
     const [formSearch] = Form.useForm();
 

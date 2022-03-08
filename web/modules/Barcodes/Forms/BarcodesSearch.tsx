@@ -1,4 +1,4 @@
-import { Button, Form, Input, Select, Space } from 'antd';
+import { Form, Input } from 'antd';
 import useTranslation from 'next-translate/useTranslation';
 import { FC } from 'react';
 
@@ -7,7 +7,7 @@ export interface IBarcodesSearchProps {
 }
 
 const BarcodesSearch: FC<IBarcodesSearchProps> = ({ form }: IBarcodesSearchProps) => {
-    let { t } = useTranslation();
+    const { t } = useTranslation();
 
     return (
         <>

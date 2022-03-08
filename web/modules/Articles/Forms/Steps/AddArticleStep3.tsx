@@ -1,12 +1,10 @@
 import { Form, Input, Checkbox, Select, InputNumber } from 'antd';
-import { FC } from 'react';
 import useTranslation from 'next-translate/useTranslation';
 
 const { Option } = Select;
-interface IAddArticleStep3Props {}
 
-const AddArticleStep3: FC<IAddArticleStep3Props> = () => {
-    let { t } = useTranslation();
+const AddArticleStep3 = () => {
+    const { t } = useTranslation();
 
     // TEXTS TRANSLATION ( REFACTORING POSSIBLE / EXPORT / DON'T KNOW YET )
     const family = t('d:family');

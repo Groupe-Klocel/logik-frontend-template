@@ -1,14 +1,13 @@
 import { WrapperForm } from '@components';
 import { Button, Col, Form, Input, Row, Select } from 'antd';
 import useTranslation from 'next-translate/useTranslation';
-import { FC, useState } from 'react';
+import { useState } from 'react';
 
 const { Option } = Select;
 
-export interface IAddStockStatusFormProps {}
 
-export const AddStockStatusForm: FC<IAddStockStatusFormProps> = ({}: IAddStockStatusFormProps) => {
-    let { t } = useTranslation('common');
+export const AddStockStatusForm = ()  => {
+    const { t } = useTranslation('common');
 
     //TODO FETCH GROUP'S NAME
     // TYPED SAFE ALL

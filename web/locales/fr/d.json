@@ -1,6 +1,7 @@
 {
 	"id": "ID",
 	"accountId": "ID Compte",
+	"available":"Disponible",
 	"companyId": "ID Entreprise",
 	"status": "Statut",
 	"code": "Code",
@@ -37,6 +38,22 @@
 	"supplierArticleCode": "Code Article Fournisseur",
 	"quantity": "Quantité",
 	"productDescription":"Description Produit",
-	"dateType": "Type Date"
+	"dateType": "Type Date",
+	"value": "Valeur",
+	"comment": "Commentaire",
+	"system": "Système",
+	"description": "Description",
+	"default": "Defaut",
+	"dispatchable": "Dispatchable",
+	"bloc": "Bloc",
+	"aisle": "allée",
+	"level": "Niveau",
+	"position": "Position",
+	"replenish": "Réapprovisionner",
+	"masse": "Masse"
+
+
+
+	
 
 }

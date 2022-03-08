@@ -1,12 +1,10 @@
 import { DeleteOutlined, EyeTwoTone, EditTwoTone } from '@ant-design/icons';
-import { FC } from 'react';
 import { Button, Space } from 'antd';
 import { featureCodesData } from 'fake-data/features';
 import { AppTable } from '@components';
 
-export interface IFeaturesCodesListProps {}
 
-export const FeaturesCodesList: FC<IFeaturesCodesListProps> = ({}) => {
+export const FeaturesCodesList = () => {
     const columns = [
         {
             title: 'common:name',
@@ -40,12 +38,5 @@ export const FeaturesCodesList: FC<IFeaturesCodesListProps> = ({}) => {
         }
     ];
 
-    return (
-        <AppTable
-            type="features-codes"
-            columns={columns}
-            scroll={{ x: 800 }}
-            data={featureCodesData}
-        />
-    );
+    return <AppTable type="features-codes" columns={columns} data={featureCodesData} />;
 };
