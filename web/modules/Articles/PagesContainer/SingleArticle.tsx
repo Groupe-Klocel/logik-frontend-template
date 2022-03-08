@@ -16,7 +16,6 @@ import { NextRouter } from 'next/router';
 import styled from 'styled-components';
 import { HeaderContent } from '@components';
 import { showError, showSuccess } from '@helpers';
-import { EditArticleForm } from '../Forms/EditArticleForm';
 
 const StyledPageContent = styled(Layout.Content)`
     margin: 15px 30px;
@@ -33,7 +32,7 @@ const SingleArticle: FC<ISingleArticleProps> = ({ id, router }: ISingleArticlePr
 
     const { graphqlRequestClient } = useAuth();
 
-    const [showModal, setShowModal] = useState(false);
+    const [isCalculating, setIsCalculating] = useState(false);
 
     const { isLoading, data, error } = useGetArticleByIdQuery<GetArticleByIdQuery, Error>(
         graphqlRequestClient,
@@ -79,18 +78,24 @@ const SingleArticle: FC<ISingleArticleProps> = ({ id, router }: ISingleArticlePr
     }, [error]);
 
     const updateBoxQuantity = async () => {
+        setIsCalculating(true);
         const res = await fetch(`/api/article/update-quantity/${id}`);
         if (!res.ok) {
             const message = t('An error has occured: ') + res.status;
             console.log(message);
-            // throw new Error(message);
+            showError(t('messsage:failed-update-box-quantity'));
+            setIsCalculating(false);
         }
         const qntData = await res.json();
         console.log(qntData);
       
-        if(data?.article)
+        if(data?.article){
             data.article.boxQuantity = qntData.quantity;
-            showSuccess(t('messages:success-update-box-quantity'));        
+            // router.reload();
+            showSuccess(t('messages:success-update-box-quantity'));
+            // forceUpdate();
+        }
+        setIsCalculating(false);
     }
 
 
@@ -106,7 +111,7 @@ const SingleArticle: FC<ISingleArticleProps> = ({ id, router }: ISingleArticlePr
                         <Button onClick={updateBoxQuantity} type="primary">
                             {t('actions:update-quantity')}
                         </Button>
-                        <Button onClick={() => setShowModal(true)} type="primary">
+                        <Button onClick={() => router.push(`/article/edit/${id}`)} type="primary">
                             {t('actions:edit')}
                         </Button>
                         <Button loading={deleteLoading} onClick={() => deleteArticle({ id: id })}>
@@ -116,9 +121,8 @@ const SingleArticle: FC<ISingleArticleProps> = ({ id, router }: ISingleArticlePr
                 }
             />
             <StyledPageContent>
-                {data && !isLoading ? <ArticleDetails details={data?.article} /> : <ContentSpin />}
+                {data && !isLoading && !isCalculating? <ArticleDetails details={data?.article} /> : <ContentSpin />}
             </StyledPageContent>
-            <EditArticleForm articleId={id} details={data?.article} showModal={showModal} setShowModal={setShowModal}/>
         </>
     );
 };

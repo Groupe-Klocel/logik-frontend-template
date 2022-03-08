@@ -22,7 +22,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     );
 
     const { id } = req.query;
-    console.log(id);
+    
     const query = gql`
         query getArticleById($id: Int!) {
             article(id: $id) {
@@ -38,13 +38,28 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     };
 
     const data = await graphqlRequestClient.request(query, variables, requestHeader);
-    console.log(data);
     const qnt = calculateBoxQuantity(data.article);
 
     // update box quantity in database by sending gql mutaion.
     // implement after gql endpoint done!
+    const updateVariables = {
+        id: parseInt(id.toString()),
+        input: {
+            boxQuantity: qnt
+        }
+    };
 
-    res.status(200).json({ quantity: qnt });
+    const updateMutation = gql`
+        mutation updateArticle($id: Int!, $input: UpdateArticleInput!) {
+            updateArticle(id: $id, input: $input) {
+               boxQuantity
+            }
+        }
+    `;
+
+    const result = await graphqlRequestClient.request(updateMutation, updateVariables, requestHeader);
+
+    res.status(200).json({ quantity: result.updateArticle.boxQuantity });
 };
 
 function calculateBoxQuantity({ width, height, length }: IData) {
