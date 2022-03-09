@@ -14,8 +14,6 @@ import {
 } from 'generated/graphql';
 import { showError, showSuccess, showInfo } from '@helpers';
 
-const { Item } = Form;
-
 export interface IEditArticleFormProps {
   articleId: string,
   details: any,
@@ -57,14 +55,13 @@ export const EditArticleForm: FC<IEditArticleFormProps> = ({articleId, details}:
             })
             .catch((err) => showError(t('messages:error-update-data')));
     };
-    let tmp_details = {...details};
-    delete tmp_details['id'];
-    delete tmp_details['created'];
-    delete tmp_details['modified'];
     
-    form.setFieldsValue(tmp_details);
-    console.log(tmp_details);
     useEffect(() => {
+        let tmp_details = {...details};
+        delete tmp_details['id'];
+        delete tmp_details['created'];
+        delete tmp_details['modified'];
+        form.setFieldsValue(tmp_details);
         if (updateLoading) {
             showInfo(t('messages:info-update-wip'));
         }
