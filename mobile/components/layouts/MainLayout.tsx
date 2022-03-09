@@ -8,6 +8,9 @@ import styled from 'styled-components'
 
 const StyledMainLayout = styled(Layout)`
   height: 100vh;
+	min-height: -moz-available;
+  min-height: -webkit-fill-available;
+  min-height: fill-available;
 `
 
 export interface IMainLayoutProps {
@@ -45,11 +48,11 @@ const MainLayout: FC<IMainLayoutProps> = ({ children }: IMainLayoutProps) => {
 			<StyledMainLayout>
 				<DrawerProvider>
 					<Header />
-					<StyledMainLayout >
+					{/* <StyledMainLayout > */}
 						<AppContent>
 							{children}
 						</AppContent>
-					</StyledMainLayout >
+					{/* </StyledMainLayout > */}
 					<DrawerItems />
 				</DrawerProvider>
 			</StyledMainLayout >
