@@ -32,27 +32,17 @@ const SingleArticle: FC<ISingleArticleProps> = ({ aId, router }: ISingleArticleP
 
 	console.log(data)
 
-	// const breadsCrumb = [...articlesSubRoutes, {
-	// 	breadcrumbName: `${t('common:article')}`,
-	// },
-	// {
-	// 	breadcrumbName: `${aId}`,
-	// }
-	// ]
-
 	return (
 		<>
 			<HeaderContent
 				title={`${t('common:article')} ${aId}`}
 			/>
 			<Page>
-				{/* <StyledPageContent> */}
 				{data?.article && !isLoading ?
 					<DetailsList details={data?.article} />
 					:
 					<ScreenSpin />
 				}
-				{/* </StyledPageContent> */}
 			</Page>
 		</>
 	);
