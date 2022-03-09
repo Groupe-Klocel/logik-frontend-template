@@ -950,12 +950,37 @@ export type DeleteArticleMutationVariables = Exact<{
 export type DeleteArticleMutation = { __typename?: 'Mutation'; deleteArticle: boolean };
 
 export type UpdateArticleMutationVariables = Exact<{
-  id: Scalars['Int'];
-  input: UpdateArticleInput;
+    id: Scalars['Int'];
+    input: UpdateArticleInput;
 }>;
 
-
-export type UpdateArticleMutation = { __typename?: 'Mutation', updateArticle?: { __typename?: 'Article', id?: number | null | undefined, accountId: number, companyId: number, status: number, code: string, name: string, length: number, width: number, height: number, baseUnitWeight: number, boxWeight: number, boxQuantity: number, baseUnitPicking: boolean, boxPicking: boolean, cubingType: number, permanentProduct: boolean, additionalDescription?: string | null | undefined, supplierName?: string | null | undefined } | null | undefined };
+export type UpdateArticleMutation = {
+    __typename?: 'Mutation';
+    updateArticle?:
+        | {
+              __typename?: 'Article';
+              id?: number | null | undefined;
+              accountId: number;
+              companyId: number;
+              status: number;
+              code: string;
+              name: string;
+              length: number;
+              width: number;
+              height: number;
+              baseUnitWeight: number;
+              boxWeight: number;
+              boxQuantity: number;
+              baseUnitPicking: boolean;
+              boxPicking: boolean;
+              cubingType: number;
+              permanentProduct: boolean;
+              additionalDescription?: string | null | undefined;
+              supplierName?: string | null | undefined;
+          }
+        | null
+        | undefined;
+};
 
 export type GetAllBarcodesQueryVariables = Exact<{
     filters?: InputMaybe<BarcodeSearchFilters>;
@@ -1283,18 +1308,26 @@ export const UpdateArticleDocument = `
   }
 }
     `;
-export const useUpdateArticleMutation = <
-      TError = any,
-      TContext = any
-    >(
-      client: GraphQLClient,
-      options?: UseMutationOptions<UpdateArticleMutation, TError, UpdateArticleMutationVariables, TContext>,
-      headers?: RequestInit['headers']
-    ) =>
+export const useUpdateArticleMutation = <TError = any, TContext = any>(
+    client: GraphQLClient,
+    options?: UseMutationOptions<
+        UpdateArticleMutation,
+        TError,
+        UpdateArticleMutationVariables,
+        TContext
+    >,
+    headers?: RequestInit['headers']
+) =>
     useMutation<UpdateArticleMutation, TError, UpdateArticleMutationVariables, TContext>(
-      ['UpdateArticle'],
-      (variables?: UpdateArticleMutationVariables) => fetcher<UpdateArticleMutation, UpdateArticleMutationVariables>(client, UpdateArticleDocument, variables, headers)(),
-      options
+        ['UpdateArticle'],
+        (variables?: UpdateArticleMutationVariables) =>
+            fetcher<UpdateArticleMutation, UpdateArticleMutationVariables>(
+                client,
+                UpdateArticleDocument,
+                variables,
+                headers
+            )(),
+        options
     );
 export const GetAllBarcodesDocument = `
     query GetAllBarcodes($filters: BarcodeSearchFilters, $orderBy: [BarcodeOrderByCriterion!], $page: Int!, $itemsPerPage: Int!) {

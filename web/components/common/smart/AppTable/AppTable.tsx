@@ -52,8 +52,8 @@ const AppTable: FC<IAppTableProps> = ({
 
     let initialState;
 
-    if( data) {
-        formatDigitsForData(data)
+    if (data) {
+        formatDigitsForData(data);
     }
 
     if (typeof window !== 'undefined') {
@@ -215,7 +215,6 @@ const AppTable: FC<IAppTableProps> = ({
         setOnSave(false);
         return () => {};
     }, [onSave]);
-
 
     return (
         <PageTableContentWrapper>

@@ -12,7 +12,6 @@ export const AddStatusConfigForm = () => {
     //TODO FETCH GROUP'S NAME
     // TYPED SAFE ALL
 
-
     const onFinish = () => {
         alert('Success');
     };

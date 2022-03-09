@@ -22,7 +22,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     );
 
     const { id } = req.query;
-    
+
     const query = gql`
         query getArticleById($id: Int!) {
             article(id: $id) {
@@ -52,12 +52,16 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     const updateMutation = gql`
         mutation updateArticle($id: Int!, $input: UpdateArticleInput!) {
             updateArticle(id: $id, input: $input) {
-               boxQuantity
+                boxQuantity
             }
         }
     `;
 
-    const result = await graphqlRequestClient.request(updateMutation, updateVariables, requestHeader);
+    const result = await graphqlRequestClient.request(
+        updateMutation,
+        updateVariables,
+        requestHeader
+    );
 
     res.status(200).json({ quantity: result.updateArticle.boxQuantity });
 };

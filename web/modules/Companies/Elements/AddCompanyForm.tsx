@@ -8,7 +8,6 @@ export const AddCompanyForm = () => {
     //TODO FETCH GROUP'S NAME
     // TYPED SAFE ALL
 
-
     // Call api to create new user
     const onFinish = () => {
         alert('Success');

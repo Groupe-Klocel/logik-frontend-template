@@ -6,7 +6,7 @@ export const AddGroupForm = () => {
     const { t } = useTranslation('common');
 
     // TYPED SAFE ALL
-    
+
     // Call api to create new group
     const onFinish = () => {
         alert('Success');

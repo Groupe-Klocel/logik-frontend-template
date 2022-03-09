@@ -15,11 +15,14 @@ import {
 import { showError, showSuccess, showInfo } from '@helpers';
 
 export interface IEditArticleFormProps {
-  articleId: string,
-  details: any,
+    articleId: string;
+    details: any;
 }
 
-export const EditArticleForm: FC<IEditArticleFormProps> = ({articleId, details}: IEditArticleFormProps) => {
+export const EditArticleForm: FC<IEditArticleFormProps> = ({
+    articleId,
+    details
+}: IEditArticleFormProps) => {
     const { t } = useTranslation();
     const { graphqlRequestClient } = useAuth();
     const router = useRouter();
@@ -51,13 +54,16 @@ export const EditArticleForm: FC<IEditArticleFormProps> = ({articleId, details}:
     const onFinish = () => {
         form.validateFields()
             .then(() => {
-              updateArticle({ id: parseInt(articleId), input: { ...form.getFieldsValue(true), accountId: 1 } });
+                updateArticle({
+                    id: parseInt(articleId),
+                    input: { ...form.getFieldsValue(true), accountId: 1 }
+                });
             })
             .catch((err) => showError(t('messages:error-update-data')));
     };
 
     useEffect(() => {
-        const tmp_details = {...details};
+        const tmp_details = { ...details };
         delete tmp_details['id'];
         delete tmp_details['created'];
         delete tmp_details['modified'];
@@ -68,22 +74,20 @@ export const EditArticleForm: FC<IEditArticleFormProps> = ({articleId, details}:
     }, [updateLoading]);
 
     return (
-      <StyledForm>
-        <Form form={form} scrollToFirstError>
-          	<AddArticleStep1/>
-          	<AddArticleStep2/>
-          	<AddArticleStep3/>
-			<div style={{ textAlign: 'right' }}>
-				<Space>
-					<Button onClick={()=> onFinish()} type="primary">
-						{t('actions:update')}
-					</Button>
-					<Button onClick={() => router.back()}>
-						{t('actions:cancel')}
-					</Button>
-				</Space>
-			</div>
-        </Form>
-      </StyledForm>
+        <StyledForm>
+            <Form form={form} scrollToFirstError>
+                <AddArticleStep1 />
+                <AddArticleStep2 />
+                <AddArticleStep3 />
+                <div style={{ textAlign: 'right' }}>
+                    <Space>
+                        <Button onClick={() => onFinish()} type="primary">
+                            {t('actions:update')}
+                        </Button>
+                        <Button onClick={() => router.back()}>{t('actions:cancel')}</Button>
+                    </Space>
+                </div>
+            </Form>
+        </StyledForm>
     );
 };

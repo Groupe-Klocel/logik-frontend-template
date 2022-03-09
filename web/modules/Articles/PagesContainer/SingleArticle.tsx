@@ -86,15 +86,15 @@ const SingleArticle: FC<ISingleArticleProps> = ({ id, router }: ISingleArticlePr
             setIsCalculating(false);
         }
         const qntData = await res.json();
-      
-        if(data?.article){
+
+        if (data?.article) {
             data.article.boxQuantity = qntData.quantity;
             // router.reload();
             showSuccess(t('messages:success-update-box-quantity'));
             // forceUpdate();
         }
         setIsCalculating(false);
-    }
+    };
 
     return (
         <>
@@ -120,7 +120,11 @@ const SingleArticle: FC<ISingleArticleProps> = ({ id, router }: ISingleArticlePr
                 }
             />
             <StyledPageContent>
-                {data && !isLoading && !isCalculating? <ArticleDetails details={data?.article} /> : <ContentSpin />}
+                {data && !isLoading && !isCalculating ? (
+                    <ArticleDetails details={data?.article} />
+                ) : (
+                    <ContentSpin />
+                )}
             </StyledPageContent>
         </>
     );

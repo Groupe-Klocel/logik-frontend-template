@@ -2,13 +2,11 @@ import { WrapperForm } from '@components';
 import { Button, Col, Form, Input, Row } from 'antd';
 import useTranslation from 'next-translate/useTranslation';
 
-
 export const AddStockStatusForm = () => {
     const { t } = useTranslation('common');
 
     //TODO FETCH GROUP'S NAME
     // TYPED SAFE ALL
-
 
     // Call api to create new user
     const onFinish = () => {

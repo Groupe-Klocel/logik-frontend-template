@@ -2,10 +2,7 @@ import { ContentSpin } from '@components';
 import { Layout } from 'antd';
 import { articlesSubRoutes } from 'modules/Articles/Static/articlesRoutes';
 import useTranslation from 'next-translate/useTranslation';
-import {
-    GetArticleByIdQuery,
-    useGetArticleByIdQuery
-} from 'generated/graphql';
+import { GetArticleByIdQuery, useGetArticleByIdQuery } from 'generated/graphql';
 import { useAuth } from 'context/AuthContext';
 import { FC, useEffect } from 'react';
 import { NextRouter } from 'next/router';
@@ -43,7 +40,6 @@ const EditArticle: FC<IEditArticleProps> = ({ id, router }: IEditArticleProps) =
         }
     ];
 
-
     useEffect(() => {
         if (error) {
             showError(t('messages:error-getting-data'));
@@ -68,7 +64,11 @@ const EditArticle: FC<IEditArticleProps> = ({ id, router }: IEditArticleProps) =
                 // }
             />
             <StyledPageContent>
-               {data && !isLoading ? <EditArticleForm articleId={id} details={data?.article}/>: <ContentSpin />}
+                {data && !isLoading ? (
+                    <EditArticleForm articleId={id} details={data?.article} />
+                ) : (
+                    <ContentSpin />
+                )}
             </StyledPageContent>
         </>
     );

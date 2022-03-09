@@ -2,7 +2,8 @@ import { stringToBoolean, cookie } from '@helpers';
 import { createCtx } from './create-context';
 
 // init from cookies
-const menuInitialState = cookie.get('isSettingMenuCollapsed') ? stringToBoolean(cookie.get('isSettingMenuCollapsed'))
+const menuInitialState = cookie.get('isSettingMenuCollapsed')
+    ? stringToBoolean(cookie.get('isSettingMenuCollapsed'))
     : true;
 const themeInitialState = cookie.get('theme') ? cookie.get('theme') : 'light';
 

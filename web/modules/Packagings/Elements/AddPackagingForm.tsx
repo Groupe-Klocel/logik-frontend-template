@@ -5,7 +5,6 @@ import useTranslation from 'next-translate/useTranslation';
 export const AddPackagingForm = () => {
     const { t } = useTranslation('common');
 
-
     // Call api to create new group
     const onFinish = () => {
         alert('Success');

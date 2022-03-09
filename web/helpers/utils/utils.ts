@@ -152,7 +152,6 @@ function getMenuState(isSettingMenuCollapsed: boolean) {
     return menuState;
 }
 
-
 function isEmpty(object: any) {
     for (const property in object) {
         return false;
@@ -160,38 +159,32 @@ function isEmpty(object: any) {
     return true;
 }
 
-
-function formatDigits (x: number) {
+function formatDigits(x: number) {
     return x.toFixed(2);
 }
 
 function isFloat(value: any) {
-    if (typeof value === 'number' &&
-      !Number.isNaN(value) &&
-      !Number.isInteger(value)
-    ) {
-      return true;
+    if (typeof value === 'number' && !Number.isNaN(value) && !Number.isInteger(value)) {
+        return true;
     }
-  
+
     return false;
-  }
+}
 
-  function isNumeric(num:any){
-    return !isNaN(num)
-  }
+function isNumeric(num: any) {
+    return !isNaN(num);
+}
 
-  function formatDigitsForData (data:any) {
+function formatDigitsForData(data: any) {
     return data.map((object: any) => {
-         Object.keys(object).map((key) => {
+        Object.keys(object).map((key) => {
             if (isFloat(object[key])) {
-                object[key] = formatDigits(object[key])
+                object[key] = formatDigits(object[key]);
             }
-          })
-        }          
-    )
- }
+        });
+    });
+}
 
- 
 function decodeJWT(token: string) {
     const base64Url = token.split('.')[1];
     const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');

@@ -41,22 +41,22 @@ export const AddBarcodeForm = () => {
     // TYPED SAFE ALL
     const [form] = Form.useForm();
 
-    const {
-        mutate,
-        isLoading: createLoading,
-    } = useCreateBarcodeMutation<Error>(graphqlRequestClient, {
-        onSuccess: (
-            data: CreateBarcodeMutation,
-            _variables: CreateBarcodeMutationVariables,
-            _context: any
-        ) => {
-            router.push(`/barcode/${data.createBarcode.id}`);
-            showSuccess(t('messages:success-created'));
-        },
-        onError: () => {
-            showError(t('messages:error-creating-data'));
+    const { mutate, isLoading: createLoading } = useCreateBarcodeMutation<Error>(
+        graphqlRequestClient,
+        {
+            onSuccess: (
+                data: CreateBarcodeMutation,
+                _variables: CreateBarcodeMutationVariables,
+                _context: any
+            ) => {
+                router.push(`/barcode/${data.createBarcode.id}`);
+                showSuccess(t('messages:success-created'));
+            },
+            onError: () => {
+                showError(t('messages:error-creating-data'));
+            }
         }
-    });
+    );
 
     const createBarcode = ({ input }: CreateBarcodeMutationVariables) => {
         mutate({ input });

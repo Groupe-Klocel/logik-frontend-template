@@ -1,5 +1,5 @@
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
-import { Logo, StyledForm, WelcomeText, WrapperLogin , LinkButton} from '@components';
+import { Logo, StyledForm, WelcomeText, WrapperLogin, LinkButton } from '@components';
 import { Button, Form, Input } from 'antd';
 import { useAuth } from 'context/AuthContext';
 import useTranslation from 'next-translate/useTranslation';
@@ -23,7 +23,8 @@ export const LoginForm = () => {
     const onFinish = (values: any) => {
         login({
             username: values.username,
-            password: values.password        });
+            password: values.password
+        });
     };
 
     return (
@@ -58,11 +59,7 @@ export const LoginForm = () => {
                     </Form.Item>
 
                     <Form.Item>
-                    <LinkButton
-                            title={forgotPassword}
-                            path="/forgot-password"
-                            type="link"
-                        />
+                        <LinkButton title={forgotPassword} path="/forgot-password" type="link" />
                     </Form.Item>
 
                     <Form.Item>

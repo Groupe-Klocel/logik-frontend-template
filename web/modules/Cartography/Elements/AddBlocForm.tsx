@@ -7,7 +7,6 @@ export const AddBlocForm = () => {
 
     // TYPED SAFE ALL
 
-
     // Call api to create new group
     const onFinish = () => {
         alert('Success');
