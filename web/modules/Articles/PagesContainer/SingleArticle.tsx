@@ -82,7 +82,7 @@ const SingleArticle: FC<ISingleArticleProps> = ({ id, router }: ISingleArticlePr
         const res = await fetch(`/api/article/update-quantity/${id}`);
         if (!res.ok) {
             const message = t('An error has occured: ') + res.status;
-            showError(t('messsage:failed-update-box-quantity'));
+            showError(t('messsages:error-update-data'));
             setIsCalculating(false);
         }
         const qntData = await res.json();
@@ -90,7 +90,7 @@ const SingleArticle: FC<ISingleArticleProps> = ({ id, router }: ISingleArticlePr
         if (data?.article) {
             data.article.boxQuantity = qntData.quantity;
             // router.reload();
-            showSuccess(t('messages:success-update-box-quantity'));
+            showSuccess(t('messages:success-update-data'));
             // forceUpdate();
         }
         setIsCalculating(false);
