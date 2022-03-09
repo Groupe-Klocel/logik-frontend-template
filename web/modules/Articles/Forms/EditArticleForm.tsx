@@ -1,6 +1,6 @@
 import { FC, useEffect } from 'react';
-import { Button, Form, Modal, Space } from 'antd';
-import { StyledForm, WrapperForm, WrapperStepContent } from '@components';
+import { Button, Form, Space } from 'antd';
+import { StyledForm } from '@components';
 import { AddArticleStep1 } from './Steps/AddArticleStep1';
 import { AddArticleStep2 } from './Steps/AddArticleStep2';
 import { AddArticleStep3 } from './Steps/AddArticleStep3';
@@ -16,11 +16,11 @@ import { showError, showSuccess, showInfo } from '@helpers';
 
 export interface IEditArticleFormProps {
   articleId: string,
-  details: any,
+  details: unknown,
 }
 
 export const EditArticleForm: FC<IEditArticleFormProps> = ({articleId, details}: IEditArticleFormProps) => {
-    let { t } = useTranslation();
+    const { t } = useTranslation();
     const { graphqlRequestClient } = useAuth();
     const router = useRouter();
 
@@ -55,7 +55,7 @@ export const EditArticleForm: FC<IEditArticleFormProps> = ({articleId, details}:
             })
             .catch((err) => showError(t('messages:error-update-data')));
     };
-    
+
     useEffect(() => {
         let tmp_details = {...details};
         delete tmp_details['id'];

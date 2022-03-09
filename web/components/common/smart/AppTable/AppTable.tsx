@@ -16,21 +16,21 @@ const { Column } = Table;
 export interface IAppTableProps {
     // Refactory to strong type
     type: string;
-    data: Array<any> | undefined;
+    data: Array<unknown> | undefined;
     isLoading?: boolean;
-    columns: any[]; //need to find what is wrong with this MyColumnType[],
+    columns: unknown[]; //need to find what is wrong with this MyColumnType[],
     scroll?: {
         x?: number | string;
         y?: number | string;
     };
-    pagination?: any;
-    setPagination?: any;
+    pagination?: unknown;
+    setPagination?: unknown;
     stickyActions?: {
-        export?: any;
+        export?: unknown;
         // delete?: boolean;
     };
     filter?: boolean;
-    onChange?: any;
+    onChange?: unknown;
 }
 
 const AppTable: FC<IAppTableProps> = ({
@@ -47,7 +47,7 @@ const AppTable: FC<IAppTableProps> = ({
 }: IAppTableProps) => {
     const { t } = useTranslation();
     // get filter from cookies if exist
-    const filterDrawerRef = useRef() as any | undefined;
+    const filterDrawerRef = useRef() as unknown | undefined;
     const allColumnKeys = getKeys(columns);
 
     let initialState;
@@ -66,7 +66,7 @@ const AppTable: FC<IAppTableProps> = ({
         const storedArray = initialState.filteredColumns;
         const inputArray = checkKeyPresenceInArray('render', columns);
         const titleCheck = checkKeyPresenceInArray('title', columns);
-        const updatedStoredArr = storedArray.map((a: any) => {
+        const updatedStoredArr = storedArray.map((a: unknown) => {
             const exists = inputArray.find((b) => a.key == b.key);
             const titles = titleCheck.find((b) => a.key == b.key);
             if (exists) {
@@ -87,10 +87,10 @@ const AppTable: FC<IAppTableProps> = ({
     const [fixedColumns, setFixedColumns] = useState<Key[]>(
         initialState !== null ? initialState.fixedColumns : []
     );
-    const [filteredColumns, setFilteredColumns] = useState<any[]>(
+    const [filteredColumns, setFilteredColumns] = useState<unknown[]>(
         initialState !== null ? initialState.filteredColumns : setCustomColumnsProps(columns)
     );
-    const [tableColumns, setTableColumns] = useState<any[]>(
+    const [tableColumns, setTableColumns] = useState<unknown[]>(
         initialState !== null ? initialState.tableColumns : setCustomColumnsProps(columns)
     );
 
@@ -192,7 +192,7 @@ const AppTable: FC<IAppTableProps> = ({
     useEffect(() => {
         if (visibleColumnKeys) {
             if (visibleColumnKeys.length) {
-                const temp = filteredColumns.filter((f: any) => visibleColumnKeys.includes(f.key));
+                const temp = filteredColumns.filter((f: unknown) => visibleColumnKeys.includes(f.key));
                 setTableColumns(temp);
             } else {
                 setTableColumns(filteredColumns);

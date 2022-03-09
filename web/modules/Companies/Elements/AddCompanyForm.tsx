@@ -11,18 +11,15 @@ export const AddCompanyForm = () => {
     //TODO FETCH GROUP'S NAME
     // TYPED SAFE ALL
 
-    const [newCompanyData, setNewCompanyData] = useState('');
 
     // Call api to create new user
-    const onFinish = (values: any) => {
+    const onFinish = () => {
         alert('Success');
-        setNewCompanyData(values);
     };
 
-    const onFinishFailed = (errorInfo: any) => {
+    const onFinishFailed = () => {
         alert('Failed');
     };
-
     return (
         <WrapperForm>
             <Form

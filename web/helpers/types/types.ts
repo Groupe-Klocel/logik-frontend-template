@@ -11,7 +11,7 @@ export type MyColumnType = {
     dataIndex?: string;
     disabled?: boolean;
     fixed?: boolean | string;
-    render?: any;
+    render?: unknown;
 };
 
 export type ProfileMenuType = {
@@ -19,7 +19,7 @@ export type ProfileMenuType = {
     title: string;
     path?: string;
     icon?: ReactNode;
-    onClick?: any;
+    onClick?: unknown;
 };
 
 export type BreadcrumbType = {
@@ -33,7 +33,7 @@ export type GroupType = {
 };
 
 export type DrawerType = {
-    context: any;
+    context: unknown;
     title: string;
     cancelButton: boolean;
     comfirmButton: boolean;
@@ -55,7 +55,7 @@ export type PaginationType = {
 export type DataQueryType = {
     count: number;
     itemsPerPage: number;
-    results: Array<any>;
+    results: Array<unknown>;
     totalPages: number;
 };
 export type DataFilterType = {

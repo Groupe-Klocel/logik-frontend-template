@@ -15,7 +15,7 @@ import { useState, useEffect, useCallback } from 'react';
 const { Title } = Typography;
 
 export interface IArticleDetailsProps {
-    details?: any;
+    details?: unknown;
 }
 
 const ArticleDetails = ({ details }: IArticleDetailsProps) => {

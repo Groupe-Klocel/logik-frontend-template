@@ -1,22 +1,18 @@
 import { WrapperForm } from '@components';
 import { Button, Col, Form, Input, Row } from 'antd';
 import useTranslation from 'next-translate/useTranslation';
-import { useState } from 'react';
 
 export const AddGroupForm = () => {
     const { t } = useTranslation('common');
 
     // TYPED SAFE ALL
-
-    const [newGroupData, setNewGroupData] = useState('');
-
+    
     // Call api to create new group
-    const onFinish = (values: any) => {
+    const onFinish = () => {
         alert('Success');
-        setNewGroupData(values);
     };
 
-    const onFinishFailed = (errorInfo: any) => {
+    const onFinishFailed = () => {
         alert('Failed');
     };
 

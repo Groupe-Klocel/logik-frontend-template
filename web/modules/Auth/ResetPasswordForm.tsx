@@ -1,4 +1,3 @@
-import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { Logo, StyledForm, WelcomeText, WrapperLogin, LinkButton } from '@components';
 import { Button, Form, Input } from 'antd';
 import { useAuth } from 'context/AuthContext';
@@ -23,7 +22,7 @@ export const ResetPasswordForm = () => {
 
 	const [form] = Form.useForm();
 
-	const onFinish = (values: any) => {
+	const onFinish = (values: unknown) => {
 		resetPassword({
 				username: values.username,
 				password: values.password,

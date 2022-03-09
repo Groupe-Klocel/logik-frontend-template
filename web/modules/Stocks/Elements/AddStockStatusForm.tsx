@@ -11,15 +11,13 @@ export const AddStockStatusForm = () => {
     //TODO FETCH GROUP'S NAME
     // TYPED SAFE ALL
 
-    const [newStockStatusData, setNewStockStatusData] = useState('');
 
     // Call api to create new user
-    const onFinish = (values: any) => {
+    const onFinish = () => {
         alert('Success');
-        setNewStockStatusData(values);
     };
 
-    const onFinishFailed = (errorInfo: any) => {
+    const onFinishFailed = () => {
         alert('Failed');
     };
 

@@ -8,7 +8,7 @@ export interface ILinkButtonProps {
         | string
         | {
               pathname: string;
-              query: any;
+              query: unknown;
           };
     type?: 'link' | 'text' | 'ghost' | 'default' | 'primary' | 'dashed' | undefined;
     icon?: ReactNode;

@@ -15,13 +15,13 @@ import useTranslation from 'next-translate/useTranslation';
 
 interface IAuthContext {
     isAuthenticated: boolean;
-    user?: any;
+    user?: unknown;
     login: Function;
     forgotPassword: Function;
     resetPassword: Function;
     loading: boolean;
     logout: Function;
-    graphqlRequestClient: any;
+    graphqlRequestClient: unknown;
 }
 
 // refactoring need to typesafe https://react-typescript-cheatsheet.netlify.app/docs/basic/getting-started/context/
@@ -74,12 +74,12 @@ export const AuthProvider: FC<OnlyChildrenType> = ({ children }: OnlyChildrenTyp
         mutate({ username, password , warehouseId});
     };
 
-    const forgotPassword = async ({ username, warehouseId = process.env.NEXT_PUBLIC_WAREHOUSE_ID }: any) => {
-        console.log("FORTGOT PASSWORD CHECK")
+    const forgotPassword = async ({ username, warehouseId = process.env.NEXT_PUBLIC_WAREHOUSE_ID }: unknown) => {
+        alert("FORTGOT PASSWORD CHECK")
     };
 
-    const resetPassword = async ({ username, password, comfirmPassword, warehouseId = process.env.NEXT_PUBLIC_WAREHOUSE_ID }: any) => {
-        console.log("RESET PASSWORD CHECK")
+    const resetPassword = async ({ username, password, comfirmPassword, warehouseId = process.env.NEXT_PUBLIC_WAREHOUSE_ID }: unknown) => {
+        alert("RESET PASSWORD CHECK")
     };
 
     const logout = () => {

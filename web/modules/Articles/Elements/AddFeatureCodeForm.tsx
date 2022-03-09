@@ -1,22 +1,19 @@
 import { WrapperForm } from '@components';
 import { Button, Checkbox, Col, Form, Input, Row } from 'antd';
 import useTranslation from 'next-translate/useTranslation';
-import { useState } from 'react';
 
 export const AddFeatureCodeForm = () => {
     const { t } = useTranslation('common');
 
     // TYPED SAFE ALL
 
-    const [newFeatureCodeData, setNewFeatureCodeData] = useState('');
 
     // Call api to create new group
-    const onFinish = (values: any) => {
+    const onFinish = () => {
         alert('Success');
-        setNewFeatureCodeData(values);
     };
 
-    const onFinishFailed = (errorInfo: any) => {
+    const onFinishFailed = () => {
         alert('Failed');
     };
 

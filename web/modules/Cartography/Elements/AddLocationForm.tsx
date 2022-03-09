@@ -11,15 +11,13 @@ export const AddLocationForm = () => {
 
     // TYPED SAFE ALL
 
-    const [newLocationData, setNewLocationData] = useState('');
 
     // Call api to create new group
-    const onFinish = (values: any) => {
+    const onFinish = () => {
         alert('Success');
-        setNewLocationData(values);
     };
 
-    const onFinishFailed = (errorInfo: any) => {
+    const onFinishFailed = () => {
         alert('Failed');
     };
 
@@ -42,7 +40,7 @@ export const AddLocationForm = () => {
                     ]}
                 >
                     <Select placeholder={`${t('error-message-select-1')} ${t('bloc')}`}>
-                        {blocsData.map((bloc: any) => (
+                        {blocsData.map((bloc: unknown) => (
                             <Option key={bloc.id} value={bloc.name}>
                                 {bloc.name}
                             </Option>

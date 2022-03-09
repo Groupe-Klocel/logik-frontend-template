@@ -15,17 +15,15 @@
     },
     "plugins": ["react", "@typescript-eslint", "unused-imports"],
     "rules": {
-        // "@typescript-eslint/no-unused-vars": "error",
-        // "@typescript-eslint/no-explicit-any": "warn",
-        // "unused-imports/no-unused-vars": [
-        //     "warn",
-        //     {
-        //         "vars": "all",
-        //         "varsIgnorePattern": "^_",
-        //         "args": "after-used",
-        //         "argsIgnorePattern": "^_"
-        //     }
-        // ]
+        "unused-imports/no-unused-vars": [
+            "warn",
+            {
+                "vars": "all",
+                "varsIgnorePattern": "^_",
+                "args": "after-used",
+                "argsIgnorePattern": "^_"
+            }
+        ],
         "no-unused-vars": "off",
         "unused-imports/no-unused-imports": "error"
     }

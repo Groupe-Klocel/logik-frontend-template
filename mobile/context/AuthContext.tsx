@@ -75,11 +75,11 @@ export const AuthProvider: FC<OnlyChildrenType> = ({ children }: OnlyChildrenTyp
 	};
 
 	const forgotPassword = async ({ username, warehouseId = process.env.NEXT_PUBLIC_WAREHOUSE_ID }: any) => {
-			console.log("FORTGOT PASSWORD CHECK")
+			alert("FORTGOT PASSWORD CHECK")
 	};
 
 	const resetPassword = async ({ username, password, comfirmPassword, warehouseId = process.env.NEXT_PUBLIC_WAREHOUSE_ID }: any) => {
-			console.log("RESET PASSWORD CHECK")
+			alert("RESET PASSWORD CHECK")
 	};
 
 	const logout = () => {

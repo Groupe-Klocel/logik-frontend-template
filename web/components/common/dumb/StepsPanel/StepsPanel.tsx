@@ -4,14 +4,14 @@ import { Steps } from 'antd';
 const { Step } = Steps;
 
 interface IStepsPanelProps {
-    steps: any;
+    steps: unknown;
     currentStep: number;
 }
 
 const StepsPanel: FC<IStepsPanelProps> = ({ steps, currentStep }: IStepsPanelProps) => {
     return (
         <Steps current={currentStep}>
-            {steps.map((step: any) => (
+            {steps.map((step: unknown) => (
                 <Step key={step.key} title={step.title} />
             ))}
         </Steps>

@@ -23,7 +23,7 @@ const StyledPageContent = styled(Layout.Content)`
 `;
 
 export interface ISingleArticleProps {
-    id: string | any;
+    id: string | unknown;
     router: NextRouter;
 }
 
@@ -82,12 +82,10 @@ const SingleArticle: FC<ISingleArticleProps> = ({ id, router }: ISingleArticlePr
         const res = await fetch(`/api/article/update-quantity/${id}`);
         if (!res.ok) {
             const message = t('An error has occured: ') + res.status;
-            console.log(message);
             showError(t('messsage:failed-update-box-quantity'));
             setIsCalculating(false);
         }
         const qntData = await res.json();
-        console.log(qntData);
       
         if(data?.article){
             data.article.boxQuantity = qntData.quantity;
