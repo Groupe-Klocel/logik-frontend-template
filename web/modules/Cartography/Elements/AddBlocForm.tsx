@@ -1,7 +1,6 @@
 import { WrapperForm } from '@components';
 import { Button, Checkbox, Col, Form, Input, Row } from 'antd';
 import useTranslation from 'next-translate/useTranslation';
-import { useState } from 'react';
 
 export const AddBlocForm = () => {
     const { t } = useTranslation('common');

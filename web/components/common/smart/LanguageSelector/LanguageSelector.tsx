@@ -19,7 +19,7 @@ const LanguageSelector: FC = () => {
 
     const dispatchLocale = useAppDispatch();
 
-    const changeLanguage = (value: unknown) => {
+    const changeLanguage = (value: any) => {
         const newLocale: string = value;
         selectLocaleSetting(newLocale);
         router.push(router.asPath, router.asPath, { locale: newLocale });

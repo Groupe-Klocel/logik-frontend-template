@@ -5,7 +5,7 @@ import { Typography } from 'antd';
 const { Title } = Typography;
 
 export interface IBarcodeDetailsProps {
-    details?: unknown;
+    details?: any;
 }
 
 const BarcodeDetails = ({ details }: IBarcodeDetailsProps) => {

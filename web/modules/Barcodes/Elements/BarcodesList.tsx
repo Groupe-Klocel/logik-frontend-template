@@ -13,13 +13,13 @@ import {
 } from '@helpers';
 
 export interface IBarcodesListProps {
-    searchCriteria?: unknown;
+    searchCriteria?: any;
 }
 
 const BarcodesList = ({ searchCriteria }: IBarcodesListProps) => {
     const [barcodes, setBarcodes] = useState<DataQueryType>();
 
-    const [sort, setSort] = useState<unknown>(null);
+    const [sort, setSort] = useState<any>(null);
 
     const [pagination, setPagination] = useState<PaginationType>({
         total: undefined,
@@ -58,7 +58,7 @@ const BarcodesList = ({ searchCriteria }: IBarcodesListProps) => {
         }
     }, [data]);
 
-    const handleTableChange = async (_pagination: unknown, _filter: unknown, sorter: unknown) => {
+    const handleTableChange = async (_pagination: any, _filter: any, sorter: any) => {
         await setSort(orberByFormater(sorter));
     };
 

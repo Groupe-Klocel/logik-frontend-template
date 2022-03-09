@@ -13,18 +13,13 @@
         "ecmaVersion": 13,
         "sourceType": "module"
     },
-    "plugins": ["react", "@typescript-eslint", "unused-imports"],
+    "plugins": ["react", "@typescript-eslint"],
     "rules": {
-        "unused-imports/no-unused-vars": [
-            "warn",
-            {
-                "vars": "all",
-                "varsIgnorePattern": "^_",
-                "args": "after-used",
-                "argsIgnorePattern": "^_"
-            }
-        ],
-        "no-unused-vars": "off",
-        "unused-imports/no-unused-imports": "error"
+        "@typescript-eslint/no-explicit-any":"off",
+        "@typescript-eslint/no-unused-vars":"off",
+        "@typescript-eslint/no-non-null-assertion": "off",
+        "@typescript-eslint/no-empty-function": "off",
+        "react-hooks/exhaustive-deps":"off",
+        "@typescript-eslint/ban-types": "off"
     }
 }

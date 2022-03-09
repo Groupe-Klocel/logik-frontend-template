@@ -3,7 +3,6 @@ import { GroupType } from '@helpers';
 import { Button, Checkbox, Col, Form, InputNumber, Row, Select } from 'antd';
 import { groupsData } from 'fake-data/groups';
 import useTranslation from 'next-translate/useTranslation';
-import { useState } from 'react';
 
 const { Option } = Select;
 

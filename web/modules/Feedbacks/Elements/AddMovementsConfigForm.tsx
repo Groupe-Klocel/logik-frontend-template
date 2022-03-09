@@ -2,7 +2,6 @@ import { WrapperForm } from '@components';
 import { Button, Checkbox, Col, Form, InputNumber, Row, Select } from 'antd';
 import { companiesData } from 'fake-data/companies';
 import useTranslation from 'next-translate/useTranslation';
-import { useState } from 'react';
 
 const { Option } = Select;
 
@@ -39,7 +38,7 @@ export const AddMovementsConfigForm = () => {
                     // rules={[{ required: true, message: `${t('error-message-select-1')} ${t('company')}`}]}
                 >
                     <Select placeholder={`${t('error-message-select-1')} ${t('company')}`}>
-                        {companiesData.map((company: unknown) => (
+                        {companiesData.map((company: any) => (
                             <Option key={company.id} value={company.name}>
                                 {company.name}
                             </Option>
@@ -59,7 +58,7 @@ export const AddMovementsConfigForm = () => {
                     ]}
                 >
                     <Select placeholder={`${t('error-message-select-1')} ${t('movement-code')}`}>
-                        {companiesData.map((group: unknown) => (
+                        {companiesData.map((group: any) => (
                             <Option key={group.id} value={group.name}>
                                 {group.name}
                             </Option>

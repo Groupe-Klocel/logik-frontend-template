@@ -42,7 +42,7 @@ export const AddArticleSetForm = () => {
                     ]}
                 >
                     <Select placeholder={t('messages:please-select', { name: 'company' })}>
-                        {companiesData.map((company: unknown) => (
+                        {companiesData.map((company: any) => (
                             <Option key={company!.id!} value={company.name}>
                                 {company.name}
                             </Option>
@@ -70,7 +70,7 @@ export const AddArticleSetForm = () => {
                     ]}
                 >
                     <Select placeholder={t('messages:please-select', { name: 'article' })}>
-                        {articlesData.map((article: unknown) => (
+                        {articlesData.map((article: any) => (
                             <Option key={article.id} value={article.name}>
                                 {article.name}
                             </Option>

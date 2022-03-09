@@ -3,7 +3,7 @@ import useTranslation from 'next-translate/useTranslation';
 import { FC } from 'react';
 
 export interface IArticlesSearchProps {
-    form: unknown;
+    form: any;
 }
 
 const ArticlesSearch: FC<IArticlesSearchProps> = ({ form }: IArticlesSearchProps) => {

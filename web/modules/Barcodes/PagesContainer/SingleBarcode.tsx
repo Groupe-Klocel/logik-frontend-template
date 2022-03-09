@@ -23,7 +23,7 @@ const StyledPageContent = styled(Layout.Content)`
 `;
 
 export interface ISingleBarcodeProps {
-    id: string | unknown;
+    id: string | any;
     router: NextRouter;
 }
 
@@ -43,7 +43,7 @@ const SingleBarcode: FC<ISingleBarcodeProps> = ({ id, router }: ISingleBarcodePr
             onSuccess: (
                 data: DeleteBarcodeMutation,
                 _variables: DeleteBarcodeMutationVariables,
-                _context: unknown
+                _context: any
             ) => {
                 router.back();
                 if (!deleteLoading) {

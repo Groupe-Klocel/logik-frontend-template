@@ -23,7 +23,7 @@ const StyledPageContent = styled(Layout.Content)`
 `;
 
 export interface ISingleArticleProps {
-    id: string | unknown;
+    id: string | any;
     router: NextRouter;
 }
 
@@ -54,7 +54,7 @@ const SingleArticle: FC<ISingleArticleProps> = ({ id, router }: ISingleArticlePr
             onSuccess: (
                 data: DeleteArticleMutation,
                 _variables: DeleteArticleMutationVariables,
-                _context: unknown
+                _context: any
             ) => {
                 router.back();
                 if (!deleteLoading) {

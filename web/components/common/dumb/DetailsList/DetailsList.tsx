@@ -5,7 +5,7 @@ import { CheckCircleOutlined, CloseSquareOutlined } from '@ant-design/icons';
 import useTranslation from 'next-translate/useTranslation';
 
 export interface IDetailsListProps {
-    details: unknown;
+    details: any;
     nbColumns?: {
         xxl?: number;
         xl?: number;

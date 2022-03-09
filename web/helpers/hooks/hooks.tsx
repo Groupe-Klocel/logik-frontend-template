@@ -6,7 +6,7 @@ import {
     GetAllBarcodesQuery
 } from 'generated/graphql';
 
-const useArticles = (search: unknown, page: number, itemsPerPage: number, sort: unknown) => {
+const useArticles = (search: any, page: number, itemsPerPage: number, sort: any) => {
     const { graphqlRequestClient } = useAuth();
 
     const articles = useGetAllArticlesQuery<Partial<GetAllArticlesQuery>, Error>(
@@ -22,7 +22,7 @@ const useArticles = (search: unknown, page: number, itemsPerPage: number, sort: 
     return articles;
 };
 
-const useBarcodes = (search: unknown, page: number, itemsPerPage: number, sort: unknown) => {
+const useBarcodes = (search: any, page: number, itemsPerPage: number, sort: any) => {
     const { graphqlRequestClient } = useAuth();
 
     const barcodes = useGetAllBarcodesQuery<Partial<GetAllBarcodesQuery>, Error>(

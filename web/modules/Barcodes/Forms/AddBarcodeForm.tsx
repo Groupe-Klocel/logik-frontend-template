@@ -1,5 +1,5 @@
 import { WrapperForm } from '@components';
-import { Button, Col, Input, InputNumber, Row, Select, Form } from 'antd';
+import { Button, Col, Input, InputNumber, Row, Form } from 'antd';
 import useTranslation from 'next-translate/useTranslation';
 import { useEffect } from 'react';
 import { useAuth } from 'context/AuthContext';
@@ -11,7 +11,7 @@ import {
 } from 'generated/graphql';
 import { showError, showSuccess, showInfo } from '@helpers';
 
-const { Option } = Select;
+// const { Option } = Select;
 
 export const AddBarcodeForm = () => {
     const { t } = useTranslation('common');
@@ -19,8 +19,8 @@ export const AddBarcodeForm = () => {
     const router = useRouter();
 
     // TEXTS TRANSLATION ( REFACTORING POSSIBLE / EXPORT / DON'T KNOW YET )
-    const selectArticle = t('common:article');
-    const selectArticlePlaceholder = t('messages:please-select', { name: t('common:article') });
+    // const selectArticle = t('common:article');
+    // const selectArticlePlaceholder = t('messages:please-select', { name: t('common:article') });
     const name = t('common:name');
     const rotation = t('d:rotation');
     const supplierName = t('d:supplierName');
@@ -44,17 +44,16 @@ export const AddBarcodeForm = () => {
     const {
         mutate,
         isLoading: createLoading,
-        data
     } = useCreateBarcodeMutation<Error>(graphqlRequestClient, {
         onSuccess: (
             data: CreateBarcodeMutation,
             _variables: CreateBarcodeMutationVariables,
-            _context: unknown
+            _context: any
         ) => {
             router.push(`/barcode/${data.createBarcode.id}`);
             showSuccess(t('messages:success-created'));
         },
-        onError: (error) => {
+        onError: () => {
             showError(t('messages:error-creating-data'));
         }
     });

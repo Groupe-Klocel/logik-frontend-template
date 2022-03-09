@@ -54,7 +54,7 @@ const orberByFormater = (sorter: any) => {
 
 // Set index to each object in an array
 function setIndex(array: Array<any>): Array<any> {
-    const arrayWithIndex = array.map((object: Object) => ({
+    const arrayWithIndex = array.map((object: any) => ({
         ...object,
         index: array.indexOf(object)
     }));
@@ -63,12 +63,12 @@ function setIndex(array: Array<any>): Array<any> {
 
 // add key pair value to each object in an array
 function addKeyValueToArrayObject(array: Array<any>, key: string, value: any): Array<any> {
-    const newarray = array.map((object: Object) => addKeyValueToObject(object, key, value));
+    const newarray = array.map((object: any) => addKeyValueToObject(object, key, value));
     return newarray;
 }
 
 // add key pair value to an object
-function addKeyValueToObject(object: Object, key: string, value: any): Object {
+function addKeyValueToObject(object: any, key: string, value: any): any {
     return Object.defineProperty(object, key, {
         value: value,
         writable: true,
@@ -153,7 +153,7 @@ function getMenuState(isSettingMenuCollapsed: boolean) {
 }
 
 
-function isEmpty(object: Object) {
+function isEmpty(object: any) {
     for (const property in object) {
         return false;
     }
@@ -176,7 +176,7 @@ function isFloat(value: any) {
     return false;
   }
 
-  function isNumeric(num){
+  function isNumeric(num:any){
     return !isNaN(num)
   }
 

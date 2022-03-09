@@ -24,7 +24,7 @@ import { EyeTwoTone, DeleteOutlined } from '@ant-design/icons';
 import { useState, useEffect, useCallback } from 'react';
 
 export interface IArticlesListProps {
-    searchCriteria?: unknown;
+    searchCriteria?: any;
 }
 
 const ArticlesList = ({ searchCriteria }: IArticlesListProps) => {
@@ -33,7 +33,7 @@ const ArticlesList = ({ searchCriteria }: IArticlesListProps) => {
 
     const [articles, setArticles] = useState<DataQueryType>();
 
-    const [sort, setSort] = useState<unknown>(null);
+    const [sort, setSort] = useState<any>(null);
 
     const [pagination, setPagination] = useState<PaginationType>({
         total: undefined,
@@ -57,7 +57,7 @@ const ArticlesList = ({ searchCriteria }: IArticlesListProps) => {
         onSuccess: (
             data: ExportArticlesMutation,
             _variables: ExportArticlesMutationVariables,
-            _context: unknown
+            _context: any
         ) => {
             showSuccess(t('messages:success-exported'));
         },
@@ -115,7 +115,7 @@ const ArticlesList = ({ searchCriteria }: IArticlesListProps) => {
         }
     }, [data]);
 
-    const handleTableChange = async (_pagination: unknown, _filter: unknown, sorter: unknown) => {
+    const handleTableChange = async (_pagination: any, _filter: any, sorter: any) => {
         await setSort(orberByFormater(sorter));
     };
 

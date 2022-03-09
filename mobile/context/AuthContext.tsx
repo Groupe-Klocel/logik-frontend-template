@@ -52,7 +52,7 @@ export const AuthProvider: FC<OnlyChildrenType> = ({ children }: OnlyChildrenTyp
 	}, []);
 
 	const { mutate } = useLoginMutation<Error>(graphqlRequestClient, {
-			onSuccess: (data: LoginMutation, _variables: LoginMutationVariables, _context: unknown) => {
+			onSuccess: (data: LoginMutation, _variables: LoginMutationVariables, _context: any) => {
 					if (data?.login?.accessToken) {
 							cookie.set('token', data.login.accessToken);
 							// Set Bearer JWT token to the header for future request

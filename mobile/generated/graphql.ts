@@ -3,7 +3,7 @@ import { RequestInit } from 'graphql-request/dist/types.dom';
 import { useQuery, UseQueryOptions, useMutation, UseMutationOptions } from 'react-query';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
-export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+export type Exact<T extends { [key: string]: any }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
 
@@ -519,7 +519,7 @@ export const GetAllArticlesDocument = `
     `;
 export const useGetAllArticlesQuery = <
   TData = GetAllArticlesQuery,
-  TError = unknown
+  TError = any
 >(
   client: GraphQLClient,
   variables: GetAllArticlesQueryVariables,
@@ -568,7 +568,7 @@ export const GetArticleByIdDocument = `
     `;
 export const useGetArticleByIdQuery = <
   TData = GetArticleByIdQuery,
-  TError = unknown
+  TError = any
 >(
   client: GraphQLClient,
   variables: GetArticleByIdQueryVariables,
@@ -588,8 +588,8 @@ export const LoginDocument = `
 }
     `;
 export const useLoginMutation = <
-  TError = unknown,
-  TContext = unknown
+  TError = any,
+  TContext = any
 >(
   client: GraphQLClient,
   options?: UseMutationOptions<LoginMutation, TError, LoginMutationVariables, TContext>,

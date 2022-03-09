@@ -16,7 +16,7 @@ import { showError, showSuccess, showInfo } from '@helpers';
 
 export interface IEditArticleFormProps {
   articleId: string,
-  details: unknown,
+  details: any,
 }
 
 export const EditArticleForm: FC<IEditArticleFormProps> = ({articleId, details}: IEditArticleFormProps) => {
@@ -34,7 +34,7 @@ export const EditArticleForm: FC<IEditArticleFormProps> = ({articleId, details}:
         onSuccess: (
             data: UpdateArticleMutation,
             _variables: UpdateArticleMutationVariables,
-            _context: unknown
+            _context: any
         ) => {
             router.push(`/article/${data.updateArticle?.id}`);
             showSuccess(t('messages:success-updated'));
@@ -57,7 +57,7 @@ export const EditArticleForm: FC<IEditArticleFormProps> = ({articleId, details}:
     };
 
     useEffect(() => {
-        let tmp_details = {...details};
+        const tmp_details = {...details};
         delete tmp_details['id'];
         delete tmp_details['created'];
         delete tmp_details['modified'];

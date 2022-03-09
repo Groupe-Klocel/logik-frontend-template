@@ -20,7 +20,7 @@ const StyledPageContent = styled(Layout.Content)`
 `;
 
 export interface IEditArticleProps {
-    id: string | unknown;
+    id: string | any;
     router: NextRouter;
 }
 

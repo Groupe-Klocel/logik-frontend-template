@@ -2,8 +2,7 @@ import { stringToBoolean, cookie } from '@helpers';
 import { createCtx } from './create-context';
 
 // init from cookies
-const menuInitialState = cookie.get('isSettingMenuCollapsed')
-    ? stringToBoolean(cookie.get('isSettingMenuCollapsed'))
+const menuInitialState = cookie.get('isSettingMenuCollapsed') ? stringToBoolean(cookie.get('isSettingMenuCollapsed'))
     : true;
 const themeInitialState = cookie.get('theme') ? cookie.get('theme') : 'light';
 
@@ -16,7 +15,7 @@ const initialState = {
 };
 
 type State = typeof initialState;
-type Action = unknown;
+type Action = any;
 
 function reducer(state: State, action: Action) {
     switch (action.type) {

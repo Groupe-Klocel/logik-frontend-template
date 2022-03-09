@@ -12,10 +12,9 @@ const StyledPageContent = styled(Layout.Content)`
 
 export interface ISingleUserProps {
     username: string;
-    userId: string;
 }
 
-export const SingleUser: FC<ISingleUserProps> = ({ username, userId }: ISingleUserProps) => {
+export const SingleUser: FC<ISingleUserProps> = ({ username }: ISingleUserProps) => {
     const { t } = useTranslation('common');
 
     // NEED TO FETCH SPECIFIC USER DATA BY ID TO DISPLAY USER DATA

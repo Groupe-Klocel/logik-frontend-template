@@ -18,8 +18,8 @@ import { arrayMoveImmutable } from 'array-move';
 import { MenuOutlined } from '@ant-design/icons';
 
 export interface ITableFilterProps {
-    ref: unknown;
-    columnsToFilter: unknown; //need to find what is wrong with this MyColumnType[],
+    ref: any;
+    columnsToFilter: any; //need to find what is wrong with this MyColumnType[],
     visibleKeys: Key[];
     fixKeys: Key[];
     onShowChange: Function;
@@ -59,7 +59,7 @@ const TableFilter: FC<ITableFilterProps> = forwardRef(
         const [currentFilteredColumns, setCurrentFilteredColumns] = useState(columnsToFilter);
 
         useImperativeHandle(ref, () => ({
-            reset(keys: unknown, columns: unknown) {
+            reset(keys: any, columns: any) {
                 setShowKeys(keys);
                 setFixedKeys([]);
                 setCurrentFilteredColumns(columns);
@@ -102,7 +102,7 @@ const TableFilter: FC<ITableFilterProps> = forwardRef(
             selectedRowKeys: fixedKeys,
             onChange: (selectedRowKeys: Key[]) => {
                 let tempColumns = currentFilteredColumns;
-                tempColumns = currentFilteredColumns.map((obj: unknown) => {
+                tempColumns = currentFilteredColumns.map((obj: any) => {
                     // change fixed to true
                     if (selectedRowKeys.some((r) => obj.index === r)) {
                         if (obj.index === 0 || obj.index === 1) {
@@ -173,7 +173,7 @@ const TableFilter: FC<ITableFilterProps> = forwardRef(
             }
         };
 
-        const DraggableContainer = (props: unknown) => (
+        const DraggableContainer = (props: any) => (
             <SortableBody
                 useDragHandle
                 disableAutoscroll
@@ -183,7 +183,7 @@ const TableFilter: FC<ITableFilterProps> = forwardRef(
             />
         );
 
-        const DraggableBodyRow = ({ className, style, ...restProps }: unknown) => {
+        const DraggableBodyRow = ({ className, style, ...restProps }: any) => {
             // function findIndex base on Table rowKey props and should always be a right array index
             const index = currentFilteredColumns.findIndex(
                 (x: { index: number }) => x.index === restProps['data-row-key']

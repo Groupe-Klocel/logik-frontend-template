@@ -3,7 +3,7 @@ import { RequestInit } from 'graphql-request/dist/types.dom';
 import { useQuery, UseQueryOptions, useMutation, UseMutationOptions } from 'react-query';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
-export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+export type Exact<T extends { [key: string]: any }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
 
@@ -23,9 +23,9 @@ export type Scalars = {
     Int: number;
     Float: number;
     /** Date with time (isoformat) */
-    DateTime: unknown;
+    DateTime: any;
     /** The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf). */
-    JSON: unknown;
+    JSON: any;
 };
 
 export type Article = {
@@ -888,9 +888,9 @@ export type GetArticleByIdQuery = {
               baseUnitRotation?: string | null | undefined;
               boxRotation?: string | null | undefined;
               featureTypeId?: number | null | undefined;
-              created?: unknown | null | undefined;
+              created?: any | null | undefined;
               createdBy?: string | null | undefined;
-              modified?: unknown | null | undefined;
+              modified?: any | null | undefined;
               modifiedBy?: string | null | undefined;
               tariffClassification?: string | null | undefined;
               family?: string | null | undefined;
@@ -1086,7 +1086,7 @@ export const GetAllArticlesDocument = `
   }
 }
     `;
-export const useGetAllArticlesQuery = <TData = GetAllArticlesQuery, TError = unknown>(
+export const useGetAllArticlesQuery = <TData = GetAllArticlesQuery, TError = any>(
     client: GraphQLClient,
     variables: GetAllArticlesQueryVariables,
     options?: UseQueryOptions<GetAllArticlesQuery, TError, TData>,
@@ -1138,7 +1138,7 @@ export const GetArticleByIdDocument = `
   }
 }
     `;
-export const useGetArticleByIdQuery = <TData = GetArticleByIdQuery, TError = unknown>(
+export const useGetArticleByIdQuery = <TData = GetArticleByIdQuery, TError = any>(
     client: GraphQLClient,
     variables: GetArticleByIdQueryVariables,
     options?: UseQueryOptions<GetArticleByIdQuery, TError, TData>,
@@ -1178,7 +1178,7 @@ export const CreateArticleDocument = `
   }
 }
     `;
-export const useCreateArticleMutation = <TError = unknown, TContext = unknown>(
+export const useCreateArticleMutation = <TError = any, TContext = any>(
     client: GraphQLClient,
     options?: UseMutationOptions<
         CreateArticleMutation,
@@ -1212,7 +1212,7 @@ export const ExportArticlesDocument = `
   }
 }
     `;
-export const useExportArticlesMutation = <TError = unknown, TContext = unknown>(
+export const useExportArticlesMutation = <TError = any, TContext = any>(
     client: GraphQLClient,
     options?: UseMutationOptions<
         ExportArticlesMutation,
@@ -1238,7 +1238,7 @@ export const DeleteArticleDocument = `
   deleteArticle(id: $id)
 }
     `;
-export const useDeleteArticleMutation = <TError = unknown, TContext = unknown>(
+export const useDeleteArticleMutation = <TError = any, TContext = any>(
     client: GraphQLClient,
     options?: UseMutationOptions<
         DeleteArticleMutation,
@@ -1284,8 +1284,8 @@ export const UpdateArticleDocument = `
 }
     `;
 export const useUpdateArticleMutation = <
-      TError = unknown,
-      TContext = unknown
+      TError = any,
+      TContext = any
     >(
       client: GraphQLClient,
       options?: UseMutationOptions<UpdateArticleMutation, TError, UpdateArticleMutationVariables, TContext>,
@@ -1323,7 +1323,7 @@ export const GetAllBarcodesDocument = `
   }
 }
     `;
-export const useGetAllBarcodesQuery = <TData = GetAllBarcodesQuery, TError = unknown>(
+export const useGetAllBarcodesQuery = <TData = GetAllBarcodesQuery, TError = any>(
     client: GraphQLClient,
     variables: GetAllBarcodesQueryVariables,
     options?: UseQueryOptions<GetAllBarcodesQuery, TError, TData>,
@@ -1356,7 +1356,7 @@ export const GetBarcodeByIdDocument = `
   }
 }
     `;
-export const useGetBarcodeByIdQuery = <TData = GetBarcodeByIdQuery, TError = unknown>(
+export const useGetBarcodeByIdQuery = <TData = GetBarcodeByIdQuery, TError = any>(
     client: GraphQLClient,
     variables: GetBarcodeByIdQueryVariables,
     options?: UseQueryOptions<GetBarcodeByIdQuery, TError, TData>,
@@ -1389,7 +1389,7 @@ export const CreateBarcodeDocument = `
   }
 }
     `;
-export const useCreateBarcodeMutation = <TError = unknown, TContext = unknown>(
+export const useCreateBarcodeMutation = <TError = any, TContext = any>(
     client: GraphQLClient,
     options?: UseMutationOptions<
         CreateBarcodeMutation,
@@ -1415,7 +1415,7 @@ export const DeleteBarcodeDocument = `
   deleteBarcode(id: $id)
 }
     `;
-export const useDeleteBarcodeMutation = <TError = unknown, TContext = unknown>(
+export const useDeleteBarcodeMutation = <TError = any, TContext = any>(
     client: GraphQLClient,
     options?: UseMutationOptions<
         DeleteBarcodeMutation,
@@ -1443,7 +1443,7 @@ export const LoginDocument = `
   }
 }
     `;
-export const useLoginMutation = <TError = unknown, TContext = unknown>(
+export const useLoginMutation = <TError = any, TContext = any>(
     client: GraphQLClient,
     options?: UseMutationOptions<LoginMutation, TError, LoginMutationVariables, TContext>,
     headers?: RequestInit['headers']

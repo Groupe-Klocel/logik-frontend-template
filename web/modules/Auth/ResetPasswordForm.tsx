@@ -22,7 +22,7 @@ export const ResetPasswordForm = () => {
 
 	const [form] = Form.useForm();
 
-	const onFinish = (values: unknown) => {
+	const onFinish = (values: any) => {
 		resetPassword({
 				username: values.username,
 				password: values.password,

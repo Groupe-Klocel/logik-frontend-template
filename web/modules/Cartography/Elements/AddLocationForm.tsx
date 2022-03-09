@@ -2,7 +2,6 @@ import { WrapperForm } from '@components';
 import { Button, Checkbox, Col, Form, Input, Row, Select } from 'antd';
 import { blocsData } from 'fake-data/blocs';
 import useTranslation from 'next-translate/useTranslation';
-import { useState } from 'react';
 
 const { Option } = Select;
 
@@ -40,7 +39,7 @@ export const AddLocationForm = () => {
                     ]}
                 >
                     <Select placeholder={`${t('error-message-select-1')} ${t('bloc')}`}>
-                        {blocsData.map((bloc: unknown) => (
+                        {blocsData.map((bloc: any) => (
                             <Option key={bloc.id} value={bloc.name}>
                                 {bloc.name}
                             </Option>

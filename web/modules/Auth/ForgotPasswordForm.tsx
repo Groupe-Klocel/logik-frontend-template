@@ -21,7 +21,7 @@ export const ForgotPasswordForm = () => {
 
 	const [form] = Form.useForm();
 
-	const onFinish = (values: unknown) => {
+	const onFinish = (values: any) => {
 			forgotPassword({
 				username: values.username,
 			});

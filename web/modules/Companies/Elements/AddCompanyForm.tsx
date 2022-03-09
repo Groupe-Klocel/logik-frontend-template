@@ -1,9 +1,6 @@
 import { WrapperForm } from '@components';
-import { Button, Col, Form, InputNumber, Row, Select } from 'antd';
+import { Button, Col, Form, InputNumber, Row } from 'antd';
 import useTranslation from 'next-translate/useTranslation';
-import { useState } from 'react';
-
-const { Option } = Select;
 
 export const AddCompanyForm = () => {
     const { t } = useTranslation('common');

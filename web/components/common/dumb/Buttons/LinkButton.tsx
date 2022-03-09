@@ -8,7 +8,7 @@ export interface ILinkButtonProps {
         | string
         | {
               pathname: string;
-              query: unknown;
+              query: any;
           };
     type?: 'link' | 'text' | 'ghost' | 'default' | 'primary' | 'dashed' | undefined;
     icon?: ReactNode;
@@ -16,7 +16,7 @@ export interface ILinkButtonProps {
 
 const LinkButton: FC<ILinkButtonProps> = ({ title, path, type, icon }: ILinkButtonProps) => {
     return (
-        <Link href={path}>
+        <Link href={path} passHref>
             <Button icon={icon} type={type}>
                 {title}
             </Button>

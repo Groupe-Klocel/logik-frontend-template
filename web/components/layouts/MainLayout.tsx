@@ -60,6 +60,6 @@ const MainLayout: FC<IMainLayoutProps> = ({ children }: IMainLayoutProps) => {
     );
 };
 
-export const getLayout = (page: unknown) => <MainLayout>{page}</MainLayout>;
+export const getLayout = (page: any) => <MainLayout>{page}</MainLayout>;
 
 export default MainLayout;

@@ -15,13 +15,13 @@ import useTranslation from 'next-translate/useTranslation';
 
 interface IAuthContext {
     isAuthenticated: boolean;
-    user?: unknown;
+    user?: any;
     login: Function;
     forgotPassword: Function;
     resetPassword: Function;
     loading: boolean;
     logout: Function;
-    graphqlRequestClient: unknown;
+    graphqlRequestClient: any;
 }
 
 // refactoring need to typesafe https://react-typescript-cheatsheet.netlify.app/docs/basic/getting-started/context/
@@ -52,7 +52,7 @@ export const AuthProvider: FC<OnlyChildrenType> = ({ children }: OnlyChildrenTyp
     }, []);
 
     const { mutate } = useLoginMutation<Error>(graphqlRequestClient, {
-        onSuccess: (data: LoginMutation, _variables: LoginMutationVariables, _context: unknown) => {
+        onSuccess: (data: LoginMutation, _variables: LoginMutationVariables, _context: any) => {
             if (data?.login?.accessToken) {
                 cookie.set('token', data.login.accessToken);
                 // Set Bearer JWT token to the header for future request
@@ -74,11 +74,11 @@ export const AuthProvider: FC<OnlyChildrenType> = ({ children }: OnlyChildrenTyp
         mutate({ username, password , warehouseId});
     };
 
-    const forgotPassword = async ({ username, warehouseId = process.env.NEXT_PUBLIC_WAREHOUSE_ID }: unknown) => {
+    const forgotPassword = async ({ username, warehouseId = process.env.NEXT_PUBLIC_WAREHOUSE_ID }: any) => {
         alert("FORTGOT PASSWORD CHECK")
     };
 
-    const resetPassword = async ({ username, password, comfirmPassword, warehouseId = process.env.NEXT_PUBLIC_WAREHOUSE_ID }: unknown) => {
+    const resetPassword = async ({ username, password, comfirmPassword, warehouseId = process.env.NEXT_PUBLIC_WAREHOUSE_ID }: any) => {
         alert("RESET PASSWORD CHECK")
     };
 

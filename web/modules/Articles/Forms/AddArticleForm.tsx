@@ -45,7 +45,7 @@ export const AddArticleForm = () => {
         onSuccess: (
             data: CreateArticleMutation,
             _variables: CreateArticleMutationVariables,
-            _context: unknown
+            _context: any
         ) => {
             router.push(`/article/${data.createArticle.id}`);
             showSuccess(t('messages:success-created'));
