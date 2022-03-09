@@ -13,15 +13,12 @@ export const AddStatusConfigForm = () => {
     //TODO FETCH GROUP'S NAME
     // TYPED SAFE ALL
 
-    const [newStatusConfigData, setNewStatusConfigData] = useState('');
 
-    // Call api to create new user
-    const onFinish = (values: any) => {
+    const onFinish = () => {
         alert('Success');
-        setNewStatusConfigData(values);
     };
 
-    const onFinishFailed = (errorInfo: any) => {
+    const onFinishFailed = () => {
         alert('Failed');
     };
 

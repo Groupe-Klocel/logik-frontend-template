@@ -1,13 +1,11 @@
 import { ThemeSwitch } from 'components/common/smart/Switchs/ThemeSwitch';
 import { MenuSwitch } from 'components/common/smart/Switchs/MenuSwitch';
-import { FC } from 'react';
 import { Row, Col, Divider } from 'antd';
 import useTranslation from 'next-translate/useTranslation';
 import { LanguageSelector } from 'components/common/smart/LanguageSelector/LanguageSelector';
 
-export interface IUserSettingsProps {}
 
-export const UserSettings: FC<IUserSettingsProps> = ({}: IUserSettingsProps) => {
+export const UserSettings = () => {
     const { t } = useTranslation();
 
     return (

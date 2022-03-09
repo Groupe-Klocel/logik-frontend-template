@@ -29,9 +29,7 @@ const SingleArticle: FC<ISingleArticleProps> = ({ aId, router }: ISingleArticleP
 	const { isLoading, data, error } = useGetArticleByIdQuery<GetArticleByIdQuery, Error>(graphqlRequestClient, {
 		id: aId,
 	})
-
-	console.log(data)
-
+	
 	return (
 		<>
 			<HeaderContent

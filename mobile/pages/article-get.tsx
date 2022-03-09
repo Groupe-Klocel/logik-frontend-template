@@ -14,7 +14,6 @@ const ArticleGet: PageComponent = () => {
   const { t } = useTranslation()
   const router = useRouter()
   const onFinish = (values: any) => {
-    console.log(values)
     const aId = values["article-id"]
     router.push(`/article/${aId}`)
   }

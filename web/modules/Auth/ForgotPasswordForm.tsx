@@ -1,4 +1,4 @@
-import { LockOutlined, UserOutlined } from '@ant-design/icons';
+import { UserOutlined } from '@ant-design/icons';
 import { Logo, StyledForm, WelcomeText, WrapperLogin, LinkButton } from '@components';
 import { Button, Form, Input } from 'antd';
 import { useAuth } from 'context/AuthContext';
@@ -21,7 +21,7 @@ export const ForgotPasswordForm = () => {
 
 	const [form] = Form.useForm();
 
-	const onFinish = (values: any) => {
+	const onFinish = (values: unknown) => {
 			forgotPassword({
 				username: values.username,
 			});

@@ -15,7 +15,7 @@ const initialState = {
 };
 
 type State = typeof initialState;
-type Action = any;
+type Action = unknown;
 function reducer(state: State, action: Action) {
     switch (action.type) {
         case 'OPEN_DRAWER':

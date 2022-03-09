@@ -20,7 +20,7 @@ export const LoginForm = () => {
 
     const [form] = Form.useForm();
 
-    const onFinish = (values: any) => {
+    const onFinish = (values: unknown) => {
         login({
             username: values.username,
             password: values.password        });

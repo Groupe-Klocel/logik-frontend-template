@@ -18,8 +18,8 @@ import { arrayMoveImmutable } from 'array-move';
 import { MenuOutlined } from '@ant-design/icons';
 
 export interface ITableFilterProps {
-    ref: any;
-    columnsToFilter: any; //need to find what is wrong with this MyColumnType[],
+    ref: unknown;
+    columnsToFilter: unknown; //need to find what is wrong with this MyColumnType[],
     visibleKeys: Key[];
     fixKeys: Key[];
     onShowChange: Function;
@@ -58,9 +58,8 @@ const TableFilter: FC<ITableFilterProps> = forwardRef(
         const [fixedKeys, setFixedKeys] = useState<Key[]>(fixKeys);
         const [currentFilteredColumns, setCurrentFilteredColumns] = useState(columnsToFilter);
 
-        console.log('currentFilteredColumns', currentFilteredColumns);
         useImperativeHandle(ref, () => ({
-            reset(keys: any, columns: any) {
+            reset(keys: unknown, columns: unknown) {
                 setShowKeys(keys);
                 setFixedKeys([]);
                 setCurrentFilteredColumns(columns);
@@ -103,7 +102,7 @@ const TableFilter: FC<ITableFilterProps> = forwardRef(
             selectedRowKeys: fixedKeys,
             onChange: (selectedRowKeys: Key[]) => {
                 let tempColumns = currentFilteredColumns;
-                tempColumns = currentFilteredColumns.map((obj: any) => {
+                tempColumns = currentFilteredColumns.map((obj: unknown) => {
                     // change fixed to true
                     if (selectedRowKeys.some((r) => obj.index === r)) {
                         if (obj.index === 0 || obj.index === 1) {
@@ -174,7 +173,7 @@ const TableFilter: FC<ITableFilterProps> = forwardRef(
             }
         };
 
-        const DraggableContainer = (props: any) => (
+        const DraggableContainer = (props: unknown) => (
             <SortableBody
                 useDragHandle
                 disableAutoscroll
@@ -184,7 +183,7 @@ const TableFilter: FC<ITableFilterProps> = forwardRef(
             />
         );
 
-        const DraggableBodyRow = ({ className, style, ...restProps }: any) => {
+        const DraggableBodyRow = ({ className, style, ...restProps }: unknown) => {
             // function findIndex base on Table rowKey props and should always be a right array index
             const index = currentFilteredColumns.findIndex(
                 (x: { index: number }) => x.index === restProps['data-row-key']

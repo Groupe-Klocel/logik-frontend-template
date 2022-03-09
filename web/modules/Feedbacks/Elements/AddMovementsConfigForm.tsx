@@ -12,15 +12,13 @@ export const AddMovementsConfigForm = () => {
     //TODO FETCH GROUP'S NAME
     // TYPED SAFE ALL
 
-    const [newMovementsConfigData, setNewMovementsConfigData] = useState('');
 
     // Call api to create new user
-    const onFinish = (values: any) => {
+    const onFinish = () => {
         alert('Success');
-        setNewMovementsConfigData(values);
     };
 
-    const onFinishFailed = (errorInfo: any) => {
+    const onFinishFailed = () => {
         alert('Failed');
     };
 
@@ -41,7 +39,7 @@ export const AddMovementsConfigForm = () => {
                     // rules={[{ required: true, message: `${t('error-message-select-1')} ${t('company')}`}]}
                 >
                     <Select placeholder={`${t('error-message-select-1')} ${t('company')}`}>
-                        {companiesData.map((company: any) => (
+                        {companiesData.map((company: unknown) => (
                             <Option key={company.id} value={company.name}>
                                 {company.name}
                             </Option>
@@ -61,7 +59,7 @@ export const AddMovementsConfigForm = () => {
                     ]}
                 >
                     <Select placeholder={`${t('error-message-select-1')} ${t('movement-code')}`}>
-                        {companiesData.map((group: any) => (
+                        {companiesData.map((group: unknown) => (
                             <Option key={group.id} value={group.name}>
                                 {group.name}
                             </Option>

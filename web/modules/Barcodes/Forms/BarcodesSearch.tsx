@@ -3,7 +3,7 @@ import useTranslation from 'next-translate/useTranslation';
 import { FC } from 'react';
 
 export interface IBarcodesSearchProps {
-    form: any;
+    form: unknown;
 }
 
 const BarcodesSearch: FC<IBarcodesSearchProps> = ({ form }: IBarcodesSearchProps) => {

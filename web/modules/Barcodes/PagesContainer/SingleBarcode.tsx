@@ -23,7 +23,7 @@ const StyledPageContent = styled(Layout.Content)`
 `;
 
 export interface ISingleBarcodeProps {
-    id: string | any;
+    id: string | unknown;
     router: NextRouter;
 }
 

@@ -7,7 +7,7 @@ export interface IHeaderContentProps {
     children?: ReactNode;
     title: string;
     routes: Array<BreadcrumbType>;
-    onBack?: any;
+    onBack?: unknown;
     actionsRight?: ReactNode;
     actionsLeft?: ReactNode;
 }

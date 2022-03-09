@@ -22,15 +22,13 @@ export const AddUserForm = () => {
     //TODO FETCH GROUP'S NAME
     // TYPED SAFE ALL
 
-    const [newUserData, setNewUserData] = useState('');
 
     // Call api to create new user
-    const onFinish = (values: any) => {
+    const onFinish = () => {
         alert('Success');
-        setNewUserData(values);
     };
 
-    const onFinishFailed = (errorInfo: any) => {
+    const onFinishFailed = () => {
         alert('Failed');
     };
 

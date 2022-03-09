@@ -3,7 +3,6 @@ import { Button, Col, Form, Input, Row, Select } from 'antd';
 import { articlesData } from 'fake-data/articles';
 import { companiesData } from 'fake-data/companies';
 import useTranslation from 'next-translate/useTranslation';
-import { useState } from 'react';
 
 const { Option } = Select;
 
@@ -12,15 +11,12 @@ export const AddArticleSetForm = () => {
 
     // TYPED SAFE ALL
 
-    const [newArticleSetData, setNewArticleSetData] = useState('');
-
     // Call api to create new group
-    const onFinish = (values: any) => {
+    const onFinish = () => {
         alert(`Success`);
-        setNewArticleSetData(values);
     };
 
-    const onFinishFailed = (errorInfo: any) => {
+    const onFinishFailed = () => {
         alert('Failed');
     };
 
@@ -46,8 +42,8 @@ export const AddArticleSetForm = () => {
                     ]}
                 >
                     <Select placeholder={t('messages:please-select', { name: 'company' })}>
-                        {companiesData.map((company: any) => (
-                            <Option key={company.id} value={company.name}>
+                        {companiesData.map((company: unknown) => (
+                            <Option key={company!.id!} value={company.name}>
                                 {company.name}
                             </Option>
                         ))}
@@ -74,7 +70,7 @@ export const AddArticleSetForm = () => {
                     ]}
                 >
                     <Select placeholder={t('messages:please-select', { name: 'article' })}>
-                        {articlesData.map((article: any) => (
+                        {articlesData.map((article: unknown) => (
                             <Option key={article.id} value={article.name}>
                                 {article.name}
                             </Option>

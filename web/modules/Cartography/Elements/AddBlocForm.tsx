@@ -8,15 +8,13 @@ export const AddBlocForm = () => {
 
     // TYPED SAFE ALL
 
-    const [newBlocData, setNewBlocData] = useState('');
 
     // Call api to create new group
-    const onFinish = (values: any) => {
+    const onFinish = () => {
         alert('Success');
-        setNewBlocData(values);
     };
 
-    const onFinishFailed = (errorInfo: any) => {
+    const onFinishFailed = () => {
         alert('Failed');
     };
 

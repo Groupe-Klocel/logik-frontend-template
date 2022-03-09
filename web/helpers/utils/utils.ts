@@ -176,13 +176,8 @@ function isFloat(value: any) {
     return false;
   }
 
-function isNumber(value: any) {
-    if (typeof value === 'number' ||
-      !Number.isNaN(value)   ) {
-      return true;
-    }
-  
-    return false;
+  function isNumeric(num){
+    return !isNaN(num)
   }
 
   function formatDigitsForData (data:any) {
@@ -239,7 +234,7 @@ const checkValuePresenceInArray = (value: any, array: any[]) =>
     array.some((obj) => obj.field === value);
 
 export {
-    isNumber,
+    isNumeric,
     formatDigitsForData,
     isFloat,
     formatDigits,

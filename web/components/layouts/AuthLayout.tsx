@@ -18,6 +18,6 @@ const AuthLayout: FC<IAuthLayoutProps> = ({ children }: IAuthLayoutProps) => {
     return <StyledAuthLayout>{children}</StyledAuthLayout>;
 };
 
-export const getLayout = (page: any) => <AuthLayout>{page}</AuthLayout>;
+export const getLayout = (page: unknown) => <AuthLayout>{page}</AuthLayout>;
 
 export default AuthLayout;

@@ -23,9 +23,9 @@ export type Scalars = {
     Int: number;
     Float: number;
     /** Date with time (isoformat) */
-    DateTime: any;
+    DateTime: unknown;
     /** The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf). */
-    JSON: any;
+    JSON: unknown;
 };
 
 export type Article = {
@@ -888,9 +888,9 @@ export type GetArticleByIdQuery = {
               baseUnitRotation?: string | null | undefined;
               boxRotation?: string | null | undefined;
               featureTypeId?: number | null | undefined;
-              created?: any | null | undefined;
+              created?: unknown | null | undefined;
               createdBy?: string | null | undefined;
-              modified?: any | null | undefined;
+              modified?: unknown | null | undefined;
               modifiedBy?: string | null | undefined;
               tariffClassification?: string | null | undefined;
               family?: string | null | undefined;
