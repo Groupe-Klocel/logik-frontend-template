@@ -49,7 +49,7 @@ export const AuthProvider: FC<OnlyChildrenType> = ({ children }: OnlyChildrenTyp
             setLoading(false);
         }
         loadUserFromCookie();
-    });
+    },[]);
 
     const { mutate } = useLoginMutation<Error>(graphqlRequestClient, {
         onSuccess: (data: LoginMutation, _variables: LoginMutationVariables, _context: unknown) => {

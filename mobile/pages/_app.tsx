@@ -46,7 +46,7 @@ const App = ({ Component, pageProps }: AppLayoutProps) => {
         }
         if (typeof window !== 'undefined')
             insertPoint = document.getElementById('inject-styles-here');
-    });
+    }, []);
 
     return (
         <>

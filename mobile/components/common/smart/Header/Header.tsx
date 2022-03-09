@@ -97,7 +97,7 @@ const Header: FC = () => {
 				<Link href='/' passHref><StyledCol><MenuOutlined /></StyledCol></Link>
 				<StyledCol flex="auto"><Logo title='BEE 2.0' /></StyledCol>
 				<StyledCol>
-					<Typography>{user.username.toUpperCase()}</Typography>
+					<Typography>{user.username.toUpperCase()[0]}</Typography>
 				</StyledCol>
 				<StyledCol>
 					<Button type='text' icon={<LogoutOutlined />} onClick={() => logout()} />
