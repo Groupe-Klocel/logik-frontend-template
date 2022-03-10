@@ -1,5 +1,5 @@
+import { gql, GraphQLClient } from 'graphql-request';
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { GraphQLClient, gql } from 'graphql-request';
 
 interface IData {
     width: number;
@@ -67,7 +67,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 };
 
 function calculateBoxQuantity({ width, height, length }: IData) {
-    const volume = width * height * length;
-    const boxVolume = 600 * 400 * 400;
-    return Math.floor(boxVolume / volume);
+    const articleVolume = (width * height * length) / 100 ** 3; // cubic centimeters to cubic meters
+    const boxVolume = (600 * 400 * 400) / 1000 ** 3; // cubic millimeters to cubic meters
+    return Math.floor(boxVolume / articleVolume);
 }
