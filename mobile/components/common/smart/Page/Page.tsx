@@ -6,6 +6,7 @@ const StyledPage = styled.div`
   min-height: calc(100% - 72px);
   background: #fff;
   padding: 20px;
+  padding-bottom: 90px;
 `
 
 export interface IPageProps {
