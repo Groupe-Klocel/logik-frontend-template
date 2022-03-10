@@ -4,6 +4,7 @@ import { FC, ReactNode } from 'react';
 
 export interface ILinkButtonProps {
     title?: string;
+    replace?: boolean;
     path:
         | string
         | {
@@ -14,9 +15,15 @@ export interface ILinkButtonProps {
     icon?: ReactNode;
 }
 
-const LinkButton: FC<ILinkButtonProps> = ({ title, path, type, icon }: ILinkButtonProps) => {
+const LinkButton: FC<ILinkButtonProps> = ({
+    title,
+    path,
+    type,
+    icon,
+    replace
+}: ILinkButtonProps) => {
     return (
-        <Link href={path} passHref>
+        <Link href={path} passHref replace={replace}>
             <Button icon={icon} type={type}>
                 {title}
             </Button>
@@ -25,5 +32,7 @@ const LinkButton: FC<ILinkButtonProps> = ({ title, path, type, icon }: ILinkButt
 };
 
 LinkButton.displayName = 'LinkButton';
-
+LinkButton.defaultProps = {
+    replace: false
+};
 export { LinkButton };

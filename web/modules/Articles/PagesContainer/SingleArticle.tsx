@@ -1,4 +1,4 @@
-import { ContentSpin } from '@components';
+import { ContentSpin,LinkButton } from '@components';
 import { Layout, Space, Button } from 'antd';
 import { articlesSubRoutes } from 'modules/Articles/Static/articlesRoutes';
 import { ArticleDetails } from 'modules/Articles/Elements/ArticleDetails';
@@ -101,15 +101,17 @@ const SingleArticle: FC<ISingleArticleProps> = ({ id, router }: ISingleArticlePr
             <HeaderContent
                 title={`${t('common:article')} ${id}`}
                 routes={breadsCrumb}
-                onBack={() => router.back()}
+                onBack={() => router.push('/articles')}
                 actionsRight={
                     <Space>
                         <Button onClick={updateBoxQuantity} type="primary">
                             {t('actions:update-quantity')}
                         </Button>
-                        <Button onClick={() => router.push(`/article/edit/${id}`)} type="primary">
-                            {t('actions:edit')}
-                        </Button>
+                        <LinkButton
+                            title={t('actions:edit')}
+                            path={`/article/edit/${id}`}
+                            type="primary"
+                        />
                         <Button
                             loading={deleteLoading}
                             onClick={() => deleteArticle({ id: parseInt(id) })}

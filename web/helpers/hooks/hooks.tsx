@@ -10,16 +10,16 @@ const useArticles = (search: any, page: number, itemsPerPage: number, sort: any)
     const { graphqlRequestClient } = useAuth();
 
     const sortByDate = {
-        field: "created",
+        field: 'created',
         ascending: false
-    }
+    };
 
-    let newSort 
+    let newSort;
 
-    if(sort === null){
-        newSort  = sortByDate
+    if (sort === null) {
+        newSort = sortByDate;
     } else {
-        newSort = sort
+        newSort = sort;
     }
 
     const articles = useGetAllArticlesQuery<Partial<GetAllArticlesQuery>, Error>(
@@ -39,16 +39,16 @@ const useBarcodes = (search: any, page: number, itemsPerPage: number, sort: any)
     const { graphqlRequestClient } = useAuth();
 
     const sortByDate = {
-        field: "created",
+        field: 'created',
         ascending: false
-    }
+    };
 
-    let newSort 
+    let newSort;
 
-    if(sort === null){
-        newSort  = sortByDate
+    if (sort === null) {
+        newSort = sortByDate;
     } else {
-        newSort = sort
+        newSort = sort;
     }
 
     const barcodes = useGetAllBarcodesQuery<Partial<GetAllBarcodesQuery>, Error>(
