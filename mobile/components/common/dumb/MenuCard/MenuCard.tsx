@@ -26,7 +26,7 @@ export interface IMenuCardProps {
 const MenuCard: FC<IMenuCardProps> = ({title, icon, path}: IMenuCardProps) => {
   return(
     <ButtonContainer>
-      <Link href={path}>
+      <Link href={path} passHref>
         <StyledButton>
           {icon}
           <div></div>
