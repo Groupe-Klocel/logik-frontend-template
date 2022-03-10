@@ -10,7 +10,7 @@ interface IData {
 export default async (req: NextApiRequest, res: NextApiResponse) => {
     const token = req.headers.cookie?.split('token=')[1].split(';')[0];
     const requestHeader = {
-        'X-API-fake': 'fake',
+        // 'X-API-fake': 'fake',
         // "X-API-seed": "same",
         authorization: `Bearer ${token}`
     };
