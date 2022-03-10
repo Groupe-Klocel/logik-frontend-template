@@ -82,7 +82,7 @@ const SingleArticle: FC<ISingleArticleProps> = ({ id, router }: ISingleArticlePr
         const res = await fetch(`/api/article/update-quantity/${id}`);
         if (!res.ok) {
             const message = t('An error has occured: ') + res.status;
-            showError(t('messsages:error-update-data'));
+            showError(t('messages:error-update-data'));
             setIsCalculating(false);
         }
         const qntData = await res.json();
