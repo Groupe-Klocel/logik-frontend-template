@@ -1,4 +1,4 @@
-# YAML config to deploy this monorepo via AWS Amplify which is the default hosting provider suggested by Klocel
+# YAML config to deploy this monorepo via AWS Amplify
 # https://docs.aws.amazon.com/amplify/latest/userguide/monorepo-configuration.html#monorepo-yml-syntax
 
 version: 1

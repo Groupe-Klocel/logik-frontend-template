@@ -1,0 +1,38 @@
+{
+	"folders": [
+		{
+			"name": "📦  common",
+			"path": "common"
+		},
+		{
+			"name": "🌐  web",
+			"path": "web"
+		},
+		{
+			"name": "📱  mobile",
+			"path": "mobile"
+		},
+		{
+			"name": "✨  logik",
+			"path": "."
+		}
+	],
+	"settings": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode",
+		"editor.formatOnSave": true,
+	},
+	"extensions": {
+		"recommendations": [
+			"ms-vscode-remote.remote-containers",
+			"VisualStudioExptTeam.vscodeintellicode",
+			"esbenp.prettier-vscode",
+			"dbaeumer.vscode-eslint",
+			"mikestead.dotenv",
+			"GraphQL.vscode-graphql",
+			"DavidAnson.vscode-markdownlint",
+			"shd101wyy.markdown-preview-enhanced",
+			"shardulm94.trailing-spaces",
+			"meganrogge.template-string-converter"
+		]
+	}
+}
