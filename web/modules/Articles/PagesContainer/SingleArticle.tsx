@@ -1,8 +1,9 @@
 import { ContentSpin,LinkButton } from '@components';
-import { Layout, Space, Button } from 'antd';
+import { Layout, Space, Button, Typography } from 'antd';
 import { articlesSubRoutes } from 'modules/Articles/Static/articlesRoutes';
 import { ArticleDetails } from 'modules/Articles/Elements/ArticleDetails';
 import useTranslation from 'next-translate/useTranslation';
+import DefaultErrorPage from 'next/error';
 import {
     GetArticleByIdQuery,
     useGetArticleByIdQuery,
@@ -40,6 +41,7 @@ const SingleArticle: FC<ISingleArticleProps> = ({ id, router }: ISingleArticlePr
             id: parseInt(id)
         }
     );
+    console.log(data);
 
     const breadsCrumb = [
         ...articlesSubRoutes,
@@ -122,9 +124,12 @@ const SingleArticle: FC<ISingleArticleProps> = ({ id, router }: ISingleArticlePr
                 }
             />
             <StyledPageContent>
-                {data && !isLoading && !isCalculating ? (
+                {/* {!!data} 
+                    <Typography >Content Does not exist</Typography> */}
+                {data && !isLoading && !isCalculating ? data.article !== null?
+                (
                     <ArticleDetails details={data?.article} />
-                ) : (
+                ) : (<Typography >Content Does not exist</Typography>) : (
                     <ContentSpin />
                 )}
             </StyledPageContent>
