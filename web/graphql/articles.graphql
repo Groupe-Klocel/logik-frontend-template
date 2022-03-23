@@ -66,6 +66,22 @@ query GetArticleById($id: Int!) {
     }
 }
 
+query GetArticleIds(
+    $filters: ArticleSearchFilters
+    $orderBy: [ArticleOrderByCriterion!]
+    $page: Int!
+    $itemsPerPage: Int!
+) {
+    articles(filters: $filters, orderBy: $orderBy, page: $page, itemsPerPage: $itemsPerPage) {
+        count
+        itemsPerPage
+        totalPages
+        results {
+            id
+        }
+    }
+}
+
 mutation CreateArticle($input: CreateArticleInput!) {
     createArticle(input: $input) {
         id
@@ -111,14 +127,8 @@ mutation DeleteArticle($id: Int!) {
     deleteArticle(id: $id)
 }
 
-mutation UpdateArticle(
-    $id: Int!
-    $input: UpdateArticleInput!
-) {
-    updateArticle(
-        id: $id
-        input: $input
-    ) {
+mutation UpdateArticle($id: Int!, $input: UpdateArticleInput!) {
+    updateArticle(id: $id, input: $input) {
         id
         accountId
         companyId

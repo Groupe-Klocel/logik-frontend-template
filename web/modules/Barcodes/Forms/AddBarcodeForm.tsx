@@ -1,7 +1,7 @@
 import { WrapperForm } from '@components';
-import { Button, Col, Input, InputNumber, Row, Form } from 'antd';
+import { Button, Col, Input, InputNumber, Row, Form, AutoComplete } from 'antd';
 import useTranslation from 'next-translate/useTranslation';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useAuth } from 'context/AuthContext';
 import { useRouter } from 'next/router';
 import {
@@ -9,9 +9,20 @@ import {
     CreateBarcodeMutation,
     CreateBarcodeMutationVariables
 } from 'generated/graphql';
-import { showError, showSuccess, showInfo } from '@helpers';
+import {
+    showError,
+    showSuccess,
+    showInfo,
+    useArticleIds,
+    DEFAULT_PAGE_NUMBER,
+    DEFAULT_ITEMS_PER_PAGE,
+    PaginationType
+} from '@helpers';
+import internal from 'stream';
 
-// const { Option } = Select;
+interface IOption {
+    value: string;
+}
 
 export const AddBarcodeForm = () => {
     const { t } = useTranslation('common');
@@ -41,6 +52,8 @@ export const AddBarcodeForm = () => {
     // TYPED SAFE ALL
     const [form] = Form.useForm();
 
+    const [idOptions, setIdOptions] = useState<Array<IOption>>([]);
+
     const { mutate, isLoading: createLoading } = useCreateBarcodeMutation<Error>(
         graphqlRequestClient,
         {
@@ -56,6 +69,18 @@ export const AddBarcodeForm = () => {
                 showError(t('messages:error-creating-data'));
             }
         }
+    );
+    const [pagination, setPagination] = useState<PaginationType>({
+        total: undefined,
+        current: DEFAULT_PAGE_NUMBER,
+        itemsPerPage: 500
+    });
+
+    const { isLoading, data, error } = useArticleIds(
+        null,
+        pagination.current,
+        pagination.itemsPerPage,
+        null
     );
 
     const createBarcode = ({ input }: CreateBarcodeMutationVariables) => {
@@ -76,6 +101,29 @@ export const AddBarcodeForm = () => {
             showInfo(t('messages:info-create-wip'));
         }
     }, [createLoading]);
+
+    useEffect(() => {
+        if (idOptions) {
+            console.log(idOptions);
+        }
+    }, [idOptions]);
+
+    useEffect(() => {
+        if (data && pagination?.current <= data.articles!.totalPages) {
+            // console.log(data.articles);
+            const newPagination = pagination;
+            newPagination.current = pagination.current + 1;
+            setPagination({
+                ...pagination
+            });
+            let newIdOpts: Array<IOption> = [];
+            data.articles?.results.forEach(({ id }) => {
+                newIdOpts.push({ value: id!.toString() });
+            });
+            setIdOptions([...idOptions, ...newIdOpts]);
+        }
+    }, [data]);
+
     return (
         <WrapperForm>
             <Form form={form} scrollToFirstError>
@@ -125,7 +173,16 @@ export const AddBarcodeForm = () => {
                             name="articleId"
                             rules={[{ required: true, message: errorMessageEmptyInput }]}
                         >
-                            <InputNumber style={{ width: '100%' }} />
+                            {/* <InputNumber style={{ width: '100%' }} /> */}
+                            <AutoComplete
+                                style={{ width: '100%' }}
+                                options={idOptions}
+                                filterOption={(inputValue, option) =>
+                                    option!.value
+                                        .toUpperCase()
+                                        .indexOf(inputValue.toUpperCase()) !== -1
+                                }
+                            />
                         </Form.Item>
                         <Form.Item
                             label={rotation}

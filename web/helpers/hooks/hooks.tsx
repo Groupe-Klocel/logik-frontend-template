@@ -3,7 +3,9 @@ import {
     GetAllArticlesQuery,
     useGetAllArticlesQuery,
     useGetAllBarcodesQuery,
-    GetAllBarcodesQuery
+    GetAllBarcodesQuery,
+    useGetArticleIdsQuery,
+    GetArticleIdsQuery
 } from 'generated/graphql';
 
 const useArticles = (search: any, page: number, itemsPerPage: number, sort: any) => {
@@ -23,6 +25,35 @@ const useArticles = (search: any, page: number, itemsPerPage: number, sort: any)
     }
 
     const articles = useGetAllArticlesQuery<Partial<GetAllArticlesQuery>, Error>(
+        graphqlRequestClient,
+        {
+            filters: search,
+            orderBy: newSort,
+            page: page,
+            itemsPerPage: itemsPerPage
+        }
+    );
+
+    return articles;
+};
+
+const useArticleIds = (search: any, page: number, itemsPerPage: number, sort: any) => {
+    const { graphqlRequestClient } = useAuth();
+
+    const sortByDate = {
+        field: 'created',
+        ascending: false
+    };
+
+    let newSort;
+
+    if (sort === null) {
+        newSort = sortByDate;
+    } else {
+        newSort = sort;
+    }
+
+    const articles = useGetArticleIdsQuery<Partial<GetArticleIdsQuery>, Error>(
         graphqlRequestClient,
         {
             filters: search,
@@ -64,4 +95,4 @@ const useBarcodes = (search: any, page: number, itemsPerPage: number, sort: any)
     return barcodes;
 };
 
-export { useArticles, useBarcodes };
+export { useArticles, useBarcodes, useArticleIds };
