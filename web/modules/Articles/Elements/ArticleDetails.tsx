@@ -1,5 +1,5 @@
 import { DetailsList, LinkButton, ContentSpin, AppTable } from '@components';
-import { EyeTwoTone } from '@ant-design/icons';
+import { EyeTwoTone, PrinterOutlined } from '@ant-design/icons';
 import {
     pathParams,
     useBarcodes,
@@ -9,7 +9,7 @@ import {
     DEFAULT_PAGE_NUMBER
 } from '@helpers';
 import useTranslation from 'next-translate/useTranslation';
-import { Divider, Typography } from 'antd';
+import { Divider, Space, Typography } from 'antd';
 import { useState, useEffect, useCallback } from 'react';
 
 const { Title } = Typography;
@@ -75,7 +75,16 @@ const ArticleDetails = ({ details }: IArticleDetailsProps) => {
             title: 'actions:actions',
             key: 'actions',
             render: (record: { id: string }) => (
-                <LinkButton icon={<EyeTwoTone />} path={pathParams('/barcode/[id]', record.id)} />
+                <Space>
+                    <LinkButton
+                        icon={<EyeTwoTone />}
+                        path={pathParams('/barcode/[id]', record.id)}
+                    />
+                    <LinkButton
+                        icon={<PrinterOutlined />}
+                        path={pathParams('/barcode/print/[id]', record.id)}
+                    />
+                </Space>
             )
         }
     ];
