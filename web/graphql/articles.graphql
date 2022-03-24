@@ -78,6 +78,7 @@ query GetArticleIds(
         totalPages
         results {
             id
+            name
         }
     }
 }

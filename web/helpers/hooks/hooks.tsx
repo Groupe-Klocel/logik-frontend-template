@@ -41,7 +41,7 @@ const useArticleIds = (search: any, page: number, itemsPerPage: number, sort: an
     const { graphqlRequestClient } = useAuth();
 
     const sortByDate = {
-        field: 'created',
+        field: 'name',
         ascending: false
     };
 

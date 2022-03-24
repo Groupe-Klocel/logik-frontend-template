@@ -862,7 +862,7 @@ export type GetArticleIdsQueryVariables = Exact<{
 }>;
 
 
-export type GetArticleIdsQuery = { __typename?: 'Query', articles: { __typename?: 'ArticleListResult', count: number, itemsPerPage: number, totalPages: number, results: Array<{ __typename?: 'Article', id?: number | null }> } };
+export type GetArticleIdsQuery = { __typename?: 'Query', articles: { __typename?: 'ArticleListResult', count: number, itemsPerPage: number, totalPages: number, results: Array<{ __typename?: 'Article', id?: number | null, name: string }> } };
 
 export type CreateArticleMutationVariables = Exact<{
   input: CreateArticleInput;
@@ -1049,6 +1049,7 @@ export const GetArticleIdsDocument = `
     totalPages
     results {
       id
+      name
     }
   }
 }

@@ -1,7 +1,7 @@
 import { WrapperForm } from '@components';
 import { Button, Col, Input, InputNumber, Row, Form, AutoComplete } from 'antd';
 import useTranslation from 'next-translate/useTranslation';
-import { useEffect, useState } from 'react';
+import { KeyboardEventHandler, useEffect, useState } from 'react';
 import { useAuth } from 'context/AuthContext';
 import { useRouter } from 'next/router';
 import {
@@ -22,6 +22,7 @@ import internal from 'stream';
 
 interface IOption {
     value: string;
+    id: number;
 }
 
 export const AddBarcodeForm = () => {
@@ -38,6 +39,7 @@ export const AddBarcodeForm = () => {
     const supplierArticleCode = t('d:supplierArticleCode');
     const companyId = t('d:companyId');
     const articleId = t('d:articleId');
+    const article = t('common:article');
     const accountId = t('d:accountId');
     const preparationMode = t('d:preparationMode');
     const flagDouble = t('d:flagDouble');
@@ -53,6 +55,8 @@ export const AddBarcodeForm = () => {
     const [form] = Form.useForm();
 
     const [idOptions, setIdOptions] = useState<Array<IOption>>([]);
+    const [articleName, setArticleName] = useState<string>('');
+    const [aId, setAId] = useState<number>();
 
     const { mutate, isLoading: createLoading } = useCreateBarcodeMutation<Error>(
         graphqlRequestClient,
@@ -70,18 +74,7 @@ export const AddBarcodeForm = () => {
             }
         }
     );
-    const [pagination, setPagination] = useState<PaginationType>({
-        total: undefined,
-        current: DEFAULT_PAGE_NUMBER,
-        itemsPerPage: 500
-    });
-
-    const { isLoading, data, error } = useArticleIds(
-        null,
-        pagination.current,
-        pagination.itemsPerPage,
-        null
-    );
+    const { data } = useArticleIds({ name: `${articleName}%` }, 1, 100, null);
 
     const createBarcode = ({ input }: CreateBarcodeMutationVariables) => {
         mutate({ input });
@@ -91,9 +84,17 @@ export const AddBarcodeForm = () => {
         form.validateFields()
             .then(() => {
                 // Here make api call of something else
-                createBarcode({ input: form.getFieldsValue(true) });
+                const formData = form.getFieldsValue(true);
+                delete formData.articleName;
+                createBarcode({ input: formData });
             })
-            .catch((err) => showError(t('messages:error-creating-data')));
+            .catch((err) => {
+                if (!aId) {
+                    showError(t('messages:error-selected-article-not-exist'));
+                } else {
+                    showError(t('messages:error-creating-data'));
+                }
+            });
     };
 
     useEffect(() => {
@@ -102,27 +103,26 @@ export const AddBarcodeForm = () => {
         }
     }, [createLoading]);
 
-    useEffect(() => {
-        if (idOptions) {
-            console.log(idOptions);
-        }
-    }, [idOptions]);
+    // useEffect(() => {
+    //     if (idOptions) {
+    //         console.log(idOptions);
+    //     }
+    // }, [idOptions]);
 
     useEffect(() => {
-        if (data && pagination?.current <= data.articles!.totalPages) {
-            // console.log(data.articles);
-            const newPagination = pagination;
-            newPagination.current = pagination.current + 1;
-            setPagination({
-                ...pagination
-            });
+        const formValue = form.getFieldsValue();
+        form.setFieldsValue({ ...formValue, articleId: aId });
+    }, [aId]);
+
+    useEffect(() => {
+        if (data) {
             let newIdOpts: Array<IOption> = [];
-            data.articles?.results.forEach(({ id }) => {
-                newIdOpts.push({ value: id!.toString() });
+            data.articles?.results.forEach(({ id, name }) => {
+                newIdOpts.push({ value: name, id: id! });
             });
-            setIdOptions([...idOptions, ...newIdOpts]);
+            setIdOptions(newIdOpts);
         }
-    }, [data]);
+    }, [articleName, data]);
 
     return (
         <WrapperForm>
@@ -172,8 +172,15 @@ export const AddBarcodeForm = () => {
                             label={articleId}
                             name="articleId"
                             rules={[{ required: true, message: errorMessageEmptyInput }]}
+                            style={{ display: 'none' }}
                         >
-                            {/* <InputNumber style={{ width: '100%' }} /> */}
+                            <InputNumber style={{ width: '100%' }} value={aId} />
+                        </Form.Item>
+                        <Form.Item
+                            label={article}
+                            name="articleName"
+                            rules={[{ required: true, message: errorMessageEmptyInput }]}
+                        >
                             <AutoComplete
                                 style={{ width: '100%' }}
                                 options={idOptions}
@@ -182,6 +189,11 @@ export const AddBarcodeForm = () => {
                                         .toUpperCase()
                                         .indexOf(inputValue.toUpperCase()) !== -1
                                 }
+                                onKeyUp={(e: any) => setArticleName(e.target.value)}
+                                onSelect={(value, option) => {
+                                    setAId(option.id);
+                                    setArticleName(value);
+                                }}
                             />
                         </Form.Item>
                         <Form.Item
