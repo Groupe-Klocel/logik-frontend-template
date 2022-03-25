@@ -8,11 +8,19 @@ import useTranslation from 'next-translate/useTranslation';
 import { showError } from '@helpers';
 import { useCallback, useState } from 'react';
 
+function useForceUpdate() {
+    let [value, setState] = useState(true);
+    return () => setState(!value);
+}
+
 const Articles = () => {
     const { t } = useTranslation();
 
     const [search, setSearch] = useState({});
+    const [update, setUpdate] = useState(false);
+    const forceUpdate = useForceUpdate();
     console.log(search);
+    console.log('update statte', update);
     //	SEARCH DRAWER
     const [formSearch] = Form.useForm();
 
@@ -56,6 +64,7 @@ const Articles = () => {
             .catch((err) => showError(t('messages:error-getting-data')));
     };
 
+    console.log('render');
     return (
         <>
             <HeaderContent
@@ -72,7 +81,7 @@ const Articles = () => {
                     </Space>
                 }
             />
-            <ArticlesList searchCriteria={search} />
+            <ArticlesList searchCriteria={search} forceUpdate={() => setUpdate(!update)} />
         </>
     );
 };

@@ -22,12 +22,14 @@ import {
 } from 'generated/graphql';
 import { EyeTwoTone, DeleteOutlined } from '@ant-design/icons';
 import { useState, useEffect, useCallback } from 'react';
+import { DeleteArticleButton } from './DeleteArticleButton';
 
 export interface IArticlesListProps {
     searchCriteria?: any;
+    forceUpdate: () => void;
 }
 
-const ArticlesList = ({ searchCriteria }: IArticlesListProps) => {
+const ArticlesList = ({ searchCriteria, forceUpdate }: IArticlesListProps) => {
     const { t } = useTranslation();
     const { graphqlRequestClient } = useAuth();
 
@@ -41,12 +43,15 @@ const ArticlesList = ({ searchCriteria }: IArticlesListProps) => {
         itemsPerPage: DEFAULT_ITEMS_PER_PAGE
     });
 
+    const [deleteArticle, setDeleteArticle] = useState<boolean>(false);
     const { isLoading, data, error } = useArticles(
         searchCriteria,
         pagination.current,
         pagination.itemsPerPage,
         sort
     );
+    console.log('render article list component');
+    console.log(data);
 
     // EXPORT ARTICLES SECTION
     const {
@@ -119,6 +124,10 @@ const ArticlesList = ({ searchCriteria }: IArticlesListProps) => {
         await setSort(orberByFormater(sorter));
     };
 
+    const handleDeleteArticle = () => {
+        forceUpdate();
+    };
+
     // to refactor to be automatique when fetching data
     const columns = [
         {
@@ -187,10 +196,10 @@ const ArticlesList = ({ searchCriteria }: IArticlesListProps) => {
                         icon={<EyeTwoTone />}
                         path={pathParams('/article/[id]', record.id)}
                     />
-                    <Button
-                        icon={<DeleteOutlined />}
-                        danger
-                        onClick={() => alert(`delete article N° ${record.id}`)}
+                    <DeleteArticleButton
+                        id={parseInt(record.id)}
+                        onLoading={() => setDeleteArticle(true)}
+                        onDeleteSuccess={handleDeleteArticle}
                     />
                 </Space>
             )
