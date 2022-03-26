@@ -2,8 +2,6 @@ import { AppHead, ContentSpin } from '@components';
 // import { PrintBarcode } from 'modules/Barcodes/PagesContainer/PrintBarcode';
 import { useRouter } from 'next/router';
 import { FC, useEffect, useState } from 'react';
-import dynamic from 'next/dynamic';
-import ReactPDF from '@react-pdf/renderer';
 import {
     RenderBarcodeMutation,
     RenderBarcodeMutationVariables,
