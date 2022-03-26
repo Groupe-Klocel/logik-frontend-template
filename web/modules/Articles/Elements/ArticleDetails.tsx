@@ -74,7 +74,7 @@ const ArticleDetails = ({ details }: IArticleDetailsProps) => {
         {
             title: 'actions:actions',
             key: 'actions',
-            render: (record: { id: string }) => (
+            render: (record: { id: string; name: string }) => (
                 <Space>
                     <LinkButton
                         icon={<EyeTwoTone />}
@@ -82,7 +82,7 @@ const ArticleDetails = ({ details }: IArticleDetailsProps) => {
                     />
                     <LinkButton
                         icon={<PrinterOutlined />}
-                        path={pathParams('/barcode/print/[id]', record.id)}
+                        path={pathParams('/barcode/print/[id]', record.name)}
                     />
                 </Space>
             )
