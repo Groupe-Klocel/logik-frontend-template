@@ -1,0 +1,12 @@
+name: Hourly cron job
+on:
+  schedule:
+    - cron: "*/5 * * * *"
+jobs:
+  cron:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Hourly cron job
+        run: |
+          curl --request POST \
+          --url 'https://demo.staging.logik.klocel.com/api/task/example'
