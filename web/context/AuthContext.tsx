@@ -7,7 +7,17 @@ import {
     IS_FAKE,
     IS_SAME_SEED
 } from '@helpers';
-import { LoginMutation, LoginMutationVariables, useLoginMutation } from 'generated/graphql';
+import {
+    ChangePasswordMutation,
+    ChangePasswordMutationVariables,
+    LoginMutation,
+    LoginMutationVariables,
+    ResetPasswordMutation,
+    ResetPasswordMutationVariables,
+    useChangePasswordMutation,
+    useLoginMutation,
+    useResetPasswordMutation
+} from 'generated/graphql';
 import { GraphQLClient } from 'graphql-request';
 import { useRouter } from 'next/router';
 import { createContext, FC, useContext, useEffect, useState } from 'react';
@@ -51,7 +61,7 @@ export const AuthProvider: FC<OnlyChildrenType> = ({ children }: OnlyChildrenTyp
         loadUserFromCookie();
     }, []);
 
-    const { mutate } = useLoginMutation<Error>(graphqlRequestClient, {
+    const loginMutation = useLoginMutation<Error>(graphqlRequestClient, {
         onSuccess: (data: LoginMutation, _variables: LoginMutationVariables, _context: any) => {
             if (data?.login?.accessToken) {
                 cookie.set('token', data.login.accessToken);
@@ -70,28 +80,73 @@ export const AuthProvider: FC<OnlyChildrenType> = ({ children }: OnlyChildrenTyp
         }
     });
 
+    const resetMutation = useResetPasswordMutation<Error>(graphqlRequestClient, {
+        onSuccess: (
+            data: ResetPasswordMutation,
+            _variables: ResetPasswordMutationVariables,
+            _context: any
+        ) => {
+            if (data.resetPassword.__typename === 'ResetPasswordSuccess') {
+                showSuccess(data.resetPassword.message);
+            } else {
+                showError(data.resetPassword.message);
+            }
+            console.log(data);
+        },
+        onError: (error) => {
+            console.log(error);
+            showError(error.message);
+        }
+    });
+
+    const changePasswordMutation = useChangePasswordMutation<Error>(graphqlRequestClient, {
+        onSuccess: (
+            data: ChangePasswordMutation,
+            _variables: ChangePasswordMutationVariables,
+            _context: any
+        ) => {
+            if (data?.changePassword.__typename === 'ChangePasswordSuccess') {
+                showSuccess(data.changePassword.message);
+                setTimeout(() => {
+                    router.replace('/login');
+                }, 1000);
+            } else {
+                showError(data.changePassword.message);
+            }
+        },
+        onError: (error) => {
+            console.log(error);
+            showError(error.message);
+        }
+    });
+
     const login = async ({
         username,
         password,
         warehouseId = process.env.NEXT_PUBLIC_WAREHOUSE_ID as string
     }: LoginMutationVariables) => {
+        const { mutate } = loginMutation;
         mutate({ username, password, warehouseId });
     };
 
     const forgotPassword = async ({
         username,
+        callbackUrl,
         warehouseId = process.env.NEXT_PUBLIC_WAREHOUSE_ID
     }: any) => {
-        alert('FORTGOT PASSWORD CHECK');
+        const { mutate } = resetMutation;
+        mutate({ email: username, callbackUrl: callbackUrl });
     };
 
     const resetPassword = async ({
-        username,
+        token,
         password,
-        comfirmPassword,
+        confirmPassword,
         warehouseId = process.env.NEXT_PUBLIC_WAREHOUSE_ID
     }: any) => {
-        alert('RESET PASSWORD CHECK');
+        // alert('RESET PASSWORD CHECK');
+        const { mutate } = changePasswordMutation;
+        mutate({ token: token, password: password, password2: confirmPassword });
     };
 
     const logout = () => {
