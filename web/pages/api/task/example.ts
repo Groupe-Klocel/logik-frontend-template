@@ -37,24 +37,6 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 // }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-    const resetPasswordMutation = gql`
-        mutation resetPassword($email: String!, $callbackUrl: String) {
-            resetPassword(email: $email, callbackUrl: $callbackUrl) {
-                __typename
-                ... on ResetPasswordSuccess {
-                    message
-                }
-                ... on ResetPasswordFailure {
-                    message
-                }
-            }
-        }
-    `;
-    const resetVariables = {
-        email: 'devphs513@gmail.com',
-        callbackUrl: 'demo.stagking.logik.klocel.com/reset-password'
-    };
-
-    const result = await graphqlRequestClient.request(resetPasswordMutation, resetVariables);
+    console.log('hello world');
     res.status(200).json({ success: 'true' });
 }
