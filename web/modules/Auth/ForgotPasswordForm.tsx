@@ -21,8 +21,10 @@ export const ForgotPasswordForm = () => {
     const [form] = Form.useForm();
 
     const onFinish = (values: any) => {
+        const url = window.location.href.replace('forgot-password', 'reset-password');
         forgotPassword({
-            username: values.username
+            username: values.username,
+            callbackUrl: url
         });
     };
 

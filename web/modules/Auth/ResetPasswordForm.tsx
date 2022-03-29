@@ -1,11 +1,16 @@
 import { Logo, StyledForm, WelcomeText, WrapperLogin, LinkButton } from '@components';
+import { showError } from '@helpers';
 import { Button, Form, Input } from 'antd';
 import { useAuth } from 'context/AuthContext';
 import useTranslation from 'next-translate/useTranslation';
+import { useRouter } from 'next/router';
 
 export const ResetPasswordForm = () => {
     const { t } = useTranslation('common');
     const { resetPassword } = useAuth();
+    const router = useRouter();
+    const token = router.query.token;
+    console.log('token ', token);
     // TEXTS TRANSLATION
 
     const resetPass = t('actions:reset-password');
@@ -22,11 +27,17 @@ export const ResetPasswordForm = () => {
     const [form] = Form.useForm();
 
     const onFinish = (values: any) => {
-        resetPassword({
-            username: values.username,
-            password: values.password,
-            comfirm: values.comfirm
-        });
+        if (token) {
+            resetPassword({
+                token: token,
+                password: values.password,
+                confirmPassword: values.confirm
+            });
+        } else {
+            showError('Token was not set exactly');
+            // redirect to forgot password
+            router.push('/forgot-password');
+        }
     };
 
     return (
@@ -57,7 +68,7 @@ export const ResetPasswordForm = () => {
                     </Form.Item>
 
                     <Form.Item
-                        name="comfirm"
+                        name="confirm"
                         label={comfirmPass}
                         dependencies={['password']}
                         hasFeedback

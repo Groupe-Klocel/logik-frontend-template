@@ -203,6 +203,11 @@ export type Barcode = {
   supplierName?: Maybe<Scalars['String']>;
 };
 
+export type BarcodeError = {
+  __typename?: 'BarcodeError';
+  message: Scalars['String'];
+};
+
 /** Filters to apply before the data export is made */
 export type BarcodeExportFilters = {
   accountId?: InputMaybe<Scalars['Int']>;
@@ -273,6 +278,39 @@ export type BarcodeSearchFilters = {
   supplierName?: InputMaybe<Scalars['String']>;
 };
 
+export enum BarcodeType {
+  Code39 = 'CODE39',
+  Code128 = 'CODE128',
+  Ean = 'EAN',
+  Ean8 = 'EAN8',
+  Ean13 = 'EAN13',
+  Ean14 = 'EAN14',
+  Gs1 = 'GS1',
+  Gs1_128 = 'GS1_128',
+  Gtin = 'GTIN',
+  Isbn = 'ISBN',
+  Isbn10 = 'ISBN10',
+  Isbn13 = 'ISBN13',
+  Issn = 'ISSN',
+  Itf = 'ITF',
+  Jan = 'JAN',
+  Pzn = 'PZN',
+  Upc = 'UPC',
+  Upca = 'UPCA'
+}
+
+export type ChangePasswordFailure = {
+  __typename?: 'ChangePasswordFailure';
+  message: Scalars['String'];
+};
+
+export type ChangePasswordResponse = ChangePasswordFailure | ChangePasswordSuccess;
+
+export type ChangePasswordSuccess = {
+  __typename?: 'ChangePasswordSuccess';
+  message: Scalars['String'];
+};
+
 export type CreateArticleInput = {
   accountId: Scalars['Int'];
   additionalDescription?: InputMaybe<Scalars['String']>;
@@ -322,11 +360,6 @@ export type CreateBarcodeInput = {
   supplierName?: InputMaybe<Scalars['String']>;
 };
 
-export type Document = {
-  __typename?: 'Document';
-  url: Scalars['String'];
-};
-
 /** Compression of the exported file */
 export enum ExportCompression {
   Gzip = 'GZIP'
@@ -367,6 +400,8 @@ export enum Mode {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  /** Change own password using a temporary token */
+  changePassword: ChangePasswordResponse;
   /** Create article */
   createArticle: Article;
   /** Create barcode */
@@ -395,13 +430,24 @@ export type Mutation = {
   inviteClientUser: Scalars['Boolean'];
   /** Obtain a JSON Web Token (JWT) to use in the frontend */
   login?: Maybe<LoginSuccess>;
+  /** Renders a barcode into a PDF document uploaded onto S3, then returns the URL to download the document */
+  renderBarcode: RenderBarcodeResponse;
   /** Renders a template given its filename and a context dictionary */
   renderDocument: RenderDocumentResponse;
+  /** Sends an email to reset the User's password */
+  resetPassword: ResetPasswordResponse;
   /** Update article */
   updateArticle?: Maybe<Article>;
   /** Update barcode */
   updateBarcode?: Maybe<Barcode>;
   updateUser?: Maybe<User>;
+};
+
+
+export type MutationChangePasswordArgs = {
+  password: Scalars['String'];
+  password2: Scalars['String'];
+  token: Scalars['String'];
 };
 
 
@@ -503,9 +549,21 @@ export type MutationLoginArgs = {
 };
 
 
+export type MutationRenderBarcodeArgs = {
+  code: Scalars['String'];
+  type?: BarcodeType;
+};
+
+
 export type MutationRenderDocumentArgs = {
   context: Scalars['JSON'];
   templateFilename: Scalars['String'];
+};
+
+
+export type MutationResetPasswordArgs = {
+  callbackUrl: Scalars['String'];
+  email: Scalars['String'];
 };
 
 
@@ -658,7 +716,26 @@ export type QueryWarehousesArgs = {
   page?: Scalars['Int'];
 };
 
-export type RenderDocumentResponse = Document | MissingContext | TemplateDoesNotExist | TemplateError;
+export type RenderBarcodeResponse = BarcodeError | RenderedDocument;
+
+export type RenderDocumentResponse = MissingContext | RenderedDocument | TemplateDoesNotExist | TemplateError;
+
+export type RenderedDocument = {
+  __typename?: 'RenderedDocument';
+  url: Scalars['String'];
+};
+
+export type ResetPasswordFailure = {
+  __typename?: 'ResetPasswordFailure';
+  message: Scalars['String'];
+};
+
+export type ResetPasswordResponse = ResetPasswordFailure | ResetPasswordSuccess;
+
+export type ResetPasswordSuccess = {
+  __typename?: 'ResetPasswordSuccess';
+  message: Scalars['String'];
+};
 
 export type RoleType = {
   __typename?: 'RoleType';
@@ -936,6 +1013,23 @@ export type LoginMutationVariables = Exact<{
 
 
 export type LoginMutation = { __typename?: 'Mutation', login?: { __typename?: 'LoginSuccess', accessToken: string } | null };
+
+export type ResetPasswordMutationVariables = Exact<{
+  email: Scalars['String'];
+  callbackUrl: Scalars['String'];
+}>;
+
+
+export type ResetPasswordMutation = { __typename?: 'Mutation', resetPassword: { __typename: 'ResetPasswordFailure', message: string } | { __typename: 'ResetPasswordSuccess', message: string } };
+
+export type ChangePasswordMutationVariables = Exact<{
+  token: Scalars['String'];
+  password: Scalars['String'];
+  password2: Scalars['String'];
+}>;
+
+
+export type ChangePasswordMutation = { __typename?: 'Mutation', changePassword: { __typename: 'ChangePasswordFailure', message: string } | { __typename: 'ChangePasswordSuccess', message: string } };
 
 
 export const GetAllArticlesDocument = `
@@ -1324,5 +1418,57 @@ export const useLoginMutation = <
     useMutation<LoginMutation, TError, LoginMutationVariables, TContext>(
       ['Login'],
       (variables?: LoginMutationVariables) => fetcher<LoginMutation, LoginMutationVariables>(client, LoginDocument, variables, headers)(),
+      options
+    );
+export const ResetPasswordDocument = `
+    mutation ResetPassword($email: String!, $callbackUrl: String!) {
+  resetPassword(email: $email, callbackUrl: $callbackUrl) {
+    __typename
+    ... on ResetPasswordSuccess {
+      message
+    }
+    ... on ResetPasswordFailure {
+      message
+    }
+  }
+}
+    `;
+export const useResetPasswordMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<ResetPasswordMutation, TError, ResetPasswordMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<ResetPasswordMutation, TError, ResetPasswordMutationVariables, TContext>(
+      ['ResetPassword'],
+      (variables?: ResetPasswordMutationVariables) => fetcher<ResetPasswordMutation, ResetPasswordMutationVariables>(client, ResetPasswordDocument, variables, headers)(),
+      options
+    );
+export const ChangePasswordDocument = `
+    mutation ChangePassword($token: String!, $password: String!, $password2: String!) {
+  changePassword(token: $token, password: $password, password2: $password2) {
+    __typename
+    ... on ChangePasswordFailure {
+      message
+    }
+    ... on ChangePasswordSuccess {
+      message
+    }
+  }
+}
+    `;
+export const useChangePasswordMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<ChangePasswordMutation, TError, ChangePasswordMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<ChangePasswordMutation, TError, ChangePasswordMutationVariables, TContext>(
+      ['ChangePassword'],
+      (variables?: ChangePasswordMutationVariables) => fetcher<ChangePasswordMutation, ChangePasswordMutationVariables>(client, ChangePasswordDocument, variables, headers)(),
       options
     );
