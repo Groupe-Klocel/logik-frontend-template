@@ -9,4 +9,4 @@ jobs:
       - name: Hourly cron job
         run: |
           curl --request POST \
-          --url 'https://logik-demo-web-git-issue-cron-job-nuage.vercel.app/api/task/example'
+          --url 'https://demo.staging.logik.klocel.com/api/task/example'
