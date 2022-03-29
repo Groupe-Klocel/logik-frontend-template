@@ -9,5 +9,5 @@ jobs:
       - name: Hourly cron job
         run: |
           curl --request POST \
-          --url 'https://demo.staging.logik.klocel.com/api/task/example'\
+          --url 'https://demo.staging.logik.klocel.com/api/task/example' \
           --header 'secret_key: ${{ secrets.SECRET_KEY }}'
