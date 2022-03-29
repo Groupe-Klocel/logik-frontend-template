@@ -1,12 +1,12 @@
 name: Hourly cron job
 on:
-    schedule:
-        - cron: '*/5 * * * *'
+  schedule:
+    - cron: "*/5 * * * *"
 jobs:
-    cron:
-        runs-on: ubuntu-latest
-        steps:
-            - name: Hourly cron job
-              run: |
-                  curl --request POST \
-                  --url 'https://logik-demo-web-git-issue-260-cron-job-nuage.vercel.app/api/task/example'
+  cron:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Hourly cron job
+        run: |
+          curl --request POST \
+          --url 'https://logik-demo-web-git-issue-cron-job-nuage.vercel.app/api/task/example'
