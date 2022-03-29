@@ -1,42 +1,21 @@
-import { useAuth } from 'context/AuthContext';
-import { gql } from 'graphql-request';
-import graphqlRequestClient from 'graphql/graphqlRequestClient';
 import type { NextApiRequest, NextApiResponse } from 'next';
-
-// export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-//     const token = req.headers.cookie?.split('token=')[1].split(';')[0];
-//     const requestHeader = {
-//         // 'X-API-fake': 'fake',
-//         // "X-API-seed": "same",
-//         authorization: `Bearer ${token}`
-//     };
-
-//     const updateVariables = {
-//         id: 1700,
-//         input: {
-//             boxQuantity: Math.floor(Math.random() * 10)
-//         }
-//     };
-
-//     const updateMutation = gql`
-//         mutation updateArticle($id: Int!, $input: UpdateArticleInput!) {
-//             updateArticle(id: $id, input: $input) {
-//                 boxQuantity
-//             }
-//         }
-//     `;
-
-//     const result = await graphqlRequestClient.request(
-//         updateMutation,
-//         updateVariables,
-//         requestHeader
-//     );
-
-//     console.log('hello world');
-//     res.status(200).json({ success: 'true' });
-// }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     console.log('hello world');
-    res.status(200).json({ success: 'true' });
+    const api_key = process.env.API_SECRET_KEY;
+    console.log('apikey=', api_key);
+    try {
+        console.log(req.headers);
+        const secret_key = req.headers.secret_key;
+        console.log('secret_key=', secret_key);
+        if (secret_key === api_key) {
+            // Process the POST request
+            res.status(200).json({ success: 'true' });
+        } else {
+            res.status(401).json({ message: 'unauthorized user' });
+        }
+    } catch (err) {
+        console.log(err);
+        res.status(500).end();
+    }
 }
