@@ -10,4 +10,4 @@ jobs:
         run: |
           curl --request POST \
           --url 'https://demo.staging.logik.klocel.com/api/task/example'
-          --header 'secret_key: ${{ secret.SECRET_KEY }}'
+          --header 'secret_key: ${{ secrets.SECRET_KEY }}'
