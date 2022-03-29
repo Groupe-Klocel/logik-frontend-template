@@ -1,7 +1,7 @@
 name: Hourly cron job
 on:
   schedule:
-    - cron: "*/5 * * * *"
+    - cron: "*/60 * * * *"
 jobs:
   cron:
     runs-on: ubuntu-latest
@@ -10,3 +10,4 @@ jobs:
         run: |
           curl --request POST \
           --url 'https://demo.staging.logik.klocel.com/api/task/example'
+          --header 'secret_key: ${{ secret.SECRET_KEY }}'
