@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     console.log('hello world');
-    const api_key = process.env.API_SECRET_KEY;
+    const api_key = process.env.NEXT_PUBLIC_API_SECRET_KEY;
     console.log('apikey=', api_key);
     try {
         console.log(req.headers);
