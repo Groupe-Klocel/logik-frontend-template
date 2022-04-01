@@ -3,5 +3,6 @@
     "defaultLocale": "en-US",
     "pages": {
         "*": ["common", "menu", "actions", "messages", "d"]
-    }
+    },
+    "logBuild": false
 }
