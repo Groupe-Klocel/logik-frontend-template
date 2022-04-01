@@ -12,14 +12,28 @@ import { Menu } from 'antd';
 import useTranslation from 'next-translate/useTranslation';
 import Link from 'next/link';
 import React, { FC } from 'react';
+import { cookie } from '@helpers';
 
 const { SubMenu } = Menu;
 
 const SideMenu: FC = () => {
     const { t } = useTranslation('menu');
     const { logout } = useAuth();
+
+    const keys = cookie.get('menuSelectedKeys');
+    const menuSelectedKeys = keys ? JSON.parse(keys) : [];
+
+    const handleMenuSelect = (e: any) => {
+        cookie.set('menuSelectedKeys', JSON.stringify(e.keyPath));
+    };
     return (
-        <Menu mode="inline" className="menu">
+        <Menu
+            mode="inline"
+            className="menu"
+            onClick={handleMenuSelect}
+            defaultSelectedKeys={menuSelectedKeys}
+            defaultOpenKeys={menuSelectedKeys}
+        >
             <SubMenu icon={<AuditOutlined />} key="administration" title={t('administration')}>
                 <SubMenu key="administration-access-management" title={t('access-management')}>
                     <Menu.Item key="administration-access-management-users">
