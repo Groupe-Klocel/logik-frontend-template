@@ -5,7 +5,8 @@ import { FC, useEffect, useState } from 'react';
 import {
     RenderBarcodeMutation,
     RenderBarcodeMutationVariables,
-    useRenderBarcodeMutation
+    useRenderBarcodeMutation,
+    BarcodeCategory
 } from 'generated/graphql';
 import { useAuth } from 'context/AuthContext';
 
@@ -14,6 +15,7 @@ type PageComponent = FC & any;
 const BarcodePage: PageComponent = () => {
     const router = useRouter();
     const { id } = router.query;
+    const pages = router.query.pages ? router.query.pages.toString() : '1';
     const { graphqlRequestClient } = useAuth();
     const [pdfPath, setPdfPath] = useState<string>();
 
@@ -33,7 +35,11 @@ const BarcodePage: PageComponent = () => {
     });
 
     useEffect(() => {
-        mutate({ code: id!.toString() });
+        mutate({
+            code: id!.toString(),
+            category: BarcodeCategory['Code128'],
+            pages: parseInt(pages)
+        });
     }, []);
 
     return (
