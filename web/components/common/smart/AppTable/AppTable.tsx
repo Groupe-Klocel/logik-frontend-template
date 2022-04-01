@@ -10,6 +10,7 @@ import { Space, Button, Table } from 'antd';
 import { useDrawerDispatch } from 'context/DrawerContext';
 import useTranslation from 'next-translate/useTranslation';
 import { FC, useCallback, useEffect, useState, useRef, Key } from 'react';
+import { Resizable } from 'react-resizable';
 
 const { Column } = Table;
 
@@ -32,6 +33,33 @@ export interface IAppTableProps {
     filter?: boolean;
     onChange?: any;
 }
+
+const ResizableTitle = (props: { [x: string]: any; onResize: any; width: any }) => {
+    const { onResize, width, ...restProps } = props;
+
+    // if (!width) {
+    //     return <th {...restProps} />;
+    // }
+
+    return (
+        <Resizable
+            width={width}
+            height={0}
+            handle={
+                <span
+                    className="react-resizable-handle"
+                    onClick={(e) => {
+                        e.stopPropagation();
+                    }}
+                />
+            }
+            onResize={onResize}
+            draggableOpts={{ enableUserSelectHack: false }}
+        >
+            <th {...restProps} />
+        </Resizable>
+    );
+};
 
 const AppTable: FC<IAppTableProps> = ({
     onChange,
@@ -216,6 +244,37 @@ const AppTable: FC<IAppTableProps> = ({
         return () => {};
     }, [onSave]);
 
+    const handleResize =
+        (index: number) =>
+        (_e: any, { size }: any) => {
+            setTableColumns(() => {
+                const nextColumns = [...tableColumns];
+                nextColumns[index] = {
+                    ...nextColumns[index],
+                    width: size.width
+                };
+                return nextColumns;
+            });
+        };
+
+    const components = {
+        header: {
+            cell: ResizableTitle
+        }
+    };
+
+    const cls = tableColumns.map((col, index) => {
+        col.title = t(col.title);
+        col.width = col.width ? col.width : 50;
+        return {
+            ...col,
+            onHeaderCell: (column: any) => ({
+                width: column.width,
+                onResize: handleResize(index)
+            })
+        };
+    });
+
     return (
         <PageTableContentWrapper>
             <WrapperStickyActions>
@@ -262,19 +321,24 @@ const AppTable: FC<IAppTableProps> = ({
                         }
                     }
                 }
+                components={components}
+                columns={cls}
             >
-                {tableColumns.map((c) => (
-                    <Column
-                        title={t(c.title)}
-                        dataIndex={c.dataIndex}
-                        key={c.key}
-                        fixed={c.fixed}
-                        width={c.width}
-                        sorter={c.sorter}
-                        showSorterTooltip={c.showSorterTooltip}
-                        render={c.render}
-                    />
-                ))}
+                {/* {tableColumns.map((c) => {
+                    console.log('width=', c.width);
+                    return (
+                        <Column
+                            title={t(c.title)}
+                            dataIndex={c.dataIndex}
+                            key={c.key}
+                            fixed={c.fixed}
+                            width={c.width}
+                            sorter={c.sorter}
+                            showSorterTooltip={c.showSorterTooltip}
+                            render={c.render}
+                        />
+                    );
+                })} */}
             </Table>
         </PageTableContentWrapper>
     );

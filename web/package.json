@@ -21,10 +21,11 @@
     },
     "dependencies": {
         "@ant-design/icons": "4.7.0",
+        "@babel/core": "^7.17.7",
+        "@babel/plugin-syntax-jsx": "7.16.7",
+        "@types/react-resizable": "^1.7.4",
         "@typescript-eslint/eslint-plugin": "^5.10.1",
         "@typescript-eslint/parser": "^5.10.1",
-        "@babel/plugin-syntax-jsx": "7.16.7",
-        "@babel/core": "^7.17.7",
         "antd": "4.17.2",
         "array-move": "^4.0.0",
         "babel-plugin-module-resolver": "^4.1.0",
@@ -43,6 +44,7 @@
         "react-css-theme-switcher": "^0.3.0",
         "react-dom": "17.0.2",
         "react-query": "3.33.6",
+        "react-resizable": "^3.0.4",
         "react-sortable-hoc": "^2.0.0",
         "sass": "1.43.5",
         "styled-components": "5.3.3"
@@ -71,14 +73,14 @@
         "gulp-postcss": "^9.0.1",
         "husky": "7.0.4",
         "less": "^4.1.2",
-        "less-plugin-npm-import": "^2.1.0",
         "less-loader": "^10.2.0",
-        "webpack": "5.70.0",
+        "less-plugin-npm-import": "^2.1.0",
         "prettier": "^2.5.1",
         "react-is": "^17.0.2",
         "stylelint": "14.0.1",
         "stylelint-config-standard": "24.0.0",
-        "typescript": "^4.5.5"
+        "typescript": "^4.5.5",
+        "webpack": "5.70.0"
     },
     "override": {
         "@babel/core": "^7.16.7",
