@@ -27,5 +27,6 @@
     "info-update-wip": "Update in progress",
     "info-delete-wip": "Delete in progress",
     "error-message-wrong-password": "The two passwords that you entered do not match!",
-    "success-update-box-quantity": "The quantity has been updated successfully"
+    "success-update-box-quantity": "The quantity has been updated successfully",
+    "error-barcode-not-render": "An error occurred while generating the barcode"
 }

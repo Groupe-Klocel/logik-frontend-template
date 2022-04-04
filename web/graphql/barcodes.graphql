@@ -60,7 +60,7 @@ mutation DeleteBarcode($id: Int!) {
     deleteBarcode(id: $id)
 }
 
-mutation RenderBarcode($code: String!, $category: BarcodeCategory!, $pages: Int!) {
+mutation RenderBarcode($code: String!, $category: BarcodeCategory, $pages: Int!) {
     renderBarcode(code: $code, category: $category, pages: $pages) {
         __typename
         ... on RenderedDocument {

@@ -9,9 +9,11 @@ import {
     DEFAULT_PAGE_NUMBER
 } from '@helpers';
 import useTranslation from 'next-translate/useTranslation';
-import { Button, Divider, Input, Modal, Space, Typography } from 'antd';
+import { Button, Divider, Space, Typography } from 'antd';
 import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/router';
+import { useAuth } from 'context/AuthContext';
+import { BarcodeRenderModal } from 'modules/Barcodes/Elements/BarcodeRenderModal';
 
 const { Title } = Typography;
 
@@ -29,10 +31,8 @@ const ArticleDetails = ({ details }: IArticleDetailsProps) => {
         current: DEFAULT_PAGE_NUMBER,
         itemsPerPage: DEFAULT_ITEMS_PER_PAGE
     });
-    const [isModalVisible, setIsModalVisible] = useState(false);
-    const [pageNumber, setPageNumber] = useState(1);
-    const [printUrl, setPrintUrl] = useState('');
-    const router = useRouter();
+    const [showModal, setShowModal] = useState(false);
+    const [barcodeName, setBarcodeName] = useState('');
 
     const { isLoading, data, error } = useBarcodes(
         { articleId: parseInt(details.id) },
@@ -88,10 +88,9 @@ const ArticleDetails = ({ details }: IArticleDetailsProps) => {
                     <Button
                         icon={<PrinterOutlined />}
                         onClick={() => {
-                            setPrintUrl(`/barcode/print/${record.name}`);
-                            showModal();
+                            setBarcodeName(record.name);
+                            setShowModal(true);
                         }}
-                        // path={pathParams('/barcode/print/[id]', record.name)}
                     />
                 </Space>
             )
@@ -108,19 +107,6 @@ const ArticleDetails = ({ details }: IArticleDetailsProps) => {
             });
         }
     }, [data]);
-
-    const showModal = () => {
-        setIsModalVisible(true);
-    };
-
-    const handleOk = async () => {
-        setIsModalVisible(false);
-        router.push(`${printUrl}?pages=${pageNumber}`);
-    };
-
-    const handleCancel = () => {
-        setIsModalVisible(false);
-    };
 
     return (
         <>
@@ -140,24 +126,13 @@ const ArticleDetails = ({ details }: IArticleDetailsProps) => {
             ) : (
                 <ContentSpin />
             )}
-            <Modal
-                title="Input Page Number"
-                visible={isModalVisible}
-                onOk={handleOk}
-                onCancel={handleCancel}
-            >
-                <p>Please Input Page Number to print PDF</p>
-                <Input
-                    name="pages"
-                    type="number"
-                    min={0}
-                    max={100}
-                    value={pageNumber}
-                    onChange={(e) => {
-                        setPageNumber(parseInt(e.target.value));
-                    }}
-                />
-            </Modal>
+            <BarcodeRenderModal
+                visible={showModal}
+                code={barcodeName}
+                showhideModal={() => {
+                    setShowModal(!showModal);
+                }}
+            />
         </>
     );
 };

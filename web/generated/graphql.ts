@@ -638,6 +638,7 @@ export type Query = {
   barcode?: Maybe<Barcode>;
   /** List multiple barcodes */
   barcodes: BarcodeListResult;
+  me: User;
   organizations: OrganizationListResult;
   roles: RoleListResult;
   users: UserListResult;
@@ -835,8 +836,10 @@ export type User = {
   email?: Maybe<Scalars['String']>;
   /** String-based unique identifier. */
   id?: Maybe<Scalars['String']>;
+  organization?: Maybe<Organization>;
   organizationId: Scalars['String'];
   password: Scalars['String'];
+  role: RoleType;
   roleId: Scalars['String'];
   username: Scalars['String'];
 };
@@ -883,6 +886,7 @@ export type Warehouse = {
   id?: Maybe<Scalars['String']>;
   /** Name of the Warehouse (e.g. `Roubaix (prod)`) */
   name: Scalars['String'];
+  organization: Organization;
   /** ID of the IntegratorOrganization that manages this Warehouse */
   organizationId: Scalars['String'];
 };
@@ -1000,7 +1004,7 @@ export type DeleteBarcodeMutation = { __typename?: 'Mutation', deleteBarcode: bo
 
 export type RenderBarcodeMutationVariables = Exact<{
   code: Scalars['String'];
-  category: BarcodeCategory;
+  category?: InputMaybe<BarcodeCategory>;
   pages: Scalars['Int'];
 }>;
 
@@ -1354,7 +1358,7 @@ export const useDeleteBarcodeMutation = <
       options
     );
 export const RenderBarcodeDocument = `
-    mutation RenderBarcode($code: String!, $category: BarcodeCategory!, $pages: Int!) {
+    mutation RenderBarcode($code: String!, $category: BarcodeCategory, $pages: Int!) {
   renderBarcode(code: $code, category: $category, pages: $pages) {
     __typename
     ... on RenderedDocument {
