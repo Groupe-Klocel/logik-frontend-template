@@ -11,6 +11,7 @@ import {
     PaginationType,
     orberByFormater
 } from '@helpers';
+import { BarcodeRenderModal } from './BarcodeRenderModal';
 
 export interface IBarcodesListProps {
     searchCriteria?: any;
@@ -20,6 +21,8 @@ const BarcodesList = ({ searchCriteria }: IBarcodesListProps) => {
     const [barcodes, setBarcodes] = useState<DataQueryType>();
 
     const [sort, setSort] = useState<any>(null);
+    const [showModal, setShowModal] = useState(false);
+    const [barcodeName, setBarcodeName] = useState('');
 
     const [pagination, setPagination] = useState<PaginationType>({
         total: undefined,
@@ -128,7 +131,7 @@ const BarcodesList = ({ searchCriteria }: IBarcodesListProps) => {
         {
             title: 'actions:actions',
             key: 'actions',
-            render: (record: { id: string }) => (
+            render: (record: { id: string; name: string }) => (
                 <Space>
                     <LinkButton
                         icon={<EyeTwoTone />}
@@ -136,7 +139,10 @@ const BarcodesList = ({ searchCriteria }: IBarcodesListProps) => {
                     />
                     <Button
                         icon={<PrinterOutlined />}
-                        onClick={() => alert(`Print ${record.id} `)}
+                        onClick={() => {
+                            setBarcodeName(record.name);
+                            setShowModal(true);
+                        }}
                     />
                 </Space>
             )
@@ -158,6 +164,13 @@ const BarcodesList = ({ searchCriteria }: IBarcodesListProps) => {
             ) : (
                 <ContentSpin />
             )}
+            <BarcodeRenderModal
+                visible={showModal}
+                code={barcodeName}
+                showhideModal={() => {
+                    setShowModal(!showModal);
+                }}
+            />
         </>
     );
 };

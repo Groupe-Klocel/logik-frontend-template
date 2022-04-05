@@ -1,5 +1,5 @@
 import { DetailsList, LinkButton, ContentSpin, AppTable } from '@components';
-import { EyeTwoTone } from '@ant-design/icons';
+import { EyeTwoTone, PrinterOutlined } from '@ant-design/icons';
 import {
     pathParams,
     useBarcodes,
@@ -9,8 +9,11 @@ import {
     DEFAULT_PAGE_NUMBER
 } from '@helpers';
 import useTranslation from 'next-translate/useTranslation';
-import { Divider, Typography } from 'antd';
+import { Button, Divider, Space, Typography } from 'antd';
 import { useState, useEffect, useCallback } from 'react';
+import { useRouter } from 'next/router';
+import { useAuth } from 'context/AuthContext';
+import { BarcodeRenderModal } from 'modules/Barcodes/Elements/BarcodeRenderModal';
 
 const { Title } = Typography;
 
@@ -28,6 +31,8 @@ const ArticleDetails = ({ details }: IArticleDetailsProps) => {
         current: DEFAULT_PAGE_NUMBER,
         itemsPerPage: DEFAULT_ITEMS_PER_PAGE
     });
+    const [showModal, setShowModal] = useState(false);
+    const [barcodeName, setBarcodeName] = useState('');
 
     const { isLoading, data, error } = useBarcodes(
         { articleId: parseInt(details.id) },
@@ -74,8 +79,20 @@ const ArticleDetails = ({ details }: IArticleDetailsProps) => {
         {
             title: 'actions:actions',
             key: 'actions',
-            render: (record: { id: string }) => (
-                <LinkButton icon={<EyeTwoTone />} path={pathParams('/barcode/[id]', record.id)} />
+            render: (record: { id: string; name: string }) => (
+                <Space>
+                    <LinkButton
+                        icon={<EyeTwoTone />}
+                        path={pathParams('/barcode/[id]', record.id)}
+                    />
+                    <Button
+                        icon={<PrinterOutlined />}
+                        onClick={() => {
+                            setBarcodeName(record.name);
+                            setShowModal(true);
+                        }}
+                    />
+                </Space>
             )
         }
     ];
@@ -109,6 +126,13 @@ const ArticleDetails = ({ details }: IArticleDetailsProps) => {
             ) : (
                 <ContentSpin />
             )}
+            <BarcodeRenderModal
+                visible={showModal}
+                code={barcodeName}
+                showhideModal={() => {
+                    setShowModal(!showModal);
+                }}
+            />
         </>
     );
 };

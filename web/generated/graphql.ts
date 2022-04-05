@@ -1,6 +1,6 @@
 import { GraphQLClient } from 'graphql-request';
 import { RequestInit } from 'graphql-request/dist/types.dom';
-import { useQuery, UseQueryOptions, useMutation, UseMutationOptions } from 'react-query';
+import { useQuery, useMutation, UseQueryOptions, UseMutationOptions } from 'react-query';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
@@ -27,38 +27,35 @@ export type Article = {
   __typename?: 'Article';
   accountId: Scalars['Int'];
   additionalDescription?: Maybe<Scalars['String']>;
-  baseUnitPicking: Scalars['Boolean'];
+  barcodes: Array<Barcode>;
+  baseUnitPicking?: Maybe<Scalars['Boolean']>;
   baseUnitPrice?: Maybe<Scalars['Float']>;
   baseUnitRotation?: Maybe<Scalars['String']>;
-  /** Weight in kilograms (kg) */
-  baseUnitWeight: Scalars['Float'];
-  boxPicking: Scalars['Boolean'];
-  boxQuantity: Scalars['Float'];
+  baseUnitWeight?: Maybe<Scalars['Float']>;
+  boxPicking?: Maybe<Scalars['Boolean']>;
+  boxQuantity?: Maybe<Scalars['Float']>;
   boxRotation?: Maybe<Scalars['String']>;
-  boxWeight: Scalars['Float'];
+  boxWeight?: Maybe<Scalars['Float']>;
   code: Scalars['String'];
   companyId: Scalars['Int'];
   created?: Maybe<Scalars['DateTime']>;
   createdBy?: Maybe<Scalars['String']>;
-  cubingType: Scalars['Int'];
+  cubingType?: Maybe<Scalars['Int']>;
   family?: Maybe<Scalars['String']>;
   featureTypeId?: Maybe<Scalars['Int']>;
   groupingId?: Maybe<Scalars['String']>;
-  /** Height in centimeters (cm) */
-  height: Scalars['Float'];
+  height?: Maybe<Scalars['Float']>;
   id?: Maybe<Scalars['Int']>;
-  /** Length in centimeters (cm) */
-  length: Scalars['Float'];
+  length?: Maybe<Scalars['Float']>;
   modified?: Maybe<Scalars['DateTime']>;
   modifiedBy?: Maybe<Scalars['String']>;
   name: Scalars['String'];
-  permanentProduct: Scalars['Boolean'];
+  permanentProduct?: Maybe<Scalars['Boolean']>;
   status: Scalars['Int'];
   subfamily?: Maybe<Scalars['String']>;
   supplierName?: Maybe<Scalars['String']>;
   tariffClassification?: Maybe<Scalars['String']>;
-  /** Width in centimeters (cm) */
-  width: Scalars['Float'];
+  width?: Maybe<Scalars['Float']>;
 };
 
 /** Filters to apply before the data export is made */
@@ -68,7 +65,6 @@ export type ArticleExportFilters = {
   baseUnitPicking?: InputMaybe<Scalars['Boolean']>;
   baseUnitPrice?: InputMaybe<Scalars['Float']>;
   baseUnitRotation?: InputMaybe<Scalars['String']>;
-  /** Weight in kilograms (kg) */
   baseUnitWeight?: InputMaybe<Scalars['Float']>;
   boxPicking?: InputMaybe<Scalars['Boolean']>;
   boxQuantity?: InputMaybe<Scalars['Float']>;
@@ -76,23 +72,18 @@ export type ArticleExportFilters = {
   boxWeight?: InputMaybe<Scalars['Float']>;
   code?: InputMaybe<Scalars['String']>;
   companyId?: InputMaybe<Scalars['Int']>;
-  createdBy?: InputMaybe<Scalars['String']>;
   cubingType?: InputMaybe<Scalars['Int']>;
   family?: InputMaybe<Scalars['String']>;
   featureTypeId?: InputMaybe<Scalars['Int']>;
   groupingId?: InputMaybe<Scalars['String']>;
-  /** Height in centimeters (cm) */
   height?: InputMaybe<Scalars['Float']>;
-  /** Length in centimeters (cm) */
   length?: InputMaybe<Scalars['Float']>;
-  modifiedBy?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
   permanentProduct?: InputMaybe<Scalars['Boolean']>;
   status?: InputMaybe<Scalars['Int']>;
   subfamily?: InputMaybe<Scalars['String']>;
   supplierName?: InputMaybe<Scalars['String']>;
   tariffClassification?: InputMaybe<Scalars['String']>;
-  /** Width in centimeters (cm) */
   width?: InputMaybe<Scalars['Float']>;
 };
 
@@ -153,7 +144,6 @@ export type ArticleSearchFilters = {
   baseUnitPicking?: InputMaybe<Scalars['Boolean']>;
   baseUnitPrice?: InputMaybe<Scalars['Float']>;
   baseUnitRotation?: InputMaybe<Scalars['String']>;
-  /** Weight in kilograms (kg) */
   baseUnitWeight?: InputMaybe<Scalars['Float']>;
   boxPicking?: InputMaybe<Scalars['Boolean']>;
   boxQuantity?: InputMaybe<Scalars['Float']>;
@@ -167,10 +157,8 @@ export type ArticleSearchFilters = {
   family?: InputMaybe<Scalars['String']>;
   featureTypeId?: InputMaybe<Scalars['Int']>;
   groupingId?: InputMaybe<Scalars['String']>;
-  /** Height in centimeters (cm) */
   height?: InputMaybe<Scalars['Float']>;
   id?: InputMaybe<Scalars['Int']>;
-  /** Length in centimeters (cm) */
   length?: InputMaybe<Scalars['Float']>;
   modified?: InputMaybe<Scalars['DateTime']>;
   modifiedBy?: InputMaybe<Scalars['String']>;
@@ -180,28 +168,49 @@ export type ArticleSearchFilters = {
   subfamily?: InputMaybe<Scalars['String']>;
   supplierName?: InputMaybe<Scalars['String']>;
   tariffClassification?: InputMaybe<Scalars['String']>;
-  /** Width in centimeters (cm) */
   width?: InputMaybe<Scalars['Float']>;
 };
 
 export type Barcode = {
   __typename?: 'Barcode';
   accountId: Scalars['Int'];
+  article: Article;
   articleId: Scalars['Int'];
   companyId: Scalars['Int'];
   created?: Maybe<Scalars['DateTime']>;
   createdBy?: Maybe<Scalars['String']>;
-  flagDouble: Scalars['Int'];
+  flagDouble?: Maybe<Scalars['Int']>;
   id?: Maybe<Scalars['Int']>;
   modified?: Maybe<Scalars['DateTime']>;
   modifiedBy?: Maybe<Scalars['String']>;
   name: Scalars['String'];
-  preparationMode: Scalars['Int'];
+  preparationMode?: Maybe<Scalars['Int']>;
   quantity?: Maybe<Scalars['Float']>;
   rotation: Scalars['String'];
   supplierArticleCode?: Maybe<Scalars['String']>;
   supplierName?: Maybe<Scalars['String']>;
 };
+
+export enum BarcodeCategory {
+  Code39 = 'CODE39',
+  Code128 = 'CODE128',
+  Ean = 'EAN',
+  Ean8 = 'EAN8',
+  Ean13 = 'EAN13',
+  Ean14 = 'EAN14',
+  Gs1 = 'GS1',
+  Gs1_128 = 'GS1_128',
+  Gtin = 'GTIN',
+  Isbn = 'ISBN',
+  Isbn10 = 'ISBN10',
+  Isbn13 = 'ISBN13',
+  Issn = 'ISSN',
+  Itf = 'ITF',
+  Jan = 'JAN',
+  Pzn = 'PZN',
+  Upc = 'UPC',
+  Upca = 'UPCA'
+}
 
 export type BarcodeError = {
   __typename?: 'BarcodeError';
@@ -213,9 +222,7 @@ export type BarcodeExportFilters = {
   accountId?: InputMaybe<Scalars['Int']>;
   articleId?: InputMaybe<Scalars['Int']>;
   companyId?: InputMaybe<Scalars['Int']>;
-  createdBy?: InputMaybe<Scalars['String']>;
   flagDouble?: InputMaybe<Scalars['Int']>;
-  modifiedBy?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
   preparationMode?: InputMaybe<Scalars['Int']>;
   quantity?: InputMaybe<Scalars['Float']>;
@@ -278,27 +285,6 @@ export type BarcodeSearchFilters = {
   supplierName?: InputMaybe<Scalars['String']>;
 };
 
-export enum BarcodeType {
-  Code39 = 'CODE39',
-  Code128 = 'CODE128',
-  Ean = 'EAN',
-  Ean8 = 'EAN8',
-  Ean13 = 'EAN13',
-  Ean14 = 'EAN14',
-  Gs1 = 'GS1',
-  Gs1_128 = 'GS1_128',
-  Gtin = 'GTIN',
-  Isbn = 'ISBN',
-  Isbn10 = 'ISBN10',
-  Isbn13 = 'ISBN13',
-  Issn = 'ISSN',
-  Itf = 'ITF',
-  Jan = 'JAN',
-  Pzn = 'PZN',
-  Upc = 'UPC',
-  Upca = 'UPCA'
-}
-
 export type ChangePasswordFailure = {
   __typename?: 'ChangePasswordFailure';
   message: Scalars['String'];
@@ -314,46 +300,38 @@ export type ChangePasswordSuccess = {
 export type CreateArticleInput = {
   accountId: Scalars['Int'];
   additionalDescription?: InputMaybe<Scalars['String']>;
-  baseUnitPicking: Scalars['Boolean'];
+  baseUnitPicking?: InputMaybe<Scalars['Boolean']>;
   baseUnitPrice?: InputMaybe<Scalars['Float']>;
   baseUnitRotation?: InputMaybe<Scalars['String']>;
-  /** Weight in kilograms (kg) */
-  baseUnitWeight: Scalars['Float'];
-  boxPicking: Scalars['Boolean'];
-  boxQuantity: Scalars['Float'];
+  baseUnitWeight?: InputMaybe<Scalars['Float']>;
+  boxPicking?: InputMaybe<Scalars['Boolean']>;
+  boxQuantity?: InputMaybe<Scalars['Float']>;
   boxRotation?: InputMaybe<Scalars['String']>;
-  boxWeight: Scalars['Float'];
+  boxWeight?: InputMaybe<Scalars['Float']>;
   code: Scalars['String'];
   companyId: Scalars['Int'];
-  createdBy?: InputMaybe<Scalars['String']>;
-  cubingType: Scalars['Int'];
+  cubingType?: InputMaybe<Scalars['Int']>;
   family?: InputMaybe<Scalars['String']>;
   featureTypeId?: InputMaybe<Scalars['Int']>;
   groupingId?: InputMaybe<Scalars['String']>;
-  /** Height in centimeters (cm) */
-  height: Scalars['Float'];
-  /** Length in centimeters (cm) */
-  length: Scalars['Float'];
-  modifiedBy?: InputMaybe<Scalars['String']>;
+  height?: InputMaybe<Scalars['Float']>;
+  length?: InputMaybe<Scalars['Float']>;
   name: Scalars['String'];
-  permanentProduct: Scalars['Boolean'];
+  permanentProduct?: InputMaybe<Scalars['Boolean']>;
   status: Scalars['Int'];
   subfamily?: InputMaybe<Scalars['String']>;
   supplierName?: InputMaybe<Scalars['String']>;
   tariffClassification?: InputMaybe<Scalars['String']>;
-  /** Width in centimeters (cm) */
-  width: Scalars['Float'];
+  width?: InputMaybe<Scalars['Float']>;
 };
 
 export type CreateBarcodeInput = {
   accountId: Scalars['Int'];
   articleId: Scalars['Int'];
   companyId: Scalars['Int'];
-  createdBy?: InputMaybe<Scalars['String']>;
-  flagDouble: Scalars['Int'];
-  modifiedBy?: InputMaybe<Scalars['String']>;
+  flagDouble?: InputMaybe<Scalars['Int']>;
   name: Scalars['String'];
-  preparationMode: Scalars['Int'];
+  preparationMode?: InputMaybe<Scalars['Int']>;
   quantity?: InputMaybe<Scalars['Float']>;
   rotation: Scalars['String'];
   supplierArticleCode?: InputMaybe<Scalars['String']>;
@@ -550,8 +528,9 @@ export type MutationLoginArgs = {
 
 
 export type MutationRenderBarcodeArgs = {
+  category?: BarcodeCategory;
   code: Scalars['String'];
-  type?: BarcodeType;
+  pages?: Scalars['Int'];
 };
 
 
@@ -624,19 +603,17 @@ export type OrganizationOrderByCriterion = {
 
 /** Attributes of Organization to filter onto */
 export type OrganizationSearchFilters = {
-  /** Access key to be used when accessing your storage space via an GUI such as FileZilla, Cyberduck... */
   awsAccessKeyId?: InputMaybe<Scalars['String']>;
-  /** Secret to use in conjunction with the `aws_access_key_id` */
   awsSecretAccessKey?: InputMaybe<Scalars['String']>;
-  /** String-based unique identifier. */
   id?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
-  /** Organization that manages this one (e.g. integrator org to its client) */
   parentOrganizationId?: InputMaybe<Scalars['String']>;
 };
 
 export type PermissionInput = {
+  /** Read/write permission */
   mode: Mode;
+  /** The table to apply permissions on (e.g. Article) */
   table: Table;
 };
 
@@ -644,8 +621,10 @@ export type PermissionType = {
   __typename?: 'PermissionType';
   /** String-based unique identifier. */
   id?: Maybe<Scalars['String']>;
+  /** Read/write permission */
   mode: Mode;
   roleId: Scalars['String'];
+  /** The table to apply permissions on (e.g. Article) */
   table: Table;
 };
 
@@ -659,9 +638,9 @@ export type Query = {
   barcode?: Maybe<Barcode>;
   /** List multiple barcodes */
   barcodes: BarcodeListResult;
+  me: User;
   organizations: OrganizationListResult;
-  /** List roles */
-  roles: Array<RoleType>;
+  roles: RoleListResult;
   users: UserListResult;
   warehouses: WarehouseListResult;
 };
@@ -697,6 +676,14 @@ export type QueryOrganizationsArgs = {
   filters?: InputMaybe<OrganizationSearchFilters>;
   itemsPerPage?: Scalars['Int'];
   orderBy?: InputMaybe<Array<OrganizationOrderByCriterion>>;
+  page?: Scalars['Int'];
+};
+
+
+export type QueryRolesArgs = {
+  filters?: InputMaybe<RoleSearchFilters>;
+  itemsPerPage?: Scalars['Int'];
+  orderBy?: InputMaybe<Array<RoleOrderByCriterion>>;
   page?: Scalars['Int'];
 };
 
@@ -737,6 +724,34 @@ export type ResetPasswordSuccess = {
   message: Scalars['String'];
 };
 
+/** Field names for the Role model */
+export enum RoleFieldName {
+  Id = 'id',
+  Name = 'name'
+}
+
+/** Returns a list of Role */
+export type RoleListResult = {
+  __typename?: 'RoleListResult';
+  count: Scalars['Int'];
+  itemsPerPage: Scalars['Int'];
+  page: Scalars['Int'];
+  results: Array<RoleType>;
+  totalPages: Scalars['Int'];
+};
+
+/** How to order the search results for Role */
+export type RoleOrderByCriterion = {
+  ascending?: Scalars['Boolean'];
+  field: RoleFieldName;
+};
+
+/** Attributes of Role to filter onto */
+export type RoleSearchFilters = {
+  id?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
+};
+
 export type RoleType = {
   __typename?: 'RoleType';
   /** String-based unique identifier. */
@@ -771,7 +786,6 @@ export type UpdateArticleInput = {
   baseUnitPicking?: InputMaybe<Scalars['Boolean']>;
   baseUnitPrice?: InputMaybe<Scalars['Float']>;
   baseUnitRotation?: InputMaybe<Scalars['String']>;
-  /** Weight in kilograms (kg) */
   baseUnitWeight?: InputMaybe<Scalars['Float']>;
   boxPicking?: InputMaybe<Scalars['Boolean']>;
   boxQuantity?: InputMaybe<Scalars['Float']>;
@@ -779,23 +793,18 @@ export type UpdateArticleInput = {
   boxWeight?: InputMaybe<Scalars['Float']>;
   code?: InputMaybe<Scalars['String']>;
   companyId?: InputMaybe<Scalars['Int']>;
-  createdBy?: InputMaybe<Scalars['String']>;
   cubingType?: InputMaybe<Scalars['Int']>;
   family?: InputMaybe<Scalars['String']>;
   featureTypeId?: InputMaybe<Scalars['Int']>;
   groupingId?: InputMaybe<Scalars['String']>;
-  /** Height in centimeters (cm) */
   height?: InputMaybe<Scalars['Float']>;
-  /** Length in centimeters (cm) */
   length?: InputMaybe<Scalars['Float']>;
-  modifiedBy?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
   permanentProduct?: InputMaybe<Scalars['Boolean']>;
   status?: InputMaybe<Scalars['Int']>;
   subfamily?: InputMaybe<Scalars['String']>;
   supplierName?: InputMaybe<Scalars['String']>;
   tariffClassification?: InputMaybe<Scalars['String']>;
-  /** Width in centimeters (cm) */
   width?: InputMaybe<Scalars['Float']>;
 };
 
@@ -804,9 +813,7 @@ export type UpdateBarcodeInput = {
   accountId?: InputMaybe<Scalars['Int']>;
   articleId?: InputMaybe<Scalars['Int']>;
   companyId?: InputMaybe<Scalars['Int']>;
-  createdBy?: InputMaybe<Scalars['String']>;
   flagDouble?: InputMaybe<Scalars['Int']>;
-  modifiedBy?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
   preparationMode?: InputMaybe<Scalars['Int']>;
   quantity?: InputMaybe<Scalars['Float']>;
@@ -819,6 +826,7 @@ export type UpdateBarcodeInput = {
 export type UpdateUserInput = {
   email?: InputMaybe<Scalars['String']>;
   organizationId?: InputMaybe<Scalars['String']>;
+  password?: InputMaybe<Scalars['String']>;
   roleId?: InputMaybe<Scalars['String']>;
   username?: InputMaybe<Scalars['String']>;
 };
@@ -828,8 +836,10 @@ export type User = {
   email?: Maybe<Scalars['String']>;
   /** String-based unique identifier. */
   id?: Maybe<Scalars['String']>;
+  organization?: Maybe<Organization>;
   organizationId: Scalars['String'];
   password: Scalars['String'];
+  role: RoleType;
   roleId: Scalars['String'];
   username: Scalars['String'];
 };
@@ -863,7 +873,6 @@ export type UserOrderByCriterion = {
 /** Attributes of User to filter onto */
 export type UserSearchFilters = {
   email?: InputMaybe<Scalars['String']>;
-  /** String-based unique identifier. */
   id?: InputMaybe<Scalars['String']>;
   organizationId?: InputMaybe<Scalars['String']>;
   password?: InputMaybe<Scalars['String']>;
@@ -877,6 +886,7 @@ export type Warehouse = {
   id?: Maybe<Scalars['String']>;
   /** Name of the Warehouse (e.g. `Roubaix (prod)`) */
   name: Scalars['String'];
+  organization: Organization;
   /** ID of the IntegratorOrganization that manages this Warehouse */
   organizationId: Scalars['String'];
 };
@@ -906,11 +916,8 @@ export type WarehouseOrderByCriterion = {
 
 /** Attributes of Warehouse to filter onto */
 export type WarehouseSearchFilters = {
-  /** String-based unique identifier. */
   id?: InputMaybe<Scalars['String']>;
-  /** Name of the Warehouse (e.g. `Roubaix (prod)`) */
   name?: InputMaybe<Scalars['String']>;
-  /** ID of the IntegratorOrganization that manages this Warehouse */
   organizationId?: InputMaybe<Scalars['String']>;
 };
 
@@ -922,14 +929,14 @@ export type GetAllArticlesQueryVariables = Exact<{
 }>;
 
 
-export type GetAllArticlesQuery = { __typename?: 'Query', articles: { __typename?: 'ArticleListResult', count: number, itemsPerPage: number, totalPages: number, results: Array<{ __typename?: 'Article', id?: number | null, accountId: number, companyId: number, status: number, code: string, name: string, length: number, width: number, height: number, baseUnitWeight: number, boxWeight: number, boxQuantity: number, baseUnitPicking: boolean, boxPicking: boolean, cubingType: number, permanentProduct: boolean, additionalDescription?: string | null, supplierName?: string | null }> } };
+export type GetAllArticlesQuery = { __typename?: 'Query', articles: { __typename?: 'ArticleListResult', count: number, itemsPerPage: number, totalPages: number, results: Array<{ __typename?: 'Article', id?: number | null, accountId: number, companyId: number, status: number, code: string, name: string, length?: number | null, width?: number | null, height?: number | null, baseUnitWeight?: number | null, boxWeight?: number | null, boxQuantity?: number | null, baseUnitPicking?: boolean | null, boxPicking?: boolean | null, cubingType?: number | null, permanentProduct?: boolean | null, additionalDescription?: string | null, supplierName?: string | null }> } };
 
 export type GetArticleByIdQueryVariables = Exact<{
   id: Scalars['Int'];
 }>;
 
 
-export type GetArticleByIdQuery = { __typename?: 'Query', article?: { __typename?: 'Article', id?: number | null, accountId: number, companyId: number, status: number, code: string, name: string, length: number, width: number, height: number, baseUnitWeight: number, boxWeight: number, boxQuantity: number, baseUnitPicking: boolean, boxPicking: boolean, cubingType: number, permanentProduct: boolean, additionalDescription?: string | null, supplierName?: string | null, baseUnitPrice?: number | null, baseUnitRotation?: string | null, boxRotation?: string | null, featureTypeId?: number | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, tariffClassification?: string | null, family?: string | null, subfamily?: string | null, groupingId?: string | null } | null };
+export type GetArticleByIdQuery = { __typename?: 'Query', article?: { __typename?: 'Article', id?: number | null, accountId: number, companyId: number, status: number, code: string, name: string, length?: number | null, width?: number | null, height?: number | null, baseUnitWeight?: number | null, boxWeight?: number | null, boxQuantity?: number | null, baseUnitPicking?: boolean | null, boxPicking?: boolean | null, cubingType?: number | null, permanentProduct?: boolean | null, additionalDescription?: string | null, supplierName?: string | null, baseUnitPrice?: number | null, baseUnitRotation?: string | null, boxRotation?: string | null, featureTypeId?: number | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, tariffClassification?: string | null, family?: string | null, subfamily?: string | null, groupingId?: string | null } | null };
 
 export type GetArticleIdsQueryVariables = Exact<{
   filters?: InputMaybe<ArticleSearchFilters>;
@@ -946,7 +953,7 @@ export type CreateArticleMutationVariables = Exact<{
 }>;
 
 
-export type CreateArticleMutation = { __typename?: 'Mutation', createArticle: { __typename?: 'Article', id?: number | null, accountId: number, companyId: number, status: number, code: string, name: string, length: number, width: number, height: number, baseUnitWeight: number, boxWeight: number, boxQuantity: number, baseUnitPicking: boolean, boxPicking: boolean, cubingType: number, permanentProduct: boolean, additionalDescription?: string | null, supplierName?: string | null } };
+export type CreateArticleMutation = { __typename?: 'Mutation', createArticle: { __typename?: 'Article', id?: number | null, accountId: number, companyId: number, status: number, code: string, name: string, length?: number | null, width?: number | null, height?: number | null, baseUnitWeight?: number | null, boxWeight?: number | null, boxQuantity?: number | null, baseUnitPicking?: boolean | null, boxPicking?: boolean | null, cubingType?: number | null, permanentProduct?: boolean | null, additionalDescription?: string | null, supplierName?: string | null } };
 
 export type ExportArticlesMutationVariables = Exact<{
   format?: InputMaybe<ExportFormat>;
@@ -972,7 +979,7 @@ export type UpdateArticleMutationVariables = Exact<{
 }>;
 
 
-export type UpdateArticleMutation = { __typename?: 'Mutation', updateArticle?: { __typename?: 'Article', id?: number | null, accountId: number, companyId: number, status: number, code: string, name: string, length: number, width: number, height: number, baseUnitWeight: number, boxWeight: number, boxQuantity: number, baseUnitPicking: boolean, boxPicking: boolean, cubingType: number, permanentProduct: boolean, additionalDescription?: string | null, supplierName?: string | null } | null };
+export type UpdateArticleMutation = { __typename?: 'Mutation', updateArticle?: { __typename?: 'Article', id?: number | null, accountId: number, companyId: number, status: number, code: string, name: string, length?: number | null, width?: number | null, height?: number | null, baseUnitWeight?: number | null, boxWeight?: number | null, boxQuantity?: number | null, baseUnitPicking?: boolean | null, boxPicking?: boolean | null, cubingType?: number | null, permanentProduct?: boolean | null, additionalDescription?: string | null, supplierName?: string | null } | null };
 
 export type GetAllBarcodesQueryVariables = Exact<{
   filters?: InputMaybe<BarcodeSearchFilters>;
@@ -982,21 +989,21 @@ export type GetAllBarcodesQueryVariables = Exact<{
 }>;
 
 
-export type GetAllBarcodesQuery = { __typename?: 'Query', barcodes: { __typename?: 'BarcodeListResult', count: number, itemsPerPage: number, totalPages: number, results: Array<{ __typename?: 'Barcode', id?: number | null, accountId: number, companyId: number, articleId: number, name: string, rotation: string, preparationMode: number, flagDouble: number, supplierName?: string | null, supplierArticleCode?: string | null, quantity?: number | null }> } };
+export type GetAllBarcodesQuery = { __typename?: 'Query', barcodes: { __typename?: 'BarcodeListResult', count: number, itemsPerPage: number, totalPages: number, results: Array<{ __typename?: 'Barcode', id?: number | null, accountId: number, companyId: number, articleId: number, name: string, rotation: string, preparationMode?: number | null, flagDouble?: number | null, supplierName?: string | null, supplierArticleCode?: string | null, quantity?: number | null }> } };
 
 export type GetBarcodeByIdQueryVariables = Exact<{
   id: Scalars['Int'];
 }>;
 
 
-export type GetBarcodeByIdQuery = { __typename?: 'Query', barcode?: { __typename?: 'Barcode', id?: number | null, accountId: number, companyId: number, articleId: number, name: string, rotation: string, preparationMode: number, flagDouble: number, supplierName?: string | null, supplierArticleCode?: string | null, quantity?: number | null } | null };
+export type GetBarcodeByIdQuery = { __typename?: 'Query', barcode?: { __typename?: 'Barcode', id?: number | null, accountId: number, companyId: number, articleId: number, name: string, rotation: string, preparationMode?: number | null, flagDouble?: number | null, supplierName?: string | null, supplierArticleCode?: string | null, quantity?: number | null } | null };
 
 export type CreateBarcodeMutationVariables = Exact<{
   input: CreateBarcodeInput;
 }>;
 
 
-export type CreateBarcodeMutation = { __typename?: 'Mutation', createBarcode: { __typename?: 'Barcode', id?: number | null, accountId: number, companyId: number, articleId: number, name: string, rotation: string, preparationMode: number, flagDouble: number, supplierName?: string | null, supplierArticleCode?: string | null, quantity?: number | null } };
+export type CreateBarcodeMutation = { __typename?: 'Mutation', createBarcode: { __typename?: 'Barcode', id?: number | null, accountId: number, companyId: number, articleId: number, name: string, rotation: string, preparationMode?: number | null, flagDouble?: number | null, supplierName?: string | null, supplierArticleCode?: string | null, quantity?: number | null } };
 
 export type DeleteBarcodeMutationVariables = Exact<{
   id: Scalars['Int'];
@@ -1004,6 +1011,15 @@ export type DeleteBarcodeMutationVariables = Exact<{
 
 
 export type DeleteBarcodeMutation = { __typename?: 'Mutation', deleteBarcode: boolean };
+
+export type RenderBarcodeMutationVariables = Exact<{
+  code: Scalars['String'];
+  category?: InputMaybe<BarcodeCategory>;
+  pages: Scalars['Int'];
+}>;
+
+
+export type RenderBarcodeMutation = { __typename?: 'Mutation', renderBarcode: { __typename: 'BarcodeError', message: string } | { __typename: 'RenderedDocument', url: string } };
 
 export type LoginMutationVariables = Exact<{
   username: Scalars['String'];
@@ -1398,6 +1414,32 @@ export const useDeleteBarcodeMutation = <
     useMutation<DeleteBarcodeMutation, TError, DeleteBarcodeMutationVariables, TContext>(
       ['DeleteBarcode'],
       (variables?: DeleteBarcodeMutationVariables) => fetcher<DeleteBarcodeMutation, DeleteBarcodeMutationVariables>(client, DeleteBarcodeDocument, variables, headers)(),
+      options
+    );
+export const RenderBarcodeDocument = `
+    mutation RenderBarcode($code: String!, $category: BarcodeCategory, $pages: Int!) {
+  renderBarcode(code: $code, category: $category, pages: $pages) {
+    __typename
+    ... on RenderedDocument {
+      url
+    }
+    ... on BarcodeError {
+      message
+    }
+  }
+}
+    `;
+export const useRenderBarcodeMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<RenderBarcodeMutation, TError, RenderBarcodeMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<RenderBarcodeMutation, TError, RenderBarcodeMutationVariables, TContext>(
+      ['RenderBarcode'],
+      (variables?: RenderBarcodeMutationVariables) => fetcher<RenderBarcodeMutation, RenderBarcodeMutationVariables>(client, RenderBarcodeDocument, variables, headers)(),
       options
     );
 export const LoginDocument = `
