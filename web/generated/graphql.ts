@@ -938,6 +938,16 @@ export type GetArticleByIdQueryVariables = Exact<{
 
 export type GetArticleByIdQuery = { __typename?: 'Query', article?: { __typename?: 'Article', id?: number | null, accountId: number, companyId: number, status: number, code: string, name: string, length?: number | null, width?: number | null, height?: number | null, baseUnitWeight?: number | null, boxWeight?: number | null, boxQuantity?: number | null, baseUnitPicking?: boolean | null, boxPicking?: boolean | null, cubingType?: number | null, permanentProduct?: boolean | null, additionalDescription?: string | null, supplierName?: string | null, baseUnitPrice?: number | null, baseUnitRotation?: string | null, boxRotation?: string | null, featureTypeId?: number | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, tariffClassification?: string | null, family?: string | null, subfamily?: string | null, groupingId?: string | null } | null };
 
+export type GetArticleIdsQueryVariables = Exact<{
+  filters?: InputMaybe<ArticleSearchFilters>;
+  orderBy?: InputMaybe<Array<ArticleOrderByCriterion> | ArticleOrderByCriterion>;
+  page: Scalars['Int'];
+  itemsPerPage: Scalars['Int'];
+}>;
+
+
+export type GetArticleIdsQuery = { __typename?: 'Query', articles: { __typename?: 'ArticleListResult', count: number, itemsPerPage: number, totalPages: number, results: Array<{ __typename?: 'Article', id?: number | null, name: string }> } };
+
 export type CreateArticleMutationVariables = Exact<{
   input: CreateArticleInput;
 }>;
@@ -1019,6 +1029,23 @@ export type LoginMutationVariables = Exact<{
 
 
 export type LoginMutation = { __typename?: 'Mutation', login?: { __typename?: 'LoginSuccess', accessToken: string } | null };
+
+export type ResetPasswordMutationVariables = Exact<{
+  email: Scalars['String'];
+  callbackUrl: Scalars['String'];
+}>;
+
+
+export type ResetPasswordMutation = { __typename?: 'Mutation', resetPassword: { __typename: 'ResetPasswordFailure', message: string } | { __typename: 'ResetPasswordSuccess', message: string } };
+
+export type ChangePasswordMutationVariables = Exact<{
+  token: Scalars['String'];
+  password: Scalars['String'];
+  password2: Scalars['String'];
+}>;
+
+
+export type ChangePasswordMutation = { __typename?: 'Mutation', changePassword: { __typename: 'ChangePasswordFailure', message: string } | { __typename: 'ChangePasswordSuccess', message: string } };
 
 
 export const GetAllArticlesDocument = `
@@ -1117,6 +1144,38 @@ export const useGetArticleByIdQuery = <
     useQuery<GetArticleByIdQuery, TError, TData>(
       ['GetArticleById', variables],
       fetcher<GetArticleByIdQuery, GetArticleByIdQueryVariables>(client, GetArticleByIdDocument, variables, headers),
+      options
+    );
+export const GetArticleIdsDocument = `
+    query GetArticleIds($filters: ArticleSearchFilters, $orderBy: [ArticleOrderByCriterion!], $page: Int!, $itemsPerPage: Int!) {
+  articles(
+    filters: $filters
+    orderBy: $orderBy
+    page: $page
+    itemsPerPage: $itemsPerPage
+  ) {
+    count
+    itemsPerPage
+    totalPages
+    results {
+      id
+      name
+    }
+  }
+}
+    `;
+export const useGetArticleIdsQuery = <
+      TData = GetArticleIdsQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: GetArticleIdsQueryVariables,
+      options?: UseQueryOptions<GetArticleIdsQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetArticleIdsQuery, TError, TData>(
+      ['GetArticleIds', variables],
+      fetcher<GetArticleIdsQuery, GetArticleIdsQueryVariables>(client, GetArticleIdsDocument, variables, headers),
       options
     );
 export const CreateArticleDocument = `
@@ -1401,5 +1460,57 @@ export const useLoginMutation = <
     useMutation<LoginMutation, TError, LoginMutationVariables, TContext>(
       ['Login'],
       (variables?: LoginMutationVariables) => fetcher<LoginMutation, LoginMutationVariables>(client, LoginDocument, variables, headers)(),
+      options
+    );
+export const ResetPasswordDocument = `
+    mutation ResetPassword($email: String!, $callbackUrl: String!) {
+  resetPassword(email: $email, callbackUrl: $callbackUrl) {
+    __typename
+    ... on ResetPasswordSuccess {
+      message
+    }
+    ... on ResetPasswordFailure {
+      message
+    }
+  }
+}
+    `;
+export const useResetPasswordMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<ResetPasswordMutation, TError, ResetPasswordMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<ResetPasswordMutation, TError, ResetPasswordMutationVariables, TContext>(
+      ['ResetPassword'],
+      (variables?: ResetPasswordMutationVariables) => fetcher<ResetPasswordMutation, ResetPasswordMutationVariables>(client, ResetPasswordDocument, variables, headers)(),
+      options
+    );
+export const ChangePasswordDocument = `
+    mutation ChangePassword($token: String!, $password: String!, $password2: String!) {
+  changePassword(token: $token, password: $password, password2: $password2) {
+    __typename
+    ... on ChangePasswordFailure {
+      message
+    }
+    ... on ChangePasswordSuccess {
+      message
+    }
+  }
+}
+    `;
+export const useChangePasswordMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<ChangePasswordMutation, TError, ChangePasswordMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<ChangePasswordMutation, TError, ChangePasswordMutationVariables, TContext>(
+      ['ChangePassword'],
+      (variables?: ChangePasswordMutationVariables) => fetcher<ChangePasswordMutation, ChangePasswordMutationVariables>(client, ChangePasswordDocument, variables, headers)(),
       options
     );

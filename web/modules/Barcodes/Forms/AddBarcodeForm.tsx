@@ -1,7 +1,7 @@
 import { WrapperForm } from '@components';
-import { Button, Col, Input, InputNumber, Row, Form } from 'antd';
+import { Button, Col, Input, InputNumber, Row, Form, AutoComplete } from 'antd';
 import useTranslation from 'next-translate/useTranslation';
-import { useEffect } from 'react';
+import { KeyboardEventHandler, useEffect, useState } from 'react';
 import { useAuth } from 'context/AuthContext';
 import { useRouter } from 'next/router';
 import {
@@ -9,9 +9,21 @@ import {
     CreateBarcodeMutation,
     CreateBarcodeMutationVariables
 } from 'generated/graphql';
-import { showError, showSuccess, showInfo } from '@helpers';
+import {
+    showError,
+    showSuccess,
+    showInfo,
+    useArticleIds,
+    DEFAULT_PAGE_NUMBER,
+    DEFAULT_ITEMS_PER_PAGE,
+    PaginationType
+} from '@helpers';
+import internal from 'stream';
 
-// const { Option } = Select;
+interface IOption {
+    value: string;
+    id: number;
+}
 
 export const AddBarcodeForm = () => {
     const { t } = useTranslation('common');
@@ -27,6 +39,7 @@ export const AddBarcodeForm = () => {
     const supplierArticleCode = t('d:supplierArticleCode');
     const companyId = t('d:companyId');
     const articleId = t('d:articleId');
+    const article = t('common:article');
     const accountId = t('d:accountId');
     const preparationMode = t('d:preparationMode');
     const flagDouble = t('d:flagDouble');
@@ -40,6 +53,10 @@ export const AddBarcodeForm = () => {
 
     // TYPED SAFE ALL
     const [form] = Form.useForm();
+
+    const [idOptions, setIdOptions] = useState<Array<IOption>>([]);
+    const [articleName, setArticleName] = useState<string>('');
+    const [aId, setAId] = useState<number>();
 
     const { mutate, isLoading: createLoading } = useCreateBarcodeMutation<Error>(
         graphqlRequestClient,
@@ -57,6 +74,7 @@ export const AddBarcodeForm = () => {
             }
         }
     );
+    const { data } = useArticleIds({ name: `${articleName}%` }, 1, 100, null);
 
     const createBarcode = ({ input }: CreateBarcodeMutationVariables) => {
         mutate({ input });
@@ -66,9 +84,17 @@ export const AddBarcodeForm = () => {
         form.validateFields()
             .then(() => {
                 // Here make api call of something else
-                createBarcode({ input: form.getFieldsValue(true) });
+                const formData = form.getFieldsValue(true);
+                delete formData.articleName;
+                createBarcode({ input: formData });
             })
-            .catch((err) => showError(t('messages:error-creating-data')));
+            .catch((err) => {
+                if (!aId) {
+                    showError(t('messages:error-selected-article-not-exist'));
+                } else {
+                    showError(t('messages:error-creating-data'));
+                }
+            });
     };
 
     useEffect(() => {
@@ -76,6 +102,28 @@ export const AddBarcodeForm = () => {
             showInfo(t('messages:info-create-wip'));
         }
     }, [createLoading]);
+
+    // useEffect(() => {
+    //     if (idOptions) {
+    //         console.log(idOptions);
+    //     }
+    // }, [idOptions]);
+
+    useEffect(() => {
+        const formValue = form.getFieldsValue();
+        form.setFieldsValue({ ...formValue, articleId: aId });
+    }, [aId]);
+
+    useEffect(() => {
+        if (data) {
+            let newIdOpts: Array<IOption> = [];
+            data.articles?.results.forEach(({ id, name }) => {
+                newIdOpts.push({ value: name, id: id! });
+            });
+            setIdOptions(newIdOpts);
+        }
+    }, [articleName, data]);
+
     return (
         <WrapperForm>
             <Form form={form} scrollToFirstError>
@@ -124,8 +172,29 @@ export const AddBarcodeForm = () => {
                             label={articleId}
                             name="articleId"
                             rules={[{ required: true, message: errorMessageEmptyInput }]}
+                            style={{ display: 'none' }}
                         >
-                            <InputNumber style={{ width: '100%' }} />
+                            <InputNumber style={{ width: '100%' }} value={aId} />
+                        </Form.Item>
+                        <Form.Item
+                            label={article}
+                            name="articleName"
+                            rules={[{ required: true, message: errorMessageEmptyInput }]}
+                        >
+                            <AutoComplete
+                                style={{ width: '100%' }}
+                                options={idOptions}
+                                filterOption={(inputValue, option) =>
+                                    option!.value
+                                        .toUpperCase()
+                                        .indexOf(inputValue.toUpperCase()) !== -1
+                                }
+                                onKeyUp={(e: any) => setArticleName(e.target.value)}
+                                onSelect={(value, option) => {
+                                    setAId(option.id);
+                                    setArticleName(value);
+                                }}
+                            />
                         </Form.Item>
                         <Form.Item
                             label={rotation}
