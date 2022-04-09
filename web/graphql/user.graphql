@@ -1,0 +1,27 @@
+query GetMyInfo {
+    me {
+        username
+        password
+        organizationId
+        roleId
+        organization {
+            name
+            id
+            awsAccessKeyId
+            awsSecretAccessKey
+            parentOrganizationId
+        }
+        role {
+            name
+            id
+            permissions {
+                table
+                mode
+                roleId
+                id
+            }
+        }
+        id
+        email
+    }
+}

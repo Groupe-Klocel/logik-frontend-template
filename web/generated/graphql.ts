@@ -1047,6 +1047,11 @@ export type ChangePasswordMutationVariables = Exact<{
 
 export type ChangePasswordMutation = { __typename?: 'Mutation', changePassword: { __typename: 'ChangePasswordFailure', message: string } | { __typename: 'ChangePasswordSuccess', message: string } };
 
+export type GetMyInfoQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetMyInfoQuery = { __typename?: 'Query', me: { __typename?: 'User', username: string, password: string, organizationId: string, roleId: string, id?: string | null, email?: string | null, organization?: { __typename?: 'Organization', name: string, id?: string | null, awsAccessKeyId?: string | null, awsSecretAccessKey?: string | null, parentOrganizationId?: string | null } | null, role: { __typename?: 'RoleType', name: string, id?: string | null, permissions: Array<{ __typename?: 'PermissionType', table: Table, mode: Mode, roleId: string, id?: string | null }> } } };
+
 
 export const GetAllArticlesDocument = `
     query GetAllArticles($filters: ArticleSearchFilters, $orderBy: [ArticleOrderByCriterion!], $page: Int!, $itemsPerPage: Int!) {
@@ -1512,5 +1517,48 @@ export const useChangePasswordMutation = <
     useMutation<ChangePasswordMutation, TError, ChangePasswordMutationVariables, TContext>(
       ['ChangePassword'],
       (variables?: ChangePasswordMutationVariables) => fetcher<ChangePasswordMutation, ChangePasswordMutationVariables>(client, ChangePasswordDocument, variables, headers)(),
+      options
+    );
+export const GetMyInfoDocument = `
+    query GetMyInfo {
+  me {
+    username
+    password
+    organizationId
+    roleId
+    organization {
+      name
+      id
+      awsAccessKeyId
+      awsSecretAccessKey
+      parentOrganizationId
+    }
+    role {
+      name
+      id
+      permissions {
+        table
+        mode
+        roleId
+        id
+      }
+    }
+    id
+    email
+  }
+}
+    `;
+export const useGetMyInfoQuery = <
+      TData = GetMyInfoQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables?: GetMyInfoQueryVariables,
+      options?: UseQueryOptions<GetMyInfoQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetMyInfoQuery, TError, TData>(
+      variables === undefined ? ['GetMyInfo'] : ['GetMyInfo', variables],
+      fetcher<GetMyInfoQuery, GetMyInfoQueryVariables>(client, GetMyInfoDocument, variables, headers),
       options
     );

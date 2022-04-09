@@ -7,12 +7,16 @@ const menuInitialState = cookie.get('isSettingMenuCollapsed')
     : true;
 const themeInitialState = cookie.get('theme') ? cookie.get('theme') : 'light';
 
+const userInfoStr = cookie.get('user') !== undefined ? cookie.get('user') : '{}';
+const userInitData = JSON.parse(userInfoStr!);
+
 const initialState = {
     theme: themeInitialState,
     isSettingMenuCollapsed: menuInitialState,
     isSessionMenuCollapsed: menuInitialState,
     globalLocale: 'fr',
-    finish: false
+    finish: false,
+    user: userInitData
 };
 
 type State = typeof initialState;
@@ -43,6 +47,12 @@ function reducer(state: State, action: Action) {
             };
         case 'SAVE_SETTINGS':
             saveUserSettings(state.isSettingMenuCollapsed, state.theme!, state.globalLocale);
+        case 'SET_USER_INFO':
+            saveUserInfo(action.user);
+            return {
+                ...state,
+                user: action.user
+            };
         default:
             return state;
     }
@@ -52,6 +62,10 @@ const saveUserSettings = (menu: boolean, theme: string, locale: string) => {
     cookie.set('isSettingMenuCollapsed', menu.toString());
     cookie.set('theme', theme);
     cookie.set('NEXT_LOCALE', locale);
+};
+
+const saveUserInfo = (user: any) => {
+    cookie.set('user', JSON.stringify(user));
 };
 
 const [useAppState, useAppDispatch, AppProvider] = createCtx(initialState, reducer);

@@ -151,7 +151,6 @@ export const AuthProvider: FC<OnlyChildrenType> = ({ children }: OnlyChildrenTyp
 
     const logout = () => {
         cookie.remove('token');
-        setUser(null);
         // Remove Bearer JWT token from header
         setHeader('NOP');
         router.push('/login');
