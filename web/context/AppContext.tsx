@@ -9,6 +9,7 @@ const themeInitialState = cookie.get('theme') ? cookie.get('theme') : 'light';
 
 const userInfoStr = cookie.get('user') !== undefined ? cookie.get('user') : '{}';
 const userInitData = JSON.parse(userInfoStr!);
+const permissions = userInitData.role?.permissions;
 
 const initialState = {
     theme: themeInitialState,
@@ -16,7 +17,8 @@ const initialState = {
     isSessionMenuCollapsed: menuInitialState,
     globalLocale: 'fr',
     finish: false,
-    user: userInitData
+    user: userInitData,
+    permissions: permissions
 };
 
 type State = typeof initialState;

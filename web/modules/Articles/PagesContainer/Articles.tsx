@@ -11,11 +11,12 @@ import { useAppState } from 'context/AppContext';
 
 const Articles = () => {
     const { t } = useTranslation();
-    const { user } = useAppState();
-    const permissions = user?.role.permissions;
-    const mode = permissions.find((p: any) => {
-        return p.table == 'ARTICLE';
-    }).mode;
+    const { permissions } = useAppState();
+    const mode =
+        !!permissions &&
+        permissions.find((p: any) => {
+            return p.table == 'ARTICLE';
+        }).mode;
     // console.log('mode', mode);
 
     const [search, setSearch] = useState({});

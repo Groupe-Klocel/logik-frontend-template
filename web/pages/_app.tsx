@@ -36,10 +36,8 @@ type AppLayoutProps = AppProps & {
 const App = ({ Component, pageProps }: AppLayoutProps) => {
     const router = useRouter();
     const { locale } = router;
-    const { user } = useAppState();
-    console.log('_app.tsx', user);
+    const { permissions } = useAppState();
     const { t } = useTranslation();
-    const [permissions, setPermissions] = useState<Array<any>>();
     const [isAllowed, setIsAllowed] = useState(true);
 
     let insertPoint;

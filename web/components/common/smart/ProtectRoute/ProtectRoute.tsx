@@ -13,7 +13,7 @@ const ProtectRoute: any | null = ({ children }: OnlyChildrenType) => {
     const router = useRouter();
     const { t } = useTranslation();
     const { isAuthenticated, loading, graphqlRequestClient, logout } = useAuth();
-    const { user } = useAppState();
+    const { user, permissions } = useAppState();
     const dispatchUser = useAppDispatch();
     const setUserInfo = useCallback(
         (newUser) =>
@@ -28,9 +28,8 @@ const ProtectRoute: any | null = ({ children }: OnlyChildrenType) => {
     const { isLoading, data, error } = useGetMyInfoQuery<Partial<GetMyInfoQuery>, Error>(
         graphqlRequestClient
     );
-    const permissions = user?.role.permissions;
-    // console.log('user', user);
-    // console.log('permissions', permissions);
+    console.log('user', user);
+    console.log('permissions', permissions);
 
     useEffect(() => {
         console.log('check current session');
@@ -39,7 +38,9 @@ const ProtectRoute: any | null = ({ children }: OnlyChildrenType) => {
             setTimeout(logout, 2000);
         }
         if (data) {
-            if (user.toString() !== data.me!.toString()) {
+            console.log('data str', JSON.stringify(data.me!));
+            console.log('user str', JSON.stringify(user));
+            if (JSON.stringify(data.me!) !== JSON.stringify(user)) {
                 setUserInfo(data.me);
             } else {
                 console.log('skip set user info');
@@ -51,13 +52,13 @@ const ProtectRoute: any | null = ({ children }: OnlyChildrenType) => {
         router.push('/login');
         return <ScreenSpin />;
     }
-
-    if (user) {
+    console.log('permissions', permissions);
+    if (permissions && data) {
         permissions.forEach((p: any) => {
             const table = p.table;
             const mode = p.mode;
-            if (table === 'ARTICLE' && mode === 'READ') {
-                if (router.pathname.startsWith('/article/edit')) {
+            if (table === 'ARTICLE' && mode === 'WRITE') {
+                if (router.pathname.includes('/article/edit')) {
                     router.replace('/');
                     showError(t('messages:error-permission'));
                 }
@@ -71,7 +72,8 @@ const ProtectRoute: any | null = ({ children }: OnlyChildrenType) => {
         });
     }
 
-    return <>{data ? children : <ContentSpin />}</>;
+    // return <>{data ? children : <ContentSpin />}</>;
+    return !!data && children;
 };
 
 ProtectRoute.displayName = 'ProtectRoute';
