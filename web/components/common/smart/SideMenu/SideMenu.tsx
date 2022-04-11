@@ -20,20 +20,13 @@ const SideMenu: FC = () => {
     const { t } = useTranslation('menu');
     const { logout } = useAuth();
 
-    const keys = cookie.get('menuSelectedKeys');
-    const menuSelectedKeys = keys ? JSON.parse(keys) : [];
+    const keys = cookie.get('menuSelectedKeys') as string;
 
     const handleMenuSelect = (e: any) => {
-        cookie.set('menuSelectedKeys', JSON.stringify(e.keyPath));
+        cookie.set('menuSelectedKeys', e.key);
     };
     return (
-        <Menu
-            mode="inline"
-            className="menu"
-            onClick={handleMenuSelect}
-            defaultSelectedKeys={menuSelectedKeys}
-            defaultOpenKeys={menuSelectedKeys}
-        >
+        <Menu mode="inline" className="menu" onClick={handleMenuSelect} selectedKeys={[keys]}>
             <SubMenu icon={<AuditOutlined />} key="administration" title={t('administration')}>
                 <SubMenu key="administration-access-management" title={t('access-management')}>
                     <Menu.Item key="administration-access-management-users">
