@@ -52,44 +52,24 @@ const ProtectRoute: any | null = ({ children }: OnlyChildrenType) => {
         return <ScreenSpin />;
     }
 
-    // useEffect(() => {
-    //     if (user) {
-    //         permissions.forEach((p: any) => {
-    //             const table = p.table;
-    //             const mode = p.mode;
-    //             if (table === 'ARTICLE' && mode === 'WRITE') {
-    //                 if (router.pathname.startsWith('/article')) {
-    //                     showError(t('messages:error-permission'));
-    //                     router.replace('/');
-    //                 }
-    //             }
-    //             if (table === 'BARCODE' && mode === 'WRITE') {
-    //                 if (router.pathname.startsWith('/barcode')) {
-    //                     showError(t('messages:error-permission'));
-    //                     router.replace('/');
-    //                 }
-    //             }
-    //         });
-    //     }
-    // }, []);
-    // if (user) {
-    //     permissions.forEach((p: any) => {
-    //         const table = p.table;
-    //         const mode = p.mode;
-    //         if (table === 'ARTICLE' && mode === 'READ') {
-    //             if (router.pathname.startsWith('/article/edit')) {
-    //                 router.replace('/');
-    //                 showError(t('messages:error-permission'));
-    //             }
-    //         }
-    //         if (table === 'BARCODE' && mode === 'READ') {
-    //             if (router.pathname.startsWith('/barcode/')) {
-    //                 router.replace('/');
-    //                 showError(t('messages:error-permission'));
-    //             }
-    //         }
-    //     });
-    // }
+    if (user) {
+        permissions.forEach((p: any) => {
+            const table = p.table;
+            const mode = p.mode;
+            if (table === 'ARTICLE' && mode === 'READ') {
+                if (router.pathname.startsWith('/article/edit')) {
+                    router.replace('/');
+                    showError(t('messages:error-permission'));
+                }
+            }
+            if (table === 'BARCODE' && mode === 'READ') {
+                if (router.pathname.startsWith('/barcode/')) {
+                    router.replace('/');
+                    showError(t('messages:error-permission'));
+                }
+            }
+        });
+    }
 
     return <>{data ? children : <ContentSpin />}</>;
 };
