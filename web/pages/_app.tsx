@@ -1,17 +1,19 @@
 import { META_DEFAULTS } from 'helpers/configs/misc';
-import { cookie, getDefaultTheme } from '@helpers';
+import { cookie, getDefaultTheme, showError } from '@helpers';
 import 'antd/dist/antd.css';
-import { AppProvider } from 'context/AppContext';
+import { AppProvider, useAppState } from 'context/AppContext';
 import { AuthProvider } from 'context/AuthContext';
 import { PageWithMainLayoutType } from 'helpers/types/pageWithLayout';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import { Fragment, useEffect } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { ThemeSwitcherProvider } from 'react-css-theme-switcher';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import '../styles/globals.css';
+import useTranslation from 'next-translate/useTranslation';
+import HomePage from 'pages';
 
 const themes = {
     dark: `/dark-theme.css`,
@@ -34,6 +36,11 @@ type AppLayoutProps = AppProps & {
 const App = ({ Component, pageProps }: AppLayoutProps) => {
     const router = useRouter();
     const { locale } = router;
+    const { user } = useAppState();
+    console.log('_app.tsx', user);
+    const { t } = useTranslation();
+    const [permissions, setPermissions] = useState<Array<any>>();
+    const [isAllowed, setIsAllowed] = useState(true);
 
     let insertPoint;
 
@@ -47,7 +54,33 @@ const App = ({ Component, pageProps }: AppLayoutProps) => {
         }
         if (typeof window !== 'undefined')
             insertPoint = document.getElementById('inject-styles-here');
+        if (user) {
+            const per = user?.role.permissions;
+            console.log('_app.tsx permission', per);
+            setPermissions(user.role.permissions);
+
+            !!permissions &&
+                permissions.forEach((p: any) => {
+                    const table = p.table;
+                    const mode = p.mode;
+                    if (table === 'ARTICLE' && mode === 'READ') {
+                        if (router.pathname.startsWith('/article/edit')) {
+                            router.replace('/');
+                            showError(t('messages:error-permission'));
+                            setIsAllowed(false);
+                        }
+                    }
+                    if (table === 'BARCODE' && mode === 'READ') {
+                        if (router.pathname.startsWith('/barcode')) {
+                            router.replace('/');
+                            showError(t('messages:error-permission'));
+                            setIsAllowed(false);
+                        }
+                    }
+                });
+        }
     }, []);
+    const ComponentToRender = isAllowed ? Component : HomePage;
 
     return (
         <>
@@ -66,7 +99,7 @@ const App = ({ Component, pageProps }: AppLayoutProps) => {
                         insertionPoint={insertPoint}
                     >
                         <AppProvider>
-                            <Layout>{getLayout(<Component {...pageProps} />)}</Layout>
+                            <Layout>{getLayout(<ComponentToRender {...pageProps} />)}</Layout>
                         </AppProvider>
                     </ThemeSwitcherProvider>
                 </AuthProvider>

@@ -7,9 +7,16 @@ import { articlesSubRoutes } from 'modules/Articles/Static/articlesRoutes';
 import useTranslation from 'next-translate/useTranslation';
 import { showError } from '@helpers';
 import { useCallback, useState } from 'react';
+import { useAppState } from 'context/AppContext';
 
 const Articles = () => {
     const { t } = useTranslation();
+    const { user } = useAppState();
+    const permissions = user?.role.permissions;
+    const mode = permissions.find((p: any) => {
+        return p.table == 'ARTICLE';
+    }).mode;
+    // console.log('mode', mode);
 
     const [search, setSearch] = useState({});
     console.log(search);
@@ -64,11 +71,15 @@ const Articles = () => {
                 actionsRight={
                     <Space>
                         <Button icon={<SearchOutlined />} onClick={() => openSearchDrawer()} />
-                        <LinkButton
-                            title={t('actions:add2', { name: t('common:article') })}
-                            path="/add-article"
-                            type="primary"
-                        />
+                        {mode == 'WRITE' ? (
+                            <LinkButton
+                                title={t('actions:add2', { name: t('common:article') })}
+                                path="/add-article"
+                                type="primary"
+                            />
+                        ) : (
+                            <></>
+                        )}
                     </Space>
                 }
             />

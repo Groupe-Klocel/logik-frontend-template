@@ -8,9 +8,15 @@ import { Space, Form, Button } from 'antd';
 import { BarcodesSearch } from 'modules/Barcodes/Forms/BarcodesSearch';
 import { useDrawerDispatch } from 'context/DrawerContext';
 import { showError } from '@helpers';
+import { useAppState } from 'context/AppContext';
 
 const Barcodes = () => {
     const { t } = useTranslation();
+    const { user } = useAppState();
+    const permissions = user?.role.permissions;
+    const mode = permissions.find((p: any) => {
+        return p.table == 'ARTICLE';
+    }).mode;
 
     //	SEARCH DRAWER
     const [search, setSearch] = useState({});
@@ -64,11 +70,15 @@ const Barcodes = () => {
                 actionsRight={
                     <Space>
                         <Button icon={<SearchOutlined />} onClick={() => openSearchDrawer()} />
-                        <LinkButton
-                            title={t('actions:add2', { name: t('common:barcode') })}
-                            path="/add-barcode"
-                            type="primary"
-                        />
+                        {mode == 'WRITE' ? (
+                            <LinkButton
+                                title={t('actions:add2', { name: t('common:barcode') })}
+                                path="/add-barcode"
+                                type="primary"
+                            />
+                        ) : (
+                            <></>
+                        )}
                     </Space>
                 }
             />
