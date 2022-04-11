@@ -52,31 +52,26 @@ const App = ({ Component, pageProps }: AppLayoutProps) => {
         }
         if (typeof window !== 'undefined')
             insertPoint = document.getElementById('inject-styles-here');
-        // if (user) {
-        //     const per = user?.role.permissions;
-        //     console.log('_app.tsx permission', per);
-        //     setPermissions(user.role.permissions);
-
-        //     !!permissions &&
-        //         permissions.forEach((p: any) => {
-        //             const table = p.table;
-        //             const mode = p.mode;
-        //             if (table === 'ARTICLE' && mode === 'READ') {
-        //                 if (router.pathname.startsWith('/article/edit')) {
-        //                     router.replace('/');
-        //                     showError(t('messages:error-permission'));
-        //                     setIsAllowed(false);
-        //                 }
-        //             }
-        //             if (table === 'BARCODE' && mode === 'READ') {
-        //                 if (router.pathname.startsWith('/barcode')) {
-        //                     router.replace('/');
-        //                     showError(t('messages:error-permission'));
-        //                     setIsAllowed(false);
-        //                 }
-        //             }
-        //         });
-        // }
+        if (permissions) {
+            permissions.forEach((p: any) => {
+                const table = p.table;
+                const mode = p.mode;
+                if (table === 'ARTICLE' && mode === 'WRITE') {
+                    if (router.pathname.startsWith('/article/edit')) {
+                        router.replace('/');
+                        showError(t('messages:error-permission'));
+                        setIsAllowed(false);
+                    }
+                }
+                if (table === 'BARCODE' && mode === 'READ') {
+                    if (router.pathname.startsWith('/barcode')) {
+                        router.replace('/');
+                        showError(t('messages:error-permission'));
+                        setIsAllowed(false);
+                    }
+                }
+            });
+        }
     }, []);
     const ComponentToRender = isAllowed ? Component : HomePage;
 

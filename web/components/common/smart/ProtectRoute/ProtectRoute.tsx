@@ -53,27 +53,27 @@ const ProtectRoute: any | null = ({ children }: OnlyChildrenType) => {
         return <ScreenSpin />;
     }
     console.log('permissions', permissions);
-    if (permissions && data) {
-        permissions.forEach((p: any) => {
-            const table = p.table;
-            const mode = p.mode;
-            if (table === 'ARTICLE' && mode === 'WRITE') {
-                if (router.pathname.includes('/article/edit')) {
-                    router.replace('/');
-                    showError(t('messages:error-permission'));
-                }
-            }
-            if (table === 'BARCODE' && mode === 'READ') {
-                if (router.pathname.startsWith('/barcode/')) {
-                    router.replace('/');
-                    showError(t('messages:error-permission'));
-                }
-            }
-        });
-    }
+    // if (permissions && data) {
+    //     permissions.forEach((p: any) => {
+    //         const table = p.table;
+    //         const mode = p.mode;
+    //         if (table === 'ARTICLE' && mode === 'WRITE') {
+    //             if (router.pathname.includes('/article/edit')) {
+    //                 router.replace('/');
+    //                 showError(t('messages:error-permission'));
+    //             }
+    //         }
+    //         if (table === 'BARCODE' && mode === 'READ') {
+    //             if (router.pathname.startsWith('/barcode/')) {
+    //                 router.replace('/');
+    //                 showError(t('messages:error-permission'));
+    //             }
+    //         }
+    //     });
+    // }
 
     // return <>{data ? children : <ContentSpin />}</>;
-    return !!data && children;
+    return children;
 };
 
 ProtectRoute.displayName = 'ProtectRoute';
