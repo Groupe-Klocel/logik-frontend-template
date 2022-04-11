@@ -56,15 +56,15 @@ const App = ({ Component, pageProps }: AppLayoutProps) => {
             permissions.forEach((p: any) => {
                 const table = p.table;
                 const mode = p.mode;
-                if (table === 'ARTICLE' && mode === 'WRITE') {
-                    if (router.pathname.startsWith('/article/edit')) {
+                if (table === 'ARTICLE' && mode === 'READ') {
+                    if (router.pathname.includes('/article/edit')) {
                         router.replace('/');
                         showError(t('messages:error-permission'));
                         setIsAllowed(false);
                     }
                 }
                 if (table === 'BARCODE' && mode === 'READ') {
-                    if (router.pathname.startsWith('/barcode')) {
+                    if (router.pathname.includes('/barcode/edit')) {
                         router.replace('/');
                         showError(t('messages:error-permission'));
                         setIsAllowed(false);
