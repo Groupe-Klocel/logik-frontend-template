@@ -9,7 +9,9 @@ import {
     useGetArticleByIdQuery,
     useDeleteArticleMutation,
     DeleteArticleMutation,
-    DeleteArticleMutationVariables
+    DeleteArticleMutationVariables,
+    Table,
+    Mode
 } from 'generated/graphql';
 import { useAuth } from 'context/AuthContext';
 import { FC, useEffect, useState } from 'react';
@@ -36,7 +38,7 @@ const SingleArticle: FC<ISingleArticleProps> = ({ id, router }: ISingleArticlePr
     const mode =
         !!permissions &&
         permissions.find((p: any) => {
-            return p.table == 'ARTICLE';
+            return p.table == Table.Article;
         }).mode;
 
     const { graphqlRequestClient } = useAuth();
@@ -113,7 +115,7 @@ const SingleArticle: FC<ISingleArticleProps> = ({ id, router }: ISingleArticlePr
                 routes={breadsCrumb}
                 onBack={() => router.push('/articles')}
                 actionsRight={
-                    mode == 'WRITE' ? (
+                    mode == Mode.Write ? (
                         <Space>
                             <Button onClick={updateBoxQuantity} type="primary">
                                 {t('actions:update-quantity')}

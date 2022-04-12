@@ -9,13 +9,13 @@ import { BarcodesSearch } from 'modules/Barcodes/Forms/BarcodesSearch';
 import { useDrawerDispatch } from 'context/DrawerContext';
 import { showError } from '@helpers';
 import { useAppState } from 'context/AppContext';
+import { Table } from 'generated/graphql';
 
 const Barcodes = () => {
     const { t } = useTranslation();
-    const { user } = useAppState();
-    const permissions = user?.role.permissions;
+    const { permissions } = useAppState();
     const mode = permissions.find((p: any) => {
-        return p.table == 'ARTICLE';
+        return p.table == Table.Barcode;
     }).mode;
 
     //	SEARCH DRAWER
