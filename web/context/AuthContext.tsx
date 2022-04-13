@@ -52,7 +52,7 @@ export const AuthProvider: FC<OnlyChildrenType> = ({ children }: OnlyChildrenTyp
         async function loadUserFromCookie() {
             const token = cookie.get('token');
             if (token) {
-                await setHeader(token);
+                setHeader(token);
                 const user = decodeJWT(token);
                 if (user) setUser(user);
             }
@@ -68,10 +68,14 @@ export const AuthProvider: FC<OnlyChildrenType> = ({ children }: OnlyChildrenTyp
                 setHeader(data.login.accessToken);
                 const user = decodeJWT(data.login.accessToken);
                 setUser(user);
-                setTimeout(() => {
-                    router.push('/');
-                    showSuccess(t('messages:login-success'));
+                const i = setInterval(() => {
+                    if (cookie.get('token')) {
+                        clearInterval(i);
+                        router.push('/');
+                        showSuccess(t('messages:login-success'));
+                    }
                 }, 100);
+
                 // Set Bearer JWT token to the header for future request
             } else {
                 showError(t('messages:error-login'));
