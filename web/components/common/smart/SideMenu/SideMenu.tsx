@@ -23,6 +23,9 @@ const SideMenu: FC = () => {
     const { permissions } = useAppState();
 
     const checkPermissionExistance = (tableName: string) => {
+        if (!permissions) {
+            return false;
+        }
         const permission = permissions.find((p: any) => {
             return p.table == tableName;
         });
