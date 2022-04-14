@@ -18,10 +18,13 @@ import {
     ExportArticlesMutationVariables,
     ExportArticlesMutation,
     useExportArticlesMutation,
-    ExportFormat
+    ExportFormat,
+    Table,
+    Mode
 } from 'generated/graphql';
 import { EyeTwoTone, DeleteOutlined } from '@ant-design/icons';
 import { useState, useEffect, useCallback } from 'react';
+import { useAppState } from 'context/AppContext';
 
 export interface IArticlesListProps {
     searchCriteria?: any;
@@ -40,6 +43,13 @@ const ArticlesList = ({ searchCriteria }: IArticlesListProps) => {
         current: DEFAULT_PAGE_NUMBER,
         itemsPerPage: DEFAULT_ITEMS_PER_PAGE
     });
+
+    const { permissions } = useAppState();
+    const mode =
+        !!permissions &&
+        permissions.find((p: any) => {
+            return p.table == Table.Article;
+        }).mode;
 
     const { isLoading, data, error } = useArticles(
         searchCriteria,
@@ -187,11 +197,15 @@ const ArticlesList = ({ searchCriteria }: IArticlesListProps) => {
                         icon={<EyeTwoTone />}
                         path={pathParams('/article/[id]', record.id)}
                     />
-                    <Button
-                        icon={<DeleteOutlined />}
-                        danger
-                        onClick={() => alert(`delete article N° ${record.id}`)}
-                    />
+                    {mode == Mode.Write ? (
+                        <Button
+                            icon={<DeleteOutlined />}
+                            danger
+                            onClick={() => alert(`delete article N° ${record.id}`)}
+                        />
+                    ) : (
+                        <></>
+                    )}
                 </Space>
             )
         }
