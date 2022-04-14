@@ -11,9 +11,9 @@ import { useAuth } from 'context/AuthContext';
 import { Menu } from 'antd';
 import useTranslation from 'next-translate/useTranslation';
 import Link from 'next/link';
-import React, { FC } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { useAppState } from 'context/AppContext';
-import { Table } from 'generated/graphql';
+import { GetMyInfoQuery, Table, useGetMyInfoQuery } from 'generated/graphql';
 
 const { SubMenu } = Menu;
 
@@ -22,11 +22,17 @@ const SideMenu: FC = () => {
     const { logout } = useAuth();
     const { permissions } = useAppState();
 
+    const [per, setPer] = useState<any>(permissions);
+    const { graphqlRequestClient } = useAuth();
+    const { isLoading, data, error } = useGetMyInfoQuery<Partial<GetMyInfoQuery>, Error>(
+        graphqlRequestClient
+    );
+
     const checkPermissionExistance = (tableName: string) => {
-        if (!permissions) {
+        if (!per) {
             return false;
         }
-        const permission = permissions.find((p: any) => {
+        const permission = per.find((p: any) => {
             return p.table == tableName;
         });
         if (permission) {
@@ -35,6 +41,15 @@ const SideMenu: FC = () => {
             return false;
         }
     };
+
+    useEffect(() => {
+        if (error) {
+            setTimeout(logout, 2000);
+        }
+        if (data) {
+            setPer(data.me?.role.permissions);
+        }
+    }, [data]);
 
     return (
         <Menu mode="inline" className="menu">
