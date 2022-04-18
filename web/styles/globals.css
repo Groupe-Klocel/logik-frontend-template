@@ -24,8 +24,8 @@ a {
 .ant-input-prefix,
 .ant-input-affix-wrapper > input.ant-input,
 input::-webkit-input-placeholder {
-  color: rgba(0, 0, 0, 0.65) !important;
-} 
+    color: rgba(0, 0, 0, 0.65) !important;
+}
 
 .ant-layout-sider-children > ul {
     border: 1px;
@@ -82,7 +82,6 @@ input::-webkit-input-placeholder {
     top: 0;
 }
 
-
 .edit-article-modal .ant-modal {
     width: 100% !important;
 }
@@ -97,3 +96,6 @@ input::-webkit-input-placeholder {
 /* .ant-modal-body {
 height: calc(100vh - 110px);
 } */
+.ant-menu > .ant-menu-submenu-selected {
+    background-color: #093452;
+}
