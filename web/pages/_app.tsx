@@ -2,7 +2,7 @@ import { META_DEFAULTS } from 'helpers/configs/misc';
 import { cookie, getDefaultTheme, showError } from '@helpers';
 import 'antd/dist/antd.css';
 import { AppProvider, useAppState } from 'context/AppContext';
-import { AuthProvider } from 'context/AuthContext';
+import { AuthProvider, useAuth } from 'context/AuthContext';
 import { PageWithMainLayoutType } from 'helpers/types/pageWithLayout';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
@@ -53,26 +53,6 @@ const App = ({ Component, pageProps }: AppLayoutProps) => {
         }
         if (typeof window !== 'undefined')
             insertPoint = document.getElementById('inject-styles-here');
-        // if (permissions) {
-        //     permissions.forEach((p: any) => {
-        //         const table = p.table;
-        //         const mode = p.mode;
-        //         if (table === Table.Article && mode === Mode.Read) {
-        //             if (router.pathname.includes('/article/edit')) {
-        //                 router.replace('/');
-        //                 showError(t('messages:error-permission'));
-        //                 setIsAllowed(false);
-        //             }
-        //         }
-        //         if (table === Table.Barcode && mode === Mode.Read) {
-        //             if (router.pathname.includes('/barcode/edit')) {
-        //                 router.replace('/');
-        //                 showError(t('messages:error-permission'));
-        //                 setIsAllowed(false);
-        //             }
-        //         }
-        //     });
-        // }
         function disallowPage() {
             showError(t('messages:error-permission'));
             router.replace('/');
@@ -89,11 +69,13 @@ const App = ({ Component, pageProps }: AppLayoutProps) => {
                 });
                 console.log(p);
                 if (!p) {
-                    console.log(router.pathname);
                     let isUrlPatternExist = false;
                     isUrlPatternExist =
                         router.pathname.startsWith('/about') || router.pathname === '/';
-                    if (!isUrlPatternExist) disallowPage();
+                    if (!isUrlPatternExist) {
+                        disallowPage();
+                        break;
+                    }
                 } else {
                     const table = p.table;
                     const mode = p.mode;
@@ -124,6 +106,7 @@ const App = ({ Component, pageProps }: AppLayoutProps) => {
                         router.replace('/');
                         showError(t('messages:error-permission'));
                         setIsAllowed(false);
+                        break;
                     }
                 }
             }

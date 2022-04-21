@@ -8,6 +8,7 @@ const menuInitialState = cookie.get('isSettingMenuCollapsed')
 const themeInitialState = cookie.get('theme') ? cookie.get('theme') : 'light';
 
 const userInfoStr = cookie.get('user') !== undefined ? cookie.get('user') : '{}';
+console.log('userinfoStr=', userInfoStr);
 const userInitData = JSON.parse(userInfoStr!);
 const permissions = userInitData.role?.permissions;
 
@@ -53,7 +54,8 @@ function reducer(state: State, action: Action) {
             saveUserInfo(action.user);
             return {
                 ...state,
-                user: action.user
+                user: action.user,
+                permissions: action.user.role.permissions
             };
         default:
             return state;

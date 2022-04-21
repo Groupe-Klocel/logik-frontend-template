@@ -1,12 +1,17 @@
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { Logo, StyledForm, WelcomeText, WrapperLogin, LinkButton } from '@components';
+import { cookie, showSuccess } from '@helpers';
 import { Button, Form, Input } from 'antd';
+import { useAppDispatch, useAppState } from 'context/AppContext';
 import { useAuth } from 'context/AuthContext';
+import { gql, GraphQLClient } from 'graphql-request';
 import useTranslation from 'next-translate/useTranslation';
+import router from 'next/router';
+import { useCallback, useEffect, useState } from 'react';
 
 export const LoginForm = () => {
     const { t } = useTranslation('common');
-    const { login } = useAuth();
+    const { login, graphqlRequestClient, isAuthenticated } = useAuth();
     // TEXTS TRANSLATION
 
     const welcome = t('welcome');
@@ -15,10 +20,79 @@ export const LoginForm = () => {
     const forgotPassword = t('forgot-password');
     const loginButton = t('actions:login');
     const errorEmptyMessage = t('messages:error-message-empty-input');
+    const { user } = useAppState();
+
+    const dispatchUser = useAppDispatch();
+    const setUserInfo = useCallback(
+        (newUser) =>
+            dispatchUser({
+                type: 'SET_USER_INFO',
+                user: newUser
+            }),
+        [dispatchUser, user]
+    );
 
     // END TEXTS TRANSLATION
 
     const [form] = Form.useForm();
+    useEffect(() => {
+        if (isAuthenticated) {
+            const token = cookie.get('token');
+            if (token) {
+                try {
+                    // const requestHeader = {
+                    //     authorization: `Bearer ${token}`
+                    // };
+                    // const graphqlRequestClient = new GraphQLClient(
+                    //     process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT as string,
+                    //     {
+                    //         headers: requestHeader
+                    //     }
+                    // );
+
+                    const query = gql`
+                        query GetMyInfo {
+                            me {
+                                username
+                                password
+                                organizationId
+                                roleId
+                                organization {
+                                    name
+                                    id
+                                    awsAccessKeyId
+                                    awsSecretAccessKey
+                                    parentOrganizationId
+                                }
+                                role {
+                                    name
+                                    id
+                                    permissions {
+                                        table
+                                        mode
+                                        roleId
+                                        id
+                                    }
+                                }
+                                id
+                                email
+                            }
+                        }
+                    `;
+
+                    graphqlRequestClient.request(query).then((data: any) => {
+                        if (data.me) {
+                            setUserInfo(data.me);
+                            router.push('/');
+                            showSuccess(t('messages:login-success'));
+                        }
+                    });
+                } catch (error) {
+                    console.log(error);
+                }
+            }
+        }
+    }, [isAuthenticated]);
 
     const onFinish = (values: any) => {
         login({
