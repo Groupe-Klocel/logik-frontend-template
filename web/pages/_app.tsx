@@ -39,8 +39,7 @@ const App = ({ Component, pageProps }: AppLayoutProps) => {
     const { locale } = router;
     const { permissions } = useAppState();
     const { t } = useTranslation();
-    const [isAllowed, setIsAllowed] = useState(true);
-
+    // const [isAllowed, setIsAllowed] = useState(true);
     let insertPoint;
 
     const getLayout = Component.getLayout ?? ((page) => page);
@@ -53,95 +52,89 @@ const App = ({ Component, pageProps }: AppLayoutProps) => {
         }
         if (typeof window !== 'undefined')
             insertPoint = document.getElementById('inject-styles-here');
-        function disallowPage() {
-            showError(t('messages:error-permission'));
-            router.replace('/');
-            setIsAllowed(false);
-        }
-        console.log('pathanem = ', router.pathname);
-        if (permissions) {
-            const tableNames = Object.values(Table);
-            for (const key of tableNames) {
-                // const tableName = Table[key];
-                console.log(key);
-                const p = permissions.find((p: any) => {
-                    return p.table == key;
-                });
-                console.log(p);
-                if (!p) {
-                    let isUrlPatternExist = false;
-                    isUrlPatternExist =
-                        router.pathname.startsWith('/about') || router.pathname === '/';
-                    if (!isUrlPatternExist) {
-                        disallowPage();
-                        break;
-                    }
-                } else {
-                    const table = p.table;
-                    const mode = p.mode;
 
-                    let isUrlPatternExist = false;
+        // function checkPagePermission(table: any, path: string) {
+        //     console.log('checkpagePermission => table', table, 'path', path);
+        //     const p = permissions.find((p: any) => {
+        //         return p.table == table;
+        //     });
+        //     if (!p) {
+        //         let isUrlPatternExist = false;
+        //         isUrlPatternExist = router.pathname.startsWith('/about') || router.pathname === '/';
+        //         if (!isUrlPatternExist) {
+        //             showError(t('messages:error-permission'));
+        //             setIsAllowed(false);
+        //             router.replace('/');
+        //         }
+        //     } else {
+        //         const mode = p.mode;
+        //         if (mode == Mode.Read) {
+        //             if (router.pathname.startsWith(path)) {
+        //                 showError(t('messages:error-permission'));
+        //                 setIsAllowed(false);
+        //                 router.replace('/');
+        //             }
+        //         }
+        //     }
+        // }
+        // console.log('pathanem = ', router.pathname);
+        // if (permissions) {
+        //     // const tableNames = Object.values(Table);
+        //     let tableName = '';
 
-                    // this switch statement used only for URL pattern check for the READ permission
-                    switch (table) {
-                        case Table.Article:
-                            isUrlPatternExist = router.pathname.includes('/article/edit');
-                            break;
-                        case Table.Barcode:
-                            isUrlPatternExist = router.pathname.includes('/barcode/edit');
-                            break;
-                        case Table.Organization:
-                            isUrlPatternExist = router.pathname.includes('/organization/edit');
-                            break;
-                        case Table.Permission:
-                            isUrlPatternExist = router.pathname.includes('/permission/edit');
-                            break;
-                        case Table.User:
-                            isUrlPatternExist = router.pathname.includes('/user/edit');
-                            break;
-                        default:
-                            isUrlPatternExist = false;
-                    }
-                    if (isUrlPatternExist && mode === Mode.Read) {
-                        router.replace('/');
-                        showError(t('messages:error-permission'));
-                        setIsAllowed(false);
-                        break;
-                    }
+        //     if (router.pathname.includes('/article')) {
+        //         tableName = 'ARTICLE';
+        //         checkPagePermission(tableName, '/article/');
+        //     } else if (router.pathname.includes('/barcode')) {
+        //         tableName = 'BARCODE';
+        //         checkPagePermission(tableName, '/barcode/');
+        //     }
+        // }
+    }, []);
+    let isAllowed = true;
+    function checkPagePermission(table: any, path: string) {
+        console.log('checkpagePermission => table', table, 'path', path);
+        const p = permissions.find((p: any) => {
+            return p.table == table;
+        });
+        if (!p) {
+            let isUrlPatternExist = false;
+            isUrlPatternExist = router.pathname.startsWith('/about') || router.pathname === '/';
+            if (!isUrlPatternExist) {
+                // setIsAllowed(false);
+                isAllowed = false;
+                router.replace('/');
+                showError(t('messages:error-permission'));
+            }
+        } else {
+            const mode = p.mode;
+            if (mode == Mode.Read) {
+                if (router.pathname.startsWith(path)) {
+                    showError(t('messages:error-permission'));
+                    // setIsAllowed(false);
+                    isAllowed = false;
+                    router.replace('/');
                 }
             }
-            // permissions.forEach((p: any) => {
-            //     const table = p.table;
-            //     const mode = p.mode;
-            //     let isUrlPatternExist = false;
-
-            //     switch (table) {
-            //         case Table.Article:
-            //             isUrlPatternExist = router.pathname.includes('/article/edit');
-            //             break;
-            //         case Table.Barcode:
-            //             isUrlPatternExist = router.pathname.includes('/article/edit');
-            //             break;
-            //         case Table.Organization:
-            //             isUrlPatternExist = router.pathname.includes('/article/edit');
-            //             break;
-            //         case Table.Permission:
-            //             isUrlPatternExist = router.pathname.includes('/article/edit');
-            //             break;
-            //         case Table.User:
-            //             isUrlPatternExist = router.pathname.includes('/article/edit');
-            //             break;
-            //         default:
-            //             isUrlPatternExist = false;
-            //     }
-            //     if (isUrlPatternExist && mode === Mode.Read) {
-            //         router.replace('/');
-            //         showError(t('messages:error-permission'));
-            //         setIsAllowed(false);
-            //     }
-            // });
         }
-    }, []);
+    }
+    if (permissions) {
+        // const tableNames = Object.values(Table);
+        let tableName = '';
+
+        if (router.pathname.includes('/article')) {
+            tableName = 'ARTICLE';
+            checkPagePermission(tableName, '/article/');
+        } else if (router.pathname.includes('/barcode')) {
+            tableName = 'BARCODE';
+            checkPagePermission(tableName, '/barcode/');
+        }
+    }
+    useEffect(() => {
+        console.log('router useeffect, ', router.pathname);
+    }, [router]);
+
+    console.log('isAllowed', isAllowed);
     const ComponentToRender = isAllowed ? Component : HomePage;
 
     return (
