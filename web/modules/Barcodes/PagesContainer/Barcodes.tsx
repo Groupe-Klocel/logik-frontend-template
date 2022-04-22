@@ -14,9 +14,11 @@ import { Table } from 'generated/graphql';
 const Barcodes = () => {
     const { t } = useTranslation();
     const { permissions } = useAppState();
-    const mode = permissions.find((p: any) => {
-        return p.table == Table.Barcode;
-    }).mode;
+    const mode =
+        !!permissions &&
+        permissions.find((p: any) => {
+            return p.table == Table.Barcode;
+        }).mode;
 
     //	SEARCH DRAWER
     const [search, setSearch] = useState({});
