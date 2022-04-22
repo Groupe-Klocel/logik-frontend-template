@@ -124,7 +124,7 @@ const App = ({ Component, pageProps }: AppLayoutProps) => {
 
         if (router.pathname.includes('/article')) {
             tableName = 'ARTICLE';
-            checkPagePermission(tableName, '/article/');
+            checkPagePermission(tableName, '/article/edit');
         } else if (router.pathname.includes('/barcode')) {
             tableName = 'BARCODE';
             checkPagePermission(tableName, '/barcode/');

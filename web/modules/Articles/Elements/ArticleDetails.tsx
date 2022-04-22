@@ -14,6 +14,8 @@ import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/router';
 import { useAuth } from 'context/AuthContext';
 import { BarcodeRenderModal } from 'modules/Barcodes/Elements/BarcodeRenderModal';
+import { useAppState } from 'context/AppContext';
+import { Mode, Table } from 'generated/graphql';
 
 const { Title } = Typography;
 
@@ -33,6 +35,12 @@ const ArticleDetails = ({ details }: IArticleDetailsProps) => {
     });
     const [showModal, setShowModal] = useState(false);
     const [barcodeName, setBarcodeName] = useState('');
+    const { permissions } = useAppState();
+    const mode =
+        !!permissions &&
+        permissions.find((p: any) => {
+            return p.table == Table.Barcode;
+        })?.mode;
 
     const { isLoading, data, error } = useBarcodes(
         { articleId: parseInt(details.id) },
@@ -81,17 +89,23 @@ const ArticleDetails = ({ details }: IArticleDetailsProps) => {
             key: 'actions',
             render: (record: { id: string; name: string }) => (
                 <Space>
-                    <LinkButton
-                        icon={<EyeTwoTone />}
-                        path={pathParams('/barcode/[id]', record.id)}
-                    />
-                    <Button
-                        icon={<PrinterOutlined />}
-                        onClick={() => {
-                            setBarcodeName(record.name);
-                            setShowModal(true);
-                        }}
-                    />
+                    {mode == null ? (
+                        <></>
+                    ) : (
+                        <>
+                            <LinkButton
+                                icon={<EyeTwoTone />}
+                                path={pathParams('/barcode/[id]', record.id)}
+                            />
+                            <Button
+                                icon={<PrinterOutlined />}
+                                onClick={() => {
+                                    setBarcodeName(record.name);
+                                    setShowModal(true);
+                                }}
+                            />
+                        </>
+                    )}
                 </Space>
             )
         }
