@@ -58,38 +58,51 @@ const App = ({ Component, pageProps }: AppLayoutProps) => {
             showError(t('messages:error-permission'));
             setIsAllowed(false);
             router.replace('/');
-            setTimeout(() => setIsAllowed(true), 1500);
+            setTimeout(() => setIsAllowed(true), 2000);
         }
 
         if (permissions) {
-            PermissionTable.forEach((p: any) => {
+            let tableName = '';
+
+            if (router.pathname.includes('article')) {
+                tableName = 'ARTICLE';
+            } else if (router.pathname.includes('barcode')) {
+                tableName = 'BARCODE';
+            }
+
+            const p = PermissionTable.find((e: any) => {
+                return e.tableName == tableName;
+            });
+            if (p) {
                 const per = permissions.find((per: any) => {
                     return per.table == p.tableName;
                 });
-                console.log('permission = ', per);
+                // console.log('permission = ', per);
                 if (per) {
                     if (per.mode == Mode.Read) {
                         const urlPatterns = p.writeModeUrls;
-                        urlPatterns.forEach((url: string) => {
-                            if (router.pathname.startsWith(url)) disallowPage();
+                        const isPatternExist = urlPatterns.find((pattern: string) => {
+                            return router.pathname.startsWith(pattern);
                         });
+                        if (isPatternExist) disallowPage();
                     } else {
                         setIsAllowed(true);
                     }
                 } else {
+                    console.log('user has no permission for table ', p.tableName);
                     const urlPatterns = p.nonePermissionUrls;
-                    urlPatterns.forEach((url: string) => {
-                        if (router.pathname.startsWith(url)) disallowPage();
-                        // else setIsAllowed(true);
+                    const isPatternExist = urlPatterns.find((pattern: string) => {
+                        return router.pathname.startsWith(pattern);
                     });
+                    if (isPatternExist) disallowPage();
                 }
-            });
+            }
         } else {
             // console.log('permission does not exist');
             setIsAllowed(true);
         }
     }, []);
-
+    console.log('route=', router.pathname, 'isAllowed=', isAllowed);
     const ComponentToRender = isAllowed ? Component : HomePage;
 
     return (
