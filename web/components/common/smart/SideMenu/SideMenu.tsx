@@ -22,12 +22,6 @@ const SideMenu: FC = () => {
     const { logout } = useAuth();
     const { permissions } = useAppState();
 
-    // const [per, setPer] = useState<any>(permissions);
-    // const { graphqlRequestClient } = useAuth();
-    // const { isLoading, data, error } = useGetMyInfoQuery<Partial<GetMyInfoQuery>, Error>(
-    //     graphqlRequestClient
-    // );
-
     const checkPermissionExistance = (tableName: string) => {
         if (!permissions) {
             return false;
@@ -41,15 +35,6 @@ const SideMenu: FC = () => {
             return false;
         }
     };
-
-    // useEffect(() => {
-    //     if (error) {
-    //         // setTimeout(logout, 2000);
-    //     }
-    //     if (data) {
-    //         setPer(data.me?.role.permissions);
-    //     }
-    // }, [data]);
 
     return (
         <Menu mode="inline" className="menu">
