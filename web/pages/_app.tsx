@@ -56,11 +56,15 @@ const App = ({ Component, pageProps }: AppLayoutProps) => {
     }, []);
 
     function disallowPage() {
-        showError(t('messages:error-permission'));
-        // setIsAllowed(false);
+        if (cookie.get('error-msg') !== 'true') {
+            showError(t('messages:error-permission'));
+            cookie.set('error-msg', 'true');
+            setTimeout(() => {
+                cookie.set('error-msg', 'false');
+            }, 1000);
+        }
         isAllowed = false;
         router.replace('/');
-        // setTimeout(() => setIsAllowed(true), 2000);
     }
 
     let isAllowed = true;
