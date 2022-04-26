@@ -15,6 +15,8 @@ import '../styles/globals.css';
 import useTranslation from 'next-translate/useTranslation';
 import HomePage from 'pages';
 import { Mode, Table } from 'generated/graphql';
+import { PermissionTable } from 'helpers/constants';
+import { Permission } from 'components/common/smart/Permission/Permission';
 
 const themes = {
     dark: `/dark-theme.css`,
@@ -39,7 +41,7 @@ const App = ({ Component, pageProps }: AppLayoutProps) => {
     const { locale } = router;
     const { permissions } = useAppState();
     const { t } = useTranslation();
-    // const [isAllowed, setIsAllowed] = useState(true);
+    const [isAllowed, setIsAllowed] = useState(false);
     let insertPoint;
 
     const getLayout = Component.getLayout ?? ((page) => page);
@@ -53,86 +55,42 @@ const App = ({ Component, pageProps }: AppLayoutProps) => {
         if (typeof window !== 'undefined')
             insertPoint = document.getElementById('inject-styles-here');
 
-        // function checkPagePermission(table: any, path: string) {
-        //     console.log('checkpagePermission => table', table, 'path', path);
-        //     const p = permissions.find((p: any) => {
-        //         return p.table == table;
-        //     });
-        //     if (!p) {
-        //         let isUrlPatternExist = false;
-        //         isUrlPatternExist = router.pathname.startsWith('/about') || router.pathname === '/';
-        //         if (!isUrlPatternExist) {
-        //             showError(t('messages:error-permission'));
-        //             setIsAllowed(false);
-        //             router.replace('/');
-        //         }
-        //     } else {
-        //         const mode = p.mode;
-        //         if (mode == Mode.Read) {
-        //             if (router.pathname.startsWith(path)) {
-        //                 showError(t('messages:error-permission'));
-        //                 setIsAllowed(false);
-        //                 router.replace('/');
-        //             }
-        //         }
-        //     }
-        // }
-        // console.log('pathanem = ', router.pathname);
-        // if (permissions) {
-        //     // const tableNames = Object.values(Table);
-        //     let tableName = '';
+        function disallowPage() {
+            showError(t('messages:error-permission'));
+            setIsAllowed(false);
+            // isAllowed = false;
+            router.replace('/');
+            setTimeout(() => setIsAllowed(true), 1000);
+        }
 
-        //     if (router.pathname.includes('/article')) {
-        //         tableName = 'ARTICLE';
-        //         checkPagePermission(tableName, '/article/');
-        //     } else if (router.pathname.includes('/barcode')) {
-        //         tableName = 'BARCODE';
-        //         checkPagePermission(tableName, '/barcode/');
-        //     }
-        // }
-    }, []);
-    let isAllowed = true;
-    function checkPagePermission(table: any, path: string) {
-        console.log('checkpagePermission => table', table, 'path', path);
-        const p = permissions.find((p: any) => {
-            return p.table == table;
-        });
-        if (!p) {
-            let isUrlPatternExist = false;
-            isUrlPatternExist = router.pathname.startsWith('/about') || router.pathname === '/';
-            if (!isUrlPatternExist) {
-                // setIsAllowed(false);
-                isAllowed = false;
-                router.replace('/');
-                showError(t('messages:error-permission'));
-            }
-        } else {
-            const mode = p.mode;
-            if (mode == Mode.Read) {
-                if (router.pathname.startsWith(path)) {
-                    showError(t('messages:error-permission'));
-                    // setIsAllowed(false);
-                    isAllowed = false;
-                    router.replace('/');
+        if (permissions) {
+            PermissionTable.forEach((p: any) => {
+                const per = permissions.find((per: any) => {
+                    return per.table == p.tableName;
+                });
+                console.log('permission = ', per);
+                if (per) {
+                    if (per.mode == Mode.Read) {
+                        const urlPatterns = p.writeModeUrls;
+                        urlPatterns.forEach((url: string) => {
+                            if (router.pathname.startsWith(url)) disallowPage();
+                        });
+                    } else {
+                        setIsAllowed(true);
+                    }
+                } else {
+                    const urlPatterns = p.nonePermissionUrls;
+                    urlPatterns.forEach((url: string) => {
+                        if (router.pathname.startsWith(url)) disallowPage();
+                        else setIsAllowed(true);
+                    });
                 }
-            }
+            });
+        } else {
+            console.log('permission does not exist =========>');
+            setIsAllowed(true);
         }
-    }
-    if (permissions) {
-        // const tableNames = Object.values(Table);
-        let tableName = '';
-
-        if (router.pathname.includes('/article')) {
-            tableName = 'ARTICLE';
-            checkPagePermission(tableName, '/article/edit');
-        } else if (router.pathname.includes('/barcode')) {
-            tableName = 'BARCODE';
-            checkPagePermission(tableName, '/barcode/edit');
-        }
-    }
-    useEffect(() => {
-        console.log('router useeffect, ', router.pathname);
-    }, [router]);
+    }, []);
 
     console.log('isAllowed', isAllowed);
     const ComponentToRender = isAllowed ? Component : HomePage;
@@ -154,7 +112,9 @@ const App = ({ Component, pageProps }: AppLayoutProps) => {
                         insertionPoint={insertPoint}
                     >
                         <AppProvider>
+                            {/* <Permission> */}
                             <Layout>{getLayout(<ComponentToRender {...pageProps} />)}</Layout>
+                            {/* </Permission> */}
                         </AppProvider>
                     </ThemeSwitcherProvider>
                 </AuthProvider>

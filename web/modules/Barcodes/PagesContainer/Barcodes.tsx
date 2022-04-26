@@ -18,7 +18,7 @@ const Barcodes = () => {
         !!permissions &&
         permissions.find((p: any) => {
             return p.table == Table.Barcode;
-        }).mode;
+        })?.mode;
 
     //	SEARCH DRAWER
     const [search, setSearch] = useState({});

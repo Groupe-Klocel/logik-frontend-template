@@ -55,7 +55,7 @@ function reducer(state: State, action: Action) {
             return {
                 ...state,
                 user: action.user,
-                permissions: action.user.role.permissions
+                permissions: action.user.role?.permissions
             };
         default:
             return state;

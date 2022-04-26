@@ -157,7 +157,8 @@ export const AuthProvider: FC<OnlyChildrenType> = ({ children }: OnlyChildrenTyp
         setHeader('NOP');
         setIsAuthenticated(false);
         setUser(null);
-        router.push('/login');
+        // router.push('/login');
+        router.reload();
     };
 
     let requestHeader;

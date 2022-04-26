@@ -39,7 +39,7 @@ const SingleArticle: FC<ISingleArticleProps> = ({ id, router }: ISingleArticlePr
         !!permissions &&
         permissions.find((p: any) => {
             return p.table == Table.Article;
-        }).mode;
+        })?.mode;
 
     const { graphqlRequestClient } = useAuth();
 
