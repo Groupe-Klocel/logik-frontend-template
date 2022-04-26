@@ -56,6 +56,14 @@ export const articlesSubRoutes = [
     }
 ];
 
+export const barcodesSubRoutes = [
+    ...articlesRoutes,
+    {
+        path: '/barcodes',
+        breadcrumbName: 'menu:barcodes'
+    }
+];
+
 export const addArticleRoutes = [
     ...articlesSubRoutes,
     {

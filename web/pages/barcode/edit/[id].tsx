@@ -1,22 +1,23 @@
 import { AppHead } from '@components';
 import { EditArticle } from 'modules/Articles/PagesContainer/EditArticle';
+import { EditBarcode } from 'modules/Barcodes/PagesContainer/EditBarcode';
 import { useRouter } from 'next/router';
 import { FC } from 'react';
 import MainLayout from '../../../components/layouts/MainLayout';
 
 type PageComponent = FC & { layout: typeof MainLayout };
 
-const EditArticlePage: PageComponent = () => {
+const EditBarcodePage: PageComponent = () => {
     const router = useRouter();
     const { id } = router.query;
     return (
         <>
             <AppHead title="Bee V2" />
-            <EditArticle router={router} id={id!} />
+            <EditBarcode router={router} id={id!} />
         </>
     );
 };
 
-EditArticlePage.layout = MainLayout;
+EditBarcodePage.layout = MainLayout;
 
-export default EditArticlePage;
+export default EditBarcodePage;
