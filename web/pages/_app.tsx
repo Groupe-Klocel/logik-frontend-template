@@ -16,7 +16,6 @@ import useTranslation from 'next-translate/useTranslation';
 import HomePage from 'pages';
 import { Mode, Table } from 'generated/graphql';
 import { PermissionTable } from 'helpers/constants';
-import { Permission } from 'components/common/smart/Permission/Permission';
 
 const themes = {
     dark: `/dark-theme.css`,
@@ -58,9 +57,8 @@ const App = ({ Component, pageProps }: AppLayoutProps) => {
         function disallowPage() {
             showError(t('messages:error-permission'));
             setIsAllowed(false);
-            // isAllowed = false;
             router.replace('/');
-            setTimeout(() => setIsAllowed(true), 1000);
+            setTimeout(() => setIsAllowed(true), 1500);
         }
 
         if (permissions) {
@@ -82,7 +80,7 @@ const App = ({ Component, pageProps }: AppLayoutProps) => {
                     const urlPatterns = p.nonePermissionUrls;
                     urlPatterns.forEach((url: string) => {
                         if (router.pathname.startsWith(url)) disallowPage();
-                        else setIsAllowed(true);
+                        // else setIsAllowed(true);
                     });
                 }
             });
@@ -112,9 +110,7 @@ const App = ({ Component, pageProps }: AppLayoutProps) => {
                         insertionPoint={insertPoint}
                     >
                         <AppProvider>
-                            {/* <Permission> */}
                             <Layout>{getLayout(<ComponentToRender {...pageProps} />)}</Layout>
-                            {/* </Permission> */}
                         </AppProvider>
                     </ThemeSwitcherProvider>
                 </AuthProvider>

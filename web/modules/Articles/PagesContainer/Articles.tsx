@@ -17,7 +17,7 @@ const Articles = () => {
         !!permissions &&
         permissions.find((p: any) => {
             return p.table == Table.Article;
-        }).mode;
+        })?.mode;
     // console.log('mode', mode);
 
     const [search, setSearch] = useState({});
