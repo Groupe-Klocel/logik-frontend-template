@@ -5,7 +5,9 @@ import {
     useGetAllBarcodesQuery,
     GetAllBarcodesQuery,
     useGetArticleIdsQuery,
-    GetArticleIdsQuery
+    GetArticleIdsQuery,
+    useGetMyInfoQuery,
+    GetMyInfoQuery
 } from 'generated/graphql';
 
 const useArticles = (search: any, page: number, itemsPerPage: number, sort: any) => {
@@ -95,4 +97,12 @@ const useBarcodes = (search: any, page: number, itemsPerPage: number, sort: any)
     return barcodes;
 };
 
-export { useArticles, useBarcodes, useArticleIds };
+const useMyInfo = () => {
+    const { graphqlRequestClient } = useAuth();
+
+    const myInfo = useGetMyInfoQuery<Partial<GetMyInfoQuery>, Error>(graphqlRequestClient);
+
+    return myInfo;
+};
+
+export { useArticles, useBarcodes, useArticleIds, useMyInfo };

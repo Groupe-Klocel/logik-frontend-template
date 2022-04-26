@@ -18,10 +18,12 @@ export interface IDetailsListProps {
 
 const DetailsList: FC<IDetailsListProps> = ({ details, nbColumns }: IDetailsListProps) => {
     const { t } = useTranslation();
+    const tmp_detail = { ...details };
+    if ('article' in tmp_detail) delete tmp_detail['article'];
 
     return (
         <Descriptions column={nbColumns} size="small" bordered>
-            {Object.keys(details).map((key) => (
+            {Object.keys(tmp_detail).map((key) => (
                 <Descriptions.Item key={key} label={t(`d:${key}`)}>
                     {details[key] === true ? (
                         <CheckCircleOutlined style={{ color: 'green' }} />

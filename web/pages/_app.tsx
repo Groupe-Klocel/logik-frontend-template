@@ -1,17 +1,21 @@
 import { META_DEFAULTS } from 'helpers/configs/misc';
-import { cookie, getDefaultTheme } from '@helpers';
+import { cookie, getDefaultTheme, showError } from '@helpers';
 import 'antd/dist/antd.css';
-import { AppProvider } from 'context/AppContext';
-import { AuthProvider } from 'context/AuthContext';
+import { AppProvider, useAppState } from 'context/AppContext';
+import { AuthProvider, useAuth } from 'context/AuthContext';
 import { PageWithMainLayoutType } from 'helpers/types/pageWithLayout';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import { Fragment, useEffect } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { ThemeSwitcherProvider } from 'react-css-theme-switcher';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import '../styles/globals.css';
+import useTranslation from 'next-translate/useTranslation';
+import HomePage from 'pages';
+import { Mode, Table } from 'generated/graphql';
+import { PermissionTable } from 'helpers/constants';
 
 const themes = {
     dark: `/dark-theme.css`,
@@ -34,7 +38,9 @@ type AppLayoutProps = AppProps & {
 const App = ({ Component, pageProps }: AppLayoutProps) => {
     const router = useRouter();
     const { locale } = router;
-
+    const { permissions } = useAppState();
+    const { t } = useTranslation();
+    const [isAllowed, setIsAllowed] = useState(false);
     let insertPoint;
 
     const getLayout = Component.getLayout ?? ((page) => page);
@@ -47,7 +53,57 @@ const App = ({ Component, pageProps }: AppLayoutProps) => {
         }
         if (typeof window !== 'undefined')
             insertPoint = document.getElementById('inject-styles-here');
+
+        function disallowPage() {
+            showError(t('messages:error-permission'));
+            setIsAllowed(false);
+            router.replace('/');
+            setTimeout(() => setIsAllowed(true), 2000);
+        }
+
+        if (permissions) {
+            let tableName = '';
+
+            if (router.pathname.includes('article')) {
+                tableName = 'ARTICLE';
+            } else if (router.pathname.includes('barcode')) {
+                tableName = 'BARCODE';
+            }
+
+            const p = PermissionTable.find((e: any) => {
+                return e.tableName == tableName;
+            });
+            if (p) {
+                const per = permissions.find((per: any) => {
+                    return per.table == p.tableName;
+                });
+                // console.log('permission = ', per);
+                if (per) {
+                    if (per.mode == Mode.Read) {
+                        const urlPatterns = p.writeModeUrls;
+                        const isPatternExist = urlPatterns.find((pattern: string) => {
+                            return router.pathname.startsWith(pattern);
+                        });
+                        if (isPatternExist) disallowPage();
+                    } else {
+                        setIsAllowed(true);
+                    }
+                } else {
+                    console.log('user has no permission for table ', p.tableName);
+                    const urlPatterns = p.nonePermissionUrls;
+                    const isPatternExist = urlPatterns.find((pattern: string) => {
+                        return router.pathname.startsWith(pattern);
+                    });
+                    if (isPatternExist) disallowPage();
+                }
+            }
+        } else {
+            // console.log('permission does not exist');
+            setIsAllowed(true);
+        }
     }, []);
+    console.log('route=', router.pathname, 'isAllowed=', isAllowed);
+    const ComponentToRender = isAllowed ? Component : HomePage;
 
     return (
         <>
@@ -66,7 +122,7 @@ const App = ({ Component, pageProps }: AppLayoutProps) => {
                         insertionPoint={insertPoint}
                     >
                         <AppProvider>
-                            <Layout>{getLayout(<Component {...pageProps} />)}</Layout>
+                            <Layout>{getLayout(<ComponentToRender {...pageProps} />)}</Layout>
                         </AppProvider>
                     </ThemeSwitcherProvider>
                 </AuthProvider>

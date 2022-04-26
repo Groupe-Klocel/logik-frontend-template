@@ -1,4 +1,4 @@
-import { ContentSpin,LinkButton } from '@components';
+import { ContentSpin, LinkButton } from '@components';
 import { Layout, Space, Button, Typography } from 'antd';
 import { articlesSubRoutes } from 'modules/Articles/Static/articlesRoutes';
 import { ArticleDetails } from 'modules/Articles/Elements/ArticleDetails';
@@ -9,7 +9,9 @@ import {
     useGetArticleByIdQuery,
     useDeleteArticleMutation,
     DeleteArticleMutation,
-    DeleteArticleMutationVariables
+    DeleteArticleMutationVariables,
+    Table,
+    Mode
 } from 'generated/graphql';
 import { useAuth } from 'context/AuthContext';
 import { FC, useEffect, useState } from 'react';
@@ -17,6 +19,7 @@ import { NextRouter } from 'next/router';
 import styled from 'styled-components';
 import { HeaderContent } from '@components';
 import { showError, showSuccess } from '@helpers';
+import { useAppState } from 'context/AppContext';
 
 const StyledPageContent = styled(Layout.Content)`
     margin: 15px 30px;
@@ -30,6 +33,13 @@ export interface ISingleArticleProps {
 
 const SingleArticle: FC<ISingleArticleProps> = ({ id, router }: ISingleArticleProps) => {
     const { t } = useTranslation();
+
+    const { permissions } = useAppState();
+    const mode =
+        !!permissions &&
+        permissions.find((p: any) => {
+            return p.table == Table.Article;
+        })?.mode;
 
     const { graphqlRequestClient } = useAuth();
 
@@ -105,31 +115,38 @@ const SingleArticle: FC<ISingleArticleProps> = ({ id, router }: ISingleArticlePr
                 routes={breadsCrumb}
                 onBack={() => router.push('/articles')}
                 actionsRight={
-                    <Space>
-                        <Button onClick={updateBoxQuantity} type="primary">
-                            {t('actions:update-quantity')}
-                        </Button>
-                        <LinkButton
-                            title={t('actions:edit')}
-                            path={`/article/edit/${id}`}
-                            type="primary"
-                        />
-                        <Button
-                            loading={deleteLoading}
-                            onClick={() => deleteArticle({ id: parseInt(id) })}
-                        >
-                            {t('actions:delete')}
-                        </Button>
-                    </Space>
+                    mode == Mode.Write ? (
+                        <Space>
+                            <Button onClick={updateBoxQuantity} type="primary">
+                                {t('actions:update-quantity')}
+                            </Button>
+                            <LinkButton
+                                title={t('actions:edit')}
+                                path={`/article/edit/${id}`}
+                                type="primary"
+                            />
+                            <Button
+                                loading={deleteLoading}
+                                onClick={() => deleteArticle({ id: parseInt(id) })}
+                            >
+                                {t('actions:delete')}
+                            </Button>
+                        </Space>
+                    ) : (
+                        <></>
+                    )
                 }
             />
             <StyledPageContent>
                 {/* {!!data} 
                     <Typography >Content Does not exist</Typography> */}
-                {data && !isLoading && !isCalculating ? data.article !== null?
-                (
-                    <ArticleDetails details={data?.article} />
-                ) : (<Typography >Content Does not exist</Typography>) : (
+                {data && !isLoading && !isCalculating ? (
+                    data.article !== null ? (
+                        <ArticleDetails details={data?.article} />
+                    ) : (
+                        <Typography>Content Does not exist</Typography>
+                    )
+                ) : (
                     <ContentSpin />
                 )}
             </StyledPageContent>

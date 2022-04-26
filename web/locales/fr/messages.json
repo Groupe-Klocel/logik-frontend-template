@@ -28,5 +28,6 @@
     "error-message-wrong-password": "Les deux mots de passe que vous avez saisis ne correspondent pas !",
     "success-update-box-quantity": "La quantité a été mise à jour",
     "error-barcode-not-render": "Une erreur est survenue lors de la génération du code à barres",
-    "error-selected-article-not-exist": "L'article sélectionné n'existe pas"
+    "error-selected-article-not-exist": "L'article sélectionné n'existe pas",
+    "error-permission": "Permissions insuffisantes"
 }

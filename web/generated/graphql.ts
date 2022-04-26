@@ -996,7 +996,7 @@ export type GetBarcodeByIdQueryVariables = Exact<{
 }>;
 
 
-export type GetBarcodeByIdQuery = { __typename?: 'Query', barcode?: { __typename?: 'Barcode', id?: number | null, accountId: number, companyId: number, articleId: number, name: string, rotation: string, preparationMode?: number | null, flagDouble?: number | null, supplierName?: string | null, supplierArticleCode?: string | null, quantity?: number | null } | null };
+export type GetBarcodeByIdQuery = { __typename?: 'Query', barcode?: { __typename?: 'Barcode', id?: number | null, accountId: number, companyId: number, articleId: number, name: string, rotation: string, preparationMode?: number | null, flagDouble?: number | null, supplierName?: string | null, supplierArticleCode?: string | null, quantity?: number | null, article: { __typename?: 'Article', name: string } } | null };
 
 export type CreateBarcodeMutationVariables = Exact<{
   input: CreateBarcodeInput;
@@ -1020,6 +1020,14 @@ export type RenderBarcodeMutationVariables = Exact<{
 
 
 export type RenderBarcodeMutation = { __typename?: 'Mutation', renderBarcode: { __typename: 'BarcodeError', message: string } | { __typename: 'RenderedDocument', url: string } };
+
+export type UpdateBarcodeMutationVariables = Exact<{
+  id: Scalars['Int'];
+  input: UpdateBarcodeInput;
+}>;
+
+
+export type UpdateBarcodeMutation = { __typename?: 'Mutation', updateBarcode?: { __typename?: 'Barcode', id?: number | null, accountId: number, companyId: number, articleId: number, name: string, rotation: string, preparationMode?: number | null, flagDouble?: number | null, supplierName?: string | null, supplierArticleCode?: string | null, quantity?: number | null, article: { __typename?: 'Article', name: string } } | null };
 
 export type LoginMutationVariables = Exact<{
   username: Scalars['String'];
@@ -1046,6 +1054,11 @@ export type ChangePasswordMutationVariables = Exact<{
 
 
 export type ChangePasswordMutation = { __typename?: 'Mutation', changePassword: { __typename: 'ChangePasswordFailure', message: string } | { __typename: 'ChangePasswordSuccess', message: string } };
+
+export type GetMyInfoQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetMyInfoQuery = { __typename?: 'Query', me: { __typename?: 'User', username: string, password: string, organizationId: string, roleId: string, id?: string | null, email?: string | null, organization?: { __typename?: 'Organization', name: string, id?: string | null, awsAccessKeyId?: string | null, awsSecretAccessKey?: string | null, parentOrganizationId?: string | null } | null, role: { __typename?: 'RoleType', name: string, id?: string | null, permissions: Array<{ __typename?: 'PermissionType', table: Table, mode: Mode, roleId: string, id?: string | null }> } } };
 
 
 export const GetAllArticlesDocument = `
@@ -1351,6 +1364,9 @@ export const GetBarcodeByIdDocument = `
     supplierName
     supplierArticleCode
     quantity
+    article {
+      name
+    }
   }
 }
     `;
@@ -1442,6 +1458,39 @@ export const useRenderBarcodeMutation = <
       (variables?: RenderBarcodeMutationVariables) => fetcher<RenderBarcodeMutation, RenderBarcodeMutationVariables>(client, RenderBarcodeDocument, variables, headers)(),
       options
     );
+export const UpdateBarcodeDocument = `
+    mutation UpdateBarcode($id: Int!, $input: UpdateBarcodeInput!) {
+  updateBarcode(id: $id, input: $input) {
+    id
+    accountId
+    companyId
+    articleId
+    name
+    rotation
+    preparationMode
+    flagDouble
+    supplierName
+    supplierArticleCode
+    quantity
+    article {
+      name
+    }
+  }
+}
+    `;
+export const useUpdateBarcodeMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<UpdateBarcodeMutation, TError, UpdateBarcodeMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<UpdateBarcodeMutation, TError, UpdateBarcodeMutationVariables, TContext>(
+      ['UpdateBarcode'],
+      (variables?: UpdateBarcodeMutationVariables) => fetcher<UpdateBarcodeMutation, UpdateBarcodeMutationVariables>(client, UpdateBarcodeDocument, variables, headers)(),
+      options
+    );
 export const LoginDocument = `
     mutation Login($username: String!, $password: String!, $warehouseId: ID!) {
   login(username: $username, password: $password, warehouseId: $warehouseId) {
@@ -1512,5 +1561,48 @@ export const useChangePasswordMutation = <
     useMutation<ChangePasswordMutation, TError, ChangePasswordMutationVariables, TContext>(
       ['ChangePassword'],
       (variables?: ChangePasswordMutationVariables) => fetcher<ChangePasswordMutation, ChangePasswordMutationVariables>(client, ChangePasswordDocument, variables, headers)(),
+      options
+    );
+export const GetMyInfoDocument = `
+    query GetMyInfo {
+  me {
+    username
+    password
+    organizationId
+    roleId
+    organization {
+      name
+      id
+      awsAccessKeyId
+      awsSecretAccessKey
+      parentOrganizationId
+    }
+    role {
+      name
+      id
+      permissions {
+        table
+        mode
+        roleId
+        id
+      }
+    }
+    id
+    email
+  }
+}
+    `;
+export const useGetMyInfoQuery = <
+      TData = GetMyInfoQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables?: GetMyInfoQueryVariables,
+      options?: UseQueryOptions<GetMyInfoQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetMyInfoQuery, TError, TData>(
+      variables === undefined ? ['GetMyInfo'] : ['GetMyInfo', variables],
+      fetcher<GetMyInfoQuery, GetMyInfoQueryVariables>(client, GetMyInfoDocument, variables, headers),
       options
     );

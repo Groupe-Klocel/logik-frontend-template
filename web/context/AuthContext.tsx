@@ -46,13 +46,14 @@ export const AuthProvider: FC<OnlyChildrenType> = ({ children }: OnlyChildrenTyp
     const [user, setUser] = useState(null);
     const [graphqlRequestClient, setGraphqlRequestClient] = useState(graphqlClient);
     const [loading, setLoading] = useState(true);
+    const [isAuthenticated, setIsAuthenticated] = useState(!!user);
 
     // Get access token from cookies , decode it and set user
     useEffect(() => {
         async function loadUserFromCookie() {
             const token = cookie.get('token');
             if (token) {
-                await setHeader(token);
+                setHeader(token);
                 const user = decodeJWT(token);
                 if (user) setUser(user);
             }
@@ -64,13 +65,13 @@ export const AuthProvider: FC<OnlyChildrenType> = ({ children }: OnlyChildrenTyp
     const loginMutation = useLoginMutation<Error>(graphqlRequestClient, {
         onSuccess: (data: LoginMutation, _variables: LoginMutationVariables, _context: any) => {
             if (data?.login?.accessToken) {
-                cookie.set('token', data.login.accessToken);
-                // Set Bearer JWT token to the header for future request
-                setHeader(data.login.accessToken);
-                const user = decodeJWT(data.login.accessToken);
+                const token = data.login.accessToken;
+                cookie.set('token', token);
+                setHeader(token);
+                const user = decodeJWT(token);
                 setUser(user);
-                router.push('/');
-                showSuccess(t('messages:login-success'));
+                setIsAuthenticated(true);
+                // Set Bearer JWT token to the header for future request
             } else {
                 showError(t('messages:error-login'));
             }
@@ -151,10 +152,13 @@ export const AuthProvider: FC<OnlyChildrenType> = ({ children }: OnlyChildrenTyp
 
     const logout = () => {
         cookie.remove('token');
-        setUser(null);
+        cookie.remove('user');
         // Remove Bearer JWT token from header
         setHeader('NOP');
-        router.push('/login');
+        setIsAuthenticated(false);
+        setUser(null);
+        // router.push('/login');
+        router.reload();
     };
 
     let requestHeader;

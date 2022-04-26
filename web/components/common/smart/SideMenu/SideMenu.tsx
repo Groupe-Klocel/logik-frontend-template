@@ -11,27 +11,42 @@ import { useAuth } from 'context/AuthContext';
 import { Menu } from 'antd';
 import useTranslation from 'next-translate/useTranslation';
 import Link from 'next/link';
-import React, { FC } from 'react';
-import { cookie } from '@helpers';
+import React, { FC, useEffect, useState } from 'react';
+import { useAppState } from 'context/AppContext';
+import { GetMyInfoQuery, Table, useGetMyInfoQuery } from 'generated/graphql';
 
 const { SubMenu } = Menu;
 
 const SideMenu: FC = () => {
     const { t } = useTranslation('menu');
     const { logout } = useAuth();
+    const { permissions } = useAppState();
 
-    const keys = cookie.get('menuSelectedKeys') as string;
-
-    const handleMenuSelect = (e: any) => {
-        cookie.set('menuSelectedKeys', e.key);
+    const checkPermissionExistance = (tableName: string) => {
+        if (!permissions) {
+            return false;
+        }
+        const permission = permissions.find((p: any) => {
+            return p.table == tableName;
+        });
+        if (permission) {
+            return true;
+        } else {
+            return false;
+        }
     };
+
     return (
-        <Menu mode="inline" className="menu" onClick={handleMenuSelect} selectedKeys={[keys]}>
+        <Menu mode="inline" className="menu">
             <SubMenu icon={<AuditOutlined />} key="administration" title={t('administration')}>
                 <SubMenu key="administration-access-management" title={t('access-management')}>
-                    <Menu.Item key="administration-access-management-users">
-                        <Link href="/users">{t('users')}</Link>
-                    </Menu.Item>
+                    {checkPermissionExistance(Table.User) ? (
+                        <Menu.Item key="administration-access-management-users">
+                            <Link href="/users">{t('users')}</Link>
+                        </Menu.Item>
+                    ) : (
+                        <></>
+                    )}
                     <Menu.Item key="administration-access-management-groups">
                         <Link href="/groups">{t('groups')}</Link>
                     </Menu.Item>
@@ -92,14 +107,23 @@ const SideMenu: FC = () => {
                             <Link href="/features-types">{t('features-types')}</Link>
                         </Menu.Item>
                     </SubMenu>
-                    <Menu.Item key="configuration-articles-articles">
-                        {' '}
-                        <Link href="/articles">{t('articles')}</Link>
-                    </Menu.Item>
-                    <Menu.Item key="configuration-articles-barcodes">
-                        {' '}
-                        <Link href="/barcodes">{t('barcodes')}</Link>
-                    </Menu.Item>
+                    {checkPermissionExistance(Table.Article) ? (
+                        <Menu.Item key="configuration-articles-articles">
+                            {' '}
+                            <Link href="/articles">{t('articles')}</Link>
+                        </Menu.Item>
+                    ) : (
+                        <></>
+                    )}
+                    {checkPermissionExistance(Table.Barcode) ? (
+                        <Menu.Item key="configuration-articles-barcodes">
+                            {' '}
+                            <Link href="/barcodes">{t('barcodes')}</Link>
+                        </Menu.Item>
+                    ) : (
+                        <></>
+                    )}
+
                     <Menu.Item key="configuration-articles-blacklisted-barcodes">
                         {' '}
                         <Link href="/blacklisted-barcodes">{t('blacklisted-barcodes')}</Link>

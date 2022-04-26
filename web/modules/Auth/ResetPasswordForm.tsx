@@ -10,7 +10,6 @@ export const ResetPasswordForm = () => {
     const { resetPassword } = useAuth();
     const router = useRouter();
     const token = router.query.token;
-    console.log('token ', token);
     // TEXTS TRANSLATION
 
     const resetPass = t('actions:reset-password');
