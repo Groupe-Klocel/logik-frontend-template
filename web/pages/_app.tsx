@@ -40,7 +40,7 @@ const App = ({ Component, pageProps }: AppLayoutProps) => {
     const { locale } = router;
     const { permissions } = useAppState();
     const { t } = useTranslation();
-    const [isAllowed, setIsAllowed] = useState(false);
+    // const [isAllowed, setIsAllowed] = useState(false);
     let insertPoint;
 
     const getLayout = Component.getLayout ?? ((page) => page);
@@ -53,55 +53,64 @@ const App = ({ Component, pageProps }: AppLayoutProps) => {
         }
         if (typeof window !== 'undefined')
             insertPoint = document.getElementById('inject-styles-here');
+    }, []);
 
-        function disallowPage() {
+    function disallowPage() {
+        if (cookie.get('error-msg') !== 'true') {
             showError(t('messages:error-permission'));
-            setIsAllowed(false);
-            router.replace('/');
-            setTimeout(() => setIsAllowed(true), 2000);
+            cookie.set('error-msg', 'true');
+            setTimeout(() => {
+                cookie.set('error-msg', 'false');
+            }, 1000);
+        }
+        isAllowed = false;
+        router.replace('/');
+    }
+
+    let isAllowed = true;
+
+    if (permissions) {
+        let tableName = '';
+
+        if (router.pathname.includes('article')) {
+            tableName = 'ARTICLE';
+        } else if (router.pathname.includes('barcode')) {
+            tableName = 'BARCODE';
         }
 
-        if (permissions) {
-            let tableName = '';
-
-            if (router.pathname.includes('article')) {
-                tableName = 'ARTICLE';
-            } else if (router.pathname.includes('barcode')) {
-                tableName = 'BARCODE';
-            }
-
-            const p = PermissionTable.find((e: any) => {
-                return e.tableName == tableName;
+        const p = PermissionTable.find((e: any) => {
+            return e.tableName == tableName;
+        });
+        if (p) {
+            const per = permissions.find((per: any) => {
+                return per.table == p.tableName;
             });
-            if (p) {
-                const per = permissions.find((per: any) => {
-                    return per.table == p.tableName;
-                });
-                // console.log('permission = ', per);
-                if (per) {
-                    if (per.mode == Mode.Read) {
-                        const urlPatterns = p.writeModeUrls;
-                        const isPatternExist = urlPatterns.find((pattern: string) => {
-                            return router.pathname.startsWith(pattern);
-                        });
-                        if (isPatternExist) disallowPage();
-                    } else {
-                        setIsAllowed(true);
-                    }
-                } else {
-                    console.log('user has no permission for table ', p.tableName);
-                    const urlPatterns = p.nonePermissionUrls;
+            // console.log('permission = ', per);
+            if (per) {
+                if (per.mode == Mode.Read) {
+                    const urlPatterns = p.writeModeUrls;
                     const isPatternExist = urlPatterns.find((pattern: string) => {
                         return router.pathname.startsWith(pattern);
                     });
                     if (isPatternExist) disallowPage();
+                } else {
+                    // setIsAllowed(true);
+                    isAllowed = true;
                 }
+            } else {
+                console.log('user has no permission for table ', p.tableName);
+                const urlPatterns = p.nonePermissionUrls;
+                const isPatternExist = urlPatterns.find((pattern: string) => {
+                    return router.pathname.startsWith(pattern);
+                });
+                if (isPatternExist) disallowPage();
             }
-        } else {
-            // console.log('permission does not exist');
-            setIsAllowed(true);
         }
-    }, []);
+    } else {
+        // console.log('permission does not exist');
+        // setIsAllowed(true);
+        isAllowed = true;
+    }
     console.log('route=', router.pathname, 'isAllowed=', isAllowed);
     const ComponentToRender = isAllowed ? Component : HomePage;
 
