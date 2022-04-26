@@ -49,6 +49,9 @@ function reducer(state: State, action: Action) {
             };
         case 'SAVE_SETTINGS':
             saveUserSettings(state.isSettingMenuCollapsed, state.theme!, state.globalLocale);
+            return {
+                ...state
+            };
         case 'SET_USER_INFO':
             saveUserInfo(action.user);
             return {
