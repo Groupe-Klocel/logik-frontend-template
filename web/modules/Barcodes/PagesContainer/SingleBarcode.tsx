@@ -1,4 +1,4 @@
-import { ContentSpin } from '@components';
+import { ContentSpin, LinkButton } from '@components';
 import { Layout, Space, Button } from 'antd';
 import { barcodesRoutes } from 'modules/Barcodes/Static/barcodesRoutes';
 import useTranslation from 'next-translate/useTranslation';
@@ -81,9 +81,11 @@ const SingleBarcode: FC<ISingleBarcodeProps> = ({ id, router }: ISingleBarcodePr
                 onBack={() => router.back()}
                 actionsRight={
                     <Space>
-                        <Button onClick={() => alert('Edit')} type="primary">
-                            {t('actions:edit')}
-                        </Button>
+                        <LinkButton
+                            title={t('actions:edit')}
+                            path={`/barcode/edit/${id}`}
+                            type="primary"
+                        />
                         <Button
                             loading={deleteLoading}
                             onClick={() => deleteBarcode({ id: parseInt(id) })}

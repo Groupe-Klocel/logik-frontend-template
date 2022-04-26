@@ -37,6 +37,9 @@ query GetBarcodeById($id: Int!) {
         supplierName
         supplierArticleCode
         quantity
+        article {
+            name
+        }
     }
 }
 
@@ -68,6 +71,25 @@ mutation RenderBarcode($code: String!, $category: BarcodeCategory, $pages: Int!)
         }
         ... on BarcodeError {
             message
+        }
+    }
+}
+
+mutation UpdateBarcode($id: Int!, $input: UpdateBarcodeInput!) {
+    updateBarcode(id: $id, input: $input) {
+        id
+        accountId
+        companyId
+        articleId
+        name
+        rotation
+        preparationMode
+        flagDouble
+        supplierName
+        supplierArticleCode
+        quantity
+        article {
+            name
         }
     }
 }
