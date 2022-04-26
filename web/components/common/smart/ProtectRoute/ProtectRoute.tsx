@@ -39,8 +39,6 @@ const ProtectRoute: any | null = ({ children }: OnlyChildrenType) => {
     useEffect(() => {
         // check current session
         if (data && !isLoading) {
-            console.log('data str', JSON.stringify(data.me!));
-            console.log('user str', JSON.stringify(user));
             if (JSON.stringify(data.me!) !== JSON.stringify(user)) {
                 setUserInfo(data.me);
                 router.push('/login');

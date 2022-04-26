@@ -85,12 +85,11 @@ const App = ({ Component, pageProps }: AppLayoutProps) => {
                 }
             });
         } else {
-            console.log('permission does not exist =========>');
+            // console.log('permission does not exist');
             setIsAllowed(true);
         }
     }, []);
 
-    console.log('isAllowed', isAllowed);
     const ComponentToRender = isAllowed ? Component : HomePage;
 
     return (
