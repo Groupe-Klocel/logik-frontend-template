@@ -936,7 +936,7 @@ export type GetArticleByIdQueryVariables = Exact<{
 }>;
 
 
-export type GetArticleByIdQuery = { __typename?: 'Query', article?: { __typename?: 'Article', id?: number | null, accountId: number, companyId: number, status: number, code: string, name: string, length?: number | null, width?: number | null, height?: number | null, baseUnitWeight?: number | null, boxWeight?: number | null, boxQuantity?: number | null, baseUnitPicking?: boolean | null, boxPicking?: boolean | null, cubingType?: number | null, permanentProduct?: boolean | null, additionalDescription?: string | null, supplierName?: string | null, baseUnitPrice?: number | null, baseUnitRotation?: string | null, boxRotation?: string | null, featureTypeId?: number | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, tariffClassification?: string | null, family?: string | null, subfamily?: string | null, groupingId?: string | null } | null };
+export type GetArticleByIdQuery = { __typename?: 'Query', article?: { __typename?: 'Article', id?: number | null, accountId: number, companyId: number, status: number, code: string, name: string, length?: number | null, width?: number | null, height?: number | null, baseUnitWeight?: number | null, boxWeight?: number | null, boxQuantity?: number | null, baseUnitPicking?: boolean | null, boxPicking?: boolean | null, cubingType?: number | null, permanentProduct?: boolean | null, additionalDescription?: string | null, supplierName?: string | null, baseUnitPrice?: number | null, baseUnitRotation?: string | null, boxRotation?: string | null, featureTypeId?: number | null, tariffClassification?: string | null, family?: string | null, subfamily?: string | null, groupingId?: string | null } | null };
 
 export type GetArticleIdsQueryVariables = Exact<{
   filters?: InputMaybe<ArticleSearchFilters>;
@@ -1134,10 +1134,6 @@ export const GetArticleByIdDocument = `
     baseUnitRotation
     boxRotation
     featureTypeId
-    created
-    createdBy
-    modified
-    modifiedBy
     tariffClassification
     family
     subfamily

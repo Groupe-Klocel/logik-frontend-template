@@ -55,10 +55,6 @@ query GetArticleById($id: Int!) {
         baseUnitRotation
         boxRotation
         featureTypeId
-        created
-        createdBy
-        modified
-        modifiedBy
         tariffClassification
         family
         subfamily
