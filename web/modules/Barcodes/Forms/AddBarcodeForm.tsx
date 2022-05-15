@@ -23,7 +23,7 @@ import internal from 'stream';
 
 interface IOption {
     value: string;
-    id: number;
+    id: string;
 }
 
 export const AddBarcodeForm = () => {

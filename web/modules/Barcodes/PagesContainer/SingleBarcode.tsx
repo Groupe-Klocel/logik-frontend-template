@@ -33,7 +33,7 @@ const SingleBarcode: FC<ISingleBarcodeProps> = ({ id, router }: ISingleBarcodePr
     const { isLoading, data, error } = useGetBarcodeByIdQuery<GetBarcodeByIdQuery, Error>(
         graphqlRequestClient,
         {
-            id: parseInt(id)
+            id: id
         }
     );
 
@@ -88,7 +88,7 @@ const SingleBarcode: FC<ISingleBarcodeProps> = ({ id, router }: ISingleBarcodePr
                         />
                         <Button
                             loading={deleteLoading}
-                            onClick={() => deleteBarcode({ id: parseInt(id) })}
+                            onClick={() => deleteBarcode({ id: id })}
                         >
                             {t('actions:delete')}
                         </Button>

@@ -34,7 +34,7 @@ const EditBarcode: FC<IEditBarcodeProps> = ({ id, router }: IEditBarcodeProps) =
     const { isLoading, data, error } = useGetBarcodeByIdQuery<GetBarcodeByIdQuery, Error>(
         graphqlRequestClient,
         {
-            id: parseInt(id)
+            id: id
         }
     );
 

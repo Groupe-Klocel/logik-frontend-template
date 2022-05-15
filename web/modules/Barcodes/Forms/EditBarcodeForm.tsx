@@ -23,7 +23,7 @@ export interface IEditBarcodeFormProps {
 
 interface IOption {
     value: string;
-    id: number;
+    id: string;
 }
 
 export const EditBarcodeForm: FC<IEditBarcodeFormProps> = ({
@@ -80,7 +80,7 @@ export const EditBarcodeForm: FC<IEditBarcodeFormProps> = ({
                 const formData = form.getFieldsValue(true);
                 delete formData.articleName;
                 delete formData.article;
-                updateBarcode({ input: formData, id: parseInt(barcodeId) });
+                updateBarcode({ input: formData, id: barcodeId });
             })
             .catch((err) => {
                 if (!aId) {
