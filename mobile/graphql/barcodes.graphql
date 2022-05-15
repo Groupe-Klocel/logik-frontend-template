@@ -24,7 +24,7 @@ query GetAllBarcodes(
     }
 }
 
-query GetBarcodeById($id: Int!) {
+query GetBarcodeById($id: String!) {
     barcode(id: $id) {
         id
         accountId
@@ -37,6 +37,9 @@ query GetBarcodeById($id: Int!) {
         supplierName
         supplierArticleCode
         quantity
+        article {
+            name
+        }
     }
 }
 
@@ -56,6 +59,37 @@ mutation CreateBarcode($input: CreateBarcodeInput!) {
     }
 }
 
-mutation DeleteBarcode($id: Int!) {
+mutation DeleteBarcode($id: String!) {
     deleteBarcode(id: $id)
+}
+
+mutation RenderBarcode($code: String!, $category: BarcodeCategory, $pages: Int!) {
+    renderBarcode(code: $code, category: $category, pages: $pages) {
+        __typename
+        ... on RenderedDocument {
+            url
+        }
+        ... on BarcodeError {
+            message
+        }
+    }
+}
+
+mutation UpdateBarcode($id: String!, $input: UpdateBarcodeInput!) {
+    updateBarcode(id: $id, input: $input) {
+        id
+        accountId
+        companyId
+        articleId
+        name
+        rotation
+        preparationMode
+        flagDouble
+        supplierName
+        supplierArticleCode
+        quantity
+        article {
+            name
+        }
+    }
 }
