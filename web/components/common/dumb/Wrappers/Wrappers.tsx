@@ -15,7 +15,7 @@ const WrapperStickyActions = styled.div`
     align-self: flex-end;
 `;
 
-const InputWrapper = styled(Input)`
+const InputWrapper = styled.div`
     background-color: white;
     color: black;
 `;

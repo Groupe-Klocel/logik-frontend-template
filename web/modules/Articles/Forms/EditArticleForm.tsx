@@ -55,7 +55,7 @@ export const EditArticleForm: FC<IEditArticleFormProps> = ({
         form.validateFields()
             .then(() => {
                 updateArticle({
-                    id: parseInt(articleId),
+                    id: articleId,
                     input: { ...form.getFieldsValue(true), accountId: 1 }
                 });
             })
