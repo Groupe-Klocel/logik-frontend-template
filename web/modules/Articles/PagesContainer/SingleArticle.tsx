@@ -11,7 +11,7 @@ import {
     DeleteArticleMutation,
     DeleteArticleMutationVariables,
     Table,
-    Mode
+    ModeEnum
 } from 'generated/graphql';
 import { useAuth } from 'context/AuthContext';
 import { FC, useEffect, useState } from 'react';
@@ -38,7 +38,7 @@ const SingleArticle: FC<ISingleArticleProps> = ({ id, router }: ISingleArticlePr
     const mode =
         !!permissions &&
         permissions.find((p: any) => {
-            return p.table == Table.Article;
+            return p.table.toUpperCase() == Table.Article;
         })?.mode;
 
     const { graphqlRequestClient } = useAuth();
@@ -48,7 +48,7 @@ const SingleArticle: FC<ISingleArticleProps> = ({ id, router }: ISingleArticlePr
     const { isLoading, data, error } = useGetArticleByIdQuery<GetArticleByIdQuery, Error>(
         graphqlRequestClient,
         {
-            id: parseInt(id)
+            id: id
         }
     );
     console.log(data);
@@ -115,7 +115,7 @@ const SingleArticle: FC<ISingleArticleProps> = ({ id, router }: ISingleArticlePr
                 routes={breadsCrumb}
                 onBack={() => router.push('/articles')}
                 actionsRight={
-                    mode == Mode.Write ? (
+                    mode.toUpperCase() == ModeEnum.Write ? (
                         <Space>
                             <Button onClick={updateBoxQuantity} type="primary">
                                 {t('actions:update-quantity')}
@@ -127,7 +127,7 @@ const SingleArticle: FC<ISingleArticleProps> = ({ id, router }: ISingleArticlePr
                             />
                             <Button
                                 loading={deleteLoading}
-                                onClick={() => deleteArticle({ id: parseInt(id) })}
+                                onClick={() => deleteArticle({ id: id })}
                             >
                                 {t('actions:delete')}
                             </Button>

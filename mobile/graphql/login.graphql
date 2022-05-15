@@ -3,3 +3,27 @@ mutation Login($username: String!, $password: String!, $warehouseId: ID!) {
         accessToken
     }
 }
+
+mutation ResetPassword($email: String!, $callbackUrl: String!) {
+    resetPassword(email: $email, callbackUrl: $callbackUrl) {
+        __typename
+        ... on ResetPasswordSuccess {
+            message
+        }
+        ... on ResetPasswordFailure {
+            message
+        }
+    }
+}
+
+mutation ChangePassword($token: String!, $password: String!, $password2: String!) {
+    changePassword(token: $token, password: $password, password2: $password2) {
+        __typename
+        ... on ChangePasswordFailure {
+            message
+        }
+        ... on ChangePasswordSuccess {
+            message
+        }
+    }
+}

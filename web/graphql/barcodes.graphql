@@ -24,7 +24,7 @@ query GetAllBarcodes(
     }
 }
 
-query GetBarcodeById($id: Int!) {
+query GetBarcodeById($id: String!) {
     barcode(id: $id) {
         id
         accountId
@@ -59,7 +59,7 @@ mutation CreateBarcode($input: CreateBarcodeInput!) {
     }
 }
 
-mutation DeleteBarcode($id: Int!) {
+mutation DeleteBarcode($id: String!) {
     deleteBarcode(id: $id)
 }
 
@@ -75,7 +75,7 @@ mutation RenderBarcode($code: String!, $category: BarcodeCategory, $pages: Int!)
     }
 }
 
-mutation UpdateBarcode($id: Int!, $input: UpdateBarcodeInput!) {
+mutation UpdateBarcode($id: String!, $input: UpdateBarcodeInput!) {
     updateBarcode(id: $id, input: $input) {
         id
         accountId

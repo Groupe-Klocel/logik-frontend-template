@@ -15,7 +15,7 @@ import { useRouter } from 'next/router';
 import { useAuth } from 'context/AuthContext';
 import { BarcodeRenderModal } from 'modules/Barcodes/Elements/BarcodeRenderModal';
 import { useAppState } from 'context/AppContext';
-import { Mode, Table } from 'generated/graphql';
+import { Table } from 'generated/graphql';
 
 const { Title } = Typography;
 
@@ -39,11 +39,11 @@ const ArticleDetails = ({ details }: IArticleDetailsProps) => {
     const mode =
         !!permissions &&
         permissions.find((p: any) => {
-            return p.table == Table.Barcode;
+            return p.table.toUpperCase() == Table.Barcode;
         })?.mode;
 
     const { isLoading, data, error } = useBarcodes(
-        { articleId: parseInt(details.id) },
+        { articleId: details.id },
         pagination.current,
         pagination.itemsPerPage,
         null

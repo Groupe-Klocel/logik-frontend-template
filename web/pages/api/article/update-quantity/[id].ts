@@ -24,7 +24,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     const { id } = req.query;
 
     const query = gql`
-        query getArticleById($id: Int!) {
+        query getArticleById($id: String!) {
             article(id: $id) {
                 width
                 height
@@ -34,23 +34,24 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     `;
 
     const variables = {
-        id: parseInt(id.toString())
+        id: id
     };
 
     const data = await graphqlRequestClient.request(query, variables, requestHeader);
     const qnt = calculateBoxQuantity(data.article);
+    console.log('quantity=', qnt);
 
     // update box quantity in database by sending gql mutaion.
     // implement after gql endpoint done!
     const updateVariables = {
-        id: parseInt(id.toString()),
+        id: id,
         input: {
             boxQuantity: qnt
         }
     };
 
     const updateMutation = gql`
-        mutation updateArticle($id: Int!, $input: UpdateArticleInput!) {
+        mutation updateArticle($id: String!, $input: UpdateArticleInput!) {
             updateArticle(id: $id, input: $input) {
                 boxQuantity
             }
@@ -68,6 +69,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
 function calculateBoxQuantity({ width, height, length }: IData) {
     const articleVolume = (width * height * length) / 100 ** 3; // cubic centimeters to cubic meters
+    if (articleVolume == 0) return 0;
     const boxVolume = (600 * 400 * 400) / 1000 ** 3; // cubic millimeters to cubic meters
     return Math.floor(boxVolume / articleVolume);
 }

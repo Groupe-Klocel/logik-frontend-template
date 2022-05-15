@@ -14,6 +14,7 @@ import {
 } from 'generated/graphql';
 import { showError, showSuccess, showInfo, useArticleIds } from '@helpers';
 import { AddBarcodeForm } from './AddBarcodeForm';
+import { debounce } from 'lodash';
 
 export interface IEditBarcodeFormProps {
     barcodeId: string;
@@ -22,7 +23,7 @@ export interface IEditBarcodeFormProps {
 
 interface IOption {
     value: string;
-    id: number;
+    id: string;
 }
 
 export const EditBarcodeForm: FC<IEditBarcodeFormProps> = ({
@@ -79,7 +80,7 @@ export const EditBarcodeForm: FC<IEditBarcodeFormProps> = ({
                 const formData = form.getFieldsValue(true);
                 delete formData.articleName;
                 delete formData.article;
-                updateBarcode({ input: formData, id: parseInt(barcodeId) });
+                updateBarcode({ input: formData, id: barcodeId });
             })
             .catch((err) => {
                 if (!aId) {
@@ -110,13 +111,17 @@ export const EditBarcodeForm: FC<IEditBarcodeFormProps> = ({
 
     useEffect(() => {
         if (data) {
-            let newIdOpts: Array<IOption> = [];
+            const newIdOpts: Array<IOption> = [];
             data.articles?.results.forEach(({ id, name }) => {
                 newIdOpts.push({ value: name, id: id! });
             });
             setIdOptions(newIdOpts);
         }
     }, [articleName, data]);
+
+    const handleSearch = (value: string) => {
+        setArticleName(value);
+    };
 
     return (
         <StyledForm>
@@ -171,11 +176,11 @@ export const EditBarcodeForm: FC<IEditBarcodeFormProps> = ({
                                             .toUpperCase()
                                             .indexOf(inputValue.toUpperCase()) !== -1
                                     }
-                                    onKeyUp={(e: any) => setArticleName(e.target.value)}
                                     onSelect={(value, option) => {
                                         setAId(option.id);
                                         setArticleName(value);
                                     }}
+                                    onSearch={debounce(handleSearch, 350)}
                                 />
                             </Form.Item>
 

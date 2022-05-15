@@ -15,45 +15,6 @@ const WrapperStickyActions = styled.div`
   align-self:flex-end;
 `
 
-// const WrapperLogin = styled.div`
-// 	display: flex;
-//   align-items: center;
-// 	justify-items:center;
-//   padding: 3%;
-// 	box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-//   flex-direction: column;
-//   width: 95vw;
-// 	@media only screen and (max-width: 320px) {
-//     width: 90vw;
-//     hr {
-//       margin-bottom: 0.3rem;
-//     }
-//     h4 {
-//       font-size: small;
-//     }
-//   }
-//   @media only screen and (min-width: 360px) {
-//     width: 90vw;
-//     h4 {
-//       font-size: small;
-//     }
-//   }
-//   @media only screen and (min-width: 411px) {
-//     width: 80vw;
-//   }
-
-//   @media only screen and (min-width: 768px) {
-//     width: 80vw;
-//   }
-//   @media only screen and (min-width: 1024px) {
-//     width: 70vw;
-//   }
-//   @media only screen and (min-width: 1280px) {
-//     width: 30vw;
-//   }
-// `
-
-
 const WrapperLogin = styled.div`
 	display: flex;
   align-items: flex-start;

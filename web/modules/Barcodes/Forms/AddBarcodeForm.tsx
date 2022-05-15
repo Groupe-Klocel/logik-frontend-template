@@ -4,6 +4,7 @@ import useTranslation from 'next-translate/useTranslation';
 import { KeyboardEventHandler, useEffect, useState } from 'react';
 import { useAuth } from 'context/AuthContext';
 import { useRouter } from 'next/router';
+import { debounce } from 'lodash';
 import {
     useCreateBarcodeMutation,
     CreateBarcodeMutation,
@@ -22,7 +23,7 @@ import internal from 'stream';
 
 interface IOption {
     value: string;
-    id: number;
+    id: string;
 }
 
 export const AddBarcodeForm = () => {
@@ -189,11 +190,22 @@ export const AddBarcodeForm = () => {
                                         .toUpperCase()
                                         .indexOf(inputValue.toUpperCase()) !== -1
                                 }
-                                onKeyUp={(e: any) => setArticleName(e.target.value)}
+                                onKeyUp={(e: any) => {
+                                    console.log('search articles name');
+                                    debounce(() => {
+                                        setArticleName(e.target.value);
+                                    }, 3000);
+                                }}
                                 onSelect={(value, option) => {
                                     setAId(option.id);
                                     setArticleName(value);
                                 }}
+                                // onSearch={(value: string) => {
+                                //     debounce(() => {
+                                //         console.log('search articles name');
+                                //         setArticleName(value);
+                                //     }, 1000);
+                                // }}
                             />
                         </Form.Item>
                         <Form.Item

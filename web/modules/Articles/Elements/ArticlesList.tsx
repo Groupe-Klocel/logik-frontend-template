@@ -20,7 +20,7 @@ import {
     useExportArticlesMutation,
     ExportFormat,
     Table,
-    Mode
+    ModeEnum
 } from 'generated/graphql';
 import { EyeTwoTone, DeleteOutlined } from '@ant-design/icons';
 import { useState, useEffect, useCallback } from 'react';
@@ -48,7 +48,7 @@ const ArticlesList = ({ searchCriteria }: IArticlesListProps) => {
     const mode =
         !!permissions &&
         permissions.find((p: any) => {
-            return p.table == Table.Article;
+            return p.table.toUpperCase() == Table.Article;
         })?.mode;
 
     const { isLoading, data, error } = useArticles(
@@ -197,7 +197,7 @@ const ArticlesList = ({ searchCriteria }: IArticlesListProps) => {
                         icon={<EyeTwoTone />}
                         path={pathParams('/article/[id]', record.id)}
                     />
-                    {mode == Mode.Write ? (
+                    {mode.toUpperCase() == ModeEnum.Write ? (
                         <Button
                             icon={<DeleteOutlined />}
                             danger

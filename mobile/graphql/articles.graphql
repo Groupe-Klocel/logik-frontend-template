@@ -31,7 +31,7 @@ query GetAllArticles(
     }
 }
 
-query GetArticleById($id: Int!) {
+query GetArticleById($id: String!) {
     article(id: $id) {
         id
         accountId
@@ -55,14 +55,27 @@ query GetArticleById($id: Int!) {
         baseUnitRotation
         boxRotation
         featureTypeId
-        created
-        createdBy
-        modified
-        modifiedBy
         tariffClassification
         family
         subfamily
         groupingId
+    }
+}
+
+query GetArticleIds(
+    $filters: ArticleSearchFilters
+    $orderBy: [ArticleOrderByCriterion!]
+    $page: Int!
+    $itemsPerPage: Int!
+) {
+    articles(filters: $filters, orderBy: $orderBy, page: $page, itemsPerPage: $itemsPerPage) {
+        count
+        itemsPerPage
+        totalPages
+        results {
+            id
+            name
+        }
     }
 }
 
@@ -107,18 +120,12 @@ mutation ExportArticles(
     }
 }
 
-mutation DeleteArticle($id: Int!) {
+mutation DeleteArticle($id: String!) {
     deleteArticle(id: $id)
 }
 
-mutation UpdateArticle(
-    $id: Int!
-    $input: UpdateArticleInput!
-) {
-    updateArticle(
-        id: $id
-        input: $input
-    ) {
+mutation UpdateArticle($id: String!, $input: UpdateArticleInput!) {
+    updateArticle(id: $id, input: $input) {
         id
         accountId
         companyId

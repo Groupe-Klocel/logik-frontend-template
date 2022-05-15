@@ -27,7 +27,7 @@ const SideMenu: FC = () => {
             return false;
         }
         const permission = permissions.find((p: any) => {
-            return p.table == tableName;
+            return p.table.toUpperCase() == tableName;
         });
         if (permission) {
             return true;

@@ -31,7 +31,7 @@ query GetAllArticles(
     }
 }
 
-query GetArticleById($id: Int!) {
+query GetArticleById($id: String!) {
     article(id: $id) {
         id
         accountId
@@ -55,10 +55,6 @@ query GetArticleById($id: Int!) {
         baseUnitRotation
         boxRotation
         featureTypeId
-        created
-        createdBy
-        modified
-        modifiedBy
         tariffClassification
         family
         subfamily
@@ -124,11 +120,11 @@ mutation ExportArticles(
     }
 }
 
-mutation DeleteArticle($id: Int!) {
+mutation DeleteArticle($id: String!) {
     deleteArticle(id: $id)
 }
 
-mutation UpdateArticle($id: Int!, $input: UpdateArticleInput!) {
+mutation UpdateArticle($id: String!, $input: UpdateArticleInput!) {
     updateArticle(id: $id, input: $input) {
         id
         accountId
