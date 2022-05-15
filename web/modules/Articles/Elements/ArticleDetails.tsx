@@ -43,7 +43,7 @@ const ArticleDetails = ({ details }: IArticleDetailsProps) => {
         })?.mode;
 
     const { isLoading, data, error } = useBarcodes(
-        { articleId: parseInt(details.id) },
+        { articleId: details.id },
         pagination.current,
         pagination.itemsPerPage,
         null
