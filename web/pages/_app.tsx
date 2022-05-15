@@ -14,7 +14,7 @@ import { ReactQueryDevtools } from 'react-query/devtools';
 import '../styles/globals.css';
 import useTranslation from 'next-translate/useTranslation';
 import HomePage from 'pages';
-import { Mode, Table } from 'generated/graphql';
+import { ModeEnum, Table } from 'generated/graphql';
 import { PermissionTable } from 'helpers/constants';
 
 const themes = {
@@ -73,21 +73,21 @@ const App = ({ Component, pageProps }: AppLayoutProps) => {
         let tableName = '';
 
         if (router.pathname.includes('article')) {
-            tableName = 'ARTICLE';
+            tableName = Table.Article;
         } else if (router.pathname.includes('barcode')) {
-            tableName = 'BARCODE';
+            tableName = Table.Barcode;
         }
 
         const p = PermissionTable.find((e: any) => {
-            return e.tableName == tableName;
+            return e.tableName.toUpperCase() == tableName;
         });
         if (p) {
             const per = permissions.find((per: any) => {
-                return per.table == p.tableName;
+                return per.table.toUpperCase() == p.tableName;
             });
             // console.log('permission = ', per);
             if (per) {
-                if (per.mode == Mode.Read) {
+                if (per.mode.toUpperCase() == ModeEnum.Read) {
                     const urlPatterns = p.writeModeUrls;
                     const isPatternExist = urlPatterns.find((pattern: string) => {
                         return router.pathname.startsWith(pattern);

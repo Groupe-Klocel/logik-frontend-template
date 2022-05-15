@@ -9,7 +9,7 @@ import { BarcodesSearch } from 'modules/Barcodes/Forms/BarcodesSearch';
 import { useDrawerDispatch } from 'context/DrawerContext';
 import { showError } from '@helpers';
 import { useAppState } from 'context/AppContext';
-import { Table } from 'generated/graphql';
+import { ModeEnum, Table } from 'generated/graphql';
 
 const Barcodes = () => {
     const { t } = useTranslation();
@@ -17,7 +17,7 @@ const Barcodes = () => {
     const mode =
         !!permissions &&
         permissions.find((p: any) => {
-            return p.table == Table.Barcode;
+            return p.table.toUpperCase() == Table.Barcode;
         })?.mode;
 
     //	SEARCH DRAWER
@@ -72,7 +72,7 @@ const Barcodes = () => {
                 actionsRight={
                     <Space>
                         <Button icon={<SearchOutlined />} onClick={() => openSearchDrawer()} />
-                        {mode == 'WRITE' ? (
+                        {mode.toUpperCase() == ModeEnum.Write ? (
                             <LinkButton
                                 title={t('actions:add2', { name: t('common:barcode') })}
                                 path="/add-barcode"

@@ -8,7 +8,7 @@ import useTranslation from 'next-translate/useTranslation';
 import { showError } from '@helpers';
 import { useCallback, useState } from 'react';
 import { useAppState } from 'context/AppContext';
-import { Mode, Table } from 'generated/graphql';
+import { ModeEnum, Table } from 'generated/graphql';
 
 const Articles = () => {
     const { t } = useTranslation();
@@ -16,9 +16,9 @@ const Articles = () => {
     const mode =
         !!permissions &&
         permissions.find((p: any) => {
-            return p.table == Table.Article;
+            return p.table.toUpperCase() == Table.Article;
         })?.mode;
-    // console.log('mode', mode);
+    console.log('mode', mode);
 
     const [search, setSearch] = useState({});
     console.log(search);
@@ -73,7 +73,7 @@ const Articles = () => {
                 actionsRight={
                     <Space>
                         <Button icon={<SearchOutlined />} onClick={() => openSearchDrawer()} />
-                        {mode == Mode.Write ? (
+                        {mode.toUpperCase() == ModeEnum.Write ? (
                             <LinkButton
                                 title={t('actions:add2', { name: t('common:article') })}
                                 path="/add-article"
