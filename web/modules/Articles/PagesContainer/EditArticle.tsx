@@ -29,7 +29,7 @@ const EditArticle: FC<IEditArticleProps> = ({ id, router }: IEditArticleProps) =
     const { isLoading, data, error } = useGetArticleByIdQuery<GetArticleByIdQuery, Error>(
         graphqlRequestClient,
         {
-            id: parseInt(id)
+            id: id
         }
     );
 
