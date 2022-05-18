@@ -20,8 +20,8 @@ export const blocksRoutes = [
 export const addBlockRoutes = [
     ...blocksRoutes,
     {
-        path: '/add-bloc',
-        breadcrumbName: 'menu:add-bloc'
+        path: '/add-block',
+        breadcrumbName: 'actions:add-block'
     }
 ];
 

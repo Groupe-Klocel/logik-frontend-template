@@ -13,7 +13,7 @@ export const AddBlock = () => {
     const { t } = useTranslation('actions');
     return (
         <>
-            <HeaderContent title={t('add2', { name: 'Bloc' })} routes={addBlockRoutes} />
+            <HeaderContent title={t('add2', { name: t('menu:block') })} routes={addBlockRoutes} />
             <StyledPageContent>
                 <AddBlockForm />
             </StyledPageContent>
