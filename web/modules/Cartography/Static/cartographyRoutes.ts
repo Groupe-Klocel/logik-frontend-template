@@ -9,16 +9,16 @@ export const cartographyRoutes = [
     }
 ];
 
-export const blocsRoutes = [
+export const blocksRoutes = [
     ...cartographyRoutes,
     {
-        path: '/blocs',
-        breadcrumbName: 'menu:blocs'
+        path: '/blocks',
+        breadcrumbName: 'menu:blocks'
     }
 ];
 
-export const addBlocRoutes = [
-    ...blocsRoutes,
+export const addBlockRoutes = [
+    ...blocksRoutes,
     {
         path: '/add-bloc',
         breadcrumbName: 'menu:add-bloc'

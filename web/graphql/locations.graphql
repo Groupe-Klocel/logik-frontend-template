@@ -1,0 +1,143 @@
+query GetAllLocations(
+    $filters: LocationSearchFilters
+    $orderBy: [LocationOrderByCriterion!]
+    $page: Int!
+    $itemsPerPage: Int!
+) {
+    locations(filters: $filters, orderBy: $orderBy, page: $page, itemsPerPage: $itemsPerPage) {
+        count
+        itemsPerPage
+        totalPages
+        results {
+            id
+            name
+            barcode
+            aisle
+            column
+            level
+            position
+            replenish
+            blockId
+            block {
+                name
+            }
+            replenishType
+            constraint
+            comment
+            baseUnitRotation
+            boxRotation
+            allowCycleCountStockMin
+        }
+    }
+}
+
+query GetLocationById($id: String!) {
+    location(id: $id) {
+        id
+        name
+        barcode
+        aisle
+        column
+        level
+        position
+        replenish
+        blockId
+        block {
+            name
+        }
+        replenishType
+        constraint
+        comment
+        baseUnitRotation
+        boxRotation
+        allowCycleCountStockMin
+    }
+}
+
+query GetLocationIds(
+    $filters: LocationSearchFilters
+    $orderBy: [LocationOrderByCriterion!]
+    $page: Int!
+    $itemsPerPage: Int!
+) {
+    locations(filters: $filters, orderBy: $orderBy, page: $page, itemsPerPage: $itemsPerPage) {
+        count
+        itemsPerPage
+        totalPages
+        results {
+            name
+            barcode
+            aisle
+            column
+            level
+            position
+            replenish
+            blockId
+            block {
+                name
+            }
+            replenishType
+            constraint
+            comment
+            baseUnitRotation
+            boxRotation
+            allowCycleCountStockMin
+        }
+    }
+}
+
+mutation CreateLocation($input: CreateLocationInput!) {
+    createLocation(input: $input) {
+        __typename
+        ... on Location {
+            id
+            name
+            barcode
+            aisle
+            column
+            level
+            position
+            replenish
+            blockId
+            block {
+                name
+            }
+            replenishType
+            constraint
+            comment
+            baseUnitRotation
+            boxRotation
+            allowCycleCountStockMin
+        }
+        ... on ValidationError {
+            message
+        }
+    }
+}
+
+mutation DeleteLocation($id: String!) {
+    deleteLocation(id: $id)
+}
+
+mutation UpdateLocation($id: String!, $input: UpdateLocationInput!) {
+    updateLocation(id: $id, input: $input) {
+        id
+        name
+        barcode
+        aisle
+        column
+        level
+        position
+        replenish
+        blockId
+        block {
+            name
+        }
+        replenishType
+        constraint
+        comment
+        baseUnitRotation
+        boxRotation
+        allowCycleCountStockMin
+    }
+}

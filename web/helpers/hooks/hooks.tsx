@@ -7,7 +7,11 @@ import {
     useGetArticleIdsQuery,
     GetArticleIdsQuery,
     useGetMyInfoQuery,
-    GetMyInfoQuery
+    GetMyInfoQuery,
+    useGetAllBlocksQuery,
+    GetAllBlocksQuery,
+    GetAllLocationsQuery,
+    useGetAllLocationsQuery
 } from 'generated/graphql';
 
 const useArticles = (search: any, page: number, itemsPerPage: number, sort: any) => {
@@ -68,6 +72,60 @@ const useArticleIds = (search: any, page: number, itemsPerPage: number, sort: an
     return articles;
 };
 
+const useBlocks = (search: any, page: number, itemsPerPage: number, sort: any) => {
+    const { graphqlRequestClient } = useAuth();
+
+    const sortByDate = {
+        field: 'created',
+        ascending: false
+    };
+
+    let newSort;
+
+    if (sort === null) {
+        newSort = sortByDate;
+    } else {
+        newSort = sort;
+    }
+
+    const blocks = useGetAllBlocksQuery<Partial<GetAllBlocksQuery>, Error>(graphqlRequestClient, {
+        filters: search,
+        orderBy: newSort,
+        page: page,
+        itemsPerPage: itemsPerPage
+    });
+
+    return blocks;
+};
+const useLocations = (search: any, page: number, itemsPerPage: number, sort: any) => {
+    const { graphqlRequestClient } = useAuth();
+
+    const sortByDate = {
+        field: 'created',
+        ascending: false
+    };
+
+    let newSort;
+
+    if (sort === null) {
+        newSort = sortByDate;
+    } else {
+        newSort = sort;
+    }
+
+    const locations = useGetAllLocationsQuery<Partial<GetAllLocationsQuery>, Error>(
+        graphqlRequestClient,
+        {
+            filters: search,
+            orderBy: newSort,
+            page: page,
+            itemsPerPage: itemsPerPage
+        }
+    );
+
+    return locations;
+};
+
 const useBarcodes = (search: any, page: number, itemsPerPage: number, sort: any) => {
     const { graphqlRequestClient } = useAuth();
 
@@ -105,4 +163,4 @@ const useMyInfo = () => {
     return myInfo;
 };
 
-export { useArticles, useBarcodes, useArticleIds, useMyInfo };
+export { useArticles, useBlocks, useLocations, useBarcodes, useArticleIds, useMyInfo };

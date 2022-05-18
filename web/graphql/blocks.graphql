@@ -1,0 +1,103 @@
+query GetAllBlocks(
+    $filters: BlockSearchFilters
+    $orderBy: [BlockOrderByCriterion!]
+    $page: Int!
+    $itemsPerPage: Int!
+) {
+    blocks(filters: $filters, orderBy: $orderBy, page: $page, itemsPerPage: $itemsPerPage) {
+        count
+        itemsPerPage
+        totalPages
+        results {
+            id
+            name
+            created
+            createdBy
+            modified
+            modifiedBy
+            moveable
+            bulk
+            comment
+            level
+            blockGroup
+        }
+    }
+}
+
+query GetBlockById($id: String!) {
+    block(id: $id) {
+        id
+        name
+        created
+        createdBy
+        modified
+        modifiedBy
+        moveable
+        bulk
+        comment
+        level
+        blockGroup
+    }
+}
+
+query GetBlockIds(
+    $filters: BlockSearchFilters
+    $orderBy: [BlockOrderByCriterion!]
+    $page: Int!
+    $itemsPerPage: Int!
+) {
+    blocks(filters: $filters, orderBy: $orderBy, page: $page, itemsPerPage: $itemsPerPage) {
+        count
+        itemsPerPage
+        totalPages
+        results {
+            id
+            name
+            created
+            createdBy
+            modified
+            modifiedBy
+            moveable
+            bulk
+            comment
+            level
+            blockGroup
+        }
+    }
+}
+
+mutation CreateBlock($input: CreateBlockInput!) {
+    createBlock(input: $input) {
+        id
+        name
+        created
+        createdBy
+        modified
+        modifiedBy
+        moveable
+        bulk
+        comment
+        level
+        blockGroup
+    }
+}
+
+mutation DeleteBlock($id: String!) {
+    deleteBlock(id: $id)
+}
+
+mutation UpdateBlock($id: String!, $input: UpdateBlockInput!) {
+    updateBlock(id: $id, input: $input) {
+        id
+        name
+        created
+        createdBy
+        modified
+        modifiedBy
+        moveable
+        bulk
+        comment
+        level
+        blockGroup
+    }
+}
