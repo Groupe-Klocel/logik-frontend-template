@@ -10,6 +10,7 @@
     "width": "Width",
     "height": "Height",
     "baseUnitWeight": "Base Unit Weight",
+    "blockGroup": "Blocks group",
     "boxWeight": "Box Weight",
     "boxQuantity": "Box Quantity",
     "baseUnitPicking": "Base Unit Picking",

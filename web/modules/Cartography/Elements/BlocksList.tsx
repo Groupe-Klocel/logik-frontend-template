@@ -18,12 +18,15 @@ import {
     pathParams,
     useBlocks
 } from '@helpers';
+import useTranslation from 'next-translate/useTranslation';
 
 export type BlocksListTypeProps = {
     searchCriteria?: any;
 };
 
 export const BlocksList = ({ searchCriteria }: BlocksListTypeProps) => {
+    const { t } = useTranslation();
+
     const [blocks, setBlocks] = useState<DataQueryType>();
     const [sort, setSort] = useState<any>(null);
     const [pagination, setPagination] = useState<PaginationType>({
@@ -65,7 +68,7 @@ export const BlocksList = ({ searchCriteria }: BlocksListTypeProps) => {
     const handleTableChange = async (_pagination: any, _filter: any, sorter: any) => {
         await setSort(orderByFormater(sorter));
     };
-    console.log(data);
+
     const columns = [
         {
             title: 'd:name',
@@ -88,6 +91,17 @@ export const BlocksList = ({ searchCriteria }: BlocksListTypeProps) => {
                 )
         },
         {
+            title: 'd:bulk',
+            dataIndex: 'bulk',
+            key: 'bulk',
+            render: (text: any) =>
+                text == true ? (
+                    <CheckCircleOutlined style={{ color: 'green' }} />
+                ) : (
+                    <CloseSquareOutlined style={{ color: 'red' }} />
+                )
+        },
+        {
             title: 'd:level',
             dataIndex: 'level',
             key: 'level',
@@ -95,6 +109,12 @@ export const BlocksList = ({ searchCriteria }: BlocksListTypeProps) => {
                 multiple: 2
             },
             showSorterTooltip: false
+        },
+        {
+            title: 'd:blockGroup',
+            dataIndex: 'blockGroup',
+            key: 'blockGroup',
+            render: (blockGroup: any) => (blockGroup == 0 ? t('common:none') : blockGroup)
         },
         {
             title: 'common:comment',

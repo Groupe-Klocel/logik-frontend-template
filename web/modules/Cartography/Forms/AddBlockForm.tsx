@@ -26,6 +26,8 @@ interface IOption {
     id: string;
 }
 
+const { TextArea } = Input;
+
 export const AddBlockForm = () => {
     const { t } = useTranslation('common');
     const { graphqlRequestClient } = useAuth();
@@ -33,6 +35,10 @@ export const AddBlockForm = () => {
 
     const name = t('common:name');
     const moveable = t('d:moveable');
+    const bulk = t('d:bulk');
+    const comment = t('common:comment');
+    const level = t('d:level');
+    const blockGroup = t('d:blockGroup');
     const errorMessageEmptyInput = t('messages:error-message-empty-input');
 
     // TYPED SAFE ALL
@@ -81,27 +87,36 @@ export const AddBlockForm = () => {
     return (
         <WrapperForm>
             <Form form={form} scrollToFirstError>
+                <Form.Item
+                    label={name}
+                    name="name"
+                    rules={[{ required: true, message: errorMessageEmptyInput }]}
+                >
+                    <Input />
+                </Form.Item>
                 <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
                     <Col xs={24} xl={12}>
-                        <Form.Item
-                            label={name}
-                            name="name"
-                            rules={[{ required: true, message: errorMessageEmptyInput }]}
-                        >
-                            <Input />
+                        <Form.Item label={level} name="level">
+                            <InputNumber min={-1} max={10} defaultValue={-1} />
                         </Form.Item>
 
-                        <Form.Item
-                            label={moveable}
-                            initialValue={false}
-                            name="moveable"
-                            rules={[{ required: true, message: errorMessageEmptyInput }]}
-                        >
-                            <Checkbox>{moveable}</Checkbox>
+                        <Form.Item label={blockGroup} name="blockGroup">
+                            <InputNumber min={0} max={10} defaultValue={0} />
                         </Form.Item>
                     </Col>
-                    <Col xs={24} xl={12}></Col>
+                    <Col xs={24} xl={12}>
+                        <Form.Item initialValue={false} name="moveable">
+                            <Checkbox>{moveable}</Checkbox>
+                        </Form.Item>
+
+                        <Form.Item initialValue={false} name="bulk">
+                            <Checkbox>{bulk}</Checkbox>
+                        </Form.Item>
+                    </Col>
                 </Row>
+                <Form.Item label={comment} name="comment">
+                    <TextArea>{comment}</TextArea>
+                </Form.Item>
             </Form>
             <div style={{ textAlign: 'center' }}>
                 <Button type="primary" loading={createLoading} onClick={onFinish}>

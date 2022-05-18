@@ -740,6 +740,8 @@ export type Mutation = {
   updatePattern?: Maybe<Pattern>;
   /** Update PatternPath */
   updatePatternPath?: Maybe<PatternPath>;
+  /** Update a Role */
+  updateRole?: Maybe<RoleType>;
   /** Update stock owner */
   updateStockOwner?: Maybe<StockOwner>;
   updateUser?: Maybe<User>;
@@ -785,6 +787,7 @@ export type MutationCreateBlockArgs = {
 
 
 export type MutationCreateIntegratorOrganizationArgs = {
+  id?: InputMaybe<Scalars['ID']>;
   name: Scalars['String'];
 };
 
@@ -824,7 +827,7 @@ export type MutationCreateStockOwnerArgs = {
 
 
 export type MutationCreateWarehouseArgs = {
-  id?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['ID']>;
   name: Scalars['String'];
   organizationId: Scalars['ID'];
 };
@@ -979,6 +982,13 @@ export type MutationUpdatePatternArgs = {
 export type MutationUpdatePatternPathArgs = {
   id: Scalars['String'];
   input: UpdatePatternPathInput;
+};
+
+
+export type MutationUpdateRoleArgs = {
+  id: Scalars['ID'];
+  name?: InputMaybe<Scalars['String']>;
+  permissions?: InputMaybe<Array<PermissionInput>>;
 };
 
 
