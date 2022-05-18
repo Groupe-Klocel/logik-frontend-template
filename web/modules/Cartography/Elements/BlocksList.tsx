@@ -1,23 +1,40 @@
+import {
+    DeleteOutlined,
+    EyeTwoTone,
+    EditTwoTone,
+    CheckCircleOutlined,
+    CloseSquareOutlined
+} from '@ant-design/icons';
 import { Button, Space } from 'antd';
-import { locationsData } from 'fake-data/locations';
 import { AppTable, ContentSpin, LinkButton } from '@components';
-import { DeleteOutlined, EyeTwoTone, EditTwoTone } from '@ant-design/icons';
-import { useCallback, useEffect, useState } from 'react';
 import {
     DataQueryType,
     DEFAULT_ITEMS_PER_PAGE,
     DEFAULT_PAGE_NUMBER,
-    orderByFormater,
     PaginationType,
+    useBlocks,
+    orderByFormater,
     pathParams,
-    useLocations
+    showError,
+    showSuccess
 } from '@helpers';
+import { useCallback, useEffect, useState } from 'react';
+import {
+    DeleteBlockMutation,
+    DeleteBlockMutationVariables,
+    useDeleteBlockMutation
+} from 'generated/graphql';
+import useTranslation from 'next-translate/useTranslation';
+import graphqlRequestClient from 'graphql/graphqlRequestClient';
+import router from 'next/router';
+import { type } from 'os';
 
-export type LocationsListTypeProps = {
+export type BlocksListTypeProps = {
     searchCriteria?: any;
 };
-const LocationsList = ({ searchCriteria }: LocationsListTypeProps) => {
-    const [locations, setLocations] = useState<DataQueryType>();
+const BlocksList = ({ searchCriteria }: BlocksListTypeProps) => {
+    const { t } = useTranslation();
+    const [blocks, setBlocks] = useState<DataQueryType>();
     const [sort, setSort] = useState<any>(null);
     const [pagination, setPagination] = useState<PaginationType>({
         total: undefined,
@@ -30,15 +47,15 @@ const LocationsList = ({ searchCriteria }: LocationsListTypeProps) => {
         (currentPage, itemsPerPage) => {
             // Re fetch data for new current page or items per page
             setPagination({
-                total: locations?.count,
+                total: blocks?.count,
                 current: currentPage,
                 itemsPerPage: itemsPerPage
             });
         },
-        [setPagination, locations]
+        [setPagination, blocks]
     );
 
-    const { isLoading, data, error } = useLocations(
+    const { isLoading, data, error } = useBlocks(
         searchCriteria,
         pagination.current,
         pagination.itemsPerPage,
@@ -48,10 +65,10 @@ const LocationsList = ({ searchCriteria }: LocationsListTypeProps) => {
     console.log('Donnees : ', data);
     useEffect(() => {
         if (data) {
-            setLocations(data?.locations); // set articles local state with new data
+            setBlocks(data?.blocks); // set articles local state with new data
             setPagination({
                 ...pagination,
-                total: data?.locations?.count // may change total items
+                total: data?.blocks?.count // may change total items
             });
         }
     }, [data]);
@@ -59,6 +76,35 @@ const LocationsList = ({ searchCriteria }: LocationsListTypeProps) => {
     const handleTableChange = async (_pagination: any, _filter: any, sorter: any) => {
         await setSort(orderByFormater(sorter));
     };
+
+    const { mutate, isLoading: deleteLoading } = useDeleteBlockMutation<Error>(
+        graphqlRequestClient,
+        {
+            onSuccess: (
+                data: DeleteBlockMutation,
+                _variables: DeleteBlockMutationVariables,
+                _context: any
+            ) => {
+                router.back();
+                if (!deleteLoading) {
+                    showSuccess(t('messages:success-deleted'));
+                }
+            },
+            onError: () => {
+                showError(t('messages:error-deleting-data'));
+            }
+        }
+    );
+
+    const deleteBlock = ({ id }: DeleteBlockMutationVariables) => {
+        mutate({ id });
+    };
+
+    useEffect(() => {
+        if (error) {
+            showError(t('messages:error-getting-data'));
+        }
+    }, [error]);
 
     const columns = [
         {
@@ -73,7 +119,14 @@ const LocationsList = ({ searchCriteria }: LocationsListTypeProps) => {
         {
             title: 'common:moveable',
             dataIndex: 'moveable',
-            key: 'moveable'
+            key: 'moveable',
+            render: (moveable: Text) => {
+                return moveable ? (
+                    <CheckCircleOutlined style={{ color: 'green' }} />
+                ) : (
+                    <CloseSquareOutlined style={{ color: 'red' }} />
+                );
+            }
         },
         {
             title: 'd:level',
@@ -92,17 +145,17 @@ const LocationsList = ({ searchCriteria }: LocationsListTypeProps) => {
         {
             title: 'actions:actions',
             key: 'actions',
-            render: (record: { id: number; name: string }) => (
+            render: (record: { id: string; name: string }) => (
                 <Space>
                     <LinkButton icon={<EyeTwoTone />} path={pathParams('/block/[id]', record.id)} />
-                    <Button
+                    <LinkButton
                         icon={<EditTwoTone />}
-                        onClick={() => alert(`Edit ${record.id} : ${record.name} `)}
+                        path={pathParams('/block/edit/[id]', record.id)}
                     />
                     <Button
                         icon={<DeleteOutlined />}
                         danger
-                        onClick={() => alert(`Delete ${record.id} `)}
+                        onClick={() => deleteBlock({ id: record.id })}
                     />
                 </Space>
             )
@@ -111,11 +164,11 @@ const LocationsList = ({ searchCriteria }: LocationsListTypeProps) => {
 
     return (
         <>
-            {locations ? (
+            {blocks ? (
                 <AppTable
-                    type="locations"
+                    type="blocks"
                     columns={columns}
-                    data={locations!.results}
+                    data={blocks!.results}
                     pagination={pagination}
                     isLoading={isLoading}
                     setPagination={onChangePagination}
@@ -127,4 +180,4 @@ const LocationsList = ({ searchCriteria }: LocationsListTypeProps) => {
         </>
     );
 };
-export { LocationsList };
+export { BlocksList };
