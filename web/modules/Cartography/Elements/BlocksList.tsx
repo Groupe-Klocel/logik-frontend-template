@@ -5,7 +5,7 @@ import {
     CheckCircleOutlined,
     CloseSquareOutlined
 } from '@ant-design/icons';
-import { Button, Space } from 'antd';
+import { Button, Modal, Space } from 'antd';
 import { blocsData } from 'fake-data/blocs';
 import { AppTable, ContentSpin, LinkButton } from '@components';
 import { useCallback, useEffect, useState } from 'react';
@@ -16,9 +16,17 @@ import {
     orderByFormater,
     PaginationType,
     pathParams,
+    showError,
+    showSuccess,
     useBlocks
 } from '@helpers';
 import useTranslation from 'next-translate/useTranslation';
+import {
+    DeleteBlockMutation,
+    DeleteBlockMutationVariables,
+    useDeleteBlockMutation
+} from 'generated/graphql';
+import graphqlRequestClient from 'graphql/graphqlRequestClient';
 
 export type BlocksListTypeProps = {
     searchCriteria?: any;
@@ -69,6 +77,35 @@ export const BlocksList = ({ searchCriteria }: BlocksListTypeProps) => {
         await setSort(orderByFormater(sorter));
     };
 
+    const { mutate, isLoading: deleteLoading } = useDeleteBlockMutation<Error>(
+        graphqlRequestClient,
+        {
+            onSuccess: (
+                data: DeleteBlockMutation,
+                _variables: DeleteBlockMutationVariables,
+                _context: unknown
+            ) => {
+                if (!deleteLoading) {
+                    showSuccess(t('messages:success-deleted'));
+                }
+            },
+            onError: () => {
+                showError(t('messages:error-deleting-data'));
+            }
+        }
+    );
+
+    const deleteBlock = ({ id }: DeleteBlockMutationVariables) => {
+        Modal.confirm({
+            title: t('messages:delete-confirm'),
+            onOk: () => {
+                mutate({ id });
+            },
+            okText: t('messages:confirm'),
+            cancelText: t('messages:cancel')
+        });
+    };
+
     const columns = [
         {
             title: 'd:name',
@@ -108,7 +145,8 @@ export const BlocksList = ({ searchCriteria }: BlocksListTypeProps) => {
             sorter: {
                 multiple: 2
             },
-            showSorterTooltip: false
+            showSorterTooltip: false,
+            render: (level: any) => (level == -1 ? 'N/A' : level)
         },
         {
             title: 'd:blockGroup',
@@ -135,7 +173,8 @@ export const BlocksList = ({ searchCriteria }: BlocksListTypeProps) => {
                     <Button
                         icon={<DeleteOutlined />}
                         danger
-                        onClick={() => alert(`Delete ${record.id} `)}
+                        loading={deleteLoading}
+                        onClick={() => deleteBlock({ id: record.id })}
                     />
                 </Space>
             )

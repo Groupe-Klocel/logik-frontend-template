@@ -15,9 +15,10 @@ import { blocksRoutes } from 'modules/Cartography/Static/cartographyRoutes';
 import { ContentSpin, HeaderContent, PageContentWrapper } from '@components';
 import useTranslation from 'next-translate/useTranslation';
 import styled from 'styled-components';
-import { Button, Layout, Space, Typography } from 'antd';
+import { Button, Layout, Modal, Space, Typography } from 'antd';
 import { BlockDetails } from '../Elements/BlockDetails';
 import { showError, showSuccess } from '@helpers';
+import { modalGlobalConfig } from 'antd/lib/modal/confirm';
 
 export type SingleBlockTypeProps = {
     id: any;
@@ -62,8 +63,17 @@ const SingleBlock: FC<SingleBlockTypeProps> = ({ id, router }: SingleBlockTypePr
     );
 
     const deleteBlock = ({ id }: DeleteBlockMutationVariables) => {
-        mutate({ id });
+        Modal.confirm({
+            title: t('messages:delete-confirm'),
+            onOk: () => {
+                mutate({ id });
+            },
+            okText: t('messages:confirm'),
+            cancelText: t('messages:cancel')
+        });
     };
+
+    //modal to handle delete confirmation
 
     return (
         <>

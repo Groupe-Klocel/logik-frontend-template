@@ -1,5 +1,8 @@
 {
     "action-impossible": "{{name}} action is not possible, you must select a record",
+    "cancel": "Retour",
+    "confirm": "OK",
+    "delete_confirm":"Are you sure you want to delete this record?",
     "error-message-empty-input": "Field must not be empty",
     "error-message-requiered-input": "Field is requiered",
     "error-message-select-1": "You must select a {{name}}",
