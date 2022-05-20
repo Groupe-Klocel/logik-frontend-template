@@ -6,7 +6,7 @@ import MainLayout from '../../components/layouts/MainLayout';
 
 type PageComponent = FC & { layout: typeof MainLayout };
 
-const BlocPage: PageComponent = () => {
+const BlockPage: PageComponent = () => {
     const router = useRouter();
     const { id } = router.query;
     return (
@@ -17,6 +17,6 @@ const BlocPage: PageComponent = () => {
     );
 };
 
-BlocPage.layout = MainLayout;
+BlockPage.layout = MainLayout;
 
-export default BlocPage;
+export default BlockPage;

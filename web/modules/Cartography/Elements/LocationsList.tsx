@@ -1,6 +1,6 @@
 import { Button, Space } from 'antd';
 import { locationsData } from 'fake-data/locations';
-import { AppTable, ContentSpin } from '@components';
+import { AppTable, ContentSpin, LinkButton } from '@components';
 import {
     DeleteOutlined,
     EyeTwoTone,
@@ -15,6 +15,7 @@ import {
     DEFAULT_PAGE_NUMBER,
     orderByFormater,
     PaginationType,
+    pathParams,
     useLocations
 } from '@helpers';
 
@@ -139,9 +140,12 @@ export const LocationsList = ({ searchCriteria }: LocationsListTypeProps) => {
         {
             title: 'actions:actions',
             key: 'actions',
-            render: (record: { id: number }) => (
+            render: (record: { id: string }) => (
                 <Space>
-                    <Button icon={<EyeTwoTone />} onClick={() => alert(`View ${record.id} `)} />
+                    <LinkButton
+                        icon={<EyeTwoTone />}
+                        path={pathParams('/location/[id]', record.id)}
+                    />
                     <Button icon={<EditTwoTone />} onClick={() => alert(`Edit ${record.id} `)} />
                     <Button
                         icon={<DeleteOutlined />}

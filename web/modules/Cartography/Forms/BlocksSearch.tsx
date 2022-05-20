@@ -11,22 +11,6 @@ export type BlocksSearchProps = {
 
 const BlocksSearch: FC<BlocksSearchProps> = ({ form }: BlocksSearchProps) => {
     const { t } = useTranslation();
-    const [moveableSearch, setMoveableSearch] = useState<BlocksSearchProps | any>();
-
-    //FIXIT:issue on this to be fixed : when  selecting several times the filter, then  "None", it does not work anymore
-    useEffect(() => {
-        const formValue = form.getFieldsValue();
-        form.setFieldsValue({ ...formValue, moveable: moveableSearch });
-    }, [moveableSearch]);
-    //FIXIT: issue on display values in the select (no problem when no parent Form.item)
-    function handleSelectChange(value: any) {
-        if (value != '') {
-            let boolValue = value == 'true';
-            setMoveableSearch(boolValue);
-        } else {
-            setMoveableSearch(undefined);
-        }
-    }
 
     return (
         <>
@@ -35,7 +19,7 @@ const BlocksSearch: FC<BlocksSearchProps> = ({ form }: BlocksSearchProps) => {
                     <Input />
                 </Form.Item>
                 <Form.Item name="moveable" label={t('d:moveable')}>
-                    <Select defaultValue="" onChange={handleSelectChange}>
+                    <Select defaultValue="">
                         <Option value="">{t('common:none')}</Option>
                         <Option value="true">{t('common:bool-yes')}</Option>
                         <Option value="false">{t('common:bool-no')}</Option>
