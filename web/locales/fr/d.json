@@ -48,7 +48,7 @@
 	"description": "Description",
 	"default": "Defaut",
 	"dispatchable": "Dispatchable",
-	"bloc": "Bloc",
+	"block": "Bloc",
 	"aisle": "allée",
 	"level": "Niveau",
 	"position": "Position",

@@ -1,7 +1,13 @@
 import { Button, Space } from 'antd';
 import { locationsData } from 'fake-data/locations';
 import { AppTable, ContentSpin } from '@components';
-import { DeleteOutlined, EyeTwoTone, EditTwoTone } from '@ant-design/icons';
+import {
+    DeleteOutlined,
+    EyeTwoTone,
+    EditTwoTone,
+    CheckCircleOutlined,
+    CloseSquareOutlined
+} from '@ant-design/icons';
 import { useCallback, useEffect, useState } from 'react';
 import {
     DataQueryType,
@@ -12,7 +18,11 @@ import {
     useLocations
 } from '@helpers';
 
-export const LocationsList = () => {
+export type LocationsListTypeProps = {
+    searchCriteria?: any;
+};
+
+export const LocationsList = ({ searchCriteria }: LocationsListTypeProps) => {
     const [locations, setLocations] = useState<DataQueryType>();
     const [sort, setSort] = useState<any>(null);
     const [pagination, setPagination] = useState<PaginationType>({
@@ -35,7 +45,7 @@ export const LocationsList = () => {
     );
 
     const { isLoading, data, error } = useLocations(
-        undefined,
+        searchCriteria,
         pagination.current,
         pagination.itemsPerPage,
         sort
@@ -67,7 +77,7 @@ export const LocationsList = () => {
             showSorterTooltip: false
         },
         {
-            title: 'd:bloc',
+            title: 'd:block',
             dataIndex: ['block', 'name'],
             key: ['block', 'name'],
             sorter: {
@@ -118,7 +128,13 @@ export const LocationsList = () => {
             sorter: {
                 multiple: 7
             },
-            showSorterTooltip: false
+            showSorterTooltip: false,
+            render: (text: any) =>
+                text == true ? (
+                    <CheckCircleOutlined style={{ color: 'green' }} />
+                ) : (
+                    <CloseSquareOutlined style={{ color: 'red' }} />
+                )
         },
         {
             title: 'actions:actions',
