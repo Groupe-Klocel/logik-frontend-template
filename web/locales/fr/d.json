@@ -1,8 +1,13 @@
 {
 	"id": "ID",
 	"accountId": "ID Compte",
+	"allowCycleCountStockMin": "Inventaire sur stock minimum",
+	"associatedBlock": "Bloc associé",
 	"available":"Disponible",
+	"blockId": "ID Bloc",
+	"column":"Colonne",
 	"companyId": "ID Entreprise",
+	"constraint": "Contrainte",
 	"status": "Statut",
 	"bulk": "Vrac",
 	"code": "Code",
@@ -53,6 +58,7 @@
 	"level": "Niveau",
 	"position": "Position",
 	"replenish": "Réapprovisionner",
+	"replenishType":"Type de réapprovisionement",
 	"masse": "Masse"
 
 

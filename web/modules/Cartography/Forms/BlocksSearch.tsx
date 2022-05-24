@@ -1,7 +1,6 @@
 import { Form, Input, InputNumber, Checkbox, Select } from 'antd';
-import { isBoolean } from 'lodash';
 import useTranslation from 'next-translate/useTranslation';
-import { FC, useEffect, useState } from 'react';
+import { FC } from 'react';
 
 const { Option } = Select;
 
@@ -26,8 +25,12 @@ const BlocksSearch: FC<BlocksSearchProps> = ({ form }: BlocksSearchProps) => {
                     </Select>
                     {/* <Checkbox>{t("d:moveable")}</Checkbox> */}
                 </Form.Item>
-                <Form.Item initialValue={false} name="bulk">
-                    <Checkbox>{t('d:bulk')}</Checkbox>
+                <Form.Item name="bulk" label={t('d:bulk')}>
+                    <Select defaultValue="">
+                        <Option value="">{t('common:none')}</Option>
+                        <Option value="true">{t('common:bool-yes')}</Option>
+                        <Option value="false">{t('common:bool-no')}</Option>
+                    </Select>
                 </Form.Item>
                 <Form.Item name="level" label={t('d:level')}>
                     <Input />

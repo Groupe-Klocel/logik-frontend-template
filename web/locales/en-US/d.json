@@ -1,8 +1,13 @@
 {
     "id": "ID",
     "accountId": "Account ID ",
+    "allowCycleCountStockMin":"Cycle count on minimum stock",
+    "associatedBlock":"Associated block",
     "available":"Available",
+    "blockId": "Block ID",
+    "column":"Column",
     "companyId": "Company ID",
+    "constraint":"Constraint",
     "status": "Status",
     "code": "Code",
     "name": "Name",
@@ -53,6 +58,7 @@
     "level": "Level",
     "position": "Position",
 	"replenish": "replenish",
+    "replesnishType": "Replenish type",
 	"masse": "Masse"
 
 

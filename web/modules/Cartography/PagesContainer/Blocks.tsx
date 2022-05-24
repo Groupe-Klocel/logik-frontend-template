@@ -45,8 +45,13 @@ export const Blocks = () => {
             .validateFields()
             .then(() => {
                 let temp = formSearch.getFieldsValue(true);
-                temp = { ...temp, moveable: temp['moveable'] == 'true' };
+                temp = {
+                    ...temp,
+                    moveable: temp['moveable'] == 'true',
+                    bulk: temp['bulk'] == 'true'
+                };
                 if (temp['moveable'] == '') delete temp['moveable'];
+                if (temp['bulk'] == '') delete temp['bulk'];
                 setSearch(temp);
                 closeDrawer();
             })

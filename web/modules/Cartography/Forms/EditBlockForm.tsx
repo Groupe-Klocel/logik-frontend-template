@@ -23,6 +23,7 @@ import {
     PaginationType
 } from '@helpers';
 import internal from 'stream';
+import { CheckboxChangeEvent } from 'antd/lib/checkbox';
 
 const { TextArea } = Input;
 
@@ -46,6 +47,8 @@ export const EditBlockForm: FC<EditBlockFormProps> = ({ blockId, details }: Edit
 
     // TYPED SAFE ALL
     const [form] = Form.useForm();
+    const [moveableValue, setMoveableValue] = useState(details.moveable);
+    const [bulkValue, setBulkValue] = useState(details.bulk);
 
     const { mutate, isLoading: updateLoading } = useUpdateBlockMutation<Error>(
         graphqlRequestClient,
@@ -55,7 +58,7 @@ export const EditBlockForm: FC<EditBlockFormProps> = ({ blockId, details }: Edit
                 _variables: UpdateBlockMutationVariables,
                 _context: any
             ) => {
-                router.push(`/block/${blockId}`);
+                router.push(`/block/${data.updateBlock?.id}`);
                 showSuccess(t('messages:success-updated'));
             },
             onError: () => {
@@ -66,6 +69,15 @@ export const EditBlockForm: FC<EditBlockFormProps> = ({ blockId, details }: Edit
 
     const updateBlock = ({ id, input }: UpdateBlockMutationVariables) => {
         mutate({ id, input });
+    };
+
+    const onMoveableChange = (e: CheckboxChangeEvent) => {
+        setMoveableValue(!moveableValue);
+        form.setFieldsValue({ moveable: e.target.checked });
+    };
+    const onBulkChange = (e: CheckboxChangeEvent) => {
+        setBulkValue(!bulkValue);
+        form.setFieldsValue({ bulk: e.target.checked });
     };
 
     const onFinish = () => {
@@ -113,12 +125,16 @@ export const EditBlockForm: FC<EditBlockFormProps> = ({ blockId, details }: Edit
                         </Form.Item>
                     </Col>
                     <Col xs={24} xl={12}>
-                        <Form.Item initialValue={false} name="moveable">
-                            <Checkbox>{moveable}</Checkbox>
+                        <Form.Item name="moveable">
+                            <Checkbox checked={moveableValue} onChange={onMoveableChange}>
+                                {moveable}
+                            </Checkbox>
                         </Form.Item>
 
-                        <Form.Item initialValue={false} name="bulk">
-                            <Checkbox>{bulk}</Checkbox>
+                        <Form.Item name="bulk">
+                            <Checkbox checked={bulkValue} onChange={onBulkChange}>
+                                {bulk}
+                            </Checkbox>
                         </Form.Item>
                     </Col>
                 </Row>
