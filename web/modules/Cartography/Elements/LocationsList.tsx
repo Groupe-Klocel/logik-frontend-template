@@ -1,4 +1,4 @@
-import { Button, Space } from 'antd';
+import { Button, Modal, Space } from 'antd';
 import { locationsData } from 'fake-data/locations';
 import { AppTable, ContentSpin, LinkButton } from '@components';
 import {
@@ -16,14 +16,28 @@ import {
     orderByFormater,
     PaginationType,
     pathParams,
+    showError,
+    showSuccess,
     useLocations
 } from '@helpers';
+import {
+    DeleteBlockMutation,
+    DeleteBlockMutationVariables,
+    DeleteLocationMutation,
+    DeleteLocationMutationVariables,
+    useDeleteBlockMutation,
+    useDeleteLocationMutation
+} from 'generated/graphql';
+import graphqlRequestClient from 'graphql/graphqlRequestClient';
+import useTranslation from 'next-translate/useTranslation';
 
 export type LocationsListTypeProps = {
     searchCriteria?: any;
 };
 
 export const LocationsList = ({ searchCriteria }: LocationsListTypeProps) => {
+    const { t } = useTranslation();
+
     const [locations, setLocations] = useState<DataQueryType>();
     const [sort, setSort] = useState<any>(null);
     const [pagination, setPagination] = useState<PaginationType>({
@@ -45,7 +59,7 @@ export const LocationsList = ({ searchCriteria }: LocationsListTypeProps) => {
         [setPagination, locations]
     );
 
-    const { isLoading, data, error } = useLocations(
+    const { isLoading, data, error, refetch } = useLocations(
         searchCriteria,
         pagination.current,
         pagination.itemsPerPage,
@@ -65,6 +79,36 @@ export const LocationsList = ({ searchCriteria }: LocationsListTypeProps) => {
     const handleTableChange = async (_pagination: any, _filter: any, sorter: any) => {
         await setSort(orderByFormater(sorter));
         console.log(sorter);
+    };
+
+    const { mutate, isLoading: deleteLoading } = useDeleteLocationMutation<Error>(
+        graphqlRequestClient,
+        {
+            onSuccess: (
+                data: DeleteLocationMutation,
+                _variables: DeleteLocationMutationVariables,
+                _context: unknown
+            ) => {
+                if (!deleteLoading) {
+                    refetch();
+                    showSuccess(t('messages:success-deleted'));
+                }
+            },
+            onError: () => {
+                showError(t('messages:error-deleting-data'));
+            }
+        }
+    );
+
+    const deleteLocation = ({ id }: DeleteLocationMutationVariables) => {
+        Modal.confirm({
+            title: t('messages:delete-confirm'),
+            onOk: () => {
+                mutate({ id });
+            },
+            okText: t('messages:confirm'),
+            cancelText: t('messages:cancel')
+        });
     };
 
     const columns = [
@@ -150,7 +194,8 @@ export const LocationsList = ({ searchCriteria }: LocationsListTypeProps) => {
                     <Button
                         icon={<DeleteOutlined />}
                         danger
-                        onClick={() => alert(`Delete ${record.id} `)}
+                        loading={deleteLoading}
+                        onClick={() => deleteLocation({ id: record.id })}
                     />
                 </Space>
             )

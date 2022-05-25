@@ -1,142 +1,226 @@
 import { WrapperForm } from '@components';
-import { Button, Checkbox, Col, Form, Input, Row, Select } from 'antd';
+import { showError, showInfo, showSuccess } from '@helpers';
+import { Button, Checkbox, Col, Form, Input, InputNumber, Row, Select } from 'antd';
+import { CheckboxChangeEvent } from 'antd/lib/checkbox';
 import { blocsData } from 'fake-data/blocs';
+import {
+    BulkCreateLocationsMutation,
+    BulkCreateLocationsMutationVariables,
+    SimpleGetAllBLocksQuery,
+    useBulkCreateLocationsMutation,
+    useSimpleGetAllBLocksQuery
+} from 'generated/graphql';
+import graphqlRequestClient from 'graphql/graphqlRequestClient';
 import useTranslation from 'next-translate/useTranslation';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 
 const { Option } = Select;
 
 export const AddLocationForm = () => {
-    const { t } = useTranslation('common');
+    const { t } = useTranslation();
+    const router = useRouter();
+
+    const [blocks, setBlocks] = useState<any>();
+
+    //To render simple blocks list for attached block selection (id and name without any filter)
+    const blocksList = useSimpleGetAllBLocksQuery<Partial<SimpleGetAllBLocksQuery>, Error>(
+        graphqlRequestClient
+    );
+
+    useEffect(() => {
+        if (blocksList) {
+            setBlocks(blocksList?.data?.blocks?.results);
+        }
+    }, [blocksList]);
 
     // TYPED SAFE ALL
+    const [form] = Form.useForm();
+
+    const { mutate, isLoading: createLoading } = useBulkCreateLocationsMutation<Error>(
+        graphqlRequestClient,
+        {
+            onSuccess: (
+                data: BulkCreateLocationsMutation,
+                _variables: BulkCreateLocationsMutationVariables,
+                _context: any
+            ) => {
+                // router.push(`/location/${data.createLocation.id}`);
+                showSuccess(t('messages:success-created'));
+            },
+            onError: () => {
+                showError(t('messages:error-creating-data'));
+            }
+        }
+    );
+
+    const bulkCreateLocation = ({ input }: BulkCreateLocationsMutationVariables) => {
+        mutate({ input });
+    };
+
+    const onReplenishChange = (e: CheckboxChangeEvent) => {
+        form.setFieldsValue({ replenish: e.target.checked });
+    };
 
     // Call api to create new group
     const onFinish = () => {
-        alert('Success');
+        form.validateFields()
+            .then(() => {
+                // Here make api call of something else
+                const formData = form.getFieldsValue(true);
+                console.log('wolf', formData);
+                bulkCreateLocation({ input: formData });
+            })
+            .catch((err) => {
+                showError(t('error-creating-data'));
+            });
     };
 
-    const onFinishFailed = () => {
-        alert('Failed');
-    };
+    useEffect(() => {
+        if (createLoading) {
+            showInfo(t('messages:info-create-wip'));
+        }
+    }, [createLoading]);
 
     return (
         <WrapperForm>
-            <Form
-                name="basic"
-                layout="vertical"
-                onFinish={onFinish}
-                onFinishFailed={onFinishFailed}
-                autoComplete="off"
-                scrollToFirstError
-            >
+            <Form form={form} scrollToFirstError>
                 <Form.Item
-                    label={t('select-bloc')}
-                    name="select-bloc"
+                    label={t('d:associatedBlock')}
+                    name="blockId"
                     hasFeedback
                     rules={[
-                        { required: true, message: `${t('error-message-select-1')} ${t('bloc')}` }
+                        {
+                            required: true,
+                            message: `${t('messages:error-message-select-1')} ${t('d:block')}`
+                        }
                     ]}
                 >
-                    <Select placeholder={`${t('error-message-select-1')} ${t('bloc')}`}>
-                        {blocsData.map((bloc: any) => (
-                            <Option key={bloc.id} value={bloc.name}>
-                                {bloc.name}
+                    <Select
+                        placeholder={`${t('messages:please-select-a', {
+                            name: t('d:block')
+                        })}`}
+                    >
+                        {blocks?.map((block: any) => (
+                            <Option key={block.id} value={block.id}>
+                                {block.name}
                             </Option>
                         ))}
                     </Select>
                 </Form.Item>
 
                 <Form.Item
-                    label={t('aisle')}
+                    label={t('d:aisle')}
                     name="aisle"
-                    rules={[{ required: true, message: `${t('error-message-empty-input')}` }]}
+                    rules={[
+                        { required: true, message: `${t('messages:error-message-empty-input')}` }
+                    ]}
                 >
                     <Input />
                 </Form.Item>
 
                 <Form.Item
-                    label={t('nb-aisle')}
-                    name="nb-aisle"
-                    rules={[{ required: true, message: `${t('error-message-empty-input')}` }]}
+                    label={t('d:nb-aisle')}
+                    name="numberOfAisle"
+                    rules={[
+                        { required: true, message: `${t('messages:error-message-empty-input')}` }
+                    ]}
                 >
-                    <Input />
+                    <InputNumber />
                 </Form.Item>
 
                 <Form.Item
-                    label={t('column')}
+                    label={t('common:column')}
                     name="column"
-                    rules={[{ required: true, message: `${t('error-message-empty-input')}` }]}
+                    rules={[
+                        { required: true, message: `${t('messages:error-message-empty-input')}` }
+                    ]}
                 >
                     <Input />
                 </Form.Item>
 
                 <Form.Item
-                    label={t('nb-column')}
-                    name="nb-column"
-                    rules={[{ required: true, message: `${t('error-message-empty-input')}` }]}
+                    label={t('d:nb-column')}
+                    name="numberOfColumn"
+                    rules={[
+                        {
+                            required: true,
+                            message: `${t('messages:error-message-empty-input')}`
+                        }
+                    ]}
                 >
-                    <Input />
+                    <InputNumber />
                 </Form.Item>
 
                 <Form.Item
-                    label={t('level')}
+                    label={t('d:level')}
                     name="level"
-                    rules={[{ required: true, message: `${t('error-message-empty-input')}` }]}
+                    rules={[
+                        {
+                            required: true,
+                            message: `${t('messages:error-message-empty-input')}`
+                        }
+                    ]}
                 >
                     <Input />
                 </Form.Item>
 
                 <Form.Item
-                    label={t('nb-level')}
-                    name="nb-level"
-                    rules={[{ required: true, message: `${t('error-message-empty-input')}` }]}
+                    label={t('d:nb-level')}
+                    name="numberOfLevel"
+                    rules={[
+                        { required: true, message: `${t('messages:error-message-empty-input')}` }
+                    ]}
                 >
-                    <Input />
+                    <InputNumber />
                 </Form.Item>
 
                 <Form.Item
-                    label={t('step')}
-                    name="step"
-                    rules={[{ required: true, message: `${t('error-message-empty-input')}` }]}
+                    label={t('d:step')}
+                    name="levelStep"
+                    rules={[
+                        { required: true, message: `${t('messages:error-message-empty-input')}` }
+                    ]}
                 >
-                    <Input />
+                    <InputNumber />
                 </Form.Item>
 
                 <Form.Item
-                    label={t('position')}
+                    label={t('d:position')}
                     name="position"
-                    rules={[{ required: true, message: `${t('error-message-empty-input')}` }]}
+                    rules={[
+                        { required: true, message: `${t('messages:error-message-empty-input')}` }
+                    ]}
                 >
                     <Input />
                 </Form.Item>
 
                 <Form.Item
-                    label={t('nb-position')}
-                    name="nb-position"
-                    rules={[{ required: true, message: `${t('error-message-empty-input')}` }]}
+                    label={t('d:nb-position')}
+                    name="numberOfPosition"
+                    rules={[
+                        { required: true, message: `${t('messages:error-message-empty-input')}` }
+                    ]}
                 >
-                    <Input />
+                    <InputNumber />
                 </Form.Item>
                 <Form.Item name="replenish">
-                    <Checkbox>{t('replenish')}</Checkbox>
+                    <Checkbox onChange={onReplenishChange}>{t('d:replenish')}</Checkbox>
                 </Form.Item>
 
-                <Form.Item label={t('constraint')} name="constraint">
+                <Form.Item label={t('d:constraint')} name="constraint">
                     <Input />
                 </Form.Item>
 
-                <Form.Item label={t('comment')} name="comment">
+                <Form.Item label={t('d:comment')} name="comment">
                     <Input />
                 </Form.Item>
-
-                <Row>
-                    <Col span={24} style={{ textAlign: 'right' }}>
-                        <Button type="primary" htmlType="submit">
-                            {t('submit')}
-                        </Button>
-                    </Col>
-                </Row>
             </Form>
+            <div style={{ textAlign: 'center' }}>
+                <Button type="primary" loading={createLoading} onClick={onFinish}>
+                    {t('actions:submit')}
+                </Button>
+            </div>
         </WrapperForm>
     );
 };

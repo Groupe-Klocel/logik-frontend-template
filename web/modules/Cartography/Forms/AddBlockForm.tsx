@@ -18,7 +18,6 @@ import {
     PaginationType
 } from '@helpers';
 import { CheckboxChangeEvent } from 'antd/lib/checkbox';
-import { isBoolean, template } from 'lodash';
 
 interface IOption {
     value: string;

@@ -1,3 +1,12 @@
+query SimpleGetAllBLocks {
+    blocks {
+        results {
+            id
+            name
+        }
+    }
+}
+
 query GetAllBlocks(
     $filters: BlockSearchFilters
     $orderBy: [BlockOrderByCriterion!]

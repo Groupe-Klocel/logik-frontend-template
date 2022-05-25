@@ -6,7 +6,7 @@ import {
     CloseSquareOutlined
 } from '@ant-design/icons';
 import { Button, Modal, Space } from 'antd';
-import { blocsData } from 'fake-data/blocs';
+// import { blocsData } from 'fake-data/blocs';
 import { AppTable, ContentSpin, LinkButton } from '@components';
 import { useCallback, useEffect, useState } from 'react';
 import {
@@ -27,6 +27,7 @@ import {
     useDeleteBlockMutation
 } from 'generated/graphql';
 import graphqlRequestClient from 'graphql/graphqlRequestClient';
+import { useRouter } from 'next/router';
 
 export type BlocksListTypeProps = {
     searchCriteria?: any;
@@ -37,6 +38,7 @@ export const BlocksList = ({ searchCriteria }: BlocksListTypeProps) => {
 
     const [blocks, setBlocks] = useState<DataQueryType>();
     const [sort, setSort] = useState<any>(null);
+    const router = useRouter();
     const [pagination, setPagination] = useState<PaginationType>({
         total: undefined,
         current: DEFAULT_PAGE_NUMBER,
@@ -56,7 +58,7 @@ export const BlocksList = ({ searchCriteria }: BlocksListTypeProps) => {
         [setPagination, blocks]
     );
 
-    const { isLoading, data, error } = useBlocks(
+    const { isLoading, data, error, refetch } = useBlocks(
         searchCriteria,
         pagination.current,
         pagination.itemsPerPage,
@@ -86,6 +88,7 @@ export const BlocksList = ({ searchCriteria }: BlocksListTypeProps) => {
                 _context: unknown
             ) => {
                 if (!deleteLoading) {
+                    refetch();
                     showSuccess(t('messages:success-deleted'));
                 }
             },

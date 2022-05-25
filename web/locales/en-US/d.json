@@ -39,6 +39,10 @@
     "modified": "Modified",
     "modifiedBy": "Modified By",
     "moveable": "Moveable",
+    "nb-aisle": "Number of aisles",
+	"nb-column":"Number of column",
+	"nb-level": "Number of levels",
+	"nb-position":"Number of positions",
     "articleId": "Article ID",
     "rotation": "Rotation",
     "preparationMode": "Preparation Mode",
@@ -53,13 +57,13 @@
     "description": "Description",
 	"default": "Default",
 	"dispatchable": "Dispatchable",
-	"bloc": "Bloc",
+	"block": "Block",
     "aisle": "Aisle",
     "level": "Level",
     "position": "Position",
-	"replenish": "replenish",
-    "replesnishType": "Replenish type",
-	"masse": "Masse"
-
+	"replenish": "Replenish",
+    "replenishType": "Replenish type",
+	"masse": "Masse",
+    "step":"Step"
 
 }

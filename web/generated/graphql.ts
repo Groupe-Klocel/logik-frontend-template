@@ -353,6 +353,92 @@ export type BlockSearchFilters = {
   name?: InputMaybe<Scalars['String']>;
 };
 
+export type Building = {
+  __typename?: 'Building';
+  address1?: Maybe<Scalars['String']>;
+  address2?: Maybe<Scalars['String']>;
+  address3?: Maybe<Scalars['String']>;
+  awsAccessKeyId?: Maybe<Scalars['String']>;
+  awsSecretAccessKey?: Maybe<Scalars['String']>;
+  city?: Maybe<Scalars['String']>;
+  contactEmail?: Maybe<Scalars['String']>;
+  contactMobile?: Maybe<Scalars['String']>;
+  contactName?: Maybe<Scalars['String']>;
+  contactPhone?: Maybe<Scalars['String']>;
+  country?: Maybe<Scalars['String']>;
+  created?: Maybe<Scalars['DateTime']>;
+  createdBy?: Maybe<Scalars['String']>;
+  /** String-based unique identifier. */
+  id?: Maybe<Scalars['String']>;
+  modified?: Maybe<Scalars['DateTime']>;
+  modifiedBy?: Maybe<Scalars['String']>;
+  name: Scalars['String'];
+  postCode?: Maybe<Scalars['String']>;
+  status?: Maybe<Scalars['Int']>;
+};
+
+/** Field names for the Building model */
+export enum BuildingFieldName {
+  Address1 = 'address1',
+  Address2 = 'address2',
+  Address3 = 'address3',
+  AwsAccessKeyId = 'awsAccessKeyId',
+  AwsSecretAccessKey = 'awsSecretAccessKey',
+  City = 'city',
+  ContactEmail = 'contactEmail',
+  ContactMobile = 'contactMobile',
+  ContactName = 'contactName',
+  ContactPhone = 'contactPhone',
+  Country = 'country',
+  Created = 'created',
+  CreatedBy = 'createdBy',
+  Id = 'id',
+  Modified = 'modified',
+  ModifiedBy = 'modifiedBy',
+  Name = 'name',
+  PostCode = 'postCode',
+  Status = 'status'
+}
+
+/** Returns a list of Building */
+export type BuildingListResult = {
+  __typename?: 'BuildingListResult';
+  count: Scalars['Int'];
+  itemsPerPage: Scalars['Int'];
+  page: Scalars['Int'];
+  results: Array<Building>;
+  totalPages: Scalars['Int'];
+};
+
+/** How to order the search results for Building */
+export type BuildingOrderByCriterion = {
+  ascending?: Scalars['Boolean'];
+  field: BuildingFieldName;
+};
+
+/** Attributes of Building to filter onto */
+export type BuildingSearchFilters = {
+  address1?: InputMaybe<Scalars['String']>;
+  address2?: InputMaybe<Scalars['String']>;
+  address3?: InputMaybe<Scalars['String']>;
+  awsAccessKeyId?: InputMaybe<Scalars['String']>;
+  awsSecretAccessKey?: InputMaybe<Scalars['String']>;
+  city?: InputMaybe<Scalars['String']>;
+  contactEmail?: InputMaybe<Scalars['String']>;
+  contactMobile?: InputMaybe<Scalars['String']>;
+  contactName?: InputMaybe<Scalars['String']>;
+  contactPhone?: InputMaybe<Scalars['String']>;
+  country?: InputMaybe<Scalars['String']>;
+  created?: InputMaybe<Scalars['DateTime']>;
+  createdBy?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['String']>;
+  modified?: InputMaybe<Scalars['DateTime']>;
+  modifiedBy?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
+  postCode?: InputMaybe<Scalars['String']>;
+  status?: InputMaybe<Scalars['Int']>;
+};
+
 export type BulkCreateLocationsInput = {
   aisle: Scalars['Int'];
   /** Eminza : create inventory when stock below quantity */
@@ -441,6 +527,23 @@ export type CreateBlockInput = {
   /** Manage stock in transit mode. */
   moveable?: InputMaybe<Scalars['Boolean']>;
   name: Scalars['String'];
+};
+
+export type CreateBuildingInput = {
+  address1?: InputMaybe<Scalars['String']>;
+  address2?: InputMaybe<Scalars['String']>;
+  address3?: InputMaybe<Scalars['String']>;
+  awsAccessKeyId?: InputMaybe<Scalars['String']>;
+  awsSecretAccessKey?: InputMaybe<Scalars['String']>;
+  city?: InputMaybe<Scalars['String']>;
+  contactEmail?: InputMaybe<Scalars['String']>;
+  contactMobile?: InputMaybe<Scalars['String']>;
+  contactName?: InputMaybe<Scalars['String']>;
+  contactPhone?: InputMaybe<Scalars['String']>;
+  country?: InputMaybe<Scalars['String']>;
+  name: Scalars['String'];
+  postCode?: InputMaybe<Scalars['String']>;
+  status?: InputMaybe<Scalars['Int']>;
 };
 
 export type CreateLocationInput = {
@@ -679,6 +782,8 @@ export type Mutation = {
   createBarcode: Barcode;
   /** Create a Block */
   createBlock: Block;
+  /** Create a Building */
+  createBuilding: Building;
   /** Create an IntegratorOrganization */
   createIntegratorOrganization: Organization;
   /** As an Integrator, I can invite a fellow Integrator */
@@ -734,6 +839,8 @@ export type Mutation = {
   updateBarcode?: Maybe<Barcode>;
   /** Update block */
   updateBlock?: Maybe<Block>;
+  /** Update building */
+  updateBuilding?: Maybe<Building>;
   /** Update Location */
   updateLocation?: Maybe<Location>;
   /** Update Pattern */
@@ -783,6 +890,11 @@ export type MutationCreateBarcodeArgs = {
 
 export type MutationCreateBlockArgs = {
   input: CreateBlockInput;
+};
+
+
+export type MutationCreateBuildingArgs = {
+  input: CreateBuildingInput;
 };
 
 
@@ -964,6 +1076,12 @@ export type MutationUpdateBarcodeArgs = {
 export type MutationUpdateBlockArgs = {
   id: Scalars['String'];
   input: UpdateBlockInput;
+};
+
+
+export type MutationUpdateBuildingArgs = {
+  id: Scalars['String'];
+  input: UpdateBuildingInput;
 };
 
 
@@ -1262,6 +1380,10 @@ export type Query = {
   block?: Maybe<Block>;
   /** Search Blocks */
   blocks: BlockListResult;
+  /** Get a Building */
+  building?: Maybe<Building>;
+  /** Search Buildings */
+  buildings: BuildingListResult;
   /** Get a Location */
   location?: Maybe<Location>;
   /** Search Locations */
@@ -1323,6 +1445,19 @@ export type QueryBlocksArgs = {
   filters?: InputMaybe<BlockSearchFilters>;
   itemsPerPage?: Scalars['Int'];
   orderBy?: InputMaybe<Array<BlockOrderByCriterion>>;
+  page?: Scalars['Int'];
+};
+
+
+export type QueryBuildingArgs = {
+  id: Scalars['String'];
+};
+
+
+export type QueryBuildingsArgs = {
+  filters?: InputMaybe<BuildingSearchFilters>;
+  itemsPerPage?: Scalars['Int'];
+  orderBy?: InputMaybe<Array<BuildingOrderByCriterion>>;
   page?: Scalars['Int'];
 };
 
@@ -1625,6 +1760,7 @@ export enum Table {
   Article = 'ARTICLE',
   Barcode = 'BARCODE',
   Block = 'BLOCK',
+  Building = 'BUILDING',
   Location = 'LOCATION',
   Organization = 'ORGANIZATION',
   Pattern = 'PATTERN',
@@ -1696,6 +1832,24 @@ export type UpdateBlockInput = {
   level?: InputMaybe<Scalars['Int']>;
   moveable?: InputMaybe<Scalars['Boolean']>;
   name?: InputMaybe<Scalars['String']>;
+};
+
+/** Values to update the existing record with */
+export type UpdateBuildingInput = {
+  address1?: InputMaybe<Scalars['String']>;
+  address2?: InputMaybe<Scalars['String']>;
+  address3?: InputMaybe<Scalars['String']>;
+  awsAccessKeyId?: InputMaybe<Scalars['String']>;
+  awsSecretAccessKey?: InputMaybe<Scalars['String']>;
+  city?: InputMaybe<Scalars['String']>;
+  contactEmail?: InputMaybe<Scalars['String']>;
+  contactMobile?: InputMaybe<Scalars['String']>;
+  contactName?: InputMaybe<Scalars['String']>;
+  contactPhone?: InputMaybe<Scalars['String']>;
+  country?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
+  postCode?: InputMaybe<Scalars['String']>;
+  status?: InputMaybe<Scalars['Int']>;
 };
 
 /** Values to update the existing record with */
@@ -2001,6 +2155,11 @@ export type UpdateBarcodeMutationVariables = Exact<{
 
 export type UpdateBarcodeMutation = { __typename?: 'Mutation', updateBarcode?: { __typename?: 'Barcode', id?: string | null, accountId: number, companyId: number, articleId: string, name: string, rotation: string, preparationMode?: number | null, flagDouble?: number | null, supplierName?: string | null, supplierArticleCode?: string | null, quantity?: number | null, article: { __typename?: 'Article', name: string } } | null };
 
+export type SimpleGetAllBLocksQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type SimpleGetAllBLocksQuery = { __typename?: 'Query', blocks: { __typename?: 'BlockListResult', results: Array<{ __typename?: 'Block', id?: string | null, name: string }> } };
+
 export type GetAllBlocksQueryVariables = Exact<{
   filters?: InputMaybe<BlockSearchFilters>;
   orderBy?: InputMaybe<Array<BlockOrderByCriterion> | BlockOrderByCriterion>;
@@ -2083,6 +2242,13 @@ export type CreateLocationMutationVariables = Exact<{
 
 
 export type CreateLocationMutation = { __typename?: 'Mutation', createLocation: { __typename: 'Location', id?: string | null, name: string, barcode: string, aisle: number, column: number, level: number, position: number, replenish?: boolean | null, blockId: string, replenishType?: number | null, constraint?: string | null, comment?: string | null, baseUnitRotation?: string | null, boxRotation?: string | null, allowCycleCountStockMin?: boolean | null, block: { __typename?: 'Block', name: string } } | { __typename: 'ValidationError', message: string } };
+
+export type BulkCreateLocationsMutationVariables = Exact<{
+  input: BulkCreateLocationsInput;
+}>;
+
+
+export type BulkCreateLocationsMutation = { __typename?: 'Mutation', bulkCreateLocations: Array<{ __typename: 'Location', id?: string | null, name: string, barcode: string, aisle: number, column: number, level: number, position: number, replenish?: boolean | null, blockId: string, replenishType?: number | null, constraint?: string | null, comment?: string | null, baseUnitRotation?: string | null, boxRotation?: string | null, allowCycleCountStockMin?: boolean | null, block: { __typename?: 'Block', name: string } }> };
 
 export type DeleteLocationMutationVariables = Exact<{
   id: Scalars['String'];
@@ -2557,6 +2723,30 @@ export const useUpdateBarcodeMutation = <
       (variables?: UpdateBarcodeMutationVariables) => fetcher<UpdateBarcodeMutation, UpdateBarcodeMutationVariables>(client, UpdateBarcodeDocument, variables, headers)(),
       options
     );
+export const SimpleGetAllBLocksDocument = `
+    query SimpleGetAllBLocks {
+  blocks {
+    results {
+      id
+      name
+    }
+  }
+}
+    `;
+export const useSimpleGetAllBLocksQuery = <
+      TData = SimpleGetAllBLocksQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables?: SimpleGetAllBLocksQueryVariables,
+      options?: UseQueryOptions<SimpleGetAllBLocksQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<SimpleGetAllBLocksQuery, TError, TData>(
+      variables === undefined ? ['SimpleGetAllBLocks'] : ['SimpleGetAllBLocks', variables],
+      fetcher<SimpleGetAllBLocksQuery, SimpleGetAllBLocksQueryVariables>(client, SimpleGetAllBLocksDocument, variables, headers),
+      options
+    );
 export const GetAllBlocksDocument = `
     query GetAllBlocks($filters: BlockSearchFilters, $orderBy: [BlockOrderByCriterion!], $page: Int!, $itemsPerPage: Int!) {
   blocks(
@@ -2922,6 +3112,46 @@ export const useCreateLocationMutation = <
     useMutation<CreateLocationMutation, TError, CreateLocationMutationVariables, TContext>(
       ['CreateLocation'],
       (variables?: CreateLocationMutationVariables) => fetcher<CreateLocationMutation, CreateLocationMutationVariables>(client, CreateLocationDocument, variables, headers)(),
+      options
+    );
+export const BulkCreateLocationsDocument = `
+    mutation BulkCreateLocations($input: BulkCreateLocationsInput!) {
+  bulkCreateLocations(input: $input) {
+    __typename
+    ... on Location {
+      id
+      name
+      barcode
+      aisle
+      column
+      level
+      position
+      replenish
+      blockId
+      block {
+        name
+      }
+      replenishType
+      constraint
+      comment
+      baseUnitRotation
+      boxRotation
+      allowCycleCountStockMin
+    }
+  }
+}
+    `;
+export const useBulkCreateLocationsMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<BulkCreateLocationsMutation, TError, BulkCreateLocationsMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<BulkCreateLocationsMutation, TError, BulkCreateLocationsMutationVariables, TContext>(
+      ['BulkCreateLocations'],
+      (variables?: BulkCreateLocationsMutationVariables) => fetcher<BulkCreateLocationsMutation, BulkCreateLocationsMutationVariables>(client, BulkCreateLocationsDocument, variables, headers)(),
       options
     );
 export const DeleteLocationDocument = `

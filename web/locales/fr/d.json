@@ -39,6 +39,10 @@
 	"modified": "Modifié",
 	"modifiedBy": "Modifié par",
 	"moveable": "Déplaçable",
+	"nb-aisle": "Nombre d'allées",
+	"nb-column":"Nombre de colonnes",
+	"nb-level": "Nombre de niveaux",
+	"nb-position":"Nombre de positions",
 	"articleId": "ID Article",
 	"rotation": "Rotation",
 	"preparationMode": "Mode de préparation",
@@ -54,12 +58,13 @@
 	"default": "Defaut",
 	"dispatchable": "Dispatchable",
 	"block": "Bloc",
-	"aisle": "allée",
+	"aisle": "Allée",
 	"level": "Niveau",
 	"position": "Position",
 	"replenish": "Réapprovisionner",
 	"replenishType":"Type de réapprovisionement",
-	"masse": "Masse"
+	"masse": "Masse",
+	"step":"Pas"
 
 
 
