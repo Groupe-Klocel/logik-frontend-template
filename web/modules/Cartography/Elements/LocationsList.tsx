@@ -21,11 +21,8 @@ import {
     useLocations
 } from '@helpers';
 import {
-    DeleteBlockMutation,
-    DeleteBlockMutationVariables,
     DeleteLocationMutation,
     DeleteLocationMutationVariables,
-    useDeleteBlockMutation,
     useDeleteLocationMutation
 } from 'generated/graphql';
 import graphqlRequestClient from 'graphql/graphqlRequestClient';
@@ -190,7 +187,10 @@ export const LocationsList = ({ searchCriteria }: LocationsListTypeProps) => {
                         icon={<EyeTwoTone />}
                         path={pathParams('/location/[id]', record.id)}
                     />
-                    <Button icon={<EditTwoTone />} onClick={() => alert(`Edit ${record.id} `)} />
+                    <LinkButton
+                        icon={<EditTwoTone />}
+                        path={pathParams('/location/edit/[id]', record.id)}
+                    />
                     <Button
                         icon={<DeleteOutlined />}
                         danger

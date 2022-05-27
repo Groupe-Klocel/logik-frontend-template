@@ -45,15 +45,18 @@ export const Blocks = () => {
             .validateFields()
             .then(() => {
                 let temp = formSearch.getFieldsValue(true);
+                console.log('temp_avant', temp);
                 temp = {
                     ...temp,
                     moveable: temp['moveable'] == 'true',
                     bulk: temp['bulk'] == 'true'
                 };
+                console.log('mid', temp);
                 if (temp['moveable'] == '') delete temp['moveable'];
                 if (temp['bulk'] == '') delete temp['bulk'];
                 setSearch(temp);
                 closeDrawer();
+                console.log('end', temp);
             })
             .catch((err) => showError(t('messages:error-getting-data')));
     };

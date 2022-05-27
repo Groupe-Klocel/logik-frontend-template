@@ -16,6 +16,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
 const { Option } = Select;
+const { TextArea } = Input;
 
 export const AddLocationForm = () => {
     const { t } = useTranslation();
@@ -45,7 +46,7 @@ export const AddLocationForm = () => {
                 _variables: BulkCreateLocationsMutationVariables,
                 _context: any
             ) => {
-                // router.push(`/location/${data.createLocation.id}`);
+                router.push(`/locations`);
                 showSuccess(t('messages:success-created'));
             },
             onError: () => {
@@ -68,7 +69,8 @@ export const AddLocationForm = () => {
             .then(() => {
                 // Here make api call of something else
                 const formData = form.getFieldsValue(true);
-                console.log('wolf', formData);
+                if (formData['replenish'] == false && formData['replenishType'] == '')
+                    formData['replenishType'] = 0;
                 bulkCreateLocation({ input: formData });
             })
             .catch((err) => {
@@ -92,7 +94,9 @@ export const AddLocationForm = () => {
                     rules={[
                         {
                             required: true,
-                            message: `${t('messages:error-message-select-1')} ${t('d:block')}`
+                            message: `${t('messages:error-message-select-1', {
+                                name: t('d:block')
+                            })}`
                         }
                     ]}
                 >
@@ -126,7 +130,7 @@ export const AddLocationForm = () => {
                         { required: true, message: `${t('messages:error-message-empty-input')}` }
                     ]}
                 >
-                    <InputNumber />
+                    <InputNumber min={0} />
                 </Form.Item>
 
                 <Form.Item
@@ -149,7 +153,7 @@ export const AddLocationForm = () => {
                         }
                     ]}
                 >
-                    <InputNumber />
+                    <InputNumber min={0} />
                 </Form.Item>
 
                 <Form.Item
@@ -172,7 +176,7 @@ export const AddLocationForm = () => {
                         { required: true, message: `${t('messages:error-message-empty-input')}` }
                     ]}
                 >
-                    <InputNumber />
+                    <InputNumber min={0} />
                 </Form.Item>
 
                 <Form.Item
@@ -182,7 +186,7 @@ export const AddLocationForm = () => {
                         { required: true, message: `${t('messages:error-message-empty-input')}` }
                     ]}
                 >
-                    <InputNumber />
+                    <InputNumber min={0} />
                 </Form.Item>
 
                 <Form.Item
@@ -202,7 +206,7 @@ export const AddLocationForm = () => {
                         { required: true, message: `${t('messages:error-message-empty-input')}` }
                     ]}
                 >
-                    <InputNumber />
+                    <InputNumber min={0} />
                 </Form.Item>
                 <Form.Item name="replenish">
                     <Checkbox onChange={onReplenishChange}>{t('d:replenish')}</Checkbox>
@@ -212,8 +216,35 @@ export const AddLocationForm = () => {
                     <Input />
                 </Form.Item>
 
+                <Form.Item
+                    label={t('d:replenishType')}
+                    name="replenishType"
+                    hasFeedback
+                    rules={[
+                        ({ getFieldValue }) => ({
+                            validator(_, value) {
+                                if (value !== null && getFieldValue('replenish') === false) {
+                                    return Promise.reject(
+                                        new Error(t('messages:replenish-validation-error'))
+                                    );
+                                }
+                                return Promise.resolve();
+                            }
+                        })
+                    ]}
+                >
+                    <Select
+                        placeholder={`${t('messages:please-select-a', {
+                            name: t('d:replenishType')
+                        })}`}
+                    >
+                        <Option value="">-</Option>
+                        <Option value="fakeReplenishType">fakeReplenishType</Option>
+                    </Select>
+                </Form.Item>
+
                 <Form.Item label={t('d:comment')} name="comment">
-                    <Input />
+                    <TextArea />
                 </Form.Item>
             </Form>
             <div style={{ textAlign: 'center' }}>
