@@ -353,6 +353,92 @@ export type BlockSearchFilters = {
   name?: InputMaybe<Scalars['String']>;
 };
 
+export type Building = {
+  __typename?: 'Building';
+  address1?: Maybe<Scalars['String']>;
+  address2?: Maybe<Scalars['String']>;
+  address3?: Maybe<Scalars['String']>;
+  awsAccessKeyId?: Maybe<Scalars['String']>;
+  awsSecretAccessKey?: Maybe<Scalars['String']>;
+  city?: Maybe<Scalars['String']>;
+  contactEmail?: Maybe<Scalars['String']>;
+  contactMobile?: Maybe<Scalars['String']>;
+  contactName?: Maybe<Scalars['String']>;
+  contactPhone?: Maybe<Scalars['String']>;
+  country?: Maybe<Scalars['String']>;
+  created?: Maybe<Scalars['DateTime']>;
+  createdBy?: Maybe<Scalars['String']>;
+  /** String-based unique identifier. */
+  id?: Maybe<Scalars['String']>;
+  modified?: Maybe<Scalars['DateTime']>;
+  modifiedBy?: Maybe<Scalars['String']>;
+  name: Scalars['String'];
+  postCode?: Maybe<Scalars['String']>;
+  status?: Maybe<Scalars['Int']>;
+};
+
+/** Field names for the Building model */
+export enum BuildingFieldName {
+  Address1 = 'address1',
+  Address2 = 'address2',
+  Address3 = 'address3',
+  AwsAccessKeyId = 'awsAccessKeyId',
+  AwsSecretAccessKey = 'awsSecretAccessKey',
+  City = 'city',
+  ContactEmail = 'contactEmail',
+  ContactMobile = 'contactMobile',
+  ContactName = 'contactName',
+  ContactPhone = 'contactPhone',
+  Country = 'country',
+  Created = 'created',
+  CreatedBy = 'createdBy',
+  Id = 'id',
+  Modified = 'modified',
+  ModifiedBy = 'modifiedBy',
+  Name = 'name',
+  PostCode = 'postCode',
+  Status = 'status'
+}
+
+/** Returns a list of Building */
+export type BuildingListResult = {
+  __typename?: 'BuildingListResult';
+  count: Scalars['Int'];
+  itemsPerPage: Scalars['Int'];
+  page: Scalars['Int'];
+  results: Array<Building>;
+  totalPages: Scalars['Int'];
+};
+
+/** How to order the search results for Building */
+export type BuildingOrderByCriterion = {
+  ascending?: Scalars['Boolean'];
+  field: BuildingFieldName;
+};
+
+/** Attributes of Building to filter onto */
+export type BuildingSearchFilters = {
+  address1?: InputMaybe<Scalars['String']>;
+  address2?: InputMaybe<Scalars['String']>;
+  address3?: InputMaybe<Scalars['String']>;
+  awsAccessKeyId?: InputMaybe<Scalars['String']>;
+  awsSecretAccessKey?: InputMaybe<Scalars['String']>;
+  city?: InputMaybe<Scalars['String']>;
+  contactEmail?: InputMaybe<Scalars['String']>;
+  contactMobile?: InputMaybe<Scalars['String']>;
+  contactName?: InputMaybe<Scalars['String']>;
+  contactPhone?: InputMaybe<Scalars['String']>;
+  country?: InputMaybe<Scalars['String']>;
+  created?: InputMaybe<Scalars['DateTime']>;
+  createdBy?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['String']>;
+  modified?: InputMaybe<Scalars['DateTime']>;
+  modifiedBy?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
+  postCode?: InputMaybe<Scalars['String']>;
+  status?: InputMaybe<Scalars['Int']>;
+};
+
 export type BulkCreateLocationsInput = {
   aisle: Scalars['Int'];
   /** Eminza : create inventory when stock below quantity */
@@ -441,6 +527,23 @@ export type CreateBlockInput = {
   /** Manage stock in transit mode. */
   moveable?: InputMaybe<Scalars['Boolean']>;
   name: Scalars['String'];
+};
+
+export type CreateBuildingInput = {
+  address1?: InputMaybe<Scalars['String']>;
+  address2?: InputMaybe<Scalars['String']>;
+  address3?: InputMaybe<Scalars['String']>;
+  awsAccessKeyId?: InputMaybe<Scalars['String']>;
+  awsSecretAccessKey?: InputMaybe<Scalars['String']>;
+  city?: InputMaybe<Scalars['String']>;
+  contactEmail?: InputMaybe<Scalars['String']>;
+  contactMobile?: InputMaybe<Scalars['String']>;
+  contactName?: InputMaybe<Scalars['String']>;
+  contactPhone?: InputMaybe<Scalars['String']>;
+  country?: InputMaybe<Scalars['String']>;
+  name: Scalars['String'];
+  postCode?: InputMaybe<Scalars['String']>;
+  status?: InputMaybe<Scalars['Int']>;
 };
 
 export type CreateLocationInput = {
@@ -679,6 +782,8 @@ export type Mutation = {
   createBarcode: Barcode;
   /** Create a Block */
   createBlock: Block;
+  /** Create a Building */
+  createBuilding: Building;
   /** Create an IntegratorOrganization */
   createIntegratorOrganization: Organization;
   /** As an Integrator, I can invite a fellow Integrator */
@@ -734,12 +839,16 @@ export type Mutation = {
   updateBarcode?: Maybe<Barcode>;
   /** Update block */
   updateBlock?: Maybe<Block>;
+  /** Update building */
+  updateBuilding?: Maybe<Building>;
   /** Update Location */
   updateLocation?: Maybe<Location>;
   /** Update Pattern */
   updatePattern?: Maybe<Pattern>;
   /** Update PatternPath */
   updatePatternPath?: Maybe<PatternPath>;
+  /** Update a Role */
+  updateRole?: Maybe<RoleType>;
   /** Update stock owner */
   updateStockOwner?: Maybe<StockOwner>;
   updateUser?: Maybe<User>;
@@ -784,7 +893,13 @@ export type MutationCreateBlockArgs = {
 };
 
 
+export type MutationCreateBuildingArgs = {
+  input: CreateBuildingInput;
+};
+
+
 export type MutationCreateIntegratorOrganizationArgs = {
+  id?: InputMaybe<Scalars['ID']>;
   name: Scalars['String'];
 };
 
@@ -824,7 +939,7 @@ export type MutationCreateStockOwnerArgs = {
 
 
 export type MutationCreateWarehouseArgs = {
-  id?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['ID']>;
   name: Scalars['String'];
   organizationId: Scalars['ID'];
 };
@@ -964,6 +1079,12 @@ export type MutationUpdateBlockArgs = {
 };
 
 
+export type MutationUpdateBuildingArgs = {
+  id: Scalars['String'];
+  input: UpdateBuildingInput;
+};
+
+
 export type MutationUpdateLocationArgs = {
   id: Scalars['String'];
   input: UpdateLocationInput;
@@ -979,6 +1100,13 @@ export type MutationUpdatePatternArgs = {
 export type MutationUpdatePatternPathArgs = {
   id: Scalars['String'];
   input: UpdatePatternPathInput;
+};
+
+
+export type MutationUpdateRoleArgs = {
+  id: Scalars['ID'];
+  name?: InputMaybe<Scalars['String']>;
+  permissions?: InputMaybe<Array<PermissionInput>>;
 };
 
 
@@ -1252,6 +1380,10 @@ export type Query = {
   block?: Maybe<Block>;
   /** Search Blocks */
   blocks: BlockListResult;
+  /** Get a Building */
+  building?: Maybe<Building>;
+  /** Search Buildings */
+  buildings: BuildingListResult;
   /** Get a Location */
   location?: Maybe<Location>;
   /** Search Locations */
@@ -1313,6 +1445,19 @@ export type QueryBlocksArgs = {
   filters?: InputMaybe<BlockSearchFilters>;
   itemsPerPage?: Scalars['Int'];
   orderBy?: InputMaybe<Array<BlockOrderByCriterion>>;
+  page?: Scalars['Int'];
+};
+
+
+export type QueryBuildingArgs = {
+  id: Scalars['String'];
+};
+
+
+export type QueryBuildingsArgs = {
+  filters?: InputMaybe<BuildingSearchFilters>;
+  itemsPerPage?: Scalars['Int'];
+  orderBy?: InputMaybe<Array<BuildingOrderByCriterion>>;
   page?: Scalars['Int'];
 };
 
@@ -1615,6 +1760,7 @@ export enum Table {
   Article = 'ARTICLE',
   Barcode = 'BARCODE',
   Block = 'BLOCK',
+  Building = 'BUILDING',
   Location = 'LOCATION',
   Organization = 'ORGANIZATION',
   Pattern = 'PATTERN',
@@ -1686,6 +1832,24 @@ export type UpdateBlockInput = {
   level?: InputMaybe<Scalars['Int']>;
   moveable?: InputMaybe<Scalars['Boolean']>;
   name?: InputMaybe<Scalars['String']>;
+};
+
+/** Values to update the existing record with */
+export type UpdateBuildingInput = {
+  address1?: InputMaybe<Scalars['String']>;
+  address2?: InputMaybe<Scalars['String']>;
+  address3?: InputMaybe<Scalars['String']>;
+  awsAccessKeyId?: InputMaybe<Scalars['String']>;
+  awsSecretAccessKey?: InputMaybe<Scalars['String']>;
+  city?: InputMaybe<Scalars['String']>;
+  contactEmail?: InputMaybe<Scalars['String']>;
+  contactMobile?: InputMaybe<Scalars['String']>;
+  contactName?: InputMaybe<Scalars['String']>;
+  contactPhone?: InputMaybe<Scalars['String']>;
+  country?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
+  postCode?: InputMaybe<Scalars['String']>;
+  status?: InputMaybe<Scalars['Int']>;
 };
 
 /** Values to update the existing record with */
@@ -2016,11 +2180,6 @@ export type ChangePasswordMutationVariables = Exact<{
 
 
 export type ChangePasswordMutation = { __typename?: 'Mutation', changePassword: { __typename: 'ChangePasswordFailure', message: string } | { __typename: 'ChangePasswordSuccess', message: string } };
-
-export type GetMyInfoQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type GetMyInfoQuery = { __typename?: 'Query', me: { __typename?: 'User', username: string, password: string, organizationId: string, roleId: string, id?: string | null | undefined, email?: string | null | undefined, organization?: { __typename?: 'Organization', name: string, id?: string | null | undefined, awsAccessKeyId?: string | null | undefined, awsSecretAccessKey?: string | null | undefined, parentOrganizationId?: string | null | undefined } | null | undefined, role: { __typename?: 'RoleType', name: string, id?: string | null | undefined, permissions: Array<{ __typename?: 'PermissionType', table: string, mode: string, roleId: string, id?: string | null | undefined }> } } };
 
 
 export const GetAllArticlesDocument = `
@@ -2519,48 +2678,5 @@ export const useChangePasswordMutation = <
     useMutation<ChangePasswordMutation, TError, ChangePasswordMutationVariables, TContext>(
       ['ChangePassword'],
       (variables?: ChangePasswordMutationVariables) => fetcher<ChangePasswordMutation, ChangePasswordMutationVariables>(client, ChangePasswordDocument, variables, headers)(),
-      options
-    );
-export const GetMyInfoDocument = `
-    query GetMyInfo {
-  me {
-    username
-    password
-    organizationId
-    roleId
-    organization {
-      name
-      id
-      awsAccessKeyId
-      awsSecretAccessKey
-      parentOrganizationId
-    }
-    role {
-      name
-      id
-      permissions {
-        table
-        mode
-        roleId
-        id
-      }
-    }
-    id
-    email
-  }
-}
-    `;
-export const useGetMyInfoQuery = <
-      TData = GetMyInfoQuery,
-      TError = unknown
-    >(
-      client: GraphQLClient,
-      variables?: GetMyInfoQueryVariables,
-      options?: UseQueryOptions<GetMyInfoQuery, TError, TData>,
-      headers?: RequestInit['headers']
-    ) =>
-    useQuery<GetMyInfoQuery, TError, TData>(
-      variables === undefined ? ['GetMyInfo'] : ['GetMyInfo', variables],
-      fetcher<GetMyInfoQuery, GetMyInfoQueryVariables>(client, GetMyInfoDocument, variables, headers),
       options
     );
