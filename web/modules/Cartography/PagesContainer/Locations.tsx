@@ -42,7 +42,14 @@ export const Locations = () => {
         formSearch
             .validateFields()
             .then(() => {
-                setSearch(formSearch.getFieldsValue(true));
+                const searchValues = formSearch.getFieldsValue(true);
+                const newSearchValues = {
+                    ...searchValues,
+                    replenish: searchValues['replenish'] == 'true'
+                };
+                if (searchValues['replenish'] == '' || searchValues['replenish'] === undefined)
+                    delete newSearchValues['replenish'];
+                setSearch(newSearchValues);
                 closeDrawer();
             })
             .catch((err) => showError(t('messages:error-getting-data')));

@@ -32,8 +32,15 @@ const LocationsSearch: FC<LocationsSearchProps> = ({ form }: LocationsSearchProp
                 <Form.Item name="position" label={t('d:position')}>
                     <Input />
                 </Form.Item>
-                <Form.Item initialValue={true} name="replenish">
-                    <Checkbox>{t('d:replenish')}</Checkbox>
+                <Form.Item name="replenish" label={t('d:replenish')}>
+                    <Select defaultValue="">
+                        <Option value="">{t('common:none')}</Option>
+                        <Option value="true">{t('common:bool-yes')}</Option>
+                        <Option value="false">{t('common:bool-no')}</Option>
+                    </Select>
+                </Form.Item>
+                <Form.Item label={t('d:constraint')} name="constraint">
+                    <Input />
                 </Form.Item>
             </Form>
         </>

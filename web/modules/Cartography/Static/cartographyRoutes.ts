@@ -37,6 +37,6 @@ export const addLocationRoutes = [
     ...locationsRoutes,
     {
         path: '/add-location',
-        breadcrumbName: 'menu:add-location'
+        breadcrumbName: 'actions:add-location'
     }
 ];

@@ -27,7 +27,6 @@ import {
     useDeleteBlockMutation
 } from 'generated/graphql';
 import graphqlRequestClient from 'graphql/graphqlRequestClient';
-import { useRouter } from 'next/router';
 
 export type BlocksListTypeProps = {
     searchCriteria?: any;
@@ -38,7 +37,6 @@ export const BlocksList = ({ searchCriteria }: BlocksListTypeProps) => {
 
     const [blocks, setBlocks] = useState<DataQueryType>();
     const [sort, setSort] = useState<any>(null);
-    const router = useRouter();
     const [pagination, setPagination] = useState<PaginationType>({
         total: undefined,
         current: DEFAULT_PAGE_NUMBER,
@@ -88,7 +86,7 @@ export const BlocksList = ({ searchCriteria }: BlocksListTypeProps) => {
                 _context: unknown
             ) => {
                 if (!deleteLoading) {
-                    refetch();
+                    refetch;
                     showSuccess(t('messages:success-deleted'));
                 }
             },

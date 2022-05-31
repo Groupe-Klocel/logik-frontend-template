@@ -1,5 +1,5 @@
 import { DetailsList, LinkButton, ContentSpin, AppTable } from '@components';
-import { EyeTwoTone } from '@ant-design/icons';
+import { CheckCircleOutlined, CloseSquareOutlined, EyeTwoTone } from '@ant-design/icons';
 import {
     pathParams,
     DataQueryType,
@@ -9,7 +9,7 @@ import {
     useLocations
 } from '@helpers';
 import useTranslation from 'next-translate/useTranslation';
-import { Divider, Typography } from 'antd';
+import { Col, Divider, Row, Typography } from 'antd';
 import { useState, useEffect, useCallback } from 'react';
 
 const { Title } = Typography;
@@ -51,11 +51,6 @@ const BlockDetails = ({ details }: IBlockDetailsProps) => {
 
     const locationColumns = [
         {
-            title: t('d:id'),
-            dataIndex: 'id',
-            key: 'id'
-        },
-        {
             title: t('common:name'),
             dataIndex: 'name',
             key: 'name'
@@ -64,6 +59,57 @@ const BlockDetails = ({ details }: IBlockDetailsProps) => {
             title: t('menu:block'),
             dataIndex: ['block', 'name'],
             key: ['block', 'name']
+        },
+        {
+            title: 'd:aisle',
+            dataIndex: 'aisle',
+            key: 'aisle',
+            sorter: {
+                multiple: 3
+            },
+            showSorterTooltip: false
+        },
+        {
+            title: 'common:column',
+            dataIndex: 'column',
+            key: 'column',
+            sorter: {
+                multiple: 4
+            },
+            showSorterTooltip: false
+        },
+        {
+            title: 'd:level',
+            dataIndex: 'level',
+            key: 'level',
+            sorter: {
+                multiple: 5
+            },
+            showSorterTooltip: false
+        },
+        {
+            title: 'd:position',
+            dataIndex: 'position',
+            key: 'position',
+            sorter: {
+                multiple: 6
+            },
+            showSorterTooltip: false
+        },
+        {
+            title: 'd:replenish',
+            dataIndex: 'replenish',
+            key: 'replenish',
+            sorter: {
+                multiple: 7
+            },
+            showSorterTooltip: false,
+            render: (text: any) =>
+                text == true ? (
+                    <CheckCircleOutlined style={{ color: 'green' }} />
+                ) : (
+                    <CloseSquareOutlined style={{ color: 'red' }} />
+                )
         },
         {
             title: t('actions:actions'),
@@ -89,7 +135,18 @@ const BlockDetails = ({ details }: IBlockDetailsProps) => {
         <>
             <DetailsList details={details} />
             <Divider />
-            <Title level={4}>{t('common:associated', { name: t('menu:locations') })}</Title>
+            <Row justify="space-between">
+                <Col span={6}>
+                    <Title level={4}>{t('common:associated', { name: t('menu:locations') })}</Title>
+                </Col>
+                <Col span={6}>
+                    <LinkButton
+                        title={t('actions:add2', { name: t('menu:location') })}
+                        path="/add-location"
+                        type="primary"
+                    />
+                </Col>
+            </Row>
             {locations ? (
                 <AppTable
                     type="associatedLocations"

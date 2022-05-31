@@ -45,18 +45,17 @@ export const Blocks = () => {
             .validateFields()
             .then(() => {
                 const searchValues = formSearch.getFieldsValue(true);
-                console.log('temp_avant', searchValues);
                 const newSearchValues = {
                     ...searchValues,
                     moveable: searchValues['moveable'] == 'true',
                     bulk: searchValues['bulk'] == 'true'
                 };
                 console.log(newSearchValues);
-                if (searchValues['moveable'] == '' || searchValues['moveable'] === undefined) delete newSearchValues['moveable'];
-                if (searchValues['bulk'] == '' || searchValues['bulk'] === undefined) delete newSearchValues['bulk'];
-                console.log('mid', newSearchValues);
+                if (searchValues['moveable'] == '' || searchValues['moveable'] === undefined)
+                    delete newSearchValues['moveable'];
+                if (searchValues['bulk'] == '' || searchValues['bulk'] === undefined)
+                    delete newSearchValues['bulk'];
                 setSearch(newSearchValues);
-                console.log('end', newSearchValues);
                 closeDrawer();
             })
             .catch((err) => showError(t('messages:error-getting-data')));

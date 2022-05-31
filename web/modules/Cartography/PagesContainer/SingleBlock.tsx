@@ -1,24 +1,20 @@
 import { useAuth } from 'context/AuthContext';
 import {
-    DeleteArticleMutation,
-    DeleteArticleMutationVariables,
     DeleteBlockMutation,
     DeleteBlockMutationVariables,
     GetBlockByIdQuery,
-    useDeleteArticleMutation,
     useDeleteBlockMutation,
     useGetBlockByIdQuery
 } from 'generated/graphql';
 import { NextRouter } from 'next/router';
 import { FC } from 'react';
 import { blocksRoutes } from 'modules/Cartography/Static/cartographyRoutes';
-import { ContentSpin, HeaderContent, PageContentWrapper } from '@components';
+import { ContentSpin, HeaderContent, LinkButton, PageContentWrapper } from '@components';
 import useTranslation from 'next-translate/useTranslation';
-import styled from 'styled-components';
 import { Button, Layout, Modal, Space, Typography } from 'antd';
 import { BlockDetails } from '../Elements/BlockDetails';
-import { showError, showSuccess } from '@helpers';
-import { modalGlobalConfig } from 'antd/lib/modal/confirm';
+import { pathParams, showError, showSuccess } from '@helpers';
+import { EditTwoTone } from '@ant-design/icons';
 
 export type SingleBlockTypeProps = {
     id: any;
@@ -84,7 +80,19 @@ const SingleBlock: FC<SingleBlockTypeProps> = ({ id, router }: SingleBlockTypePr
                 actionsRight={
                     <Space>
                         {/* ADD HERE*/}
-                        <Button loading={deleteLoading} onClick={() => deleteBlock({ id: id })}>
+                        <LinkButton
+                            title={t('actions:list', { name: t('menu:locations') })}
+                            path={'/locations'}
+                        />
+                        <LinkButton
+                            icon={<EditTwoTone />}
+                            path={pathParams('/block/edit/[id]', id)}
+                        />
+                        <Button
+                            danger
+                            loading={deleteLoading}
+                            onClick={() => deleteBlock({ id: id })}
+                        >
                             {t('actions:delete')}
                         </Button>
                         {/* ADD HERE*/}
@@ -92,8 +100,6 @@ const SingleBlock: FC<SingleBlockTypeProps> = ({ id, router }: SingleBlockTypePr
                 }
             />
             <PageContentWrapper>
-                {/* {!!data} 
-                    <Typography >Content Does not exist</Typography> */}
                 {data && !isLoading ? (
                     data.block !== null ? (
                         <BlockDetails details={data?.block} />
