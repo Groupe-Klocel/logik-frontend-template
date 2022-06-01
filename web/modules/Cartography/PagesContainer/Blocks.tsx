@@ -50,7 +50,6 @@ export const Blocks = () => {
                     moveable: searchValues['moveable'] == 'true',
                     bulk: searchValues['bulk'] == 'true'
                 };
-                console.log(newSearchValues);
                 if (searchValues['moveable'] == '' || searchValues['moveable'] === undefined)
                     delete newSearchValues['moveable'];
                 if (searchValues['bulk'] == '' || searchValues['bulk'] === undefined)
