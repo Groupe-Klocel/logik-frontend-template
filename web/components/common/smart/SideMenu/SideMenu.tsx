@@ -95,6 +95,9 @@ const SideMenu: FC = () => {
                         <Link href="/locations">{t('locations')}</Link>
                     </Menu.Item>
                 </SubMenu>
+                <Menu.Item key="configuration-carriers">
+                    <Link href="/carriers">{t('carriers')}</Link>
+                </Menu.Item>
                 <Menu.Item key="configuration-stock-statuses">
                     <Link href="/stock-statuses">{t('stock-statuses')}</Link>
                 </Menu.Item>
@@ -135,9 +138,6 @@ const SideMenu: FC = () => {
                 </SubMenu>
                 <Menu.Item key="configuration-packagings">
                     <Link href="/packagings">{t('packagings')}</Link>
-                </Menu.Item>
-                <Menu.Item key="configuration-carriers">
-                    <Link href="/carriers">{t('carriers')}</Link>
                 </Menu.Item>
                 <Menu.Item key="configuration-equipments">
                     <Link href="/equipments">{t('equipments')}</Link>

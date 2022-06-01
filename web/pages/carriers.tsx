@@ -1,7 +1,7 @@
 import { AppHead } from '@components';
 import MainLayout from 'components/layouts/MainLayout';
+import { Carriers } from 'modules/Carriers/PagesContainer/Carriers';
 import { FC } from 'react';
-import { Carriers } from '../modules/Unclassed/PagesContainer/Carriers';
 
 type PageComponent = FC & { layout: typeof MainLayout };
 
@@ -13,7 +13,6 @@ const CarriersPage: PageComponent = () => {
         </>
     );
 };
-
 CarriersPage.layout = MainLayout;
 
 export default CarriersPage;

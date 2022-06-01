@@ -377,6 +377,90 @@ export type BulkCreateLocationsInput = {
   separator?: Scalars['String'];
 };
 
+export type Carrier = {
+  __typename?: 'Carrier';
+  accountNumber?: Maybe<Scalars['String']>;
+  /** To temporary disabling a carrier. */
+  available?: Maybe<Scalars['Boolean']>;
+  code: Scalars['String'];
+  counter?: Maybe<Scalars['Float']>;
+  created?: Maybe<Scalars['DateTime']>;
+  createdBy?: Maybe<Scalars['String']>;
+  extraInfo?: Maybe<Scalars['String']>;
+  /** String-based unique identifier. */
+  id?: Maybe<Scalars['String']>;
+  modified?: Maybe<Scalars['DateTime']>;
+  modifiedBy?: Maybe<Scalars['String']>;
+  monoroundgroup?: Maybe<Scalars['Boolean']>;
+  name: Scalars['String'];
+  parentCarrierId?: Maybe<Scalars['String']>;
+  status?: Maybe<Scalars['Int']>;
+  /** When True, all boxes assigned to this carrier will change to this status after preparation and before shipment. */
+  toBeLoaded?: Maybe<Scalars['Boolean']>;
+  /** When True, all boxes assigned to this carrier will change to this status after preparation and before shipment. */
+  toBePalletized?: Maybe<Scalars['Boolean']>;
+  /** When True, a box for this carrier will first go through the 'WAITING RECEIPT' state before being 'SHIPPED'. To be shipped, the carrier's parcel number must be entered. */
+  useReceiptNumber?: Maybe<Scalars['Boolean']>;
+};
+
+/** Field names for the Carrier model */
+export enum CarrierFieldName {
+  AccountNumber = 'accountNumber',
+  Available = 'available',
+  Code = 'code',
+  Counter = 'counter',
+  Created = 'created',
+  CreatedBy = 'createdBy',
+  ExtraInfo = 'extraInfo',
+  Id = 'id',
+  Modified = 'modified',
+  ModifiedBy = 'modifiedBy',
+  Monoroundgroup = 'monoroundgroup',
+  Name = 'name',
+  ParentCarrierId = 'parentCarrierId',
+  Status = 'status',
+  ToBeLoaded = 'toBeLoaded',
+  ToBePalletized = 'toBePalletized',
+  UseReceiptNumber = 'useReceiptNumber'
+}
+
+/** Returns a list of Carrier */
+export type CarrierListResult = {
+  __typename?: 'CarrierListResult';
+  count: Scalars['Int'];
+  itemsPerPage: Scalars['Int'];
+  page: Scalars['Int'];
+  results: Array<Carrier>;
+  totalPages: Scalars['Int'];
+};
+
+/** How to order the search results for Carrier */
+export type CarrierOrderByCriterion = {
+  ascending?: Scalars['Boolean'];
+  field: CarrierFieldName;
+};
+
+/** Attributes of Carrier to filter onto */
+export type CarrierSearchFilters = {
+  accountNumber?: InputMaybe<Scalars['String']>;
+  available?: InputMaybe<Scalars['Boolean']>;
+  code?: InputMaybe<Scalars['String']>;
+  counter?: InputMaybe<Scalars['Float']>;
+  created?: InputMaybe<Scalars['DateTime']>;
+  createdBy?: InputMaybe<Scalars['String']>;
+  extraInfo?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['String']>;
+  modified?: InputMaybe<Scalars['DateTime']>;
+  modifiedBy?: InputMaybe<Scalars['String']>;
+  monoroundgroup?: InputMaybe<Scalars['Boolean']>;
+  name?: InputMaybe<Scalars['String']>;
+  parentCarrierId?: InputMaybe<Scalars['String']>;
+  status?: InputMaybe<Scalars['Int']>;
+  toBeLoaded?: InputMaybe<Scalars['Boolean']>;
+  toBePalletized?: InputMaybe<Scalars['Boolean']>;
+  useReceiptNumber?: InputMaybe<Scalars['Boolean']>;
+};
+
 export type ChangePasswordFailure = {
   __typename?: 'ChangePasswordFailure';
   message: Scalars['String'];
@@ -441,6 +525,25 @@ export type CreateBlockInput = {
   /** Manage stock in transit mode. */
   moveable?: InputMaybe<Scalars['Boolean']>;
   name: Scalars['String'];
+};
+
+export type CreateCarrierInput = {
+  accountNumber?: InputMaybe<Scalars['String']>;
+  /** To temporary disabling a carrier. */
+  available?: InputMaybe<Scalars['Boolean']>;
+  code: Scalars['String'];
+  counter?: InputMaybe<Scalars['Float']>;
+  extraInfo?: InputMaybe<Scalars['String']>;
+  monoroundgroup?: InputMaybe<Scalars['Boolean']>;
+  name: Scalars['String'];
+  parentCarrierId?: InputMaybe<Scalars['String']>;
+  status?: InputMaybe<Scalars['Int']>;
+  /** When True, all boxes assigned to this carrier will change to this status after preparation and before shipment. */
+  toBeLoaded?: InputMaybe<Scalars['Boolean']>;
+  /** When True, all boxes assigned to this carrier will change to this status after preparation and before shipment. */
+  toBePalletized?: InputMaybe<Scalars['Boolean']>;
+  /** When True, a box for this carrier will first go through the 'WAITING RECEIPT' state before being 'SHIPPED'. To be shipped, the carrier's parcel number must be entered. */
+  useReceiptNumber?: InputMaybe<Scalars['Boolean']>;
 };
 
 export type CreateLocationInput = {
@@ -679,6 +782,8 @@ export type Mutation = {
   createBarcode: Barcode;
   /** Create a Block */
   createBlock: Block;
+  /** Create a Carrier */
+  createCarrier: Carrier;
   /** Create an IntegratorOrganization */
   createIntegratorOrganization: Organization;
   /** As an Integrator, I can invite a fellow Integrator */
@@ -700,6 +805,8 @@ export type Mutation = {
   deleteBarcode: Scalars['Boolean'];
   /** Delete a Block */
   deleteBlock: Scalars['Boolean'];
+  /** Delete a Carrier */
+  deleteCarrier: Scalars['Boolean'];
   /** Delete a Location */
   deleteLocation: Scalars['Boolean'];
   deleteOrganization: Scalars['Boolean'];
@@ -726,6 +833,8 @@ export type Mutation = {
   renderDocument: RenderDocumentResponse;
   /** Sends an email to reset the User's password */
   resetPassword: ResetPasswordResponse;
+  /** Delete Carrier => update status */
+  softDeleteCarrier: Scalars['Boolean'];
   /** Delete Stock Owner => update status */
   softDeleteStockOwner: Scalars['Boolean'];
   /** Update article */
@@ -734,12 +843,16 @@ export type Mutation = {
   updateBarcode?: Maybe<Barcode>;
   /** Update block */
   updateBlock?: Maybe<Block>;
+  /** Update carrier */
+  updateCarrier?: Maybe<Carrier>;
   /** Update Location */
   updateLocation?: Maybe<Location>;
   /** Update Pattern */
   updatePattern?: Maybe<Pattern>;
   /** Update PatternPath */
   updatePatternPath?: Maybe<PatternPath>;
+  /** Update a Role */
+  updateRole?: Maybe<RoleType>;
   /** Update stock owner */
   updateStockOwner?: Maybe<StockOwner>;
   updateUser?: Maybe<User>;
@@ -784,7 +897,13 @@ export type MutationCreateBlockArgs = {
 };
 
 
+export type MutationCreateCarrierArgs = {
+  input: CreateCarrierInput;
+};
+
+
 export type MutationCreateIntegratorOrganizationArgs = {
+  id?: InputMaybe<Scalars['ID']>;
   name: Scalars['String'];
 };
 
@@ -824,7 +943,7 @@ export type MutationCreateStockOwnerArgs = {
 
 
 export type MutationCreateWarehouseArgs = {
-  id?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['ID']>;
   name: Scalars['String'];
   organizationId: Scalars['ID'];
 };
@@ -841,6 +960,11 @@ export type MutationDeleteBarcodeArgs = {
 
 
 export type MutationDeleteBlockArgs = {
+  id: Scalars['String'];
+};
+
+
+export type MutationDeleteCarrierArgs = {
   id: Scalars['String'];
 };
 
@@ -941,6 +1065,11 @@ export type MutationResetPasswordArgs = {
 };
 
 
+export type MutationSoftDeleteCarrierArgs = {
+  carrierId: Scalars['String'];
+};
+
+
 export type MutationSoftDeleteStockOwnerArgs = {
   stockOwnerId: Scalars['String'];
 };
@@ -964,6 +1093,12 @@ export type MutationUpdateBlockArgs = {
 };
 
 
+export type MutationUpdateCarrierArgs = {
+  id: Scalars['String'];
+  input: UpdateCarrierInput;
+};
+
+
 export type MutationUpdateLocationArgs = {
   id: Scalars['String'];
   input: UpdateLocationInput;
@@ -979,6 +1114,13 @@ export type MutationUpdatePatternArgs = {
 export type MutationUpdatePatternPathArgs = {
   id: Scalars['String'];
   input: UpdatePatternPathInput;
+};
+
+
+export type MutationUpdateRoleArgs = {
+  id: Scalars['ID'];
+  name?: InputMaybe<Scalars['String']>;
+  permissions?: InputMaybe<Array<PermissionInput>>;
 };
 
 
@@ -1252,6 +1394,10 @@ export type Query = {
   block?: Maybe<Block>;
   /** Search Blocks */
   blocks: BlockListResult;
+  /** Get a Carrier */
+  carrier?: Maybe<Carrier>;
+  /** List multiple Carriers */
+  carriers: CarrierListResult;
   /** Get a Location */
   location?: Maybe<Location>;
   /** Search Locations */
@@ -1313,6 +1459,19 @@ export type QueryBlocksArgs = {
   filters?: InputMaybe<BlockSearchFilters>;
   itemsPerPage?: Scalars['Int'];
   orderBy?: InputMaybe<Array<BlockOrderByCriterion>>;
+  page?: Scalars['Int'];
+};
+
+
+export type QueryCarrierArgs = {
+  id: Scalars['String'];
+};
+
+
+export type QueryCarriersArgs = {
+  filters?: InputMaybe<CarrierSearchFilters>;
+  itemsPerPage?: Scalars['Int'];
+  orderBy?: InputMaybe<Array<CarrierOrderByCriterion>>;
   page?: Scalars['Int'];
 };
 
@@ -1615,6 +1774,7 @@ export enum Table {
   Article = 'ARTICLE',
   Barcode = 'BARCODE',
   Block = 'BLOCK',
+  Carrier = 'CARRIER',
   Location = 'LOCATION',
   Organization = 'ORGANIZATION',
   Pattern = 'PATTERN',
@@ -1686,6 +1846,22 @@ export type UpdateBlockInput = {
   level?: InputMaybe<Scalars['Int']>;
   moveable?: InputMaybe<Scalars['Boolean']>;
   name?: InputMaybe<Scalars['String']>;
+};
+
+/** Values to update the existing record with */
+export type UpdateCarrierInput = {
+  accountNumber?: InputMaybe<Scalars['String']>;
+  available?: InputMaybe<Scalars['Boolean']>;
+  code?: InputMaybe<Scalars['String']>;
+  counter?: InputMaybe<Scalars['Float']>;
+  extraInfo?: InputMaybe<Scalars['String']>;
+  monoroundgroup?: InputMaybe<Scalars['Boolean']>;
+  name?: InputMaybe<Scalars['String']>;
+  parentCarrierId?: InputMaybe<Scalars['String']>;
+  status?: InputMaybe<Scalars['Int']>;
+  toBeLoaded?: InputMaybe<Scalars['Boolean']>;
+  toBePalletized?: InputMaybe<Scalars['Boolean']>;
+  useReceiptNumber?: InputMaybe<Scalars['Boolean']>;
 };
 
 /** Values to update the existing record with */
@@ -1990,6 +2166,55 @@ export type UpdateBarcodeMutationVariables = Exact<{
 
 
 export type UpdateBarcodeMutation = { __typename?: 'Mutation', updateBarcode?: { __typename?: 'Barcode', id?: string | null, accountId: number, companyId: number, articleId: string, name: string, rotation: string, preparationMode?: number | null, flagDouble?: number | null, supplierName?: string | null, supplierArticleCode?: string | null, quantity?: number | null, article: { __typename?: 'Article', name: string } } | null };
+
+export type GetAllCarriersQueryVariables = Exact<{
+  filters?: InputMaybe<CarrierSearchFilters>;
+  orderBy?: InputMaybe<Array<CarrierOrderByCriterion> | CarrierOrderByCriterion>;
+  page: Scalars['Int'];
+  itemsPerPage: Scalars['Int'];
+}>;
+
+
+export type GetAllCarriersQuery = { __typename?: 'Query', carriers: { __typename?: 'CarrierListResult', count: number, itemsPerPage: number, totalPages: number, results: Array<{ __typename?: 'Carrier', name: string, id?: string | null, code: string, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, status?: number | null, counter?: number | null, available?: boolean | null, toBeLoaded?: boolean | null, toBePalletized?: boolean | null, useReceiptNumber?: boolean | null, parentCarrierId?: string | null, monoroundgroup?: boolean | null, accountNumber?: string | null, extraInfo?: string | null }> } };
+
+export type GetCarrierByIdQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type GetCarrierByIdQuery = { __typename?: 'Query', carrier?: { __typename?: 'Carrier', name: string, id?: string | null, code: string, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, status?: number | null, counter?: number | null, available?: boolean | null, toBeLoaded?: boolean | null, toBePalletized?: boolean | null, useReceiptNumber?: boolean | null, parentCarrierId?: string | null, monoroundgroup?: boolean | null, accountNumber?: string | null, extraInfo?: string | null } | null };
+
+export type GetCarrierIdsQueryVariables = Exact<{
+  filters?: InputMaybe<CarrierSearchFilters>;
+  orderBy?: InputMaybe<Array<CarrierOrderByCriterion> | CarrierOrderByCriterion>;
+  page: Scalars['Int'];
+  itemsPerPage: Scalars['Int'];
+}>;
+
+
+export type GetCarrierIdsQuery = { __typename?: 'Query', carriers: { __typename?: 'CarrierListResult', count: number, itemsPerPage: number, totalPages: number, results: Array<{ __typename?: 'Carrier', id?: string | null, name: string }> } };
+
+export type CreateCarrierMutationVariables = Exact<{
+  input: CreateCarrierInput;
+}>;
+
+
+export type CreateCarrierMutation = { __typename?: 'Mutation', createCarrier: { __typename?: 'Carrier', name: string, id?: string | null, code: string, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, status?: number | null, counter?: number | null, available?: boolean | null, toBeLoaded?: boolean | null, toBePalletized?: boolean | null, useReceiptNumber?: boolean | null, parentCarrierId?: string | null, monoroundgroup?: boolean | null, accountNumber?: string | null, extraInfo?: string | null } };
+
+export type DeleteCarrierMutationVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type DeleteCarrierMutation = { __typename?: 'Mutation', deleteCarrier: boolean };
+
+export type UpdateCarrierMutationVariables = Exact<{
+  id: Scalars['String'];
+  input: UpdateCarrierInput;
+}>;
+
+
+export type UpdateCarrierMutation = { __typename?: 'Mutation', updateCarrier?: { __typename?: 'Carrier', name: string, id?: string | null, code: string, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, status?: number | null, counter?: number | null, available?: boolean | null, toBeLoaded?: boolean | null, toBePalletized?: boolean | null, useReceiptNumber?: boolean | null, parentCarrierId?: string | null, monoroundgroup?: boolean | null, accountNumber?: string | null, extraInfo?: string | null } | null };
 
 export type LoginMutationVariables = Exact<{
   username: Scalars['String'];
@@ -2447,6 +2672,212 @@ export const useUpdateBarcodeMutation = <
     useMutation<UpdateBarcodeMutation, TError, UpdateBarcodeMutationVariables, TContext>(
       ['UpdateBarcode'],
       (variables?: UpdateBarcodeMutationVariables) => fetcher<UpdateBarcodeMutation, UpdateBarcodeMutationVariables>(client, UpdateBarcodeDocument, variables, headers)(),
+      options
+    );
+export const GetAllCarriersDocument = `
+    query GetAllCarriers($filters: CarrierSearchFilters, $orderBy: [CarrierOrderByCriterion!], $page: Int!, $itemsPerPage: Int!) {
+  carriers(
+    filters: $filters
+    orderBy: $orderBy
+    page: $page
+    itemsPerPage: $itemsPerPage
+  ) {
+    count
+    itemsPerPage
+    totalPages
+    results {
+      name
+      id
+      code
+      created
+      createdBy
+      modified
+      modifiedBy
+      status
+      counter
+      available
+      toBeLoaded
+      toBePalletized
+      useReceiptNumber
+      parentCarrierId
+      monoroundgroup
+      accountNumber
+      extraInfo
+    }
+  }
+}
+    `;
+export const useGetAllCarriersQuery = <
+      TData = GetAllCarriersQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: GetAllCarriersQueryVariables,
+      options?: UseQueryOptions<GetAllCarriersQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetAllCarriersQuery, TError, TData>(
+      ['GetAllCarriers', variables],
+      fetcher<GetAllCarriersQuery, GetAllCarriersQueryVariables>(client, GetAllCarriersDocument, variables, headers),
+      options
+    );
+export const GetCarrierByIdDocument = `
+    query GetCarrierById($id: String!) {
+  carrier(id: $id) {
+    name
+    id
+    code
+    created
+    createdBy
+    modified
+    modifiedBy
+    status
+    counter
+    available
+    toBeLoaded
+    toBePalletized
+    useReceiptNumber
+    parentCarrierId
+    monoroundgroup
+    accountNumber
+    extraInfo
+  }
+}
+    `;
+export const useGetCarrierByIdQuery = <
+      TData = GetCarrierByIdQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: GetCarrierByIdQueryVariables,
+      options?: UseQueryOptions<GetCarrierByIdQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetCarrierByIdQuery, TError, TData>(
+      ['GetCarrierById', variables],
+      fetcher<GetCarrierByIdQuery, GetCarrierByIdQueryVariables>(client, GetCarrierByIdDocument, variables, headers),
+      options
+    );
+export const GetCarrierIdsDocument = `
+    query GetCarrierIds($filters: CarrierSearchFilters, $orderBy: [CarrierOrderByCriterion!], $page: Int!, $itemsPerPage: Int!) {
+  carriers(
+    filters: $filters
+    orderBy: $orderBy
+    page: $page
+    itemsPerPage: $itemsPerPage
+  ) {
+    count
+    itemsPerPage
+    totalPages
+    results {
+      id
+      name
+    }
+  }
+}
+    `;
+export const useGetCarrierIdsQuery = <
+      TData = GetCarrierIdsQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: GetCarrierIdsQueryVariables,
+      options?: UseQueryOptions<GetCarrierIdsQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetCarrierIdsQuery, TError, TData>(
+      ['GetCarrierIds', variables],
+      fetcher<GetCarrierIdsQuery, GetCarrierIdsQueryVariables>(client, GetCarrierIdsDocument, variables, headers),
+      options
+    );
+export const CreateCarrierDocument = `
+    mutation CreateCarrier($input: CreateCarrierInput!) {
+  createCarrier(input: $input) {
+    name
+    id
+    code
+    created
+    createdBy
+    modified
+    modifiedBy
+    status
+    counter
+    available
+    toBeLoaded
+    toBePalletized
+    useReceiptNumber
+    parentCarrierId
+    monoroundgroup
+    accountNumber
+    extraInfo
+  }
+}
+    `;
+export const useCreateCarrierMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<CreateCarrierMutation, TError, CreateCarrierMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<CreateCarrierMutation, TError, CreateCarrierMutationVariables, TContext>(
+      ['CreateCarrier'],
+      (variables?: CreateCarrierMutationVariables) => fetcher<CreateCarrierMutation, CreateCarrierMutationVariables>(client, CreateCarrierDocument, variables, headers)(),
+      options
+    );
+export const DeleteCarrierDocument = `
+    mutation DeleteCarrier($id: String!) {
+  deleteCarrier(id: $id)
+}
+    `;
+export const useDeleteCarrierMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<DeleteCarrierMutation, TError, DeleteCarrierMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<DeleteCarrierMutation, TError, DeleteCarrierMutationVariables, TContext>(
+      ['DeleteCarrier'],
+      (variables?: DeleteCarrierMutationVariables) => fetcher<DeleteCarrierMutation, DeleteCarrierMutationVariables>(client, DeleteCarrierDocument, variables, headers)(),
+      options
+    );
+export const UpdateCarrierDocument = `
+    mutation UpdateCarrier($id: String!, $input: UpdateCarrierInput!) {
+  updateCarrier(id: $id, input: $input) {
+    name
+    id
+    code
+    created
+    createdBy
+    modified
+    modifiedBy
+    status
+    counter
+    available
+    toBeLoaded
+    toBePalletized
+    useReceiptNumber
+    parentCarrierId
+    monoroundgroup
+    accountNumber
+    extraInfo
+  }
+}
+    `;
+export const useUpdateCarrierMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<UpdateCarrierMutation, TError, UpdateCarrierMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<UpdateCarrierMutation, TError, UpdateCarrierMutationVariables, TContext>(
+      ['UpdateCarrier'],
+      (variables?: UpdateCarrierMutationVariables) => fetcher<UpdateCarrierMutation, UpdateCarrierMutationVariables>(client, UpdateCarrierDocument, variables, headers)(),
       options
     );
 export const LoginDocument = `
