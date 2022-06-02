@@ -6,3 +6,11 @@ export const returnCodesRoutes = [
     }
 ];
 
+export const addReturnCodeRoutes = [
+    ...returnCodesRoutes,
+    {
+        path: '/add-return-code',
+        breadcrumbName: 'actions:add-return-code'
+    }
+];
+

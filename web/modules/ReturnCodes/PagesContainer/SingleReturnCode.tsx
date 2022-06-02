@@ -38,7 +38,7 @@ const SingleReturnCode: FC<SingleReturnCodeTypeProps> = ({
     const breadsCrumb = [
         ...returnCodesRoutes,
         {
-            breadcrumbName: `${id}`
+            breadcrumbName: `${data?.returnCode?.name}`
         }
     ];
 

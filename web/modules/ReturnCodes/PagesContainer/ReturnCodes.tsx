@@ -1,4 +1,4 @@
-import { HeaderContent } from '@components';
+import { HeaderContent, LinkButton } from '@components';
 import { returnCodesRoutes } from 'modules/ReturnCodes/Static/returnCodesRoutes';
 import useTranslation from 'next-translate/useTranslation';
 import { ReturnCodesList } from 'modules/ReturnCodes/Elements/ReturnCodesList';
@@ -60,6 +60,11 @@ export const ReturnCodes = () => {
                 actionsRight={
                     <Space>
                         <Button icon={<SearchOutlined />} onClick={() => openSearchDrawer()} />
+                        <LinkButton
+                            title={t('actions:add2', { name: t('menu:return-code') })}
+                            path="/add-return-code"
+                            type="primary"
+                        />
                     </Space>
                 }
             />
