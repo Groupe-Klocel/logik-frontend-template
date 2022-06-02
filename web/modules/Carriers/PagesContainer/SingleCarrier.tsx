@@ -1,24 +1,26 @@
 import { HeaderContent, PageContentWrapper, ContentSpin } from '@components';
 import { showSuccess, showError } from '@helpers';
-import { Space, Button, Typography } from 'antd';
+import { Modal, Space, Button, Typography } from 'antd';
 import { useAuth } from 'context/AuthContext';
 import {
-    DeleteCarrierMutation,
-    DeleteCarrierMutationVariables,
+    useGetCarrierByIdQuery,
     GetCarrierByIdQuery,
     useDeleteCarrierMutation,
-    useGetCarrierByIdQuery
+    DeleteCarrierMutation,
+    DeleteCarrierMutationVariables
 } from 'generated/graphql';
 import useTranslation from 'next-translate/useTranslation';
 import { NextRouter } from 'next/router';
-import { FC, useEffect } from 'react';
+import { FC } from 'react';
+import { CarrierDetails } from '../Elements/CarrierDetails';
 import { carriersRoutes } from '../Static/carriersRoutes';
 
-export type SingleCarrierProps = {
-    id: string;
+export type SingleCarrierTypeProps = {
+    id: any;
     router: NextRouter;
 };
-const SingleCarrier: FC<SingleCarrierProps> = ({ id, router }: SingleCarrierProps) => {
+
+const SingleCarrier: FC<SingleCarrierTypeProps> = ({ id, router }: SingleCarrierTypeProps) => {
     const { graphqlRequestClient } = useAuth();
     const { t } = useTranslation();
 
@@ -32,7 +34,7 @@ const SingleCarrier: FC<SingleCarrierProps> = ({ id, router }: SingleCarrierProp
     const breadsCrumb = [
         ...carriersRoutes,
         {
-            breadcrumbName: `${data?.carrier?.name}`
+            breadcrumbName: `${id}`
         }
     ];
 
@@ -42,7 +44,7 @@ const SingleCarrier: FC<SingleCarrierProps> = ({ id, router }: SingleCarrierProp
             onSuccess: (
                 data: DeleteCarrierMutation,
                 _variables: DeleteCarrierMutationVariables,
-                _context: any
+                _context: unknown
             ) => {
                 router.back();
                 if (!deleteLoading) {
@@ -56,35 +58,40 @@ const SingleCarrier: FC<SingleCarrierProps> = ({ id, router }: SingleCarrierProp
     );
 
     const deleteCarrier = ({ id }: DeleteCarrierMutationVariables) => {
-        mutate({ id });
+        Modal.confirm({
+            title: t('messages:delete-confirm'),
+            onOk: () => {
+                mutate({ id });
+            },
+            okText: t('messages:confirm'),
+            cancelText: t('messages:cancel')
+        });
     };
-
-    useEffect(() => {
-        if (error) {
-            showError(t('messages:error-getting-data'));
-        }
-    }, [error]);
 
     return (
         <>
             <HeaderContent
-                title={`${data?.carrier?.name}`}
+                title={`${t('menu:carrier')} ${data?.carrier?.name}`}
                 routes={breadsCrumb}
                 onBack={() => router.push('/carriers')}
                 actionsRight={
                     <Space>
+                        {/* ADD HERE*/}
                         <Button loading={deleteLoading} onClick={() => deleteCarrier({ id: id })}>
                             {t('actions:delete')}
                         </Button>
+                        {/* ADD HERE*/}
                     </Space>
                 }
             />
             <PageContentWrapper>
+                {/* {!!data} 
+                    <Typography >Content Does not exist</Typography> */}
                 {data && !isLoading ? (
                     data.carrier !== null ? (
                         <CarrierDetails details={data?.carrier} />
                     ) : (
-                        <Typography>Carrier {id} does not exist</Typography>
+                        <Typography>Content Does not exist</Typography>
                     )
                 ) : (
                     <ContentSpin />
