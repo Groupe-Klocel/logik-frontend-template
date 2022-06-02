@@ -1,7 +1,7 @@
 import { AppTable, ContentSpin, LinkButton } from '@components';
 import { Button, Modal, Space } from 'antd';
 import { returnCodesData } from 'fake-data/returnCodes';
-import { DeleteOutlined, EyeTwoTone } from '@ant-design/icons';
+import { DeleteOutlined, EditTwoTone, EyeTwoTone } from '@ant-design/icons';
 import { useCallback, useEffect, useState } from 'react';
 import {
     DataQueryType,
@@ -135,6 +135,10 @@ export const ReturnCodesList = ({ searchCriteria }: BlocksListTypeProps) => {
                     <LinkButton
                         icon={<EyeTwoTone />}
                         path={pathParams('/return-code/[id]', record.id)}
+                    />
+                    <LinkButton
+                        icon={<EditTwoTone />}
+                        path={pathParams('/return-code/edit/[id]', record.id)}
                     />
                     <Button
                         icon={<DeleteOutlined />}
