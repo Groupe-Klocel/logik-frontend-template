@@ -24,6 +24,7 @@
     "reset-password": "Reset Password",
     "fixed": "Fixed",
     "login": "Log in",
+    "list": "List {{name}}",
     "print": "Print",
     "next-step": "Next step",
     "reset": "Reset",

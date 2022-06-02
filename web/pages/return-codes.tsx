@@ -1,7 +1,7 @@
 import { AppHead } from '@components';
 import MainLayout from 'components/layouts/MainLayout';
 import { FC } from 'react';
-import { ReturnCodes } from '../modules/Unclassed/PagesContainer/ReturnCodes';
+import { ReturnCodes } from '../modules/ReturnCodes/PagesContainer/ReturnCodes';
 
 type PageComponent = FC & { layout: typeof MainLayout };
 

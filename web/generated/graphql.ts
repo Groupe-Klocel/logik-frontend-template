@@ -41,6 +41,8 @@ export type Article = {
   created?: Maybe<Scalars['DateTime']>;
   createdBy?: Maybe<Scalars['String']>;
   cubingType?: Maybe<Scalars['Int']>;
+  /** Semi-structured attributes that can be used to store data for anything that doesn't fit in the default columns */
+  extras?: Maybe<Scalars['JSON']>;
   family?: Maybe<Scalars['String']>;
   featureTypeId?: Maybe<Scalars['Int']>;
   groupingId?: Maybe<Scalars['String']>;
@@ -74,6 +76,7 @@ export type ArticleExportFilters = {
   code?: InputMaybe<Scalars['String']>;
   companyId?: InputMaybe<Scalars['Int']>;
   cubingType?: InputMaybe<Scalars['Int']>;
+  extras?: InputMaybe<Scalars['JSON']>;
   family?: InputMaybe<Scalars['String']>;
   featureTypeId?: InputMaybe<Scalars['Int']>;
   groupingId?: InputMaybe<Scalars['String']>;
@@ -105,6 +108,7 @@ export enum ArticleFieldName {
   Created = 'created',
   CreatedBy = 'createdBy',
   CubingType = 'cubingType',
+  Extras = 'extras',
   Family = 'family',
   FeatureTypeId = 'featureTypeId',
   GroupingId = 'groupingId',
@@ -155,6 +159,7 @@ export type ArticleSearchFilters = {
   created?: InputMaybe<Scalars['DateTime']>;
   createdBy?: InputMaybe<Scalars['String']>;
   cubingType?: InputMaybe<Scalars['Int']>;
+  extras?: InputMaybe<Scalars['JSON']>;
   family?: InputMaybe<Scalars['String']>;
   featureTypeId?: InputMaybe<Scalars['Int']>;
   groupingId?: InputMaybe<Scalars['String']>;
@@ -180,6 +185,8 @@ export type Barcode = {
   companyId: Scalars['Int'];
   created?: Maybe<Scalars['DateTime']>;
   createdBy?: Maybe<Scalars['String']>;
+  /** Semi-structured attributes that can be used to store data for anything that doesn't fit in the default columns */
+  extras?: Maybe<Scalars['JSON']>;
   flagDouble?: Maybe<Scalars['Int']>;
   /** String-based unique identifier. */
   id?: Maybe<Scalars['String']>;
@@ -224,6 +231,7 @@ export type BarcodeExportFilters = {
   accountId?: InputMaybe<Scalars['Int']>;
   articleId?: InputMaybe<Scalars['String']>;
   companyId?: InputMaybe<Scalars['Int']>;
+  extras?: InputMaybe<Scalars['JSON']>;
   flagDouble?: InputMaybe<Scalars['Int']>;
   name?: InputMaybe<Scalars['String']>;
   preparationMode?: InputMaybe<Scalars['Int']>;
@@ -240,6 +248,7 @@ export enum BarcodeFieldName {
   CompanyId = 'companyId',
   Created = 'created',
   CreatedBy = 'createdBy',
+  Extras = 'extras',
   FlagDouble = 'flagDouble',
   Id = 'id',
   Modified = 'modified',
@@ -275,6 +284,7 @@ export type BarcodeSearchFilters = {
   companyId?: InputMaybe<Scalars['Int']>;
   created?: InputMaybe<Scalars['DateTime']>;
   createdBy?: InputMaybe<Scalars['String']>;
+  extras?: InputMaybe<Scalars['JSON']>;
   flagDouble?: InputMaybe<Scalars['Int']>;
   id?: InputMaybe<Scalars['String']>;
   modified?: InputMaybe<Scalars['DateTime']>;
@@ -296,6 +306,8 @@ export type Block = {
   comment?: Maybe<Scalars['String']>;
   created?: Maybe<Scalars['DateTime']>;
   createdBy?: Maybe<Scalars['String']>;
+  /** Semi-structured attributes that can be used to store data for anything that doesn't fit in the default columns */
+  extras?: Maybe<Scalars['JSON']>;
   /** String-based unique identifier. */
   id?: Maybe<Scalars['String']>;
   /** DEFAULT '-1', set level when bloc is a mezzanine (“-1”: “N/A”, “0”: “Level0”, “1”: “Level1”, “2”: “Level2”, …). Language conversion have to be set on this field. */
@@ -314,6 +326,7 @@ export enum BlockFieldName {
   Comment = 'comment',
   Created = 'created',
   CreatedBy = 'createdBy',
+  Extras = 'extras',
   Id = 'id',
   Level = 'level',
   Modified = 'modified',
@@ -345,12 +358,99 @@ export type BlockSearchFilters = {
   comment?: InputMaybe<Scalars['String']>;
   created?: InputMaybe<Scalars['DateTime']>;
   createdBy?: InputMaybe<Scalars['String']>;
+  extras?: InputMaybe<Scalars['JSON']>;
   id?: InputMaybe<Scalars['String']>;
   level?: InputMaybe<Scalars['Int']>;
   modified?: InputMaybe<Scalars['DateTime']>;
   modifiedBy?: InputMaybe<Scalars['String']>;
   moveable?: InputMaybe<Scalars['Boolean']>;
   name?: InputMaybe<Scalars['String']>;
+};
+
+export type Building = {
+  __typename?: 'Building';
+  address1?: Maybe<Scalars['String']>;
+  address2?: Maybe<Scalars['String']>;
+  address3?: Maybe<Scalars['String']>;
+  awsAccessKeyId?: Maybe<Scalars['String']>;
+  awsSecretAccessKey?: Maybe<Scalars['String']>;
+  city?: Maybe<Scalars['String']>;
+  contactEmail?: Maybe<Scalars['String']>;
+  contactMobile?: Maybe<Scalars['String']>;
+  contactName?: Maybe<Scalars['String']>;
+  contactPhone?: Maybe<Scalars['String']>;
+  country?: Maybe<Scalars['String']>;
+  created?: Maybe<Scalars['DateTime']>;
+  createdBy?: Maybe<Scalars['String']>;
+  /** String-based unique identifier. */
+  id?: Maybe<Scalars['String']>;
+  modified?: Maybe<Scalars['DateTime']>;
+  modifiedBy?: Maybe<Scalars['String']>;
+  name: Scalars['String'];
+  postCode?: Maybe<Scalars['String']>;
+  status?: Maybe<Scalars['Int']>;
+};
+
+/** Field names for the Building model */
+export enum BuildingFieldName {
+  Address1 = 'address1',
+  Address2 = 'address2',
+  Address3 = 'address3',
+  AwsAccessKeyId = 'awsAccessKeyId',
+  AwsSecretAccessKey = 'awsSecretAccessKey',
+  City = 'city',
+  ContactEmail = 'contactEmail',
+  ContactMobile = 'contactMobile',
+  ContactName = 'contactName',
+  ContactPhone = 'contactPhone',
+  Country = 'country',
+  Created = 'created',
+  CreatedBy = 'createdBy',
+  Id = 'id',
+  Modified = 'modified',
+  ModifiedBy = 'modifiedBy',
+  Name = 'name',
+  PostCode = 'postCode',
+  Status = 'status'
+}
+
+/** Returns a list of Building */
+export type BuildingListResult = {
+  __typename?: 'BuildingListResult';
+  count: Scalars['Int'];
+  itemsPerPage: Scalars['Int'];
+  page: Scalars['Int'];
+  results: Array<Building>;
+  totalPages: Scalars['Int'];
+};
+
+/** How to order the search results for Building */
+export type BuildingOrderByCriterion = {
+  ascending?: Scalars['Boolean'];
+  field: BuildingFieldName;
+};
+
+/** Attributes of Building to filter onto */
+export type BuildingSearchFilters = {
+  address1?: InputMaybe<Scalars['String']>;
+  address2?: InputMaybe<Scalars['String']>;
+  address3?: InputMaybe<Scalars['String']>;
+  awsAccessKeyId?: InputMaybe<Scalars['String']>;
+  awsSecretAccessKey?: InputMaybe<Scalars['String']>;
+  city?: InputMaybe<Scalars['String']>;
+  contactEmail?: InputMaybe<Scalars['String']>;
+  contactMobile?: InputMaybe<Scalars['String']>;
+  contactName?: InputMaybe<Scalars['String']>;
+  contactPhone?: InputMaybe<Scalars['String']>;
+  country?: InputMaybe<Scalars['String']>;
+  created?: InputMaybe<Scalars['DateTime']>;
+  createdBy?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['String']>;
+  modified?: InputMaybe<Scalars['DateTime']>;
+  modifiedBy?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
+  postCode?: InputMaybe<Scalars['String']>;
+  status?: InputMaybe<Scalars['Int']>;
 };
 
 export type BulkCreateLocationsInput = {
@@ -365,6 +465,8 @@ export type BulkCreateLocationsInput = {
   column: Scalars['Int'];
   comment?: InputMaybe<Scalars['String']>;
   constraint?: InputMaybe<Scalars['String']>;
+  /** Semi-structured attributes that can be used to store data for anything that doesn't fit in the default columns */
+  extras?: InputMaybe<Scalars['JSON']>;
   level: Scalars['Int'];
   levelStep: Scalars['Int'];
   numberOfAisle: Scalars['Int'];
@@ -403,6 +505,8 @@ export type CreateArticleInput = {
   code: Scalars['String'];
   companyId: Scalars['Int'];
   cubingType?: InputMaybe<Scalars['Int']>;
+  /** Semi-structured attributes that can be used to store data for anything that doesn't fit in the default columns */
+  extras?: InputMaybe<Scalars['JSON']>;
   family?: InputMaybe<Scalars['String']>;
   featureTypeId?: InputMaybe<Scalars['Int']>;
   groupingId?: InputMaybe<Scalars['String']>;
@@ -421,6 +525,8 @@ export type CreateBarcodeInput = {
   accountId: Scalars['Int'];
   articleId: Scalars['String'];
   companyId: Scalars['Int'];
+  /** Semi-structured attributes that can be used to store data for anything that doesn't fit in the default columns */
+  extras?: InputMaybe<Scalars['JSON']>;
   flagDouble?: InputMaybe<Scalars['Int']>;
   name: Scalars['String'];
   preparationMode?: InputMaybe<Scalars['Int']>;
@@ -436,11 +542,30 @@ export type CreateBlockInput = {
   /** Large area without racks where products are stored on top of each other. */
   bulk?: InputMaybe<Scalars['Boolean']>;
   comment?: InputMaybe<Scalars['String']>;
+  /** Semi-structured attributes that can be used to store data for anything that doesn't fit in the default columns */
+  extras?: InputMaybe<Scalars['JSON']>;
   /** DEFAULT '-1', set level when bloc is a mezzanine (“-1”: “N/A”, “0”: “Level0”, “1”: “Level1”, “2”: “Level2”, …). Language conversion have to be set on this field. */
   level?: InputMaybe<Scalars['Int']>;
   /** Manage stock in transit mode. */
   moveable?: InputMaybe<Scalars['Boolean']>;
   name: Scalars['String'];
+};
+
+export type CreateBuildingInput = {
+  address1?: InputMaybe<Scalars['String']>;
+  address2?: InputMaybe<Scalars['String']>;
+  address3?: InputMaybe<Scalars['String']>;
+  awsAccessKeyId?: InputMaybe<Scalars['String']>;
+  awsSecretAccessKey?: InputMaybe<Scalars['String']>;
+  city?: InputMaybe<Scalars['String']>;
+  contactEmail?: InputMaybe<Scalars['String']>;
+  contactMobile?: InputMaybe<Scalars['String']>;
+  contactName?: InputMaybe<Scalars['String']>;
+  contactPhone?: InputMaybe<Scalars['String']>;
+  country?: InputMaybe<Scalars['String']>;
+  name: Scalars['String'];
+  postCode?: InputMaybe<Scalars['String']>;
+  status?: InputMaybe<Scalars['Int']>;
 };
 
 export type CreateLocationInput = {
@@ -456,6 +581,8 @@ export type CreateLocationInput = {
   column: Scalars['Int'];
   comment?: InputMaybe<Scalars['String']>;
   constraint?: InputMaybe<Scalars['String']>;
+  /** Semi-structured attributes that can be used to store data for anything that doesn't fit in the default columns */
+  extras?: InputMaybe<Scalars['JSON']>;
   level: Scalars['Int'];
   name: Scalars['String'];
   position: Scalars['Int'];
@@ -466,6 +593,8 @@ export type CreateLocationInput = {
 export type CreateLocationResponse = Location | ValidationError;
 
 export type CreatePatternInput = {
+  /** Semi-structured attributes that can be used to store data for anything that doesn't fit in the default columns */
+  extras?: InputMaybe<Scalars['JSON']>;
   name: Scalars['String'];
   patternType: Scalars['String'];
   status: Scalars['Int'];
@@ -473,15 +602,27 @@ export type CreatePatternInput = {
 };
 
 export type CreatePatternPathInput = {
+  /** Semi-structured attributes that can be used to store data for anything that doesn't fit in the default columns */
+  extras?: InputMaybe<Scalars['JSON']>;
   name: Scalars['String'];
   patternId: Scalars['String'];
   status: Scalars['Int'];
 };
 
 export type CreatePatternPathLocationInput = {
+  /** Semi-structured attributes that can be used to store data for anything that doesn't fit in the default columns */
+  extras?: InputMaybe<Scalars['JSON']>;
   locationId: Scalars['String'];
   /** Location position in pattern_path */
   order: Scalars['Int'];
+};
+
+export type CreateReturnCodeInput = {
+  description?: InputMaybe<Scalars['String']>;
+  /** Semi-structured attributes that can be used to store data for anything that doesn't fit in the default columns */
+  extras?: InputMaybe<Scalars['JSON']>;
+  name: Scalars['String'];
+  type?: InputMaybe<Scalars['String']>;
 };
 
 export type CreateStockOwnerInput = {
@@ -555,6 +696,8 @@ export type Location = {
   constraint?: Maybe<Scalars['String']>;
   created?: Maybe<Scalars['DateTime']>;
   createdBy?: Maybe<Scalars['String']>;
+  /** Semi-structured attributes that can be used to store data for anything that doesn't fit in the default columns */
+  extras?: Maybe<Scalars['JSON']>;
   /** String-based unique identifier. */
   id?: Maybe<Scalars['String']>;
   level: Scalars['Int'];
@@ -577,6 +720,7 @@ export type LocationExportFilters = {
   column?: InputMaybe<Scalars['Int']>;
   comment?: InputMaybe<Scalars['String']>;
   constraint?: InputMaybe<Scalars['String']>;
+  extras?: InputMaybe<Scalars['JSON']>;
   level?: InputMaybe<Scalars['Int']>;
   name?: InputMaybe<Scalars['String']>;
   position?: InputMaybe<Scalars['Int']>;
@@ -597,6 +741,7 @@ export enum LocationFieldName {
   Constraint = 'constraint',
   Created = 'created',
   CreatedBy = 'createdBy',
+  Extras = 'extras',
   Id = 'id',
   Level = 'level',
   Modified = 'modified',
@@ -636,6 +781,7 @@ export type LocationSearchFilters = {
   constraint?: InputMaybe<Scalars['String']>;
   created?: InputMaybe<Scalars['DateTime']>;
   createdBy?: InputMaybe<Scalars['String']>;
+  extras?: InputMaybe<Scalars['JSON']>;
   id?: InputMaybe<Scalars['String']>;
   level?: InputMaybe<Scalars['Int']>;
   modified?: InputMaybe<Scalars['DateTime']>;
@@ -679,6 +825,8 @@ export type Mutation = {
   createBarcode: Barcode;
   /** Create a Block */
   createBlock: Block;
+  /** Create a Building */
+  createBuilding: Building;
   /** Create an IntegratorOrganization */
   createIntegratorOrganization: Organization;
   /** As an Integrator, I can invite a fellow Integrator */
@@ -688,6 +836,8 @@ export type Mutation = {
   createPattern: Pattern;
   /** Create a PatternPath */
   createPatternPath: PatternPath;
+  /** Create Return Code */
+  createReturnCode: ReturnCode;
   /** Create a new Role */
   createRole: RoleType;
   /** Create stock owner */
@@ -707,6 +857,8 @@ export type Mutation = {
   deletePattern: Scalars['Boolean'];
   /** Delete a PatternPath */
   deletePatternPath: Scalars['Boolean'];
+  /** Delete a return code */
+  deleteReturnCode: Scalars['Boolean'];
   deleteRole: Scalars['Boolean'];
   deleteUser: Scalars['Boolean'];
   deleteWarehouse: Scalars['Boolean'];
@@ -734,12 +886,18 @@ export type Mutation = {
   updateBarcode?: Maybe<Barcode>;
   /** Update block */
   updateBlock?: Maybe<Block>;
+  /** Update building */
+  updateBuilding?: Maybe<Building>;
   /** Update Location */
   updateLocation?: Maybe<Location>;
   /** Update Pattern */
   updatePattern?: Maybe<Pattern>;
   /** Update PatternPath */
   updatePatternPath?: Maybe<PatternPath>;
+  /** Update Return Code */
+  updateReturnCode?: Maybe<ReturnCode>;
+  /** Update a Role */
+  updateRole?: Maybe<RoleType>;
   /** Update stock owner */
   updateStockOwner?: Maybe<StockOwner>;
   updateUser?: Maybe<User>;
@@ -784,7 +942,13 @@ export type MutationCreateBlockArgs = {
 };
 
 
+export type MutationCreateBuildingArgs = {
+  input: CreateBuildingInput;
+};
+
+
 export type MutationCreateIntegratorOrganizationArgs = {
+  id?: InputMaybe<Scalars['ID']>;
   name: Scalars['String'];
 };
 
@@ -812,6 +976,11 @@ export type MutationCreatePatternPathArgs = {
 };
 
 
+export type MutationCreateReturnCodeArgs = {
+  input: CreateReturnCodeInput;
+};
+
+
 export type MutationCreateRoleArgs = {
   name: Scalars['String'];
   permissions: Array<PermissionInput>;
@@ -824,7 +993,7 @@ export type MutationCreateStockOwnerArgs = {
 
 
 export type MutationCreateWarehouseArgs = {
-  id?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['ID']>;
   name: Scalars['String'];
   organizationId: Scalars['ID'];
 };
@@ -861,6 +1030,11 @@ export type MutationDeletePatternArgs = {
 
 
 export type MutationDeletePatternPathArgs = {
+  id: Scalars['String'];
+};
+
+
+export type MutationDeleteReturnCodeArgs = {
   id: Scalars['String'];
 };
 
@@ -964,6 +1138,12 @@ export type MutationUpdateBlockArgs = {
 };
 
 
+export type MutationUpdateBuildingArgs = {
+  id: Scalars['String'];
+  input: UpdateBuildingInput;
+};
+
+
 export type MutationUpdateLocationArgs = {
   id: Scalars['String'];
   input: UpdateLocationInput;
@@ -979,6 +1159,19 @@ export type MutationUpdatePatternArgs = {
 export type MutationUpdatePatternPathArgs = {
   id: Scalars['String'];
   input: UpdatePatternPathInput;
+};
+
+
+export type MutationUpdateReturnCodeArgs = {
+  id: Scalars['String'];
+  input: UpdateReturnCodeInput;
+};
+
+
+export type MutationUpdateRoleArgs = {
+  id: Scalars['ID'];
+  name?: InputMaybe<Scalars['String']>;
+  permissions?: InputMaybe<Array<PermissionInput>>;
 };
 
 
@@ -1056,6 +1249,8 @@ export type Pattern = {
   __typename?: 'Pattern';
   created?: Maybe<Scalars['DateTime']>;
   createdBy?: Maybe<Scalars['String']>;
+  /** Semi-structured attributes that can be used to store data for anything that doesn't fit in the default columns */
+  extras?: Maybe<Scalars['JSON']>;
   /** String-based unique identifier. */
   id?: Maybe<Scalars['String']>;
   modified?: Maybe<Scalars['DateTime']>;
@@ -1071,6 +1266,7 @@ export type Pattern = {
 export enum PatternFieldName {
   Created = 'created',
   CreatedBy = 'createdBy',
+  Extras = 'extras',
   Id = 'id',
   Modified = 'modified',
   ModifiedBy = 'modifiedBy',
@@ -1100,6 +1296,8 @@ export type PatternPath = {
   __typename?: 'PatternPath';
   created?: Maybe<Scalars['DateTime']>;
   createdBy?: Maybe<Scalars['String']>;
+  /** Semi-structured attributes that can be used to store data for anything that doesn't fit in the default columns */
+  extras?: Maybe<Scalars['JSON']>;
   /** String-based unique identifier. */
   id?: Maybe<Scalars['String']>;
   locations: Array<PatternPathLocation>;
@@ -1114,6 +1312,7 @@ export type PatternPath = {
 export enum PatternPathFieldName {
   Created = 'created',
   CreatedBy = 'createdBy',
+  Extras = 'extras',
   Id = 'id',
   Modified = 'modified',
   ModifiedBy = 'modifiedBy',
@@ -1136,6 +1335,8 @@ export type PatternPathLocation = {
   __typename?: 'PatternPathLocation';
   created?: Maybe<Scalars['DateTime']>;
   createdBy?: Maybe<Scalars['String']>;
+  /** Semi-structured attributes that can be used to store data for anything that doesn't fit in the default columns */
+  extras?: Maybe<Scalars['JSON']>;
   /** String-based unique identifier. */
   id?: Maybe<Scalars['String']>;
   location: Location;
@@ -1151,6 +1352,7 @@ export type PatternPathLocation = {
 export enum PatternPathLocationFieldName {
   Created = 'created',
   CreatedBy = 'createdBy',
+  Extras = 'extras',
   Id = 'id',
   LocationId = 'locationId',
   Modified = 'modified',
@@ -1179,6 +1381,7 @@ export type PatternPathLocationOrderByCriterion = {
 export type PatternPathLocationSearchFilters = {
   created?: InputMaybe<Scalars['DateTime']>;
   createdBy?: InputMaybe<Scalars['String']>;
+  extras?: InputMaybe<Scalars['JSON']>;
   id?: InputMaybe<Scalars['String']>;
   locationId?: InputMaybe<Scalars['String']>;
   modified?: InputMaybe<Scalars['DateTime']>;
@@ -1197,6 +1400,7 @@ export type PatternPathOrderByCriterion = {
 export type PatternPathSearchFilters = {
   created?: InputMaybe<Scalars['DateTime']>;
   createdBy?: InputMaybe<Scalars['String']>;
+  extras?: InputMaybe<Scalars['JSON']>;
   id?: InputMaybe<Scalars['String']>;
   modified?: InputMaybe<Scalars['DateTime']>;
   modifiedBy?: InputMaybe<Scalars['String']>;
@@ -1209,6 +1413,7 @@ export type PatternPathSearchFilters = {
 export type PatternSearchFilters = {
   created?: InputMaybe<Scalars['DateTime']>;
   createdBy?: InputMaybe<Scalars['String']>;
+  extras?: InputMaybe<Scalars['JSON']>;
   id?: InputMaybe<Scalars['String']>;
   modified?: InputMaybe<Scalars['DateTime']>;
   modifiedBy?: InputMaybe<Scalars['String']>;
@@ -1252,6 +1457,10 @@ export type Query = {
   block?: Maybe<Block>;
   /** Search Blocks */
   blocks: BlockListResult;
+  /** Get a Building */
+  building?: Maybe<Building>;
+  /** Search Buildings */
+  buildings: BuildingListResult;
   /** Get a Location */
   location?: Maybe<Location>;
   /** Search Locations */
@@ -1268,6 +1477,10 @@ export type Query = {
   patternPaths: PatternPathListResult;
   /** Search Patterns */
   patterns: PatternListResult;
+  /** Retrieve a given Return Code by its ID */
+  returnCode?: Maybe<ReturnCode>;
+  /** List multiple Return Codes */
+  returnCodes: ReturnCodeListResult;
   roles: RoleListResult;
   /** Retrieve a given StockOwner by its ID */
   stockOwner?: Maybe<StockOwner>;
@@ -1313,6 +1526,19 @@ export type QueryBlocksArgs = {
   filters?: InputMaybe<BlockSearchFilters>;
   itemsPerPage?: Scalars['Int'];
   orderBy?: InputMaybe<Array<BlockOrderByCriterion>>;
+  page?: Scalars['Int'];
+};
+
+
+export type QueryBuildingArgs = {
+  id: Scalars['String'];
+};
+
+
+export type QueryBuildingsArgs = {
+  filters?: InputMaybe<BuildingSearchFilters>;
+  itemsPerPage?: Scalars['Int'];
+  orderBy?: InputMaybe<Array<BuildingOrderByCriterion>>;
   page?: Scalars['Int'];
 };
 
@@ -1372,6 +1598,19 @@ export type QueryPatternsArgs = {
 };
 
 
+export type QueryReturnCodeArgs = {
+  id: Scalars['String'];
+};
+
+
+export type QueryReturnCodesArgs = {
+  filters?: InputMaybe<ReturnCodeSearchFilters>;
+  itemsPerPage?: Scalars['Int'];
+  orderBy?: InputMaybe<Array<ReturnCodeOrderByCriterion>>;
+  page?: Scalars['Int'];
+};
+
+
 export type QueryRolesArgs = {
   filters?: InputMaybe<RoleSearchFilters>;
   itemsPerPage?: Scalars['Int'];
@@ -1427,6 +1666,63 @@ export type ResetPasswordResponse = ResetPasswordFailure | ResetPasswordSuccess;
 export type ResetPasswordSuccess = {
   __typename?: 'ResetPasswordSuccess';
   message: Scalars['String'];
+};
+
+export type ReturnCode = {
+  __typename?: 'ReturnCode';
+  created?: Maybe<Scalars['DateTime']>;
+  createdBy?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars['String']>;
+  /** Semi-structured attributes that can be used to store data for anything that doesn't fit in the default columns */
+  extras?: Maybe<Scalars['JSON']>;
+  /** String-based unique identifier. */
+  id?: Maybe<Scalars['String']>;
+  modified?: Maybe<Scalars['DateTime']>;
+  modifiedBy?: Maybe<Scalars['String']>;
+  name: Scalars['String'];
+  type?: Maybe<Scalars['String']>;
+};
+
+/** Field names for the ReturnCode model */
+export enum ReturnCodeFieldName {
+  Created = 'created',
+  CreatedBy = 'createdBy',
+  Description = 'description',
+  Extras = 'extras',
+  Id = 'id',
+  Modified = 'modified',
+  ModifiedBy = 'modifiedBy',
+  Name = 'name',
+  Type = 'type'
+}
+
+/** Returns a list of ReturnCode */
+export type ReturnCodeListResult = {
+  __typename?: 'ReturnCodeListResult';
+  count: Scalars['Int'];
+  itemsPerPage: Scalars['Int'];
+  page: Scalars['Int'];
+  results: Array<ReturnCode>;
+  totalPages: Scalars['Int'];
+};
+
+/** How to order the search results for ReturnCode */
+export type ReturnCodeOrderByCriterion = {
+  ascending?: Scalars['Boolean'];
+  field: ReturnCodeFieldName;
+};
+
+/** Attributes of ReturnCode to filter onto */
+export type ReturnCodeSearchFilters = {
+  created?: InputMaybe<Scalars['DateTime']>;
+  createdBy?: InputMaybe<Scalars['String']>;
+  description?: InputMaybe<Scalars['String']>;
+  extras?: InputMaybe<Scalars['JSON']>;
+  id?: InputMaybe<Scalars['String']>;
+  modified?: InputMaybe<Scalars['DateTime']>;
+  modifiedBy?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
+  type?: InputMaybe<Scalars['String']>;
 };
 
 /** Field names for the Role model */
@@ -1615,10 +1911,12 @@ export enum Table {
   Article = 'ARTICLE',
   Barcode = 'BARCODE',
   Block = 'BLOCK',
+  Building = 'BUILDING',
   Location = 'LOCATION',
   Organization = 'ORGANIZATION',
   Pattern = 'PATTERN',
   PatternPath = 'PATTERN_PATH',
+  ReturnCode = 'RETURN_CODE',
   Role = 'ROLE',
   StockOwner = 'STOCK_OWNER',
   User = 'USER'
@@ -1650,6 +1948,7 @@ export type UpdateArticleInput = {
   code?: InputMaybe<Scalars['String']>;
   companyId?: InputMaybe<Scalars['Int']>;
   cubingType?: InputMaybe<Scalars['Int']>;
+  extras?: InputMaybe<Scalars['JSON']>;
   family?: InputMaybe<Scalars['String']>;
   featureTypeId?: InputMaybe<Scalars['Int']>;
   groupingId?: InputMaybe<Scalars['String']>;
@@ -1669,6 +1968,7 @@ export type UpdateBarcodeInput = {
   accountId?: InputMaybe<Scalars['Int']>;
   articleId?: InputMaybe<Scalars['String']>;
   companyId?: InputMaybe<Scalars['Int']>;
+  extras?: InputMaybe<Scalars['JSON']>;
   flagDouble?: InputMaybe<Scalars['Int']>;
   name?: InputMaybe<Scalars['String']>;
   preparationMode?: InputMaybe<Scalars['Int']>;
@@ -1683,9 +1983,28 @@ export type UpdateBlockInput = {
   blockGroup?: InputMaybe<Scalars['Int']>;
   bulk?: InputMaybe<Scalars['Boolean']>;
   comment?: InputMaybe<Scalars['String']>;
+  extras?: InputMaybe<Scalars['JSON']>;
   level?: InputMaybe<Scalars['Int']>;
   moveable?: InputMaybe<Scalars['Boolean']>;
   name?: InputMaybe<Scalars['String']>;
+};
+
+/** Values to update the existing record with */
+export type UpdateBuildingInput = {
+  address1?: InputMaybe<Scalars['String']>;
+  address2?: InputMaybe<Scalars['String']>;
+  address3?: InputMaybe<Scalars['String']>;
+  awsAccessKeyId?: InputMaybe<Scalars['String']>;
+  awsSecretAccessKey?: InputMaybe<Scalars['String']>;
+  city?: InputMaybe<Scalars['String']>;
+  contactEmail?: InputMaybe<Scalars['String']>;
+  contactMobile?: InputMaybe<Scalars['String']>;
+  contactName?: InputMaybe<Scalars['String']>;
+  contactPhone?: InputMaybe<Scalars['String']>;
+  country?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
+  postCode?: InputMaybe<Scalars['String']>;
+  status?: InputMaybe<Scalars['Int']>;
 };
 
 /** Values to update the existing record with */
@@ -1699,6 +2018,7 @@ export type UpdateLocationInput = {
   column?: InputMaybe<Scalars['Int']>;
   comment?: InputMaybe<Scalars['String']>;
   constraint?: InputMaybe<Scalars['String']>;
+  extras?: InputMaybe<Scalars['JSON']>;
   level?: InputMaybe<Scalars['Int']>;
   name?: InputMaybe<Scalars['String']>;
   position?: InputMaybe<Scalars['Int']>;
@@ -1708,6 +2028,7 @@ export type UpdateLocationInput = {
 
 /** Values to update the existing record with */
 export type UpdatePatternInput = {
+  extras?: InputMaybe<Scalars['JSON']>;
   name?: InputMaybe<Scalars['String']>;
   patternType?: InputMaybe<Scalars['String']>;
   status?: InputMaybe<Scalars['Int']>;
@@ -1716,9 +2037,18 @@ export type UpdatePatternInput = {
 
 /** Values to update the existing record with */
 export type UpdatePatternPathInput = {
+  extras?: InputMaybe<Scalars['JSON']>;
   name?: InputMaybe<Scalars['String']>;
   patternId?: InputMaybe<Scalars['String']>;
   status?: InputMaybe<Scalars['Int']>;
+};
+
+/** Values to update the existing record with */
+export type UpdateReturnCodeInput = {
+  description?: InputMaybe<Scalars['String']>;
+  extras?: InputMaybe<Scalars['JSON']>;
+  name?: InputMaybe<Scalars['String']>;
+  type?: InputMaybe<Scalars['String']>;
 };
 
 /** Values to update the existing record with */
@@ -2016,6 +2346,55 @@ export type ChangePasswordMutationVariables = Exact<{
 
 
 export type ChangePasswordMutation = { __typename?: 'Mutation', changePassword: { __typename: 'ChangePasswordFailure', message: string } | { __typename: 'ChangePasswordSuccess', message: string } };
+
+export type GetAllReturnCodesQueryVariables = Exact<{
+  filters?: InputMaybe<ReturnCodeSearchFilters>;
+  orderBy?: InputMaybe<Array<ReturnCodeOrderByCriterion> | ReturnCodeOrderByCriterion>;
+  page: Scalars['Int'];
+  itemsPerPage: Scalars['Int'];
+}>;
+
+
+export type GetAllReturnCodesQuery = { __typename?: 'Query', returnCodes: { __typename?: 'ReturnCodeListResult', count: number, itemsPerPage: number, totalPages: number, results: Array<{ __typename?: 'ReturnCode', id?: string | null, name: string, type?: string | null }> } };
+
+export type GetReturnCodeByIdQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type GetReturnCodeByIdQuery = { __typename?: 'Query', returnCode?: { __typename?: 'ReturnCode', id?: string | null, name: string, type?: string | null, description?: string | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null } | null };
+
+export type GetReturnCodeIdsQueryVariables = Exact<{
+  filters?: InputMaybe<ReturnCodeSearchFilters>;
+  orderBy?: InputMaybe<Array<ReturnCodeOrderByCriterion> | ReturnCodeOrderByCriterion>;
+  page: Scalars['Int'];
+  itemsPerPage: Scalars['Int'];
+}>;
+
+
+export type GetReturnCodeIdsQuery = { __typename?: 'Query', returnCodes: { __typename?: 'ReturnCodeListResult', count: number, itemsPerPage: number, totalPages: number, results: Array<{ __typename?: 'ReturnCode', id?: string | null, name: string, type?: string | null }> } };
+
+export type CreateReturnCodeMutationVariables = Exact<{
+  input: CreateReturnCodeInput;
+}>;
+
+
+export type CreateReturnCodeMutation = { __typename?: 'Mutation', createReturnCode: { __typename?: 'ReturnCode', id?: string | null, name: string, type?: string | null } };
+
+export type DeleteReturnCodeMutationVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type DeleteReturnCodeMutation = { __typename?: 'Mutation', deleteReturnCode: boolean };
+
+export type UpdateReturnCodeMutationVariables = Exact<{
+  id: Scalars['String'];
+  input: UpdateReturnCodeInput;
+}>;
+
+
+export type UpdateReturnCodeMutation = { __typename?: 'Mutation', updateReturnCode?: { __typename?: 'ReturnCode', id?: string | null, name: string, type?: string | null } | null };
 
 export type GetMyInfoQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -2519,6 +2898,162 @@ export const useChangePasswordMutation = <
     useMutation<ChangePasswordMutation, TError, ChangePasswordMutationVariables, TContext>(
       ['ChangePassword'],
       (variables?: ChangePasswordMutationVariables) => fetcher<ChangePasswordMutation, ChangePasswordMutationVariables>(client, ChangePasswordDocument, variables, headers)(),
+      options
+    );
+export const GetAllReturnCodesDocument = `
+    query GetAllReturnCodes($filters: ReturnCodeSearchFilters, $orderBy: [ReturnCodeOrderByCriterion!], $page: Int!, $itemsPerPage: Int!) {
+  returnCodes(
+    filters: $filters
+    orderBy: $orderBy
+    page: $page
+    itemsPerPage: $itemsPerPage
+  ) {
+    count
+    itemsPerPage
+    totalPages
+    results {
+      id
+      name
+      type
+    }
+  }
+}
+    `;
+export const useGetAllReturnCodesQuery = <
+      TData = GetAllReturnCodesQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: GetAllReturnCodesQueryVariables,
+      options?: UseQueryOptions<GetAllReturnCodesQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetAllReturnCodesQuery, TError, TData>(
+      ['GetAllReturnCodes', variables],
+      fetcher<GetAllReturnCodesQuery, GetAllReturnCodesQueryVariables>(client, GetAllReturnCodesDocument, variables, headers),
+      options
+    );
+export const GetReturnCodeByIdDocument = `
+    query GetReturnCodeById($id: String!) {
+  returnCode(id: $id) {
+    id
+    name
+    type
+    description
+    created
+    createdBy
+    modified
+    modifiedBy
+  }
+}
+    `;
+export const useGetReturnCodeByIdQuery = <
+      TData = GetReturnCodeByIdQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: GetReturnCodeByIdQueryVariables,
+      options?: UseQueryOptions<GetReturnCodeByIdQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetReturnCodeByIdQuery, TError, TData>(
+      ['GetReturnCodeById', variables],
+      fetcher<GetReturnCodeByIdQuery, GetReturnCodeByIdQueryVariables>(client, GetReturnCodeByIdDocument, variables, headers),
+      options
+    );
+export const GetReturnCodeIdsDocument = `
+    query GetReturnCodeIds($filters: ReturnCodeSearchFilters, $orderBy: [ReturnCodeOrderByCriterion!], $page: Int!, $itemsPerPage: Int!) {
+  returnCodes(
+    filters: $filters
+    orderBy: $orderBy
+    page: $page
+    itemsPerPage: $itemsPerPage
+  ) {
+    count
+    itemsPerPage
+    totalPages
+    results {
+      id
+      name
+      type
+    }
+  }
+}
+    `;
+export const useGetReturnCodeIdsQuery = <
+      TData = GetReturnCodeIdsQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: GetReturnCodeIdsQueryVariables,
+      options?: UseQueryOptions<GetReturnCodeIdsQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetReturnCodeIdsQuery, TError, TData>(
+      ['GetReturnCodeIds', variables],
+      fetcher<GetReturnCodeIdsQuery, GetReturnCodeIdsQueryVariables>(client, GetReturnCodeIdsDocument, variables, headers),
+      options
+    );
+export const CreateReturnCodeDocument = `
+    mutation CreateReturnCode($input: CreateReturnCodeInput!) {
+  createReturnCode(input: $input) {
+    id
+    name
+    type
+  }
+}
+    `;
+export const useCreateReturnCodeMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<CreateReturnCodeMutation, TError, CreateReturnCodeMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<CreateReturnCodeMutation, TError, CreateReturnCodeMutationVariables, TContext>(
+      ['CreateReturnCode'],
+      (variables?: CreateReturnCodeMutationVariables) => fetcher<CreateReturnCodeMutation, CreateReturnCodeMutationVariables>(client, CreateReturnCodeDocument, variables, headers)(),
+      options
+    );
+export const DeleteReturnCodeDocument = `
+    mutation DeleteReturnCode($id: String!) {
+  deleteReturnCode(id: $id)
+}
+    `;
+export const useDeleteReturnCodeMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<DeleteReturnCodeMutation, TError, DeleteReturnCodeMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<DeleteReturnCodeMutation, TError, DeleteReturnCodeMutationVariables, TContext>(
+      ['DeleteReturnCode'],
+      (variables?: DeleteReturnCodeMutationVariables) => fetcher<DeleteReturnCodeMutation, DeleteReturnCodeMutationVariables>(client, DeleteReturnCodeDocument, variables, headers)(),
+      options
+    );
+export const UpdateReturnCodeDocument = `
+    mutation UpdateReturnCode($id: String!, $input: UpdateReturnCodeInput!) {
+  updateReturnCode(id: $id, input: $input) {
+    id
+    name
+    type
+  }
+}
+    `;
+export const useUpdateReturnCodeMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<UpdateReturnCodeMutation, TError, UpdateReturnCodeMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<UpdateReturnCodeMutation, TError, UpdateReturnCodeMutationVariables, TContext>(
+      ['UpdateReturnCode'],
+      (variables?: UpdateReturnCodeMutationVariables) => fetcher<UpdateReturnCodeMutation, UpdateReturnCodeMutationVariables>(client, UpdateReturnCodeDocument, variables, headers)(),
       options
     );
 export const GetMyInfoDocument = `

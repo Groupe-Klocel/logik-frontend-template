@@ -50,7 +50,8 @@
     "level": "Level",
     "position": "Position",
 	"replenish": "replenish",
-	"masse": "Masse"
+	"masse": "Masse",
+    "type": "Type"
 
 
 }

@@ -22,6 +22,7 @@
     "filter": "Filtrer",
     "fixed": "Fixe",
     "login": "Connexion",
+    "list": "Lister {{name}}",
     "print": "Imprimer",
     "next-step": "Etape suivante",
     "reset": "Réinitialiser",
