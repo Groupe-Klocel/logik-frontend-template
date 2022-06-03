@@ -17,11 +17,14 @@ import {
     showSuccess,
     useCarriers
 } from '@helpers';
-import { Button, Space } from 'antd';
+import { Button, Modal, Space } from 'antd';
 import {
     DeleteCarrierMutation,
     DeleteCarrierMutationVariables,
-    useDeleteCarrierMutation
+    SoftDeleteCarrierMutation,
+    SoftDeleteCarrierMutationVariables,
+    useDeleteCarrierMutation,
+    useSoftDeleteCarrierMutation
 } from 'generated/graphql';
 import graphqlRequestClient from 'graphql/graphqlRequestClient';
 import useTranslation from 'next-translate/useTranslation';
@@ -76,16 +79,16 @@ const CarriersList = ({ searchCriteria }: CarriersListTypeProps) => {
         await setSort(orderByFormater(sorter));
     };
 
-    const { mutate, isLoading: deleteLoading } = useDeleteCarrierMutation<Error>(
+    const { mutate, isLoading: softDeleteLoading } = useSoftDeleteCarrierMutation<Error>(
         graphqlRequestClient,
         {
             onSuccess: (
-                data: DeleteCarrierMutation,
-                _variables: DeleteCarrierMutationVariables,
+                data: SoftDeleteCarrierMutation,
+                _variables: SoftDeleteCarrierMutationVariables,
                 _context: any
             ) => {
                 router.back();
-                if (!deleteLoading) {
+                if (!softDeleteLoading) {
                     showSuccess(t('messages:success-deleted'));
                 }
             },
@@ -95,15 +98,16 @@ const CarriersList = ({ searchCriteria }: CarriersListTypeProps) => {
         }
     );
 
-    const deleteCarrier = ({ id }: DeleteCarrierMutationVariables) => {
-        mutate({ id });
+    const softDeleteCarrier = ({ carrierId }: SoftDeleteCarrierMutationVariables) => {
+        Modal.confirm({
+            title: t('messages:delete-confirm'),
+            onOk: () => {
+                mutate({ carrierId });
+            },
+            okText: t('messages:confirm'),
+            cancelText: t('messages:cancel')
+        });
     };
-
-    useEffect(() => {
-        if (error) {
-            showError(t('messages:error-getting-data'));
-        }
-    }, [error]);
 
     const columns = [
         {
@@ -157,7 +161,7 @@ const CarriersList = ({ searchCriteria }: CarriersListTypeProps) => {
                     <Button
                         icon={<DeleteOutlined />}
                         danger
-                        onClick={() => deleteCarrier({ id: record.id })}
+                        onClick={() => softDeleteCarrier({ carrierId: record.id })}
                     />
                 </Space>
             )

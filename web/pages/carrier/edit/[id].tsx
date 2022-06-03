@@ -1,5 +1,6 @@
 import { AppHead } from '@components';
 import MainLayout from 'components/layouts/MainLayout';
+import { EditCarrier } from 'modules/Carriers/PagesContainer/EditCarrier';
 import { useRouter } from 'next/router';
 import { FC } from 'react';
 

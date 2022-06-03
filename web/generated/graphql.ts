@@ -2208,6 +2208,13 @@ export type DeleteCarrierMutationVariables = Exact<{
 
 export type DeleteCarrierMutation = { __typename?: 'Mutation', deleteCarrier: boolean };
 
+export type SoftDeleteCarrierMutationVariables = Exact<{
+  carrierId: Scalars['String'];
+}>;
+
+
+export type SoftDeleteCarrierMutation = { __typename?: 'Mutation', softDeleteCarrier: boolean };
+
 export type UpdateCarrierMutationVariables = Exact<{
   id: Scalars['String'];
   input: UpdateCarrierInput;
@@ -2842,6 +2849,24 @@ export const useDeleteCarrierMutation = <
     useMutation<DeleteCarrierMutation, TError, DeleteCarrierMutationVariables, TContext>(
       ['DeleteCarrier'],
       (variables?: DeleteCarrierMutationVariables) => fetcher<DeleteCarrierMutation, DeleteCarrierMutationVariables>(client, DeleteCarrierDocument, variables, headers)(),
+      options
+    );
+export const SoftDeleteCarrierDocument = `
+    mutation SoftDeleteCarrier($carrierId: String!) {
+  softDeleteCarrier(carrierId: $carrierId)
+}
+    `;
+export const useSoftDeleteCarrierMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<SoftDeleteCarrierMutation, TError, SoftDeleteCarrierMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<SoftDeleteCarrierMutation, TError, SoftDeleteCarrierMutationVariables, TContext>(
+      ['SoftDeleteCarrier'],
+      (variables?: SoftDeleteCarrierMutationVariables) => fetcher<SoftDeleteCarrierMutation, SoftDeleteCarrierMutationVariables>(client, SoftDeleteCarrierDocument, variables, headers)(),
       options
     );
 export const UpdateCarrierDocument = `

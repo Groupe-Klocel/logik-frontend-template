@@ -95,6 +95,10 @@ mutation DeleteCarrier($id: String!) {
     deleteCarrier(id: $id)
 }
 
+mutation SoftDeleteCarrier($carrierId: String!) {
+    softDeleteCarrier(carrierId: $carrierId)
+}
+
 mutation UpdateCarrier($id: String!, $input: UpdateCarrierInput!) {
     updateCarrier(id: $id, input: $input) {
         name
