@@ -29,5 +29,8 @@
     "success-update-box-quantity": "La quantité a été mise à jour",
     "error-barcode-not-render": "Une erreur est survenue lors de la génération du code à barres",
     "error-selected-article-not-exist": "L'article sélectionné n'existe pas",
-    "error-permission": "Permissions insuffisantes"
+    "error-permission": "Permissions insuffisantes",
+    "delete-confirm": "Confirmez la suppression",
+    "cancel": "Annuler",
+    "confirm": "Confirmer"
 }

@@ -1,6 +1,7 @@
 import { WrapperForm } from '@components';
 import { showSuccess, showError, showInfo } from '@helpers';
 import { Form, Row, Col, Input, Checkbox, Button } from 'antd';
+import { CheckboxChangeEvent } from 'antd/lib/checkbox';
 import { useAuth } from 'context/AuthContext';
 import {
     useUpdateCarrierMutation,
@@ -9,7 +10,7 @@ import {
 } from 'generated/graphql';
 import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
-import { FC, useEffect } from 'react';
+import { FC, useEffect, useState } from 'react';
 
 export type EditCarrierFormProps = {
     carrierId: string;
@@ -29,6 +30,7 @@ export const EditCarrierForm: FC<EditCarrierFormProps> = ({
     const errorMessageEmptyInput = t('messages:error-message-empty-input');
 
     const [form] = Form.useForm();
+    const [availableValue, setAvailableValue] = useState(details.available);
 
     const {
         mutate,
@@ -50,6 +52,11 @@ export const EditCarrierForm: FC<EditCarrierFormProps> = ({
 
     const updateCarrier = ({ id, input }: UpdateCarrierMutationVariables) => {
         mutate({ id, input });
+    };
+
+    const onAvailableChange = (e: CheckboxChangeEvent) => {
+        setAvailableValue(!availableValue);
+        form.setFieldsValue({ available: e.target.checked });
     };
 
     const onFinish = () => {
@@ -100,13 +107,10 @@ export const EditCarrierForm: FC<EditCarrierFormProps> = ({
                         </Form.Item>
                     </Col>
                     <Col xs={24} xl={12}>
-                        <Form.Item
-                            label={available}
-                            name="available"
-                            valuePropName="checked"
-                            initialValue={true}
-                        >
-                            <Checkbox>{available}</Checkbox>
+                        <Form.Item name="available">
+                            <Checkbox checked={availableValue} onChange={onAvailableChange}>
+                                {available}
+                            </Checkbox>
                         </Form.Item>
                     </Col>
                 </Row>

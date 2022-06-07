@@ -7,7 +7,7 @@ import {
     pathParams,
     DataQueryType,
     PaginationType,
-    orberByFormater,
+    orderByFormater,
     showInfo,
     showError,
     showSuccess
@@ -126,7 +126,7 @@ const ArticlesList = ({ searchCriteria }: IArticlesListProps) => {
     }, [data]);
 
     const handleTableChange = async (_pagination: any, _filter: any, sorter: any) => {
-        await setSort(orberByFormater(sorter));
+        await setSort(orderByFormater(sorter));
     };
 
     // to refactor to be automatique when fetching data

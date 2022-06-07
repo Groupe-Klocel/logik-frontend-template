@@ -115,9 +115,18 @@ export const AddCarrierForm = () => {
                 </Row>
             </Form>
             <div style={{ textAlign: 'center' }}>
-                <Button type="primary" loading={createLoading} onClick={onFinish}>
-                    {t('actions:submit')}
-                </Button>
+                <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
+                    <Col xs={24} xl={12}>
+                        <Button type="primary" loading={createLoading} onClick={onFinish}>
+                            {t('actions:submit')}
+                        </Button>
+                    </Col>
+                    <Col xs={24} xl={12}>
+                        <Button danger onClick={() => router.back()}>
+                            {t('actions:cancel')}
+                        </Button>
+                    </Col>
+                </Row>
             </div>
         </WrapperForm>
     );

@@ -30,6 +30,7 @@ import graphqlRequestClient from 'graphql/graphqlRequestClient';
 import useTranslation from 'next-translate/useTranslation';
 import router from 'next/router';
 import { useCallback, useEffect, useState } from 'react';
+import { resolveProjectReferencePath } from 'typescript';
 
 export type CarriersListTypeProps = {
     searchCriteria?: any;
@@ -57,7 +58,7 @@ const CarriersList = ({ searchCriteria }: CarriersListTypeProps) => {
         [setPagination, carriers]
     );
 
-    const { isLoading, data, error } = useCarriers(
+    const { isLoading, data, error, refetch } = useCarriers(
         searchCriteria,
         pagination.current,
         pagination.itemsPerPage,
@@ -87,8 +88,8 @@ const CarriersList = ({ searchCriteria }: CarriersListTypeProps) => {
                 _variables: SoftDeleteCarrierMutationVariables,
                 _context: any
             ) => {
-                router.back();
                 if (!softDeleteLoading) {
+                    refetch;
                     showSuccess(t('messages:success-deleted'));
                 }
             },
@@ -148,21 +149,27 @@ const CarriersList = ({ searchCriteria }: CarriersListTypeProps) => {
         {
             title: 'actions:actions',
             key: 'actions',
-            render: (record: { id: string; name: string }) => (
+            render: (record: { id: string; name: string; status: number }) => (
                 <Space>
                     <LinkButton
                         icon={<EyeTwoTone />}
                         path={pathParams('/carrier/[id]', record.id)}
                     />
-                    <LinkButton
-                        icon={<EditTwoTone />}
-                        path={pathParams('/carrier/edit/[id]', record.id)}
-                    />
-                    <Button
-                        icon={<DeleteOutlined />}
-                        danger
-                        onClick={() => softDeleteCarrier({ carrierId: record.id })}
-                    />
+                    {record.status != 1005 ? (
+                        <>
+                            <LinkButton
+                                icon={<EditTwoTone />}
+                                path={pathParams('/carrier/edit/[id]', record.id)}
+                            />
+                            <Button
+                                icon={<DeleteOutlined />}
+                                danger
+                                onClick={() => softDeleteCarrier({ carrierId: record.id })}
+                            />
+                        </>
+                    ) : (
+                        <></>
+                    )}
                 </Space>
             )
         }

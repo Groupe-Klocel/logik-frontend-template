@@ -7,7 +7,10 @@ import {
     GetCarrierByIdQuery,
     useDeleteCarrierMutation,
     DeleteCarrierMutation,
-    DeleteCarrierMutationVariables
+    DeleteCarrierMutationVariables,
+    useSoftDeleteCarrierMutation,
+    SoftDeleteCarrierMutationVariables,
+    SoftDeleteCarrierMutation
 } from 'generated/graphql';
 import useTranslation from 'next-translate/useTranslation';
 import { NextRouter } from 'next/router';
@@ -38,16 +41,16 @@ const SingleCarrier: FC<SingleCarrierTypeProps> = ({ id, router }: SingleCarrier
         }
     ];
 
-    const { mutate, isLoading: deleteLoading } = useDeleteCarrierMutation<Error>(
+    const { mutate, isLoading: softDeleteLoading } = useSoftDeleteCarrierMutation<Error>(
         graphqlRequestClient,
         {
             onSuccess: (
-                data: DeleteCarrierMutation,
-                _variables: DeleteCarrierMutationVariables,
+                data: SoftDeleteCarrierMutation,
+                _variables: SoftDeleteCarrierMutationVariables,
                 _context: unknown
             ) => {
                 router.back();
-                if (!deleteLoading) {
+                if (!softDeleteLoading) {
                     showSuccess(t('messages:success-deleted'));
                 }
             },
@@ -57,11 +60,11 @@ const SingleCarrier: FC<SingleCarrierTypeProps> = ({ id, router }: SingleCarrier
         }
     );
 
-    const deleteCarrier = ({ id }: DeleteCarrierMutationVariables) => {
+    const softDeleteCarrier = ({ carrierId }: SoftDeleteCarrierMutationVariables) => {
         Modal.confirm({
             title: t('messages:delete-confirm'),
             onOk: () => {
-                mutate({ id });
+                mutate({ carrierId });
             },
             okText: t('messages:confirm'),
             cancelText: t('messages:cancel')
@@ -77,7 +80,10 @@ const SingleCarrier: FC<SingleCarrierTypeProps> = ({ id, router }: SingleCarrier
                 actionsRight={
                     <Space>
                         {/* ADD HERE*/}
-                        <Button loading={deleteLoading} onClick={() => deleteCarrier({ id: id })}>
+                        <Button
+                            loading={softDeleteLoading}
+                            onClick={() => softDeleteCarrier({ carrierId: id })}
+                        >
                             {t('actions:delete')}
                         </Button>
                         {/* ADD HERE*/}
