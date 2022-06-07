@@ -5,9 +5,6 @@ import { useAuth } from 'context/AuthContext';
 import {
     useGetCarrierByIdQuery,
     GetCarrierByIdQuery,
-    useDeleteCarrierMutation,
-    DeleteCarrierMutation,
-    DeleteCarrierMutationVariables,
     useSoftDeleteCarrierMutation,
     SoftDeleteCarrierMutationVariables,
     SoftDeleteCarrierMutation
@@ -37,7 +34,7 @@ const SingleCarrier: FC<SingleCarrierTypeProps> = ({ id, router }: SingleCarrier
     const breadsCrumb = [
         ...carriersRoutes,
         {
-            breadcrumbName: `${id}`
+            breadcrumbName: `${data?.carrier?.name}`
         }
     ];
 

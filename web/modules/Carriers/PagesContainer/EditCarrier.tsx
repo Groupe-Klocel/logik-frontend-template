@@ -35,7 +35,7 @@ const EditCarrier: FC<EditCarrierProps> = ({ id, router }: EditCarrierProps) => 
     const breadsCrumb = [
         ...carriersRoutes,
         {
-            breadcrumbName: `${id}`
+            breadcrumbName: `${data?.carrier?.name}`
         }
     ];
 
