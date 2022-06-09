@@ -48,7 +48,7 @@ const EditCarrier: FC<EditCarrierProps> = ({ id, router }: EditCarrierProps) => 
     return (
         <>
             <HeaderContent
-                title={`${t('common:carrier')} ${id}`}
+                title={`${t('common:carrier')} ${data?.carrier?.name}`}
                 routes={breadsCrumb}
                 onBack={() => router.back()}
                 // actionsRight={

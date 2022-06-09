@@ -1,7 +1,7 @@
 {
     "id": "ID",
     "accountId": "Account ID ",
-    "available":"Available",
+    "available": "Available",
     "companyId": "Company ID",
     "status": "Status",
     "code": "Code",
@@ -43,14 +43,21 @@
     "comment": "Comment",
     "system": "System",
     "description": "Description",
-	"default": "Default",
-	"dispatchable": "Dispatchable",
-	"bloc": "Bloc",
+    "default": "Default",
+    "dispatchable": "Dispatchable",
+    "bloc": "Bloc",
     "aisle": "Aisle",
     "level": "Level",
     "position": "Position",
-	"replenish": "replenish",
-	"masse": "Masse"
-
-
+    "replenish": "replenish",
+    "masse": "Masse",
+    "counter": "Counter",
+    "to_be_loaded": "To be loaded",
+    "to_be_palletized": "To be palletized",
+    "use_receipt_number": "Use receipt number",
+    "parent_carrier": "Parent Carrier",
+    "is_virtual": "Virtual",
+    "none": "",
+    "bool-yes": "Yes",
+    "bool-no": "No"
 }

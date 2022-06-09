@@ -9,7 +9,6 @@ type PageComponent = FC & { layout: typeof MainLayout };
 const CarrierPage: PageComponent = () => {
     const router = useRouter();
     const { id } = router.query;
-    const { name } = router.query;
     return (
         <>
             <AppHead title="Bee V2" />

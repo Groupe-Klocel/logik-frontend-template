@@ -26,6 +26,7 @@ query GetAllCarriers(
             monoroundgroup
             accountNumber
             extraInfo
+            isVirtual
         }
     }
 }
@@ -49,6 +50,7 @@ query GetCarrierById($id: String!) {
         monoroundgroup
         accountNumber
         extraInfo
+        isVirtual
     }
 }
 
@@ -88,6 +90,7 @@ mutation CreateCarrier($input: CreateCarrierInput!) {
         monoroundgroup
         accountNumber
         extraInfo
+        isVirtual
     }
 }
 
@@ -118,5 +121,6 @@ mutation UpdateCarrier($id: String!, $input: UpdateCarrierInput!) {
         monoroundgroup
         accountNumber
         extraInfo
+        isVirtual
     }
 }

@@ -37,6 +37,25 @@ export type CarriersListTypeProps = {
 };
 const CarriersList = ({ searchCriteria }: CarriersListTypeProps) => {
     const { t } = useTranslation();
+    const name = t('d:name');
+    const status = t('d:status');
+    const available = t('d:available');
+    const code = t('d:code');
+    const counter = t('d:counter');
+    const to_be_loaded = t('d:to_be_loaded');
+    const to_be_palletized = t('d:to_be_palletized');
+    const use_receipt_number = t('d:use_receipt_number');
+    const parent_carrier = t('common:parent_carrier');
+    const is_virtual = t('d:is_virtual');
+    const errorMessageEmptyInput = t('messages:error-message-empty-input');
+    const succesDetetionMessage = t('messages:success-deleted');
+    const errorDeletionMessage = t('messages:error-deleting-data');
+    const confirmDeletionMessage = t('messages:delete-confirm');
+    const confirmationMessage = t('messages:confirm');
+    const cancelledMessage = t('messages:cancel');
+    const actions = t('actions:actions');
+    const submit = t('actions:submit');
+    const cancel = t('actions:cancel');
     const [carriers, setCarriers] = useState<DataQueryType>();
     const [sort, setSort] = useState<any>(null);
     const [pagination, setPagination] = useState<PaginationType>({
@@ -66,6 +85,10 @@ const CarriersList = ({ searchCriteria }: CarriersListTypeProps) => {
     );
 
     console.log('Donnees : ', data);
+    console.log(
+        'Use Carrier',
+        useCarriers(searchCriteria, pagination.current, pagination.itemsPerPage, sort)
+    );
     useEffect(() => {
         if (data) {
             setCarriers(data?.carriers); // set articles local state with new data
@@ -79,7 +102,7 @@ const CarriersList = ({ searchCriteria }: CarriersListTypeProps) => {
     const handleTableChange = async (_pagination: any, _filter: any, sorter: any) => {
         await setSort(orderByFormater(sorter));
     };
-
+    console.log('JND', carriers);
     const { mutate, isLoading: softDeleteLoading } = useSoftDeleteCarrierMutation<Error>(
         graphqlRequestClient,
         {
@@ -90,29 +113,29 @@ const CarriersList = ({ searchCriteria }: CarriersListTypeProps) => {
             ) => {
                 if (!softDeleteLoading) {
                     refetch;
-                    showSuccess(t('messages:success-deleted'));
+                    showSuccess(succesDetetionMessage);
                 }
             },
             onError: () => {
-                showError(t('messages:error-deleting-data'));
+                showError(errorDeletionMessage);
             }
         }
     );
 
     const softDeleteCarrier = ({ carrierId }: SoftDeleteCarrierMutationVariables) => {
         Modal.confirm({
-            title: t('messages:delete-confirm'),
+            title: confirmDeletionMessage,
             onOk: () => {
                 mutate({ carrierId });
             },
-            okText: t('messages:confirm'),
-            cancelText: t('messages:cancel')
+            okText: confirmationMessage,
+            cancelText: cancelledMessage
         });
     };
 
     const columns = [
         {
-            title: 'd:name',
+            title: name,
             dataIndex: 'name',
             key: 'name',
             sorter: {
@@ -121,7 +144,16 @@ const CarriersList = ({ searchCriteria }: CarriersListTypeProps) => {
             showSorterTooltip: false
         },
         {
-            title: 'd:available',
+            title: status,
+            dataIndex: 'status',
+            key: 'status',
+            sorter: {
+                multiple: 2
+            },
+            showSorterTooltip: false
+        },
+        {
+            title: available,
             dataIndex: 'available',
             key: 'available',
             render: (available: Text) => {
@@ -133,21 +165,60 @@ const CarriersList = ({ searchCriteria }: CarriersListTypeProps) => {
             }
         },
         {
-            title: 'd:status',
-            dataIndex: 'status',
-            key: 'status',
-            sorter: {
-                multiple: 2
-            },
-            showSorterTooltip: false
+            title: to_be_loaded,
+            dataIndex: 'toBeLoaded',
+            key: 'toBeLoaded',
+            render: (toBeLoaded: Text) => {
+                return toBeLoaded ? (
+                    <CheckCircleOutlined style={{ color: 'green' }} />
+                ) : (
+                    <CloseSquareOutlined style={{ color: 'red' }} />
+                );
+            }
         },
         {
-            title: 'd:code',
+            title: to_be_palletized,
+            dataIndex: 'toBePalletized',
+            key: 'toBePalletized',
+            render: (toBePalletized: Text) => {
+                return toBePalletized ? (
+                    <CheckCircleOutlined style={{ color: 'green' }} />
+                ) : (
+                    <CloseSquareOutlined style={{ color: 'red' }} />
+                );
+            }
+        },
+        {
+            title: use_receipt_number,
+            dataIndex: 'useReceiptNumber',
+            key: 'useReceiptNumber',
+            render: (useReceiptNumber: Text) => {
+                return useReceiptNumber ? (
+                    <CheckCircleOutlined style={{ color: 'green' }} />
+                ) : (
+                    <CloseSquareOutlined style={{ color: 'red' }} />
+                );
+            }
+        },
+        {
+            title: is_virtual,
+            dataIndex: 'isVirtual',
+            key: 'isVirtual',
+            render: (isVirtual: Text) => {
+                return isVirtual ? (
+                    <CheckCircleOutlined style={{ color: 'green' }} />
+                ) : (
+                    <CloseSquareOutlined style={{ color: 'red' }} />
+                );
+            }
+        },
+        {
+            title: code,
             dataIndex: 'code',
             key: 'code'
         },
         {
-            title: 'actions:actions',
+            title: actions,
             key: 'actions',
             render: (record: { id: string; name: string; status: number }) => (
                 <Space>

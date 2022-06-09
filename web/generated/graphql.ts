@@ -389,6 +389,7 @@ export type Carrier = {
   extraInfo?: Maybe<Scalars['String']>;
   /** String-based unique identifier. */
   id?: Maybe<Scalars['String']>;
+  isVirtual?: Maybe<Scalars['Boolean']>;
   modified?: Maybe<Scalars['DateTime']>;
   modifiedBy?: Maybe<Scalars['String']>;
   monoroundgroup?: Maybe<Scalars['Boolean']>;
@@ -413,6 +414,7 @@ export enum CarrierFieldName {
   CreatedBy = 'createdBy',
   ExtraInfo = 'extraInfo',
   Id = 'id',
+  IsVirtual = 'isVirtual',
   Modified = 'modified',
   ModifiedBy = 'modifiedBy',
   Monoroundgroup = 'monoroundgroup',
@@ -450,6 +452,7 @@ export type CarrierSearchFilters = {
   createdBy?: InputMaybe<Scalars['String']>;
   extraInfo?: InputMaybe<Scalars['String']>;
   id?: InputMaybe<Scalars['String']>;
+  isVirtual?: InputMaybe<Scalars['Boolean']>;
   modified?: InputMaybe<Scalars['DateTime']>;
   modifiedBy?: InputMaybe<Scalars['String']>;
   monoroundgroup?: InputMaybe<Scalars['Boolean']>;
@@ -534,6 +537,7 @@ export type CreateCarrierInput = {
   code: Scalars['String'];
   counter?: InputMaybe<Scalars['Float']>;
   extraInfo?: InputMaybe<Scalars['String']>;
+  isVirtual?: InputMaybe<Scalars['Boolean']>;
   monoroundgroup?: InputMaybe<Scalars['Boolean']>;
   name: Scalars['String'];
   parentCarrierId?: InputMaybe<Scalars['String']>;
@@ -1855,6 +1859,7 @@ export type UpdateCarrierInput = {
   code?: InputMaybe<Scalars['String']>;
   counter?: InputMaybe<Scalars['Float']>;
   extraInfo?: InputMaybe<Scalars['String']>;
+  isVirtual?: InputMaybe<Scalars['Boolean']>;
   monoroundgroup?: InputMaybe<Scalars['Boolean']>;
   name?: InputMaybe<Scalars['String']>;
   parentCarrierId?: InputMaybe<Scalars['String']>;
@@ -2175,14 +2180,14 @@ export type GetAllCarriersQueryVariables = Exact<{
 }>;
 
 
-export type GetAllCarriersQuery = { __typename?: 'Query', carriers: { __typename?: 'CarrierListResult', count: number, itemsPerPage: number, totalPages: number, results: Array<{ __typename?: 'Carrier', name: string, id?: string | null, code: string, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, status?: number | null, counter?: number | null, available?: boolean | null, toBeLoaded?: boolean | null, toBePalletized?: boolean | null, useReceiptNumber?: boolean | null, parentCarrierId?: string | null, monoroundgroup?: boolean | null, accountNumber?: string | null, extraInfo?: string | null }> } };
+export type GetAllCarriersQuery = { __typename?: 'Query', carriers: { __typename?: 'CarrierListResult', count: number, itemsPerPage: number, totalPages: number, results: Array<{ __typename?: 'Carrier', name: string, id?: string | null, code: string, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, status?: number | null, counter?: number | null, available?: boolean | null, toBeLoaded?: boolean | null, toBePalletized?: boolean | null, useReceiptNumber?: boolean | null, parentCarrierId?: string | null, monoroundgroup?: boolean | null, accountNumber?: string | null, extraInfo?: string | null, isVirtual?: boolean | null }> } };
 
 export type GetCarrierByIdQueryVariables = Exact<{
   id: Scalars['String'];
 }>;
 
 
-export type GetCarrierByIdQuery = { __typename?: 'Query', carrier?: { __typename?: 'Carrier', name: string, id?: string | null, code: string, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, status?: number | null, counter?: number | null, available?: boolean | null, toBeLoaded?: boolean | null, toBePalletized?: boolean | null, useReceiptNumber?: boolean | null, parentCarrierId?: string | null, monoroundgroup?: boolean | null, accountNumber?: string | null, extraInfo?: string | null } | null };
+export type GetCarrierByIdQuery = { __typename?: 'Query', carrier?: { __typename?: 'Carrier', name: string, id?: string | null, code: string, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, status?: number | null, counter?: number | null, available?: boolean | null, toBeLoaded?: boolean | null, toBePalletized?: boolean | null, useReceiptNumber?: boolean | null, parentCarrierId?: string | null, monoroundgroup?: boolean | null, accountNumber?: string | null, extraInfo?: string | null, isVirtual?: boolean | null } | null };
 
 export type GetCarrierIdsQueryVariables = Exact<{
   filters?: InputMaybe<CarrierSearchFilters>;
@@ -2199,7 +2204,7 @@ export type CreateCarrierMutationVariables = Exact<{
 }>;
 
 
-export type CreateCarrierMutation = { __typename?: 'Mutation', createCarrier: { __typename?: 'Carrier', name: string, id?: string | null, code: string, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, status?: number | null, counter?: number | null, available?: boolean | null, toBeLoaded?: boolean | null, toBePalletized?: boolean | null, useReceiptNumber?: boolean | null, parentCarrierId?: string | null, monoroundgroup?: boolean | null, accountNumber?: string | null, extraInfo?: string | null } };
+export type CreateCarrierMutation = { __typename?: 'Mutation', createCarrier: { __typename?: 'Carrier', name: string, id?: string | null, code: string, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, status?: number | null, counter?: number | null, available?: boolean | null, toBeLoaded?: boolean | null, toBePalletized?: boolean | null, useReceiptNumber?: boolean | null, parentCarrierId?: string | null, monoroundgroup?: boolean | null, accountNumber?: string | null, extraInfo?: string | null, isVirtual?: boolean | null } };
 
 export type DeleteCarrierMutationVariables = Exact<{
   id: Scalars['String'];
@@ -2221,7 +2226,7 @@ export type UpdateCarrierMutationVariables = Exact<{
 }>;
 
 
-export type UpdateCarrierMutation = { __typename?: 'Mutation', updateCarrier?: { __typename?: 'Carrier', name: string, id?: string | null, code: string, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, status?: number | null, counter?: number | null, available?: boolean | null, toBeLoaded?: boolean | null, toBePalletized?: boolean | null, useReceiptNumber?: boolean | null, parentCarrierId?: string | null, monoroundgroup?: boolean | null, accountNumber?: string | null, extraInfo?: string | null } | null };
+export type UpdateCarrierMutation = { __typename?: 'Mutation', updateCarrier?: { __typename?: 'Carrier', name: string, id?: string | null, code: string, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, status?: number | null, counter?: number | null, available?: boolean | null, toBeLoaded?: boolean | null, toBePalletized?: boolean | null, useReceiptNumber?: boolean | null, parentCarrierId?: string | null, monoroundgroup?: boolean | null, accountNumber?: string | null, extraInfo?: string | null, isVirtual?: boolean | null } | null };
 
 export type LoginMutationVariables = Exact<{
   username: Scalars['String'];
@@ -2710,6 +2715,7 @@ export const GetAllCarriersDocument = `
       monoroundgroup
       accountNumber
       extraInfo
+      isVirtual
     }
   }
 }
@@ -2748,6 +2754,7 @@ export const GetCarrierByIdDocument = `
     monoroundgroup
     accountNumber
     extraInfo
+    isVirtual
   }
 }
     `;
@@ -2817,6 +2824,7 @@ export const CreateCarrierDocument = `
     monoroundgroup
     accountNumber
     extraInfo
+    isVirtual
   }
 }
     `;
@@ -2889,6 +2897,7 @@ export const UpdateCarrierDocument = `
     monoroundgroup
     accountNumber
     extraInfo
+    isVirtual
   }
 }
     `;

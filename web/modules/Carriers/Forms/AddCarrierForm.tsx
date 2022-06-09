@@ -1,6 +1,6 @@
 import { WrapperForm } from '@components';
 import { showSuccess, showError, showInfo } from '@helpers';
-import { Form, Row, Col, Input, Checkbox, Button } from 'antd';
+import { Form, Row, Col, Input, Checkbox, Button, InputNumber } from 'antd';
 import { useAuth } from 'context/AuthContext';
 import {
     useCreateCarrierMutation,
@@ -17,7 +17,7 @@ interface IOption {
 }
 
 export const AddCarrierForm = () => {
-    const { t } = useTranslation('common');
+    const { t } = useTranslation();
     const { graphqlRequestClient } = useAuth();
     const router = useRouter();
 
@@ -27,7 +27,15 @@ export const AddCarrierForm = () => {
     const name = t('common:name');
     const available = t('common:available');
     const code = t('common:code');
+    const counter = t('common:counter');
+    const to_be_loaded = t('common:to_be_loaded');
+    const to_be_palletized = t('common:to_be_palletized');
+    const use_receipt_number = t('common:use_receipt_number');
+    const parent_carrier = t('common:parent_carrier');
+    const is_virtual = t('common:is_virtual');
     const errorMessageEmptyInput = t('messages:error-message-empty-input');
+    const submit = t('actions:submit');
+    const cancel = t('actions:cancel');
     // const articleSelectErrorMessage = `${t('messages:error-message-select-1')} ${t(
     //     'common:article'
     // )}`;
@@ -61,6 +69,7 @@ export const AddCarrierForm = () => {
         mutate({ input });
     };
 
+    console.log('JND', form.getFieldsValue(true));
     const onFinish = () => {
         form.validateFields()
             .then(() => {
@@ -103,13 +112,41 @@ export const AddCarrierForm = () => {
                         </Form.Item>
                     </Col>
                     <Col xs={24} xl={12}>
+                        <Form.Item label={counter} name="counter">
+                            <InputNumber defaultValue="0" min="0" max="10" step="0.01" />
+                        </Form.Item>
+                    </Col>
+                    <Col xs={24} xl={12}>
+                        <Form.Item name="toBeLoaded" valuePropName="checked" initialValue={false}>
+                            <Checkbox>{to_be_loaded}</Checkbox>
+                        </Form.Item>
+                    </Col>
+                    <Col xs={24} xl={12}>
                         <Form.Item
-                            label={available}
-                            name="available"
+                            name="toBePalletized"
                             valuePropName="checked"
-                            initialValue={true}
+                            initialValue={false}
                         >
+                            <Checkbox>{to_be_palletized}</Checkbox>
+                        </Form.Item>
+                    </Col>
+                    <Col xs={24} xl={12}>
+                        <Form.Item
+                            name="useReceiptNumber"
+                            valuePropName="checked"
+                            initialValue={false}
+                        >
+                            <Checkbox>{use_receipt_number}</Checkbox>
+                        </Form.Item>
+                    </Col>
+                    <Col xs={24} xl={12}>
+                        <Form.Item name="available" valuePropName="checked" initialValue={false}>
                             <Checkbox>{available}</Checkbox>
+                        </Form.Item>
+                    </Col>
+                    <Col xs={24} xl={12}>
+                        <Form.Item name="isVirtual" valuePropName="checked" initialValue={false}>
+                            <Checkbox>{is_virtual}</Checkbox>
                         </Form.Item>
                     </Col>
                 </Row>
@@ -118,12 +155,12 @@ export const AddCarrierForm = () => {
                 <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
                     <Col xs={24} xl={12}>
                         <Button type="primary" loading={createLoading} onClick={onFinish}>
-                            {t('actions:submit')}
+                            {submit}
                         </Button>
                     </Col>
                     <Col xs={24} xl={12}>
                         <Button danger onClick={() => router.back()}>
-                            {t('actions:cancel')}
+                            {cancel}
                         </Button>
                     </Col>
                 </Row>

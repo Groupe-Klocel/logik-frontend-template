@@ -1,6 +1,6 @@
 import { WrapperForm } from '@components';
 import { showSuccess, showError, showInfo } from '@helpers';
-import { Form, Row, Col, Input, Checkbox, Button } from 'antd';
+import { Form, Row, Col, Input, Checkbox, Button, InputNumber } from 'antd';
 import { CheckboxChangeEvent } from 'antd/lib/checkbox';
 import { useAuth } from 'context/AuthContext';
 import {
@@ -27,9 +27,21 @@ export const EditCarrierForm: FC<EditCarrierFormProps> = ({
     const name = t('common:name');
     const available = t('common:available');
     const code = t('common:code');
+    const counter = t('common:counter');
+    const to_be_loaded = t('common:to_be_loaded');
+    const to_be_palletized = t('common:to_be_palletized');
+    const use_receipt_number = t('common:use_receipt_number');
+    const parent_carrier = t('common:parent_carrier');
+    const is_virtual = t('common:is_virtual');
+    const submit = t('actions:submit');
+    const cancel = t('actions:cancel');
     const errorMessageEmptyInput = t('messages:error-message-empty-input');
 
     const [form] = Form.useForm();
+    const [toBeLoadedValue, setToBeLoadedValue] = useState(details.toBeLoaded);
+    const [toBePalletizedValue, setToBePalletizedValue] = useState(details.toBePalletized);
+    const [useReceiptNumberValue, setUseReceiptNumberValue] = useState(details.useReceiptNumber);
+    const [isVirtualValue, setIsVirtualValue] = useState(details.isVirtual);
     const [availableValue, setAvailableValue] = useState(details.available);
 
     const {
@@ -54,6 +66,22 @@ export const EditCarrierForm: FC<EditCarrierFormProps> = ({
         mutate({ id, input });
     };
 
+    const onToBeLoadedChange = (e: CheckboxChangeEvent) => {
+        setToBeLoadedValue(!toBeLoadedValue);
+        form.setFieldsValue({ toBeLoaded: e.target.checked });
+    };
+    const onToBePalletizedChange = (e: CheckboxChangeEvent) => {
+        setToBePalletizedValue(!toBePalletizedValue);
+        form.setFieldsValue({ toBePalletized: e.target.checked });
+    };
+    const onUseReceiptNumberChange = (e: CheckboxChangeEvent) => {
+        setUseReceiptNumberValue(!useReceiptNumberValue);
+        form.setFieldsValue({ useReceiptNumber: e.target.checked });
+    };
+    const onIsVirtualChange = (e: CheckboxChangeEvent) => {
+        setIsVirtualValue(!isVirtualValue);
+        form.setFieldsValue({ isVirtual: e.target.checked });
+    };
     const onAvailableChange = (e: CheckboxChangeEvent) => {
         setAvailableValue(!availableValue);
         form.setFieldsValue({ available: e.target.checked });
@@ -107,18 +135,53 @@ export const EditCarrierForm: FC<EditCarrierFormProps> = ({
                         </Form.Item>
                     </Col>
                     <Col xs={24} xl={12}>
-                        <Form.Item name="available">
-                            <Checkbox checked={availableValue} onChange={onAvailableChange}>
-                                {available}
-                            </Checkbox>
+                        <Form.Item label={counter} name="counter">
+                            <InputNumber defaultValue="0" min="0" max="10" step="0.01" />
                         </Form.Item>
+                    </Col>
+                    <Col xs={24} xl={12}>
+                        <Checkbox checked={toBeLoadedValue} onChange={onToBeLoadedChange}>
+                            {to_be_loaded}
+                        </Checkbox>
+                    </Col>
+                    <Col xs={24} xl={12}>
+                        <Checkbox checked={toBePalletizedValue} onChange={onToBePalletizedChange}>
+                            {to_be_palletized}
+                        </Checkbox>
+                    </Col>
+                    <Col xs={24} xl={12}>
+                        <Checkbox
+                            checked={useReceiptNumberValue}
+                            onChange={onUseReceiptNumberChange}
+                        >
+                            {use_receipt_number}
+                        </Checkbox>
+                    </Col>
+                    <Col xs={24} xl={12}>
+                        <Checkbox checked={availableValue} onChange={onAvailableChange}>
+                            {available}
+                        </Checkbox>
+                    </Col>
+                    <Col xs={24} xl={12}>
+                        <Checkbox checked={isVirtualValue} onChange={onIsVirtualChange}>
+                            {is_virtual}
+                        </Checkbox>
                     </Col>
                 </Row>
             </Form>
             <div style={{ textAlign: 'center' }}>
-                <Button type="primary" loading={updateLoading} onClick={onFinish}>
-                    {t('actions:submit')}
-                </Button>
+                <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
+                    <Col xs={24} xl={12}>
+                        <Button type="primary" loading={updateLoading} onClick={onFinish}>
+                            {submit}
+                        </Button>
+                    </Col>
+                    <Col xs={24} xl={12}>
+                        <Button danger onClick={() => router.back()}>
+                            {cancel}
+                        </Button>
+                    </Col>
+                </Row>
             </div>
         </WrapperForm>
     );

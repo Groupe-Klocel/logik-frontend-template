@@ -77,12 +77,16 @@ const SingleCarrier: FC<SingleCarrierTypeProps> = ({ id, router }: SingleCarrier
                 actionsRight={
                     <Space>
                         {/* ADD HERE*/}
-                        <Button
-                            loading={softDeleteLoading}
-                            onClick={() => softDeleteCarrier({ carrierId: id })}
-                        >
-                            {t('actions:delete')}
-                        </Button>
+                        {data?.carrier?.status != 1005 ? (
+                            <Button
+                                loading={softDeleteLoading}
+                                onClick={() => softDeleteCarrier({ carrierId: id })}
+                            >
+                                {t('actions:delete')}
+                            </Button>
+                        ) : (
+                            <></>
+                        )}
                         {/* ADD HERE*/}
                     </Space>
                 }

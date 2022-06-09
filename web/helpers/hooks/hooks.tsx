@@ -134,7 +134,6 @@ const useCarriers = (search: any, page: number, itemsPerPage: number, sort: any)
             itemsPerPage: itemsPerPage
         }
     );
-
     return carriers;
 };
 
