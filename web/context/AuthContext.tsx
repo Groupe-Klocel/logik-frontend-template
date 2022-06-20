@@ -10,12 +10,12 @@ import {
 import {
     ChangePasswordMutation,
     ChangePasswordMutationVariables,
-    LoginMutation,
-    LoginMutationVariables,
+    WarehouseLoginMutation,
+    WarehouseLoginMutationVariables,
+    useWarehouseLoginMutation,
     ResetPasswordMutation,
     ResetPasswordMutationVariables,
     useChangePasswordMutation,
-    useLoginMutation,
     useResetPasswordMutation
 } from 'generated/graphql';
 import { GraphQLClient } from 'graphql-request';
@@ -62,13 +62,14 @@ export const AuthProvider: FC<OnlyChildrenType> = ({ children }: OnlyChildrenTyp
         loadUserFromCookie();
     }, []);
 
-    const loginMutation = useLoginMutation<Error>(graphqlRequestClient, {
-        onSuccess: (data: LoginMutation, _variables: LoginMutationVariables, _context: any) => {
-            if (data?.login?.accessToken) {
-                const token = data.login.accessToken;
+    const loginMutation = useWarehouseLoginMutation<Error>(graphqlRequestClient, {
+        onSuccess: (data: WarehouseLoginMutation, _variables: WarehouseLoginMutationVariables, _context: any) => {
+            if (data?.warehouseLogin?.accessToken) {
+                const token = data.warehouseLogin.accessToken;
                 cookie.set('token', token);
                 setHeader(token);
                 const user = decodeJWT(token);
+                console.log(user);
                 setUser(user);
                 setIsAuthenticated(true);
                 // Set Bearer JWT token to the header for future request
@@ -125,7 +126,7 @@ export const AuthProvider: FC<OnlyChildrenType> = ({ children }: OnlyChildrenTyp
         username,
         password,
         warehouseId = process.env.NEXT_PUBLIC_WAREHOUSE_ID as string
-    }: LoginMutationVariables) => {
+    }: WarehouseLoginMutationVariables) => {
         const { mutate } = loginMutation;
         mutate({ username, password, warehouseId });
     };

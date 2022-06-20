@@ -1,27 +1,54 @@
 query GetMyInfo {
     me {
-        username
-        password
-        organizationId
-        roleId
-        organization {
-            name
+        __typename
+        ...on WarehouseWorker {
             id
-            awsAccessKeyId
-            awsSecretAccessKey
-            parentOrganizationId
+            password
+            username
+            warehouseId
+            roleId
+            created
+            createdBy
+            modified
+            modifiedBy
         }
-        role {
-            name
+
+        ...on IntegratorUser {
             id
-            permissions {
-                table
-                mode
-                roleId
+            password
+            email
+            integratorId
+            roleId
+            integrator {
                 id
+                name
+                awsAccessKeyId
+                awsSecretAccessKey
             }
+            role {
+                id
+                name
+                permissions {
+                    id
+                    table
+                    mode
+                    roleId
+                    created
+                    createdBy
+                    modified
+                    modifiedBy
+                }
+                created
+                createdBy
+                modified
+                modifiedBy
+            }
+            created
+            createdBy
+            modified
+            modifiedBy
+            isAdmin
         }
-        id
-        email
+
     }
 }
