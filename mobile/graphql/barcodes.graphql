@@ -10,16 +10,18 @@ query GetAllBarcodes(
         totalPages
         results {
             id
-            accountId
-            companyId
-            articleId
+            extras
             name
-            rotation
-            preparationMode
-            flagDouble
             supplierName
             supplierArticleCode
             quantity
+            rotation
+            preparationMode
+            flagDouble
+            blacklisted
+            stockOwnerId
+            rotationText
+            preparationModeText
         }
     }
 }
@@ -27,16 +29,18 @@ query GetAllBarcodes(
 query GetBarcodeById($id: String!) {
     barcode(id: $id) {
         id
-        accountId
-        companyId
-        articleId
+        extras
         name
-        rotation
-        preparationMode
-        flagDouble
         supplierName
         supplierArticleCode
         quantity
+        rotation
+        preparationMode
+        flagDouble
+        blacklisted
+        stockOwnerId
+        rotationText
+        preparationModeText
         article {
             name
         }
@@ -46,16 +50,18 @@ query GetBarcodeById($id: String!) {
 mutation CreateBarcode($input: CreateBarcodeInput!) {
     createBarcode(input: $input) {
         id
-        accountId
-        companyId
-        articleId
+        extras
         name
-        rotation
-        preparationMode
-        flagDouble
         supplierName
         supplierArticleCode
         quantity
+        rotation
+        preparationMode
+        flagDouble
+        blacklisted
+        stockOwnerId
+        rotationText
+        preparationModeText
     }
 }
 
@@ -78,16 +84,18 @@ mutation RenderBarcode($code: String!, $category: BarcodeCategory, $pages: Int!)
 mutation UpdateBarcode($id: String!, $input: UpdateBarcodeInput!) {
     updateBarcode(id: $id, input: $input) {
         id
-        accountId
-        companyId
-        articleId
+        extras
         name
-        rotation
-        preparationMode
-        flagDouble
         supplierName
         supplierArticleCode
         quantity
+        rotation
+        preparationMode
+        flagDouble
+        blacklisted
+        stockOwnerId
+        rotationText
+        preparationModeText
         article {
             name
         }

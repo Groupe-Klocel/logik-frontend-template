@@ -50,6 +50,24 @@ export const LoginForm = () => {
                                     username
                                     warehouseId
                                     roleId
+                                    role {
+                                        id
+                                        name
+                                        permissions {
+                                            id
+                                            table
+                                            mode
+                                            roleId
+                                            created
+                                            createdBy
+                                            modified
+                                            modifiedBy
+                                        }
+                                        created
+                                        createdBy
+                                        modified
+                                        modifiedBy
+                                    }
                                     created
                                     createdBy
                                     modified

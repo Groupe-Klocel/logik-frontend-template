@@ -1,5 +1,6 @@
 import { GraphQLClient } from 'graphql-request';
-import { useMutation, UseMutationOptions } from 'react-query';
+import { RequestInit } from 'graphql-request/dist/types.dom';
+import { useQuery, useMutation, UseQueryOptions, UseMutationOptions } from 'react-query';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
@@ -3395,7 +3396,7 @@ export type IntegratorUser = {
   email: Scalars['String'];
   /** String-based unique identifier. */
   id?: Maybe<Scalars['String']>;
-  integrator?: Maybe<Integrator>;
+  integrator: Integrator;
   integratorId: Scalars['String'];
   isAdmin?: Maybe<Scalars['Boolean']>;
   modified?: Maybe<Scalars['DateTime']>;
@@ -3403,6 +3404,50 @@ export type IntegratorUser = {
   password: Scalars['String'];
   role: RoleType;
   roleId: Scalars['String'];
+};
+
+/** Field names for the IntegratorUser model */
+export enum IntegratorUserFieldName {
+  Created = 'created',
+  CreatedBy = 'createdBy',
+  Email = 'email',
+  Id = 'id',
+  IntegratorId = 'integratorId',
+  IsAdmin = 'isAdmin',
+  Modified = 'modified',
+  ModifiedBy = 'modifiedBy',
+  Password = 'password',
+  RoleId = 'roleId'
+}
+
+/** Returns a list of IntegratorUser */
+export type IntegratorUserListResult = {
+  __typename?: 'IntegratorUserListResult';
+  count: Scalars['Int'];
+  itemsPerPage: Scalars['Int'];
+  page: Scalars['Int'];
+  results: Array<IntegratorUser>;
+  totalPages: Scalars['Int'];
+};
+
+/** How to order the search results for IntegratorUser */
+export type IntegratorUserOrderByCriterion = {
+  ascending?: Scalars['Boolean'];
+  field: IntegratorUserFieldName;
+};
+
+/** Attributes of IntegratorUser to filter onto */
+export type IntegratorUserSearchFilters = {
+  created?: InputMaybe<Scalars['DateTime']>;
+  createdBy?: InputMaybe<Scalars['String']>;
+  email?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['String']>;
+  integratorId?: InputMaybe<Scalars['String']>;
+  isAdmin?: InputMaybe<Scalars['Boolean']>;
+  modified?: InputMaybe<Scalars['DateTime']>;
+  modifiedBy?: InputMaybe<Scalars['String']>;
+  password?: InputMaybe<Scalars['String']>;
+  roleId?: InputMaybe<Scalars['String']>;
 };
 
 export type Load = {
@@ -5960,6 +6005,7 @@ export type Query = {
   handlingUnit?: Maybe<HandlingUnit>;
   /** Get handling_unit objects */
   handlingUnits: HandlingUnitListResult;
+  integratorUsers: IntegratorUserListResult;
   integrators: IntegratorListResult;
   /** List configs for a scope */
   listConfigsForAScope: Array<ConfigResults>;
@@ -6031,7 +6077,7 @@ export type Query = {
   stockOwner?: Maybe<StockOwner>;
   /** List multiple StockOwner */
   stockOwners: StockOwnerListResult;
-  users: UserListResult;
+  warehouseWorkers: WarehouseWorkerListResult;
   warehouses: WarehouseListResult;
 };
 
@@ -6471,6 +6517,15 @@ export type QueryHandlingUnitsArgs = {
 };
 
 
+export type QueryIntegratorUsersArgs = {
+  filters?: InputMaybe<IntegratorUserSearchFilters>;
+  itemsPerPage?: Scalars['Int'];
+  language?: InputMaybe<Scalars['String']>;
+  orderBy?: InputMaybe<Array<IntegratorUserOrderByCriterion>>;
+  page?: Scalars['Int'];
+};
+
+
 export type QueryIntegratorsArgs = {
   filters?: InputMaybe<IntegratorSearchFilters>;
   itemsPerPage?: Scalars['Int'];
@@ -6743,11 +6798,11 @@ export type QueryStockOwnersArgs = {
 };
 
 
-export type QueryUsersArgs = {
-  filters?: InputMaybe<UserSearchFilters>;
+export type QueryWarehouseWorkersArgs = {
+  filters?: InputMaybe<WarehouseWorkerSearchFilters>;
   itemsPerPage?: Scalars['Int'];
   language?: InputMaybe<Scalars['String']>;
-  orderBy?: InputMaybe<Array<UserOrderByCriterion>>;
+  orderBy?: InputMaybe<Array<WarehouseWorkerOrderByCriterion>>;
   page?: Scalars['Int'];
 };
 
@@ -8134,50 +8189,6 @@ export type UpdateStockOwnerInput = {
   status?: InputMaybe<Scalars['Int']>;
 };
 
-/** Field names for the User model */
-export enum UserFieldName {
-  Created = 'created',
-  CreatedBy = 'createdBy',
-  Email = 'email',
-  Id = 'id',
-  IntegratorId = 'integratorId',
-  IsAdmin = 'isAdmin',
-  Modified = 'modified',
-  ModifiedBy = 'modifiedBy',
-  Password = 'password',
-  RoleId = 'roleId'
-}
-
-/** Returns a list of User */
-export type UserListResult = {
-  __typename?: 'UserListResult';
-  count: Scalars['Int'];
-  itemsPerPage: Scalars['Int'];
-  page: Scalars['Int'];
-  results: Array<IntegratorUser>;
-  totalPages: Scalars['Int'];
-};
-
-/** How to order the search results for User */
-export type UserOrderByCriterion = {
-  ascending?: Scalars['Boolean'];
-  field: UserFieldName;
-};
-
-/** Attributes of User to filter onto */
-export type UserSearchFilters = {
-  created?: InputMaybe<Scalars['DateTime']>;
-  createdBy?: InputMaybe<Scalars['String']>;
-  email?: InputMaybe<Scalars['String']>;
-  id?: InputMaybe<Scalars['String']>;
-  integratorId?: InputMaybe<Scalars['String']>;
-  isAdmin?: InputMaybe<Scalars['Boolean']>;
-  modified?: InputMaybe<Scalars['DateTime']>;
-  modifiedBy?: InputMaybe<Scalars['String']>;
-  password?: InputMaybe<Scalars['String']>;
-  roleId?: InputMaybe<Scalars['String']>;
-};
-
 export type ValidationError = {
   __typename?: 'ValidationError';
   message: Scalars['String'];
@@ -8238,6 +8249,7 @@ export type WarehouseSearchFilters = {
 
 export type WarehouseWorker = {
   __typename?: 'WarehouseWorker';
+  client: Client;
   created?: Maybe<Scalars['DateTime']>;
   createdBy?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
@@ -8246,10 +8258,164 @@ export type WarehouseWorker = {
   modified?: Maybe<Scalars['DateTime']>;
   modifiedBy?: Maybe<Scalars['String']>;
   password: Scalars['String'];
+  role: RoleType;
   roleId: Scalars['String'];
   username: Scalars['String'];
   warehouseId: Scalars['String'];
 };
+
+/** Field names for the WarehouseWorker model */
+export enum WarehouseWorkerFieldName {
+  Created = 'created',
+  CreatedBy = 'createdBy',
+  Email = 'email',
+  Id = 'id',
+  Modified = 'modified',
+  ModifiedBy = 'modifiedBy',
+  Password = 'password',
+  RoleId = 'roleId',
+  Username = 'username',
+  WarehouseId = 'warehouseId'
+}
+
+/** Returns a list of WarehouseWorker */
+export type WarehouseWorkerListResult = {
+  __typename?: 'WarehouseWorkerListResult';
+  count: Scalars['Int'];
+  itemsPerPage: Scalars['Int'];
+  page: Scalars['Int'];
+  results: Array<WarehouseWorker>;
+  totalPages: Scalars['Int'];
+};
+
+/** How to order the search results for WarehouseWorker */
+export type WarehouseWorkerOrderByCriterion = {
+  ascending?: Scalars['Boolean'];
+  field: WarehouseWorkerFieldName;
+};
+
+/** Attributes of WarehouseWorker to filter onto */
+export type WarehouseWorkerSearchFilters = {
+  created?: InputMaybe<Scalars['DateTime']>;
+  createdBy?: InputMaybe<Scalars['String']>;
+  email?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['String']>;
+  modified?: InputMaybe<Scalars['DateTime']>;
+  modifiedBy?: InputMaybe<Scalars['String']>;
+  password?: InputMaybe<Scalars['String']>;
+  roleId?: InputMaybe<Scalars['String']>;
+  username?: InputMaybe<Scalars['String']>;
+  warehouseId?: InputMaybe<Scalars['String']>;
+};
+
+export type GetAllArticlesQueryVariables = Exact<{
+  filters?: InputMaybe<ArticleSearchFilters>;
+  orderBy?: InputMaybe<Array<ArticleOrderByCriterion> | ArticleOrderByCriterion>;
+  page: Scalars['Int'];
+  itemsPerPage: Scalars['Int'];
+}>;
+
+
+export type GetAllArticlesQuery = { __typename?: 'Query', articles: { __typename?: 'ArticleListResult', count: number, itemsPerPage: number, totalPages: number, results: Array<{ __typename?: 'Article', id?: string | null, extras?: any | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, status?: number | null, code?: string | null, name?: string | null, additionalDescription?: string | null, supplierName?: string | null, translation?: any | null, length?: number | null, width?: number | null, height?: number | null, baseUnitPrice?: number | null, baseUnitWeight?: number | null, baseUnitPicking?: boolean | null, baseUnitRotation?: number | null, cubingType?: number | null, featureType?: number | null, permanentProduct?: boolean | null, tariffClassification?: string | null, family?: string | null, subfamily?: string | null, groupingId?: string | null, countryOfOrigin?: string | null, newProduct?: boolean | null, endOfLife?: boolean | null, supportQuantity?: number | null, stockOwnerId?: string | null, statusText?: string | null, cubingTypeText?: string | null, baseUnitRotationText?: string | null, featureTypeText?: string | null }> } };
+
+export type GetArticleByIdQueryVariables = Exact<{
+  id: Scalars['String'];
+  language?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type GetArticleByIdQuery = { __typename?: 'Query', article?: { __typename?: 'Article', id?: string | null, extras?: any | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, status?: number | null, code?: string | null, name?: string | null, additionalDescription?: string | null, supplierName?: string | null, translation?: any | null, length?: number | null, width?: number | null, height?: number | null, baseUnitPrice?: number | null, baseUnitWeight?: number | null, baseUnitPicking?: boolean | null, baseUnitRotation?: number | null, cubingType?: number | null, featureType?: number | null, permanentProduct?: boolean | null, tariffClassification?: string | null, family?: string | null, subfamily?: string | null, groupingId?: string | null, countryOfOrigin?: string | null, newProduct?: boolean | null, endOfLife?: boolean | null, supportQuantity?: number | null, stockOwnerId?: string | null, statusText?: string | null, cubingTypeText?: string | null, baseUnitRotationText?: string | null, featureTypeText?: string | null } | null };
+
+export type GetArticleIdsQueryVariables = Exact<{
+  filters?: InputMaybe<ArticleSearchFilters>;
+  orderBy?: InputMaybe<Array<ArticleOrderByCriterion> | ArticleOrderByCriterion>;
+  page: Scalars['Int'];
+  itemsPerPage: Scalars['Int'];
+}>;
+
+
+export type GetArticleIdsQuery = { __typename?: 'Query', articles: { __typename?: 'ArticleListResult', count: number, itemsPerPage: number, totalPages: number, results: Array<{ __typename?: 'Article', id?: string | null, name?: string | null }> } };
+
+export type CreateArticleMutationVariables = Exact<{
+  input: CreateArticleInput;
+}>;
+
+
+export type CreateArticleMutation = { __typename?: 'Mutation', createArticle: { __typename?: 'Article', id?: string | null, extras?: any | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, status?: number | null, code?: string | null, name?: string | null, additionalDescription?: string | null, supplierName?: string | null, translation?: any | null, length?: number | null, width?: number | null, height?: number | null, baseUnitPrice?: number | null, baseUnitWeight?: number | null, baseUnitPicking?: boolean | null, baseUnitRotation?: number | null, cubingType?: number | null, featureType?: number | null, permanentProduct?: boolean | null, tariffClassification?: string | null, family?: string | null, subfamily?: string | null, groupingId?: string | null, countryOfOrigin?: string | null, newProduct?: boolean | null, endOfLife?: boolean | null, supportQuantity?: number | null, stockOwnerId?: string | null, statusText?: string | null, cubingTypeText?: string | null, baseUnitRotationText?: string | null, featureTypeText?: string | null } };
+
+export type ExportArticlesMutationVariables = Exact<{
+  format?: InputMaybe<ExportFormat>;
+  compression?: InputMaybe<ExportCompression>;
+  separator?: InputMaybe<Scalars['String']>;
+  orderBy?: InputMaybe<Array<ArticleOrderByCriterion> | ArticleOrderByCriterion>;
+  filters?: InputMaybe<ArticleExportFilters>;
+}>;
+
+
+export type ExportArticlesMutation = { __typename?: 'Mutation', exportArticles: { __typename?: 'ExportResult', url: string } };
+
+export type DeleteArticleMutationVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type DeleteArticleMutation = { __typename?: 'Mutation', deleteArticle: boolean };
+
+export type UpdateArticleMutationVariables = Exact<{
+  id: Scalars['String'];
+  input: UpdateArticleInput;
+}>;
+
+
+export type UpdateArticleMutation = { __typename?: 'Mutation', updateArticle?: { __typename?: 'Article', id?: string | null, extras?: any | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, status?: number | null, code?: string | null, name?: string | null, additionalDescription?: string | null, supplierName?: string | null, translation?: any | null, length?: number | null, width?: number | null, height?: number | null, baseUnitPrice?: number | null, baseUnitWeight?: number | null, baseUnitPicking?: boolean | null, baseUnitRotation?: number | null, cubingType?: number | null, featureType?: number | null, permanentProduct?: boolean | null, tariffClassification?: string | null, family?: string | null, subfamily?: string | null, groupingId?: string | null, countryOfOrigin?: string | null, newProduct?: boolean | null, endOfLife?: boolean | null, supportQuantity?: number | null, stockOwnerId?: string | null, statusText?: string | null, cubingTypeText?: string | null, baseUnitRotationText?: string | null, featureTypeText?: string | null } | null };
+
+export type GetAllBarcodesQueryVariables = Exact<{
+  filters?: InputMaybe<BarcodeSearchFilters>;
+  orderBy?: InputMaybe<Array<BarcodeOrderByCriterion> | BarcodeOrderByCriterion>;
+  page: Scalars['Int'];
+  itemsPerPage: Scalars['Int'];
+}>;
+
+
+export type GetAllBarcodesQuery = { __typename?: 'Query', barcodes: { __typename?: 'BarcodeListResult', count: number, itemsPerPage: number, totalPages: number, results: Array<{ __typename?: 'Barcode', id?: string | null, extras?: any | null, name?: string | null, supplierName?: string | null, supplierArticleCode?: string | null, quantity?: number | null, rotation?: number | null, preparationMode?: number | null, flagDouble?: number | null, blacklisted?: boolean | null, stockOwnerId?: string | null, rotationText?: string | null, preparationModeText?: string | null }> } };
+
+export type GetBarcodeByIdQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type GetBarcodeByIdQuery = { __typename?: 'Query', barcode?: { __typename?: 'Barcode', id?: string | null, extras?: any | null, name?: string | null, supplierName?: string | null, supplierArticleCode?: string | null, quantity?: number | null, rotation?: number | null, preparationMode?: number | null, flagDouble?: number | null, blacklisted?: boolean | null, stockOwnerId?: string | null, rotationText?: string | null, preparationModeText?: string | null, article: { __typename?: 'Article', name?: string | null } } | null };
+
+export type CreateBarcodeMutationVariables = Exact<{
+  input: CreateBarcodeInput;
+}>;
+
+
+export type CreateBarcodeMutation = { __typename?: 'Mutation', createBarcode: { __typename?: 'Barcode', id?: string | null, extras?: any | null, name?: string | null, supplierName?: string | null, supplierArticleCode?: string | null, quantity?: number | null, rotation?: number | null, preparationMode?: number | null, flagDouble?: number | null, blacklisted?: boolean | null, stockOwnerId?: string | null, rotationText?: string | null, preparationModeText?: string | null } };
+
+export type DeleteBarcodeMutationVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type DeleteBarcodeMutation = { __typename?: 'Mutation', deleteBarcode: boolean };
+
+export type RenderBarcodeMutationVariables = Exact<{
+  code: Scalars['String'];
+  category?: InputMaybe<BarcodeCategory>;
+  pages: Scalars['Int'];
+}>;
+
+
+export type RenderBarcodeMutation = { __typename?: 'Mutation', renderBarcode: { __typename: 'BarcodeError', message: string } | { __typename: 'RenderedDocument', url: string } };
+
+export type UpdateBarcodeMutationVariables = Exact<{
+  id: Scalars['String'];
+  input: UpdateBarcodeInput;
+}>;
+
+
+export type UpdateBarcodeMutation = { __typename?: 'Mutation', updateBarcode?: { __typename?: 'Barcode', id?: string | null, extras?: any | null, name?: string | null, supplierName?: string | null, supplierArticleCode?: string | null, quantity?: number | null, rotation?: number | null, preparationMode?: number | null, flagDouble?: number | null, blacklisted?: boolean | null, stockOwnerId?: string | null, rotationText?: string | null, preparationModeText?: string | null, article: { __typename?: 'Article', name?: string | null } } | null };
 
 export type WarehouseLoginMutationVariables = Exact<{
   username: Scalars['String'];
@@ -8287,6 +8453,500 @@ export type ChangePasswordMutationVariables = Exact<{
 export type ChangePasswordMutation = { __typename?: 'Mutation', changePassword: { __typename: 'ChangePasswordFailure', message: string } | { __typename: 'ChangePasswordSuccess', message: string } };
 
 
+export const GetAllArticlesDocument = `
+    query GetAllArticles($filters: ArticleSearchFilters, $orderBy: [ArticleOrderByCriterion!], $page: Int!, $itemsPerPage: Int!) {
+  articles(
+    filters: $filters
+    orderBy: $orderBy
+    page: $page
+    itemsPerPage: $itemsPerPage
+  ) {
+    count
+    itemsPerPage
+    totalPages
+    results {
+      id
+      extras
+      created
+      createdBy
+      modified
+      modifiedBy
+      status
+      code
+      name
+      additionalDescription
+      supplierName
+      translation
+      length
+      width
+      height
+      baseUnitPrice
+      baseUnitWeight
+      baseUnitPicking
+      baseUnitRotation
+      cubingType
+      featureType
+      permanentProduct
+      tariffClassification
+      family
+      subfamily
+      groupingId
+      countryOfOrigin
+      newProduct
+      endOfLife
+      supportQuantity
+      stockOwnerId
+      statusText
+      cubingTypeText
+      baseUnitRotationText
+      featureTypeText
+    }
+  }
+}
+    `;
+export const useGetAllArticlesQuery = <
+      TData = GetAllArticlesQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: GetAllArticlesQueryVariables,
+      options?: UseQueryOptions<GetAllArticlesQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetAllArticlesQuery, TError, TData>(
+      ['GetAllArticles', variables],
+      fetcher<GetAllArticlesQuery, GetAllArticlesQueryVariables>(client, GetAllArticlesDocument, variables, headers),
+      options
+    );
+export const GetArticleByIdDocument = `
+    query GetArticleById($id: String!, $language: String = "en") {
+  article(id: $id, language: $language) {
+    id
+    extras
+    created
+    createdBy
+    modified
+    modifiedBy
+    status
+    code
+    name
+    additionalDescription
+    supplierName
+    translation
+    length
+    width
+    height
+    baseUnitPrice
+    baseUnitWeight
+    baseUnitPicking
+    baseUnitRotation
+    cubingType
+    featureType
+    permanentProduct
+    tariffClassification
+    family
+    subfamily
+    groupingId
+    countryOfOrigin
+    newProduct
+    endOfLife
+    supportQuantity
+    stockOwnerId
+    statusText
+    cubingTypeText
+    baseUnitRotationText
+    featureTypeText
+  }
+}
+    `;
+export const useGetArticleByIdQuery = <
+      TData = GetArticleByIdQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: GetArticleByIdQueryVariables,
+      options?: UseQueryOptions<GetArticleByIdQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetArticleByIdQuery, TError, TData>(
+      ['GetArticleById', variables],
+      fetcher<GetArticleByIdQuery, GetArticleByIdQueryVariables>(client, GetArticleByIdDocument, variables, headers),
+      options
+    );
+export const GetArticleIdsDocument = `
+    query GetArticleIds($filters: ArticleSearchFilters, $orderBy: [ArticleOrderByCriterion!], $page: Int!, $itemsPerPage: Int!) {
+  articles(
+    filters: $filters
+    orderBy: $orderBy
+    page: $page
+    itemsPerPage: $itemsPerPage
+  ) {
+    count
+    itemsPerPage
+    totalPages
+    results {
+      id
+      name
+    }
+  }
+}
+    `;
+export const useGetArticleIdsQuery = <
+      TData = GetArticleIdsQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: GetArticleIdsQueryVariables,
+      options?: UseQueryOptions<GetArticleIdsQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetArticleIdsQuery, TError, TData>(
+      ['GetArticleIds', variables],
+      fetcher<GetArticleIdsQuery, GetArticleIdsQueryVariables>(client, GetArticleIdsDocument, variables, headers),
+      options
+    );
+export const CreateArticleDocument = `
+    mutation CreateArticle($input: CreateArticleInput!) {
+  createArticle(input: $input) {
+    id
+    extras
+    created
+    createdBy
+    modified
+    modifiedBy
+    status
+    code
+    name
+    additionalDescription
+    supplierName
+    translation
+    length
+    width
+    height
+    baseUnitPrice
+    baseUnitWeight
+    baseUnitPicking
+    baseUnitRotation
+    cubingType
+    featureType
+    permanentProduct
+    tariffClassification
+    family
+    subfamily
+    groupingId
+    countryOfOrigin
+    newProduct
+    endOfLife
+    supportQuantity
+    stockOwnerId
+    statusText
+    cubingTypeText
+    baseUnitRotationText
+    featureTypeText
+  }
+}
+    `;
+export const useCreateArticleMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<CreateArticleMutation, TError, CreateArticleMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<CreateArticleMutation, TError, CreateArticleMutationVariables, TContext>(
+      ['CreateArticle'],
+      (variables?: CreateArticleMutationVariables) => fetcher<CreateArticleMutation, CreateArticleMutationVariables>(client, CreateArticleDocument, variables, headers)(),
+      options
+    );
+export const ExportArticlesDocument = `
+    mutation ExportArticles($format: ExportFormat, $compression: ExportCompression, $separator: String, $orderBy: [ArticleOrderByCriterion!], $filters: ArticleExportFilters) {
+  exportArticles(
+    format: $format
+    compression: $compression
+    separator: $separator
+    orderBy: $orderBy
+    filters: $filters
+  ) {
+    url
+  }
+}
+    `;
+export const useExportArticlesMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<ExportArticlesMutation, TError, ExportArticlesMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<ExportArticlesMutation, TError, ExportArticlesMutationVariables, TContext>(
+      ['ExportArticles'],
+      (variables?: ExportArticlesMutationVariables) => fetcher<ExportArticlesMutation, ExportArticlesMutationVariables>(client, ExportArticlesDocument, variables, headers)(),
+      options
+    );
+export const DeleteArticleDocument = `
+    mutation DeleteArticle($id: String!) {
+  deleteArticle(id: $id)
+}
+    `;
+export const useDeleteArticleMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<DeleteArticleMutation, TError, DeleteArticleMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<DeleteArticleMutation, TError, DeleteArticleMutationVariables, TContext>(
+      ['DeleteArticle'],
+      (variables?: DeleteArticleMutationVariables) => fetcher<DeleteArticleMutation, DeleteArticleMutationVariables>(client, DeleteArticleDocument, variables, headers)(),
+      options
+    );
+export const UpdateArticleDocument = `
+    mutation UpdateArticle($id: String!, $input: UpdateArticleInput!) {
+  updateArticle(id: $id, input: $input) {
+    id
+    extras
+    created
+    createdBy
+    modified
+    modifiedBy
+    status
+    code
+    name
+    additionalDescription
+    supplierName
+    translation
+    length
+    width
+    height
+    baseUnitPrice
+    baseUnitWeight
+    baseUnitPicking
+    baseUnitRotation
+    cubingType
+    featureType
+    permanentProduct
+    tariffClassification
+    family
+    subfamily
+    groupingId
+    countryOfOrigin
+    newProduct
+    endOfLife
+    supportQuantity
+    stockOwnerId
+    statusText
+    cubingTypeText
+    baseUnitRotationText
+    featureTypeText
+  }
+}
+    `;
+export const useUpdateArticleMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<UpdateArticleMutation, TError, UpdateArticleMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<UpdateArticleMutation, TError, UpdateArticleMutationVariables, TContext>(
+      ['UpdateArticle'],
+      (variables?: UpdateArticleMutationVariables) => fetcher<UpdateArticleMutation, UpdateArticleMutationVariables>(client, UpdateArticleDocument, variables, headers)(),
+      options
+    );
+export const GetAllBarcodesDocument = `
+    query GetAllBarcodes($filters: BarcodeSearchFilters, $orderBy: [BarcodeOrderByCriterion!], $page: Int!, $itemsPerPage: Int!) {
+  barcodes(
+    filters: $filters
+    orderBy: $orderBy
+    page: $page
+    itemsPerPage: $itemsPerPage
+  ) {
+    count
+    itemsPerPage
+    totalPages
+    results {
+      id
+      extras
+      name
+      supplierName
+      supplierArticleCode
+      quantity
+      rotation
+      preparationMode
+      flagDouble
+      blacklisted
+      stockOwnerId
+      rotationText
+      preparationModeText
+    }
+  }
+}
+    `;
+export const useGetAllBarcodesQuery = <
+      TData = GetAllBarcodesQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: GetAllBarcodesQueryVariables,
+      options?: UseQueryOptions<GetAllBarcodesQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetAllBarcodesQuery, TError, TData>(
+      ['GetAllBarcodes', variables],
+      fetcher<GetAllBarcodesQuery, GetAllBarcodesQueryVariables>(client, GetAllBarcodesDocument, variables, headers),
+      options
+    );
+export const GetBarcodeByIdDocument = `
+    query GetBarcodeById($id: String!) {
+  barcode(id: $id) {
+    id
+    extras
+    name
+    supplierName
+    supplierArticleCode
+    quantity
+    rotation
+    preparationMode
+    flagDouble
+    blacklisted
+    stockOwnerId
+    rotationText
+    preparationModeText
+    article {
+      name
+    }
+  }
+}
+    `;
+export const useGetBarcodeByIdQuery = <
+      TData = GetBarcodeByIdQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: GetBarcodeByIdQueryVariables,
+      options?: UseQueryOptions<GetBarcodeByIdQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetBarcodeByIdQuery, TError, TData>(
+      ['GetBarcodeById', variables],
+      fetcher<GetBarcodeByIdQuery, GetBarcodeByIdQueryVariables>(client, GetBarcodeByIdDocument, variables, headers),
+      options
+    );
+export const CreateBarcodeDocument = `
+    mutation CreateBarcode($input: CreateBarcodeInput!) {
+  createBarcode(input: $input) {
+    id
+    extras
+    name
+    supplierName
+    supplierArticleCode
+    quantity
+    rotation
+    preparationMode
+    flagDouble
+    blacklisted
+    stockOwnerId
+    rotationText
+    preparationModeText
+  }
+}
+    `;
+export const useCreateBarcodeMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<CreateBarcodeMutation, TError, CreateBarcodeMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<CreateBarcodeMutation, TError, CreateBarcodeMutationVariables, TContext>(
+      ['CreateBarcode'],
+      (variables?: CreateBarcodeMutationVariables) => fetcher<CreateBarcodeMutation, CreateBarcodeMutationVariables>(client, CreateBarcodeDocument, variables, headers)(),
+      options
+    );
+export const DeleteBarcodeDocument = `
+    mutation DeleteBarcode($id: String!) {
+  deleteBarcode(id: $id)
+}
+    `;
+export const useDeleteBarcodeMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<DeleteBarcodeMutation, TError, DeleteBarcodeMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<DeleteBarcodeMutation, TError, DeleteBarcodeMutationVariables, TContext>(
+      ['DeleteBarcode'],
+      (variables?: DeleteBarcodeMutationVariables) => fetcher<DeleteBarcodeMutation, DeleteBarcodeMutationVariables>(client, DeleteBarcodeDocument, variables, headers)(),
+      options
+    );
+export const RenderBarcodeDocument = `
+    mutation RenderBarcode($code: String!, $category: BarcodeCategory, $pages: Int!) {
+  renderBarcode(code: $code, category: $category, pages: $pages) {
+    __typename
+    ... on RenderedDocument {
+      url
+    }
+    ... on BarcodeError {
+      message
+    }
+  }
+}
+    `;
+export const useRenderBarcodeMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<RenderBarcodeMutation, TError, RenderBarcodeMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<RenderBarcodeMutation, TError, RenderBarcodeMutationVariables, TContext>(
+      ['RenderBarcode'],
+      (variables?: RenderBarcodeMutationVariables) => fetcher<RenderBarcodeMutation, RenderBarcodeMutationVariables>(client, RenderBarcodeDocument, variables, headers)(),
+      options
+    );
+export const UpdateBarcodeDocument = `
+    mutation UpdateBarcode($id: String!, $input: UpdateBarcodeInput!) {
+  updateBarcode(id: $id, input: $input) {
+    id
+    extras
+    name
+    supplierName
+    supplierArticleCode
+    quantity
+    rotation
+    preparationMode
+    flagDouble
+    blacklisted
+    stockOwnerId
+    rotationText
+    preparationModeText
+    article {
+      name
+    }
+  }
+}
+    `;
+export const useUpdateBarcodeMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<UpdateBarcodeMutation, TError, UpdateBarcodeMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<UpdateBarcodeMutation, TError, UpdateBarcodeMutationVariables, TContext>(
+      ['UpdateBarcode'],
+      (variables?: UpdateBarcodeMutationVariables) => fetcher<UpdateBarcodeMutation, UpdateBarcodeMutationVariables>(client, UpdateBarcodeDocument, variables, headers)(),
+      options
+    );
 export const WarehouseLoginDocument = `
     mutation WarehouseLogin($username: String!, $password: String!, $warehouseId: ID!) {
   warehouseLogin(
