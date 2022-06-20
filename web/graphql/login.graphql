@@ -5,7 +5,7 @@ mutation WarehouseLogin($username: String!, $password: String!, $warehouseId: ID
 }
 
 mutation IntegratorLogin($email: String!, $password: String!, $integratorId: ID!) {
-    warehouseLogin(email: $email, password: $password, integratorId: $integratorId) {
+    integratorLogin(email: $email, password: $password, integratorId: $integratorId) {
         accessToken
     }
 }
