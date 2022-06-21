@@ -116,9 +116,11 @@ export const LoginForm = () => {
                     `;
 
                     graphqlRequestClient.request(query).then((data: any) => {
-                        console.log(data)
                         if (data.me) {
-                            setUserInfo(data.me);
+                            const tmpUser = data.me;
+                            delete tmpUser['role'];
+                            console.log(tmpUser)
+                            setUserInfo(tmpUser);
                             router.push('/');
                             showSuccess(t('messages:login-success'));
                         }

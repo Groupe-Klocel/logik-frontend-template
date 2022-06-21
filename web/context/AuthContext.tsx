@@ -69,7 +69,7 @@ export const AuthProvider: FC<OnlyChildrenType> = ({ children }: OnlyChildrenTyp
                 cookie.set('token', token);
                 setHeader(token);
                 const user = decodeJWT(token);
-                console.log(user);
+                console.log('decoded user = ', user);
                 setUser(user);
                 setIsAuthenticated(true);
                 // Set Bearer JWT token to the header for future request
