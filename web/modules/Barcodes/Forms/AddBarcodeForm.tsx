@@ -117,8 +117,8 @@ export const AddBarcodeForm = () => {
 
     useEffect(() => {
         if (data) {
-            let newIdOpts: Array<IOption> = [];
-            data.articles?.results.forEach(({ id, name }) => {
+            const newIdOpts: Array<IOption> = [];
+            data.articles?.results.forEach(({ id, name: string }) => {
                 newIdOpts.push({ value: name, id: id! });
             });
             setIdOptions(newIdOpts);

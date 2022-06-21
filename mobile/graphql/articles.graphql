@@ -10,55 +10,81 @@ query GetAllArticles(
         totalPages
         results {
             id
-            accountId
-            companyId
+            extras
+            created
+            createdBy
+            modified
+            modifiedBy
             status
             code
             name
+            additionalDescription
+            supplierName
+            translation
             length
             width
             height
+            baseUnitPrice
             baseUnitWeight
-            boxWeight
-            boxQuantity
             baseUnitPicking
-            boxPicking
+            baseUnitRotation
             cubingType
+            featureType
             permanentProduct
-            additionalDescription
-            supplierName
+            tariffClassification
+            family
+            subfamily
+            groupingId
+            countryOfOrigin
+            newProduct
+            endOfLife
+            supportQuantity
+            stockOwnerId
+            statusText
+            cubingTypeText
+            baseUnitRotationText
+            featureTypeText
         }
     }
 }
 
-query GetArticleById($id: String!) {
-    article(id: $id) {
+query GetArticleById($id: String!, $language:String = "en") {
+    article(id: $id, language: $language) {
         id
-        accountId
-        companyId
+        extras
+        created
+        createdBy
+        modified
+        modifiedBy
         status
         code
         name
+        additionalDescription
+        supplierName
+        translation
         length
         width
         height
-        baseUnitWeight
-        boxWeight
-        boxQuantity
-        baseUnitPicking
-        boxPicking
-        cubingType
-        permanentProduct
-        additionalDescription
-        supplierName
         baseUnitPrice
+        baseUnitWeight
+        baseUnitPicking
         baseUnitRotation
-        boxRotation
-        featureTypeId
+        cubingType
+        featureType
+        permanentProduct
         tariffClassification
         family
         subfamily
         groupingId
+        countryOfOrigin
+        newProduct
+        endOfLife
+        supportQuantity
+        stockOwnerId
+        statusText
+        cubingTypeText
+        baseUnitRotationText
+        featureTypeText
     }
 }
 
@@ -82,23 +108,40 @@ query GetArticleIds(
 mutation CreateArticle($input: CreateArticleInput!) {
     createArticle(input: $input) {
         id
-        accountId
-        companyId
+        extras
+        created
+        createdBy
+        modified
+        modifiedBy
         status
         code
         name
+        additionalDescription
+        supplierName
+        translation
         length
         width
         height
+        baseUnitPrice
         baseUnitWeight
-        boxWeight
-        boxQuantity
         baseUnitPicking
-        boxPicking
+        baseUnitRotation
         cubingType
+        featureType
         permanentProduct
-        additionalDescription
-        supplierName
+        tariffClassification
+        family
+        subfamily
+        groupingId
+        countryOfOrigin
+        newProduct
+        endOfLife
+        supportQuantity
+        stockOwnerId
+        statusText
+        cubingTypeText
+        baseUnitRotationText
+        featureTypeText
     }
 }
 
@@ -127,22 +170,39 @@ mutation DeleteArticle($id: String!) {
 mutation UpdateArticle($id: String!, $input: UpdateArticleInput!) {
     updateArticle(id: $id, input: $input) {
         id
-        accountId
-        companyId
+        extras
+        created
+        createdBy
+        modified
+        modifiedBy
         status
         code
         name
+        additionalDescription
+        supplierName
+        translation
         length
         width
         height
+        baseUnitPrice
         baseUnitWeight
-        boxWeight
-        boxQuantity
         baseUnitPicking
-        boxPicking
+        baseUnitRotation
         cubingType
+        featureType
         permanentProduct
-        additionalDescription
-        supplierName
+        tariffClassification
+        family
+        subfamily
+        groupingId
+        countryOfOrigin
+        newProduct
+        endOfLife
+        supportQuantity
+        stockOwnerId
+        statusText
+        cubingTypeText
+        baseUnitRotationText
+        featureTypeText
     }
 }
