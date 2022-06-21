@@ -1,19 +1,19 @@
 import { AppHead } from '@components';
 import MainLayout from 'components/layouts/MainLayout';
 import { FC } from 'react';
-import { MovementsConfig } from '../modules/Feedbacks/PagesContainer/MovementsConfig';
+import { FeedbackOverwrite } from '../modules/Feedbacks/PagesContainer/FeedbackOverwrite';
 
 type PageComponent = FC & { layout: typeof MainLayout };
 
-const MovementsConfigPage: PageComponent = () => {
+const FeedbackOverwritePage: PageComponent = () => {
     return (
         <>
             <AppHead title="Bee V2" />
-            <MovementsConfig />
+            <FeedbackOverwrite />
         </>
     );
 };
 
-MovementsConfigPage.layout = MainLayout;
+FeedbackOverwritePage.layout = MainLayout;
 
-export default MovementsConfigPage;
+export default FeedbackOverwritePage;

@@ -14,7 +14,7 @@ export const feedbacksRoutes = [
 export const movementsConfigRoutes: Array<BreadcrumbType> = [
     ...feedbacksRoutes,
     {
-        path: '/movements-config',
+        path: '/feedback-overwrite',
         breadcrumbName: 'menu:movements-config'
     }
 ];

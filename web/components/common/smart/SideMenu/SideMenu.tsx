@@ -64,7 +64,7 @@ const SideMenu: FC = () => {
                 </SubMenu>
                 <SubMenu key="administration-feedbacks" title={t('feedbacks')}>
                     <Menu.Item key="administration-feedbacks-movements-config">
-                        <Link href="/movements-config">{t('movements-config')}</Link>
+                        <Link href="/feedback-overwrite">{t('movements-config')}</Link>
                     </Menu.Item>
                     <Menu.Item key="administration-feedbacks-status-config">
                         <Link href="/status-config">{t('status-config')}</Link>

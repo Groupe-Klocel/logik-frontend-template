@@ -2,9 +2,9 @@ import { HeaderContent } from '@components';
 import { movementsConfigRoutes } from 'modules/Feedbacks/Static/feedbacksRoutes';
 import useTranslation from 'next-translate/useTranslation';
 import { LinkButton } from 'components/common/dumb/Buttons/LinkButton';
-import { MovementsConfigList } from 'modules/Feedbacks/Elements/MovementsConfigList';
+import { FeedbackOverwriteList } from 'modules/Feedbacks/Elements/FeedbackOverwriteList';
 
-export const MovementsConfig = () => {
+export const FeedbackOverwrite = () => {
     const { t } = useTranslation();
     return (
         <>
@@ -19,7 +19,7 @@ export const MovementsConfig = () => {
                     />
                 }
             />
-            <MovementsConfigList />
+            <FeedbackOverwriteList />
         </>
     );
 };
