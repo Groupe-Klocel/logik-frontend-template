@@ -7,10 +7,10 @@ import {
     pathParams,
     DataQueryType,
     PaginationType,
-    orberByFormater,
     showInfo,
     showError,
-    showSuccess
+    showSuccess,
+    orderByFormater
 } from '@helpers';
 import { useAuth } from 'context/AuthContext';
 import useTranslation from 'next-translate/useTranslation';
@@ -126,7 +126,7 @@ const ArticlesList = ({ searchCriteria }: IArticlesListProps) => {
     }, [data]);
 
     const handleTableChange = async (_pagination: any, _filter: any, sorter: any) => {
-        await setSort(orberByFormater(sorter));
+        await setSort(orderByFormater(sorter));
     };
 
     // to refactor to be automatique when fetching data

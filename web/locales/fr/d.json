@@ -50,7 +50,8 @@
 	"level": "Niveau",
 	"position": "Position",
 	"replenish": "Réapprovisionner",
-	"masse": "Masse"
+	"masse": "Masse",
+	"type": "Type"
 
 
 

@@ -1,5 +1,8 @@
 {
     "action-impossible": "{{name}} n'est pas possible, vous devez sélectionner un enregistrement",
+    "cancel": "Retour",
+    "confirm": "OK",
+    "delete-confirm":"Etes-vous sûr(e) de vouloir supprimer cet enregistrement ?",
     "error-message-empty-input": "Le champ ne doit pas être vide",
     "error-message-requiered-input": "Le champ est requis",
     "please-enter-a": "Veuillez remplir un {{name}}",
