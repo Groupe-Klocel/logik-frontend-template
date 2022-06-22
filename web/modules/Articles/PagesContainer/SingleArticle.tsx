@@ -115,7 +115,7 @@ const SingleArticle: FC<ISingleArticleProps> = ({ id, router }: ISingleArticlePr
                 routes={breadsCrumb}
                 onBack={() => router.push('/articles')}
                 actionsRight={
-                    mode.toUpperCase() == ModeEnum.Write ? (
+                    !!mode && mode.toUpperCase() == ModeEnum.Write ? (
                         <Space>
                             <Button onClick={updateBoxQuantity} type="primary">
                                 {t('actions:update-quantity')}

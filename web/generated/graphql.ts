@@ -8516,6 +8516,7 @@ export type DeleteReturnCodeMutationVariables = Exact<{
 
 export type DeleteReturnCodeMutation = { __typename?: 'Mutation'; deleteReturnCode: boolean };
 
+
 export type UpdateReturnCodeMutationVariables = Exact<{
     id: Scalars['String'];
     input: UpdateReturnCodeInput;
@@ -8532,83 +8533,7 @@ export type UpdateReturnCodeMutation = {
 };
 
 export type GetMyInfoQueryVariables = Exact<{ [key: string]: never }>;
-
-export type GetMyInfoQuery = {
-    __typename?: 'Query';
-    me:
-        | {
-              __typename: 'IntegratorUser';
-              id?: string | null;
-              password: string;
-              email: string;
-              integratorId: string;
-              roleId: string;
-              created?: any | null;
-              createdBy?: string | null;
-              modified?: any | null;
-              modifiedBy?: string | null;
-              isAdmin?: boolean | null;
-              integrator: {
-                  __typename?: 'Integrator';
-                  id?: string | null;
-                  name: string;
-                  awsAccessKeyId?: string | null;
-                  awsSecretAccessKey?: string | null;
-              };
-              role: {
-                  __typename?: 'RoleType';
-                  id?: string | null;
-                  name: string;
-                  created?: any | null;
-                  createdBy?: string | null;
-                  modified?: any | null;
-                  modifiedBy?: string | null;
-                  permissions: Array<{
-                      __typename?: 'PermissionType';
-                      id?: string | null;
-                      table: string;
-                      mode: string;
-                      roleId: string;
-                      created?: any | null;
-                      createdBy?: string | null;
-                      modified?: any | null;
-                      modifiedBy?: string | null;
-                  }>;
-              };
-          }
-        | {
-              __typename: 'WarehouseWorker';
-              id?: string | null;
-              password: string;
-              username: string;
-              warehouseId: string;
-              roleId: string;
-              created?: any | null;
-              createdBy?: string | null;
-              modified?: any | null;
-              modifiedBy?: string | null;
-              role: {
-                  __typename?: 'RoleType';
-                  id?: string | null;
-                  name: string;
-                  created?: any | null;
-                  createdBy?: string | null;
-                  modified?: any | null;
-                  modifiedBy?: string | null;
-                  permissions: Array<{
-                      __typename?: 'PermissionType';
-                      id?: string | null;
-                      table: string;
-                      mode: string;
-                      roleId: string;
-                      created?: any | null;
-                      createdBy?: string | null;
-                      modified?: any | null;
-                      modifiedBy?: string | null;
-                  }>;
-              };
-          };
-};
+export type GetMyInfoQuery = { __typename?: 'Query', me: { __typename: 'IntegratorUser', id?: string | null, password: string, email: string, integratorId: string, roleId: string, isAdmin?: boolean | null, integrator: { __typename?: 'Integrator', id?: string | null, name: string, awsAccessKeyId?: string | null, awsSecretAccessKey?: string | null }, role: { __typename?: 'RoleType', id?: string | null, name: string, permissions: Array<{ __typename?: 'PermissionType', id?: string | null, table: string, mode: string, roleId: string }> } } | { __typename: 'WarehouseWorker', id?: string | null, password: string, username: string, warehouseId: string, roleId: string, role: { __typename?: 'RoleType', id?: string | null, name: string, permissions: Array<{ __typename?: 'PermissionType', id?: string | null, table: string, mode: string, roleId: string }> } } };
 
 export const GetAllArticlesDocument = `
     query GetAllArticles($filters: ArticleSearchFilters, $orderBy: [ArticleOrderByCriterion!], $page: Int!, $itemsPerPage: Int!) {
@@ -9510,20 +9435,8 @@ export const GetMyInfoDocument = `
           table
           mode
           roleId
-          created
-          createdBy
-          modified
-          modifiedBy
         }
-        created
-        createdBy
-        modified
-        modifiedBy
       }
-      created
-      createdBy
-      modified
-      modifiedBy
     }
     ... on IntegratorUser {
       id
@@ -9545,20 +9458,8 @@ export const GetMyInfoDocument = `
           table
           mode
           roleId
-          created
-          createdBy
-          modified
-          modifiedBy
         }
-        created
-        createdBy
-        modified
-        modifiedBy
       }
-      created
-      createdBy
-      modified
-      modifiedBy
       isAdmin
     }
   }

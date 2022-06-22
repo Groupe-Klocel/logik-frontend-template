@@ -197,7 +197,7 @@ const ArticlesList = ({ searchCriteria }: IArticlesListProps) => {
                         icon={<EyeTwoTone />}
                         path={pathParams('/article/[id]', record.id)}
                     />
-                    {mode.toUpperCase() == ModeEnum.Write ? (
+                    {!!mode && mode.toUpperCase() == ModeEnum.Write ? (
                         <Button
                             icon={<DeleteOutlined />}
                             danger

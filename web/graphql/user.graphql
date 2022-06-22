@@ -15,20 +15,8 @@ query GetMyInfo {
                     table
                     mode
                     roleId
-                    created
-                    createdBy
-                    modified
-                    modifiedBy
                 }
-                created
-                createdBy
-                modified
-                modifiedBy
             }
-            created
-            createdBy
-            modified
-            modifiedBy
         }
 
         ...on IntegratorUser {
@@ -51,20 +39,8 @@ query GetMyInfo {
                     table
                     mode
                     roleId
-                    created
-                    createdBy
-                    modified
-                    modifiedBy
                 }
-                created
-                createdBy
-                modified
-                modifiedBy
             }
-            created
-            createdBy
-            modified
-            modifiedBy
             isAdmin
         }
 
