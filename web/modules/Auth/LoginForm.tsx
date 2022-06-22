@@ -58,20 +58,8 @@ export const LoginForm = () => {
                                             table
                                             mode
                                             roleId
-                                            created
-                                            createdBy
-                                            modified
-                                            modifiedBy
                                         }
-                                        created
-                                        createdBy
-                                        modified
-                                        modifiedBy
                                     }
-                                    created
-                                    createdBy
-                                    modified
-                                    modifiedBy
                                 }
                         
                                 ...on IntegratorUser {
@@ -94,20 +82,8 @@ export const LoginForm = () => {
                                             table
                                             mode
                                             roleId
-                                            created
-                                            createdBy
-                                            modified
-                                            modifiedBy
                                         }
-                                        created
-                                        createdBy
-                                        modified
-                                        modifiedBy
                                     }
-                                    created
-                                    createdBy
-                                    modified
-                                    modifiedBy
                                     isAdmin
                                 }
                         
@@ -117,10 +93,7 @@ export const LoginForm = () => {
 
                     graphqlRequestClient.request(query).then((data: any) => {
                         if (data.me) {
-                            const tmpUser = data.me;
-                            delete tmpUser['role'];
-                            console.log(tmpUser)
-                            setUserInfo(tmpUser);
+                            setUserInfo(data.me);
                             router.push('/');
                             showSuccess(t('messages:login-success'));
                         }

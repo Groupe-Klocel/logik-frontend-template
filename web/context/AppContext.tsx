@@ -9,7 +9,9 @@ const themeInitialState = cookie.get('theme') ? cookie.get('theme') : 'light';
 
 const userInfoStr = cookie.get('user') !== undefined ? cookie.get('user') : '{}';
 const userInitData = JSON.parse(userInfoStr!);
-const permissions = userInitData.role?.permissions;
+// const permissions = userInitData.role?.permissions;
+const permissionsStr = cookie.get('permissions') !== undefined ? cookie.get('permissions') : '[]';
+const permissions = JSON.parse(permissionsStr!);
 
 const initialState = {
     theme: themeInitialState,
@@ -52,13 +54,16 @@ function reducer(state: State, action: Action) {
             return {
                 ...state
             };
-        case 'SET_USER_INFO':
+        case 'SET_USER_INFO': {
             saveUserInfo(action.user);
+            const userWithoutRole = JSON.parse(JSON.stringify(action.user));
+            delete userWithoutRole['role'];
             return {
                 ...state,
-                user: action.user,
+                user: userWithoutRole,
                 permissions: action.user.role?.permissions
             };
+        }
         default:
             return state;
     }
@@ -71,7 +76,11 @@ const saveUserSettings = (menu: boolean, theme: string, locale: string) => {
 };
 
 const saveUserInfo = (user: any) => {
-    cookie.set('user', JSON.stringify(user));
+    const tmpUser = JSON.parse(JSON.stringify(user));
+    delete tmpUser['role'];
+    console.log('tmpuser',tmpUser)
+    cookie.set('user', JSON.stringify(tmpUser));
+    cookie.set('permissions', JSON.stringify(user.role?.permissions))
 };
 
 const [useAppState, useAppDispatch, AppProvider] = createCtx(initialState, reducer);
