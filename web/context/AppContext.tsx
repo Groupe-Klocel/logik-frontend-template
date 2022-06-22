@@ -1,4 +1,5 @@
 import { stringToBoolean, cookie } from '@helpers';
+import { PermissionType } from 'generated/graphql';
 import { createCtx } from './create-context';
 
 // init from cookies
@@ -9,21 +10,27 @@ const themeInitialState = cookie.get('theme') ? cookie.get('theme') : 'light';
 
 const userInfoStr = cookie.get('user') !== undefined ? cookie.get('user') : '{}';
 const userInitData = JSON.parse(userInfoStr!);
-// const permissions = userInitData.role?.permissions;
-const permissionsStr = cookie.get('permissions') !== undefined ? cookie.get('permissions') : '[]';
-const permissions = JSON.parse(permissionsStr!);
 
-const initialState = {
+type State  = {
+    theme: string | undefined,
+    isSettingMenuCollapsed: boolean,
+    isSessionMenuCollapsed: boolean,
+    globalLocale: string,
+    finish: boolean,
+    user: any,
+    permissions: Array<PermissionType> | undefined
+};
+
+const initialState: State = {
     theme: themeInitialState,
     isSettingMenuCollapsed: menuInitialState,
     isSessionMenuCollapsed: menuInitialState,
     globalLocale: 'fr',
     finish: false,
     user: userInitData,
-    permissions: permissions
+    permissions: undefined
 };
 
-type State = typeof initialState;
 type Action = any;
 
 function reducer(state: State, action: Action) {
@@ -78,9 +85,7 @@ const saveUserSettings = (menu: boolean, theme: string, locale: string) => {
 const saveUserInfo = (user: any) => {
     const tmpUser = JSON.parse(JSON.stringify(user));
     delete tmpUser['role'];
-    console.log('tmpuser',tmpUser)
     cookie.set('user', JSON.stringify(tmpUser));
-    cookie.set('permissions', JSON.stringify(user.role?.permissions))
 };
 
 const [useAppState, useAppDispatch, AppProvider] = createCtx(initialState, reducer);

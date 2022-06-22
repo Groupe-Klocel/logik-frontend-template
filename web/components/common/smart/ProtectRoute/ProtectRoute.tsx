@@ -41,9 +41,8 @@ const ProtectRoute: any | null = ({ children }: OnlyChildrenType) => {
         if (data && !isLoading) {
             const tmpUser: any = JSON.parse(JSON.stringify(data.me));
             delete tmpUser['role'];
-
+            setUserInfo(data.me);
             if (JSON.stringify(tmpUser) !== JSON.stringify(user)) {
-                setUserInfo(data.me);
                 router.push('/login');
             } else {
                 // console.log('skip set user info');
