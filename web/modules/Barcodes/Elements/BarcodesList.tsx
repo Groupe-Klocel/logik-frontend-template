@@ -9,7 +9,7 @@ import {
     pathParams,
     DataQueryType,
     PaginationType,
-    orberByFormater
+    orderByFormater
 } from '@helpers';
 import { BarcodeRenderModal } from './BarcodeRenderModal';
 
@@ -62,7 +62,7 @@ const BarcodesList = ({ searchCriteria }: IBarcodesListProps) => {
     }, [data]);
 
     const handleTableChange = async (_pagination: any, _filter: any, sorter: any) => {
-        await setSort(orberByFormater(sorter));
+        await setSort(orderByFormater(sorter));
     };
 
     const columns = [

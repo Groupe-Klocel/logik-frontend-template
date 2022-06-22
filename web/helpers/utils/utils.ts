@@ -47,7 +47,7 @@ function purgeSorter(data: Array<any> | any): Array<any> | null {
     return newSorter;
 }
 
-const orberByFormater = (sorter: any) => {
+const orderByFormater = (sorter: any) => {
     const newSorter = purgeSorter(sorter);
     return newSorter;
 };
@@ -232,7 +232,7 @@ export {
     isFloat,
     formatDigits,
     isEmpty,
-    orberByFormater,
+    orderByFormater,
     purgeSorter,
     checkValuePresenceInArray,
     pathParams,
