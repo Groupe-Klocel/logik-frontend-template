@@ -1,5 +1,5 @@
 overwrite: true
-schema: "schema: "https://api.staging.logik.klocel.com/graphql"
+schema: "https://api.staging.logik.klocel.com/graphql"
 documents: "**/**/*.graphql"
 generates:
   generated/graphql.ts:
