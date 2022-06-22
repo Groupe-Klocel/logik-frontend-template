@@ -25,7 +25,6 @@ query GetAllLocations(
             constraint
             comment
             baseUnitRotation
-            boxRotation
             allowCycleCountStockMin
         }
     }
@@ -49,7 +48,6 @@ query GetLocationById($id: String!) {
         constraint
         comment
         baseUnitRotation
-        boxRotation
         allowCycleCountStockMin
     }
 }
@@ -80,7 +78,6 @@ query GetLocationIds(
             constraint
             comment
             baseUnitRotation
-            boxRotation
             allowCycleCountStockMin
         }
     }
@@ -106,7 +103,6 @@ mutation CreateLocation($input: CreateLocationInput!) {
             constraint
             comment
             baseUnitRotation
-            boxRotation
             allowCycleCountStockMin
         }
         ... on ValidationError {
@@ -135,7 +131,6 @@ mutation BulkCreateLocations($input: BulkCreateLocationsInput!) {
             constraint
             comment
             baseUnitRotation
-            boxRotation
             allowCycleCountStockMin
         }
     }
@@ -163,7 +158,6 @@ mutation UpdateLocation($id: String!, $input: UpdateLocationInput!) {
         constraint
         comment
         baseUnitRotation
-        boxRotation
         allowCycleCountStockMin
     }
 }

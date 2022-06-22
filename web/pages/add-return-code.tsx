@@ -1,19 +1,19 @@
 import { AppHead } from '@components';
 import MainLayout from 'components/layouts/MainLayout';
 import { FC } from 'react';
-import { ReturnCodes } from '../modules/ReturnCodes/PagesContainer/ReturnCodes';
+import { AddReturnCode } from '../modules/ReturnCodes/PagesContainer/AddReturnCode';
 
 type PageComponent = FC & { layout: typeof MainLayout };
 
-const ReturnCodesPage: PageComponent = () => {
+const AddReturnCodePage: PageComponent = () => {
     return (
         <>
             <AppHead title="Bee V2" />
-            <ReturnCodes />
+            <AddReturnCode />
         </>
     );
 };
 
-ReturnCodesPage.layout = MainLayout;
+AddReturnCodePage.layout = MainLayout;
 
-export default ReturnCodesPage;
+export default AddReturnCodePage;
