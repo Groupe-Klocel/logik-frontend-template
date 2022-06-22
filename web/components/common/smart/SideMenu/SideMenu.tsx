@@ -40,7 +40,7 @@ const SideMenu: FC = () => {
         <Menu mode="inline" className="menu">
             <SubMenu icon={<AuditOutlined />} key="administration" title={t('administration')}>
                 <SubMenu key="administration-access-management" title={t('access-management')}>
-                    {checkPermissionExistance(Table.User) ? (
+                    {checkPermissionExistance(Table.WarehouseWorker) ? (
                         <Menu.Item key="administration-access-management-users">
                             <Link href="/users">{t('users')}</Link>
                         </Menu.Item>
