@@ -21,8 +21,9 @@ const { TextArea } = Input;
 export const AddLocationForm = () => {
     const { t } = useTranslation();
     const router = useRouter();
-
+    const { id } = router.query;
     const [blocks, setBlocks] = useState<any>();
+    const [defaultBlock, setDefaultBlock] = useState<any>();
 
     //To render simple blocks list for attached block selection (id and name without any filter)
     const blocksList = useSimpleGetAllBLocksQuery<Partial<SimpleGetAllBLocksQuery>, Error>(
@@ -30,10 +31,15 @@ export const AddLocationForm = () => {
     );
 
     useEffect(() => {
+        if (id != undefined) {
+            setDefaultBlock(blocksList?.data?.blocks?.results.find((e: any) => (e.id = id)));
+        }
         if (blocksList) {
             setBlocks(blocksList?.data?.blocks?.results);
         }
-    }, [blocksList]);
+    }, [blocksList, id]);
+
+    console.log(defaultBlock?.name);
 
     // TYPED SAFE ALL
     const [form] = Form.useForm();
@@ -87,32 +93,47 @@ export const AddLocationForm = () => {
     return (
         <WrapperForm>
             <Form form={form} scrollToFirstError>
-                <Form.Item
-                    label={t('d:associatedBlock')}
-                    name="blockId"
-                    hasFeedback
-                    rules={[
-                        {
-                            required: true,
-                            message: `${t('messages:error-message-select-1', {
-                                name: t('d:block')
-                            })}`
-                        }
-                    ]}
-                >
-                    <Select
-                        placeholder={`${t('messages:please-select-a', {
-                            name: t('d:block')
-                        })}`}
-                    >
-                        {blocks?.map((block: any) => (
-                            <Option key={block.id} value={block.id}>
-                                {block.name}
-                            </Option>
-                        ))}
-                    </Select>
-                </Form.Item>
-
+                <>
+                    {defaultBlock ? (
+                        <Form.Item
+                            label={t('d:associatedBlock')}
+                            name="associatedBlock"
+                            rules={[
+                                {
+                                    required: true
+                                }
+                            ]}
+                        >
+                            <Input disabled={true} defaultValue={defaultBlock?.name} />
+                        </Form.Item>
+                    ) : (
+                        <Form.Item
+                            label={t('d:associatedBlock')}
+                            name="blockId"
+                            hasFeedback
+                            rules={[
+                                {
+                                    required: true,
+                                    message: `${t('messages:error-message-select-1', {
+                                        name: t('d:block')
+                                    })}`
+                                }
+                            ]}
+                        >
+                            <Select
+                                placeholder={`${t('messages:please-select-a', {
+                                    name: t('d:block')
+                                })}`}
+                            >
+                                {blocks?.map((block: any) => (
+                                    <Option key={block.id} value={block.id}>
+                                        {block.name}
+                                    </Option>
+                                ))}
+                            </Select>
+                        </Form.Item>
+                    )}
+                </>
                 <Form.Item
                     label={t('d:aisle')}
                     name="aisle"

@@ -1,10 +1,9 @@
 import { WrapperForm } from '@components';
-import { Button, Col, Input, InputNumber, Row, Form, AutoComplete, Checkbox, Select } from 'antd';
+import { Button, Col, Input, InputNumber, Row, Form, Checkbox, Select } from 'antd';
 import useTranslation from 'next-translate/useTranslation';
-import { FC, KeyboardEventHandler, useEffect, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { useAuth } from 'context/AuthContext';
 import { useRouter } from 'next/router';
-import { debounce } from 'lodash';
 import {
     useUpdateBlockMutation,
     UpdateBlockMutation,
@@ -113,11 +112,9 @@ export const EditBlockForm: FC<EditBlockFormProps> = ({ blockId, details }: Edit
                 if (formData.level !== blockLevelCode) {
                     formData.level = blockLevelCode;
                 }
-                console.log('yoyo', formData);
                 delete formData['associatedBuilding'];
                 delete formData['blockLevel'];
                 delete formData['building'];
-                // console.log(refurbishFormData);
                 updateBlock({ id: blockId, input: formData });
             })
             .catch((err) => {

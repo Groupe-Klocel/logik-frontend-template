@@ -6,7 +6,6 @@ import {
     CloseSquareOutlined
 } from '@ant-design/icons';
 import { Button, Modal, Space } from 'antd';
-// import { blocsData } from 'fake-data/blocs';
 import { AppTable, ContentSpin, LinkButton } from '@components';
 import { useCallback, useEffect, useState } from 'react';
 import {
@@ -184,7 +183,6 @@ export const BlocksList = ({ searchCriteria }: BlocksListTypeProps) => {
                         icon={<EditTwoTone />}
                         path={pathParams('/block/edit/[id]', record.id)}
                     />
-                    {/* <Button icon={<EditTwoTone />} onClick={() => alert(`Edit ${record.id} `)} /> */}
                     <Button
                         icon={<DeleteOutlined />}
                         danger

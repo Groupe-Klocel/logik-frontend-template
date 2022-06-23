@@ -86,11 +86,7 @@ export const EditLocationForm: FC<EditLocationFormProps> = ({
     };
 
     useEffect(() => {
-        const tmp_details = {
-            ...details,
-            associatedBlock: details.block.name,
-            blockLevel: blockLevels?.find((e: any) => e.code == details.level).text
-        };
+        const tmp_details = { ...details, associatedBlock: details.block.name };
         delete tmp_details['id'];
         delete tmp_details['created'];
         delete tmp_details['createdBy'];

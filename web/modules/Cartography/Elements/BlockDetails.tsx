@@ -166,7 +166,8 @@ const BlockDetails = ({ details }: IBlockDetailsProps) => {
                 <Col span={6}>
                     <LinkButton
                         title={t('actions:add2', { name: t('menu:location') })}
-                        path="/add-location"
+                        // path="/add-location"
+                        path={pathParams('/add-location', details.id)}
                         type="primary"
                     />
                 </Col>

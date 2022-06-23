@@ -81,10 +81,6 @@ const SingleBlock: FC<SingleBlockTypeProps> = ({ id, router }: SingleBlockTypePr
                     <Space>
                         {/* ADD HERE*/}
                         <LinkButton
-                            title={t('actions:list', { name: t('menu:blocks') })}
-                            path={'/blocks'}
-                        />
-                        <LinkButton
                             icon={<EditTwoTone />}
                             path={pathParams('/block/edit/[id]', id)}
                         />
