@@ -7,6 +7,24 @@ query SimpleGetAllBLocks {
     }
 }
 
+query SimpleGetAllBuildings {
+    buildings {
+        results {
+            id
+            name
+        }
+    }
+}
+
+query getBlockLevelsParams {
+    listParametersForAScope(scope: "block_level") {
+        id
+        scope
+        code
+        text
+    }
+}
+
 query GetAllBlocks(
     $filters: BlockSearchFilters
     $orderBy: [BlockOrderByCriterion!]
@@ -19,6 +37,9 @@ query GetAllBlocks(
         totalPages
         results {
             id
+            building {
+                name
+            }
             name
             created
             createdBy
@@ -36,6 +57,9 @@ query GetAllBlocks(
 query GetBlockById($id: String!) {
     block(id: $id) {
         id
+        building {
+            name
+        }
         name
         created
         createdBy

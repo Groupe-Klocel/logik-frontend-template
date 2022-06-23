@@ -11,6 +11,8 @@ import {
 import useTranslation from 'next-translate/useTranslation';
 import { Col, Divider, Row, Typography } from 'antd';
 import { useState, useEffect, useCallback } from 'react';
+import { GetBlockLevelsParamsQuery, useGetBlockLevelsParamsQuery } from 'generated/graphql';
+import graphqlRequestClient from 'graphql/graphqlRequestClient';
 
 const { Title } = Typography;
 
@@ -22,6 +24,18 @@ const BlockDetails = ({ details }: IBlockDetailsProps) => {
     const { t } = useTranslation();
 
     const [locations, setLocations] = useState<DataQueryType>();
+    const [blockLevels, setBlockLevels] = useState<any>();
+
+    //To render block Levels from parameter table for the given scope
+    const blockLevelsList = useGetBlockLevelsParamsQuery<Partial<GetBlockLevelsParamsQuery>, Error>(
+        graphqlRequestClient
+    );
+
+    useEffect(() => {
+        if (blockLevelsList) {
+            setBlockLevels(blockLevelsList?.data?.listParametersForAScope);
+        }
+    }, [blockLevelsList]);
 
     const [pagination, setPagination] = useState<PaginationType>({
         total: undefined,
@@ -49,6 +63,16 @@ const BlockDetails = ({ details }: IBlockDetailsProps) => {
         [setPagination, locations]
     );
 
+    // const textLevel = blockLevels.find((e: any) => e.code == details.level).text;
+    let refurbDetails = {
+        ...details,
+        associatedBuilding: details.building.name,
+        blockLevel: blockLevels?.find((e: any) => e.code == details.level).text
+    };
+    delete refurbDetails['building'];
+    delete refurbDetails['level'];
+
+    // console.log(textLevel);
     const locationColumns = [
         {
             title: t('common:name'),
@@ -133,7 +157,7 @@ const BlockDetails = ({ details }: IBlockDetailsProps) => {
 
     return (
         <>
-            <DetailsList details={details} />
+            <DetailsList details={refurbDetails} />
             <Divider />
             <Row justify="space-between">
                 <Col span={6}>

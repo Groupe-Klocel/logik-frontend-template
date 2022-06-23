@@ -24,7 +24,9 @@ import useTranslation from 'next-translate/useTranslation';
 import {
     DeleteBlockMutation,
     DeleteBlockMutationVariables,
-    useDeleteBlockMutation
+    GetBlockLevelsParamsQuery,
+    useDeleteBlockMutation,
+    useGetBlockLevelsParamsQuery
 } from 'generated/graphql';
 import graphqlRequestClient from 'graphql/graphqlRequestClient';
 
@@ -42,6 +44,18 @@ export const BlocksList = ({ searchCriteria }: BlocksListTypeProps) => {
         current: DEFAULT_PAGE_NUMBER,
         itemsPerPage: DEFAULT_ITEMS_PER_PAGE
     });
+    const [blockLevels, setBlockLevels] = useState<any>();
+
+    //To render block Levels from parameter table for the given scope
+    const blockLevelsList = useGetBlockLevelsParamsQuery<Partial<GetBlockLevelsParamsQuery>, Error>(
+        graphqlRequestClient
+    );
+
+    useEffect(() => {
+        if (blockLevelsList) {
+            setBlockLevels(blockLevelsList?.data?.listParametersForAScope);
+        }
+    }, [blockLevelsList]);
 
     // make wrapper function to give child
     const onChangePagination = useCallback(
@@ -147,7 +161,7 @@ export const BlocksList = ({ searchCriteria }: BlocksListTypeProps) => {
                 multiple: 2
             },
             showSorterTooltip: false,
-            render: (level: any) => (level == -1 ? 'N/A' : level)
+            render: (level: any) => blockLevels.find((e: any) => e.code == level).text
         },
         {
             title: 'd:blockGroup',

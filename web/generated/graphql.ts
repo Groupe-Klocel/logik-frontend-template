@@ -567,6 +567,7 @@ export type BarcodeSearchFilters = {
 export type Block = {
   __typename?: 'Block';
   blockGroup?: Maybe<Scalars['Int']>;
+  building: Building;
   buildingId?: Maybe<Scalars['String']>;
   bulk?: Maybe<Scalars['Boolean']>;
   comment?: Maybe<Scalars['String']>;
@@ -8422,6 +8423,16 @@ export type SimpleGetAllBLocksQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type SimpleGetAllBLocksQuery = { __typename?: 'Query', blocks: { __typename?: 'BlockListResult', results: Array<{ __typename?: 'Block', id?: string | null, name?: string | null }> } };
 
+export type SimpleGetAllBuildingsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type SimpleGetAllBuildingsQuery = { __typename?: 'Query', buildings: { __typename?: 'BuildingListResult', results: Array<{ __typename?: 'Building', id?: string | null, name?: string | null }> } };
+
+export type GetBlockLevelsParamsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetBlockLevelsParamsQuery = { __typename?: 'Query', listParametersForAScope: Array<{ __typename?: 'ParameterResults', id: string, scope: string, code: string, text: string }> };
+
 export type GetAllBlocksQueryVariables = Exact<{
   filters?: InputMaybe<BlockSearchFilters>;
   orderBy?: InputMaybe<Array<BlockOrderByCriterion> | BlockOrderByCriterion>;
@@ -8430,14 +8441,14 @@ export type GetAllBlocksQueryVariables = Exact<{
 }>;
 
 
-export type GetAllBlocksQuery = { __typename?: 'Query', blocks: { __typename?: 'BlockListResult', count: number, itemsPerPage: number, totalPages: number, results: Array<{ __typename?: 'Block', id?: string | null, name?: string | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, moveable?: boolean | null, bulk?: boolean | null, comment?: string | null, level?: number | null, blockGroup?: number | null }> } };
+export type GetAllBlocksQuery = { __typename?: 'Query', blocks: { __typename?: 'BlockListResult', count: number, itemsPerPage: number, totalPages: number, results: Array<{ __typename?: 'Block', id?: string | null, name?: string | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, moveable?: boolean | null, bulk?: boolean | null, comment?: string | null, level?: number | null, blockGroup?: number | null, building: { __typename?: 'Building', name?: string | null } }> } };
 
 export type GetBlockByIdQueryVariables = Exact<{
   id: Scalars['String'];
 }>;
 
 
-export type GetBlockByIdQuery = { __typename?: 'Query', block?: { __typename?: 'Block', id?: string | null, name?: string | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, moveable?: boolean | null, bulk?: boolean | null, comment?: string | null, level?: number | null, blockGroup?: number | null } | null };
+export type GetBlockByIdQuery = { __typename?: 'Query', block?: { __typename?: 'Block', id?: string | null, name?: string | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, moveable?: boolean | null, bulk?: boolean | null, comment?: string | null, level?: number | null, blockGroup?: number | null, building: { __typename?: 'Building', name?: string | null } } | null };
 
 export type GetBlockIdsQueryVariables = Exact<{
   filters?: InputMaybe<BlockSearchFilters>;
@@ -9135,6 +9146,54 @@ export const useSimpleGetAllBLocksQuery = <
       fetcher<SimpleGetAllBLocksQuery, SimpleGetAllBLocksQueryVariables>(client, SimpleGetAllBLocksDocument, variables, headers),
       options
     );
+export const SimpleGetAllBuildingsDocument = `
+    query SimpleGetAllBuildings {
+  buildings {
+    results {
+      id
+      name
+    }
+  }
+}
+    `;
+export const useSimpleGetAllBuildingsQuery = <
+      TData = SimpleGetAllBuildingsQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables?: SimpleGetAllBuildingsQueryVariables,
+      options?: UseQueryOptions<SimpleGetAllBuildingsQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<SimpleGetAllBuildingsQuery, TError, TData>(
+      variables === undefined ? ['SimpleGetAllBuildings'] : ['SimpleGetAllBuildings', variables],
+      fetcher<SimpleGetAllBuildingsQuery, SimpleGetAllBuildingsQueryVariables>(client, SimpleGetAllBuildingsDocument, variables, headers),
+      options
+    );
+export const GetBlockLevelsParamsDocument = `
+    query getBlockLevelsParams {
+  listParametersForAScope(scope: "block_level") {
+    id
+    scope
+    code
+    text
+  }
+}
+    `;
+export const useGetBlockLevelsParamsQuery = <
+      TData = GetBlockLevelsParamsQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables?: GetBlockLevelsParamsQueryVariables,
+      options?: UseQueryOptions<GetBlockLevelsParamsQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetBlockLevelsParamsQuery, TError, TData>(
+      variables === undefined ? ['getBlockLevelsParams'] : ['getBlockLevelsParams', variables],
+      fetcher<GetBlockLevelsParamsQuery, GetBlockLevelsParamsQueryVariables>(client, GetBlockLevelsParamsDocument, variables, headers),
+      options
+    );
 export const GetAllBlocksDocument = `
     query GetAllBlocks($filters: BlockSearchFilters, $orderBy: [BlockOrderByCriterion!], $page: Int!, $itemsPerPage: Int!) {
   blocks(
@@ -9148,6 +9207,9 @@ export const GetAllBlocksDocument = `
     totalPages
     results {
       id
+      building {
+        name
+      }
       name
       created
       createdBy
@@ -9180,6 +9242,9 @@ export const GetBlockByIdDocument = `
     query GetBlockById($id: String!) {
   block(id: $id) {
     id
+    building {
+      name
+    }
     name
     created
     createdBy

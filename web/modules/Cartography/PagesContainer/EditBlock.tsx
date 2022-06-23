@@ -36,7 +36,7 @@ const EditBlock: FC<EditBlockProps> = ({ id, router }: EditBlockProps) => {
     const breadsCrumb = [
         ...blocksRoutes,
         {
-            breadcrumbName: `${id}`
+            breadcrumbName: `${data?.block?.name}`
         }
     ];
 
