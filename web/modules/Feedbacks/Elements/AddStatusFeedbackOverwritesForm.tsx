@@ -6,7 +6,7 @@ import useTranslation from 'next-translate/useTranslation';
 
 const { Option } = Select;
 
-export const AddStatusConfigForm = () => {
+export const AddStatusFeedbackOverwritesForm = () => {
     const { t } = useTranslation('common');
 
     //TODO FETCH GROUP'S NAME

@@ -3,22 +3,37 @@ import { Button, Space } from 'antd';
 import { AppTable } from '@components';
 import { companiesData } from 'fake-data/companies';
 
-export const StatusConfigList = () => {
+export const StatusFeedbackOverwritesList = () => {
     const columns = [
         {
-            title: 'common:account',
-            dataIndex: 'account',
-            key: 'account'
+            title: 'common:stock-owner',
+            dataIndex: 'stock-owner',
+            key: 'stock-owner'
         },
         {
-            title: 'common:company',
-            dataIndex: 'company',
-            key: 'company'
+            title: 'common:object-type',
+            dataIndex: 'object-type',
+            key: 'object-type'
+        },
+        {
+            title: 'common:status-code',
+            dataIndex: 'status-code',
+            key: 'status-code'
         },
         {
             title: 'common:feedback',
             dataIndex: 'feedback',
             key: 'feedback'
+        },
+        {
+            title: 'common:custom-value',
+            dataIndex: 'custom-value',
+            key: 'custom-value'
+        },
+        {
+            title: 'common:system',
+            dataIndex: 'system',
+            key: 'system'
         },
         {
             title: 'actions:actions',
@@ -42,5 +57,5 @@ export const StatusConfigList = () => {
             )
         }
     ];
-    return <AppTable type="status-config" columns={columns} data={companiesData} />;
+    return <AppTable type="status-feedback-overwrites" columns={columns} data={companiesData} />;
 };

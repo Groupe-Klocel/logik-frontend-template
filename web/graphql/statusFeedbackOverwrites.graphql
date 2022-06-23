@@ -1,0 +1,91 @@
+query GetAllStatusFeedbackOverwrites(
+    $filters: StatusFeedbackOverwriteSearchFilters
+    $orderBy: [StatusFeedbackOverwriteOrderByCriterion!]
+    $page: Int!
+    $itemsPerPage: Int!
+) {
+    statusFeedbackOverwrites(
+        filters: $filters
+        orderBy: $orderBy
+        page: $page
+        itemsPerPage: $itemsPerPage
+    ) {
+        count
+        itemsPerPage
+        totalPages
+        results {
+            id
+            stockOwnerId
+            objectType
+            status
+            feedback
+            customValue
+            system
+        }
+    }
+}
+
+query GetStatusFeedbackOverwriteById($id: String!) {
+    statusFeedbackOverwrite(id: $id) {
+        id
+        stockOwnerId
+        objectType
+        status
+        feedback
+        customValue
+        system
+        created
+        createdBy
+        modified
+        modifiedBy
+    }
+}
+
+query GetStatusFeedbackOverwriteIds(
+    $filters: StatusFeedbackOverwriteSearchFilters
+    $orderBy: [StatusFeedbackOverwriteOrderByCriterion!]
+    $page: Int!
+    $itemsPerPage: Int!
+) {
+    statusFeedbackOverwrites(
+        filters: $filters
+        orderBy: $orderBy
+        page: $page
+        itemsPerPage: $itemsPerPage
+    ) {
+        count
+        itemsPerPage
+        totalPages
+        results {
+            id
+        }
+    }
+}
+
+mutation CreateStatusFeedbackOverwrite($input: CreateStatusFeedbackOverwriteInput!) {
+    createStatusFeedbackOverwrite(input: $input) {
+        id
+        stockOwnerId
+        objectType
+        status
+        feedback
+        customValue
+        system
+    }
+}
+
+mutation DeleteStatusFeedbackOverwrite($id: String!) {
+    deleteStatusFeedbackOverwrite(id: $id)
+}
+
+mutation UpdateStatusFeedbackOverwrite($id: String!, $input: UpdateStatusFeedbackOverwriteInput!) {
+    updateStatusFeedbackOverwrite(id: $id, input: $input) {
+        id
+        stockOwnerId
+        objectType
+        status
+        feedback
+        customValue
+        system
+    }
+}

@@ -9,7 +9,7 @@
     "add-movements-config-feedback": "Ajouter Movements Config Feedback",
     "add-packaging": "Ajouter Emballage",
     "add-return-code": "Ajouter Code Retour",
-    "add-status-config-feedback": "Ajouter Status Config Feedback",
+    "add-status-feedback_overwrites": "Ajouter Status Config Feedback",
     "add-stock-status": "Ajouter Stock Status",
     "add-user": "Ajouter Utilisateur",
     "add-your": "Ajouter votre {{name}}",

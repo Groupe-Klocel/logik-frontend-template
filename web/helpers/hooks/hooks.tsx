@@ -9,7 +9,9 @@ import {
     useGetMyInfoQuery,
     GetMyInfoQuery,
     useGetAllReturnCodesQuery,
-    GetAllReturnCodesQuery
+    GetAllReturnCodesQuery,
+    useGetAllStatusFeedbackOverwritesQuery,
+    GetAllStatusFeedbackOverwritesQuery
 } from 'generated/graphql';
 
 const useArticles = (search: any, page: number, itemsPerPage: number, sort: any) => {
@@ -136,4 +138,45 @@ const useReturnCodes = (search: any, page: number, itemsPerPage: number, sort: a
     return returnCodes;
 };
 
-export { useArticles, useBarcodes, useArticleIds, useMyInfo, useReturnCodes };
+const useStatusFeedbackOverwrites = (
+    search: any,
+    page: number,
+    itemsPerPage: number,
+    sort: any
+) => {
+    const { graphqlRequestClient } = useAuth();
+
+    const sortByDate = {
+        field: 'created',
+        ascending: false
+    };
+
+    let newSort;
+
+    if (sort === null) {
+        newSort = sortByDate;
+    } else {
+        newSort = sort;
+    }
+
+    const returnCodes = useGetAllStatusFeedbackOverwritesQuery<
+        Partial<GetAllStatusFeedbackOverwritesQuery>,
+        Error
+    >(graphqlRequestClient, {
+        filters: search,
+        orderBy: newSort,
+        page: page,
+        itemsPerPage: itemsPerPage
+    });
+
+    return returnCodes;
+};
+
+export {
+    useArticles,
+    useBarcodes,
+    useArticleIds,
+    useMyInfo,
+    useReturnCodes,
+    useStatusFeedbackOverwrites
+};
