@@ -7,10 +7,10 @@ import {
     pathParams,
     DataQueryType,
     PaginationType,
-    orderByFormater,
     showInfo,
     showError,
-    showSuccess
+    showSuccess,
+    orderByFormater
 } from '@helpers';
 import { useAuth } from 'context/AuthContext';
 import useTranslation from 'next-translate/useTranslation';
@@ -197,7 +197,7 @@ const ArticlesList = ({ searchCriteria }: IArticlesListProps) => {
                         icon={<EyeTwoTone />}
                         path={pathParams('/article/[id]', record.id)}
                     />
-                    {mode.toUpperCase() == ModeEnum.Write ? (
+                    {!!mode && mode.toUpperCase() == ModeEnum.Write ? (
                         <Button
                             icon={<DeleteOutlined />}
                             danger

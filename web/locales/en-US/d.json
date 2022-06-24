@@ -50,7 +50,6 @@
     "level": "Level",
     "position": "Position",
     "replenish": "replenish",
-    "masse": "Masse",
     "counter": "Counter",
     "to_be_loaded": "To be loaded",
     "to_be_palletized": "To be palletized",
@@ -59,5 +58,7 @@
     "is_virtual": "Virtual",
     "none": "",
     "bool-yes": "Yes",
-    "bool-no": "No"
+    "bool-no": "No",
+    "masse": "Masse",
+    "type": "Type"
 }

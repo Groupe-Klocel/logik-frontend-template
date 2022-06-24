@@ -59,5 +59,6 @@
     "is_virtual": "Virtuel",
     "none": "",
     "bool-yes": "Oui",
-    "bool-no": "Non"
+    "bool-no": "Non",
+    "type": "Type"
 }

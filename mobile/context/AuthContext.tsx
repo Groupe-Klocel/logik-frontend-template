@@ -7,7 +7,7 @@ import {
     IS_FAKE,
     IS_SAME_SEED
 } from '@helpers';
-import { LoginMutation, LoginMutationVariables, useLoginMutation } from 'generated/graphql';
+import { WarehouseLoginMutation, WarehouseLoginMutationVariables, useWarehouseLoginMutation } from 'generated/graphql';
 import { GraphQLClient } from 'graphql-request';
 import { useRouter } from 'next/router';
 import { createContext, FC, useContext, useEffect, useState } from 'react';
@@ -51,13 +51,13 @@ export const AuthProvider: FC<OnlyChildrenType> = ({ children }: OnlyChildrenTyp
         loadUserFromCookie();
     },[]);
 
-    const { mutate } = useLoginMutation<Error>(graphqlRequestClient, {
-        onSuccess: (data: LoginMutation, _variables: LoginMutationVariables, _context: unknown) => {
-            if (data?.login?.accessToken) {
-                cookie.set('token', data.login.accessToken);
+    const { mutate } = useWarehouseLoginMutation<Error>(graphqlRequestClient, {
+        onSuccess: (data: WarehouseLoginMutation, _variables: WarehouseLoginMutationVariables, _context: unknown) => {
+            if (data?.warehouseLogin?.accessToken) {
+                cookie.set('token', data.warehouseLogin.accessToken);
                 // Set Bearer JWT token to the header for future request
-                setHeader(data.login.accessToken);
-                const user = decodeJWT(data.login.accessToken);
+                setHeader(data.warehouseLogin.accessToken);
+                const user = decodeJWT(data.warehouseLogin.accessToken);
                 setUser(user);
                 router.push('/');
                 showSuccess(t('messages:login-success'));
@@ -74,7 +74,7 @@ export const AuthProvider: FC<OnlyChildrenType> = ({ children }: OnlyChildrenTyp
         username,
         password,
         warehouseId = process.env.NEXT_PUBLIC_WAREHOUSE_ID as string
-    }: LoginMutationVariables) => {
+    }: WarehouseLoginMutationVariables) => {
         mutate({ username, password, warehouseId });
     };
 

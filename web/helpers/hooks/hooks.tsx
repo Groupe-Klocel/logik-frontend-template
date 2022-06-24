@@ -11,7 +11,9 @@ import {
     useGetAllCarriersQuery,
     GetAllCarriersQuery,
     useGetCarrierIdsQuery,
-    GetCarrierIdsQuery
+    GetCarrierIdsQuery,
+    useGetAllReturnCodesQuery,
+    GetAllReturnCodesQuery
 } from 'generated/graphql';
 
 const useArticles = (search: any, page: number, itemsPerPage: number, sort: any) => {
@@ -166,4 +168,46 @@ const useCarrierIds = (search: any, page: number, itemsPerPage: number, sort: an
     return carriers;
 };
 
-export { useArticles, useBarcodes, useArticleIds, useMyInfo, useCarriers, useCarrierIds };
+const useReturnCodes = (search: any, page: number, itemsPerPage: number, sort: any) => {
+    const { graphqlRequestClient } = useAuth();
+
+    const sortByDate = {
+        field: 'created',
+
+        ascending: false
+    };
+
+    let newSort;
+
+    if (sort === null) {
+        newSort = sortByDate;
+    } else {
+        newSort = sort;
+    }
+
+    const returnCodes = useGetAllReturnCodesQuery<Partial<GetAllReturnCodesQuery>, Error>(
+        graphqlRequestClient,
+
+        {
+            filters: search,
+
+            orderBy: newSort,
+
+            page: page,
+
+            itemsPerPage: itemsPerPage
+        }
+    );
+
+    return returnCodes;
+};
+
+export {
+    useArticles,
+    useBarcodes,
+    useArticleIds,
+    useMyInfo,
+    useCarriers,
+    useCarrierIds,
+    useReturnCodes
+};
