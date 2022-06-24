@@ -92,6 +92,9 @@ export const AddBlockForm = () => {
             .then(() => {
                 // Here make api call of something else
                 const formData = form.getFieldsValue(true);
+                if (formData.level == undefined) {
+                    formData.level = -1;
+                }
                 const NumberLevel = parseInt(formData.level);
                 formData.level = NumberLevel;
                 delete formData.blockName;

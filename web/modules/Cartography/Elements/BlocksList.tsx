@@ -99,7 +99,7 @@ export const BlocksList = ({ searchCriteria }: BlocksListTypeProps) => {
                 _context: unknown
             ) => {
                 if (!deleteLoading) {
-                    refetch;
+                    refetch();
                     showSuccess(t('messages:success-deleted'));
                 }
             },
@@ -160,7 +160,8 @@ export const BlocksList = ({ searchCriteria }: BlocksListTypeProps) => {
                 multiple: 2
             },
             showSorterTooltip: false,
-            render: (level: any) => blockLevels.find((e: any) => e.code == level).text
+            render: (level: any) =>
+                level ? blockLevels.find((e: any) => e.code == level).text : 'N/A'
         },
         {
             title: 'd:blockGroup',

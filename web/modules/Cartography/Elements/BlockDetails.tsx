@@ -63,7 +63,8 @@ const BlockDetails = ({ details }: IBlockDetailsProps) => {
         [setPagination, locations]
     );
 
-    // const textLevel = blockLevels.find((e: any) => e.code == details.level).text;
+    console.log(details.level);
+
     let refurbDetails = {
         ...details,
         associatedBuilding: details.building.name,

@@ -2,7 +2,6 @@ import { WrapperForm } from '@components';
 import { showError, showInfo, showSuccess } from '@helpers';
 import { Button, Checkbox, Col, Form, Input, InputNumber, Row, Select } from 'antd';
 import { CheckboxChangeEvent } from 'antd/lib/checkbox';
-import { blocsData } from 'fake-data/blocs';
 import {
     BulkCreateLocationsMutation,
     BulkCreateLocationsMutationVariables,
