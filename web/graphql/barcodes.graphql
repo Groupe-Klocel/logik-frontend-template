@@ -41,9 +41,6 @@ query GetBarcodeById($id: String!) {
         stockOwnerId
         rotationText
         preparationModeText
-        article {
-            name
-        }
     }
 }
 
@@ -96,8 +93,5 @@ mutation UpdateBarcode($id: String!, $input: UpdateBarcodeInput!) {
         stockOwnerId
         rotationText
         preparationModeText
-        article {
-            name
-        }
     }
 }
