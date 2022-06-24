@@ -1,6 +1,5 @@
 import { AppTable, ContentSpin, LinkButton } from '@components';
 import { Button, Modal, Space } from 'antd';
-import { returnCodesData } from 'fake-data/returnCodes';
 import { DeleteOutlined, EditTwoTone, EyeTwoTone } from '@ant-design/icons';
 import { useCallback, useEffect, useState } from 'react';
 import {
@@ -22,11 +21,11 @@ import {
 import graphqlRequestClient from 'graphql/graphqlRequestClient';
 import useTranslation from 'next-translate/useTranslation';
 
-export type BlocksListTypeProps = {
+export type ReturnCodesListTypeProps = {
     searchCriteria?: any;
 };
 
-export const ReturnCodesList = ({ searchCriteria }: BlocksListTypeProps) => {
+export const ReturnCodesList = ({ searchCriteria }: ReturnCodesListTypeProps) => {
     const { t } = useTranslation();
 
     const [returnCodes, setReturnCodes] = useState<DataQueryType>();
@@ -81,7 +80,7 @@ export const ReturnCodesList = ({ searchCriteria }: BlocksListTypeProps) => {
                 _context: unknown
             ) => {
                 if (!deleteLoading) {
-                    refetch;
+                    refetch();
                     showSuccess(t('messages:success-deleted'));
                 }
             },
