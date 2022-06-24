@@ -51,7 +51,8 @@
     "position": "Position",
 	"replenish": "replenish",
 	"masse": "Masse",
-    "type": "Type"
-
+    "type": "Type",
+    "extras": "Extras",
+    "company": "Company"
 
 }

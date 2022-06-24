@@ -1,0 +1,86 @@
+query GetAllGoodsIns(
+    $orderBy: [GoodsInOrderByCriterion!]
+    $filters: GoodsInSearchFilters
+    $page: Int!
+    $itemsPerPage: Int!
+    $language: String
+) {
+    goodsIns(orderBy: $orderBy, filters: $filters, page: $page, itemsPerPage: $itemsPerPage, language: $language) {
+        count
+        itemsPerPage
+        totalPages
+        page
+        results {
+            id
+            extras
+            created
+            createdBy
+            modified
+            modifiedBy
+            name
+            comment
+        }
+    }
+}
+
+query GetGoodsInById($id: String!, $language:String = "en") {
+    goodsIn(id: $id, language: $language) {
+        id
+        extras
+        created
+        createdBy
+        modified
+        modifiedBy
+        name
+        comment
+    }
+}
+
+query GetGoodsInIds(
+    $filters: GoodsInSearchFilters
+    $orderBy: [GoodsInOrderByCriterion!]
+    $page: Int!
+    $itemsPerPage: Int!
+    $language: String
+) {
+    goodsIns(filters: $filters, orderBy: $orderBy, page: $page, itemsPerPage: $itemsPerPage, language: $language) {
+        count
+        itemsPerPage
+        totalPages
+        results {
+            id
+            name
+            comment
+        }
+    }
+}
+
+mutation CreateGoodsIn($input: CreateGoodsInInput!) {
+    createGoodsIn(input: $input) {
+        id
+        extras
+        created
+        createdBy
+        modified
+        modifiedBy
+        name
+        comment
+    }
+}
+
+mutation DeleteGoodsIn($id: String!) {
+    deleteGoodsIn(id: $id)
+}
+
+mutation UpdateGoodsIn($id: String!, $input: UpdateGoodsInInput!) {
+    updateGoodsIn(id: $id, input: $input) {
+        id
+        extras
+        created
+        createdBy
+        modified
+        modifiedBy
+        name
+        comment
+    }
+}

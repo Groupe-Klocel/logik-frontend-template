@@ -70,5 +70,7 @@
 	"weight": "Poids",
 	"welcome": "Bienvenue sur",
 	"width": "Largeur",
-	"workspace": "ID Espace de travail"
+	"workspace": "ID Espace de travail",
+	"goods-ins": "Arrivages",
+	"goods-in": "Goods In"
 }
