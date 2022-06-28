@@ -1,5 +1,11 @@
-mutation Login($username: String!, $password: String!, $warehouseId: ID!) {
-    login(username: $username, password: $password, warehouseId: $warehouseId) {
+mutation WarehouseLogin($username: String!, $password: String!, $warehouseId: ID!) {
+    warehouseLogin(username: $username, password: $password, warehouseId: $warehouseId) {
+        accessToken
+    }
+}
+
+mutation IntegratorLogin($email: String!, $password: String!, $integratorId: ID!) {
+    integratorLogin(email: $email, password: $password, integratorId: $integratorId) {
         accessToken
     }
 }

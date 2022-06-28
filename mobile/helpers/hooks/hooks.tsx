@@ -16,13 +16,27 @@ const useDrawerState = (initialState: { isOpen: boolean; drawerProps: any }) => 
     return [{ isOpen, drawerProps }, setDrawerState];
 };
 
-const useArticles = (search: any, page: number, itemsPerPage: number, sort: string) => {
+const useArticles = (search: any, page: number, itemsPerPage: number, sort: any) => {
     const { graphqlRequestClient } = useAuth();
+
+    const sortByDate = {
+        field: 'created',
+        ascending: false
+    };
+
+    let newSort;
+
+    if (sort === null) {
+        newSort = sortByDate;
+    } else {
+        newSort = sort;
+    }
+
     const articles = useGetAllArticlesQuery<Partial<GetAllArticlesQuery>, Error>(
         graphqlRequestClient,
         {
             filters: search,
-            orderBy: sort,
+            orderBy: newSort,
             page: page,
             itemsPerPage: itemsPerPage
         }

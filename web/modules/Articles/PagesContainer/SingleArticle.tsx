@@ -99,7 +99,7 @@ const SingleArticle: FC<ISingleArticleProps> = ({ id, router }: ISingleArticlePr
         const qntData = await res.json();
 
         if (data?.article) {
-            data.article.boxQuantity = qntData.quantity;
+            // data.article.boxQuantity = qntData.quantity;
             // router.reload();
             showSuccess(t('messages:success-update-data'));
             // forceUpdate();
@@ -114,7 +114,7 @@ const SingleArticle: FC<ISingleArticleProps> = ({ id, router }: ISingleArticlePr
                 routes={breadsCrumb}
                 onBack={() => router.push('/articles')}
                 actionsRight={
-                    mode.toUpperCase() == ModeEnum.Write ? (
+                    !!mode && mode.toUpperCase() == ModeEnum.Write ? (
                         <Space>
                             <Button onClick={updateBoxQuantity} type="primary">
                                 {t('actions:update-quantity')}

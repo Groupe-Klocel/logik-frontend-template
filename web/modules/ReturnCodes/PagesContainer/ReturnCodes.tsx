@@ -1,26 +1,16 @@
-import { useCallback, useState } from 'react';
-import { SearchOutlined } from '@ant-design/icons';
 import { HeaderContent, LinkButton } from '@components';
-import { barcodesRoutes } from 'modules/Barcodes/Static/barcodesRoutes';
+import { returnCodesRoutes } from 'modules/ReturnCodes/Static/returnCodesRoutes';
 import useTranslation from 'next-translate/useTranslation';
-import { BarcodesList } from 'modules/Barcodes/Elements/BarcodesList';
-import { Space, Form, Button } from 'antd';
-import { BarcodesSearch } from 'modules/Barcodes/Forms/BarcodesSearch';
+import { ReturnCodesList } from 'modules/ReturnCodes/Elements/ReturnCodesList';
+import { Button, Form, Space } from 'antd';
+import { SearchOutlined } from '@ant-design/icons';
+import { useCallback, useState } from 'react';
 import { useDrawerDispatch } from 'context/DrawerContext';
+import { ReturnCodesSearch } from '../Forms/ReturnCodesSearch';
 import { showError } from '@helpers';
-import { useAppState } from 'context/AppContext';
-import { ModeEnum, Table } from 'generated/graphql';
 
-const Barcodes = () => {
+export const ReturnCodes = () => {
     const { t } = useTranslation();
-    const { permissions } = useAppState();
-    const mode =
-        !!permissions &&
-        permissions.find((p: any) => {
-            return p.table.toUpperCase() == Table.Barcode;
-        })?.mode;
-
-    //	SEARCH DRAWER
     const [search, setSearch] = useState({});
     const [formSearch] = Form.useForm();
 
@@ -29,7 +19,6 @@ const Barcodes = () => {
     const openSearchDrawer = useCallback(
         () =>
             dispatchDrawer({
-                size: 450,
                 type: 'OPEN_DRAWER',
                 title: 'actions:search',
                 comfirmButtonTitle: 'actions:search',
@@ -37,7 +26,7 @@ const Barcodes = () => {
                 cancelButtonTitle: 'actions:reset',
                 cancelButton: true,
                 submit: true,
-                content: <BarcodesSearch form={formSearch} />,
+                content: <ReturnCodesSearch form={formSearch} />,
                 onCancel: () => handleReset(),
                 onComfirm: () => handleSubmit()
             }),
@@ -49,46 +38,37 @@ const Barcodes = () => {
         [dispatchDrawer]
     );
 
-    const handleReset = () => {
-        formSearch.resetFields();
-    };
-
     const handleSubmit = () => {
         formSearch
             .validateFields()
             .then(() => {
-                // Here make api call of something else
                 setSearch(formSearch.getFieldsValue(true));
                 closeDrawer();
             })
             .catch((err) => showError(t('messages:error-getting-data')));
     };
 
+    const handleReset = () => {
+        formSearch.resetFields();
+    };
+
     return (
         <>
             <HeaderContent
-                title={t('common:barcodes')}
-                routes={barcodesRoutes}
+                title={t('menu:return-codes')}
+                routes={returnCodesRoutes}
                 actionsRight={
                     <Space>
                         <Button icon={<SearchOutlined />} onClick={() => openSearchDrawer()} />
-                        {!!mode && mode.toUpperCase() == ModeEnum.Write ? (
-                            <LinkButton
-                                title={t('actions:add2', { name: t('common:barcode') })}
-                                path="/add-barcode"
-                                type="primary"
-                            />
-                        ) : (
-                            <></>
-                        )}
+                        <LinkButton
+                            title={t('actions:add2', { name: t('menu:return-code') })}
+                            path="/add-return-code"
+                            type="primary"
+                        />
                     </Space>
                 }
             />
-            <BarcodesList searchCriteria={search} />
+            <ReturnCodesList searchCriteria={search} />
         </>
     );
 };
-
-Barcodes.displayName = 'Barcodes';
-
-export { Barcodes };

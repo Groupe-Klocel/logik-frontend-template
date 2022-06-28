@@ -112,7 +112,7 @@ export const EditBarcodeForm: FC<IEditBarcodeFormProps> = ({
     useEffect(() => {
         if (data) {
             const newIdOpts: Array<IOption> = [];
-            data.articles?.results.forEach(({ id, name }) => {
+            data.articles?.results.forEach(({ id, name: string }) => {
                 newIdOpts.push({ value: name, id: id! });
             });
             setIdOptions(newIdOpts);

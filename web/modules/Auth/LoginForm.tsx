@@ -40,42 +40,53 @@ export const LoginForm = () => {
             const token = cookie.get('token');
             if (token) {
                 try {
-                    // const requestHeader = {
-                    //     authorization: `Bearer ${token}`
-                    // };
-                    // const graphqlRequestClient = new GraphQLClient(
-                    //     process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT as string,
-                    //     {
-                    //         headers: requestHeader
-                    //     }
-                    // );
-
                     const query = gql`
                         query GetMyInfo {
                             me {
-                                username
-                                password
-                                organizationId
-                                roleId
-                                organization {
-                                    name
+                                __typename
+                                ...on WarehouseWorker {
                                     id
-                                    awsAccessKeyId
-                                    awsSecretAccessKey
-                                    parentOrganizationId
-                                }
-                                role {
-                                    name
-                                    id
-                                    permissions {
-                                        table
-                                        mode
-                                        roleId
+                                    password
+                                    username
+                                    warehouseId
+                                    roleId
+                                    role {
                                         id
+                                        name
+                                        permissions {
+                                            id
+                                            table
+                                            mode
+                                            roleId
+                                        }
                                     }
                                 }
-                                id
-                                email
+                        
+                                ...on IntegratorUser {
+                                    id
+                                    password
+                                    email
+                                    integratorId
+                                    roleId
+                                    integrator {
+                                        id
+                                        name
+                                        awsAccessKeyId
+                                        awsSecretAccessKey
+                                    }
+                                    role {
+                                        id
+                                        name
+                                        permissions {
+                                            id
+                                            table
+                                            mode
+                                            roleId
+                                        }
+                                    }
+                                    isAdmin
+                                }
+                        
                             }
                         }
                     `;

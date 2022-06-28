@@ -73,7 +73,7 @@ const Articles = () => {
                 actionsRight={
                     <Space>
                         <Button icon={<SearchOutlined />} onClick={() => openSearchDrawer()} />
-                        {mode.toUpperCase() == ModeEnum.Write ? (
+                        {!!mode && mode.toUpperCase() == ModeEnum.Write ? (
                             <LinkButton
                                 title={t('actions:add2', { name: t('common:article') })}
                                 path="/add-article"
