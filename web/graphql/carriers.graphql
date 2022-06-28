@@ -124,3 +124,12 @@ mutation UpdateCarrier($id: String!, $input: UpdateCarrierInput!) {
         isVirtual
     }
 }
+
+query getCarriersStatusesConfigs {
+    listConfigsForAScope(scope: "carrier_status") {
+        id
+        scope
+        code
+        text
+    }
+}

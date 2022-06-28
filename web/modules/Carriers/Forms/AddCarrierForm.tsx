@@ -1,11 +1,13 @@
 import { WrapperForm } from '@components';
 import { showSuccess, showError, showInfo } from '@helpers';
-import { Form, Row, Col, Input, Checkbox, Button, InputNumber } from 'antd';
+import { Form, Row, Col, Input, Checkbox, Button, InputNumber, Select } from 'antd';
 import { useAuth } from 'context/AuthContext';
 import {
     useCreateCarrierMutation,
     CreateCarrierMutation,
-    CreateCarrierMutationVariables
+    CreateCarrierMutationVariables,
+    useGetCarriersStatusesConfigsQuery,
+    GetCarriersStatusesConfigsQuery
 } from 'generated/graphql';
 import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
@@ -15,6 +17,8 @@ interface IOption {
     value: string;
     id: string;
 }
+
+const { Option } = Select;
 
 export const AddCarrierForm = () => {
     const { t } = useTranslation();
@@ -27,6 +31,7 @@ export const AddCarrierForm = () => {
     const name = t('common:name');
     const available = t('common:available');
     const code = t('common:code');
+    const status = t('common:status');
     const counter = t('common:counter');
     const to_be_loaded = t('common:to_be_loaded');
     const to_be_palletized = t('common:to_be_palletized');
@@ -47,6 +52,20 @@ export const AddCarrierForm = () => {
 
     const [idOptions, setIdOptions] = useState<Array<IOption>>([]);
     const [aId, setAId] = useState<number>();
+
+    const [carrierStatuses, setCarrierStatuses] = useState<any>();
+
+    //To render carriers statuses from config table for the given scope
+    const carrierStatusesList = useGetCarriersStatusesConfigsQuery<
+        Partial<GetCarriersStatusesConfigsQuery>,
+        Error
+    >(graphqlRequestClient);
+
+    useEffect(() => {
+        if (carrierStatusesList) {
+            setCarrierStatuses(carrierStatusesList?.data?.listConfigsForAScope);
+        }
+    }, [carrierStatusesList]);
 
     const { mutate, isLoading: createLoading } = useCreateCarrierMutation<Error>(
         graphqlRequestClient,
@@ -109,6 +128,29 @@ export const AddCarrierForm = () => {
                             rules={[{ required: true, message: errorMessageEmptyInput }]}
                         >
                             <Input />
+                        </Form.Item>
+                    </Col>
+                    <Col xs={24} xl={12}>
+                        <Form.Item
+                            label={status}
+                            name="status"
+                            hasFeedback
+                            rules={[{ required: true, message: errorMessageEmptyInput }]}
+                        >
+                            <Select
+                                placeholder={`${t('messages:please-select-a', {
+                                    name: status
+                                })}`}
+                            >
+                                {carrierStatuses?.map((carrierStatus: any) => (
+                                    <Option
+                                        key={carrierStatus.id}
+                                        value={parseInt(carrierStatus.code)}
+                                    >
+                                        {carrierStatus.text}
+                                    </Option>
+                                ))}
+                            </Select>
                         </Form.Item>
                     </Col>
                     <Col xs={24} xl={12}>

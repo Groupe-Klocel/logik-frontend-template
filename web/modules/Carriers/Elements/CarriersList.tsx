@@ -21,9 +21,11 @@ import { Button, Modal, Space } from 'antd';
 import {
     DeleteCarrierMutation,
     DeleteCarrierMutationVariables,
+    GetCarriersStatusesConfigsQuery,
     SoftDeleteCarrierMutation,
     SoftDeleteCarrierMutationVariables,
     useDeleteCarrierMutation,
+    useGetCarriersStatusesConfigsQuery,
     useSoftDeleteCarrierMutation
 } from 'generated/graphql';
 import graphqlRequestClient from 'graphql/graphqlRequestClient';
@@ -64,6 +66,20 @@ const CarriersList = ({ searchCriteria }: CarriersListTypeProps) => {
         itemsPerPage: DEFAULT_ITEMS_PER_PAGE
     });
 
+    const [carrierStatuses, setCarrierStatuses] = useState<any>();
+
+    //To render carriers statuses from config table for the given scope
+    const carrierStatusesList = useGetCarriersStatusesConfigsQuery<
+        Partial<GetCarriersStatusesConfigsQuery>,
+        Error
+    >(graphqlRequestClient);
+
+    useEffect(() => {
+        if (carrierStatusesList) {
+            setCarrierStatuses(carrierStatusesList?.data?.listConfigsForAScope);
+        }
+    }, [carrierStatusesList]);
+
     // make wrapper function to give child
     const onChangePagination = useCallback(
         (currentPage, itemsPerPage) => {
@@ -84,14 +100,15 @@ const CarriersList = ({ searchCriteria }: CarriersListTypeProps) => {
         sort
     );
 
-    console.log('Donnees : ', data);
-    console.log(
-        'Use Carrier',
-        useCarriers(searchCriteria, pagination.current, pagination.itemsPerPage, sort)
-    );
+    // console.log('Donnees : ', data);
+    // console.log(
+    //     'Use Carrier',
+    //     useCarriers(searchCriteria, pagination.current, pagination.itemsPerPage, sort)
+    // );
+
     useEffect(() => {
         if (data) {
-            setCarriers(data?.carriers); // set articles local state with new data
+            setCarriers(data?.carriers); // set carriers local state with new data
             setPagination({
                 ...pagination,
                 total: data?.carriers?.count // may change total items
@@ -102,7 +119,7 @@ const CarriersList = ({ searchCriteria }: CarriersListTypeProps) => {
     const handleTableChange = async (_pagination: any, _filter: any, sorter: any) => {
         await setSort(orderByFormater(sorter));
     };
-    console.log('JND', carriers);
+    //console.log('JND', carriers);
     const { mutate, isLoading: softDeleteLoading } = useSoftDeleteCarrierMutation<Error>(
         graphqlRequestClient,
         {
@@ -151,6 +168,8 @@ const CarriersList = ({ searchCriteria }: CarriersListTypeProps) => {
                 multiple: 2
             },
             showSorterTooltip: false
+            // render: (status: any) =>
+            //     status ? carrierStatuses.find((e: any) => e.code == status).text : 'N/A'
         },
         {
             title: available,
