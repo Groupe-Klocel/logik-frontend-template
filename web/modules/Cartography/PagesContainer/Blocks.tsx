@@ -45,15 +45,21 @@ export const Blocks = () => {
             .validateFields()
             .then(() => {
                 const searchValues = formSearch.getFieldsValue(true);
+                console.log('zzz', searchValues);
                 const newSearchValues = {
                     ...searchValues,
                     moveable: searchValues['moveable'] == 'true',
-                    bulk: searchValues['bulk'] == 'true'
+                    bulk: searchValues['bulk'] == 'true',
+                    level: parseInt(searchValues['level'])
                 };
                 if (searchValues['moveable'] == '' || searchValues['moveable'] === undefined)
                     delete newSearchValues['moveable'];
                 if (searchValues['bulk'] == '' || searchValues['bulk'] === undefined)
                     delete newSearchValues['bulk'];
+                if (searchValues['buildingId'] == '' || searchValues['buildingId'] === undefined)
+                    delete newSearchValues['buildingId'];
+                if (searchValues['level'] == '' || searchValues['level'] === undefined)
+                    delete newSearchValues['level'];
                 setSearch(newSearchValues);
                 closeDrawer();
             })

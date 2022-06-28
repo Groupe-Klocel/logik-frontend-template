@@ -122,11 +122,20 @@ export const BlocksList = ({ searchCriteria }: BlocksListTypeProps) => {
 
     const columns = [
         {
+            title: 'd:building',
+            dataIndex: ['building', 'name'],
+            key: ['building', 'name'],
+            sorter: {
+                multiple: 1
+            },
+            showSorterTooltip: false
+        },
+        {
             title: 'd:name',
             dataIndex: 'name',
             key: 'name',
             sorter: {
-                multiple: 1
+                multiple: 2
             },
             showSorterTooltip: false
         },
@@ -157,7 +166,7 @@ export const BlocksList = ({ searchCriteria }: BlocksListTypeProps) => {
             dataIndex: 'level',
             key: 'level',
             sorter: {
-                multiple: 2
+                multiple: 3
             },
             showSorterTooltip: false,
             render: (level: any) =>

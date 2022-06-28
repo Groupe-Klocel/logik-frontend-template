@@ -95,7 +95,7 @@ export const EditBlockForm: FC<EditBlockFormProps> = ({ blockId, details }: Edit
         setBulkValue(!bulkValue);
         form.setFieldsValue({ bulk: e.target.checked });
     };
-
+    console.log('xoxo', blockLevels);
     const onFinish = () => {
         form.validateFields()
             .then(() => {
@@ -106,9 +106,12 @@ export const EditBlockForm: FC<EditBlockFormProps> = ({ blockId, details }: Edit
                         (e: any) => e.name == formData.associatedBuilding
                     ).id;
                 }
-                const blockLevelCode = parseInt(
-                    blockLevels?.find((e: any) => e.text == formData.blockLevel).code
-                );
+                const blockLevelCode =
+                    formData.blockLevel == 'N/A' || formData.blockLevel == '-1'
+                        ? -1
+                        : parseInt(
+                              blockLevels?.find((e: any) => e.text == formData.blockLevel).code
+                          );
                 if (formData.level !== blockLevelCode) {
                     formData.level = blockLevelCode;
                 }
