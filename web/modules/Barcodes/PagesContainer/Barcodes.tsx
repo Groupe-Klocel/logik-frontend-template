@@ -72,7 +72,7 @@ const Barcodes = () => {
                 actionsRight={
                     <Space>
                         <Button icon={<SearchOutlined />} onClick={() => openSearchDrawer()} />
-                        {mode.toUpperCase() == ModeEnum.Write ? (
+                        {!!mode && mode.toUpperCase() == ModeEnum.Write ? (
                             <LinkButton
                                 title={t('actions:add2', { name: t('common:barcode') })}
                                 path="/add-barcode"
