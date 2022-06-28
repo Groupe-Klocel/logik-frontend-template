@@ -1,3 +1,30 @@
+query SimpleGetAllStockOwners {
+    stockOwners {
+        results {
+            id
+            name
+        }
+    }
+}
+
+query getStatusFeedbackOverwriteStatusConfigs {
+    listConfigsForAScope(scope: "status_feedback_overwrite_status") {
+        id
+        scope
+        code
+        text
+    }
+}
+
+query getStatusFeedbackOverwriteObjectTypeConfigs {
+    listConfigsForAScope(scope: "status_object") {
+        id
+        scope
+        code
+        text
+    }
+}
+
 query GetAllStatusFeedbackOverwrites(
     $filters: StatusFeedbackOverwriteSearchFilters
     $orderBy: [StatusFeedbackOverwriteOrderByCriterion!]
@@ -16,6 +43,9 @@ query GetAllStatusFeedbackOverwrites(
         results {
             id
             stockOwnerId
+            stockOwner {
+                name
+            }
             objectType
             status
             feedback
@@ -29,6 +59,9 @@ query GetStatusFeedbackOverwriteById($id: String!) {
     statusFeedbackOverwrite(id: $id) {
         id
         stockOwnerId
+        stockOwner {
+            name
+        }
         objectType
         status
         feedback
