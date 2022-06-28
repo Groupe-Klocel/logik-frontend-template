@@ -1,3 +1,21 @@
+query getReplenishTypesConfigs {
+    listConfigsForAScope(scope: "location_replenish_type") {
+        id
+        scope
+        code
+        text
+    }
+}
+
+query getRotationsParams {
+    listParametersForAScope(scope: "rotation") {
+        id
+        scope
+        code
+        text
+    }
+}
+
 query GetAllLocations(
     $filters: LocationSearchFilters
     $orderBy: [LocationOrderByCriterion!]
@@ -22,6 +40,7 @@ query GetAllLocations(
                 name
             }
             replenishType
+            rotation
             constraint
             comment
             baseUnitRotation

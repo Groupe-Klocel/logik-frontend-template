@@ -136,9 +136,6 @@ export const AddBlockForm = () => {
                 </Form.Item>
                 <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
                     <Col xs={24} xl={12}>
-                        {/* <Form.Item label={level} name="level">
-                            <InputNumber min={-1} max={10} defaultValue={-1} />
-                        </Form.Item> */}
                         <Form.Item label={t('d:blockLevel')} name="level" hasFeedback>
                             <Select
                                 placeholder={`${t('messages:please-select-a', {

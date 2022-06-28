@@ -1,5 +1,4 @@
 import { Button, Modal, Space } from 'antd';
-import { locationsData } from 'fake-data/locations';
 import { AppTable, ContentSpin, LinkButton } from '@components';
 import {
     DeleteOutlined,

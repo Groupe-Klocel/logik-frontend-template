@@ -5,8 +5,12 @@ import { CheckboxChangeEvent } from 'antd/lib/checkbox';
 import {
     BulkCreateLocationsMutation,
     BulkCreateLocationsMutationVariables,
+    GetReplenishTypesConfigsQuery,
+    GetRotationsParamsQuery,
     SimpleGetAllBLocksQuery,
     useBulkCreateLocationsMutation,
+    useGetReplenishTypesConfigsQuery,
+    useGetRotationsParamsQuery,
     useSimpleGetAllBLocksQuery
 } from 'generated/graphql';
 import graphqlRequestClient from 'graphql/graphqlRequestClient';
@@ -23,6 +27,36 @@ export const AddLocationForm = () => {
     const { id } = router.query;
     const [blocks, setBlocks] = useState<any>();
     const [defaultBlock, setDefaultBlock] = useState<any>();
+    const [replenishTypes, setReplenishTypes] = useState<any>();
+    const [rotations, setRotations] = useState<any>();
+    const [selectedReplenish, setSelectedReplenish] = useState<any>();
+    const [selectedReplenishType, setSelectedReplenishType] = useState<any>(null);
+
+    // TYPED SAFE ALL
+    const [form] = Form.useForm();
+
+    //To render replenish types from config table for the given scope
+    const replenishTypesList = useGetReplenishTypesConfigsQuery<
+        Partial<GetReplenishTypesConfigsQuery>,
+        Error
+    >(graphqlRequestClient);
+
+    useEffect(() => {
+        if (replenishTypesList) {
+            setReplenishTypes(replenishTypesList?.data?.listConfigsForAScope);
+        }
+    }, [replenishTypesList]);
+
+    //To render rotations from parameters table for the given scope
+    const rotationsList = useGetRotationsParamsQuery<Partial<GetRotationsParamsQuery>, Error>(
+        graphqlRequestClient
+    );
+
+    useEffect(() => {
+        if (rotationsList) {
+            setRotations(rotationsList?.data?.listParametersForAScope);
+        }
+    }, [rotationsList]);
 
     //To render simple blocks list for attached block selection (id and name without any filter)
     const blocksList = useSimpleGetAllBLocksQuery<Partial<SimpleGetAllBLocksQuery>, Error>(
@@ -32,16 +66,18 @@ export const AddLocationForm = () => {
     useEffect(() => {
         if (id != undefined) {
             setDefaultBlock(blocksList?.data?.blocks?.results.find((e: any) => (e.id = id)));
+            const formData = form.getFieldsValue(true);
+            formData['blockId'] = id;
         }
         if (blocksList) {
             setBlocks(blocksList?.data?.blocks?.results);
         }
     }, [blocksList, id]);
 
-    console.log(defaultBlock?.name);
-
-    // TYPED SAFE ALL
-    const [form] = Form.useForm();
+    // to handle display of rotations
+    const handleReplenishTypeChange = (value: string) => {
+        setSelectedReplenishType(value);
+    };
 
     const { mutate, isLoading: createLoading } = useBulkCreateLocationsMutation<Error>(
         graphqlRequestClient,
@@ -65,6 +101,7 @@ export const AddLocationForm = () => {
     };
 
     const onReplenishChange = (e: CheckboxChangeEvent) => {
+        setSelectedReplenish(e.target.checked);
         form.setFieldsValue({ replenish: e.target.checked });
     };
 
@@ -75,7 +112,11 @@ export const AddLocationForm = () => {
                 // Here make api call of something else
                 const formData = form.getFieldsValue(true);
                 if (formData['replenish'] == false && formData['replenishType'] == '')
-                    formData['replenishType'] = 0;
+                    formData['replenishType'] = null;
+                const NumberReplenishType = parseInt(formData.replenishType);
+                formData.replenishType = NumberReplenishType;
+                formData.baseUnitRotation = parseInt(formData.rotation);
+                delete formData.rotation;
                 bulkCreateLocation({ input: formData });
             })
             .catch((err) => {
@@ -94,15 +135,7 @@ export const AddLocationForm = () => {
             <Form form={form} scrollToFirstError>
                 <>
                     {defaultBlock ? (
-                        <Form.Item
-                            label={t('d:associatedBlock')}
-                            name="associatedBlock"
-                            rules={[
-                                {
-                                    required: true
-                                }
-                            ]}
-                        >
+                        <Form.Item label={t('d:associatedBlock')} name="associatedBlock">
                             <Input disabled={true} defaultValue={defaultBlock?.name} />
                         </Form.Item>
                     ) : (
@@ -228,40 +261,53 @@ export const AddLocationForm = () => {
                 >
                     <InputNumber min={0} />
                 </Form.Item>
-                <Form.Item name="replenish">
+                <Form.Item name="replenish" initialValue={false}>
                     <Checkbox onChange={onReplenishChange}>{t('d:replenish')}</Checkbox>
                 </Form.Item>
 
                 <Form.Item label={t('d:constraint')} name="constraint">
                     <Input />
                 </Form.Item>
-
-                <Form.Item
-                    label={t('d:replenishType')}
-                    name="replenishType"
-                    hasFeedback
-                    rules={[
-                        ({ getFieldValue }) => ({
-                            validator(_, value) {
-                                if (value !== null && getFieldValue('replenish') === false) {
-                                    return Promise.reject(
-                                        new Error(t('messages:replenish-validation-error'))
-                                    );
+                {selectedReplenish && (
+                    <Form.Item
+                        label={t('d:replenishType')}
+                        name="replenishType"
+                        hasFeedback
+                        rules={[
+                            ({ getFieldValue }) => ({
+                                validator(_, value) {
+                                    if (value !== null && getFieldValue('replenish') === false) {
+                                        return Promise.reject(
+                                            new Error(t('messages:replenish-validation-error'))
+                                        );
+                                    }
+                                    return Promise.resolve();
                                 }
-                                return Promise.resolve();
-                            }
-                        })
-                    ]}
-                >
-                    <Select
-                        placeholder={`${t('messages:please-select-a', {
-                            name: t('d:replenishType')
-                        })}`}
+                            })
+                        ]}
                     >
-                        <Option value="">-</Option>
-                        <Option value="fakeReplenishType">fakeReplenishType</Option>
-                    </Select>
-                </Form.Item>
+                        <Select defaultValue="" onChange={handleReplenishTypeChange}>
+                            <Option value="">-</Option>
+                            {replenishTypes?.map((replenishType: any) => (
+                                <Option key={replenishType.id} value={replenishType.code}>
+                                    {replenishType.text}
+                                </Option>
+                            ))}
+                        </Select>
+                    </Form.Item>
+                )}
+                {selectedReplenish && selectedReplenishType === '20610' && (
+                    <Form.Item label={t('d:rotation')} name="rotation" hasFeedback>
+                        <Select defaultValue="">
+                            <Option value="">-</Option>
+                            {rotations?.map((rotation: any) => (
+                                <Option key={rotation.id} value={rotation.code}>
+                                    {rotation.text}
+                                </Option>
+                            ))}
+                        </Select>
+                    </Form.Item>
+                )}
 
                 <Form.Item label={t('d:comment')} name="comment">
                     <TextArea />

@@ -137,7 +137,7 @@ export const EditBlockForm: FC<EditBlockFormProps> = ({ blockId, details }: Edit
         if (updateLoading) {
             showInfo(t('messages:info-create-wip'));
         }
-    }, [updateLoading]);
+    }, [updateLoading, blockLevels]);
 
     return (
         <WrapperForm>

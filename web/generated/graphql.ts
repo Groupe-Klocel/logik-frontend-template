@@ -8482,6 +8482,16 @@ export type UpdateBlockMutationVariables = Exact<{
 
 export type UpdateBlockMutation = { __typename?: 'Mutation', updateBlock?: { __typename?: 'Block', id?: string | null, name?: string | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, moveable?: boolean | null, bulk?: boolean | null, comment?: string | null, level?: number | null, blockGroup?: number | null } | null };
 
+export type GetReplenishTypesConfigsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetReplenishTypesConfigsQuery = { __typename?: 'Query', listConfigsForAScope: Array<{ __typename?: 'ConfigResults', id: string, scope: string, code: string, text: string }> };
+
+export type GetRotationsParamsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetRotationsParamsQuery = { __typename?: 'Query', listParametersForAScope: Array<{ __typename?: 'ParameterResults', id: string, scope: string, code: string, text: string }> };
+
 export type GetAllLocationsQueryVariables = Exact<{
   filters?: InputMaybe<LocationSearchFilters>;
   orderBy?: InputMaybe<Array<LocationOrderByCriterion> | LocationOrderByCriterion>;
@@ -9389,6 +9399,54 @@ export const useUpdateBlockMutation = <
     useMutation<UpdateBlockMutation, TError, UpdateBlockMutationVariables, TContext>(
       ['UpdateBlock'],
       (variables?: UpdateBlockMutationVariables) => fetcher<UpdateBlockMutation, UpdateBlockMutationVariables>(client, UpdateBlockDocument, variables, headers)(),
+      options
+    );
+export const GetReplenishTypesConfigsDocument = `
+    query getReplenishTypesConfigs {
+  listConfigsForAScope(scope: "location_replenish_type") {
+    id
+    scope
+    code
+    text
+  }
+}
+    `;
+export const useGetReplenishTypesConfigsQuery = <
+      TData = GetReplenishTypesConfigsQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables?: GetReplenishTypesConfigsQueryVariables,
+      options?: UseQueryOptions<GetReplenishTypesConfigsQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetReplenishTypesConfigsQuery, TError, TData>(
+      variables === undefined ? ['getReplenishTypesConfigs'] : ['getReplenishTypesConfigs', variables],
+      fetcher<GetReplenishTypesConfigsQuery, GetReplenishTypesConfigsQueryVariables>(client, GetReplenishTypesConfigsDocument, variables, headers),
+      options
+    );
+export const GetRotationsParamsDocument = `
+    query getRotationsParams {
+  listParametersForAScope(scope: "rotation") {
+    id
+    scope
+    code
+    text
+  }
+}
+    `;
+export const useGetRotationsParamsQuery = <
+      TData = GetRotationsParamsQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables?: GetRotationsParamsQueryVariables,
+      options?: UseQueryOptions<GetRotationsParamsQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetRotationsParamsQuery, TError, TData>(
+      variables === undefined ? ['getRotationsParams'] : ['getRotationsParams', variables],
+      fetcher<GetRotationsParamsQuery, GetRotationsParamsQueryVariables>(client, GetRotationsParamsDocument, variables, headers),
       options
     );
 export const GetAllLocationsDocument = `

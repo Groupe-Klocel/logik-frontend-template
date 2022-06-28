@@ -63,12 +63,12 @@ const BlockDetails = ({ details }: IBlockDetailsProps) => {
         [setPagination, locations]
     );
 
-    console.log(details.level);
-
-    let refurbDetails = {
+    const refurbDetails = {
         ...details,
         associatedBuilding: details.building.name,
-        blockLevel: blockLevels?.find((e: any) => e.code == details.level).text
+        blockLevel: details.level
+            ? blockLevels?.find((e: any) => e.code == details.level).text
+            : 'N/A'
     };
     delete refurbDetails['building'];
     delete refurbDetails['level'];
