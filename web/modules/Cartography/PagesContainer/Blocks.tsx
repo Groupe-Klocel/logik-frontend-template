@@ -45,7 +45,6 @@ export const Blocks = () => {
             .validateFields()
             .then(() => {
                 const searchValues = formSearch.getFieldsValue(true);
-                console.log('zzz', searchValues);
                 const newSearchValues = {
                     ...searchValues,
                     moveable: searchValues['moveable'] == 'true',

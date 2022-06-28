@@ -74,7 +74,6 @@ export const LocationsList = ({ searchCriteria }: LocationsListTypeProps) => {
 
     const handleTableChange = async (_pagination: any, _filter: any, sorter: any) => {
         await setSort(orderByFormater(sorter));
-        console.log(sorter);
     };
 
     const { mutate, isLoading: deleteLoading } = useDeleteLocationMutation<Error>(

@@ -1,6 +1,8 @@
 import { Form, Input, Checkbox, Select } from 'antd';
+import { SimpleGetAllBLocksQuery, useSimpleGetAllBLocksQuery } from 'generated/graphql';
+import graphqlRequestClient from 'graphql/graphqlRequestClient';
 import useTranslation from 'next-translate/useTranslation';
-import { FC } from 'react';
+import { FC, useEffect, useState } from 'react';
 
 const { Option } = Select;
 
@@ -10,6 +12,18 @@ export type LocationsSearchProps = {
 
 const LocationsSearch: FC<LocationsSearchProps> = ({ form }: LocationsSearchProps) => {
     const { t } = useTranslation();
+    const [blocks, setBlocks] = useState<any>();
+
+    //To render simple blocks list for attached block selection (id and name without any filter)
+    const blocksList = useSimpleGetAllBLocksQuery<Partial<SimpleGetAllBLocksQuery>, Error>(
+        graphqlRequestClient
+    );
+
+    useEffect(() => {
+        if (blocksList) {
+            setBlocks(blocksList?.data?.blocks?.results);
+        }
+    }, [blocksList]);
 
     return (
         <>
@@ -17,8 +31,15 @@ const LocationsSearch: FC<LocationsSearchProps> = ({ form }: LocationsSearchProp
                 <Form.Item name="name" label={t('common:name')}>
                     <Input />
                 </Form.Item>
-                <Form.Item name="block" label={t('d:block')}>
-                    <Input />
+                <Form.Item name="blockId" label={t('d:block')}>
+                    <Select defaultValue="">
+                        <Option value="">{t('common:none')}</Option>
+                        {blocks?.map((block: any) => (
+                            <Option key={block.id} value={block.id}>
+                                {block.name}
+                            </Option>
+                        ))}
+                    </Select>
                 </Form.Item>
                 <Form.Item name="aisle" label={t('d:aisle')}>
                     <Input />

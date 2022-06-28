@@ -112,7 +112,6 @@ export const EditLocationForm: FC<EditLocationFormProps> = ({
             .then(() => {
                 // Here make api call of something else
                 const formData = form.getFieldsValue(true);
-                console.log('xxx', formData);
                 //update replenish type
                 const replenishTypeCode =
                     formData.replenishTypeText == '-' || formData.replenishTypeText == ''
@@ -142,7 +141,6 @@ export const EditLocationForm: FC<EditLocationFormProps> = ({
                 delete formData['associatedBlock'];
                 delete formData['replenishTypeText'];
                 delete formData['baseUnitRotationText'];
-                console.log('zzz', formData);
                 updateLocation({ id: locationId, input: formData });
             })
             .catch((err) => {
@@ -172,8 +170,7 @@ export const EditLocationForm: FC<EditLocationFormProps> = ({
             showInfo(t('messages:info-create-wip'));
         }
     }, [updateLoading, replenishTypes, rotations]);
-    // console.log('input', details);
-    // console.log(form.getFieldsValue(true));
+
     return (
         <WrapperForm>
             <Form form={form} scrollToFirstError>

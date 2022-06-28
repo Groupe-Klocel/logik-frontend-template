@@ -73,7 +73,6 @@ const BlockDetails = ({ details }: IBlockDetailsProps) => {
     delete refurbDetails['building'];
     delete refurbDetails['level'];
 
-    // console.log(textLevel);
     const locationColumns = [
         {
             title: t('common:name'),

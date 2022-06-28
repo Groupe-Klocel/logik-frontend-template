@@ -95,7 +95,6 @@ export const EditBlockForm: FC<EditBlockFormProps> = ({ blockId, details }: Edit
         setBulkValue(!bulkValue);
         form.setFieldsValue({ bulk: e.target.checked });
     };
-    console.log('xoxo', blockLevels);
     const onFinish = () => {
         form.validateFields()
             .then(() => {
