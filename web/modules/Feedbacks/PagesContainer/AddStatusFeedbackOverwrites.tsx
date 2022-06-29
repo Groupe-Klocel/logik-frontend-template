@@ -2,7 +2,7 @@ import { Layout } from 'antd';
 import { HeaderContent } from '@components';
 import { addStatusFeedbackOverwritesRoutes } from 'modules/Feedbacks/Static/feedbacksRoutes';
 import useTranslation from 'next-translate/useTranslation';
-import { AddStatusFeedbackOverwritesForm } from 'modules/Feedbacks/Elements/AddStatusFeedbackOverwritesForm';
+import { AddStatusFeedbackOverwritesForm } from 'modules/Feedbacks/Forms/AddStatusFeedbackOverwritesForm';
 import styled from 'styled-components';
 
 const StyledPageContent = styled(Layout.Content)`
@@ -14,7 +14,7 @@ export const AddStatusFeedbackOverwrites = () => {
     return (
         <>
             <HeaderContent
-                title={t('add-status-feedback-overwrites')}
+                title={t('add-status-feedback-overwrite')}
                 routes={addStatusFeedbackOverwritesRoutes}
             />
             <StyledPageContent>

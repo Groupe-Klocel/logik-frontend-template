@@ -63,7 +63,7 @@ export const StatusFeedbackOverwrites = () => {
                     <Space>
                         <Button icon={<SearchOutlined />} onClick={() => openSearchDrawer()} />
                         <LinkButton
-                            title={t('actions:add-status-feedback-overwrites', {
+                            title={t('actions:add-status-feedback-overwrite', {
                                 name: t('menu:status-feedback-overwrites')
                             })}
                             path="/add-status-feedback-overwrites"

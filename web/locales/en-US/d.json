@@ -1,7 +1,7 @@
 {
     "id": "ID",
     "accountId": "Account ID ",
-    "available":"Available",
+    "available": "Available",
     "companyId": "Company ID",
     "status": "Status",
     "code": "Code",
@@ -43,15 +43,18 @@
     "comment": "Comment",
     "system": "System",
     "description": "Description",
-	"default": "Default",
-	"dispatchable": "Dispatchable",
-	"bloc": "Bloc",
+    "default": "Default",
+    "dispatchable": "Dispatchable",
+    "bloc": "Bloc",
     "aisle": "Aisle",
     "level": "Level",
     "position": "Position",
-	"replenish": "replenish",
-	"masse": "Masse",
-    "type": "Type"
-
-
+    "replenish": "replenish",
+    "masse": "Masse",
+    "type": "Type",
+    "stockOwnerId": "Stock Owner ID",
+    "feedback": "Feedback",
+    "objectType": "Object Type",
+    "customValue": "Custom Value",
+    "associatedStockOwner": "Stock Owner"
 }

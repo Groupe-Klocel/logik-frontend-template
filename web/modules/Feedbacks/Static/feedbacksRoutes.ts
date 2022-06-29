@@ -27,7 +27,7 @@ export const addMovementsConfigRoutes: Array<BreadcrumbType> = [
     }
 ];
 
-export const statusFeedbackOverwritesRoutes: Array<BreadcrumbType> = [
+export const statusFeedbackOverwritesRoutes = [
     ...feedbacksRoutes,
     {
         path: '/status-feedback-overwrites',
@@ -35,10 +35,10 @@ export const statusFeedbackOverwritesRoutes: Array<BreadcrumbType> = [
     }
 ];
 
-export const addStatusFeedbackOverwritesRoutes: Array<BreadcrumbType> = [
+export const addStatusFeedbackOverwritesRoutes = [
     ...statusFeedbackOverwritesRoutes,
     {
-        path: '/add-status-feedback-overwrites',
-        breadcrumbName: 'menu:add-status-feedback-overwrites'
+        path: '/add-status-feedback-overwrite',
+        breadcrumbName: 'actions:add-status-feedback-overwrite'
     }
 ];

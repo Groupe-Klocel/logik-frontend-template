@@ -1,27 +1,27 @@
-import { Form, Input, InputNumber, Select } from 'antd';
+import { WrapperForm } from '@components';
+import { showError, showInfo, showSuccess } from '@helpers';
+import { Button, Checkbox, Col, Form, Input, InputNumber, Select } from 'antd';
+import { CheckboxChangeEvent } from 'antd/lib/checkbox';
 import {
+    CreateStatusFeedbackOverwriteMutation,
+    CreateStatusFeedbackOverwriteMutationVariables,
     GetStatusFeedbackOverwriteObjectTypeConfigsQuery,
     GetStatusFeedbackOverwriteStatusConfigsQuery,
     SimpleGetAllStockOwnersQuery,
+    useCreateStatusFeedbackOverwriteMutation,
     useGetStatusFeedbackOverwriteObjectTypeConfigsQuery,
     useGetStatusFeedbackOverwriteStatusConfigsQuery,
     useSimpleGetAllStockOwnersQuery
 } from 'generated/graphql';
 import graphqlRequestClient from 'graphql/graphqlRequestClient';
 import useTranslation from 'next-translate/useTranslation';
-import { FC, useEffect, useState } from 'react';
+import Router from 'next/router';
+import { useEffect, useState } from 'react';
 
 const { Option } = Select;
 
-export type StatusFeedbackOverwritesSearchProps = {
-    form: any;
-};
-
-const StatusFeedbackOverwritesSearch: FC<StatusFeedbackOverwritesSearchProps> = ({
-    form
-}: StatusFeedbackOverwritesSearchProps) => {
-    const { t } = useTranslation();
-
+export const AddStatusFeedbackOverwritesForm = () => {
+    const { t } = useTranslation('common');
     const [statusFeedbackOverwriteStatus, setStatusFeedbackOverwriteStatus] = useState<any>();
     const [statusFeedbackOverwriteObjectType, setStatusFeedbackOverwriteObjectType] =
         useState<any>();
@@ -68,12 +68,65 @@ const StatusFeedbackOverwritesSearch: FC<StatusFeedbackOverwritesSearchProps> = 
         }
     }, [statusFeedbackOverwriteObjectTypeList]);
 
+    // TYPED SAFE ALL
+    const [form] = Form.useForm();
+
+    const { mutate, isLoading: createLoading } = useCreateStatusFeedbackOverwriteMutation<Error>(
+        graphqlRequestClient,
+        {
+            onSuccess: (
+                data: CreateStatusFeedbackOverwriteMutation,
+                _variables: CreateStatusFeedbackOverwriteMutationVariables,
+                _context: any
+            ) => {
+                Router.push(`/status-feedback-overwrite/${data.createStatusFeedbackOverwrite.id}`);
+                showSuccess(t('messages:success-created'));
+            },
+            onError: () => {
+                showError(t('messages:error-creating-data'));
+            }
+        }
+    );
+
+    const createStatusFeedbackOverwrite = ({
+        input
+    }: CreateStatusFeedbackOverwriteMutationVariables) => {
+        mutate({ input });
+    };
+
+    // Call api to create new group
+    const onFinish = () => {
+        form.validateFields()
+            .then(() => {
+                // Here make api call of something else
+                const formData = form.getFieldsValue(true);
+                console.log(formData);
+                createStatusFeedbackOverwrite({ input: formData });
+            })
+            .catch((err) => {
+                showError(t('error-creating-data'));
+            });
+    };
+
+    useEffect(() => {
+        if (createLoading) {
+            showInfo(t('messages:info-create-wip'));
+        }
+    }, [createLoading]);
+
+    const onFeedbackChange = (e: CheckboxChangeEvent) => {
+        form.setFieldsValue({ feedback: e.target.checked });
+    };
+
+    const onSystemChange = (e: CheckboxChangeEvent) => {
+        form.setFieldsValue({ system: e.target.checked });
+    };
+
     return (
-        <>
-            <Form form={form} name="control-hooks">
+        <WrapperForm>
+            <Form form={form} scrollToFirstError>
                 <Form.Item name="stockOwnerId" label={t('common:stock-owner')}>
                     <Select>
-                        <Option value=""> </Option>
                         {stockOwners?.map((stockOwner: any) => (
                             <Option key={stockOwner.id} value={stockOwner.id}>
                                 {stockOwner.name}
@@ -81,9 +134,14 @@ const StatusFeedbackOverwritesSearch: FC<StatusFeedbackOverwritesSearchProps> = 
                         ))}
                     </Select>
                 </Form.Item>
-                <Form.Item label={t('common:object-type')} name="object-type">
+                <Form.Item
+                    label={t('common:object-type')}
+                    name="objectType"
+                    rules={[
+                        { required: true, message: `${t('messages:error-message-empty-input')}` }
+                    ]}
+                >
                     <Select>
-                        <Option value=""> </Option>
                         {statusFeedbackOverwriteObjectType?.map(
                             (statusFeedbackOverwriteObjectType: any) => (
                                 <Option
@@ -96,9 +154,14 @@ const StatusFeedbackOverwritesSearch: FC<StatusFeedbackOverwritesSearchProps> = 
                         )}
                     </Select>
                 </Form.Item>
-                <Form.Item label={t('common:status-code')} name="status">
+                <Form.Item
+                    label={t('common:status-code')}
+                    name="status"
+                    rules={[
+                        { required: true, message: `${t('messages:error-message-empty-input')}` }
+                    ]}
+                >
                     <Select>
-                        <Option value=""> </Option>
                         {statusFeedbackOverwriteStatus?.map(
                             (statusFeedbackOverwriteStatus: any) => (
                                 <Option
@@ -111,28 +174,21 @@ const StatusFeedbackOverwritesSearch: FC<StatusFeedbackOverwritesSearchProps> = 
                         )}
                     </Select>
                 </Form.Item>
-                <Form.Item name="feedback" label={t('common:feedback')}>
-                    <Select>
-                        <Option value=""> </Option>
-                        <Option value="true">{t('common:bool-yes')}</Option>
-                        <Option value="false">{t('common:bool-no')}</Option>
-                    </Select>
+                <Form.Item name="feedback">
+                    <Checkbox onChange={onFeedbackChange}>{t('common:feedback')}</Checkbox>
                 </Form.Item>
                 <Form.Item name="custom-value" label={t('common:custom-value')}>
                     <Input />
                 </Form.Item>
-                <Form.Item name="system" label={t('d:system')}>
-                    <Select>
-                        <Option value=""> </Option>
-                        <Option value="true">{t('common:bool-yes')}</Option>
-                        <Option value="false">{t('common:bool-no')}</Option>
-                    </Select>
+                <Form.Item name="system">
+                    <Checkbox onChange={onSystemChange}>{t('common:system')}</Checkbox>
                 </Form.Item>
             </Form>
-        </>
+            <div style={{ textAlign: 'center' }}>
+                <Button type="primary" loading={createLoading} onClick={onFinish}>
+                    {t('actions:submit')}
+                </Button>
+            </div>
+        </WrapperForm>
     );
 };
-
-StatusFeedbackOverwritesSearch.displayName = 'StatusFeedbackOverwritesSearch';
-
-export { StatusFeedbackOverwritesSearch };
