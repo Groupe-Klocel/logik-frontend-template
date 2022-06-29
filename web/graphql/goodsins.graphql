@@ -84,3 +84,83 @@ mutation UpdateGoodsIn($id: String!, $input: UpdateGoodsInInput!) {
         comment
     }
 }
+
+query GetGoodsInLineById($id: String!, $language: String = "en") {
+    goodsInLine(id:$id, language:$language) {
+        id
+        extras
+        quantity
+        reservation
+        stockOwnerId
+        articleId
+        goodsInId
+        purchaseOrderId
+        purchaseOrderLineId
+    }
+}
+
+query GetGoodsInLines(
+    $orderBy: [GoodsInLineOrderByCriterion!]
+    $filters: GoodsInLineSearchFilters
+    $page: Int!
+    $itemsPerPage: Int!
+    $language: String = "en"
+) {
+    goodsInLines(orderBy: $orderBy, filters: $filters, page: $page, itemsPerPage: $itemsPerPage, language: $language) {
+        count
+        itemsPerPage
+        totalPages
+        page
+        results {
+            id
+            extras
+            quantity
+            reservation
+            stockOwnerId
+            articleId
+            goodsInId
+            purchaseOrderId
+            purchaseOrderLineId
+        }
+    }
+}
+
+mutation CreateGoodsInLine($input: CreateGoodsInLineInput!) {
+    createGoodsInLine(input: $input) {
+        id
+        extras
+        created
+        createdBy
+        modified
+        modifiedBy
+        quantity
+        reservation
+        stockOwnerId
+        articleId
+        goodsInId
+        purchaseOrderId
+        purchaseOrderLineId
+    }
+}
+
+mutation DeleteGoodsInLine($id: String!) {
+    deleteGoodsInLine(id: $id)
+}
+
+mutation UpdateGoodsInLine($id: String!, $input: UpdateGoodsInLineInput!) {
+    updateGoodsInLine(id: $id, input: $input) {
+        id
+        extras
+        created
+        createdBy
+        modified
+        modifiedBy
+        quantity
+        reservation
+        stockOwnerId
+        articleId
+        goodsInId
+        purchaseOrderId
+        purchaseOrderLineId
+    }
+}

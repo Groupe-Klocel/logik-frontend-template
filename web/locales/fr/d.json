@@ -53,8 +53,10 @@
 	"masse": "Masse",
 	"type": "Type",
 	"extras": "Extras",
-	"company": "Société"
-
-	
+	"company": "Société",
+	"article": "Article",
+    "reservation": "Reservation",
+    "purchaseOrder": "Commande fournisseur",
+    "purchaseOrderLine": "Lignes commandes fournisseur"
 
 }
