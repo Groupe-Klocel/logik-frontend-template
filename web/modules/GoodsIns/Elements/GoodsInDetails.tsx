@@ -99,7 +99,7 @@ const GoodsInDetails = ({ details }: IGoodsInDetailsProps) => {
                         <>
                             <LinkButton
                                 icon={<EyeTwoTone />}
-                                path={pathParams('/goods-in-line/[id]', record.id)}
+                                path={pathParams('/goods-in/line/[id]', record.id)}
                             />
                         </>
                     )}
