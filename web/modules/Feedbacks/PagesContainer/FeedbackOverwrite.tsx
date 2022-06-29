@@ -9,12 +9,12 @@ export const FeedbackOverwrite = () => {
     return (
         <>
             <HeaderContent
-                title={t('menu:movements-config')}
+                title={t('menu:feedbackOverwrite')}
                 routes={movementsConfigRoutes}
                 actionsRight={
                     <LinkButton
-                        title={t('actions:add-movements-config-feedback')}
-                        path="/add-movements-config-feedback"
+                        title={t('actions:add-feedbackOverwrite')}
+                        path="/add-feedbackOverwrite"
                         type="primary"
                     />
                 }

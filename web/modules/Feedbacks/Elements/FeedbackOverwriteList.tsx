@@ -1,20 +1,28 @@
-import { DeleteOutlined, EyeTwoTone, EditTwoTone } from '@ant-design/icons';
+import {
+    DeleteOutlined,
+    EyeTwoTone,
+    EditTwoTone,
+    CheckCircleOutlined,
+    CloseSquareOutlined
+} from '@ant-design/icons';
 import { Button, Space } from 'antd';
-import { AppTable } from '@components';
+import { AppTable, ContentSpin } from '@components';
 import { companiesData } from 'fake-data/companies';
 import useTranslation from 'next-translate/useTranslation';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import {
     DataQueryType,
     DEFAULT_ITEMS_PER_PAGE,
     DEFAULT_PAGE_NUMBER,
-    PaginationType
+    orderByFormater,
+    PaginationType,
+    useFeedbackOverwrites
 } from '@helpers';
 
 export const FeedbackOverwriteList = () => {
     const { t } = useTranslation();
 
-    const [feedbackOverwrite, setFeedbackOverwrite] = useState<DataQueryType>();
+    const [feedbackOverwrites, setFeedbackOverwrites] = useState<DataQueryType>();
     const [sort, setSort] = useState<any>(null);
     const [pagination, setPagination] = useState<PaginationType>({
         total: undefined,
@@ -27,29 +35,58 @@ export const FeedbackOverwriteList = () => {
         (currentPage, itemsPerPage) => {
             // Re fetch data for new current page or items per page
             setPagination({
-                total: feedbackOverwrite?.count,
+                total: feedbackOverwrites?.count,
                 current: currentPage,
                 itemsPerPage: itemsPerPage
             });
         },
-        [setPagination, feedbackOverwrite]
+        [setPagination, feedbackOverwrites]
     );
+
+    const { isLoading, data, error } = useFeedbackOverwrites(
+        undefined,
+        pagination.current,
+        pagination.itemsPerPage,
+        sort
+    );
+
+    useEffect(() => {
+        if (data) {
+            setFeedbackOverwrites(data?.feedbackOverwrites);
+            setPagination({
+                ...pagination,
+                total: data?.feedbackOverwrites?.count
+            });
+        }
+    }, [data]);
+
+    console.log(data);
+
+    const handleTableChange = async (_pagination: any, _filter: any, sorter: any) => {
+        await setSort(orderByFormater(sorter));
+    };
 
     const columns = [
         {
             title: 'common:stockOwner',
-            dataIndex: 'stockOwner',
-            key: 'stockOwner'
+            dataIndex: ['stockOwner', 'name'],
+            key: ['stockOwner', 'name']
         },
         {
             title: 'd:movementCode',
-            dataIndex: 'movementCode',
-            key: 'movementCode'
+            dataIndex: 'movementCodeText',
+            key: 'movementCodeText'
         },
         {
             title: 'common:feedback',
             dataIndex: 'feedback',
-            key: 'feedback'
+            key: 'feedback',
+            render: (text: any) =>
+                text == true ? (
+                    <CheckCircleOutlined style={{ color: 'green' }} />
+                ) : (
+                    <CloseSquareOutlined style={{ color: 'red' }} />
+                )
         },
         {
             title: 'common:customValue',
@@ -61,10 +98,6 @@ export const FeedbackOverwriteList = () => {
             key: 'actions',
             render: (record: { id: number; account: string }) => (
                 <Space>
-                    <Button
-                        icon={<EyeTwoTone />}
-                        onClick={() => alert(`View ${record.id} - ${record.account}`)}
-                    />
                     <Button
                         icon={<EditTwoTone />}
                         onClick={() => alert(`Edit ${record.id} - ${record.account}`)}
@@ -78,5 +111,21 @@ export const FeedbackOverwriteList = () => {
             )
         }
     ];
-    return <AppTable type="movements-config" columns={columns} data={companiesData} />;
+    return (
+        <>
+            {feedbackOverwrites ? (
+                <AppTable
+                    type="return-codes"
+                    columns={columns}
+                    data={feedbackOverwrites!.results}
+                    pagination={pagination}
+                    isLoading={isLoading}
+                    setPagination={onChangePagination}
+                    onChange={handleTableChange}
+                />
+            ) : (
+                <ContentSpin />
+            )}
+        </>
+    );
 };

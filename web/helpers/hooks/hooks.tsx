@@ -13,7 +13,9 @@ import {
     GetAllLocationsQuery,
     useGetAllLocationsQuery,
     useGetAllReturnCodesQuery,
-    GetAllReturnCodesQuery
+    GetAllReturnCodesQuery,
+    useGetAllFeedbackOverwritesQuery,
+    GetAllFeedbackOverwritesQuery
 } from 'generated/graphql';
 
 const useArticles = (search: any, page: number, itemsPerPage: number, sort: any) => {
@@ -157,6 +159,36 @@ const useBarcodes = (search: any, page: number, itemsPerPage: number, sort: any)
     return barcodes;
 };
 
+const useFeedbackOverwrites = (search: any, page: number, itemsPerPage: number, sort: any) => {
+    const { graphqlRequestClient } = useAuth();
+
+    // default sort by creation date
+    const sortByDate = {
+        field: 'created',
+        ascending: false
+    };
+
+    let newSort;
+
+    if (sort === null) {
+        newSort = sortByDate;
+    } else {
+        newSort = sort;
+    }
+
+    const feedbackOverwrites = useGetAllFeedbackOverwritesQuery<
+        Partial<GetAllFeedbackOverwritesQuery>,
+        Error
+    >(graphqlRequestClient, {
+        filters: search,
+        orderBy: newSort,
+        page: page,
+        itemsPerPage: itemsPerPage
+    });
+
+    return feedbackOverwrites;
+};
+
 const useMyInfo = () => {
     const { graphqlRequestClient } = useAuth();
 
@@ -199,6 +231,7 @@ export {
     useBlocks,
     useLocations,
     useBarcodes,
+    useFeedbackOverwrites,
     useArticleIds,
     useMyInfo,
     useReturnCodes

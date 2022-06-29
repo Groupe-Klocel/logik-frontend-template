@@ -15,15 +15,15 @@ export const movementsConfigRoutes: Array<BreadcrumbType> = [
     ...feedbacksRoutes,
     {
         path: '/feedback-overwrite',
-        breadcrumbName: 'menu:movements-config'
+        breadcrumbName: 'menu:feedbackOverwrite'
     }
 ];
 
 export const addMovementsConfigRoutes: Array<BreadcrumbType> = [
     ...movementsConfigRoutes,
     {
-        path: '/add-movements-config-feedback',
-        breadcrumbName: 'menu:add-movements-config-feedback'
+        path: '/add-feedbackOverwrite',
+        breadcrumbName: 'actions:add-feedbackOverwrite'
     }
 ];
 

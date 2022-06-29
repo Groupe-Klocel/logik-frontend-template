@@ -13,6 +13,7 @@
     "code": "Code",
     "name": "Nom",
     "length": "Longueur",
+    "movementCode": "Code mouvement",
     "width": "Largeur",
     "height": "Hauteur",
     "baseUnitWeight": "Unité Poids",
