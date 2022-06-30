@@ -2082,11 +2082,11 @@ export type CreateStatusFeedbackOverwriteInput = {
   customValue?: InputMaybe<Scalars['String']>;
   /** Semi-structured attributes that can be used to store data for anything that doesn't fit in the default columns */
   extras?: InputMaybe<Scalars['JSON']>;
-  feedback: Scalars['Boolean'];
+  feedback?: InputMaybe<Scalars['Boolean']>;
   objectType: Scalars['Int'];
   status: Scalars['Int'];
-  stockOwnerId: Scalars['String'];
-  system: Scalars['Boolean'];
+  stockOwnerId?: InputMaybe<Scalars['String']>;
+  system?: InputMaybe<Scalars['Boolean']>;
 };
 
 export type CreateStockOwnerInput = {
@@ -8525,14 +8525,14 @@ export type GetAllStatusFeedbackOverwritesQueryVariables = Exact<{
 }>;
 
 
-export type GetAllStatusFeedbackOverwritesQuery = { __typename?: 'Query', statusFeedbackOverwrites: { __typename?: 'StatusFeedbackOverwriteListResult', count: number, itemsPerPage: number, totalPages: number, results: Array<{ __typename?: 'StatusFeedbackOverWrite', id?: string | null, stockOwnerId?: string | null, objectType?: number | null, status?: number | null, feedback?: boolean | null, customValue?: string | null, system?: boolean | null, stockOwner: { __typename?: 'StockOwner', name?: string | null } }> } };
+export type GetAllStatusFeedbackOverwritesQuery = { __typename?: 'Query', statusFeedbackOverwrites: { __typename?: 'StatusFeedbackOverwriteListResult', count: number, itemsPerPage: number, totalPages: number, results: Array<{ __typename?: 'StatusFeedbackOverWrite', id?: string | null, stockOwnerId?: string | null, objectType?: number | null, status?: number | null, objectTypeText?: string | null, statusText?: string | null, feedback?: boolean | null, customValue?: string | null, system?: boolean | null, stockOwner: { __typename?: 'StockOwner', name?: string | null } }> } };
 
 export type GetStatusFeedbackOverwriteByIdQueryVariables = Exact<{
   id: Scalars['String'];
 }>;
 
 
-export type GetStatusFeedbackOverwriteByIdQuery = { __typename?: 'Query', statusFeedbackOverwrite?: { __typename?: 'StatusFeedbackOverWrite', id?: string | null, stockOwnerId?: string | null, objectType?: number | null, status?: number | null, feedback?: boolean | null, customValue?: string | null, system?: boolean | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, stockOwner: { __typename?: 'StockOwner', name?: string | null } } | null };
+export type GetStatusFeedbackOverwriteByIdQuery = { __typename?: 'Query', statusFeedbackOverwrite?: { __typename?: 'StatusFeedbackOverWrite', id?: string | null, stockOwnerId?: string | null, objectType?: number | null, status?: number | null, objectTypeText?: string | null, statusText?: string | null, feedback?: boolean | null, customValue?: string | null, system?: boolean | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, stockOwner: { __typename?: 'StockOwner', name?: string | null } } | null };
 
 export type GetStatusFeedbackOverwriteIdsQueryVariables = Exact<{
   filters?: InputMaybe<StatusFeedbackOverwriteSearchFilters>;
@@ -9409,6 +9409,8 @@ export const GetAllStatusFeedbackOverwritesDocument = `
       }
       objectType
       status
+      objectTypeText
+      statusText
       feedback
       customValue
       system
@@ -9440,6 +9442,8 @@ export const GetStatusFeedbackOverwriteByIdDocument = `
     }
     objectType
     status
+    objectTypeText
+    statusText
     feedback
     customValue
     system

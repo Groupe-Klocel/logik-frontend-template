@@ -1,27 +1,44 @@
 import { WrapperForm } from '@components';
-import { showError, showInfo, showSuccess } from '@helpers';
-import { Button, Checkbox, Col, Form, Input, InputNumber, Select } from 'antd';
+import { Button, Col, Input, InputNumber, Row, Form, AutoComplete, Checkbox, Select } from 'antd';
+import useTranslation from 'next-translate/useTranslation';
+import { FC, useEffect, useState } from 'react';
+import { useAuth } from 'context/AuthContext';
+import { useRouter } from 'next/router';
+import { showError, showSuccess, showInfo } from '@helpers';
 import { CheckboxChangeEvent } from 'antd/lib/checkbox';
 import {
-    CreateStatusFeedbackOverwriteMutation,
-    CreateStatusFeedbackOverwriteMutationVariables,
     GetStatusFeedbackOverwriteObjectTypeConfigsQuery,
     GetStatusFeedbackOverwriteStatusConfigsQuery,
     SimpleGetAllStockOwnersQuery,
-    useCreateStatusFeedbackOverwriteMutation,
+    UpdateStatusFeedbackOverwriteMutation,
+    UpdateStatusFeedbackOverwriteMutationVariables,
     useGetStatusFeedbackOverwriteObjectTypeConfigsQuery,
     useGetStatusFeedbackOverwriteStatusConfigsQuery,
-    useSimpleGetAllStockOwnersQuery
+    useSimpleGetAllStockOwnersQuery,
+    useUpdateStatusFeedbackOverwriteMutation
 } from 'generated/graphql';
-import graphqlRequestClient from 'graphql/graphqlRequestClient';
-import useTranslation from 'next-translate/useTranslation';
-import Router from 'next/router';
-import { useEffect, useState } from 'react';
 
 const { Option } = Select;
+const { TextArea } = Input;
 
-export const AddStatusFeedbackOverwritesForm = () => {
-    const { t } = useTranslation('common');
+export type EditStatusFeedbackOverwriteFormProps = {
+    statusFeedbackOverwriteId: string;
+    details: any;
+};
+
+export const EditStatusFeedbackOverwriteForm: FC<EditStatusFeedbackOverwriteFormProps> = ({
+    statusFeedbackOverwriteId,
+    details
+}: EditStatusFeedbackOverwriteFormProps) => {
+    const { t } = useTranslation();
+    const { graphqlRequestClient } = useAuth();
+    const router = useRouter();
+    const [feedbackValue, setFeedbackValue] = useState(details.feedback);
+    const [systemValue, setSystemValue] = useState(details.system);
+
+    // TYPED SAFE ALL
+    const [form] = Form.useForm();
+
     const [statusFeedbackOverwriteStatus, setStatusFeedbackOverwriteStatus] = useState<any>();
     const [statusFeedbackOverwriteObjectType, setStatusFeedbackOverwriteObjectType] =
         useState<any>();
@@ -68,31 +85,49 @@ export const AddStatusFeedbackOverwritesForm = () => {
         }
     }, [statusFeedbackOverwriteObjectTypeList]);
 
-    // TYPED SAFE ALL
-    const [form] = Form.useForm();
-
-    const { mutate, isLoading: createLoading } = useCreateStatusFeedbackOverwriteMutation<Error>(
+    const { mutate, isLoading: updateLoading } = useUpdateStatusFeedbackOverwriteMutation<Error>(
         graphqlRequestClient,
         {
             onSuccess: (
-                data: CreateStatusFeedbackOverwriteMutation,
-                _variables: CreateStatusFeedbackOverwriteMutationVariables,
+                data: UpdateStatusFeedbackOverwriteMutation,
+                _variables: UpdateStatusFeedbackOverwriteMutationVariables,
                 _context: any
             ) => {
-                Router.push(`/status-feedback-overwrite/${data.createStatusFeedbackOverwrite.id}`);
-                showSuccess(t('messages:success-created'));
+                router.push(`/status-feedback-overwrite/${data.updateStatusFeedbackOverwrite?.id}`);
+                showSuccess(t('messages:success-updated'));
             },
             onError: () => {
-                showError(t('messages:error-creating-data'));
+                showError(t('messages:error-update-data'));
             }
         }
     );
 
-    const createStatusFeedbackOverwrite = ({
+    const updateStatusFeedbackOverwrite = ({
+        id,
         input
-    }: CreateStatusFeedbackOverwriteMutationVariables) => {
-        mutate({ input });
+    }: UpdateStatusFeedbackOverwriteMutationVariables) => {
+        mutate({ id, input });
     };
+
+    const onFeedbackChange = (e: CheckboxChangeEvent) => {
+        setFeedbackValue(!feedbackValue);
+        form.setFieldsValue({ feedback: e.target.checked });
+    };
+
+    const onSystemChange = (e: CheckboxChangeEvent) => {
+        setSystemValue(!systemValue);
+        form.setFieldsValue({ system: e.target.checked });
+    };
+
+    // to validate empty field when replenish is false
+    useEffect(() => {
+        form.validateFields(['feedback']);
+    }, [feedbackValue, form]);
+
+    // to validate empty field when replenish is false
+    useEffect(() => {
+        form.validateFields(['system']);
+    }, [systemValue, form]);
 
     // Call api to create new group
     const onFinish = () => {
@@ -101,35 +136,41 @@ export const AddStatusFeedbackOverwritesForm = () => {
                 // Here make api call of something else
                 const formData = form.getFieldsValue(true);
                 if (formData.stockOwnerId == undefined) {
-                    delete formData['stockOwnerId'];
+                    formData.stockOwnerId = stockOwners?.find(
+                        (e: any) => e.name == formData.associatedStockOwner
+                    ).id;
                 }
-                console.log(formData);
-                createStatusFeedbackOverwrite({ input: formData });
+                delete formData['associatedStockOwner'];
+                delete formData['stockOwner'];
+                updateStatusFeedbackOverwrite({ id: statusFeedbackOverwriteId, input: formData });
             })
             .catch((err) => {
-                showError(t('error-creating-data'));
+                showError(t('error-update-data'));
             });
     };
 
     useEffect(() => {
-        if (createLoading) {
+        const tmp_details = {
+            ...details,
+            associatedStockOwner: details.stockOwner.name
+        };
+        delete tmp_details['id'];
+        delete tmp_details['created'];
+        delete tmp_details['createdBy'];
+        delete tmp_details['modified'];
+        delete tmp_details['modifiedBy'];
+        form.setFieldsValue(tmp_details);
+        if (updateLoading) {
             showInfo(t('messages:info-create-wip'));
         }
-    }, [createLoading]);
-
-    const onFeedbackChange = (e: CheckboxChangeEvent) => {
-        form.setFieldsValue({ feedback: e.target.checked });
-    };
-
-    const onSystemChange = (e: CheckboxChangeEvent) => {
-        form.setFieldsValue({ system: e.target.checked });
-    };
+    }, [updateLoading]);
 
     return (
         <WrapperForm>
             <Form form={form} scrollToFirstError>
                 <Form.Item name="stockOwnerId" label={t('common:stock-owner')}>
-                    <Select>
+                    <Select disabled={details?.system === true ? true : false}>
+                        <Option value=""> </Option>
                         {stockOwners?.map((stockOwner: any) => (
                             <Option key={stockOwner.id} value={stockOwner.id}>
                                 {stockOwner.name}
@@ -144,7 +185,7 @@ export const AddStatusFeedbackOverwritesForm = () => {
                         { required: true, message: `${t('messages:error-message-empty-input')}` }
                     ]}
                 >
-                    <Select>
+                    <Select disabled={details?.system === true ? true : false}>
                         {statusFeedbackOverwriteObjectType?.map(
                             (statusFeedbackOverwriteObjectType: any) => (
                                 <Option
@@ -164,7 +205,7 @@ export const AddStatusFeedbackOverwritesForm = () => {
                         { required: true, message: `${t('messages:error-message-empty-input')}` }
                     ]}
                 >
-                    <Select>
+                    <Select disabled={details?.system === true ? true : false}>
                         {statusFeedbackOverwriteStatus?.map(
                             (statusFeedbackOverwriteStatus: any) => (
                                 <Option
@@ -178,17 +219,25 @@ export const AddStatusFeedbackOverwritesForm = () => {
                     </Select>
                 </Form.Item>
                 <Form.Item name="feedback">
-                    <Checkbox onChange={onFeedbackChange}>{t('common:feedback')}</Checkbox>
+                    <Checkbox
+                        checked={feedbackValue}
+                        onChange={onFeedbackChange}
+                        disabled={details?.system === true ? true : false}
+                    >
+                        {t('common:feedback')}
+                    </Checkbox>
                 </Form.Item>
                 <Form.Item name="custom-value" label={t('common:custom-value')}>
                     <Input />
                 </Form.Item>
                 {/*<Form.Item name="system">
-                    <Checkbox onChange={onSystemChange}>{t('common:system')}</Checkbox>
+                    <Checkbox checked={systemValue} onChange={onSystemChange}>
+                        {t('common:system')}
+                    </Checkbox>
                 </Form.Item>*/}
             </Form>
             <div style={{ textAlign: 'center' }}>
-                <Button type="primary" loading={createLoading} onClick={onFinish}>
+                <Button type="primary" loading={updateLoading} onClick={onFinish}>
                     {t('actions:submit')}
                 </Button>
             </div>

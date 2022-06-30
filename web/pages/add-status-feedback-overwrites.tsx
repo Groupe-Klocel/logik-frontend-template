@@ -1,7 +1,7 @@
 import { AppHead } from '@components';
 import MainLayout from 'components/layouts/MainLayout';
 import { FC } from 'react';
-import { AddStatusFeedbackOverwrites } from '../modules/Feedbacks/PagesContainer/AddStatusFeedbackOverwrites';
+import { AddStatusFeedbackOverwrites } from '../modules/Feedbacks/PagesContainer/AddStatusFeedbackOverwrite';
 
 type PageComponent = FC & { layout: typeof MainLayout };
 

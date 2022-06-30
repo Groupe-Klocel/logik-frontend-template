@@ -38,7 +38,7 @@ const SingleStatusFeedbackOverwrite: FC<SingleStatusFeedbackOverwriteTypeProps> 
     const breadsCrumb = [
         ...statusFeedbackOverwritesRoutes,
         {
-            breadcrumbName: `${data?.statusFeedbackOverwrite?.id}`
+            breadcrumbName: `${data?.statusFeedbackOverwrite?.objectTypeText}/${data?.statusFeedbackOverwrite?.statusText}`
         }
     ];
 
@@ -80,8 +80,8 @@ const SingleStatusFeedbackOverwrite: FC<SingleStatusFeedbackOverwriteTypeProps> 
         <>
             <HeaderContent
                 title={`${t('menu:status-feedback-overwrite')} ${
-                    data?.statusFeedbackOverwrite?.id
-                }`}
+                    data?.statusFeedbackOverwrite?.objectTypeText
+                }/${data?.statusFeedbackOverwrite?.statusText}`}
                 routes={breadsCrumb}
                 onBack={() => router.push('/status-feedback-overwrites')}
                 actionsRight={
@@ -90,14 +90,20 @@ const SingleStatusFeedbackOverwrite: FC<SingleStatusFeedbackOverwriteTypeProps> 
                         <LinkButton
                             icon={<EditTwoTone />}
                             path={pathParams('/status-feedback-overwrite/edit/[id]', id)}
-                        />
-                        <Button
-                            danger
-                            loading={deleteLoading}
-                            onClick={() => deleteStatusFeedbackOverwrite({ id: id })}
-                        >
-                            {t('actions:delete')}
-                        </Button>
+                        ></LinkButton>
+                        {data?.statusFeedbackOverwrite?.system != true ? (
+                            <>
+                                <Button
+                                    danger
+                                    loading={deleteLoading}
+                                    onClick={() => deleteStatusFeedbackOverwrite({ id: id })}
+                                >
+                                    {t('actions:delete')}
+                                </Button>
+                            </>
+                        ) : (
+                            <></>
+                        )}
                         {/* ADD HERE*/}
                     </Space>
                 }

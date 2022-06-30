@@ -48,6 +48,8 @@ query GetAllStatusFeedbackOverwrites(
             }
             objectType
             status
+            objectTypeText
+            statusText
             feedback
             customValue
             system
@@ -64,6 +66,8 @@ query GetStatusFeedbackOverwriteById($id: String!) {
         }
         objectType
         status
+        objectTypeText
+        statusText
         feedback
         customValue
         system

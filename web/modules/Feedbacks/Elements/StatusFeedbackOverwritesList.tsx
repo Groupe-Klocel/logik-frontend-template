@@ -126,7 +126,7 @@ export const StatusFeedbackOverwritesList = ({
                 _context: unknown
             ) => {
                 if (!deleteLoading) {
-                    refetch;
+                    refetch();
                     showSuccess(t('messages:success-deleted'));
                 }
             },
@@ -229,7 +229,7 @@ export const StatusFeedbackOverwritesList = ({
         {
             title: 'actions:actions',
             key: 'actions',
-            render: (record: { id: string; account: string }) => (
+            render: (record: { id: string; account: string; system: boolean }) => (
                 <Space>
                     <LinkButton
                         icon={<EyeTwoTone />}
@@ -239,12 +239,18 @@ export const StatusFeedbackOverwritesList = ({
                         icon={<EditTwoTone />}
                         path={pathParams('/status-feedback-overwrite/edit/[id]', record.id)}
                     />
-                    <Button
-                        icon={<DeleteOutlined />}
-                        danger
-                        loading={deleteLoading}
-                        onClick={() => deleteStatusFeedbackOverwrite({ id: record.id })}
-                    />
+                    {record.system != true ? (
+                        <>
+                            <Button
+                                icon={<DeleteOutlined />}
+                                danger
+                                loading={deleteLoading}
+                                onClick={() => deleteStatusFeedbackOverwrite({ id: record.id })}
+                            />
+                        </>
+                    ) : (
+                        <></>
+                    )}
                 </Space>
             )
         }
