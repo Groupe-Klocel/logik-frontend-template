@@ -1,5 +1,5 @@
 import { AppHead } from '@components';
-import { SingleGoodsInLine } from 'modules/GoodsIns/PagesContainer/SingleGoodsInLine';
+import { SingleGoodsInLine } from 'modules/GoodsInLine/PagesContainer/SingleGoodsInLine';
 import { useRouter } from 'next/router';
 import { FC } from 'react';
 import MainLayout from '../../../components/layouts/MainLayout';

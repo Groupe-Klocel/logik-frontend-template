@@ -1,7 +1,7 @@
 import { ContentSpin, LinkButton } from '@components';
 import { Layout, Space, Button, Typography } from 'antd';
-import { goodsInsSubRoutes } from 'modules/GoodsIns/Static/goodsInsRoutes';
-import { GoodsInLineDetails } from 'modules/GoodsIns/Elements/GoodsInLineDetails';
+import { goodsInLineSubRoutes } from 'modules/GoodsInLine/Static/goodsInLineRoutes';
+import { GoodsInLineDetails } from 'modules/GoodsInLine/Elements/GoodsInLineDetails';
 import useTranslation from 'next-translate/useTranslation';
 import {
     Table,
@@ -51,7 +51,7 @@ const SingleGoodsInLine: FC<ISingleGoodsInLineLineProps> = ({ id, router }: ISin
     console.log(data);
 
     const breadsCrumb = [
-        ...goodsInsSubRoutes,
+        ...goodsInLineSubRoutes,
         {
             breadcrumbName: `${id}`
         }

@@ -41,9 +41,6 @@ query GetBarcodeById($id: String!) {
         stockOwnerId
         rotationText
         preparationModeText
-        article {
-            name
-        }
     }
 }
 
@@ -69,13 +66,19 @@ mutation DeleteBarcode($id: String!) {
     deleteBarcode(id: $id)
 }
 
-mutation RenderBarcode($code: String!, $category: BarcodeCategory, $pages: Int!) {
-    renderBarcode(code: $code, category: $category, pages: $pages) {
+mutation RenderedDocument($templateFilename: String!, $context: JSON!) {
+    renderDocument(templateFilename: $templateFilename, context: $context) {
         __typename
         ... on RenderedDocument {
             url
         }
-        ... on BarcodeError {
+        ...on TemplateDoesNotExist {
+            message
+        }
+        ... on TemplateError {
+            message
+        }
+        ... on MissingContext {
             message
         }
     }
@@ -96,8 +99,5 @@ mutation UpdateBarcode($id: String!, $input: UpdateBarcodeInput!) {
         stockOwnerId
         rotationText
         preparationModeText
-        article {
-            name
-        }
     }
 }
