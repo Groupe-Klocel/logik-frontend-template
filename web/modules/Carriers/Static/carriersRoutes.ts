@@ -5,6 +5,7 @@ export const carriersRoutes = [
         breadcrumbName: 'menu:configuration'
     },
     {
+        path: '/carriers',
         breadcrumbName: 'menu:carriers'
     }
 ];

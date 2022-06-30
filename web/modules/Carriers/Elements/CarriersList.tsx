@@ -44,11 +44,12 @@ const CarriersList = ({ searchCriteria }: CarriersListTypeProps) => {
     const available = t('d:available');
     const code = t('d:code');
     const counter = t('d:counter');
-    const to_be_loaded = t('d:to_be_loaded');
-    const to_be_palletized = t('d:to_be_palletized');
-    const use_receipt_number = t('d:use_receipt_number');
-    const parent_carrier = t('common:parent_carrier');
-    const is_virtual = t('d:is_virtual');
+    const to_be_loaded = t('d:toBeLoaded');
+    const to_be_palletized = t('d:toBePalletized');
+    const use_receipt_number = t('d:useReceiptNumber');
+    const parent_carrier = t('common:parentCarrierId');
+    const is_virtual = t('d:isVirtual');
+    const mono_round_group = t('common:monoroundgroup');
     const errorMessageEmptyInput = t('messages:error-message-empty-input');
     const succesDetetionMessage = t('messages:success-deleted');
     const errorDeletionMessage = t('messages:error-deleting-data');
@@ -58,6 +59,7 @@ const CarriersList = ({ searchCriteria }: CarriersListTypeProps) => {
     const actions = t('actions:actions');
     const submit = t('actions:submit');
     const cancel = t('actions:cancel');
+
     const [carriers, setCarriers] = useState<DataQueryType>();
     const [sort, setSort] = useState<any>(null);
     const [pagination, setPagination] = useState<PaginationType>({
@@ -161,15 +163,9 @@ const CarriersList = ({ searchCriteria }: CarriersListTypeProps) => {
             showSorterTooltip: false
         },
         {
-            title: status,
-            dataIndex: 'status',
-            key: 'status',
-            sorter: {
-                multiple: 2
-            },
-            showSorterTooltip: false
-            // render: (status: any) =>
-            //     status ? carrierStatuses.find((e: any) => e.code == status).text : 'N/A'
+            title: code,
+            dataIndex: 'code',
+            key: 'code'
         },
         {
             title: available,
@@ -194,6 +190,18 @@ const CarriersList = ({ searchCriteria }: CarriersListTypeProps) => {
                     <CloseSquareOutlined style={{ color: 'red' }} />
                 );
             }
+        },
+        {
+            title: status,
+            dataIndex: 'status',
+            key: 'status',
+            sorter: {
+                multiple: 2
+            },
+            showSorterTooltip: false,
+            // render: (status: any) =>
+            //     status ? carrierStatuses.find((e: any) => e.code == status).text : 'N/A'
+            render: (status: any) => carrierStatuses.find((e: any) => e.code == status).text
         },
         {
             title: to_be_palletized,
@@ -232,9 +240,16 @@ const CarriersList = ({ searchCriteria }: CarriersListTypeProps) => {
             }
         },
         {
-            title: code,
-            dataIndex: 'code',
-            key: 'code'
+            title: mono_round_group,
+            dataIndex: 'monroundgroup',
+            key: 'monroundgroup',
+            render: (mono_round_group: Text) => {
+                return mono_round_group ? (
+                    <CheckCircleOutlined style={{ color: 'green' }} />
+                ) : (
+                    <CloseSquareOutlined style={{ color: 'red' }} />
+                );
+            }
         },
         {
             title: actions,

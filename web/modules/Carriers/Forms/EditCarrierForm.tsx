@@ -1,12 +1,14 @@
 import { WrapperForm } from '@components';
 import { showSuccess, showError, showInfo } from '@helpers';
-import { Form, Row, Col, Input, Checkbox, Button, InputNumber } from 'antd';
+import { Form, Row, Col, Input, Checkbox, Button, InputNumber, Select } from 'antd';
 import { CheckboxChangeEvent } from 'antd/lib/checkbox';
 import { useAuth } from 'context/AuthContext';
 import {
     useUpdateCarrierMutation,
     UpdateCarrierMutation,
-    UpdateCarrierMutationVariables
+    UpdateCarrierMutationVariables,
+    useSimpleGetAllCarriersQuery,
+    SimpleGetAllCarriersQuery
 } from 'generated/graphql';
 import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
@@ -16,6 +18,8 @@ export type EditCarrierFormProps = {
     carrierId: string;
     details: any;
 };
+
+const { Option } = Select;
 
 export const EditCarrierForm: FC<EditCarrierFormProps> = ({
     carrierId,
@@ -28,11 +32,12 @@ export const EditCarrierForm: FC<EditCarrierFormProps> = ({
     const available = t('common:available');
     const code = t('common:code');
     const counter = t('common:counter');
-    const to_be_loaded = t('common:to_be_loaded');
-    const to_be_palletized = t('common:to_be_palletized');
-    const use_receipt_number = t('common:use_receipt_number');
-    const parent_carrier = t('common:parent_carrier');
-    const is_virtual = t('common:is_virtual');
+    const to_be_loaded = t('common:toBeLoaded');
+    const to_be_palletized = t('common:toBePalletized');
+    const use_receipt_number = t('common:useReceiptNumber');
+    const parent_carrier = t('common:parentCarrierId');
+    const is_virtual = t('common:isVirtual');
+    const mono_round_group = t('common:monoroundgroup');
     const submit = t('actions:submit');
     const cancel = t('actions:cancel');
     const errorMessageEmptyInput = t('messages:error-message-empty-input');
@@ -43,6 +48,8 @@ export const EditCarrierForm: FC<EditCarrierFormProps> = ({
     const [useReceiptNumberValue, setUseReceiptNumberValue] = useState(details.useReceiptNumber);
     const [isVirtualValue, setIsVirtualValue] = useState(details.isVirtual);
     const [availableValue, setAvailableValue] = useState(details.available);
+    const [monoroundgroupValue, setMonoroundgroupValue] = useState(details.monoroundgroup);
+    const [carriers, setCarriers] = useState<any>();
 
     const {
         mutate,
@@ -86,20 +93,46 @@ export const EditCarrierForm: FC<EditCarrierFormProps> = ({
         setAvailableValue(!availableValue);
         form.setFieldsValue({ available: e.target.checked });
     };
+    const onMonoroundgroupChange = (e: CheckboxChangeEvent) => {
+        setMonoroundgroupValue(!monoroundgroupValue);
+        form.setFieldsValue({ monoroundgroup: e.target.checked });
+    };
+
+    //To render Simple carriers list
+    const carriersList = useSimpleGetAllCarriersQuery<Partial<SimpleGetAllCarriersQuery>, Error>(
+        graphqlRequestClient
+    );
+
+    useEffect(() => {
+        if (carriersList) {
+            setCarriers(carriersList?.data?.carriers?.results);
+        }
+    }, [carriersList]);
 
     const onFinish = () => {
         form.validateFields()
             .then(() => {
+                const formData = form.getFieldsValue(true);
+                if (formData.carrierId == undefined) {
+                    formData.carrierId = carriers?.find(
+                        (e: any) => e.name == formData.associatedCarrier
+                    ).id;
+                }
+                delete formData['associatedCarrier'];
+                delete formData['carrier'];
                 updateCarrier({
                     id: carrierId,
-                    input: form.getFieldsValue(true)
+                    input: formData
                 });
             })
             .catch((err) => showError(t('messages:error-update-data')));
     };
-
+    console.log(details);
     useEffect(() => {
-        const tmp_details = { ...details };
+        const tmp_details = {
+            ...details
+            //associatedCarrier: details.carrier.name
+        };
         delete tmp_details['id'];
         delete tmp_details['created'];
         delete tmp_details['createdBy'];
@@ -140,6 +173,17 @@ export const EditCarrierForm: FC<EditCarrierFormProps> = ({
                         </Form.Item>
                     </Col>
                     <Col xs={24} xl={12}>
+                        <Form.Item label={parent_carrier} name="parentCarrierId" hasFeedback>
+                            <Select>
+                                {carriers?.map((carrier: any) => (
+                                    <Option key={carrier.id} value={carrier.id}>
+                                        {carrier.name}
+                                    </Option>
+                                ))}
+                            </Select>
+                        </Form.Item>
+                    </Col>
+                    <Col xs={24} xl={12}>
                         <Checkbox checked={toBeLoadedValue} onChange={onToBeLoadedChange}>
                             {to_be_loaded}
                         </Checkbox>
@@ -165,6 +209,11 @@ export const EditCarrierForm: FC<EditCarrierFormProps> = ({
                     <Col xs={24} xl={12}>
                         <Checkbox checked={isVirtualValue} onChange={onIsVirtualChange}>
                             {is_virtual}
+                        </Checkbox>
+                    </Col>
+                    <Col xs={24} xl={12}>
+                        <Checkbox checked={monoroundgroupValue} onChange={onMonoroundgroupChange}>
+                            {mono_round_group}
                         </Checkbox>
                     </Col>
                 </Row>

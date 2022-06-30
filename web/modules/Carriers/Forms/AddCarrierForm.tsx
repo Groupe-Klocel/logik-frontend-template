@@ -1,5 +1,5 @@
 import { WrapperForm } from '@components';
-import { showSuccess, showError, showInfo } from '@helpers';
+import { showSuccess, showError, showInfo, DataQueryType, useCarriers } from '@helpers';
 import { Form, Row, Col, Input, Checkbox, Button, InputNumber, Select } from 'antd';
 import { useAuth } from 'context/AuthContext';
 import {
@@ -7,7 +7,9 @@ import {
     CreateCarrierMutation,
     CreateCarrierMutationVariables,
     useGetCarriersStatusesConfigsQuery,
-    GetCarriersStatusesConfigsQuery
+    GetCarriersStatusesConfigsQuery,
+    useSimpleGetAllCarriersQuery,
+    SimpleGetAllCarriersQuery
 } from 'generated/graphql';
 import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
@@ -33,11 +35,12 @@ export const AddCarrierForm = () => {
     const code = t('common:code');
     const status = t('common:status');
     const counter = t('common:counter');
-    const to_be_loaded = t('common:to_be_loaded');
-    const to_be_palletized = t('common:to_be_palletized');
-    const use_receipt_number = t('common:use_receipt_number');
-    const parent_carrier = t('common:parent_carrier');
-    const is_virtual = t('common:is_virtual');
+    const to_be_loaded = t('common:toBeLoaded');
+    const to_be_palletized = t('common:toBePalletized');
+    const use_receipt_number = t('common:useReceiptNumber');
+    const parent_carrier = t('common:parentCarrierId');
+    const is_virtual = t('common:isVirtual');
+    const mono_round_group = t('common:monoroundgroup');
     const errorMessageEmptyInput = t('messages:error-message-empty-input');
     const submit = t('actions:submit');
     const cancel = t('actions:cancel');
@@ -52,6 +55,7 @@ export const AddCarrierForm = () => {
 
     const [idOptions, setIdOptions] = useState<Array<IOption>>([]);
     const [aId, setAId] = useState<number>();
+    const [carriers, setCarriers] = useState<any>();
 
     const [carrierStatuses, setCarrierStatuses] = useState<any>();
 
@@ -87,6 +91,17 @@ export const AddCarrierForm = () => {
     const createCarrier = ({ input }: CreateCarrierMutationVariables) => {
         mutate({ input });
     };
+
+    //To render Simple carriers list
+    const carriersList = useSimpleGetAllCarriersQuery<Partial<SimpleGetAllCarriersQuery>, Error>(
+        graphqlRequestClient
+    );
+
+    useEffect(() => {
+        if (carriersList) {
+            setCarriers(carriersList?.data?.carriers?.results);
+        }
+    }, [carriersList]);
 
     console.log('JND', form.getFieldsValue(true));
     const onFinish = () => {
@@ -154,6 +169,17 @@ export const AddCarrierForm = () => {
                         </Form.Item>
                     </Col>
                     <Col xs={24} xl={12}>
+                        <Form.Item label={parent_carrier} name="parentCarrierId" hasFeedback>
+                            <Select>
+                                {carriers?.map((carriers: any) => (
+                                    <Option key={carriers.id} value={carriers.id}>
+                                        {carriers.name}
+                                    </Option>
+                                ))}
+                            </Select>
+                        </Form.Item>
+                    </Col>
+                    <Col xs={24} xl={12}>
                         <Form.Item label={counter} name="counter">
                             <InputNumber defaultValue="0" min="0" max="10" step="0.01" />
                         </Form.Item>
@@ -189,6 +215,15 @@ export const AddCarrierForm = () => {
                     <Col xs={24} xl={12}>
                         <Form.Item name="isVirtual" valuePropName="checked" initialValue={false}>
                             <Checkbox>{is_virtual}</Checkbox>
+                        </Form.Item>
+                    </Col>
+                    <Col xs={24} xl={12}>
+                        <Form.Item
+                            name="monoroundgroup"
+                            valuePropName="checked"
+                            initialValue={false}
+                        >
+                            <Checkbox>{mono_round_group}</Checkbox>
                         </Form.Item>
                     </Col>
                 </Row>

@@ -40,7 +40,35 @@ export const Carriers = () => {
         formSearch
             .validateFields()
             .then(() => {
-                setSearch(formSearch.getFieldsValue(true));
+                const searchValues = formSearch.getFieldsValue(true);
+                const newSearchValues = {
+                    ...searchValues,
+                    status: parseInt(searchValues['status']),
+                    available: searchValues['available'] == 'true',
+                    toBeLoaded: searchValues['toBeLoaded'] == 'true',
+                    toBePalletized: searchValues['toBePalletized'] == 'true',
+                    useReceiptNumber: searchValues['useReceiptNumber'] == 'true',
+                    isVirtual: searchValues['isVirtual'] == 'true'
+                };
+                if (searchValues['status'] == '' || searchValues['status'] === undefined)
+                    delete newSearchValues['status'];
+                if (searchValues['available'] == '' || searchValues['available'] === undefined)
+                    delete newSearchValues['available'];
+                if (searchValues['toBeLoaded'] == '' || searchValues['toBeLoaded'] === undefined)
+                    delete newSearchValues['toBeLoaded'];
+                if (
+                    searchValues['toBePalletized'] == '' ||
+                    searchValues['toBePalletized'] === undefined
+                )
+                    delete newSearchValues['toBePalletized'];
+                if (
+                    searchValues['useReceiptNumber'] == '' ||
+                    searchValues['useReceiptNumber'] === undefined
+                )
+                    delete newSearchValues['useReceiptNumber'];
+                if (searchValues['isVirtual'] == '' || searchValues['isVirtual'] === undefined)
+                    delete newSearchValues['isVirtual'];
+                setSearch(newSearchValues);
                 closeDrawer();
             })
             .catch((err) => showError(t('messages:error-getting-data')));

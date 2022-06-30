@@ -1,3 +1,12 @@
+query SimpleGetAllCarriers {
+    carriers {
+        results {
+            id
+            name
+        }
+    }
+}
+
 query GetAllCarriers(
     $filters: CarrierSearchFilters
     $orderBy: [CarrierOrderByCriterion!]
@@ -23,6 +32,9 @@ query GetAllCarriers(
             toBePalletized
             useReceiptNumber
             parentCarrierId
+            # parentCarrier {
+            #     name
+            # }
             monoroundgroup
             accountNumber
             extraInfo
@@ -47,6 +59,9 @@ query GetCarrierById($id: String!) {
         toBePalletized
         useReceiptNumber
         parentCarrierId
+        # parentCarrier {
+        #     name
+        # }
         monoroundgroup
         accountNumber
         extraInfo
@@ -87,6 +102,7 @@ mutation CreateCarrier($input: CreateCarrierInput!) {
         toBePalletized
         useReceiptNumber
         parentCarrierId
+
         monoroundgroup
         accountNumber
         extraInfo
