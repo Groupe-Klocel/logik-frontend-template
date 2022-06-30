@@ -74,7 +74,7 @@ export const EditReturnCodeForm: FC<EditReturnCodeFormProps> = ({
         form.validateFields()
             .then(() => {
                 // Here make api call of something else
-                let formData = form.getFieldsValue(true);
+                const formData = form.getFieldsValue(true);
                 updateReturnCode({ id: returnCodeId, input: formData });
             })
             .catch((err) => {

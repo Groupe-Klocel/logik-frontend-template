@@ -59,7 +59,7 @@ export const AddFeedbackOverwriteForm = () => {
                 _variables: CreateFeedbackOverwriteMutationVariables,
                 _context: any
             ) => {
-                router.push(`/feedback-overwrite`);
+                router.push(`/feedback-overwrites`);
                 showSuccess(t('messages:success-created'));
             },
             onError: () => {
@@ -82,7 +82,6 @@ export const AddFeedbackOverwriteForm = () => {
             .then(() => {
                 // Here make api call of something else
                 const formData = form.getFieldsValue(true);
-                console.log(formData);
                 createFeedbackOverwrite({ input: formData });
             })
             .catch((err) => {

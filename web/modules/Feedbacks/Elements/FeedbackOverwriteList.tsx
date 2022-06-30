@@ -6,8 +6,7 @@ import {
     CloseSquareOutlined
 } from '@ant-design/icons';
 import { Button, Space } from 'antd';
-import { AppTable, ContentSpin } from '@components';
-import { companiesData } from 'fake-data/companies';
+import { AppTable, ContentSpin, LinkButton } from '@components';
 import useTranslation from 'next-translate/useTranslation';
 import { useCallback, useEffect, useState } from 'react';
 import {
@@ -16,6 +15,7 @@ import {
     DEFAULT_PAGE_NUMBER,
     orderByFormater,
     PaginationType,
+    pathParams,
     useFeedbackOverwrites
 } from '@helpers';
 
@@ -60,8 +60,6 @@ export const FeedbackOverwriteList = () => {
         }
     }, [data]);
 
-    console.log(data);
-
     const handleTableChange = async (_pagination: any, _filter: any, sorter: any) => {
         await setSort(orderByFormater(sorter));
     };
@@ -96,16 +94,20 @@ export const FeedbackOverwriteList = () => {
         {
             title: 'actions:actions',
             key: 'actions',
-            render: (record: { id: number; account: string }) => (
+            render: (record: { id: string }) => (
                 <Space>
-                    <Button
+                    <LinkButton
+                        icon={<EyeTwoTone />}
+                        path={pathParams('/feedback-overwrite/[id]', record.id)}
+                    />
+                    <LinkButton
                         icon={<EditTwoTone />}
-                        onClick={() => alert(`Edit ${record.id} - ${record.account}`)}
+                        path={pathParams('/feedback-overwrite/edit/[id]', record.id)}
                     />
                     <Button
                         icon={<DeleteOutlined />}
                         danger
-                        onClick={() => alert(`Delete ${record.id} - ${record.account}`)}
+                        onClick={() => alert(`Delete ${record.id}`)}
                     />
                 </Space>
             )
@@ -115,7 +117,7 @@ export const FeedbackOverwriteList = () => {
         <>
             {feedbackOverwrites ? (
                 <AppTable
-                    type="return-codes"
+                    type="feedbackOverwrite"
                     columns={columns}
                     data={feedbackOverwrites!.results}
                     pagination={pagination}

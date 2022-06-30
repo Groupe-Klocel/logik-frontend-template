@@ -11,16 +11,16 @@ export const feedbacksRoutes = [
     }
 ];
 
-export const movementsConfigRoutes: Array<BreadcrumbType> = [
+export const feedbackOverwritesRoutes: Array<BreadcrumbType> = [
     ...feedbacksRoutes,
     {
-        path: '/feedback-overwrite',
+        path: '/feedback-overwrites',
         breadcrumbName: 'menu:feedbackOverwrite'
     }
 ];
 
-export const addMovementsConfigRoutes: Array<BreadcrumbType> = [
-    ...movementsConfigRoutes,
+export const addFeedbackOverwriteRoutes: Array<BreadcrumbType> = [
+    ...feedbackOverwritesRoutes,
     {
         path: '/add-feedbackOverwrite',
         breadcrumbName: 'actions:add-feedbackOverwrite'
