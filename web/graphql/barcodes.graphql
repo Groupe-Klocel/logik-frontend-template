@@ -66,7 +66,7 @@ mutation DeleteBarcode($id: String!) {
     deleteBarcode(id: $id)
 }
 
-mutation RenderedDocument($templateFilename: String!, $context: JSON!) {
+mutation RenderDocument($templateFilename: String!, $context: JSON!) {
     renderDocument(templateFilename: $templateFilename, context: $context) {
         __typename
         ... on RenderedDocument {

@@ -26,7 +26,6 @@ export type Scalars = {
 export type Article = {
   __typename?: 'Article';
   additionalDescription?: Maybe<Scalars['String']>;
-  barcodes: Array<Barcode>;
   baseUnitPicking?: Maybe<Scalars['Boolean']>;
   baseUnitPrice?: Maybe<Scalars['Float']>;
   baseUnitRotation?: Maybe<Scalars['Int']>;
@@ -447,7 +446,6 @@ export type ArticleSetSearchFilters = {
 
 export type Barcode = {
   __typename?: 'Barcode';
-  article: Article;
   blacklisted?: Maybe<Scalars['Boolean']>;
   created?: Maybe<Scalars['DateTime']>;
   createdBy?: Maybe<Scalars['String']>;
@@ -467,33 +465,6 @@ export type Barcode = {
   stockOwnerId?: Maybe<Scalars['String']>;
   supplierArticleCode?: Maybe<Scalars['String']>;
   supplierName?: Maybe<Scalars['String']>;
-};
-
-export enum BarcodeCategory {
-  Codabar = 'CODABAR',
-  Code39 = 'CODE39',
-  Code128 = 'CODE128',
-  Ean = 'EAN',
-  Ean8 = 'EAN8',
-  Ean13 = 'EAN13',
-  Ean14 = 'EAN14',
-  Gs1 = 'GS1',
-  Gs1_128 = 'GS1_128',
-  Gtin = 'GTIN',
-  Isbn = 'ISBN',
-  Isbn10 = 'ISBN10',
-  Isbn13 = 'ISBN13',
-  Issn = 'ISSN',
-  Itf = 'ITF',
-  Jan = 'JAN',
-  Pzn = 'PZN',
-  Upc = 'UPC',
-  Upca = 'UPCA'
-}
-
-export type BarcodeError = {
-  __typename?: 'BarcodeError';
-  message: Scalars['String'];
 };
 
 /** Filters to apply before the data export is made */
@@ -567,6 +538,7 @@ export type BarcodeSearchFilters = {
 export type Block = {
   __typename?: 'Block';
   blockGroup?: Maybe<Scalars['Int']>;
+  building: Building;
   buildingId?: Maybe<Scalars['String']>;
   bulk?: Maybe<Scalars['Boolean']>;
   comment?: Maybe<Scalars['String']>;
@@ -4139,8 +4111,6 @@ export type Mutation = {
   exportRounds: ExportResult;
   /** Obtain a JSON Web Token (JWT) to use in the frontend */
   integratorLogin?: Maybe<LoginSuccess>;
-  /** Renders a barcode into a PDF document uploaded onto S3, then returns the URL to download the document */
-  renderBarcode: RenderBarcodeResponse;
   /** Renders a template given its filename and a context dictionary */
   renderDocument: RenderDocumentResponse;
   /** Sends an email to reset the IntegratorUser's password */
@@ -4970,13 +4940,6 @@ export type MutationIntegratorLoginArgs = {
   email: Scalars['String'];
   integratorId: Scalars['ID'];
   password: Scalars['String'];
-};
-
-
-export type MutationRenderBarcodeArgs = {
-  category?: BarcodeCategory;
-  code: Scalars['String'];
-  pages?: Scalars['Int'];
 };
 
 
@@ -6815,8 +6778,6 @@ export type QueryWarehousesArgs = {
   page?: Scalars['Int'];
 };
 
-export type RenderBarcodeResponse = BarcodeError | RenderedDocument;
-
 export type RenderDocumentResponse = MissingContext | RenderedDocument | TemplateDoesNotExist | TemplateError;
 
 export type RenderedDocument = {
@@ -8384,7 +8345,7 @@ export type GetBarcodeByIdQueryVariables = Exact<{
 }>;
 
 
-export type GetBarcodeByIdQuery = { __typename?: 'Query', barcode?: { __typename?: 'Barcode', id?: string | null, extras?: any | null, name?: string | null, supplierName?: string | null, supplierArticleCode?: string | null, quantity?: number | null, rotation?: number | null, preparationMode?: number | null, flagDouble?: number | null, blacklisted?: boolean | null, stockOwnerId?: string | null, rotationText?: string | null, preparationModeText?: string | null, article: { __typename?: 'Article', name?: string | null } } | null };
+export type GetBarcodeByIdQuery = { __typename?: 'Query', barcode?: { __typename?: 'Barcode', id?: string | null, extras?: any | null, name?: string | null, supplierName?: string | null, supplierArticleCode?: string | null, quantity?: number | null, rotation?: number | null, preparationMode?: number | null, flagDouble?: number | null, blacklisted?: boolean | null, stockOwnerId?: string | null, rotationText?: string | null, preparationModeText?: string | null } | null };
 
 export type CreateBarcodeMutationVariables = Exact<{
   input: CreateBarcodeInput;
@@ -8400,14 +8361,13 @@ export type DeleteBarcodeMutationVariables = Exact<{
 
 export type DeleteBarcodeMutation = { __typename?: 'Mutation', deleteBarcode: boolean };
 
-export type RenderBarcodeMutationVariables = Exact<{
-  code: Scalars['String'];
-  category?: InputMaybe<BarcodeCategory>;
-  pages: Scalars['Int'];
+export type RenderDocumentMutationVariables = Exact<{
+  templateFilename: Scalars['String'];
+  context: Scalars['JSON'];
 }>;
 
 
-export type RenderBarcodeMutation = { __typename?: 'Mutation', renderBarcode: { __typename: 'BarcodeError', message: string } | { __typename: 'RenderedDocument', url: string } };
+export type RenderDocumentMutation = { __typename?: 'Mutation', renderDocument: { __typename: 'MissingContext', message: string } | { __typename: 'RenderedDocument', url: string } | { __typename: 'TemplateDoesNotExist', message: string } | { __typename: 'TemplateError', message: string } };
 
 export type UpdateBarcodeMutationVariables = Exact<{
   id: Scalars['String'];
@@ -8415,7 +8375,7 @@ export type UpdateBarcodeMutationVariables = Exact<{
 }>;
 
 
-export type UpdateBarcodeMutation = { __typename?: 'Mutation', updateBarcode?: { __typename?: 'Barcode', id?: string | null, extras?: any | null, name?: string | null, supplierName?: string | null, supplierArticleCode?: string | null, quantity?: number | null, rotation?: number | null, preparationMode?: number | null, flagDouble?: number | null, blacklisted?: boolean | null, stockOwnerId?: string | null, rotationText?: string | null, preparationModeText?: string | null, article: { __typename?: 'Article', name?: string | null } } | null };
+export type UpdateBarcodeMutation = { __typename?: 'Mutation', updateBarcode?: { __typename?: 'Barcode', id?: string | null, extras?: any | null, name?: string | null, supplierName?: string | null, supplierArticleCode?: string | null, quantity?: number | null, rotation?: number | null, preparationMode?: number | null, flagDouble?: number | null, blacklisted?: boolean | null, stockOwnerId?: string | null, rotationText?: string | null, preparationModeText?: string | null } | null };
 
 export type GetAllGoodsInsQueryVariables = Exact<{
   orderBy?: InputMaybe<Array<GoodsInOrderByCriterion> | GoodsInOrderByCriterion>;
@@ -8468,6 +8428,47 @@ export type UpdateGoodsInMutationVariables = Exact<{
 
 
 export type UpdateGoodsInMutation = { __typename?: 'Mutation', updateGoodsIn?: { __typename?: 'GoodsIn', id?: string | null, extras?: any | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, name?: string | null, comment?: string | null } | null };
+
+export type GetGoodsInLineByIdQueryVariables = Exact<{
+  id: Scalars['String'];
+  language?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type GetGoodsInLineByIdQuery = { __typename?: 'Query', goodsInLine?: { __typename?: 'GoodsInLine', id?: string | null, extras?: any | null, quantity?: number | null, reservation?: string | null, stockOwnerId?: string | null, articleId?: string | null, goodsInId?: string | null, purchaseOrderId?: string | null, purchaseOrderLineId?: string | null } | null };
+
+export type GetGoodsInLinesQueryVariables = Exact<{
+  orderBy?: InputMaybe<Array<GoodsInLineOrderByCriterion> | GoodsInLineOrderByCriterion>;
+  filters?: InputMaybe<GoodsInLineSearchFilters>;
+  page: Scalars['Int'];
+  itemsPerPage: Scalars['Int'];
+  language?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type GetGoodsInLinesQuery = { __typename?: 'Query', goodsInLines: { __typename?: 'GoodsInLineListResult', count: number, itemsPerPage: number, totalPages: number, page: number, results: Array<{ __typename?: 'GoodsInLine', id?: string | null, extras?: any | null, quantity?: number | null, reservation?: string | null, stockOwnerId?: string | null, articleId?: string | null, goodsInId?: string | null, purchaseOrderId?: string | null, purchaseOrderLineId?: string | null }> } };
+
+export type CreateGoodsInLineMutationVariables = Exact<{
+  input: CreateGoodsInLineInput;
+}>;
+
+
+export type CreateGoodsInLineMutation = { __typename?: 'Mutation', createGoodsInLine: { __typename?: 'GoodsInLine', id?: string | null, extras?: any | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, quantity?: number | null, reservation?: string | null, stockOwnerId?: string | null, articleId?: string | null, goodsInId?: string | null, purchaseOrderId?: string | null, purchaseOrderLineId?: string | null } };
+
+export type DeleteGoodsInLineMutationVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type DeleteGoodsInLineMutation = { __typename?: 'Mutation', deleteGoodsInLine: boolean };
+
+export type UpdateGoodsInLineMutationVariables = Exact<{
+  id: Scalars['String'];
+  input: UpdateGoodsInLineInput;
+}>;
+
+
+export type UpdateGoodsInLineMutation = { __typename?: 'Mutation', updateGoodsInLine?: { __typename?: 'GoodsInLine', id?: string | null, extras?: any | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, quantity?: number | null, reservation?: string | null, stockOwnerId?: string | null, articleId?: string | null, goodsInId?: string | null, purchaseOrderId?: string | null, purchaseOrderLineId?: string | null } | null };
 
 export type WarehouseLoginMutationVariables = Exact<{
   username: Scalars['String'];
@@ -8922,9 +8923,6 @@ export const GetBarcodeByIdDocument = `
     stockOwnerId
     rotationText
     preparationModeText
-    article {
-      name
-    }
   }
 }
     `;
@@ -8992,30 +8990,36 @@ export const useDeleteBarcodeMutation = <
       (variables?: DeleteBarcodeMutationVariables) => fetcher<DeleteBarcodeMutation, DeleteBarcodeMutationVariables>(client, DeleteBarcodeDocument, variables, headers)(),
       options
     );
-export const RenderBarcodeDocument = `
-    mutation RenderBarcode($code: String!, $category: BarcodeCategory, $pages: Int!) {
-  renderBarcode(code: $code, category: $category, pages: $pages) {
+export const RenderDocumentDocument = `
+    mutation RenderDocument($templateFilename: String!, $context: JSON!) {
+  renderDocument(templateFilename: $templateFilename, context: $context) {
     __typename
     ... on RenderedDocument {
       url
     }
-    ... on BarcodeError {
+    ... on TemplateDoesNotExist {
+      message
+    }
+    ... on TemplateError {
+      message
+    }
+    ... on MissingContext {
       message
     }
   }
 }
     `;
-export const useRenderBarcodeMutation = <
+export const useRenderDocumentMutation = <
       TError = unknown,
       TContext = unknown
     >(
       client: GraphQLClient,
-      options?: UseMutationOptions<RenderBarcodeMutation, TError, RenderBarcodeMutationVariables, TContext>,
+      options?: UseMutationOptions<RenderDocumentMutation, TError, RenderDocumentMutationVariables, TContext>,
       headers?: RequestInit['headers']
     ) =>
-    useMutation<RenderBarcodeMutation, TError, RenderBarcodeMutationVariables, TContext>(
-      ['RenderBarcode'],
-      (variables?: RenderBarcodeMutationVariables) => fetcher<RenderBarcodeMutation, RenderBarcodeMutationVariables>(client, RenderBarcodeDocument, variables, headers)(),
+    useMutation<RenderDocumentMutation, TError, RenderDocumentMutationVariables, TContext>(
+      ['RenderDocument'],
+      (variables?: RenderDocumentMutationVariables) => fetcher<RenderDocumentMutation, RenderDocumentMutationVariables>(client, RenderDocumentDocument, variables, headers)(),
       options
     );
 export const UpdateBarcodeDocument = `
@@ -9034,9 +9038,6 @@ export const UpdateBarcodeDocument = `
     stockOwnerId
     rotationText
     preparationModeText
-    article {
-      name
-    }
   }
 }
     `;
@@ -9225,6 +9226,158 @@ export const useUpdateGoodsInMutation = <
     useMutation<UpdateGoodsInMutation, TError, UpdateGoodsInMutationVariables, TContext>(
       ['UpdateGoodsIn'],
       (variables?: UpdateGoodsInMutationVariables) => fetcher<UpdateGoodsInMutation, UpdateGoodsInMutationVariables>(client, UpdateGoodsInDocument, variables, headers)(),
+      options
+    );
+export const GetGoodsInLineByIdDocument = `
+    query GetGoodsInLineById($id: String!, $language: String = "en") {
+  goodsInLine(id: $id, language: $language) {
+    id
+    extras
+    quantity
+    reservation
+    stockOwnerId
+    articleId
+    goodsInId
+    purchaseOrderId
+    purchaseOrderLineId
+  }
+}
+    `;
+export const useGetGoodsInLineByIdQuery = <
+      TData = GetGoodsInLineByIdQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: GetGoodsInLineByIdQueryVariables,
+      options?: UseQueryOptions<GetGoodsInLineByIdQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetGoodsInLineByIdQuery, TError, TData>(
+      ['GetGoodsInLineById', variables],
+      fetcher<GetGoodsInLineByIdQuery, GetGoodsInLineByIdQueryVariables>(client, GetGoodsInLineByIdDocument, variables, headers),
+      options
+    );
+export const GetGoodsInLinesDocument = `
+    query GetGoodsInLines($orderBy: [GoodsInLineOrderByCriterion!], $filters: GoodsInLineSearchFilters, $page: Int!, $itemsPerPage: Int!, $language: String = "en") {
+  goodsInLines(
+    orderBy: $orderBy
+    filters: $filters
+    page: $page
+    itemsPerPage: $itemsPerPage
+    language: $language
+  ) {
+    count
+    itemsPerPage
+    totalPages
+    page
+    results {
+      id
+      extras
+      quantity
+      reservation
+      stockOwnerId
+      articleId
+      goodsInId
+      purchaseOrderId
+      purchaseOrderLineId
+    }
+  }
+}
+    `;
+export const useGetGoodsInLinesQuery = <
+      TData = GetGoodsInLinesQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: GetGoodsInLinesQueryVariables,
+      options?: UseQueryOptions<GetGoodsInLinesQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetGoodsInLinesQuery, TError, TData>(
+      ['GetGoodsInLines', variables],
+      fetcher<GetGoodsInLinesQuery, GetGoodsInLinesQueryVariables>(client, GetGoodsInLinesDocument, variables, headers),
+      options
+    );
+export const CreateGoodsInLineDocument = `
+    mutation CreateGoodsInLine($input: CreateGoodsInLineInput!) {
+  createGoodsInLine(input: $input) {
+    id
+    extras
+    created
+    createdBy
+    modified
+    modifiedBy
+    quantity
+    reservation
+    stockOwnerId
+    articleId
+    goodsInId
+    purchaseOrderId
+    purchaseOrderLineId
+  }
+}
+    `;
+export const useCreateGoodsInLineMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<CreateGoodsInLineMutation, TError, CreateGoodsInLineMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<CreateGoodsInLineMutation, TError, CreateGoodsInLineMutationVariables, TContext>(
+      ['CreateGoodsInLine'],
+      (variables?: CreateGoodsInLineMutationVariables) => fetcher<CreateGoodsInLineMutation, CreateGoodsInLineMutationVariables>(client, CreateGoodsInLineDocument, variables, headers)(),
+      options
+    );
+export const DeleteGoodsInLineDocument = `
+    mutation DeleteGoodsInLine($id: String!) {
+  deleteGoodsInLine(id: $id)
+}
+    `;
+export const useDeleteGoodsInLineMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<DeleteGoodsInLineMutation, TError, DeleteGoodsInLineMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<DeleteGoodsInLineMutation, TError, DeleteGoodsInLineMutationVariables, TContext>(
+      ['DeleteGoodsInLine'],
+      (variables?: DeleteGoodsInLineMutationVariables) => fetcher<DeleteGoodsInLineMutation, DeleteGoodsInLineMutationVariables>(client, DeleteGoodsInLineDocument, variables, headers)(),
+      options
+    );
+export const UpdateGoodsInLineDocument = `
+    mutation UpdateGoodsInLine($id: String!, $input: UpdateGoodsInLineInput!) {
+  updateGoodsInLine(id: $id, input: $input) {
+    id
+    extras
+    created
+    createdBy
+    modified
+    modifiedBy
+    quantity
+    reservation
+    stockOwnerId
+    articleId
+    goodsInId
+    purchaseOrderId
+    purchaseOrderLineId
+  }
+}
+    `;
+export const useUpdateGoodsInLineMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<UpdateGoodsInLineMutation, TError, UpdateGoodsInLineMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<UpdateGoodsInLineMutation, TError, UpdateGoodsInLineMutationVariables, TContext>(
+      ['UpdateGoodsInLine'],
+      (variables?: UpdateGoodsInLineMutationVariables) => fetcher<UpdateGoodsInLineMutation, UpdateGoodsInLineMutationVariables>(client, UpdateGoodsInLineDocument, variables, headers)(),
       options
     );
 export const WarehouseLoginDocument = `
