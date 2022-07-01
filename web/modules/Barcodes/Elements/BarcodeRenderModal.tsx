@@ -3,9 +3,13 @@ import useTranslation from 'next-translate/useTranslation';
 import { Input, Modal, Typography } from 'antd';
 import { useState } from 'react';
 import {
-    RenderBarcodeMutation,
-    RenderBarcodeMutationVariables,
-    useRenderBarcodeMutation
+    // RenderBarcodeMutation,
+    // RenderBarcodeMutationVariables,
+    // useRenderBarcodeMutation
+    RenderDocumentMutation,
+    RenderDocumentMutationVariables,
+    useRenderDocumentMutation,
+
 } from 'generated/graphql';
 import { showError } from '@helpers';
 import { useAuth } from 'context/AuthContext';
@@ -23,14 +27,14 @@ const BarcodeRenderModal = ({ visible, showhideModal, code }: IBarcodeRenderModa
     const [pageNumber, setPageNumber] = useState(1);
     const [isModalVisible, setIsModalVisible] = useState(visible);
 
-    const { mutate } = useRenderBarcodeMutation<Error>(graphqlRequestClient, {
+    const { mutate } = useRenderDocumentMutation<Error>(graphqlRequestClient, {
         onSuccess: (
-            data: RenderBarcodeMutation,
-            _variables: RenderBarcodeMutationVariables,
+            data: RenderDocumentMutation,
+            _variables: RenderDocumentMutationVariables,
             _context: any
         ) => {
-            if (data.renderBarcode.__typename == 'RenderedDocument') {
-                window.open(data.renderBarcode.url, '_blank');
+            if (data.renderDocument.__typename == 'RenderedDocument') {
+                window.open(data.renderDocument.url, '_blank');
             }
         },
         onError: () => {
@@ -44,10 +48,10 @@ const BarcodeRenderModal = ({ visible, showhideModal, code }: IBarcodeRenderModa
     };
 
     const onClickOk = () => {
-        mutate({
-            code: code,
-            pages: pageNumber
-        });
+        // mutate({
+        //     code: code,
+        //     pages: pageNumber
+        // });
         showhideModal();
     };
     return (
