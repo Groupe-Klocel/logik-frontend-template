@@ -139,8 +139,8 @@ const SideMenu: FC = () => {
                 <Menu.Item key="configuration-carriers">
                     <Link href="/carriers">{t('carriers')}</Link>
                 </Menu.Item>
-                <Menu.Item key="configuration-equipments">
-                    <Link href="/equipments">{t('equipments')}</Link>
+                <Menu.Item key="configuration-equipment">
+                    <Link href="/equipment">{t('equipment')}</Link>
                 </Menu.Item>
                 <Menu.Item key="configuration-return-codes">
                     <Link href="/return-codes">{t('return-codes')}</Link>

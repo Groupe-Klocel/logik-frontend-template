@@ -9,7 +9,9 @@ import {
     useGetMyInfoQuery,
     GetMyInfoQuery,
     useGetAllReturnCodesQuery,
-    GetAllReturnCodesQuery
+    GetAllReturnCodesQuery,
+    useGetAllEquipmentQuery,
+    GetAllEquipmentQuery
 } from 'generated/graphql';
 
 const useArticles = (search: any, page: number, itemsPerPage: number, sort: any) => {
@@ -99,6 +101,35 @@ const useBarcodes = (search: any, page: number, itemsPerPage: number, sort: any)
     return barcodes;
 };
 
+const useEquipment = (search: any, page: number, itemsPerPage: number, sort: any) => {
+    const { graphqlRequestClient } = useAuth();
+
+    const sortByDate = {
+        field: 'created',
+        ascending: false
+    };
+
+    let newSort;
+
+    if (sort === null) {
+        newSort = sortByDate;
+    } else {
+        newSort = sort;
+    }
+
+    const equipment = useGetAllEquipmentQuery<Partial<GetAllEquipmentQuery>, Error>(
+        graphqlRequestClient,
+        {
+            filters: search,
+            orderBy: newSort,
+            page: page,
+            itemsPerPage: itemsPerPage
+        }
+    );
+
+    return equipment;
+};
+
 const useMyInfo = () => {
     const { graphqlRequestClient } = useAuth();
 
@@ -136,4 +167,4 @@ const useReturnCodes = (search: any, page: number, itemsPerPage: number, sort: a
     return returnCodes;
 };
 
-export { useArticles, useBarcodes, useArticleIds, useMyInfo, useReturnCodes };
+export { useArticles, useBarcodes, useEquipment, useArticleIds, useMyInfo, useReturnCodes };

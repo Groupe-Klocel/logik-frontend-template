@@ -1,19 +1,19 @@
 import { AppHead } from '@components';
 import MainLayout from 'components/layouts/MainLayout';
 import { FC } from 'react';
-import { Equipments } from '../modules/Unclassed/PagesContainer/Equipments';
+import { Equipment } from '../modules/Equipment/PagesContainer/Equipment';
 
 type PageComponent = FC & { layout: typeof MainLayout };
 
-const EquipmentsPage: PageComponent = () => {
+const EquipmentPage: PageComponent = () => {
     return (
         <>
             <AppHead title="Bee V2" />
-            <Equipments />
+            <Equipment />
         </>
     );
 };
 
-EquipmentsPage.layout = MainLayout;
+EquipmentPage.layout = MainLayout;
 
-export default EquipmentsPage;
+export default EquipmentPage;
