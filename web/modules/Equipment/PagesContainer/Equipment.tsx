@@ -7,6 +7,7 @@ import { Button, Form, Space } from 'antd';
 import { useDrawerDispatch } from 'context/DrawerContext';
 import { showError } from '@helpers';
 import { SearchOutlined } from '@ant-design/icons';
+import { EquipmentSearch } from '../Form/EquipmentSearch';
 
 export const Equipment = () => {
     const { t } = useTranslation();
@@ -25,7 +26,7 @@ export const Equipment = () => {
                 cancelButtonTitle: 'actions:reset',
                 cancelButton: true,
                 submit: true,
-                // content: <EquipementSearch form={formSearch} />,
+                content: <EquipmentSearch form={formSearch} />,
                 onCancel: () => handleReset(),
                 onComfirm: () => handleSubmit()
             }),
@@ -74,16 +75,14 @@ export const Equipment = () => {
                     <Space>
                         <Button icon={<SearchOutlined />} onClick={() => openSearchDrawer()} />
                         <LinkButton
-                            title={t('actions:add2', { name: t('menu:equipement-piece') })}
+                            title={t('actions:add2', { name: t('menu:equipment-piece') })}
                             path="/add-equipement-piece"
                             type="primary"
                         />
                     </Space>
                 }
             />
-            <EquipmentList
-            // searchCriteria={search}
-            />
+            <EquipmentList searchCriteria={search} />
         </>
     );
 };

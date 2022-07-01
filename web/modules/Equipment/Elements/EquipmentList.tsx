@@ -1,4 +1,10 @@
-import { CaretUpOutlined, CaretDownOutlined, EyeTwoTone } from '@ant-design/icons';
+import {
+    CaretUpOutlined,
+    CaretDownOutlined,
+    EyeTwoTone,
+    CheckCircleOutlined,
+    CloseSquareOutlined
+} from '@ant-design/icons';
 import { Button, Modal, Space } from 'antd';
 import { AppTable, ContentSpin } from '@components';
 import { equipmentsData } from 'fake-data/equipments';
@@ -21,7 +27,11 @@ import {
 } from 'generated/graphql';
 import { useAuth } from 'context/AuthContext';
 
-export const EquipmentList = () => {
+export type FeedbackOverwriteListTypeProps = {
+    searchCriteria?: any;
+};
+
+export const EquipmentList = ({ searchCriteria }: FeedbackOverwriteListTypeProps) => {
     const { t } = useTranslation();
     const { graphqlRequestClient } = useAuth();
 
@@ -47,8 +57,7 @@ export const EquipmentList = () => {
     );
 
     const { isLoading, data, error, refetch } = useEquipment(
-        // searchCriteria,
-        undefined,
+        searchCriteria,
         pagination.current,
         pagination.itemsPerPage,
         sort
@@ -98,11 +107,13 @@ export const EquipmentList = () => {
         });
     };
 
+    console.log(equipment);
+
     const columns = [
         {
             title: 'common:stock-owner',
-            dataIndex: 'stockOwner',
-            key: 'stockOwner',
+            dataIndex: ['stockOwner', 'name'],
+            key: ['stockOwner', 'name'],
             sorter: {
                 multiple: 2
             },
@@ -119,8 +130,8 @@ export const EquipmentList = () => {
         },
         {
             title: 'd:type',
-            dataIndex: 'type',
-            key: 'type',
+            dataIndex: 'typeText',
+            key: 'typeText',
             sorter: {
                 multiple: 4
             },
@@ -128,8 +139,8 @@ export const EquipmentList = () => {
         },
         {
             title: 'd:priority',
-            dataIndex: 'priority',
-            key: 'priority',
+            dataIndex: 'priorityText',
+            key: 'priorityText',
             sorter: {
                 multiple: 1
             },
@@ -137,8 +148,8 @@ export const EquipmentList = () => {
         },
         {
             title: 'd:status',
-            dataIndex: 'status',
-            key: 'status',
+            dataIndex: 'statusText',
+            key: 'statusText',
             sorter: {
                 multiple: 5
             },
@@ -147,37 +158,62 @@ export const EquipmentList = () => {
         {
             title: 'd:available',
             dataIndex: 'available',
-            key: 'available'
+            key: 'available',
+            render: (text: any) =>
+                text == true ? (
+                    <CheckCircleOutlined style={{ color: 'green' }} />
+                ) : (
+                    <CloseSquareOutlined style={{ color: 'red' }} />
+                )
         },
         {
             title: 'd:distributed',
             dataIndex: 'distributed',
-            key: 'distributed'
+            key: 'distributed',
+            render: (text: any) =>
+                text == true ? (
+                    <CheckCircleOutlined style={{ color: 'green' }} />
+                ) : (
+                    <CloseSquareOutlined style={{ color: 'red' }} />
+                )
         },
         {
             title: 'd:mono-company',
             dataIndex: 'monoCompany',
-            key: 'monoCompany'
+            key: 'monoCompany',
+            render: (text: any) =>
+                text == true ? (
+                    <CheckCircleOutlined style={{ color: 'green' }} />
+                ) : (
+                    <CloseSquareOutlined style={{ color: 'red' }} />
+                )
         },
         {
             title: 'd:mono-carrier',
             dataIndex: 'monoCarrier',
-            key: 'monoCarrier'
+            key: 'monoCarrier',
+            render: (text: any) =>
+                text == true ? (
+                    <CheckCircleOutlined style={{ color: 'green' }} />
+                ) : (
+                    <CloseSquareOutlined style={{ color: 'red' }} />
+                )
         },
         {
-            title: 'd:mono-carrier',
-            dataIndex: 'monoCarrier',
-            key: 'monoCarrier'
+            title: 'd:nb-max-box',
+            dataIndex: 'nbMaxBox',
+            key: 'nbMaxBox'
         },
         {
-            title: 'd:nb_max_box',
-            dataIndex: 'maxBoxNb',
-            key: 'maxBoxNb'
-        },
-        {
-            title: 'd:check_position',
+            title: 'd:check-position',
             dataIndex: 'checkPosition',
-            key: 'checkPosition'
+            key: 'checkPosition',
+            render: (text: any) =>
+                text == true ? (
+                    <CheckCircleOutlined style={{ color: 'green' }} />
+                ) : (
+                    <CloseSquareOutlined style={{ color: 'red' }} />
+                )
         },
         {
             title: 'actions:actions',
