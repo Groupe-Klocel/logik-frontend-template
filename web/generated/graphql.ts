@@ -982,7 +982,7 @@ export type BuildingSearchFilters = {
 
 export type BulkCreateLocationsInput = {
     aisle: Scalars['String'];
-    /** Eminza : create inventory when stock below quantity */
+    /** Eminza: create inventory when stock below quantity */
     allowCycleCountStockMin?: InputMaybe<Scalars['Boolean']>;
     baseUnitRotation?: InputMaybe<Scalars['Int']>;
     blockId: Scalars['String'];
@@ -1870,7 +1870,7 @@ export type CreateLoadInput = {
 
 export type CreateLocationInput = {
     aisle: Scalars['String'];
-    /** Eminza : create inventory when stock below quantity */
+    /** Eminza: create inventory when stock below quantity */
     allowCycleCountStockMin?: InputMaybe<Scalars['Boolean']>;
     barcode: Scalars['String'];
     baseUnitRotation?: InputMaybe<Scalars['Int']>;
@@ -8516,7 +8516,6 @@ export type DeleteReturnCodeMutationVariables = Exact<{
 
 export type DeleteReturnCodeMutation = { __typename?: 'Mutation'; deleteReturnCode: boolean };
 
-
 export type UpdateReturnCodeMutationVariables = Exact<{
     id: Scalars['String'];
     input: UpdateReturnCodeInput;
@@ -8533,7 +8532,58 @@ export type UpdateReturnCodeMutation = {
 };
 
 export type GetMyInfoQueryVariables = Exact<{ [key: string]: never }>;
-export type GetMyInfoQuery = { __typename?: 'Query', me: { __typename: 'IntegratorUser', id?: string | null, password: string, email: string, integratorId: string, roleId: string, isAdmin?: boolean | null, integrator: { __typename?: 'Integrator', id?: string | null, name: string, awsAccessKeyId?: string | null, awsSecretAccessKey?: string | null }, role: { __typename?: 'RoleType', id?: string | null, name: string, permissions: Array<{ __typename?: 'PermissionType', id?: string | null, table: string, mode: string, roleId: string }> } } | { __typename: 'WarehouseWorker', id?: string | null, password: string, username: string, warehouseId: string, roleId: string, role: { __typename?: 'RoleType', id?: string | null, name: string, permissions: Array<{ __typename?: 'PermissionType', id?: string | null, table: string, mode: string, roleId: string }> } } };
+export type GetMyInfoQuery = {
+    __typename?: 'Query';
+    me:
+        | {
+              __typename: 'IntegratorUser';
+              id?: string | null;
+              password: string;
+              email: string;
+              integratorId: string;
+              roleId: string;
+              isAdmin?: boolean | null;
+              integrator: {
+                  __typename?: 'Integrator';
+                  id?: string | null;
+                  name: string;
+                  awsAccessKeyId?: string | null;
+                  awsSecretAccessKey?: string | null;
+              };
+              role: {
+                  __typename?: 'RoleType';
+                  id?: string | null;
+                  name: string;
+                  permissions: Array<{
+                      __typename?: 'PermissionType';
+                      id?: string | null;
+                      table: string;
+                      mode: string;
+                      roleId: string;
+                  }>;
+              };
+          }
+        | {
+              __typename: 'WarehouseWorker';
+              id?: string | null;
+              password: string;
+              username: string;
+              warehouseId: string;
+              roleId: string;
+              role: {
+                  __typename?: 'RoleType';
+                  id?: string | null;
+                  name: string;
+                  permissions: Array<{
+                      __typename?: 'PermissionType';
+                      id?: string | null;
+                      table: string;
+                      mode: string;
+                      roleId: string;
+                  }>;
+              };
+          };
+};
 
 export const GetAllArticlesDocument = `
     query GetAllArticles($filters: ArticleSearchFilters, $orderBy: [ArticleOrderByCriterion!], $page: Int!, $itemsPerPage: Int!) {

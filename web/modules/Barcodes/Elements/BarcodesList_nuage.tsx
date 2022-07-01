@@ -1,34 +1,41 @@
+import { AppTable, LinkButton, ContentSpin } from '@components';
+import { Button, Space } from 'antd';
 import { EyeTwoTone, PrinterOutlined } from '@ant-design/icons';
-import { AppTable, ContentSpin, LinkButton } from '@components';
+import { useState, useEffect, useCallback } from 'react';
 import {
-    DataQueryType,
     DEFAULT_ITEMS_PER_PAGE,
     DEFAULT_PAGE_NUMBER,
-    orderByFormater,
-    PaginationType,
+    useBarcodes,
     pathParams,
-    useBarcodes
+    DataQueryType,
+    PaginationType,
+    orderByFormater
 } from '@helpers';
-import { Button, Space } from 'antd';
-import useTranslation from 'next-translate/useTranslation';
-import { useCallback, useEffect, useState } from 'react';
 import { BarcodeRenderModal } from './BarcodeRenderModal';
 
-export type BarcodesListTypeProps = {
+export interface IBarcodesListProps {
     searchCriteria?: any;
-};
+}
 
-const BarcodesList = ({ searchCriteria }: BarcodesListTypeProps) => {
-    const { t } = useTranslation();
+const BarcodesList = ({ searchCriteria }: IBarcodesListProps) => {
     const [barcodes, setBarcodes] = useState<DataQueryType>();
+
     const [sort, setSort] = useState<any>(null);
     const [showModal, setShowModal] = useState(false);
     const [barcodeName, setBarcodeName] = useState('');
+
     const [pagination, setPagination] = useState<PaginationType>({
         total: undefined,
         current: DEFAULT_PAGE_NUMBER,
         itemsPerPage: DEFAULT_ITEMS_PER_PAGE
     });
+
+    const { isLoading, data, error } = useBarcodes(
+        searchCriteria,
+        pagination.current,
+        pagination.itemsPerPage,
+        sort
+    );
 
     // make wrapper function to give child
     const onChangePagination = useCallback(
@@ -41,13 +48,6 @@ const BarcodesList = ({ searchCriteria }: BarcodesListTypeProps) => {
             });
         },
         [setPagination, barcodes]
-    );
-
-    const { isLoading, data, error, refetch } = useBarcodes(
-        searchCriteria,
-        pagination.current,
-        pagination.itemsPerPage,
-        sort
     );
 
     // For pagination
@@ -67,11 +67,6 @@ const BarcodesList = ({ searchCriteria }: BarcodesListTypeProps) => {
 
     const columns = [
         {
-            title: 'd:stockOwner',
-            dataIndex: 'stockOwner',
-            key: 'stockOwner'
-        },
-        {
             title: 'd:name',
             dataIndex: 'name',
             key: 'name',
@@ -81,19 +76,23 @@ const BarcodesList = ({ searchCriteria }: BarcodesListTypeProps) => {
             showSorterTooltip: false
         },
         {
-            title: 'd:articleCode',
-            dataIndex: 'articleCode',
-            key: 'articleCode'
+            title: 'd:accountId',
+            dataIndex: 'accountId',
+            key: 'accountId',
+            sorter: {
+                multiple: 2
+            },
+            showSorterTooltip: false
         },
         {
-            title: 'd:articleName',
-            dataIndex: 'articleName',
-            key: 'articleName'
+            title: 'd:companyId',
+            dataIndex: 'companyId',
+            key: 'companyId'
         },
         {
-            title: 'd:supplierName',
-            dataIndex: 'supplierName',
-            key: 'supplierName'
+            title: 'd:articleId',
+            dataIndex: 'articleId',
+            key: 'articleId'
         },
         {
             title: 'd:rotation',
@@ -110,24 +109,24 @@ const BarcodesList = ({ searchCriteria }: BarcodesListTypeProps) => {
             key: 'preparationMode'
         },
         {
-            title: 'd:articleLuLength',
-            dataIndex: 'articleLuLength',
-            key: 'articleLuLength'
+            title: 'd:flagDouble',
+            dataIndex: 'flagDouble',
+            key: 'flagDouble'
         },
         {
-            title: 'd:articleLuWidth',
-            dataIndex: 'articleLuWidth',
-            key: 'articleLuWidth'
+            title: 'd:supplierName',
+            dataIndex: 'supplierName',
+            key: 'supplierName'
         },
         {
-            title: 'd:articleLuHeight',
-            dataIndex: 'articleLuHeight',
-            key: 'articleLuHeight'
+            title: 'd:supplierArticleCode',
+            dataIndex: 'supplierArticleCode',
+            key: 'supplierArticleCode'
         },
         {
-            title: 'd:articleLuBaseUnitWeight',
-            dataIndex: 'articleLuBaseUnitWeight',
-            key: 'articleLuBaseUnitWeight'
+            title: 'd:quantity',
+            dataIndex: 'quantity',
+            key: 'quantity'
         },
         {
             title: 'actions:actions',

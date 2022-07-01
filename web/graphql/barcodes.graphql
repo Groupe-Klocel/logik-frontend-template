@@ -3,14 +3,20 @@ query GetAllBarcodes(
     $orderBy: [BarcodeOrderByCriterion!]
     $page: Int!
     $itemsPerPage: Int!
+    $language: String
 ) {
-    barcodes(filters: $filters, orderBy: $orderBy, page: $page, itemsPerPage: $itemsPerPage) {
+    barcodes(
+        filters: $filters
+        orderBy: $orderBy
+        page: $page
+        itemsPerPage: $itemsPerPage
+        language: $language
+    ) {
         count
         itemsPerPage
         totalPages
         results {
             id
-            extras
             name
             supplierName
             supplierArticleCode
@@ -22,6 +28,10 @@ query GetAllBarcodes(
             stockOwnerId
             rotationText
             preparationModeText
+            name
+            quantity
+            rotation
+            blacklisted
         }
     }
 }
@@ -29,7 +39,6 @@ query GetAllBarcodes(
 query GetBarcodeById($id: String!) {
     barcode(id: $id) {
         id
-        extras
         name
         supplierName
         supplierArticleCode
@@ -41,16 +50,12 @@ query GetBarcodeById($id: String!) {
         stockOwnerId
         rotationText
         preparationModeText
-        article {
-            name
-        }
     }
 }
 
 mutation CreateBarcode($input: CreateBarcodeInput!) {
     createBarcode(input: $input) {
         id
-        extras
         name
         supplierName
         supplierArticleCode
@@ -69,6 +74,24 @@ mutation DeleteBarcode($id: String!) {
     deleteBarcode(id: $id)
 }
 
+mutation ExportBarcodes(
+    $format: ExportFormat
+    $compression: ExportCompression
+    $separator: String
+    $orderBy: [BarcodeOrderByCriterion!]
+    $filters: BarcodeExportFilters
+) {
+    exportBarcodes(
+        format: $format
+        compression: $compression
+        separator: $separator
+        orderBy: $orderBy
+        filters: $filters
+    ) {
+        url
+    }
+}
+
 mutation RenderBarcode($code: String!, $category: BarcodeCategory, $pages: Int!) {
     renderBarcode(code: $code, category: $category, pages: $pages) {
         __typename
@@ -84,7 +107,6 @@ mutation RenderBarcode($code: String!, $category: BarcodeCategory, $pages: Int!)
 mutation UpdateBarcode($id: String!, $input: UpdateBarcodeInput!) {
     updateBarcode(id: $id, input: $input) {
         id
-        extras
         name
         supplierName
         supplierArticleCode
@@ -96,8 +118,5 @@ mutation UpdateBarcode($id: String!, $input: UpdateBarcodeInput!) {
         stockOwnerId
         rotationText
         preparationModeText
-        article {
-            name
-        }
     }
 }

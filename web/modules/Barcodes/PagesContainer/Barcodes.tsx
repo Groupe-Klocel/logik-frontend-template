@@ -1,94 +1,75 @@
-import { useCallback, useState } from 'react';
 import { SearchOutlined } from '@ant-design/icons';
 import { HeaderContent, LinkButton } from '@components';
-import { barcodesRoutes } from 'modules/Barcodes/Static/barcodesRoutes';
-import useTranslation from 'next-translate/useTranslation';
-import { BarcodesList } from 'modules/Barcodes/Elements/BarcodesList';
-import { Space, Form, Button } from 'antd';
-import { BarcodesSearch } from 'modules/Barcodes/Forms/BarcodesSearch';
-import { useDrawerDispatch } from 'context/DrawerContext';
 import { showError } from '@helpers';
-import { useAppState } from 'context/AppContext';
-import { ModeEnum, Table } from 'generated/graphql';
+import { Button, Form, Space } from 'antd';
+import { useDrawerDispatch } from 'context/DrawerContext';
+import useTranslation from 'next-translate/useTranslation';
+import { useCallback, useState } from 'react';
+import { BarcodesList } from '../Elements/BarcodesList';
+import { BarcodesSearch } from '../Forms/BarcodesSearch';
+import { barcodesRoutes } from '../Static/barcodesRoutes';
 
-const Barcodes = () => {
-    const { t } = useTranslation();
-    const { permissions } = useAppState();
-    const mode =
-        !!permissions &&
-        permissions.find((p: any) => {
-            return p.table.toUpperCase() == Table.Barcode;
-        })?.mode;
+export const Barcodes = () => {
+    const Barcodes = () => {
+        const { t } = useTranslation();
+        //	SEARCH DRAWER
+        const [search, setSearch] = useState({});
+        const [formSearch] = Form.useForm();
+        const dispatchDrawer = useDrawerDispatch();
+        const openSearchDrawer = useCallback(
+            () =>
+                dispatchDrawer({
+                    type: 'OPEN_DRAWER',
+                    title: 'actions:search',
+                    comfirmButtonTitle: 'actions:search',
+                    comfirmButton: true,
+                    cancelButtonTitle: 'actions:reset',
+                    cancelButton: true,
+                    submit: true,
+                    content: <BarcodesSearch form={formSearch} />,
+                    onCancel: () => handleReset(),
+                    onComfirm: () => handleSubmit()
+                }),
+            [dispatchDrawer]
+        );
+        const closeDrawer = useCallback(
+            () => dispatchDrawer({ type: 'CLOSE_DRAWER' }),
+            [dispatchDrawer]
+        );
 
-    //	SEARCH DRAWER
-    const [search, setSearch] = useState({});
-    const [formSearch] = Form.useForm();
+        const handleSubmit = () => {
+            formSearch
+                .validateFields()
+                .then(() => {
+                    // Here make api call of something else
+                    setSearch(formSearch.getFieldsValue(true));
+                    closeDrawer();
+                })
+                .catch((err) => showError(t('messages:error-getting-data')));
+        };
 
-    const dispatchDrawer = useDrawerDispatch();
+        const handleReset = () => {
+            formSearch.resetFields();
+        };
 
-    const openSearchDrawer = useCallback(
-        () =>
-            dispatchDrawer({
-                size: 450,
-                type: 'OPEN_DRAWER',
-                title: 'actions:search',
-                comfirmButtonTitle: 'actions:search',
-                comfirmButton: true,
-                cancelButtonTitle: 'actions:reset',
-                cancelButton: true,
-                submit: true,
-                content: <BarcodesSearch form={formSearch} />,
-                onCancel: () => handleReset(),
-                onComfirm: () => handleSubmit()
-            }),
-        [dispatchDrawer]
-    );
-
-    const closeDrawer = useCallback(
-        () => dispatchDrawer({ type: 'CLOSE_DRAWER' }),
-        [dispatchDrawer]
-    );
-
-    const handleReset = () => {
-        formSearch.resetFields();
-    };
-
-    const handleSubmit = () => {
-        formSearch
-            .validateFields()
-            .then(() => {
-                // Here make api call of something else
-                setSearch(formSearch.getFieldsValue(true));
-                closeDrawer();
-            })
-            .catch((err) => showError(t('messages:error-getting-data')));
-    };
-
-    return (
-        <>
-            <HeaderContent
-                title={t('common:barcodes')}
-                routes={barcodesRoutes}
-                actionsRight={
-                    <Space>
-                        <Button icon={<SearchOutlined />} onClick={() => openSearchDrawer()} />
-                        {!!mode && mode.toUpperCase() == ModeEnum.Write ? (
+        return (
+            <>
+                <HeaderContent
+                    title={t('menu:barcodes')}
+                    routes={barcodesRoutes}
+                    actionsRight={
+                        <Space>
+                            <Button icon={<SearchOutlined />} onClick={() => openSearchDrawer()} />
                             <LinkButton
-                                title={t('actions:add2', { name: t('common:barcode') })}
+                                title={t('actions:add2', { name: t('menu:barcode') })}
                                 path="/add-barcode"
                                 type="primary"
                             />
-                        ) : (
-                            <></>
-                        )}
-                    </Space>
-                }
-            />
-            <BarcodesList searchCriteria={search} />
-        </>
-    );
+                        </Space>
+                    }
+                />
+                <BarcodesList searchCriteria={search} />
+            </>
+        );
+    };
 };
-
-Barcodes.displayName = 'Barcodes';
-
-export { Barcodes };
