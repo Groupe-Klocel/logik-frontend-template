@@ -11,6 +11,7 @@ const FeedbackOverwriteDetails = ({ details }: IFeedbackOverwriteDetailsProps) =
     };
     delete refurbDetails['stockOwner'];
     delete refurbDetails['stockOwnerId'];
+    delete refurbDetails['movementCode'];
 
     return (
         <>

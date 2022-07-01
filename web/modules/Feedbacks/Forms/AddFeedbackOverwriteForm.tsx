@@ -39,7 +39,7 @@ export const AddFeedbackOverwriteForm = () => {
         }
     }, [stockOwnerList]);
 
-    //To render block Levels from parameter table for the given scope
+    //To render movement codes from parameter table for the given scope
     const movementCodesList = useGetFeedbackOverwriteMovementCodeParamsQuery<
         Partial<GetFeedbackOverwriteMovementCodeParamsQuery>,
         Error
@@ -106,7 +106,7 @@ export const AddFeedbackOverwriteForm = () => {
                 >
                     <Select
                         placeholder={`${t('messages:please-select-a', {
-                            name: t('common:stockOwner')
+                            name: t('common:stock-owner')
                         })}`}
                     >
                         {stockOwners?.map((stockOwner: any) => (
@@ -145,7 +145,7 @@ export const AddFeedbackOverwriteForm = () => {
                     <Checkbox onChange={onFeedbackChange}>{t('common:feedback')}</Checkbox>
                 </Form.Item>
 
-                <Form.Item label={t('common:customValue')} name="custom-value">
+                <Form.Item label={t('common:custom-value')} name="custom-value">
                     <InputNumber />
                 </Form.Item>
                 <Row>

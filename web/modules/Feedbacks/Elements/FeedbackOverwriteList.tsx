@@ -5,7 +5,7 @@ import {
     CheckCircleOutlined,
     CloseSquareOutlined
 } from '@ant-design/icons';
-import { Button, Space } from 'antd';
+import { Button, Modal, Space } from 'antd';
 import { AppTable, ContentSpin, LinkButton } from '@components';
 import useTranslation from 'next-translate/useTranslation';
 import { useCallback, useEffect, useState } from 'react';
@@ -16,11 +16,24 @@ import {
     orderByFormater,
     PaginationType,
     pathParams,
+    showError,
+    showSuccess,
     useFeedbackOverwrites
 } from '@helpers';
+import {
+    DeleteFeedbackOverwriteMutation,
+    DeleteFeedbackOverwriteMutationVariables,
+    useDeleteFeedbackOverwriteMutation
+} from 'generated/graphql';
+import { useAuth } from 'context/AuthContext';
 
-export const FeedbackOverwriteList = () => {
+export type FeedbackOverwriteListTypeProps = {
+    searchCriteria?: any;
+};
+
+export const FeedbackOverwriteList = ({ searchCriteria }: FeedbackOverwriteListTypeProps) => {
     const { t } = useTranslation();
+    const { graphqlRequestClient } = useAuth();
 
     const [feedbackOverwrites, setFeedbackOverwrites] = useState<DataQueryType>();
     const [sort, setSort] = useState<any>(null);
@@ -43,8 +56,8 @@ export const FeedbackOverwriteList = () => {
         [setPagination, feedbackOverwrites]
     );
 
-    const { isLoading, data, error } = useFeedbackOverwrites(
-        undefined,
+    const { isLoading, data, error, refetch } = useFeedbackOverwrites(
+        searchCriteria,
         pagination.current,
         pagination.itemsPerPage,
         sort
@@ -64,9 +77,39 @@ export const FeedbackOverwriteList = () => {
         await setSort(orderByFormater(sorter));
     };
 
+    const { mutate, isLoading: deleteLoading } = useDeleteFeedbackOverwriteMutation<Error>(
+        graphqlRequestClient,
+        {
+            onSuccess: (
+                data: DeleteFeedbackOverwriteMutation,
+                _variables: DeleteFeedbackOverwriteMutationVariables,
+                _context: unknown
+            ) => {
+                if (!deleteLoading) {
+                    refetch();
+                    showSuccess(t('messages:success-deleted'));
+                }
+            },
+            onError: () => {
+                showError(t('messages:error-deleting-data'));
+            }
+        }
+    );
+
+    const deleteFeedbackOverwrite = ({ id }: DeleteFeedbackOverwriteMutationVariables) => {
+        Modal.confirm({
+            title: t('messages:delete-confirm'),
+            onOk: () => {
+                mutate({ id });
+            },
+            okText: t('messages:confirm'),
+            cancelText: t('messages:cancel')
+        });
+    };
+
     const columns = [
         {
-            title: 'common:stockOwner',
+            title: 'common:stock-owner',
             dataIndex: ['stockOwner', 'name'],
             key: ['stockOwner', 'name']
         },
@@ -87,14 +130,14 @@ export const FeedbackOverwriteList = () => {
                 )
         },
         {
-            title: 'common:customValue',
+            title: 'common:custom-value',
             dataIndex: 'customValue',
             key: 'customValue'
         },
         {
             title: 'actions:actions',
             key: 'actions',
-            render: (record: { id: string }) => (
+            render: (record: { id: string; system: boolean }) => (
                 <Space>
                     <LinkButton
                         icon={<EyeTwoTone />}
@@ -104,11 +147,16 @@ export const FeedbackOverwriteList = () => {
                         icon={<EditTwoTone />}
                         path={pathParams('/feedback-overwrite/edit/[id]', record.id)}
                     />
-                    <Button
-                        icon={<DeleteOutlined />}
-                        danger
-                        onClick={() => alert(`Delete ${record.id}`)}
-                    />
+                    {record.system != true ? (
+                        <Button
+                            icon={<DeleteOutlined />}
+                            danger
+                            loading={deleteLoading}
+                            onClick={() => deleteFeedbackOverwrite({ id: record.id })}
+                        />
+                    ) : (
+                        <></>
+                    )}
                 </Space>
             )
         }

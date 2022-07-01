@@ -9,7 +9,7 @@
     "column": "Colonne",
     "companyId": "ID Entreprise",
     "constraint": "Contrainte",
-    "customValue": "Valeur personnalisée",
+    "customdisabled={details?.system === true ? true : false}alue": "Valeur spécifique",
     "status": "Statut",
     "bulk": "Vrac",
     "code": "Code",

@@ -1785,7 +1785,7 @@ export type CreateFeedbackOverwriteInput = {
   feedback?: InputMaybe<Scalars['Boolean']>;
   movementCode: Scalars['Int'];
   stockOwnerId?: InputMaybe<Scalars['String']>;
-  system: Scalars['Boolean'];
+  system?: InputMaybe<Scalars['Boolean']>;
 };
 
 export type CreateGoodsInInput = {

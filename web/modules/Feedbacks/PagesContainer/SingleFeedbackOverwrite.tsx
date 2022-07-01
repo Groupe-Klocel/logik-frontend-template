@@ -79,25 +79,25 @@ const SingleFeedbackOverwrite: FC<SingleFeedbackOverwriteTypeProps> = ({
                     data?.feedbackOverwrite?.stockOwner.name
                 }/${data?.feedbackOverwrite?.movementCodeText}`}
                 routes={breadsCrumb}
-                onBack={() => router.push('/feedbackOverwrites')}
+                onBack={() => router.push('/feedback-overwrites')}
                 actionsRight={
                     <Space>
                         {/* ADD HERE*/}
                         <LinkButton
-                            title={t('actions:list', { name: t('menu:feedbackOverwrites') })}
-                            path={'/feedback-overwrites'}
-                        />
-                        <LinkButton
                             icon={<EditTwoTone />}
                             path={pathParams('/feedback-overwrite/edit/[id]', id)}
                         />
-                        <Button
-                            danger
-                            loading={deleteLoading}
-                            onClick={() => deleteFeedbackOverwrite({ id: id })}
-                        >
-                            {t('actions:delete')}
-                        </Button>
+                        {data?.feedbackOverwrite?.system != true ? (
+                            <Button
+                                danger
+                                loading={deleteLoading}
+                                onClick={() => deleteFeedbackOverwrite({ id: id })}
+                            >
+                                {t('actions:delete')}
+                            </Button>
+                        ) : (
+                            <></>
+                        )}
                         {/* ADD HERE*/}
                     </Space>
                 }

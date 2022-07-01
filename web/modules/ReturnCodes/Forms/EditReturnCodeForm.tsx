@@ -30,7 +30,7 @@ export const EditReturnCodeForm: FC<EditReturnCodeFormProps> = ({
 
     // TYPED SAFE ALL
     const [form] = Form.useForm();
-    const [replenishValue, setReplenishValue] = useState(details.replenish);
+    const [replenishValue, setReplenishValue] = useState(true);
     const [stockMinValue, setStockMinValue] = useState(details.allowCycleCountStockMin);
     console.log('replen', replenishValue);
 
@@ -106,7 +106,7 @@ export const EditReturnCodeForm: FC<EditReturnCodeFormProps> = ({
                         { required: true, message: `${t('messages:error-message-empty-input')}` }
                     ]}
                 >
-                    <Input />
+                    <Input disabled={replenishValue === false ? true : false} />
                 </Form.Item>
                 <Form.Item name="description" label={t('common:description')}>
                     <Input />
