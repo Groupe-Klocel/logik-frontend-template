@@ -1,6 +1,5 @@
 import { ContentSpin, LinkButton } from '@components';
 import { Layout, Space, Button } from 'antd';
-import { barcodesRoutes } from 'modules/Barcodes/Static/barcodesRoutes';
 import useTranslation from 'next-translate/useTranslation';
 import {
     GetPurchaseOrderLineByIdQuery,
@@ -16,6 +15,7 @@ import styled from 'styled-components';
 import { HeaderContent } from '@components';
 import { showError, showSuccess } from '@helpers';
 import { PurchaseOrderLineDetails } from '../Elements/PurchaseOrderLineDetails';
+import { purchaseOrderLineSubRoutes } from '../Static/purchaseOrderLineRoutes';
 
 const StyledPageContent = styled(Layout.Content)`
     margin: 15px 30px;
@@ -61,7 +61,7 @@ const SinglePurchaseOrderLine: FC<ISinglePurchaseOrderLineProps> = ({ id, router
     };
 
     const breadsCrumb = [
-        ...barcodesRoutes,
+        ...purchaseOrderLineSubRoutes,
         {
             breadcrumbName: `${id}`
         }

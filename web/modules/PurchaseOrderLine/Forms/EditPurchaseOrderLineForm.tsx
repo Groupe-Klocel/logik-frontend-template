@@ -53,24 +53,52 @@ export const EditPurchaseOrderLineForm: FC<IEditPurchaseOrderLineFormProps> = ({
     const onFinish = () => {
         form.validateFields()
             .then(() => {
+                const tmp_formdata = JSON.parse(JSON.stringify(form.getFieldsValue(true)))
+                delete tmp_formdata['purchaseOrderName'];
+                delete tmp_formdata['articleName'];
+                delete tmp_formdata['companyName'];
+                console.log(tmp_formdata)
+
                 updatePurchaseOrderLine({
                     id: id,
-                    input: { ...form.getFieldsValue(true), accountId: 1 }
+                    input: tmp_formdata
                 });
             })
             .catch((err) => showError(t('messages:error-update-data')));
     };
 
     useEffect(() => {
-        const tmp_details = { ...details };
+        const tmp_details = details;
         delete tmp_details['id'];
         delete tmp_details['created'];
+        delete tmp_details['createdBy'];
         delete tmp_details['modified'];
+        delete tmp_details['modifiedBy'];
+        delete tmp_details['blockingStatusText'];
+        delete tmp_details['extras'];
+        delete tmp_details['statusText'];
+        delete tmp_details['receivedQuantity'];
         form.setFieldsValue(tmp_details);
         if (updateLoading) {
             showInfo(t('messages:info-update-wip'));
         }
     }, [updateLoading]);
+
+    useEffect(() => {
+        const tmp_details = details;
+        delete tmp_details['id'];
+        delete tmp_details['created'];
+        delete tmp_details['createdBy'];
+        delete tmp_details['modified'];
+        delete tmp_details['modifiedBy'];
+        delete tmp_details['blockingStatusText'];
+        delete tmp_details['extras'];
+        delete tmp_details['statusText'];
+        delete tmp_details['receivedQuantity'];
+
+        console.log(tmp_details)
+        form.setFieldsValue(tmp_details);
+    }, []);
 
     return (
         <StyledForm>

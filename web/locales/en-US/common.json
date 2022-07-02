@@ -71,5 +71,6 @@
 	"weight": "Weight",
 	"welcome": "Welcome on",
 	"width": "Width",
-	"workspace": "Workspace ID"
+	"workspace": "Workspace ID",
+	"purchase-order-line": "Purchase Order Line"
 }

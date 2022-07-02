@@ -1,8 +1,7 @@
 import { ContentSpin } from '@components';
 import { Layout } from 'antd';
-import { articlesSubRoutes } from 'modules/Articles/Static/articlesRoutes';
 import useTranslation from 'next-translate/useTranslation';
-import { GetArticleByIdQuery, useGetArticleByIdQuery } from 'generated/graphql';
+import { GetPurchaseOrderLineByIdQuery, useGetPurchaseOrderLineByIdQuery } from 'generated/graphql';
 import { useAuth } from 'context/AuthContext';
 import { FC, useEffect } from 'react';
 import { NextRouter } from 'next/router';
@@ -10,6 +9,7 @@ import styled from 'styled-components';
 import { HeaderContent } from '@components';
 import { showError } from '@helpers';
 import { EditPurchaseOrderLineForm } from '../Forms/EditPurchaseOrderLineForm';
+import { purchaseOrderLineSubRoutes } from '../Static/purchaseOrderLineRoutes';
 
 const StyledPageContent = styled(Layout.Content)`
     margin: 0px 30px 50px 30px;
@@ -26,7 +26,7 @@ const EditPurchaseOrderLine: FC<IEditPurchaseOrderLineProps> = ({ id, router }: 
 
     const { graphqlRequestClient } = useAuth();
 
-    const { isLoading, data, error } = useGetArticleByIdQuery<GetArticleByIdQuery, Error>(
+    const { isLoading, data, error } = useGetPurchaseOrderLineByIdQuery<GetPurchaseOrderLineByIdQuery, Error>(
         graphqlRequestClient,
         {
             id: id
@@ -34,7 +34,7 @@ const EditPurchaseOrderLine: FC<IEditPurchaseOrderLineProps> = ({ id, router }: 
     );
 
     const breadsCrumb = [
-        ...articlesSubRoutes,
+        ...purchaseOrderLineSubRoutes,
         {
             breadcrumbName: `${id}`
         }
@@ -65,7 +65,7 @@ const EditPurchaseOrderLine: FC<IEditPurchaseOrderLineProps> = ({ id, router }: 
             />
             <StyledPageContent>
                 {data && !isLoading ? (
-                    <EditPurchaseOrderLineForm id={id} details={data?.article} />
+                    <EditPurchaseOrderLineForm id={id} details={data?.purchaseOrderLine} />
                 ) : (
                     <ContentSpin />
                 )}

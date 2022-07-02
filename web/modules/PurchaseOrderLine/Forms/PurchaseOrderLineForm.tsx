@@ -28,15 +28,15 @@ const PurchaseOrderLineForm: FC<IPurchaseOrderLineFormProps>  = ({companyId, pur
 
     const [idOptions, setIdOptions] = useState<Array<IOption>>([]);
     const [articleName, setArticleName] = useState<string>('');
-    const [aId, setAId] = useState<number>();
+    const [aId, setAId] = useState<string>('');
 
     const [cidOptions, setCIdOptions] = useState<Array<IOption>>([]);
     const [companyName, setCompanyName] = useState<string>('');
-    const [cId, setCId] = useState<number>();
+    const [cId, setCId] = useState<string>('');
 
     const [pidOptions, setPIdOptions] = useState<Array<IOption>>([]);
     const [purchaseOrderName, setPurchaseOrderName] = useState<string>('');
-    const [pId, setPId] = useState<number>();
+    const [pId, setPId] = useState<string>('');
 
     const articleId = t('d:articleId');    
     const errorMessageEmptyInput = t('messages:error-message-empty-input');    
@@ -46,21 +46,26 @@ const PurchaseOrderLineForm: FC<IPurchaseOrderLineFormProps>  = ({companyId, pur
     const quantityMax = t('d:quantityMax');
     const quantity = t('d:quantity');
     const article = t('d:article');    
-    const company = t('d:company');
+    const company = t('d:stockOwner');
     const purchaseOrder = t('d:purchaseOrder');
 
     const { data } = useArticleIds({ name: `${articleName}%` }, 1, 100, null);
 
     useEffect(() => {
         const formValue = form.getFieldsValue();
-        form.setFieldsValue({ ...formValue, articleId: aId });
+        form.setFieldsValue({ ...formValue, articleId: aId, articleName: articleName });
     }, [aId]);
 
     useEffect(() => {
         if (data) {
             const newIdOpts: Array<IOption> = [];
             data.articles?.results.forEach(({ id, name }) => {
+                if(form.getFieldsValue(true).articleId === id) {
+                    setAId(id!);
+                    setArticleName(name!);
+                }
                 newIdOpts.push({ value: "" + name, id: id! });
+
             });
             setIdOptions(newIdOpts);
         }
@@ -72,14 +77,18 @@ const PurchaseOrderLineForm: FC<IPurchaseOrderLineFormProps>  = ({companyId, pur
 
     useEffect(() => {
         const formValue = form.getFieldsValue();
-        form.setFieldsValue({ ...formValue, purchaseOrderId: pId });
+        form.setFieldsValue({ ...formValue, purchaseOrderId: pId, purchaseOrderName: purchaseOrderName });
     }, [pId]);
 
     useEffect(() => {
         if (pData.data) {
             const newIdOpts: Array<IOption> = [];
             pData.data.purchaseOrders?.results.forEach(({ id, name }) => {
-                newIdOpts.push({ value: "" + name, id: id! });
+                if(id === poid || form.getFieldsValue(true).purchaseOrderId === id) {
+                    setPId(id!);
+                    setPurchaseOrderName(name!);
+                }
+                newIdOpts.push({ value: name!, id: id! });
             });
             setPIdOptions(newIdOpts);
         }
@@ -90,18 +99,24 @@ const PurchaseOrderLineForm: FC<IPurchaseOrderLineFormProps>  = ({companyId, pur
 
     useEffect(() => {
         const formValue = form.getFieldsValue();
-        form.setFieldsValue({ ...formValue, stockOwnerId: cId });
+        form.setFieldsValue({ ...formValue, stockOwnerId: cId, companyName: companyName });
     }, [cId]);
 
     useEffect(() => {
         if (cData.data) {
             const newIdOpts: Array<IOption> = [];
             cData.data.stockOwners?.results.forEach(({ id, name }) => {
-                newIdOpts.push({ value: "" + name, id: id! });
+                if(id == soid || form.getFieldsValue(true).stockOwnerId === id) {
+                    setCId(id!);
+                    setCompanyName(name!);
+                }
+                newIdOpts.push({ value: name!, id: id! });
             });
             setCIdOptions(newIdOpts);
         }
     }, [companyName, cData.data]);
+
+
 
     return (
         <>
@@ -121,6 +136,8 @@ const PurchaseOrderLineForm: FC<IPurchaseOrderLineFormProps>  = ({companyId, pur
                 <AutoComplete
                     style={{ width: '100%' }}
                     options={pidOptions}
+                    value={purchaseOrderName}
+                    disabled={purchaseOrderName !== '' ? true: false}
                     filterOption={(inputValue, option) =>
                         option!.value
                             .toUpperCase()
@@ -156,6 +173,8 @@ const PurchaseOrderLineForm: FC<IPurchaseOrderLineFormProps>  = ({companyId, pur
                 <AutoComplete
                     style={{ width: '100%' }}
                     options={cidOptions}
+                    value={companyName}
+                    disabled={companyName !== '' ? true: false}
                     filterOption={(inputValue, option) =>
                         option!.value
                             .toUpperCase()
@@ -214,7 +233,6 @@ const PurchaseOrderLineForm: FC<IPurchaseOrderLineFormProps>  = ({companyId, pur
             <Form.Item
                 label={quantity}
                 name="quantity"
-                rules={[{ required: true, message: errorMessageEmptyInput }]}
             >
                 <InputNumber style={{ width: '100%' }} />
             </Form.Item>
@@ -222,7 +240,6 @@ const PurchaseOrderLineForm: FC<IPurchaseOrderLineFormProps>  = ({companyId, pur
             <Form.Item
                 label={quantityMax}
                 name="quantityMax"
-                rules={[{ required: true, message: errorMessageEmptyInput }]}
             >
                 <InputNumber style={{ width: '100%' }} />
             </Form.Item>
@@ -230,7 +247,7 @@ const PurchaseOrderLineForm: FC<IPurchaseOrderLineFormProps>  = ({companyId, pur
             <Form.Item
                 label={status}
                 name="status"
-                rules={[{ required: true, message: errorMessageEmptyInput }]}
+                rules={[{required: true, message: errorMessageEmptyInput }]}
             >
                 <InputNumber style={{ width: '100%' }} />
             </Form.Item>
@@ -238,7 +255,7 @@ const PurchaseOrderLineForm: FC<IPurchaseOrderLineFormProps>  = ({companyId, pur
             <Form.Item
                 label={blockingStatus}
                 name="blockingStatus"
-                rules={[{ required: true, message: errorMessageEmptyInput }]}
+                rules={[{required: true, message: errorMessageEmptyInput }]}
             >
                 <InputNumber style={{ width: '100%' }} />
             </Form.Item>
@@ -246,7 +263,6 @@ const PurchaseOrderLineForm: FC<IPurchaseOrderLineFormProps>  = ({companyId, pur
             <Form.Item
                 label={reservation}
                 name="reservation"
-                rules={[{ required: true, message: errorMessageEmptyInput }]}
             >
                 <Input />
             </Form.Item>
