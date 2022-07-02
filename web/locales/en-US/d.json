@@ -51,7 +51,22 @@
     "position": "Position",
 	"replenish": "replenish",
 	"masse": "Masse",
-    "type": "Type"
-
+    "type": "Type",
+    "blockingStatus": "Blocking Status",
+    "reservation": "Reservation",
+    "quantityMax": "Max Quantity",
+    "article": "Article",
+    "stockOwner": "Stock Owner",
+    "purchaseOrder": "Purchase Order",
+    "statusText": "Status Text",
+    "reservedQuantity": "Reserved Quantity",
+    "stockOwnerId": "Stock Owner ID",
+    "originalPurchaseOrder": "Original Purchase Order",
+    "blockingStatusText": "Blocking Status Text",
+    "receivedQuantity": "Received Quantity",
+    "purchaseOrderId": "Purchase Order ID",
+    "originalPurchaseOrderLine": "Original Purchase Order Line",
+    "supplier": "Supplier",
+    "expectedGoodsInDate": "Expected Goods In Date"
 
 }

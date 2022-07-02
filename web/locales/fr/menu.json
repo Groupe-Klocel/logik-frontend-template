@@ -57,5 +57,7 @@
 	"users": "Utilisateurs",
 	"users-rights": "Droits utilisateurs",
 	"warning": "Alertes",
-	"user-settings": "Mes Paramètres"
+	"user-settings": "Mes Paramètres",
+	"purchase-order-line": "Purchase Order Line",
+	"purchase-order": "Purchase Order"
 }

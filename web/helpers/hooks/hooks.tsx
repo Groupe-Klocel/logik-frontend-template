@@ -9,7 +9,9 @@ import {
     useGetMyInfoQuery,
     GetMyInfoQuery,
     useGetAllReturnCodesQuery,
-    GetAllReturnCodesQuery
+    GetAllReturnCodesQuery,
+    useGetStockOwnerIdsQuery,
+    GetStockOwnerIdsQuery
 } from 'generated/graphql';
 
 const useArticles = (search: any, page: number, itemsPerPage: number, sort: any) => {
@@ -136,4 +138,33 @@ const useReturnCodes = (search: any, page: number, itemsPerPage: number, sort: a
     return returnCodes;
 };
 
-export { useArticles, useBarcodes, useArticleIds, useMyInfo, useReturnCodes };
+const useStockOwnerIds = (search: any, page: number, itemsPerPage: number, sort: any) => {
+    const { graphqlRequestClient } = useAuth();
+
+    const sortByDate = {
+        field: 'name',
+        ascending: false
+    };
+
+    let newSort;
+
+    if (sort === null) {
+        newSort = sortByDate;
+    } else {
+        newSort = sort;
+    }
+
+    const stockOwners = useGetStockOwnerIdsQuery<Partial<GetStockOwnerIdsQuery>, Error>(
+        graphqlRequestClient,
+        {
+            filters: search,
+            orderBy: newSort,
+            page: page,
+            itemsPerPage: itemsPerPage
+        }
+    );
+
+    return stockOwners;
+};
+
+export { useArticles, useBarcodes, useArticleIds, useMyInfo, useReturnCodes, useStockOwnerIds };
