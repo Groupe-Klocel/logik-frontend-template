@@ -44,7 +44,24 @@ export const StatusFeedbackOverwrites = () => {
         formSearch
             .validateFields()
             .then(() => {
-                setSearch(formSearch.getFieldsValue(true));
+                const searchValues = formSearch.getFieldsValue(true);
+                const newSearchValues = {
+                    ...searchValues,
+                    feedback: searchValues['feedback'] == 'true',
+                    system: searchValues['system'] == 'true'
+                };
+                if (searchValues['feedback'] == '' || searchValues['feedback'] === undefined)
+                    delete newSearchValues['feedback'];
+                if (searchValues['system'] == '' || searchValues['system'] === undefined)
+                    delete newSearchValues['system'];
+                if (
+                    searchValues['stockOwnerId'] == '' ||
+                    searchValues['stockOwnerId'] === undefined
+                )
+                    delete newSearchValues['stockOwnerId'];
+                if (searchValues['objetType'] == '' || searchValues['objetType'] === undefined)
+                    delete newSearchValues['objetType'];
+                setSearch(newSearchValues);
                 closeDrawer();
             })
             .catch((err) => showError(t('messages:error-getting-data')));

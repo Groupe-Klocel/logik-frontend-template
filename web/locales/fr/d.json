@@ -56,5 +56,7 @@
     "feedback": "Remontée",
     "objectType": "Type Objet",
     "customValue": "Valeur Spécifique",
-    "associatedStockOwner": "Société"
+    "associatedStockOwner": "Société",
+    "statusText": "Etat",
+    "objectTypeText": "Type Objet"
 }

@@ -56,5 +56,7 @@
     "feedback": "Feedback",
     "objectType": "Object Type",
     "customValue": "Custom Value",
-    "associatedStockOwner": "Stock Owner"
+    "associatedStockOwner": "Stock Owner",
+    "statusText": "Status",
+    "objectTypeText": "Object Type"
 }

@@ -118,8 +118,8 @@ const StatusFeedbackOverwritesSearch: FC<StatusFeedbackOverwritesSearchProps> = 
                         <Option value="false">{t('common:bool-no')}</Option>
                     </Select>
                 </Form.Item>
-                <Form.Item name="custom-value" label={t('common:custom-value')}>
-                    <Input />
+                <Form.Item name="customValue" label={t('common:custom-value')}>
+                    <InputNumber />
                 </Form.Item>
                 <Form.Item name="system" label={t('d:system')}>
                     <Select>

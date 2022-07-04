@@ -103,11 +103,11 @@ export const AddStatusFeedbackOverwritesForm = () => {
                 if (formData.stockOwnerId == undefined) {
                     delete formData['stockOwnerId'];
                 }
-                console.log(formData);
+
                 createStatusFeedbackOverwrite({ input: formData });
             })
             .catch((err) => {
-                showError(t('error-creating-data'));
+                showError(t('messages:error-creating-data'));
             });
     };
 
@@ -130,6 +130,7 @@ export const AddStatusFeedbackOverwritesForm = () => {
             <Form form={form} scrollToFirstError>
                 <Form.Item name="stockOwnerId" label={t('common:stock-owner')}>
                     <Select>
+                        <Option value=""> </Option>
                         {stockOwners?.map((stockOwner: any) => (
                             <Option key={stockOwner.id} value={stockOwner.id}>
                                 {stockOwner.name}
@@ -180,8 +181,8 @@ export const AddStatusFeedbackOverwritesForm = () => {
                 <Form.Item name="feedback">
                     <Checkbox onChange={onFeedbackChange}>{t('common:feedback')}</Checkbox>
                 </Form.Item>
-                <Form.Item name="custom-value" label={t('common:custom-value')}>
-                    <Input />
+                <Form.Item name="customValue" label={t('common:custom-value')}>
+                    <InputNumber />
                 </Form.Item>
                 {/*<Form.Item name="system">
                     <Checkbox onChange={onSystemChange}>{t('common:system')}</Checkbox>

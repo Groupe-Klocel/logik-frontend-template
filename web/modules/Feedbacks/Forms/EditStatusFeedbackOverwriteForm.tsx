@@ -35,14 +35,13 @@ export const EditStatusFeedbackOverwriteForm: FC<EditStatusFeedbackOverwriteForm
     const router = useRouter();
     const [feedbackValue, setFeedbackValue] = useState(details.feedback);
     const [systemValue, setSystemValue] = useState(details.system);
-
-    // TYPED SAFE ALL
-    const [form] = Form.useForm();
-
     const [statusFeedbackOverwriteStatus, setStatusFeedbackOverwriteStatus] = useState<any>();
     const [statusFeedbackOverwriteObjectType, setStatusFeedbackOverwriteObjectType] =
         useState<any>();
     const [stockOwners, setStockOwners] = useState<any>();
+
+    // TYPED SAFE ALL
+    const [form] = Form.useForm();
 
     //To render Simple stockOwners list
     const stockOwnerList = useSimpleGetAllStockOwnersQuery<
@@ -114,17 +113,18 @@ export const EditStatusFeedbackOverwriteForm: FC<EditStatusFeedbackOverwriteForm
         form.setFieldsValue({ feedback: e.target.checked });
     };
 
-    const onSystemChange = (e: CheckboxChangeEvent) => {
-        setSystemValue(!systemValue);
-        form.setFieldsValue({ system: e.target.checked });
-    };
+    //FIXME: Kept for when the backend will be modified for superadmin only
+    // const onSystemChange = (e: CheckboxChangeEvent) => {
+    //     setSystemValue(!systemValue);
+    //     form.setFieldsValue({ system: e.target.checked });
+    // };
 
-    // to validate empty field when replenish is false
+    // to validate empty field when feedback is false
     useEffect(() => {
         form.validateFields(['feedback']);
     }, [feedbackValue, form]);
 
-    // to validate empty field when replenish is false
+    // to validate empty field when system is false
     useEffect(() => {
         form.validateFields(['system']);
     }, [systemValue, form]);
@@ -135,17 +135,23 @@ export const EditStatusFeedbackOverwriteForm: FC<EditStatusFeedbackOverwriteForm
             .then(() => {
                 // Here make api call of something else
                 const formData = form.getFieldsValue(true);
-                if (formData.stockOwnerId == undefined) {
-                    formData.stockOwnerId = stockOwners?.find(
-                        (e: any) => e.name == formData.associatedStockOwner
-                    ).id;
+
+                if (formData.stockOwnerId == null || formData.stockOwnerId == undefined) {
+                    if (formData.associatedStockOwner != null) {
+                        formData.stockOwnerId = stockOwners?.find(
+                            (e: any) => e.name == formData.associatedStockOwner
+                        ).id;
+                    }
                 }
+
                 delete formData['associatedStockOwner'];
                 delete formData['stockOwner'];
+                delete formData['objectTypeText'];
+                delete formData['statusText'];
                 updateStatusFeedbackOverwrite({ id: statusFeedbackOverwriteId, input: formData });
             })
             .catch((err) => {
-                showError(t('error-update-data'));
+                showError(t('messages:error-update-data'));
             });
     };
 
@@ -227,8 +233,8 @@ export const EditStatusFeedbackOverwriteForm: FC<EditStatusFeedbackOverwriteForm
                         {t('common:feedback')}
                     </Checkbox>
                 </Form.Item>
-                <Form.Item name="custom-value" label={t('common:custom-value')}>
-                    <Input />
+                <Form.Item name="customValue" label={t('common:custom-value')}>
+                    <InputNumber />
                 </Form.Item>
                 {/*<Form.Item name="system">
                     <Checkbox checked={systemValue} onChange={onSystemChange}>

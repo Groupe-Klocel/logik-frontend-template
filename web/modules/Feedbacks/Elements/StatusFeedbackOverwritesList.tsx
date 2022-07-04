@@ -50,39 +50,6 @@ export const StatusFeedbackOverwritesList = ({
         itemsPerPage: DEFAULT_ITEMS_PER_PAGE
     });
 
-    const [statusFeedbackOverwriteStatus, setStatusFeedbackOverwriteStatus] = useState<any>();
-    const [statusFeedbackOverwriteObjectType, setStatusFeedbackOverwriteObjectType] =
-        useState<any>();
-
-    // CONFIG : status
-    const statusFeedbackOverwriteStatusList = useGetStatusFeedbackOverwriteStatusConfigsQuery<
-        Partial<GetStatusFeedbackOverwriteStatusConfigsQuery>,
-        Error
-    >(graphqlRequestClient);
-
-    useEffect(() => {
-        if (statusFeedbackOverwriteStatusList) {
-            setStatusFeedbackOverwriteStatus(
-                statusFeedbackOverwriteStatusList?.data?.listConfigsForAScope
-            );
-        }
-    }, [statusFeedbackOverwriteStatusList]);
-
-    // CONFIG : object-type
-    const statusFeedbackOverwriteObjectTypeList =
-        useGetStatusFeedbackOverwriteObjectTypeConfigsQuery<
-            Partial<GetStatusFeedbackOverwriteObjectTypeConfigsQuery>,
-            Error
-        >(graphqlRequestClient);
-
-    useEffect(() => {
-        if (statusFeedbackOverwriteObjectTypeList) {
-            setStatusFeedbackOverwriteObjectType(
-                statusFeedbackOverwriteObjectTypeList?.data?.listConfigsForAScope
-            );
-        }
-    }, [statusFeedbackOverwriteObjectTypeList]);
-
     // make wrapper function to give child
     const onChangePagination = useCallback(
         (currentPage, itemsPerPage) => {
@@ -161,29 +128,21 @@ export const StatusFeedbackOverwritesList = ({
         },
         {
             title: 'common:object-type',
-            dataIndex: 'objectType',
-            key: 'object-type',
+            dataIndex: 'objectTypeText',
+            key: 'objectTypeText',
             sorter: {
                 multiple: 2
             },
-            showSorterTooltip: false,
-            render: (objectType: any) =>
-                objectType
-                    ? statusFeedbackOverwriteObjectType.find((e: any) => e.code == objectType).text
-                    : 'N/A'
+            showSorterTooltip: false
         },
         {
             title: 'common:status-code',
-            dataIndex: 'status',
-            key: 'status',
+            dataIndex: 'statusText',
+            key: 'statusText',
             sorter: {
                 multiple: 3
             },
-            showSorterTooltip: false,
-            render: (status: any) =>
-                status
-                    ? statusFeedbackOverwriteStatus.find((e: any) => e.code == status).text
-                    : 'N/A'
+            showSorterTooltip: false
         },
         {
             title: 'common:feedback',
@@ -204,7 +163,7 @@ export const StatusFeedbackOverwritesList = ({
         {
             title: 'common:custom-value',
             dataIndex: 'customValue',
-            key: 'custom-value',
+            key: 'customValue',
             sorter: {
                 multiple: 5
             },

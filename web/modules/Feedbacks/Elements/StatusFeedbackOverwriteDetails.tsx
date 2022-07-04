@@ -1,66 +1,18 @@
-import { DetailsList, LinkButton, ContentSpin, AppTable } from '@components';
-import {
-    GetStatusFeedbackOverwriteObjectTypeConfigsQuery,
-    GetStatusFeedbackOverwriteStatusConfigsQuery,
-    useGetStatusFeedbackOverwriteObjectTypeConfigsQuery,
-    useGetStatusFeedbackOverwriteStatusConfigsQuery
-} from 'generated/graphql';
-import graphqlRequestClient from 'graphql/graphqlRequestClient';
-
-import useTranslation from 'next-translate/useTranslation';
-import { useEffect, useState } from 'react';
+import { DetailsList } from '@components';
 
 export interface IStatusFeedbackOverwriteDetailsProps {
     details?: any;
 }
 
 const StatusFeedbackOverwriteDetails = ({ details }: IStatusFeedbackOverwriteDetailsProps) => {
-    const { t } = useTranslation();
-
-    const [statusFeedbackOverwriteStatus, setStatusFeedbackOverwriteStatus] = useState<any>();
-    const [statusFeedbackOverwriteObjectType, setStatusFeedbackOverwriteObjectType] =
-        useState<any>();
-
-    // CONFIG : status
-    const statusFeedbackOverwriteStatusList = useGetStatusFeedbackOverwriteStatusConfigsQuery<
-        Partial<GetStatusFeedbackOverwriteStatusConfigsQuery>,
-        Error
-    >(graphqlRequestClient);
-
-    useEffect(() => {
-        if (statusFeedbackOverwriteStatusList) {
-            setStatusFeedbackOverwriteStatus(
-                statusFeedbackOverwriteStatusList?.data?.listConfigsForAScope
-            );
-        }
-    }, [statusFeedbackOverwriteStatusList]);
-
-    // CONFIG : object-type
-    const statusFeedbackOverwriteObjectTypeList =
-        useGetStatusFeedbackOverwriteObjectTypeConfigsQuery<
-            Partial<GetStatusFeedbackOverwriteObjectTypeConfigsQuery>,
-            Error
-        >(graphqlRequestClient);
-
-    useEffect(() => {
-        if (statusFeedbackOverwriteObjectTypeList) {
-            setStatusFeedbackOverwriteObjectType(
-                statusFeedbackOverwriteObjectTypeList?.data?.listConfigsForAScope
-            );
-        }
-    }, [statusFeedbackOverwriteObjectTypeList]);
-
     const refurbDetails = {
         ...details,
-        associatedStockOwner: details.stockOwner.name,
-        status: details.status
-            ? statusFeedbackOverwriteStatus?.find((e: any) => e.code == details.status).text
-            : '-',
-        objectType: details.objectType
-            ? statusFeedbackOverwriteObjectType?.find((e: any) => e.code == details.objectType).text
-            : '-'
+        associatedStockOwner: details.stockOwner.name
     };
     delete refurbDetails['stockOwner'];
+    delete refurbDetails['stockOwnerId'];
+    delete refurbDetails['objectType'];
+    delete refurbDetails['status'];
 
     return (
         <>
