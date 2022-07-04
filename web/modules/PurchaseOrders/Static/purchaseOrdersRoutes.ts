@@ -9,13 +9,13 @@ export const purchaseOrdersRoutes = [
 export const purchaseOrdersSubRoutes = [
     ...purchaseOrdersRoutes,
     {
-        path: '/purchase-order',
-        breadcrumbName: 'menu:purchase-order'
+        path: '/purchase-orders',
+        breadcrumbName: 'menu:purchase-orders'
     }
 ];
 
 export const addpurchaseOrderRoutes = [
-    ...purchaseOrdersRoutes,
+    ...purchaseOrdersSubRoutes,
     {
         path: '/add-purchaseOrder',
         breadcrumbName: 'actions:add-purchase-order'

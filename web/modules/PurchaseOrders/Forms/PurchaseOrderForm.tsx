@@ -10,8 +10,8 @@ interface IOption {
 }
 
 export interface IPurchaseOrderFormProps {
-    id: string;
-    details: any;
+    id?: string;
+    details?: any;
     form: any
 }
 
@@ -65,7 +65,7 @@ const PurchaseOrderForm: FC<IPurchaseOrderFormProps>  = ({id, details, form}: IP
                     name="name"
                     rules={[{ required: true, message: errorMessageEmptyInput }]}
                 >
-                    <InputNumber style={{ width: '100%' }} precision={2} />
+                    <Input style={{ width: '100%' }} />
                 </Form.Item>
                 <Form.Item
                     label={stockOwnerId}
@@ -108,7 +108,7 @@ const PurchaseOrderForm: FC<IPurchaseOrderFormProps>  = ({id, details, form}: IP
                     name="type"
                     rules={[{ required: true, message: errorMessageEmptyInput }]}
                 >
-                    <Input />
+                    <InputNumber style={{ width: '100%' }} precision={2}/>
                 </Form.Item>
 
                 <Form.Item

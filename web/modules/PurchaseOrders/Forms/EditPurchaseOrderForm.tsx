@@ -40,7 +40,7 @@ export const EditPurchaseOrderForm: FC<IEditPurchaseOrderFormProps> = ({
                 _variables: UpdatePurchaseOrderMutationVariables,
                 _context: any
             ) => {
-                // router.push(`/purchase-order/${data.updatePurchaseOrder?.id}`);
+                router.push(`/purchase-orders/${data.updatePurchaseOrder?.id}`);
                 showSuccess(t('messages:success-updated'));
             },
             onError: () => {

@@ -1,5 +1,5 @@
 import { AppHead } from '@components';
-import { EditPurchaseOrder } from 'modules/PurchaseOrder/PagesContainer/EditPurchaseOrder';
+import { EditPurchaseOrder } from 'modules/PurchaseOrders/PagesContainer/EditPurchaseOrder';
 import { useRouter } from 'next/router';
 import { FC } from 'react';
 import MainLayout from '../../../components/layouts/MainLayout';

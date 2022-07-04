@@ -11,7 +11,9 @@ import {
     useGetAllReturnCodesQuery,
     GetAllReturnCodesQuery,
     useGetStockOwnerIdsQuery,
-    GetStockOwnerIdsQuery
+    GetStockOwnerIdsQuery,
+    useGetAllPurchaseOrdersQuery,
+    GetAllPurchaseOrdersQuery
 } from 'generated/graphql';
 
 const useArticles = (search: any, page: number, itemsPerPage: number, sort: any) => {
@@ -167,4 +169,34 @@ const useStockOwnerIds = (search: any, page: number, itemsPerPage: number, sort:
     return stockOwners;
 };
 
-export { useArticles, useBarcodes, useArticleIds, useMyInfo, useReturnCodes, useStockOwnerIds };
+
+const usePurchaseOrders = (search: any, page: number, itemsPerPage: number, sort: any) => {
+    const { graphqlRequestClient } = useAuth();
+
+    const sortByDate = {
+        field: 'created',
+        ascending: false
+    };
+
+    let newSort;
+
+    if (sort === null) {
+        newSort = sortByDate;
+    } else {
+        newSort = sort;
+    }
+
+    const purchaseOrders = useGetAllPurchaseOrdersQuery<Partial<GetAllPurchaseOrdersQuery>, Error>(
+        graphqlRequestClient,
+        {
+            filters: search,
+            orderBy: newSort,
+            page: page,
+            itemsPerPage: itemsPerPage
+        }
+    );
+
+    return purchaseOrders;
+};
+
+export { useArticles, useBarcodes, useArticleIds, useMyInfo, useReturnCodes, useStockOwnerIds, usePurchaseOrders };

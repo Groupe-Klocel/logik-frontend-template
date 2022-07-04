@@ -73,5 +73,6 @@
 	"width": "Width",
 	"workspace": "Workspace ID",
 	"purchase-order-line": "Purchase Order Line",
-	"purchase-order": "Purchase Order"
+	"purchase-order": "Purchase Order",
+	"purchase-orders": "Purchase Orders"
 }
