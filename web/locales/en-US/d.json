@@ -1,7 +1,7 @@
 {
     "id": "ID",
     "accountId": "Account ID ",
-    "available":"Available",
+    "available": "Available",
     "companyId": "Company ID",
     "status": "Status",
     "code": "Code",
@@ -43,15 +43,26 @@
     "comment": "Comment",
     "system": "System",
     "description": "Description",
-	"default": "Default",
-	"dispatchable": "Dispatchable",
-	"bloc": "Bloc",
+    "default": "Default",
+    "dispatchable": "Dispatchable",
+    "bloc": "Bloc",
     "aisle": "Aisle",
     "level": "Level",
     "position": "Position",
-	"replenish": "replenish",
-	"masse": "Masse",
-    "type": "Type"
-
-
+    "replenish": "replenish",
+    "masse": "Masse",
+    "type": "Type",
+    "address1": "Address 1",
+    "address2": "Address 2",
+    "address3": "Address 3",
+    "awsAccessKeyId": "AWS Access Key Id",
+    "awsSecretAccessKey": "AWS Secret Access Key",
+    "city": "City",
+    "contactEmail": "Contact Email",
+    "contactMobile": "Contact Mobile",
+    "contactName": "Contact Name",
+    "contactPhone": "Contact Phone",
+    "country": "Country",
+    "postCode": "Post Code",
+    "statusText": "Status"
 }
