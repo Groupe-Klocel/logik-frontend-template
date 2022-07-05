@@ -74,5 +74,7 @@
 	"workspace": "Workspace ID",
 	"purchase-order-line": "Purchase Order Line",
 	"purchase-order": "Purchase Order",
-	"purchase-orders": "Purchase Orders"
+	"purchase-orders": "Purchase Orders",
+	"line": "Line",
+	"none": "None"
 }

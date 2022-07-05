@@ -57,12 +57,23 @@ const PurchaseOrders = () => {
         formSearch
             .validateFields()
             .then(() => {
+                console.log(formSearch.getFieldsValue(true))
+                const searchValues = formSearch.getFieldsValue(true);
+                const newSearchValues = {
+                    ...searchValues,
+                   status: parseInt(searchValues.status),
+                   type: parseInt(searchValues.type),
+                };
                 // Here make api call of something else
-                setSearch(formSearch.getFieldsValue(true));
+                setSearch(newSearchValues);
                 closeDrawer();
             })
             .catch((err) => showError(t('messages:error-getting-data')));
     };
+
+    const handleExport = () => {
+        console.log('call exportPurchaseOrders endpoint and download csv')
+    }
 
     return (
         <>
@@ -73,11 +84,17 @@ const PurchaseOrders = () => {
                     <Space>
                         <Button icon={<SearchOutlined />} onClick={() => openSearchDrawer()} />
                         {!!mode && mode.toUpperCase() == ModeEnum.Write ? (
-                            <LinkButton
-                                title={t('actions:add2', { name: t('common:purchase-order') })}
-                                path="/purchase-orders/add"
-                                type="primary"
-                            />
+                            <>
+                                <LinkButton
+                                    title={t('actions:add2', { name: t('common:purchase-order') })}
+                                    path="/purchase-orders/add"
+                                    type="primary"
+                                />
+                                <Button
+                                    type="primary"
+                                    onClick={() => handleExport()}
+                                >{t('actions:export', { name: t('common:purchase-order') })}</Button>
+                            </>
                         ) : (
                             <>
                             </>

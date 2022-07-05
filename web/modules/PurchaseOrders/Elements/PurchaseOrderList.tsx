@@ -11,12 +11,16 @@ import {
     PaginationType,
     orderByFormater
 } from '@helpers';
+import useTranslation from 'next-translate/useTranslation';
+import { ProgressBar } from 'components/common/dumb/ProgressBar/ProgressBar';
+import { PurchaseOrderProgressBar } from './PurchaseOrderProgressBar';
 
 export interface IPurchaseOrderListProps {
     searchCriteria?: any;
 }
 
 const PurchaseOrderList = ({ searchCriteria }: IPurchaseOrderListProps) => {
+    const { t } = useTranslation();
     const [purchaseOrders, setPurchaseOrder] = useState<DataQueryType>();
 
     const [sort, setSort] = useState<any>(null);
@@ -110,8 +114,8 @@ const PurchaseOrderList = ({ searchCriteria }: IPurchaseOrderListProps) => {
         {
             title: 'd:progress',
             key: 'progress',
-            render: (record: {id: string}) => (
-                <></>
+            render: (record: {id:string, status: number}) => (
+                <PurchaseOrderProgressBar id={record.id} status={record.status}/>
             )
                 
         },
@@ -130,6 +134,10 @@ const PurchaseOrderList = ({ searchCriteria }: IPurchaseOrderListProps) => {
                             setPurchaseOrderName(record.name);
                             setShowModal(true);
                         }}
+                    />
+                    <LinkButton
+                        title={t('actions:add2', { name: t('common:line') })}
+                        path={'/purchase-order-lines/add?poid=' + record.id}
                     />
                 </Space>
             )

@@ -1,6 +1,6 @@
 import { ContentSpin, LinkButton } from '@components';
 import { Layout, Space, Button } from 'antd';
-import { purchaseOrdersRoutes } from 'modules/PurchaseOrders/Static/purchaseOrdersRoutes';
+import { purchaseOrdersSubRoutes } from 'modules/PurchaseOrders/Static/purchaseOrdersRoutes';
 import useTranslation from 'next-translate/useTranslation';
 import {
     GetPurchaseOrderByIdQuery,
@@ -61,7 +61,7 @@ const SinglePurchaseOrder: FC<ISinglePurchaseOrderProps> = ({ id, router }: ISin
     };
 
     const breadsCrumb = [
-        ...purchaseOrdersRoutes,
+        ...purchaseOrdersSubRoutes,
         {
             breadcrumbName: `${id}`
         }

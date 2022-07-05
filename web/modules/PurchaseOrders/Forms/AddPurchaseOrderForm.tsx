@@ -48,6 +48,7 @@ export const AddPurchaseOrderForm = () => {
         form.validateFields()
             .then(() => {
                 const formData = form.getFieldsValue(true);
+                delete formData.companyName
                 createPurchaseLine({ input: formData });
             })
             .catch((err) => {

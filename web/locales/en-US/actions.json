@@ -41,5 +41,6 @@
     "update-quantity": "Update box quantity",
     "update": "Update",
     "view": "View",
+    "export": "Export",
     "enter-page-number": "Please enter the number of pages to print PDF"
 }
