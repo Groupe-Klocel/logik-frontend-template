@@ -16,15 +16,6 @@ query getEquipmentTypesConfigs {
     }
 }
 
-query getPrioritiesParams {
-    listParametersForAScope(scope: "priority") {
-        id
-        scope
-        code
-        text
-    }
-}
-
 query getEquipmentStatusesConfigs {
     listConfigsForAScope(scope: "equipment_status") {
         id
@@ -40,6 +31,14 @@ query getEquipmentLimitTypeConfigs {
         scope
         code
         text
+    }
+}
+
+query getListOfPriorities {
+    equipments {
+        results {
+            priority
+        }
     }
 }
 
@@ -63,7 +62,6 @@ query GetAllEquipment(
             type
             typeText
             priority
-            priorityText
             status
             statusText
             available
@@ -104,7 +102,6 @@ query GetEquipmentById($id: String!) {
         type
         typeText
         priority
-        priorityText
         status
         statusText
         available
@@ -153,7 +150,6 @@ query GetEquipmentIds(
             type
             typeText
             priority
-            priorityText
             status
             statusText
             available

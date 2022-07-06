@@ -3,19 +3,19 @@ import {
     CaretDownOutlined,
     EyeTwoTone,
     CheckCircleOutlined,
-    CloseSquareOutlined
+    CloseSquareOutlined,
+    EditTwoTone
 } from '@ant-design/icons';
 import { Button, Modal, Space } from 'antd';
-import { AppTable, ContentSpin } from '@components';
-import { equipmentsData } from 'fake-data/equipments';
+import { AppTable, ContentSpin, LinkButton } from '@components';
 import useTranslation from 'next-translate/useTranslation';
 import { useCallback, useEffect, useState } from 'react';
 import {
     DataQueryType,
     DEFAULT_ITEMS_PER_PAGE,
     DEFAULT_PAGE_NUMBER,
-    orderByFormater,
     PaginationType,
+    pathParams,
     showError,
     showSuccess,
     useEquipment
@@ -36,7 +36,7 @@ export const EquipmentList = ({ searchCriteria }: FeedbackOverwriteListTypeProps
     const { graphqlRequestClient } = useAuth();
 
     const [equipment, setEquipment] = useState<DataQueryType>();
-    const [sort, setSort] = useState<any>(null);
+    const [sort] = useState<any>({ ascending: true, field: 'priority' });
     const [pagination, setPagination] = useState<PaginationType>({
         total: undefined,
         current: DEFAULT_PAGE_NUMBER,
@@ -73,10 +73,6 @@ export const EquipmentList = ({ searchCriteria }: FeedbackOverwriteListTypeProps
         }
     }, [data]);
 
-    const handleTableChange = async (_pagination: any, _filter: any, sorter: any) => {
-        await setSort(orderByFormater(sorter));
-    };
-
     const { mutate, isLoading: deleteLoading } = useDeleteEquipmentMutation<Error>(
         graphqlRequestClient,
         {
@@ -107,53 +103,31 @@ export const EquipmentList = ({ searchCriteria }: FeedbackOverwriteListTypeProps
         });
     };
 
-    console.log(equipment);
-
     const columns = [
+        {
+            title: 'd:priority',
+            dataIndex: 'priority',
+            key: 'priority'
+        },
         {
             title: 'common:stock-owner',
             dataIndex: ['stockOwner', 'name'],
-            key: ['stockOwner', 'name'],
-            sorter: {
-                multiple: 2
-            },
-            showSorterTooltip: false
+            key: ['stockOwner', 'name']
         },
         {
             title: 'd:name',
             dataIndex: 'name',
-            key: 'name',
-            sorter: {
-                multiple: 3
-            },
-            showSorterTooltip: false
+            key: 'name'
         },
         {
             title: 'd:type',
             dataIndex: 'typeText',
-            key: 'typeText',
-            sorter: {
-                multiple: 4
-            },
-            showSorterTooltip: false
-        },
-        {
-            title: 'd:priority',
-            dataIndex: 'priorityText',
-            key: 'priorityText',
-            sorter: {
-                multiple: 1
-            },
-            showSorterTooltip: false
+            key: 'typeText'
         },
         {
             title: 'd:status',
             dataIndex: 'statusText',
-            key: 'statusText',
-            sorter: {
-                multiple: 5
-            },
-            showSorterTooltip: false
+            key: 'statusText'
         },
         {
             title: 'd:available',
@@ -219,13 +193,17 @@ export const EquipmentList = ({ searchCriteria }: FeedbackOverwriteListTypeProps
             title: 'actions:actions',
             key: 'actions',
             fixed: 'right',
-            render: (record: { id: number; name: string }) => (
+            render: (record: { id: string; name: string }) => (
                 <Space>
                     <Button onClick={() => alert(`GO UP `)} icon={<CaretUpOutlined />} />
                     <Button onClick={() => alert(`GO DOWN `)} icon={<CaretDownOutlined />} />
-                    <Button
+                    <LinkButton
                         icon={<EyeTwoTone />}
-                        onClick={() => alert(`View ${record.id} - ${record.name}`)}
+                        path={pathParams('/equipment/[id]', record.id)}
+                    />
+                    <LinkButton
+                        icon={<EditTwoTone />}
+                        path={pathParams('/equipment/edit/[id]', record.id)}
                     />
                 </Space>
             )
@@ -241,7 +219,6 @@ export const EquipmentList = ({ searchCriteria }: FeedbackOverwriteListTypeProps
                     pagination={pagination}
                     isLoading={isLoading}
                     setPagination={onChangePagination}
-                    onChange={handleTableChange}
                 />
             ) : (
                 <ContentSpin />

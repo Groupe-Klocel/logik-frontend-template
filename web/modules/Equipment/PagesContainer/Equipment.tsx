@@ -1,5 +1,5 @@
 import { HeaderContent, LinkButton } from '@components';
-import { equipmentRoutes } from 'modules/Equipment/Static/EquipementRoutes';
+import { equipmentRoutes } from 'modules/Equipment/Static/equipmentRoutes';
 import useTranslation from 'next-translate/useTranslation';
 import { EquipmentList } from 'modules/Equipment/Elements/EquipmentList';
 import { useCallback, useState } from 'react';
@@ -7,7 +7,7 @@ import { Button, Form, Space } from 'antd';
 import { useDrawerDispatch } from 'context/DrawerContext';
 import { showError } from '@helpers';
 import { SearchOutlined } from '@ant-design/icons';
-import { EquipmentSearch } from '../Form/EquipmentSearch';
+import { EquipmentSearch } from '../Forms/EquipmentSearch';
 
 export const Equipment = () => {
     const { t } = useTranslation();
@@ -76,7 +76,7 @@ export const Equipment = () => {
                         <Button icon={<SearchOutlined />} onClick={() => openSearchDrawer()} />
                         <LinkButton
                             title={t('actions:add2', { name: t('menu:equipment-piece') })}
-                            path="/add-equipement-piece"
+                            path="/add-equipment"
                             type="primary"
                         />
                     </Space>

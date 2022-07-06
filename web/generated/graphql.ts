@@ -1745,12 +1745,11 @@ export type CreateEquipmentInput = {
   monoCompany?: InputMaybe<Scalars['Boolean']>;
   name: Scalars['String'];
   nbMaxBox?: InputMaybe<Scalars['Int']>;
-  /** Priority given to an equipment in the round calculation */
   priority?: InputMaybe<Scalars['Int']>;
   /** Maximum quantity of boxes that can be picked up for one round */
   qtyMaxArticle?: InputMaybe<Scalars['Int']>;
   status: Scalars['Int'];
-  stockOwnerId: Scalars['String'];
+  stockOwnerId?: InputMaybe<Scalars['String']>;
   toleranceDimension?: InputMaybe<Scalars['Int']>;
   type: Scalars['Int'];
   virtual?: InputMaybe<Scalars['Boolean']>;
@@ -2731,8 +2730,6 @@ export type Equipment = {
   name?: Maybe<Scalars['String']>;
   nbMaxBox?: Maybe<Scalars['Int']>;
   priority?: Maybe<Scalars['Int']>;
-  /** Text value for field priority */
-  priorityText?: Maybe<Scalars['String']>;
   qtyMaxArticle?: Maybe<Scalars['Int']>;
   status?: Maybe<Scalars['Int']>;
   /** Text value for field status */
@@ -8381,11 +8378,6 @@ export type GetEquipmentTypesConfigsQueryVariables = Exact<{ [key: string]: neve
 
 export type GetEquipmentTypesConfigsQuery = { __typename?: 'Query', listConfigsForAScope: Array<{ __typename?: 'ConfigResults', id: string, scope: string, code: string, text: string }> };
 
-export type GetPrioritiesParamsQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type GetPrioritiesParamsQuery = { __typename?: 'Query', listParametersForAScope: Array<{ __typename?: 'ParameterResults', id: string, scope: string, code: string, text: string }> };
-
 export type GetEquipmentStatusesConfigsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -8396,6 +8388,11 @@ export type GetEquipmentLimitTypeConfigsQueryVariables = Exact<{ [key: string]: 
 
 export type GetEquipmentLimitTypeConfigsQuery = { __typename?: 'Query', listConfigsForAScope: Array<{ __typename?: 'ConfigResults', id: string, scope: string, code: string, text: string }> };
 
+export type GetListOfPrioritiesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetListOfPrioritiesQuery = { __typename?: 'Query', equipments: { __typename?: 'EquipmentListResult', results: Array<{ __typename?: 'Equipment', priority?: number | null }> } };
+
 export type GetAllEquipmentQueryVariables = Exact<{
   filters?: InputMaybe<EquipmentSearchFilters>;
   orderBy?: InputMaybe<Array<EquipmentOrderByCriterion> | EquipmentOrderByCriterion>;
@@ -8404,14 +8401,14 @@ export type GetAllEquipmentQueryVariables = Exact<{
 }>;
 
 
-export type GetAllEquipmentQuery = { __typename?: 'Query', equipments: { __typename?: 'EquipmentListResult', count: number, itemsPerPage: number, totalPages: number, results: Array<{ __typename?: 'Equipment', id?: string | null, stockOwnerId?: string | null, name?: string | null, type?: number | null, typeText?: string | null, priority?: number | null, priorityText?: string | null, status?: number | null, statusText?: string | null, available?: boolean | null, distributed?: boolean | null, monoCompany?: boolean | null, monoCarrier?: boolean | null, boxLineGrouped?: boolean | null, boxMonoArticle?: boolean | null, qtyMaxArticle?: number | null, nbMaxBox?: number | null, checkPosition?: boolean | null, comment?: string | null, virtual?: boolean | null, limitType?: number | null, limitTypeText?: string | null, length?: number | null, width?: number | null, height?: number | null, toleranceDimension?: number | null, allowPickingOrderFree?: boolean | null, extras?: any | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, stockOwner: { __typename?: 'StockOwner', name?: string | null } }> } };
+export type GetAllEquipmentQuery = { __typename?: 'Query', equipments: { __typename?: 'EquipmentListResult', count: number, itemsPerPage: number, totalPages: number, results: Array<{ __typename?: 'Equipment', id?: string | null, stockOwnerId?: string | null, name?: string | null, type?: number | null, typeText?: string | null, priority?: number | null, status?: number | null, statusText?: string | null, available?: boolean | null, distributed?: boolean | null, monoCompany?: boolean | null, monoCarrier?: boolean | null, boxLineGrouped?: boolean | null, boxMonoArticle?: boolean | null, qtyMaxArticle?: number | null, nbMaxBox?: number | null, checkPosition?: boolean | null, comment?: string | null, virtual?: boolean | null, limitType?: number | null, limitTypeText?: string | null, length?: number | null, width?: number | null, height?: number | null, toleranceDimension?: number | null, allowPickingOrderFree?: boolean | null, extras?: any | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, stockOwner: { __typename?: 'StockOwner', name?: string | null } }> } };
 
 export type GetEquipmentByIdQueryVariables = Exact<{
   id: Scalars['String'];
 }>;
 
 
-export type GetEquipmentByIdQuery = { __typename?: 'Query', equipment?: { __typename?: 'Equipment', id?: string | null, stockOwnerId?: string | null, name?: string | null, type?: number | null, typeText?: string | null, priority?: number | null, priorityText?: string | null, status?: number | null, statusText?: string | null, available?: boolean | null, distributed?: boolean | null, monoCompany?: boolean | null, monoCarrier?: boolean | null, boxLineGrouped?: boolean | null, boxMonoArticle?: boolean | null, qtyMaxArticle?: number | null, nbMaxBox?: number | null, checkPosition?: boolean | null, comment?: string | null, virtual?: boolean | null, limitType?: number | null, limitTypeText?: string | null, length?: number | null, width?: number | null, height?: number | null, toleranceDimension?: number | null, allowPickingOrderFree?: boolean | null, extras?: any | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, stockOwner: { __typename?: 'StockOwner', name?: string | null } } | null };
+export type GetEquipmentByIdQuery = { __typename?: 'Query', equipment?: { __typename?: 'Equipment', id?: string | null, stockOwnerId?: string | null, name?: string | null, type?: number | null, typeText?: string | null, priority?: number | null, status?: number | null, statusText?: string | null, available?: boolean | null, distributed?: boolean | null, monoCompany?: boolean | null, monoCarrier?: boolean | null, boxLineGrouped?: boolean | null, boxMonoArticle?: boolean | null, qtyMaxArticle?: number | null, nbMaxBox?: number | null, checkPosition?: boolean | null, comment?: string | null, virtual?: boolean | null, limitType?: number | null, limitTypeText?: string | null, length?: number | null, width?: number | null, height?: number | null, toleranceDimension?: number | null, allowPickingOrderFree?: boolean | null, extras?: any | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, stockOwner: { __typename?: 'StockOwner', name?: string | null } } | null };
 
 export type GetEquipmentIdsQueryVariables = Exact<{
   filters?: InputMaybe<EquipmentSearchFilters>;
@@ -8421,7 +8418,7 @@ export type GetEquipmentIdsQueryVariables = Exact<{
 }>;
 
 
-export type GetEquipmentIdsQuery = { __typename?: 'Query', equipments: { __typename?: 'EquipmentListResult', count: number, itemsPerPage: number, totalPages: number, results: Array<{ __typename?: 'Equipment', id?: string | null, stockOwnerId?: string | null, name?: string | null, type?: number | null, typeText?: string | null, priority?: number | null, priorityText?: string | null, status?: number | null, statusText?: string | null, available?: boolean | null, distributed?: boolean | null, monoCompany?: boolean | null, monoCarrier?: boolean | null, boxLineGrouped?: boolean | null, boxMonoArticle?: boolean | null, qtyMaxArticle?: number | null, nbMaxBox?: number | null, checkPosition?: boolean | null, comment?: string | null, virtual?: boolean | null, limitType?: number | null, limitTypeText?: string | null, length?: number | null, width?: number | null, height?: number | null, toleranceDimension?: number | null, allowPickingOrderFree?: boolean | null, extras?: any | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, stockOwner: { __typename?: 'StockOwner', name?: string | null } }> } };
+export type GetEquipmentIdsQuery = { __typename?: 'Query', equipments: { __typename?: 'EquipmentListResult', count: number, itemsPerPage: number, totalPages: number, results: Array<{ __typename?: 'Equipment', id?: string | null, stockOwnerId?: string | null, name?: string | null, type?: number | null, typeText?: string | null, priority?: number | null, status?: number | null, statusText?: string | null, available?: boolean | null, distributed?: boolean | null, monoCompany?: boolean | null, monoCarrier?: boolean | null, boxLineGrouped?: boolean | null, boxMonoArticle?: boolean | null, qtyMaxArticle?: number | null, nbMaxBox?: number | null, checkPosition?: boolean | null, comment?: string | null, virtual?: boolean | null, limitType?: number | null, limitTypeText?: string | null, length?: number | null, width?: number | null, height?: number | null, toleranceDimension?: number | null, allowPickingOrderFree?: boolean | null, extras?: any | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, stockOwner: { __typename?: 'StockOwner', name?: string | null } }> } };
 
 export type CreateEquipmentMutationVariables = Exact<{
   input: CreateEquipmentInput;
@@ -9045,30 +9042,6 @@ export const useGetEquipmentTypesConfigsQuery = <
       fetcher<GetEquipmentTypesConfigsQuery, GetEquipmentTypesConfigsQueryVariables>(client, GetEquipmentTypesConfigsDocument, variables, headers),
       options
     );
-export const GetPrioritiesParamsDocument = `
-    query getPrioritiesParams {
-  listParametersForAScope(scope: "priority") {
-    id
-    scope
-    code
-    text
-  }
-}
-    `;
-export const useGetPrioritiesParamsQuery = <
-      TData = GetPrioritiesParamsQuery,
-      TError = unknown
-    >(
-      client: GraphQLClient,
-      variables?: GetPrioritiesParamsQueryVariables,
-      options?: UseQueryOptions<GetPrioritiesParamsQuery, TError, TData>,
-      headers?: RequestInit['headers']
-    ) =>
-    useQuery<GetPrioritiesParamsQuery, TError, TData>(
-      variables === undefined ? ['getPrioritiesParams'] : ['getPrioritiesParams', variables],
-      fetcher<GetPrioritiesParamsQuery, GetPrioritiesParamsQueryVariables>(client, GetPrioritiesParamsDocument, variables, headers),
-      options
-    );
 export const GetEquipmentStatusesConfigsDocument = `
     query getEquipmentStatusesConfigs {
   listConfigsForAScope(scope: "equipment_status") {
@@ -9117,6 +9090,29 @@ export const useGetEquipmentLimitTypeConfigsQuery = <
       fetcher<GetEquipmentLimitTypeConfigsQuery, GetEquipmentLimitTypeConfigsQueryVariables>(client, GetEquipmentLimitTypeConfigsDocument, variables, headers),
       options
     );
+export const GetListOfPrioritiesDocument = `
+    query getListOfPriorities {
+  equipments {
+    results {
+      priority
+    }
+  }
+}
+    `;
+export const useGetListOfPrioritiesQuery = <
+      TData = GetListOfPrioritiesQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables?: GetListOfPrioritiesQueryVariables,
+      options?: UseQueryOptions<GetListOfPrioritiesQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetListOfPrioritiesQuery, TError, TData>(
+      variables === undefined ? ['getListOfPriorities'] : ['getListOfPriorities', variables],
+      fetcher<GetListOfPrioritiesQuery, GetListOfPrioritiesQueryVariables>(client, GetListOfPrioritiesDocument, variables, headers),
+      options
+    );
 export const GetAllEquipmentDocument = `
     query GetAllEquipment($filters: EquipmentSearchFilters, $orderBy: [EquipmentOrderByCriterion!], $page: Int!, $itemsPerPage: Int!) {
   equipments(
@@ -9138,7 +9134,6 @@ export const GetAllEquipmentDocument = `
       type
       typeText
       priority
-      priorityText
       status
       statusText
       available
@@ -9194,7 +9189,6 @@ export const GetEquipmentByIdDocument = `
     type
     typeText
     priority
-    priorityText
     status
     statusText
     available
@@ -9258,7 +9252,6 @@ export const GetEquipmentIdsDocument = `
       type
       typeText
       priority
-      priorityText
       status
       statusText
       available

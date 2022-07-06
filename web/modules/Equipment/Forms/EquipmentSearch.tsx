@@ -15,7 +15,6 @@ export type EquipmentSearchProps = {
     form: any;
 };
 
-//FIXME: finalize search include list of movement codes
 const EquipmentSearch: FC<EquipmentSearchProps> = ({ form }: EquipmentSearchProps) => {
     const { t } = useTranslation();
 
