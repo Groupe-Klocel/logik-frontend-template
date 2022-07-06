@@ -116,6 +116,16 @@ export const BuildingList = ({ searchCriteria }: BuildingListTypeProps) => {
             key: 'address1'
         },
         {
+            title: 'common:address2',
+            dataIndex: 'address2',
+            key: 'address2'
+        },
+        {
+            title: 'common:address3',
+            dataIndex: 'address3',
+            key: 'address3'
+        },
+        {
             title: 'common:post-code',
             dataIndex: 'postCode',
             key: 'postCode'
@@ -131,6 +141,26 @@ export const BuildingList = ({ searchCriteria }: BuildingListTypeProps) => {
             key: 'country'
         },
         {
+            title: 'common:contact-name',
+            dataIndex: 'contactName',
+            key: 'contactName'
+        },
+        {
+            title: 'common:contact-phone',
+            dataIndex: 'contactPhone',
+            key: 'contactPhone'
+        },
+        {
+            title: 'common:contact-mobile',
+            dataIndex: 'contactMobile',
+            key: 'contactMobile'
+        },
+        {
+            title: 'common:contact-email',
+            dataIndex: 'contactEmail',
+            key: 'contactEmail'
+        },
+        {
             title: 'd:status',
             dataIndex: 'statusText',
             key: 'statusText'
@@ -138,7 +168,7 @@ export const BuildingList = ({ searchCriteria }: BuildingListTypeProps) => {
         {
             title: 'actions:actions',
             key: 'actions',
-            render: (record: { id: string; system: boolean }) => (
+            render: (record: { id: string }) => (
                 <Space>
                     <LinkButton
                         icon={<EyeTwoTone />}
