@@ -3,6 +3,7 @@ export const buildingsRoutes = [
         breadcrumbName: 'menu:configuration'
     },
     {
+        path: '/buildings',
         breadcrumbName: 'menu:buildings'
     }
 ];
@@ -10,7 +11,6 @@ export const buildingsRoutes = [
 export const addBuildingRoutes = [
     ...buildingsRoutes,
     {
-        path: '/building',
         breadcrumbName: 'actions:add-building'
     }
 ];
