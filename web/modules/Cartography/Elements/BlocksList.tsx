@@ -1,5 +1,3 @@
-import { Button, Modal, Space } from 'antd';
-import { AppTable, ContentSpin, LinkButton } from '@components';
 import {
     DeleteOutlined,
     EyeTwoTone,
@@ -7,6 +5,8 @@ import {
     CheckCircleOutlined,
     CloseSquareOutlined
 } from '@ant-design/icons';
+import { Button, Modal, Space } from 'antd';
+import { AppTable, ContentSpin, LinkButton } from '@components';
 import { useCallback, useEffect, useState } from 'react';
 import {
     DataQueryType,
@@ -17,45 +17,59 @@ import {
     pathParams,
     showError,
     showSuccess,
-    useLocations
+    useBlocks
 } from '@helpers';
+import useTranslation from 'next-translate/useTranslation';
 import {
-    DeleteLocationMutation,
-    DeleteLocationMutationVariables,
-    useDeleteLocationMutation
+    DeleteBlockMutation,
+    DeleteBlockMutationVariables,
+    GetBlockLevelsParamsQuery,
+    useDeleteBlockMutation,
+    useGetBlockLevelsParamsQuery
 } from 'generated/graphql';
 import graphqlRequestClient from 'graphql/graphqlRequestClient';
-import useTranslation from 'next-translate/useTranslation';
 
-export type LocationsListTypeProps = {
+export type BlocksListTypeProps = {
     searchCriteria?: any;
 };
 
-export const LocationsList = ({ searchCriteria }: LocationsListTypeProps) => {
+export const BlocksList = ({ searchCriteria }: BlocksListTypeProps) => {
     const { t } = useTranslation();
 
-    const [locations, setLocations] = useState<DataQueryType>();
+    const [blocks, setBlocks] = useState<DataQueryType>();
     const [sort, setSort] = useState<any>(null);
     const [pagination, setPagination] = useState<PaginationType>({
         total: undefined,
         current: DEFAULT_PAGE_NUMBER,
         itemsPerPage: DEFAULT_ITEMS_PER_PAGE
     });
+    const [blockLevels, setBlockLevels] = useState<any>();
+
+    //To render block Levels from parameter table for the given scope
+    const blockLevelsList = useGetBlockLevelsParamsQuery<Partial<GetBlockLevelsParamsQuery>, Error>(
+        graphqlRequestClient
+    );
+
+    useEffect(() => {
+        if (blockLevelsList) {
+            setBlockLevels(blockLevelsList?.data?.listParametersForAScope);
+        }
+    }, [blockLevelsList]);
 
     // make wrapper function to give child
     const onChangePagination = useCallback(
         (currentPage, itemsPerPage) => {
             // Re fetch data for new current page or items per page
             setPagination({
-                total: locations?.count,
+                total: blocks?.count,
                 current: currentPage,
                 itemsPerPage: itemsPerPage
             });
         },
-        [setPagination, locations]
+        [setPagination, blocks]
     );
 
-    const { isLoading, data, error, refetch } = useLocations(
+    const { isLoading, data, error, refetch } = useBlocks(
         searchCriteria,
         pagination.current,
         pagination.itemsPerPage,
@@ -64,10 +78,10 @@ export const LocationsList = ({ searchCriteria }: LocationsListTypeProps) => {
 
     useEffect(() => {
         if (data) {
-            setLocations(data?.locations); // set articles local state with new data
+            setBlocks(data?.blocks); // set articles local state with new data
             setPagination({
                 ...pagination,
-                total: data?.locations?.count // may change total items
+                total: data?.blocks?.count // may change total items
             });
         }
     }, [data]);
@@ -76,12 +90,12 @@ export const LocationsList = ({ searchCriteria }: LocationsListTypeProps) => {
         await setSort(orderByFormater(sorter));
     };
 
-    const { mutate, isLoading: deleteLoading } = useDeleteLocationMutation<Error>(
+    const { mutate, isLoading: deleteLoading } = useDeleteBlockMutation<Error>(
         graphqlRequestClient,
         {
             onSuccess: (
-                data: DeleteLocationMutation,
-                _variables: DeleteLocationMutationVariables,
+                data: DeleteBlockMutation,
+                _variables: DeleteBlockMutationVariables,
                 _context: unknown
             ) => {
                 if (!deleteLoading) {
@@ -95,7 +109,7 @@ export const LocationsList = ({ searchCriteria }: LocationsListTypeProps) => {
         }
     );
 
-    const deleteLocation = ({ id }: DeleteLocationMutationVariables) => {
+    const deleteBlock = ({ id }: DeleteBlockMutationVariables) => {
         Modal.confirm({
             title: t('messages:delete-confirm'),
             onOk: () => {
@@ -108,6 +122,15 @@ export const LocationsList = ({ searchCriteria }: LocationsListTypeProps) => {
 
     const columns = [
         {
+            title: 'd:building',
+            dataIndex: ['building', 'name'],
+            key: ['building', 'name'],
+            sorter: {
+                multiple: 1
+            },
+            showSorterTooltip: false
+        },
+        {
             title: 'd:name',
             dataIndex: 'name',
             key: 'name',
@@ -117,58 +140,9 @@ export const LocationsList = ({ searchCriteria }: LocationsListTypeProps) => {
             showSorterTooltip: false
         },
         {
-            title: 'd:block',
-            dataIndex: ['block', 'name'],
-            key: ['block', 'name'],
-            sorter: {
-                multiple: 1
-            },
-            showSorterTooltip: false
-        },
-        {
-            title: 'd:aisle',
-            dataIndex: 'aisle',
-            key: 'aisle',
-            sorter: {
-                multiple: 3
-            },
-            showSorterTooltip: false
-        },
-        {
-            title: 'common:column',
-            dataIndex: 'column',
-            key: 'column',
-            sorter: {
-                multiple: 4
-            },
-            showSorterTooltip: false
-        },
-        {
-            title: 'd:level',
-            dataIndex: 'level',
-            key: 'level',
-            sorter: {
-                multiple: 5
-            },
-            showSorterTooltip: false
-        },
-        {
-            title: 'd:position',
-            dataIndex: 'position',
-            key: 'position',
-            sorter: {
-                multiple: 6
-            },
-            showSorterTooltip: false
-        },
-        {
-            title: 'd:replenish',
-            dataIndex: 'replenish',
-            key: 'replenish',
-            sorter: {
-                multiple: 7
-            },
-            showSorterTooltip: false,
+            title: 'd:moveable',
+            dataIndex: 'moveable',
+            key: 'moveable',
             render: (text: any) =>
                 text == true ? (
                     <CheckCircleOutlined style={{ color: 'green' }} />
@@ -177,36 +151,65 @@ export const LocationsList = ({ searchCriteria }: LocationsListTypeProps) => {
                 )
         },
         {
+            title: 'd:bulk',
+            dataIndex: 'bulk',
+            key: 'bulk',
+            render: (text: any) =>
+                text == true ? (
+                    <CheckCircleOutlined style={{ color: 'green' }} />
+                ) : (
+                    <CloseSquareOutlined style={{ color: 'red' }} />
+                )
+        },
+        {
+            title: 'd:level',
+            dataIndex: 'level',
+            key: 'level',
+            sorter: {
+                multiple: 3
+            },
+            showSorterTooltip: false,
+            render: (level: any) =>
+                level ? blockLevels.find((e: any) => e.code == level).text : 'N/A'
+        },
+        {
+            title: 'd:blockGroup',
+            dataIndex: 'blockGroup',
+            key: 'blockGroup',
+            render: (blockGroup: any) => (blockGroup == 0 ? t('common:none') : blockGroup)
+        },
+        {
+            title: 'common:comment',
+            dataIndex: 'comment',
+            key: 'comment'
+        },
+        {
             title: 'actions:actions',
             key: 'actions',
-            render: (record: { id: string }) => (
+            render: (record: { id: string; name: string }) => (
                 <Space>
-                    <LinkButton
-                        icon={<EyeTwoTone />}
-                        path={pathParams('/location/[id]', record.id)}
-                    />
+                    <LinkButton icon={<EyeTwoTone />} path={pathParams('/block/[id]', record.id)} />
                     <LinkButton
                         icon={<EditTwoTone />}
-                        path={pathParams('/location/edit/[id]', record.id)}
+                        path={pathParams('/block/edit/[id]', record.id)}
                     />
                     <Button
                         icon={<DeleteOutlined />}
                         danger
                         loading={deleteLoading}
-                        onClick={() => deleteLocation({ id: record.id })}
+                        onClick={() => deleteBlock({ id: record.id })}
                     />
                 </Space>
             )
         }
     ];
-
     return (
         <>
-            {locations ? (
+            {blocks ? (
                 <AppTable
-                    type="locations"
+                    type="blocks"
                     columns={columns}
-                    data={locations!.results}
+                    data={blocks!.results}
                     pagination={pagination}
                     isLoading={isLoading}
                     setPagination={onChangePagination}

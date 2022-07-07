@@ -1,16 +1,17 @@
 import { HeaderContent } from '@components';
 import { cartographyRoutes } from 'modules/Cartography/Static/cartographyRoutes';
 import useTranslation from 'next-translate/useTranslation';
-import { LocationsList } from 'modules/Cartography/Elements/LocationsList';
+import { BlocksList } from 'modules/Cartography/Elements/BlocksList';
 import { LinkButton } from 'components/common/dumb/Buttons/LinkButton';
 import { useCallback, useState } from 'react';
-import { Button, Form, Space } from 'antd';
+import { Button, Space } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 import { useDrawerDispatch } from 'context/DrawerContext';
+import { Form } from 'antd';
 import { showError } from '@helpers';
-import { LocationsSearch } from '../Forms/LocationsSearch';
+import { BlocksSearch } from '../Forms/BlocksSearch';
 
-export const Locations = () => {
+export const Blocks = () => {
     const { t } = useTranslation();
     const [search, setSearch] = useState({});
     const [formSearch] = Form.useForm();
@@ -27,7 +28,7 @@ export const Locations = () => {
                 cancelButtonTitle: 'actions:reset',
                 cancelButton: true,
                 submit: true,
-                content: <LocationsSearch form={formSearch} />,
+                content: <BlocksSearch form={formSearch} />,
                 onCancel: () => handleReset(),
                 onComfirm: () => handleSubmit()
             }),
@@ -38,6 +39,7 @@ export const Locations = () => {
         () => dispatchDrawer({ type: 'CLOSE_DRAWER' }),
         [dispatchDrawer]
     );
+
     const handleSubmit = () => {
         formSearch
             .validateFields()
@@ -45,12 +47,18 @@ export const Locations = () => {
                 const searchValues = formSearch.getFieldsValue(true);
                 const newSearchValues = {
                     ...searchValues,
-                    replenish: searchValues['replenish'] == 'true'
+                    moveable: searchValues['moveable'] == 'true',
+                    bulk: searchValues['bulk'] == 'true',
+                    level: parseInt(searchValues['level'])
                 };
-                if (searchValues['replenish'] == '' || searchValues['replenish'] === undefined)
-                    delete newSearchValues['replenish'];
-                if (searchValues['blockId'] == '' || searchValues['blockId'] === undefined)
-                    delete newSearchValues['blockId'];
+                if (searchValues['moveable'] == '' || searchValues['moveable'] === undefined)
+                    delete newSearchValues['moveable'];
+                if (searchValues['bulk'] == '' || searchValues['bulk'] === undefined)
+                    delete newSearchValues['bulk'];
+                if (searchValues['buildingId'] == '' || searchValues['buildingId'] === undefined)
+                    delete newSearchValues['buildingId'];
+                if (searchValues['level'] == '' || searchValues['level'] === undefined)
+                    delete newSearchValues['level'];
                 setSearch(newSearchValues);
                 closeDrawer();
             })
@@ -60,24 +68,23 @@ export const Locations = () => {
     const handleReset = () => {
         formSearch.resetFields();
     };
-
     return (
         <>
             <HeaderContent
-                title={t('menu:locations')}
+                title={t('menu:blocks')}
                 routes={cartographyRoutes}
                 actionsRight={
                     <Space>
                         <Button icon={<SearchOutlined />} onClick={() => openSearchDrawer()} />
                         <LinkButton
-                            title={t('actions:add2', { name: t('menu:location') })}
-                            path="/add-location"
+                            title={t('actions:add2', { name: t('menu:block') })}
+                            path="/add-block"
                             type="primary"
                         />
                     </Space>
                 }
             />
-            <LocationsList searchCriteria={search} />
+            <BlocksList searchCriteria={search} />
         </>
     );
 };

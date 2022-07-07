@@ -8,6 +8,10 @@ import {
     GetArticleIdsQuery,
     useGetMyInfoQuery,
     GetMyInfoQuery,
+    useGetAllBlocksQuery,
+    GetAllBlocksQuery,
+    GetAllLocationsQuery,
+    useGetAllLocationsQuery,
     useGetAllReturnCodesQuery,
     GetAllReturnCodesQuery
 } from 'generated/graphql';
@@ -68,6 +72,60 @@ const useArticleIds = (search: any, page: number, itemsPerPage: number, sort: an
     );
 
     return articles;
+};
+
+const useBlocks = (search: any, page: number, itemsPerPage: number, sort: any) => {
+    const { graphqlRequestClient } = useAuth();
+
+    const sortByDate = {
+        field: 'created',
+        ascending: false
+    };
+
+    let newSort;
+
+    if (sort === null) {
+        newSort = sortByDate;
+    } else {
+        newSort = sort;
+    }
+
+    const blocks = useGetAllBlocksQuery<Partial<GetAllBlocksQuery>, Error>(graphqlRequestClient, {
+        filters: search,
+        orderBy: newSort,
+        page: page,
+        itemsPerPage: itemsPerPage
+    });
+
+    return blocks;
+};
+const useLocations = (search: any, page: number, itemsPerPage: number, sort: any) => {
+    const { graphqlRequestClient } = useAuth();
+
+    const sortByDate = {
+        field: 'created',
+        ascending: false
+    };
+
+    let newSort;
+
+    if (sort === null) {
+        newSort = sortByDate;
+    } else {
+        newSort = sort;
+    }
+
+    const locations = useGetAllLocationsQuery<Partial<GetAllLocationsQuery>, Error>(
+        graphqlRequestClient,
+        {
+            filters: search,
+            orderBy: newSort,
+            page: page,
+            itemsPerPage: itemsPerPage
+        }
+    );
+
+    return locations;
 };
 
 const useBarcodes = (search: any, page: number, itemsPerPage: number, sort: any) => {
@@ -136,4 +194,12 @@ const useReturnCodes = (search: any, page: number, itemsPerPage: number, sort: a
     return returnCodes;
 };
 
-export { useArticles, useBarcodes, useArticleIds, useMyInfo, useReturnCodes };
+export {
+    useArticles,
+    useBlocks,
+    useLocations,
+    useBarcodes,
+    useArticleIds,
+    useMyInfo,
+    useReturnCodes
+};
