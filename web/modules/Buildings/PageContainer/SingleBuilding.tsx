@@ -3,8 +3,11 @@ import {
     DeleteBuildingMutation,
     DeleteBuildingMutationVariables,
     GetBuildingByIdQuery,
+    SoftDeleteBuildingMutation,
+    SoftDeleteBuildingMutationVariables,
     useDeleteBuildingMutation,
-    useGetBuildingByIdQuery
+    useGetBuildingByIdQuery,
+    useSoftDeleteBuildingMutation
 } from 'generated/graphql';
 import { NextRouter } from 'next/router';
 import { FC } from 'react';
@@ -39,7 +42,8 @@ const SingleBuilding: FC<SingleBuildingTypeProps> = ({ id, router }: SingleBuild
         }
     ];
 
-    const { mutate, isLoading: deleteLoading } = useDeleteBuildingMutation<Error>(
+    //Using Soft Delete instead of Delete
+    /*const { mutate, isLoading: deleteLoading } = useDeleteBuildingMutation<Error>(
         graphqlRequestClient,
         {
             onSuccess: (
@@ -67,9 +71,37 @@ const SingleBuilding: FC<SingleBuildingTypeProps> = ({ id, router }: SingleBuild
             okText: t('messages:confirm'),
             cancelText: t('messages:cancel')
         });
-    };
+    };*/
 
-    //modal to handle delete confirmation
+    const { mutate, isLoading: softDeleteLoading } = useSoftDeleteBuildingMutation<Error>(
+        graphqlRequestClient,
+        {
+            onSuccess: (
+                data: SoftDeleteBuildingMutation,
+                _variables: SoftDeleteBuildingMutationVariables,
+                _context: unknown
+            ) => {
+                router.back();
+                if (!softDeleteLoading) {
+                    showSuccess(t('messages:success-deleted'));
+                }
+            },
+            onError: () => {
+                showError(t('messages:error-deleting-data'));
+            }
+        }
+    );
+
+    const softDeleteBuilding = ({ buildingId }: SoftDeleteBuildingMutationVariables) => {
+        Modal.confirm({
+            title: t('messages:delete-confirm'),
+            onOk: () => {
+                mutate({ buildingId });
+            },
+            okText: t('messages:confirm'),
+            cancelText: t('messages:cancel')
+        });
+    };
 
     return (
         <>
@@ -80,18 +112,22 @@ const SingleBuilding: FC<SingleBuildingTypeProps> = ({ id, router }: SingleBuild
                 actionsRight={
                     <Space>
                         {/* ADD HERE*/}
-                        {/*FIXME : Enable delete + edit for Superadmin ?
-                            <LinkButton
-                                icon={<EditTwoTone />}
-                                path={pathParams('/building/edit/[id]', id)}
-                            ></LinkButton>
-                            <Button
-                                danger
-                                loading={deleteLoading}
-                                onClick={() => deleteBuilding({ id: id })}
-                            >
-                                {t('actions:delete')}
-                            </Button>*/}
+                        {data?.building?.status != 1005 ? (
+                            <>
+                                <LinkButton
+                                    icon={<EditTwoTone />}
+                                    path={pathParams('/building/edit/[id]', id)}
+                                ></LinkButton>
+                                <Button
+                                    danger
+                                    onClick={() => softDeleteBuilding({ buildingId: id })}
+                                >
+                                    {t('actions:delete')}
+                                </Button>
+                            </>
+                        ) : (
+                            <></>
+                        )}
                     </Space>
                 }
             />

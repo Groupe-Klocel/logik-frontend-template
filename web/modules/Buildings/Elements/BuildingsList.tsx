@@ -22,6 +22,14 @@ import {
 } from '@helpers';
 
 import { useAuth } from 'context/AuthContext';
+import {
+    DeleteBuildingMutation,
+    DeleteBuildingMutationVariables,
+    SoftDeleteBuildingMutation,
+    SoftDeleteBuildingMutationVariables,
+    useDeleteBuildingMutation,
+    useSoftDeleteBuildingMutation
+} from 'generated/graphql';
 
 export type BuildingListTypeProps = {
     searchCriteria?: any;
@@ -73,8 +81,8 @@ export const BuildingList = ({ searchCriteria }: BuildingListTypeProps) => {
         await setSort(orderByFormater(sorter));
     };
 
-    /*FIXME : Enable delete for Superadmin ?
-    const { mutate, isLoading: deleteLoading } = useDeleteBuildingMutation<Error>(
+    //Using Soft Delete instead of Delete
+    /*const { mutate, isLoading: deleteLoading } = useDeleteBuildingMutation<Error>(
         graphqlRequestClient,
         {
             onSuccess: (
@@ -103,6 +111,36 @@ export const BuildingList = ({ searchCriteria }: BuildingListTypeProps) => {
             cancelText: t('messages:cancel')
         });
     };*/
+
+    const { mutate, isLoading: softDeleteLoading } = useSoftDeleteBuildingMutation<Error>(
+        graphqlRequestClient,
+        {
+            onSuccess: (
+                data: SoftDeleteBuildingMutation,
+                _variables: SoftDeleteBuildingMutationVariables,
+                _context: any
+            ) => {
+                if (!softDeleteLoading) {
+                    refetch;
+                    showSuccess(t('messages:success-deleted'));
+                }
+            },
+            onError: () => {
+                showError(t('messages:error-deleting-data'));
+            }
+        }
+    );
+
+    const softDeleteBuilding = ({ buildingId }: SoftDeleteBuildingMutationVariables) => {
+        Modal.confirm({
+            title: t('messages:delete-confirm'),
+            onOk: () => {
+                mutate({ buildingId });
+            },
+            okText: t('messages:confirm'),
+            cancelText: t('messages:cancel')
+        });
+    };
 
     const columns = [
         {
@@ -168,23 +206,27 @@ export const BuildingList = ({ searchCriteria }: BuildingListTypeProps) => {
         {
             title: 'actions:actions',
             key: 'actions',
-            render: (record: { id: string }) => (
+            render: (record: { id: string; status: number }) => (
                 <Space>
                     <LinkButton
                         icon={<EyeTwoTone />}
                         path={pathParams('/building/[id]', record.id)}
                     />
-                    {/*FIXME : Enable delete + edit for Superadmin ?
-                    <LinkButton
-                        icon={<EditTwoTone />}
-                        path={pathParams('/building/edit/[id]', record.id)}
-                    />
-                    <Button
-                        icon={<DeleteOutlined />}
-                        danger
-                        loading={deleteLoading}
-                        onClick={() => deleteBuilding({ id: record.id })}
-                    />*/}
+                    {record?.status != 1005 ? (
+                        <>
+                            <LinkButton
+                                icon={<EditTwoTone />}
+                                path={pathParams('/building/edit/[id]', record.id)}
+                            />
+                            <Button
+                                icon={<DeleteOutlined />}
+                                danger
+                                onClick={() => softDeleteBuilding({ buildingId: record.id })}
+                            />
+                        </>
+                    ) : (
+                        <></>
+                    )}
                 </Space>
             )
         }

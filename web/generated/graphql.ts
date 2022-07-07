@@ -1875,7 +1875,7 @@ export type CreateLogisticUnitInput = {
   height?: InputMaybe<Scalars['Float']>;
   length?: InputMaybe<Scalars['Float']>;
   luConfigId?: InputMaybe<Scalars['String']>;
-  model: Scalars['Int'];
+  model?: InputMaybe<Scalars['Int']>;
   name: Scalars['String'];
   order?: InputMaybe<Scalars['Int']>;
   /** Logistic Unit with smaller level than this one (e.g. detail to box, box to palett) */
@@ -5888,6 +5888,14 @@ export type Query = {
   articleLuBarcode?: Maybe<ArticleLuBarcode>;
   /** Get Article_lu_barcode objects */
   articleLuBarcodes: ArticleLuBarcodeListResult;
+  /** Get Articles_lu_barcode objects by article id */
+  articleLuBarcodesByArticleId: Array<ArticleLuBarcode>;
+  /** Get Articles_lu_barcode objects by barcode id */
+  articleLuBarcodesByBarcodeId: Array<ArticleLuBarcode>;
+  /** Get Articles_lu_barcode objects by Logistic Unit id */
+  articleLuBarcodesByLuId: Array<ArticleLuBarcode>;
+  /** Get Articles_lu_barcode objects by Stock Owner id */
+  articleLuBarcodesByStockOwnerId: Array<ArticleLuBarcode>;
   /** Get a Article_lu objects */
   articleLus: ArticleLuListResult;
   /** Get a article_set object */
@@ -6097,6 +6105,26 @@ export type QueryArticleLuBarcodesArgs = {
   language?: InputMaybe<Scalars['String']>;
   orderBy?: InputMaybe<Array<ArticleLuBarcodeOrderByCriterion>>;
   page?: Scalars['Int'];
+};
+
+
+export type QueryArticleLuBarcodesByArticleIdArgs = {
+  articleId: Scalars['String'];
+};
+
+
+export type QueryArticleLuBarcodesByBarcodeIdArgs = {
+  barcodeId: Scalars['String'];
+};
+
+
+export type QueryArticleLuBarcodesByLuIdArgs = {
+  luId: Scalars['String'];
+};
+
+
+export type QueryArticleLuBarcodesByStockOwnerIdArgs = {
+  stockOwnerId: Scalars['String'];
 };
 
 
@@ -8443,6 +8471,13 @@ export type UpdateBuildingMutationVariables = Exact<{
 
 export type UpdateBuildingMutation = { __typename?: 'Mutation', updateBuilding?: { __typename?: 'Building', id?: string | null, name?: string | null, address1?: string | null, address2?: string | null, address3?: string | null, postCode?: string | null, city?: string | null, country?: string | null, contactName?: string | null, contactPhone?: string | null, contactMobile?: string | null, contactEmail?: string | null, awsAccessKeyId?: string | null, awsSecretAccessKey?: string | null, status?: number | null } | null };
 
+export type SoftDeleteBuildingMutationVariables = Exact<{
+  buildingId: Scalars['String'];
+}>;
+
+
+export type SoftDeleteBuildingMutation = { __typename?: 'Mutation', softDeleteBuilding: boolean };
+
 export type WarehouseLoginMutationVariables = Exact<{
   username: Scalars['String'];
   password: Scalars['String'];
@@ -9193,6 +9228,24 @@ export const useUpdateBuildingMutation = <
     useMutation<UpdateBuildingMutation, TError, UpdateBuildingMutationVariables, TContext>(
       ['UpdateBuilding'],
       (variables?: UpdateBuildingMutationVariables) => fetcher<UpdateBuildingMutation, UpdateBuildingMutationVariables>(client, UpdateBuildingDocument, variables, headers)(),
+      options
+    );
+export const SoftDeleteBuildingDocument = `
+    mutation SoftDeleteBuilding($buildingId: String!) {
+  softDeleteBuilding(buildingId: $buildingId)
+}
+    `;
+export const useSoftDeleteBuildingMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<SoftDeleteBuildingMutation, TError, SoftDeleteBuildingMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<SoftDeleteBuildingMutation, TError, SoftDeleteBuildingMutationVariables, TContext>(
+      ['SoftDeleteBuilding'],
+      (variables?: SoftDeleteBuildingMutationVariables) => fetcher<SoftDeleteBuildingMutation, SoftDeleteBuildingMutationVariables>(client, SoftDeleteBuildingDocument, variables, headers)(),
       options
     );
 export const WarehouseLoginDocument = `

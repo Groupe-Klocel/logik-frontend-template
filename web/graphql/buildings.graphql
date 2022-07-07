@@ -110,3 +110,7 @@ mutation UpdateBuilding($id: String!, $input: UpdateBuildingInput!) {
         status
     }
 }
+
+mutation SoftDeleteBuilding($buildingId: String!) {
+    softDeleteBuilding(buildingId: $buildingId)
+}
