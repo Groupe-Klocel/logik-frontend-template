@@ -33,5 +33,6 @@
     "success-update-box-quantity": "The quantity has been updated successfully",
     "error-barcode-not-render": "An error occurred while generating the barcode",
     "error-selected-article-not-exist": "Selected article does not exist",
-    "error-permission": "Insufficient permissions"
+    "error-permission": "Insufficient permissions",
+    "replenish-validation-error": "Type must be empty when Replenish is not checked"
 }

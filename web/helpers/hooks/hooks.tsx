@@ -8,6 +8,10 @@ import {
     GetArticleIdsQuery,
     useGetMyInfoQuery,
     GetMyInfoQuery,
+    useGetAllBlocksQuery,
+    GetAllBlocksQuery,
+    GetAllLocationsQuery,
+    useGetAllLocationsQuery,
     useGetAllReturnCodesQuery,
     GetAllReturnCodesQuery,
     useGetAllGoodsInsQuery,
@@ -72,6 +76,60 @@ const useArticleIds = (search: any, page: number, itemsPerPage: number, sort: an
     );
 
     return articles;
+};
+
+const useBlocks = (search: any, page: number, itemsPerPage: number, sort: any) => {
+    const { graphqlRequestClient } = useAuth();
+
+    const sortByDate = {
+        field: 'created',
+        ascending: false
+    };
+
+    let newSort;
+
+    if (sort === null) {
+        newSort = sortByDate;
+    } else {
+        newSort = sort;
+    }
+
+    const blocks = useGetAllBlocksQuery<Partial<GetAllBlocksQuery>, Error>(graphqlRequestClient, {
+        filters: search,
+        orderBy: newSort,
+        page: page,
+        itemsPerPage: itemsPerPage
+    });
+
+    return blocks;
+};
+const useLocations = (search: any, page: number, itemsPerPage: number, sort: any) => {
+    const { graphqlRequestClient } = useAuth();
+
+    const sortByDate = {
+        field: 'created',
+        ascending: false
+    };
+
+    let newSort;
+
+    if (sort === null) {
+        newSort = sortByDate;
+    } else {
+        newSort = sort;
+    }
+
+    const locations = useGetAllLocationsQuery<Partial<GetAllLocationsQuery>, Error>(
+        graphqlRequestClient,
+        {
+            filters: search,
+            orderBy: newSort,
+            page: page,
+            itemsPerPage: itemsPerPage
+        }
+    );
+
+    return locations;
 };
 
 const useBarcodes = (search: any, page: number, itemsPerPage: number, sort: any) => {
@@ -140,7 +198,13 @@ const useReturnCodes = (search: any, page: number, itemsPerPage: number, sort: a
     return returnCodes;
 };
 
-const useGoodsIns = (search: any, page: number, itemsPerPage: number, sort: any, language: string) => {
+const useGoodsIns = (
+    search: any,
+    page: number,
+    itemsPerPage: number,
+    sort: any,
+    language: string
+) => {
     const { graphqlRequestClient } = useAuth();
 
     const sortByDate = {
@@ -170,9 +234,14 @@ const useGoodsIns = (search: any, page: number, itemsPerPage: number, sort: any,
     return goodsIns;
 };
 
-const useGoodsInLines = (search: any, page: number, itemsPerPage: number, sort: any, language = "en") => {
+const useGoodsInLines = (
+    search: any,
+    page: number,
+    itemsPerPage: number,
+    sort: any,
+    language = 'en'
+) => {
     const { graphqlRequestClient } = useAuth();
-
 
     const sortByDate = {
         field: 'created',
@@ -199,7 +268,16 @@ const useGoodsInLines = (search: any, page: number, itemsPerPage: number, sort: 
     );
 
     return goodsInLine;
-}
+};
 
-
-export { useArticles, useBarcodes, useArticleIds, useMyInfo, useReturnCodes, useGoodsIns, useGoodsInLines };
+export {
+    useArticles,
+    useBlocks,
+    useLocations,
+    useBarcodes,
+    useArticleIds,
+    useMyInfo,
+    useReturnCodes,
+    useGoodsIns,
+    useGoodsInLines
+};

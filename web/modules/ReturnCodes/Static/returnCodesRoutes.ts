@@ -2,8 +2,9 @@
 
 export const returnCodesRoutes = [
     {
-        breadcrumbName: 'menu:return-codes'
-    }
+        breadcrumbName: 'menu:configuration'
+    },
+    { path: '/return-codes', breadcrumbName: 'menu:return-codes' }
 ];
 
 export const addReturnCodeRoutes = [
@@ -13,4 +14,3 @@ export const addReturnCodeRoutes = [
         breadcrumbName: 'actions:add-return-code'
     }
 ];
-

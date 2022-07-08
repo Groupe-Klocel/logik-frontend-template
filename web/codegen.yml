@@ -1,11 +1,11 @@
 overwrite: true
-schema: "https://api.staging.logik.klocel.com/graphql"
-documents: "**/**/*.graphql"
+schema: 'https://api.staging.logik.klocel.com/graphql'
+documents: '**/**/*.graphql'
 generates:
-  generated/graphql.ts:
-    plugins:
-      - "typescript"
-      - "typescript-operations"
-      - "typescript-react-query"
-    config:
-      fetcher: graphql-request
+    generated/graphql.ts:
+        plugins:
+            - 'typescript'
+            - 'typescript-operations'
+            - 'typescript-react-query'
+        config:
+            fetcher: graphql-request
