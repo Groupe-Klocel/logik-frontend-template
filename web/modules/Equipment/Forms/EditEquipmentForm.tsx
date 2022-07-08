@@ -8,10 +8,12 @@ import { showError, showSuccess, showInfo } from '@helpers';
 import { CheckboxChangeEvent } from 'antd/lib/checkbox';
 import {
     GetEquipmentLimitTypeConfigsQuery,
+    GetListOfPrioritiesQuery,
     SimpleGetAllStockOwnersQuery,
     UpdateEquipmentMutation,
     UpdateEquipmentMutationVariables,
     useGetEquipmentLimitTypeConfigsQuery,
+    useGetListOfPrioritiesQuery,
     useSimpleGetAllStockOwnersQuery,
     useUpdateEquipmentMutation
 } from 'generated/graphql';
@@ -48,6 +50,8 @@ export const EditEquipmentForm: FC<EditEquipmentFormProps> = ({
     const [allowPickingOrderFreeValue, setAllowPickingOrderFreeValue] = useState(
         details.allowPickingOrderFree
     );
+    const [equipmentWithPriorities, setEquipmentWithPriorities] = useState<any>();
+    const [maxPriority, setMaxPriority] = useState<number>(details.priority);
 
     // TYPED SAFE ALL
     const [form] = Form.useForm();
@@ -75,6 +79,32 @@ export const EditEquipmentForm: FC<EditEquipmentFormProps> = ({
             setEquipmentLimitTypes(equipmentLimitTypeList?.data?.listConfigsForAScope);
         }
     }, [equipmentLimitTypeList]);
+
+    //To render existing priorities list
+    const priorityList = useGetListOfPrioritiesQuery<Partial<GetListOfPrioritiesQuery>, Error>(
+        graphqlRequestClient
+    );
+    useEffect(() => {
+        setEquipmentWithPriorities(priorityList?.data?.equipments?.results);
+        const receivedList = priorityList?.data?.equipments?.results.map((e: any) => e.priority);
+        if (receivedList) {
+            setMaxPriority(Math.max(...receivedList));
+        }
+    }, [priorityList]);
+
+    //rework priorities list
+    function compare(a: any, b: any) {
+        if (a.priority < b.priority) {
+            return -1;
+        }
+        if (a.priority > b.priority) {
+            return 1;
+        }
+        return 0;
+    }
+    const inCourseEquipment = equipmentWithPriorities
+        ?.filter((e: any) => e.priority !== null)
+        .sort(compare);
 
     const { mutate, isLoading: updateLoading } = useUpdateEquipmentMutation<Error>(
         graphqlRequestClient,
@@ -150,12 +180,6 @@ export const EditEquipmentForm: FC<EditEquipmentFormProps> = ({
             .then(() => {
                 // Here make api call of something else
                 const formData = form.getFieldsValue(true);
-                console.log('zzz', formData);
-                // if (formData.stockOwnerId == undefined) {
-                //     formData.stockOwnerId = stockOwners?.find(
-                //         (e: any) => e.name == formData.associatedStockOwner
-                //     ).id;
-                // }
                 if (formData.limitType === 20520) {
                     formData['length'] = null;
                     formData['width'] = null;
@@ -164,6 +188,26 @@ export const EditEquipmentForm: FC<EditEquipmentFormProps> = ({
                 } else {
                     formData['nbMaxBox'] = null;
                 }
+                //part to update priorities on foreigners
+                let equipmentToUpdate: any;
+                let updateSide: number;
+                if (formData.priority > details.priority) {
+                    equipmentToUpdate = inCourseEquipment.filter(
+                        (e: any) => e.priority <= formData.priority && e.priority > details.priority
+                    );
+                    updateSide = -1;
+                } else {
+                    equipmentToUpdate = inCourseEquipment.filter(
+                        (e: any) => e.priority >= formData.priority && e.priority < details.priority
+                    );
+                    updateSide = 1;
+                }
+                if (equipmentToUpdate) {
+                    equipmentToUpdate.forEach((e: any) =>
+                        updateEquipment({ id: e.id, input: { priority: e.priority + updateSide } })
+                    );
+                }
+                //end part to update priorities on foreigners
                 delete formData['associatedStockOwner'];
                 delete formData['stockOwner'];
                 delete formData['typeText'];
@@ -175,7 +219,7 @@ export const EditEquipmentForm: FC<EditEquipmentFormProps> = ({
                 showError(t('error-update-data'));
             });
     };
-    console.log('yyy', form.getFieldsValue(true));
+
     useEffect(() => {
         const tmp_details = {
             ...details,
@@ -230,7 +274,7 @@ export const EditEquipmentForm: FC<EditEquipmentFormProps> = ({
                 </Form.Item>
                 <Col xs={24} xl={12}>
                     <Form.Item label={t('d:priority')} name="priority" hasFeedback>
-                        <InputNumber min={1} />
+                        <InputNumber min={1} max={maxPriority} />
                     </Form.Item>
                 </Col>
                 <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>

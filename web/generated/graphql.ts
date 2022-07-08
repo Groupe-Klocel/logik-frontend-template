@@ -8391,7 +8391,7 @@ export type GetEquipmentLimitTypeConfigsQuery = { __typename?: 'Query', listConf
 export type GetListOfPrioritiesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetListOfPrioritiesQuery = { __typename?: 'Query', equipments: { __typename?: 'EquipmentListResult', results: Array<{ __typename?: 'Equipment', priority?: number | null }> } };
+export type GetListOfPrioritiesQuery = { __typename?: 'Query', equipments: { __typename?: 'EquipmentListResult', results: Array<{ __typename?: 'Equipment', priority?: number | null, id?: string | null, name?: string | null }> } };
 
 export type GetAllEquipmentQueryVariables = Exact<{
   filters?: InputMaybe<EquipmentSearchFilters>;
@@ -8433,6 +8433,13 @@ export type DeleteEquipmentMutationVariables = Exact<{
 
 
 export type DeleteEquipmentMutation = { __typename?: 'Mutation', deleteEquipment: boolean };
+
+export type SoftDeleteEquipmentMutationVariables = Exact<{
+  equipmentId: Scalars['String'];
+}>;
+
+
+export type SoftDeleteEquipmentMutation = { __typename?: 'Mutation', softDeleteEquipment: boolean };
 
 export type UpdateEquipmentMutationVariables = Exact<{
   id: Scalars['String'];
@@ -9095,6 +9102,8 @@ export const GetListOfPrioritiesDocument = `
   equipments {
     results {
       priority
+      id
+      name
     }
   }
 }
@@ -9353,6 +9362,24 @@ export const useDeleteEquipmentMutation = <
     useMutation<DeleteEquipmentMutation, TError, DeleteEquipmentMutationVariables, TContext>(
       ['DeleteEquipment'],
       (variables?: DeleteEquipmentMutationVariables) => fetcher<DeleteEquipmentMutation, DeleteEquipmentMutationVariables>(client, DeleteEquipmentDocument, variables, headers)(),
+      options
+    );
+export const SoftDeleteEquipmentDocument = `
+    mutation SoftDeleteEquipment($equipmentId: String!) {
+  softDeleteEquipment(equipmentId: $equipmentId)
+}
+    `;
+export const useSoftDeleteEquipmentMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<SoftDeleteEquipmentMutation, TError, SoftDeleteEquipmentMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<SoftDeleteEquipmentMutation, TError, SoftDeleteEquipmentMutationVariables, TContext>(
+      ['SoftDeleteEquipment'],
+      (variables?: SoftDeleteEquipmentMutationVariables) => fetcher<SoftDeleteEquipmentMutation, SoftDeleteEquipmentMutationVariables>(client, SoftDeleteEquipmentDocument, variables, headers)(),
       options
     );
 export const UpdateEquipmentDocument = `

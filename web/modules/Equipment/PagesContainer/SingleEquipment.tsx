@@ -1,10 +1,10 @@
 import { useAuth } from 'context/AuthContext';
 import {
-    DeleteEquipmentMutation,
-    DeleteEquipmentMutationVariables,
     GetEquipmentByIdQuery,
-    useDeleteEquipmentMutation,
-    useGetEquipmentByIdQuery
+    SoftDeleteEquipmentMutation,
+    SoftDeleteEquipmentMutationVariables,
+    useGetEquipmentByIdQuery,
+    useSoftDeleteEquipmentMutation
 } from 'generated/graphql';
 import { NextRouter } from 'next/router';
 import { FC } from 'react';
@@ -42,35 +42,35 @@ const SingleEquipment: FC<SingleEquipmentTypeProps> = ({
         }
     ];
 
-    // const { mutate, isLoading: deleteLoading } = useDeleteEquipmentMutation<Error>(
-    //     graphqlRequestClient,
-    //     {
-    //         onSuccess: (
-    //             data: DeleteEquipmentMutation,
-    //             _variables: DeleteEquipmentMutationVariables,
-    //             _context: unknown
-    //         ) => {
-    //             router.back();
-    //             if (!deleteLoading) {
-    //                 showSuccess(t('messages:success-deleted'));
-    //             }
-    //         },
-    //         onError: () => {
-    //             showError(t('messages:error-deleting-data'));
-    //         }
-    //     }
-    // );
+    const { mutate, isLoading: deleteLoading } = useSoftDeleteEquipmentMutation<Error>(
+        graphqlRequestClient,
+        {
+            onSuccess: (
+                data: SoftDeleteEquipmentMutation,
+                _variables: SoftDeleteEquipmentMutationVariables,
+                _context: unknown
+            ) => {
+                router.back();
+                if (!deleteLoading) {
+                    showSuccess(t('messages:success-deleted'));
+                }
+            },
+            onError: () => {
+                showError(t('messages:error-deleting-data'));
+            }
+        }
+    );
 
-    // const deleteEquipment = ({ id }: DeleteEquipmentMutationVariables) => {
-    //     Modal.confirm({
-    //         title: t('messages:delete-confirm'),
-    //         onOk: () => {
-    //             mutate({ id });
-    //         },
-    //         okText: t('messages:confirm'),
-    //         cancelText: t('messages:cancel')
-    //     });
-    // };
+    const softDeleteEquipment = ({ equipmentId }: SoftDeleteEquipmentMutationVariables) => {
+        Modal.confirm({
+            title: t('messages:delete-confirm'),
+            onOk: () => {
+                mutate({ equipmentId });
+            },
+            okText: t('messages:confirm'),
+            cancelText: t('messages:cancel')
+        });
+    };
 
     return (
         <>
@@ -79,21 +79,25 @@ const SingleEquipment: FC<SingleEquipmentTypeProps> = ({
                 routes={breadsCrumb}
                 onBack={() => router.push('/equipment')}
                 actionsRight={
-                    <Space>
-                        {/* ADD HERE*/}
-                        {/* <LinkButton
-                            icon={<EditTwoTone />}
-                            path={pathParams('/equipment/edit/[id]', id)}
-                        /> */}
-                        {/* <Button
-                            danger
-                            loading={deleteLoading}
-                            onClick={() => deleteEquipment({ id: id })}
-                        >
-                            {t('actions:delete')}
-                        </Button> */}
-                        {/* ADD HERE*/}
-                    </Space>
+                    data?.equipment?.priority === null ? (
+                        <></>
+                    ) : (
+                        <Space>
+                            {/* ADD HERE*/}
+                            <LinkButton
+                                icon={<EditTwoTone />}
+                                path={pathParams('/equipment/edit/[id]', id)}
+                            />
+                            <Button
+                                danger
+                                loading={deleteLoading}
+                                onClick={() => softDeleteEquipment({ equipmentId: id })}
+                            >
+                                {t('actions:delete')}
+                            </Button>
+                            {/* ADD HERE*/}
+                        </Space>
+                    )
                 }
             />
             <PageContentWrapper>

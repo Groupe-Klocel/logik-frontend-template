@@ -2,7 +2,7 @@
     "action-impossible": "{{name}} n'est pas possible, vous devez sélectionner un enregistrement",
     "cancel": "Retour",
     "confirm": "OK",
-    "delete-confirm":"Etes-vous sûr(e) de vouloir supprimer cet enregistrement ?",
+    "delete-confirm": "Etes-vous sûr(e) de vouloir supprimer cet enregistrement ?",
     "error-message-empty-input": "Le champ ne doit pas être vide",
     "error-message-requiered-input": "Le champ est requis",
     "please-enter-a": "Veuillez remplir un {{name}}",
@@ -32,5 +32,6 @@
     "success-update-box-quantity": "La quantité a été mise à jour",
     "error-barcode-not-render": "Une erreur est survenue lors de la génération du code à barres",
     "error-selected-article-not-exist": "L'article sélectionné n'existe pas",
-    "error-permission": "Permissions insuffisantes"
+    "error-permission": "Permissions insuffisantes",
+    "maximum-priority-reached": "Priorité maximum atteinte"
 }

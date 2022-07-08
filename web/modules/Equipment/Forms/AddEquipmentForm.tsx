@@ -15,7 +15,10 @@ import {
     useGetEquipmentLimitTypeConfigsQuery,
     GetEquipmentLimitTypeConfigsQuery,
     useGetListOfPrioritiesQuery,
-    GetListOfPrioritiesQuery
+    GetListOfPrioritiesQuery,
+    useUpdateEquipmentMutation,
+    UpdateEquipmentMutation,
+    UpdateEquipmentMutationVariables
 } from 'generated/graphql';
 import { showError, showSuccess, showInfo } from '@helpers';
 import { CheckboxChangeEvent } from 'antd/lib/checkbox';
@@ -33,12 +36,14 @@ export const AddEquipmentForm = () => {
     const errorMessageEmptyInput = t('messages:error-message-empty-input');
 
     const [stockOwners, setStockOwners] = useState<any>();
+    const [equipmentWithPriorities, setEquipmentWithPriorities] = useState<any>();
     const [equipmentTypes, setEquipmentTypes] = useState<any>();
     const [equipmentLimitTypes, setEquipmentLimitTypes] = useState<any>();
     const [boxLineGroupedValue, setBoxLineGroupValue] = useState<boolean>(false);
     const [boxMonoArticleChange, setBoxMonoArticleChange] = useState<boolean>();
     const [disableTypeRelated, setDisableTypeRelated] = useState<boolean>(false);
     const [displayLimitTypeRelated, setDisplayLimitTypeRelated] = useState<boolean>(false);
+    const [maxPriority, setMaxPriority] = useState<number>(0);
 
     //To render Simple stock owners list
     const stockOwnerList = useSimpleGetAllStockOwnersQuery<
@@ -56,17 +61,49 @@ export const AddEquipmentForm = () => {
     const priorityList = useGetListOfPrioritiesQuery<Partial<GetListOfPrioritiesQuery>, Error>(
         graphqlRequestClient
     );
-
     useEffect(() => {
-        if (priorityList) {
-            const receivedList = priorityList?.data?.equipments?.results.map(
-                (e: any) => e.priority
-            );
-            if (receivedList) {
-                form.setFieldsValue({ priority: Math.max(...receivedList) });
+        const receivedList = priorityList?.data?.equipments?.results.map((e: any) => e.priority);
+        if (receivedList) {
+            setMaxPriority(Math.max(...receivedList) + 1);
+            form.setFieldsValue({ priority: Math.max(...receivedList) });
+        }
+        setEquipmentWithPriorities(priorityList?.data?.equipments?.results);
+    }, [priorityList]);
+
+    //rework priorities list
+    function compare(a: any, b: any) {
+        if (a.priority < b.priority) {
+            return -1;
+        }
+        if (a.priority > b.priority) {
+            return 1;
+        }
+        return 0;
+    }
+    const inCourseEquipment = equipmentWithPriorities
+        ?.filter((e: any) => e.priority !== null)
+        .sort(compare);
+
+    //For priority updates on Finish
+    const { mutate: updateMutate, isLoading: updateLoading } = useUpdateEquipmentMutation<Error>(
+        graphqlRequestClient,
+        {
+            onSuccess: (
+                data: UpdateEquipmentMutation,
+                _variables: UpdateEquipmentMutationVariables,
+                _context: any
+            ) => {
+                // showSuccess(t('messages:success-updated'));
+            },
+            onError: () => {
+                showError(t('messages:error-update-data'));
             }
         }
-    }, [priorityList]);
+    );
+
+    const updateEquipment = ({ id, input }: UpdateEquipmentMutationVariables) => {
+        updateMutate({ id, input });
+    };
 
     //To render Equipment types list configs
     const equipmentTypesList = useGetEquipmentTypesConfigsQuery<
@@ -189,6 +226,14 @@ export const AddEquipmentForm = () => {
             .then(() => {
                 // Here make api call of something else
                 const formData = form.getFieldsValue(true);
+                const equipmentToUpdate = inCourseEquipment.filter(
+                    (e: any) => e.priority >= formData.priority
+                );
+                if (equipmentToUpdate) {
+                    equipmentToUpdate.forEach((e: any) =>
+                        updateEquipment({ id: e.id, input: { priority: e.priority + 1 } })
+                    );
+                }
                 formData['status'] = 450;
                 delete formData['limitTypeText'];
                 createEquipment({ input: formData });
@@ -207,17 +252,7 @@ export const AddEquipmentForm = () => {
     return (
         <WrapperForm>
             <Form form={form} scrollToFirstError>
-                <Form.Item
-                    label={t('common:stock-owner')}
-                    name="stockOwnerId"
-                    hasFeedback
-                    // rules={[
-                    //     {
-                    //         required: true,
-                    //         message: `${t('error-message-select-1')} ${t('stock-owner')}`
-                    //     }
-                    // ]}
-                >
+                <Form.Item label={t('common:stock-owner')} name="stockOwnerId" hasFeedback>
                     <Select
                         placeholder={`${t('messages:please-select-a', {
                             name: t('common:stock-owner')
@@ -264,7 +299,7 @@ export const AddEquipmentForm = () => {
                 </Form.Item>
                 <Col xs={24} xl={12}>
                     <Form.Item label={t('d:priority')} name="priority" hasFeedback>
-                        <InputNumber min={1} onChange={onPriorityChange} />
+                        <InputNumber min={1} max={maxPriority} onChange={onPriorityChange} />
                     </Form.Item>
                 </Col>
                 <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>

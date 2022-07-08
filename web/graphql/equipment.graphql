@@ -38,6 +38,8 @@ query getListOfPriorities {
     equipments {
         results {
             priority
+            id
+            name
         }
     }
 }
@@ -209,6 +211,10 @@ mutation CreateEquipment($input: CreateEquipmentInput!) {
 
 mutation DeleteEquipment($id: String!) {
     deleteEquipment(id: $id)
+}
+
+mutation SoftDeleteEquipment($equipmentId: String!) {
+    softDeleteEquipment(equipmentId: $equipmentId)
 }
 
 mutation UpdateEquipment($id: String!, $input: UpdateEquipmentInput!) {

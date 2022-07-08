@@ -6,7 +6,7 @@ import {
     CloseSquareOutlined,
     EditTwoTone
 } from '@ant-design/icons';
-import { Button, Modal, Space } from 'antd';
+import { Button, Space } from 'antd';
 import { AppTable, ContentSpin, LinkButton } from '@components';
 import useTranslation from 'next-translate/useTranslation';
 import { useCallback, useEffect, useState } from 'react';
@@ -20,12 +20,12 @@ import {
     showSuccess,
     useEquipment
 } from '@helpers';
-import {
-    DeleteEquipmentMutation,
-    DeleteEquipmentMutationVariables,
-    useDeleteEquipmentMutation
-} from 'generated/graphql';
 import { useAuth } from 'context/AuthContext';
+import {
+    UpdateEquipmentMutation,
+    UpdateEquipmentMutationVariables,
+    useUpdateEquipmentMutation
+} from 'generated/graphql';
 
 export type FeedbackOverwriteListTypeProps = {
     searchCriteria?: any;
@@ -42,6 +42,8 @@ export const EquipmentList = ({ searchCriteria }: FeedbackOverwriteListTypeProps
         current: DEFAULT_PAGE_NUMBER,
         itemsPerPage: DEFAULT_ITEMS_PER_PAGE
     });
+    const [priorityUpId, setPriorityUpId] = useState<string>();
+    const [priorityDownId, setPriorityDownId] = useState<string>();
 
     // make wrapper function to give child
     const onChangePagination = useCallback(
@@ -73,35 +75,71 @@ export const EquipmentList = ({ searchCriteria }: FeedbackOverwriteListTypeProps
         }
     }, [data]);
 
-    const { mutate, isLoading: deleteLoading } = useDeleteEquipmentMutation<Error>(
+    //Priority up and down management (this part of code could be improved in the next phase by e.g. factorising it)
+    const { mutate, isLoading: updateLoading } = useUpdateEquipmentMutation<Error>(
         graphqlRequestClient,
         {
             onSuccess: (
-                data: DeleteEquipmentMutation,
-                _variables: DeleteEquipmentMutationVariables,
-                _context: unknown
+                data: UpdateEquipmentMutation,
+                _variables: UpdateEquipmentMutationVariables,
+                _context: any
             ) => {
-                if (!deleteLoading) {
-                    refetch();
-                    showSuccess(t('messages:success-deleted'));
-                }
+                refetch();
+                // showSuccess(t('messages:success-updated'));
             },
             onError: () => {
-                showError(t('messages:error-deleting-data'));
+                showError(t('messages:error-update-data'));
             }
         }
     );
 
-    const deleteEquipment = ({ id }: DeleteEquipmentMutationVariables) => {
-        Modal.confirm({
-            title: t('messages:delete-confirm'),
-            onOk: () => {
-                mutate({ id });
-            },
-            okText: t('messages:confirm'),
-            cancelText: t('messages:cancel')
-        });
+    const updateEquipment = ({ id, input }: UpdateEquipmentMutationVariables) => {
+        mutate({ id, input });
     };
+
+    const priorityUp = (id: string) => {
+        setPriorityUpId(id);
+    };
+
+    const priorityDown = (id: string) => {
+        setPriorityDownId(id);
+    };
+
+    useEffect(() => {
+        const currentEquipment = data?.equipments?.results.find((e: any) => e.id == priorityUpId);
+        const currentPriority = currentEquipment?.priority;
+        const minusOnePriority = currentPriority ? currentPriority - 1 : undefined;
+        const minusOneEquipmentId = data?.equipments?.results.find(
+            (e: any) => e.priority == minusOnePriority
+        )?.id;
+        if (minusOnePriority && priorityUpId) {
+            updateEquipment({ id: priorityUpId, input: { priority: minusOnePriority } });
+            if (minusOneEquipmentId) {
+                updateEquipment({
+                    id: minusOneEquipmentId,
+                    input: { priority: currentPriority }
+                });
+            }
+        }
+    }, [priorityUpId]);
+
+    useEffect(() => {
+        const currentEquipment = data?.equipments?.results.find((e: any) => e.id == priorityDownId);
+        const currentPriority = currentEquipment?.priority;
+        const plusOnePriority = currentPriority ? currentPriority + 1 : undefined;
+        const plusOneEquipmentId = data?.equipments?.results.find(
+            (e: any) => e.priority == plusOnePriority
+        )?.id;
+        if (plusOnePriority && priorityDownId) {
+            updateEquipment({ id: priorityDownId, input: { priority: plusOnePriority } });
+            if (plusOneEquipmentId) {
+                updateEquipment({
+                    id: plusOneEquipmentId,
+                    input: { priority: currentPriority }
+                });
+            }
+        }
+    }, [priorityDownId]);
 
     const columns = [
         {
@@ -193,18 +231,36 @@ export const EquipmentList = ({ searchCriteria }: FeedbackOverwriteListTypeProps
             title: 'actions:actions',
             key: 'actions',
             fixed: 'right',
-            render: (record: { id: string; name: string }) => (
+            render: (record: { id: string; name: string; priority: number }) => (
                 <Space>
-                    <Button onClick={() => alert(`GO UP `)} icon={<CaretUpOutlined />} />
-                    <Button onClick={() => alert(`GO DOWN `)} icon={<CaretDownOutlined />} />
+                    {record.priority === null ? (
+                        <></>
+                    ) : (
+                        <>
+                            <Button
+                                onClick={() => priorityUp(record.id)}
+                                icon={<CaretUpOutlined />}
+                            />
+                            <Button
+                                onClick={() => priorityDown(record.id)}
+                                icon={<CaretDownOutlined />}
+                            />
+                        </>
+                    )}
                     <LinkButton
                         icon={<EyeTwoTone />}
                         path={pathParams('/equipment/[id]', record.id)}
                     />
-                    <LinkButton
-                        icon={<EditTwoTone />}
-                        path={pathParams('/equipment/edit/[id]', record.id)}
-                    />
+                    {record.priority === null ? (
+                        <></>
+                    ) : (
+                        <>
+                            <LinkButton
+                                icon={<EditTwoTone />}
+                                path={pathParams('/equipment/edit/[id]', record.id)}
+                            />
+                        </>
+                    )}
                 </Space>
             )
         }
