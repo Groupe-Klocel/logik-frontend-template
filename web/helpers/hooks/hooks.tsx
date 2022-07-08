@@ -13,7 +13,11 @@ import {
     GetAllLocationsQuery,
     useGetAllLocationsQuery,
     useGetAllReturnCodesQuery,
-    GetAllReturnCodesQuery
+    GetAllReturnCodesQuery,
+    useGetAllGoodsInsQuery,
+    GetAllGoodsInsQuery,
+    useGetGoodsInLinesQuery,
+    GetGoodsInLinesQuery
 } from 'generated/graphql';
 
 const useArticles = (search: any, page: number, itemsPerPage: number, sort: any) => {
@@ -194,6 +198,78 @@ const useReturnCodes = (search: any, page: number, itemsPerPage: number, sort: a
     return returnCodes;
 };
 
+const useGoodsIns = (
+    search: any,
+    page: number,
+    itemsPerPage: number,
+    sort: any,
+    language: string
+) => {
+    const { graphqlRequestClient } = useAuth();
+
+    const sortByDate = {
+        field: 'created',
+        ascending: false
+    };
+
+    let newSort;
+
+    if (sort === null) {
+        newSort = sortByDate;
+    } else {
+        newSort = sort;
+    }
+
+    const goodsIns = useGetAllGoodsInsQuery<Partial<GetAllGoodsInsQuery>, Error>(
+        graphqlRequestClient,
+        {
+            filters: search,
+            orderBy: newSort,
+            page: page,
+            itemsPerPage: itemsPerPage,
+            language: language
+        }
+    );
+
+    return goodsIns;
+};
+
+const useGoodsInLines = (
+    search: any,
+    page: number,
+    itemsPerPage: number,
+    sort: any,
+    language = 'en'
+) => {
+    const { graphqlRequestClient } = useAuth();
+
+    const sortByDate = {
+        field: 'created',
+        ascending: false
+    };
+
+    let newSort;
+
+    if (sort === null) {
+        newSort = sortByDate;
+    } else {
+        newSort = sort;
+    }
+
+    const goodsInLine = useGetGoodsInLinesQuery<Partial<GetGoodsInLinesQuery>, Error>(
+        graphqlRequestClient,
+        {
+            filters: search,
+            orderBy: newSort,
+            page: page,
+            itemsPerPage: itemsPerPage,
+            language: language
+        }
+    );
+
+    return goodsInLine;
+};
+
 export {
     useArticles,
     useBlocks,
@@ -201,5 +277,7 @@ export {
     useBarcodes,
     useArticleIds,
     useMyInfo,
-    useReturnCodes
+    useReturnCodes,
+    useGoodsIns,
+    useGoodsInLines
 };

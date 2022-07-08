@@ -75,5 +75,9 @@
 	"weight": "Weight",
 	"welcome": "Welcome on",
 	"width": "Width",
-	"workspace": "Workspace ID"
+	"workspace": "Workspace ID",
+	"goods-ins": "Goods Ins",
+	"goods-in": "Goods In",
+	"goods-in-line": "Goods In Line",
+	"goods-in-lines": "Goods In Lines"
 }
