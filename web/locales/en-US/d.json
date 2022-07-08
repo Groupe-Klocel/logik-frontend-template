@@ -18,6 +18,7 @@
     "length": "Length (mm)",
     "limit-type": "Limit type",
     "limitTypeText": "Limit type",
+    "packaging": "Packaging",
     "qty-max-article": "Max articles quantity",
     "qtyMaxArticle": "Max articles quantity",
     "statusText": "Status",

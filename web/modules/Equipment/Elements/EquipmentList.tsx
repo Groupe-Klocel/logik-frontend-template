@@ -17,7 +17,6 @@ import {
     PaginationType,
     pathParams,
     showError,
-    showSuccess,
     useEquipment
 } from '@helpers';
 import { useAuth } from 'context/AuthContext';
