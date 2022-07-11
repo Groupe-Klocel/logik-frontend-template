@@ -188,6 +188,9 @@ export const EditEquipmentForm: FC<EditEquipmentFormProps> = ({
                 } else {
                     formData['nbMaxBox'] = null;
                 }
+                if (formData['stockOwnerId'] == '') {
+                    formData['stockOwnerId'] = null;
+                }
                 //part to update priorities on foreigners
                 let equipmentToUpdate: any;
                 let updateSide: number;

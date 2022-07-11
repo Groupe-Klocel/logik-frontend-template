@@ -1,4 +1,4 @@
-import { EyeTwoTone } from '@ant-design/icons';
+import { EditTwoTone, EyeTwoTone } from '@ant-design/icons';
 import { AppTable, ContentSpin, DetailsList, LinkButton } from '@components';
 import {
     DataQueryType,
@@ -112,12 +112,17 @@ const EquipmentDetails = ({ details }: IEquipmentDetailsProps) => {
                                 icon={<EyeTwoTone />}
                                 path={pathParams('/equipment/detail/[id]', record.id)}
                             />
+                            <LinkButton
+                                icon={<EditTwoTone />}
+                                path={pathParams('/equipment/detail/edit/[id]', record.id)}
+                            />
                         </>
                     )}
                 </Space>
             )
         }
     ];
+
     return (
         <>
             <DetailsList details={refurbDetails} />
