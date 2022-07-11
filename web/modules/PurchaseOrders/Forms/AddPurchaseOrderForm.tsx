@@ -7,7 +7,10 @@ import { useRouter } from 'next/router';
 import {
     useCreatePurchaseOrderMutation,
     CreatePurchaseOrderMutation,
-    CreatePurchaseOrderMutationVariables
+    CreatePurchaseOrderMutationVariables,
+    useCreateStatusEvolutionMutation,
+    CreateStatusEvolutionMutation,
+    CreateStatusEvolutionMutationVariables
 } from 'generated/graphql';
 import {
     showError,
@@ -15,12 +18,40 @@ import {
     showInfo,
 } from '@helpers';
 import { PurchaseOrderForm } from './PurchaseOrderForm';
+import moment from 'moment';
 
 export const AddPurchaseOrderForm = () => {
     const { t } = useTranslation('common');
+    const [poId, setPoId] = useState('');
     const { graphqlRequestClient } = useAuth();
     const router = useRouter();
     const [form] = Form.useForm();
+
+    const {mutate: createStatusEvolutionMutate, isLoading: createStatusEvolutionLoading} = useCreateStatusEvolutionMutation<Error>(
+        graphqlRequestClient,
+        {
+            onSuccess: (
+                date: CreateStatusEvolutionMutation,
+                _variables: CreateStatusEvolutionMutationVariables,
+                _context: any
+            ) => {
+                showSuccess(t('messages:success-created'));
+                console.log(form.getFieldValue('type'))
+                if(form.getFieldValue('type') == 10102) {
+                    router.push(`/purchase-orders/`);
+                } else {
+                    router.push(`/purchase-orders/${poId}`);
+                }
+            },
+            onError: () => {
+                showError(t('messages:error-creating-data'));
+            }
+        }
+    )
+
+    const createStatusEvolution = ({input}: CreateStatusEvolutionMutationVariables) => {
+        createStatusEvolutionMutate({input});
+    }
 
     const { mutate, isLoading: createLoading } = useCreatePurchaseOrderMutation<Error>(
         graphqlRequestClient,
@@ -30,8 +61,19 @@ export const AddPurchaseOrderForm = () => {
                 _variables: CreatePurchaseOrderMutationVariables,
                 _context: any
             ) => {
-                router.push(`/purchase-orders/${data.createPurchaseOrder.id}`);
-                showSuccess(t('messages:success-created'));
+                setPoId(data.createPurchaseOrder.id!);
+                // create new stock evolution
+                createStatusEvolution({
+                    input: {
+                        stockOwnerId: data.createPurchaseOrder.stockOwnerId!,
+                        object: 19010,
+                        objectReference: data.createPurchaseOrder.id,
+                        status: data.createPurchaseOrder.status,
+                        feedback: false,
+                        toBeFeedback: false
+                    }
+                })
+                // showSuccess(t('messages:success-created'));
             },
             onError: () => {
                 showError(t('messages:error-creating-data'));
@@ -49,7 +91,14 @@ export const AddPurchaseOrderForm = () => {
             .then(() => {
                 const formData = form.getFieldsValue(true);
                 delete formData.companyName
-                createPurchaseLine({ input: formData });
+                const newFormData = {
+                    ...formData, 
+                    status: parseInt(formData.status), 
+                    type: parseInt(formData.type),
+                    orderDate: moment(),
+                    expectedGoodsInDate: (formData.expectedGoodsInDate) ? formData.expectedGoodsInDate: moment()
+                };
+                createPurchaseLine({ input: newFormData });
             })
             .catch((err) => {
                 showError(t('messages:error-creating-data'));
@@ -64,8 +113,8 @@ export const AddPurchaseOrderForm = () => {
 
     return (
         <WrapperForm>
-            <Form form={form} scrollToFirstError>
-                <PurchaseOrderForm form={form}/>
+            <Form form={form} scrollToFirstError initialValues={{status: '8'}}>
+                <PurchaseOrderForm form={form} mode='add'/>
             </Form>
             <div style={{ textAlign: 'center' }}>
                 <Button type="primary" loading={createLoading} onClick={onFinish}>

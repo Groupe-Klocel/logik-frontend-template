@@ -72,8 +72,11 @@
 	"width": "Largeur",
 	"workspace": "ID Espace de travail",
 	"purchase-order-line": "Purchase Order Line",
+	"purchase-order-lines": "Purchase Order Lines",
 	"purchase-order": "Purchase Order",
 	"purchase-orders": "Purchase Orders",
+	"movements": "Movements",
+	"status-evolutions": "Status Evolutions",
 	"line": "Line",
 	"none": "None"
 }

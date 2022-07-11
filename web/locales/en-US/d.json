@@ -67,6 +67,8 @@
     "purchaseOrderId": "Purchase Order ID",
     "originalPurchaseOrderLine": "Original Purchase Order Line",
     "supplier": "Supplier",
-    "expectedGoodsInDate": "Expected Goods In Date"
+    "expectedGoodsInDate": "Expected Goods In Date",
+    "typeText": "Type Text",
+    "orderDate": "Order Date"
 
 }

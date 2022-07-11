@@ -1,0 +1,207 @@
+query GetAllMovements(
+    $orderBy: [MovementOrderByCriterion!]
+    $filters: MovementSearchFilters
+    $page: Int!
+    $itemsPerPage: Int!
+    $language: String
+) {
+    movements(orderBy: $orderBy, filters: $filters, page: $page, itemsPerPage: $itemsPerPage, language: $language) {
+        count
+        itemsPerPage
+        totalPages
+        page
+        results {
+            id
+            extras
+            created
+            createdBy
+            modified
+            modifiedBy
+            originalMovement {
+                id
+                extras
+                quantity
+            }
+            quantity
+            initialStatus
+            finalReservation
+            status
+            code
+            type
+            model
+            finalArticle
+            finalQuantity
+            feedback
+            toBeFeedback
+            comment
+            equipmentBarcode
+            priority
+            stockOwnerId
+            articleId
+            originalLocationId
+            finalLocationId
+            goodsInId
+            purchaseOrderId
+            boxId
+            boxLineId
+            originalMovementId
+            returnCodeId
+            actionCodeId
+            initialStatusText
+            finalStatusText
+            statusText
+            typeText
+            modelText
+            codeText
+            priorityText
+        }
+    }
+}
+
+query GetMovementById($id: String!, $language:String = "en") {
+    movement(id: $id, language: $language) {
+        id
+        extras
+        created
+        createdBy
+        modified
+        modifiedBy
+        originalMovement {
+            id
+            extras
+            quantity
+        }
+        quantity
+        initialStatus
+        finalReservation
+        status
+        code
+        type
+        model
+        finalArticle
+        finalQuantity
+        feedback
+        toBeFeedback
+        comment
+        equipmentBarcode
+        priority
+        stockOwnerId
+        articleId
+        originalLocationId
+        finalLocationId
+        goodsInId
+        purchaseOrderId
+        boxId
+        boxLineId
+        originalMovementId
+        returnCodeId
+        actionCodeId
+        initialStatusText
+        finalStatusText
+        statusText
+        typeText
+        modelText
+        codeText
+        priorityText
+    }
+}
+
+mutation CreateMovement($input: CreateMovementInput!) {
+    createMovement(input: $input) {
+        id
+        extras
+        created
+        createdBy
+        modified
+        modifiedBy
+        originalMovement {
+            id
+            extras
+            quantity
+        }
+        quantity
+        initialStatus
+        finalReservation
+        status
+        code
+        type
+        model
+        finalArticle
+        finalQuantity
+        feedback
+        toBeFeedback
+        comment
+        equipmentBarcode
+        priority
+        stockOwnerId
+        articleId
+        originalLocationId
+        finalLocationId
+        goodsInId
+        purchaseOrderId
+        boxId
+        boxLineId
+        originalMovementId
+        returnCodeId
+        actionCodeId
+        initialStatusText
+        finalStatusText
+        statusText
+        typeText
+        modelText
+        codeText
+        priorityText
+    }
+}
+
+mutation DeleteMovement($id: String!) {
+    deleteMovement(id: $id)
+}
+
+mutation UpdateMovement($id: String!, $input: UpdateMovementInput!) {
+    updateMovement(id: $id, input: $input) {
+        id
+        extras
+        created
+        createdBy
+        modified
+        modifiedBy
+        originalMovement {
+            id
+            extras
+            quantity
+        }
+        quantity
+        initialStatus
+        finalReservation
+        status
+        code
+        type
+        model
+        finalArticle
+        finalQuantity
+        feedback
+        toBeFeedback
+        comment
+        equipmentBarcode
+        priority
+        stockOwnerId
+        articleId
+        originalLocationId
+        finalLocationId
+        goodsInId
+        purchaseOrderId
+        boxId
+        boxLineId
+        originalMovementId
+        returnCodeId
+        actionCodeId
+        initialStatusText
+        finalStatusText
+        statusText
+        typeText
+        modelText
+        codeText
+        priorityText
+    }
+}

@@ -51,13 +51,13 @@ const PurchaseOrderSearch: FC<IPurchaseOrderSearchProps> = ({ form }: IPurchaseO
         if (statusTextList) {
             setStatusTexts(statusTextList?.data?.listConfigsForAScope);
         }
-    }, [stockOwnerList])
+    }, [statusTextList])
 
     useEffect(()=> {
         if (typeTextList) {
             setTypeTexts(typeTextList?.data?.listConfigsForAScope);
         }
-    }, [stockOwnerList])
+    }, [typeTextList])
 
 
     return (

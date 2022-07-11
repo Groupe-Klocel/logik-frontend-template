@@ -1,8 +1,12 @@
 import { useStockOwnerIds } from '@helpers';
-import { Form, Input, InputNumber, Row, Col, Checkbox, AutoComplete } from 'antd';
+import { Form, Input, InputNumber, Row, Col, Checkbox, AutoComplete, DatePicker, Select } from 'antd';
+import { useAuth } from 'context/AuthContext';
+import { useListConfigsForAScopeQuery } from 'generated/graphql';
 import { debounce } from 'lodash';
 import useTranslation from 'next-translate/useTranslation';
 import { FC, useEffect, useState } from 'react';
+
+const { Option } = Select
 
 interface IOption {
     value: string;
@@ -12,11 +16,13 @@ interface IOption {
 export interface IPurchaseOrderFormProps {
     id?: string;
     details?: any;
-    form: any
+    mode?: string;
+    form: any;
 }
 
-const PurchaseOrderForm: FC<IPurchaseOrderFormProps>  = ({id, details, form}: IPurchaseOrderFormProps) => {
+const PurchaseOrderForm: FC<IPurchaseOrderFormProps>  = ({form, mode}: IPurchaseOrderFormProps) => {
     const { t } = useTranslation();
+    const {graphqlRequestClient} = useAuth();
 
     // TEXTS TRANSLATION ( REFACTORING POSSIBLE / EXPORT / DON'T KNOW YET )
 
@@ -35,8 +41,34 @@ const PurchaseOrderForm: FC<IPurchaseOrderFormProps>  = ({id, details, form}: IP
     const [cidOptions, setCIdOptions] = useState<Array<IOption>>([]);
     const [companyName, setCompanyName] = useState<string>('');
     const [cId, setCId] = useState<string>('');
+    const [typeId, setTypeId] = useState<string>('');
+    const [statusId, setStatusId] = useState<string>('');
+    const [statusTexts, setStatusTexts] = useState<any>();
+    const [typeTexts, setTypeTexts] = useState<any>();
+    const addCodeInList = ['10101', '10102', '10103']
+    
+    const cData = useStockOwnerIds({ name: `${companyName}%` }, 1, 100, null);  
 
-    const cData = useStockOwnerIds({ name: `${companyName}%` }, 1, 100, null);
+    const statusTextList = useListConfigsForAScopeQuery(
+        graphqlRequestClient,
+        (mode == 'add') ? (
+            {
+                scope: 'purchase_order_status',
+                code: '8'
+            }
+        ): (
+            {
+                scope: 'purchase_order_status',
+            }
+        )
+    )
+
+    const typeTextList = useListConfigsForAScopeQuery(
+        graphqlRequestClient,
+        {
+            scope: 'purchase_order_type'
+        }
+    )
 
     useEffect(() => {
         const formValue = form.getFieldsValue();
@@ -57,6 +89,22 @@ const PurchaseOrderForm: FC<IPurchaseOrderFormProps>  = ({id, details, form}: IP
         }
     }, [companyName, cData.data]);
 
+    useEffect(()=> {
+        if (statusTextList) {
+            setStatusTexts(statusTextList?.data?.listConfigsForAScope);
+            if(mode == 'add') {
+                setStatusId('8');
+            }
+        }
+    }, [statusTextList])
+
+    
+    useEffect(()=> {
+        if (typeTextList) {
+            setTypeTexts(typeTextList?.data?.listConfigsForAScope);
+        }
+    }, [typeTextList])
+
     return (
         <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
             <Col xs={24} xl={12}>
@@ -65,7 +113,7 @@ const PurchaseOrderForm: FC<IPurchaseOrderFormProps>  = ({id, details, form}: IP
                     name="name"
                     rules={[{ required: true, message: errorMessageEmptyInput }]}
                 >
-                    <Input style={{ width: '100%' }} />
+                    <Input style={{ width: '100%' }} disabled={mode=='edit'? true: false}/>
                 </Form.Item>
                 <Form.Item
                     label={stockOwnerId}
@@ -84,7 +132,7 @@ const PurchaseOrderForm: FC<IPurchaseOrderFormProps>  = ({id, details, form}: IP
                         style={{ width: '100%' }}
                         options={cidOptions}
                         value={companyName}
-                        disabled={companyName !== '' ? true: false}
+                        // disabled={companyName !== '' ? true: false}
                         filterOption={(inputValue, option) =>
                             option!.value
                                 .toUpperCase()
@@ -100,6 +148,7 @@ const PurchaseOrderForm: FC<IPurchaseOrderFormProps>  = ({id, details, form}: IP
                             setCId(option.id);
                             setCompanyName(value);
                         }}
+                        disabled={mode=='edit'? true: false}
                     />
                 </Form.Item>
 
@@ -108,7 +157,29 @@ const PurchaseOrderForm: FC<IPurchaseOrderFormProps>  = ({id, details, form}: IP
                     name="type"
                     rules={[{ required: true, message: errorMessageEmptyInput }]}
                 >
-                    <InputNumber style={{ width: '100%' }} precision={2}/>
+                    <Select 
+                        defaultValue=""
+                        disabled={mode=='edit'? true: false}
+                    >
+                        {typeTexts?.map((type: any) => {
+                            if(mode == 'add') {
+                                if(addCodeInList.includes(type.code)) {
+                                    return (
+                                        <Option key={type.code} value={type.code}>
+                                            {type.text}
+                                        </Option>
+                                    )        
+                                }
+                            } else {
+                                return (
+                                    <Option key={type.code} value={type.code}>
+                                        {type.text}
+                                    </Option>
+                                )
+                            }
+                        }
+                        )}
+                    </Select>
                 </Form.Item>
 
                 <Form.Item
@@ -116,7 +187,16 @@ const PurchaseOrderForm: FC<IPurchaseOrderFormProps>  = ({id, details, form}: IP
                     name="status"
                     rules={[{ required: true, message: errorMessageEmptyInput }]}
                 >
-                    <InputNumber style={{ width: '100%' }} precision={2} />
+                    <Select 
+                        // disabled={(mode=='add' || mode=='edit')? true: false}
+                        disabled
+                    >
+                        {statusTexts?.map((s: any) => (
+                            <Option key={s.code} value={s.code}>
+                                {s.text}
+                            </Option>
+                        ))}
+                    </Select>
                 </Form.Item>
             </Col>
             <Col xs={24} xl={12}>
@@ -124,11 +204,11 @@ const PurchaseOrderForm: FC<IPurchaseOrderFormProps>  = ({id, details, form}: IP
                     label={supplier}
                     name="supplier"
                 >
-                    <Input style={{ width: '100%' }} />
+                    <Input style={{ width: '100%' }} disabled={mode=='edit'? true: false}/>
                 </Form.Item>
 
                 <Form.Item label={expGoodsInDate} name="expectedGoodsInDate">
-                    <Input />
+                    <DatePicker style={{ width: '100%' }} />
                 </Form.Item>
 
                 <Form.Item label={comment} name="comment">

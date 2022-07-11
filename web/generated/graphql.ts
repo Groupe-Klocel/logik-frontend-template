@@ -57,6 +57,7 @@ export type Article = {
   status?: Maybe<Scalars['Int']>;
   /** Text value for field status */
   statusText?: Maybe<Scalars['String']>;
+  stockOwner: StockOwner;
   stockOwnerId?: Maybe<Scalars['String']>;
   subfamily?: Maybe<Scalars['String']>;
   supplierName?: Maybe<Scalars['String']>;
@@ -163,6 +164,7 @@ export type ArticleLu = {
   rotation?: Maybe<Scalars['Int']>;
   /** Text value for field rotation */
   rotationText?: Maybe<Scalars['String']>;
+  stockOwner: StockOwner;
   stockOwnerId?: Maybe<Scalars['String']>;
   width?: Maybe<Scalars['Float']>;
 };
@@ -179,6 +181,7 @@ export type ArticleLuBarcode = {
   luId?: Maybe<Scalars['String']>;
   modified?: Maybe<Scalars['DateTime']>;
   modifiedBy?: Maybe<Scalars['String']>;
+  stockOwner: StockOwner;
   stockOwnerId?: Maybe<Scalars['String']>;
 };
 
@@ -339,6 +342,7 @@ export type ArticleSet = {
   modified?: Maybe<Scalars['DateTime']>;
   modifiedBy?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
+  stockOwner: StockOwner;
   stockOwnerId?: Maybe<Scalars['String']>;
 };
 
@@ -353,6 +357,7 @@ export type ArticleSetDetail = {
   modified?: Maybe<Scalars['DateTime']>;
   modifiedBy?: Maybe<Scalars['String']>;
   quantity?: Maybe<Scalars['Float']>;
+  stockOwner: StockOwner;
   stockOwnerId?: Maybe<Scalars['String']>;
 };
 
@@ -462,6 +467,7 @@ export type Barcode = {
   rotation?: Maybe<Scalars['Int']>;
   /** Text value for field rotation */
   rotationText?: Maybe<Scalars['String']>;
+  stockOwner: StockOwner;
   stockOwnerId?: Maybe<Scalars['String']>;
   supplierArticleCode?: Maybe<Scalars['String']>;
   supplierName?: Maybe<Scalars['String']>;
@@ -632,6 +638,7 @@ export type Box = {
   status?: Maybe<Scalars['Int']>;
   /** Text value for field status */
   statusText?: Maybe<Scalars['String']>;
+  stockOwner: StockOwner;
   stockOwnerId?: Maybe<Scalars['String']>;
   toBeChecked?: Maybe<Scalars['Boolean']>;
   toBePalletized?: Maybe<Scalars['Boolean']>;
@@ -692,6 +699,7 @@ export type BoxLine = {
   status?: Maybe<Scalars['Int']>;
   /** Text value for field status */
   statusText?: Maybe<Scalars['String']>;
+  stockOwner: StockOwner;
   stockOwnerId?: Maybe<Scalars['String']>;
 };
 
@@ -705,6 +713,7 @@ export type BoxLineFeature = {
   id?: Maybe<Scalars['String']>;
   modified?: Maybe<Scalars['DateTime']>;
   modifiedBy?: Maybe<Scalars['String']>;
+  stockOwner: StockOwner;
   stockOwnerId?: Maybe<Scalars['String']>;
   value?: Maybe<Scalars['String']>;
 };
@@ -881,6 +890,8 @@ export type Building = {
   name?: Maybe<Scalars['String']>;
   postCode?: Maybe<Scalars['String']>;
   status?: Maybe<Scalars['Int']>;
+  /** Text value for field status */
+  statusText?: Maybe<Scalars['String']>;
 };
 
 /** Field names for the Building model */
@@ -965,7 +976,7 @@ export type BulkCreateLocationsInput = {
   numberOfLevel: Scalars['Int'];
   numberOfPosition: Scalars['Int'];
   position: Scalars['String'];
-  replenish: Scalars['Boolean'];
+  replenish?: InputMaybe<Scalars['Boolean']>;
   replenishType?: InputMaybe<Scalars['Int']>;
   separator?: Scalars['String'];
 };
@@ -1137,6 +1148,7 @@ export type Content = {
   purchaseOrderId?: Maybe<Scalars['String']>;
   quantity?: Maybe<Scalars['Float']>;
   reservation?: Maybe<Scalars['String']>;
+  stockOwner: StockOwner;
   stockOwnerId?: Maybe<Scalars['String']>;
   stockStatus?: Maybe<Scalars['Int']>;
   /** Text value for field stock_status */
@@ -1271,6 +1283,7 @@ export type Conversion = {
   status?: Maybe<Scalars['Int']>;
   /** Text value for field status */
   statusText?: Maybe<Scalars['String']>;
+  stockOwner: StockOwner;
   stockOwnerId?: Maybe<Scalars['String']>;
   type?: Maybe<Scalars['Int']>;
   /** Text value for field type */
@@ -1783,10 +1796,10 @@ export type CreateFeatureTypeDetailInput = {
 export type CreateFeedbackOverwriteInput = {
   customValue?: InputMaybe<Scalars['Int']>;
   extras?: InputMaybe<Scalars['JSON']>;
-  feedback: Scalars['Boolean'];
+  feedback?: InputMaybe<Scalars['Boolean']>;
   movementCode: Scalars['Int'];
   stockOwnerId?: InputMaybe<Scalars['String']>;
-  system: Scalars['Boolean'];
+  system?: InputMaybe<Scalars['Boolean']>;
 };
 
 export type CreateGoodsInInput = {
@@ -1850,7 +1863,7 @@ export type CreateLocationInput = {
   level: Scalars['String'];
   name: Scalars['String'];
   position: Scalars['String'];
-  replenish: Scalars['Boolean'];
+  replenish?: InputMaybe<Scalars['Boolean']>;
   replenishType?: InputMaybe<Scalars['Int']>;
 };
 
@@ -1862,7 +1875,7 @@ export type CreateLogisticUnitInput = {
   height?: InputMaybe<Scalars['Float']>;
   length?: InputMaybe<Scalars['Float']>;
   luConfigId?: InputMaybe<Scalars['String']>;
-  model: Scalars['Int'];
+  model?: InputMaybe<Scalars['Int']>;
   name: Scalars['String'];
   order?: InputMaybe<Scalars['Int']>;
   /** Logistic Unit with smaller level than this one (e.g. detail to box, box to palett) */
@@ -2051,14 +2064,14 @@ export type CreateStatusEvolutionInput = {
 };
 
 export type CreateStatusFeedbackOverwriteInput = {
-  customValue?: InputMaybe<Scalars['String']>;
+  customValue?: InputMaybe<Scalars['Int']>;
   /** Semi-structured attributes that can be used to store data for anything that doesn't fit in the default columns */
   extras?: InputMaybe<Scalars['JSON']>;
-  feedback: Scalars['Boolean'];
+  feedback?: InputMaybe<Scalars['Boolean']>;
   objectType: Scalars['Int'];
   status: Scalars['Int'];
-  stockOwnerId: Scalars['String'];
-  system: Scalars['Boolean'];
+  stockOwnerId?: InputMaybe<Scalars['String']>;
+  system?: InputMaybe<Scalars['Boolean']>;
 };
 
 export type CreateStockOwnerInput = {
@@ -2151,6 +2164,7 @@ export type CycleCount = {
   status?: Maybe<Scalars['Int']>;
   /** Text value for field status */
   statusText?: Maybe<Scalars['String']>;
+  stockOwner: StockOwner;
   stockOwnerId?: Maybe<Scalars['String']>;
   type?: Maybe<Scalars['Int']>;
   /** Text value for field type */
@@ -2202,6 +2216,7 @@ export type CycleCountLine = {
   status?: Maybe<Scalars['Int']>;
   /** Text value for field status */
   statusText?: Maybe<Scalars['String']>;
+  stockOwner: StockOwner;
   stockOwnerId?: Maybe<Scalars['String']>;
 };
 
@@ -2288,6 +2303,7 @@ export type CycleCountMovement = {
   status?: Maybe<Scalars['Int']>;
   /** Text value for field status */
   statusText?: Maybe<Scalars['String']>;
+  stockOwner: StockOwner;
   stockOwnerId?: Maybe<Scalars['String']>;
   type?: Maybe<Scalars['Int']>;
   /** Text value for field type */
@@ -2458,6 +2474,7 @@ export type Delivery = {
   status?: Maybe<Scalars['Int']>;
   /** Text value for field status */
   statusText?: Maybe<Scalars['String']>;
+  stockOwner: StockOwner;
   stockOwnerId?: Maybe<Scalars['String']>;
   toBePalletized?: Maybe<Scalars['Boolean']>;
   transportationAmount?: Maybe<Scalars['Int']>;
@@ -2549,6 +2566,7 @@ export type DeliveryLine = {
   status?: Maybe<Scalars['Int']>;
   /** Text value for field status */
   statusText?: Maybe<Scalars['String']>;
+  stockOwner: StockOwner;
   stockOwnerId?: Maybe<Scalars['String']>;
   substitutionArticle?: Maybe<Scalars['String']>;
   toBeCubed?: Maybe<Scalars['Boolean']>;
@@ -2738,6 +2756,7 @@ export type Equipment = {
   status?: Maybe<Scalars['Int']>;
   /** Text value for field status */
   statusText?: Maybe<Scalars['String']>;
+  stockOwner: StockOwner;
   stockOwnerId?: Maybe<Scalars['String']>;
   toleranceDimension?: Maybe<Scalars['Int']>;
   type?: Maybe<Scalars['Int']>;
@@ -2920,6 +2939,7 @@ export type FeatureCode = {
   modifiedBy?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   prefixBarcode?: Maybe<Scalars['String']>;
+  stockOwner: StockOwner;
   stockOwnerId?: Maybe<Scalars['String']>;
   suffixBarcode?: Maybe<Scalars['String']>;
   unique?: Maybe<Scalars['Boolean']>;
@@ -3051,6 +3071,7 @@ export type FeedbackOverwrite = {
   movementCode?: Maybe<Scalars['Int']>;
   /** Text value for field movement_code */
   movementCodeText?: Maybe<Scalars['String']>;
+  stockOwner: StockOwner;
   stockOwnerId?: Maybe<Scalars['String']>;
   system?: Maybe<Scalars['Boolean']>;
 };
@@ -3111,6 +3132,7 @@ export type GoodsIn = {
   modified?: Maybe<Scalars['DateTime']>;
   modifiedBy?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
+  stockOwner: StockOwner;
 };
 
 /** Field names for the GoodsIn model */
@@ -3436,6 +3458,7 @@ export type Load = {
   status?: Maybe<Scalars['Int']>;
   /** Text value for field status */
   statusText?: Maybe<Scalars['String']>;
+  stockOwner: StockOwner;
   stockOwnerId?: Maybe<Scalars['String']>;
   weight?: Maybe<Scalars['Float']>;
 };
@@ -3621,6 +3644,7 @@ export type LogisticUnit = {
   status?: Maybe<Scalars['Int']>;
   /** Text value for field status */
   statusText?: Maybe<Scalars['String']>;
+  stockOwner: StockOwner;
   stockOwnerId?: Maybe<Scalars['String']>;
   width?: Maybe<Scalars['Float']>;
 };
@@ -3756,6 +3780,7 @@ export type Movement = {
   status?: Maybe<Scalars['Int']>;
   /** Text value for field status */
   statusText?: Maybe<Scalars['String']>;
+  stockOwner: StockOwner;
   stockOwnerId?: Maybe<Scalars['String']>;
   toBeFeedback?: Maybe<Scalars['Boolean']>;
   type?: Maybe<Scalars['Int']>;
@@ -5511,6 +5536,7 @@ export type Pattern = {
   status?: Maybe<Scalars['Int']>;
   /** Text value for field status */
   statusText?: Maybe<Scalars['String']>;
+  stockOwner: StockOwner;
   stockOwnerId?: Maybe<Scalars['String']>;
 };
 
@@ -5705,6 +5731,7 @@ export type PurchaseOrder = {
   status?: Maybe<Scalars['Int']>;
   /** Text value for field status */
   statusText?: Maybe<Scalars['String']>;
+  stockOwner: StockOwner;
   stockOwnerId?: Maybe<Scalars['String']>;
   supplier?: Maybe<Scalars['String']>;
   type?: Maybe<Scalars['Int']>;
@@ -5753,6 +5780,7 @@ export type PurchaseOrderLine = {
   status?: Maybe<Scalars['Int']>;
   /** Text value for field status */
   statusText?: Maybe<Scalars['String']>;
+  stockOwner: StockOwner;
   stockOwnerId?: Maybe<Scalars['String']>;
 };
 
@@ -5860,6 +5888,14 @@ export type Query = {
   articleLuBarcode?: Maybe<ArticleLuBarcode>;
   /** Get Article_lu_barcode objects */
   articleLuBarcodes: ArticleLuBarcodeListResult;
+  /** Get Articles_lu_barcode objects by article id */
+  articleLuBarcodesByArticleId: Array<ArticleLuBarcode>;
+  /** Get Articles_lu_barcode objects by barcode id */
+  articleLuBarcodesByBarcodeId: Array<ArticleLuBarcode>;
+  /** Get Articles_lu_barcode objects by Logistic Unit id */
+  articleLuBarcodesByLuId: Array<ArticleLuBarcode>;
+  /** Get Articles_lu_barcode objects by Stock Owner id */
+  articleLuBarcodesByStockOwnerId: Array<ArticleLuBarcode>;
   /** Get a Article_lu objects */
   articleLus: ArticleLuListResult;
   /** Get a article_set object */
@@ -6069,6 +6105,26 @@ export type QueryArticleLuBarcodesArgs = {
   language?: InputMaybe<Scalars['String']>;
   orderBy?: InputMaybe<Array<ArticleLuBarcodeOrderByCriterion>>;
   page?: Scalars['Int'];
+};
+
+
+export type QueryArticleLuBarcodesByArticleIdArgs = {
+  articleId: Scalars['String'];
+};
+
+
+export type QueryArticleLuBarcodesByBarcodeIdArgs = {
+  barcodeId: Scalars['String'];
+};
+
+
+export type QueryArticleLuBarcodesByLuIdArgs = {
+  luId: Scalars['String'];
+};
+
+
+export type QueryArticleLuBarcodesByStockOwnerIdArgs = {
+  stockOwnerId: Scalars['String'];
 };
 
 
@@ -7097,6 +7153,7 @@ export type StatusEvolution = {
   status?: Maybe<Scalars['Int']>;
   /** Text value for field status */
   statusText?: Maybe<Scalars['String']>;
+  stockOwner: StockOwner;
   stockOwnerId?: Maybe<Scalars['String']>;
   toBeFeedback?: Maybe<Scalars['Boolean']>;
 };
@@ -7153,7 +7210,7 @@ export type StatusFeedbackOverWrite = {
   __typename?: 'StatusFeedbackOverWrite';
   created?: Maybe<Scalars['DateTime']>;
   createdBy?: Maybe<Scalars['String']>;
-  customValue?: Maybe<Scalars['String']>;
+  customValue?: Maybe<Scalars['Int']>;
   extras?: Maybe<Scalars['JSON']>;
   feedback?: Maybe<Scalars['Boolean']>;
   id?: Maybe<Scalars['String']>;
@@ -7165,6 +7222,7 @@ export type StatusFeedbackOverWrite = {
   status?: Maybe<Scalars['Int']>;
   /** Text value for field status */
   statusText?: Maybe<Scalars['String']>;
+  stockOwner: StockOwner;
   stockOwnerId?: Maybe<Scalars['String']>;
   system?: Maybe<Scalars['Boolean']>;
 };
@@ -7205,7 +7263,7 @@ export type StatusFeedbackOverwriteOrderByCriterion = {
 export type StatusFeedbackOverwriteSearchFilters = {
   created?: InputMaybe<Scalars['DateTime']>;
   createdBy?: InputMaybe<Scalars['String']>;
-  customValue?: InputMaybe<Scalars['String']>;
+  customValue?: InputMaybe<Scalars['Int']>;
   extras?: InputMaybe<Scalars['JSON']>;
   feedback?: InputMaybe<Scalars['Boolean']>;
   id?: InputMaybe<Scalars['String']>;
@@ -8106,7 +8164,7 @@ export type UpdateStatusEvolutionInput = {
 
 /** Values to update the existing record with */
 export type UpdateStatusFeedbackOverwriteInput = {
-  customValue?: InputMaybe<Scalars['String']>;
+  customValue?: InputMaybe<Scalars['Int']>;
   extras?: InputMaybe<Scalars['JSON']>;
   feedback?: InputMaybe<Scalars['Boolean']>;
   objectType?: InputMaybe<Scalars['Int']>;
@@ -8462,6 +8520,47 @@ export type ChangePasswordMutationVariables = Exact<{
 
 export type ChangePasswordMutation = { __typename?: 'Mutation', changePassword: { __typename: 'ChangePasswordFailure', message: string } | { __typename: 'ChangePasswordSuccess', message: string } };
 
+export type GetAllMovementsQueryVariables = Exact<{
+  orderBy?: InputMaybe<Array<MovementOrderByCriterion> | MovementOrderByCriterion>;
+  filters?: InputMaybe<MovementSearchFilters>;
+  page: Scalars['Int'];
+  itemsPerPage: Scalars['Int'];
+  language?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type GetAllMovementsQuery = { __typename?: 'Query', movements: { __typename?: 'MovementListResult', count: number, itemsPerPage: number, totalPages: number, page: number, results: Array<{ __typename?: 'Movement', id?: string | null, extras?: any | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, quantity?: number | null, initialStatus?: number | null, finalReservation?: string | null, status?: number | null, code?: number | null, type?: number | null, model?: number | null, finalArticle?: number | null, finalQuantity?: number | null, feedback?: boolean | null, toBeFeedback?: boolean | null, comment?: string | null, equipmentBarcode?: string | null, priority?: number | null, stockOwnerId?: string | null, articleId?: string | null, originalLocationId?: string | null, finalLocationId?: string | null, goodsInId?: string | null, purchaseOrderId?: string | null, boxId?: string | null, boxLineId?: string | null, originalMovementId?: string | null, returnCodeId?: string | null, actionCodeId?: string | null, initialStatusText?: string | null, finalStatusText?: string | null, statusText?: string | null, typeText?: string | null, modelText?: string | null, codeText?: string | null, priorityText?: string | null, originalMovement: Array<{ __typename?: 'Movement', id?: string | null, extras?: any | null, quantity?: number | null }> }> } };
+
+export type GetMovementByIdQueryVariables = Exact<{
+  id: Scalars['String'];
+  language?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type GetMovementByIdQuery = { __typename?: 'Query', movement?: { __typename?: 'Movement', id?: string | null, extras?: any | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, quantity?: number | null, initialStatus?: number | null, finalReservation?: string | null, status?: number | null, code?: number | null, type?: number | null, model?: number | null, finalArticle?: number | null, finalQuantity?: number | null, feedback?: boolean | null, toBeFeedback?: boolean | null, comment?: string | null, equipmentBarcode?: string | null, priority?: number | null, stockOwnerId?: string | null, articleId?: string | null, originalLocationId?: string | null, finalLocationId?: string | null, goodsInId?: string | null, purchaseOrderId?: string | null, boxId?: string | null, boxLineId?: string | null, originalMovementId?: string | null, returnCodeId?: string | null, actionCodeId?: string | null, initialStatusText?: string | null, finalStatusText?: string | null, statusText?: string | null, typeText?: string | null, modelText?: string | null, codeText?: string | null, priorityText?: string | null, originalMovement: Array<{ __typename?: 'Movement', id?: string | null, extras?: any | null, quantity?: number | null }> } | null };
+
+export type CreateMovementMutationVariables = Exact<{
+  input: CreateMovementInput;
+}>;
+
+
+export type CreateMovementMutation = { __typename?: 'Mutation', createMovement: { __typename?: 'Movement', id?: string | null, extras?: any | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, quantity?: number | null, initialStatus?: number | null, finalReservation?: string | null, status?: number | null, code?: number | null, type?: number | null, model?: number | null, finalArticle?: number | null, finalQuantity?: number | null, feedback?: boolean | null, toBeFeedback?: boolean | null, comment?: string | null, equipmentBarcode?: string | null, priority?: number | null, stockOwnerId?: string | null, articleId?: string | null, originalLocationId?: string | null, finalLocationId?: string | null, goodsInId?: string | null, purchaseOrderId?: string | null, boxId?: string | null, boxLineId?: string | null, originalMovementId?: string | null, returnCodeId?: string | null, actionCodeId?: string | null, initialStatusText?: string | null, finalStatusText?: string | null, statusText?: string | null, typeText?: string | null, modelText?: string | null, codeText?: string | null, priorityText?: string | null, originalMovement: Array<{ __typename?: 'Movement', id?: string | null, extras?: any | null, quantity?: number | null }> } };
+
+export type DeleteMovementMutationVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type DeleteMovementMutation = { __typename?: 'Mutation', deleteMovement: boolean };
+
+export type UpdateMovementMutationVariables = Exact<{
+  id: Scalars['String'];
+  input: UpdateMovementInput;
+}>;
+
+
+export type UpdateMovementMutation = { __typename?: 'Mutation', updateMovement?: { __typename?: 'Movement', id?: string | null, extras?: any | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, quantity?: number | null, initialStatus?: number | null, finalReservation?: string | null, status?: number | null, code?: number | null, type?: number | null, model?: number | null, finalArticle?: number | null, finalQuantity?: number | null, feedback?: boolean | null, toBeFeedback?: boolean | null, comment?: string | null, equipmentBarcode?: string | null, priority?: number | null, stockOwnerId?: string | null, articleId?: string | null, originalLocationId?: string | null, finalLocationId?: string | null, goodsInId?: string | null, purchaseOrderId?: string | null, boxId?: string | null, boxLineId?: string | null, originalMovementId?: string | null, returnCodeId?: string | null, actionCodeId?: string | null, initialStatusText?: string | null, finalStatusText?: string | null, statusText?: string | null, typeText?: string | null, modelText?: string | null, codeText?: string | null, priorityText?: string | null, originalMovement: Array<{ __typename?: 'Movement', id?: string | null, extras?: any | null, quantity?: number | null }> } | null };
+
 export type GetAllPurchaseOrdersQueryVariables = Exact<{
   orderBy?: InputMaybe<Array<PurchaseOrderOrderByCriterion> | PurchaseOrderOrderByCriterion>;
   filters?: InputMaybe<PurchaseOrderSearchFilters>;
@@ -8504,6 +8603,13 @@ export type DeletePurchaseOrderMutationVariables = Exact<{
 
 
 export type DeletePurchaseOrderMutation = { __typename?: 'Mutation', deletePurchaseOrder: boolean };
+
+export type SoftDeletePurchaseOrderMutationVariables = Exact<{
+  purchaseOrderId: Scalars['String'];
+}>;
+
+
+export type SoftDeletePurchaseOrderMutation = { __typename?: 'Mutation', softDeletePurchaseOrder: boolean };
 
 export type UpdatePurchaseOrderMutationVariables = Exact<{
   id: Scalars['String'];
@@ -8603,6 +8709,47 @@ export type UpdateReturnCodeMutationVariables = Exact<{
 
 export type UpdateReturnCodeMutation = { __typename?: 'Mutation', updateReturnCode?: { __typename?: 'ReturnCode', id?: string | null, name?: string | null, type?: number | null } | null };
 
+export type GetAllStatusEvolutionsQueryVariables = Exact<{
+  orderBy?: InputMaybe<Array<StatusEvolutionOrderByCriterion> | StatusEvolutionOrderByCriterion>;
+  filters?: InputMaybe<StatusEvolutionSearchFilters>;
+  page: Scalars['Int'];
+  itemsPerPage: Scalars['Int'];
+  language?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type GetAllStatusEvolutionsQuery = { __typename?: 'Query', statusEvolutions: { __typename?: 'StatusEvolutionListResult', count: number, itemsPerPage: number, totalPages: number, page: number, results: Array<{ __typename?: 'StatusEvolution', id?: string | null, extras?: any | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, object?: number | null, objectReference?: string | null, status?: number | null, feedback?: boolean | null, toBeFeedback?: boolean | null, stockOwnerId?: string | null, objectText?: string | null, statusText?: string | null, stockOwner: { __typename?: 'StockOwner', id?: string | null, name?: string | null } }> } };
+
+export type GetStatusEvolutionByIdQueryVariables = Exact<{
+  id: Scalars['String'];
+  language?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type GetStatusEvolutionByIdQuery = { __typename?: 'Query', statusEvolution?: { __typename?: 'StatusEvolution', id?: string | null, extras?: any | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, object?: number | null, objectReference?: string | null, status?: number | null, feedback?: boolean | null, toBeFeedback?: boolean | null, stockOwnerId?: string | null, objectText?: string | null, statusText?: string | null, stockOwner: { __typename?: 'StockOwner', id?: string | null, name?: string | null } } | null };
+
+export type CreateStatusEvolutionMutationVariables = Exact<{
+  input: CreateStatusEvolutionInput;
+}>;
+
+
+export type CreateStatusEvolutionMutation = { __typename?: 'Mutation', createStatusEvolution: { __typename?: 'StatusEvolution', id?: string | null, extras?: any | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, object?: number | null, objectReference?: string | null, status?: number | null, feedback?: boolean | null, toBeFeedback?: boolean | null, stockOwnerId?: string | null, objectText?: string | null, statusText?: string | null, stockOwner: { __typename?: 'StockOwner', id?: string | null, name?: string | null } } };
+
+export type DeleteStatusEvolutionMutationVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type DeleteStatusEvolutionMutation = { __typename?: 'Mutation', deleteStatusEvolution: boolean };
+
+export type UpdateStatusEvolutionMutationVariables = Exact<{
+  id: Scalars['String'];
+  input: UpdateStatusEvolutionInput;
+}>;
+
+
+export type UpdateStatusEvolutionMutation = { __typename?: 'Mutation', updateStatusEvolution?: { __typename?: 'StatusEvolution', id?: string | null, extras?: any | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, object?: number | null, objectReference?: string | null, status?: number | null, feedback?: boolean | null, toBeFeedback?: boolean | null, stockOwnerId?: string | null, objectText?: string | null, statusText?: string | null, stockOwner: { __typename?: 'StockOwner', id?: string | null, name?: string | null } } | null };
+
 export type GetAllStockOwnersQueryVariables = Exact<{
   orderBy?: InputMaybe<Array<StockOwnerOrderByCriterion> | StockOwnerOrderByCriterion>;
   filters?: InputMaybe<StockOwnerSearchFilters>;
@@ -8623,6 +8770,15 @@ export type GetStockOwnerIdsQueryVariables = Exact<{
 
 
 export type GetStockOwnerIdsQuery = { __typename?: 'Query', stockOwners: { __typename?: 'StockOwnerListResult', count: number, itemsPerPage: number, totalPages: number, results: Array<{ __typename?: 'StockOwner', id?: string | null, name?: string | null }> } };
+
+export type ListParametersForAScopeQueryVariables = Exact<{
+  scope: Scalars['String'];
+  code?: InputMaybe<Scalars['String']>;
+  language?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type ListParametersForAScopeQuery = { __typename?: 'Query', listParametersForAScope: Array<{ __typename?: 'ParameterResults', id: string, text: string, scope: string, code: string }> };
 
 export type GetMyInfoQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -9396,6 +9552,286 @@ export const useChangePasswordMutation = <
       (variables?: ChangePasswordMutationVariables) => fetcher<ChangePasswordMutation, ChangePasswordMutationVariables>(client, ChangePasswordDocument, variables, headers)(),
       options
     );
+export const GetAllMovementsDocument = `
+    query GetAllMovements($orderBy: [MovementOrderByCriterion!], $filters: MovementSearchFilters, $page: Int!, $itemsPerPage: Int!, $language: String) {
+  movements(
+    orderBy: $orderBy
+    filters: $filters
+    page: $page
+    itemsPerPage: $itemsPerPage
+    language: $language
+  ) {
+    count
+    itemsPerPage
+    totalPages
+    page
+    results {
+      id
+      extras
+      created
+      createdBy
+      modified
+      modifiedBy
+      originalMovement {
+        id
+        extras
+        quantity
+      }
+      quantity
+      initialStatus
+      finalReservation
+      status
+      code
+      type
+      model
+      finalArticle
+      finalQuantity
+      feedback
+      toBeFeedback
+      comment
+      equipmentBarcode
+      priority
+      stockOwnerId
+      articleId
+      originalLocationId
+      finalLocationId
+      goodsInId
+      purchaseOrderId
+      boxId
+      boxLineId
+      originalMovementId
+      returnCodeId
+      actionCodeId
+      initialStatusText
+      finalStatusText
+      statusText
+      typeText
+      modelText
+      codeText
+      priorityText
+    }
+  }
+}
+    `;
+export const useGetAllMovementsQuery = <
+      TData = GetAllMovementsQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: GetAllMovementsQueryVariables,
+      options?: UseQueryOptions<GetAllMovementsQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetAllMovementsQuery, TError, TData>(
+      ['GetAllMovements', variables],
+      fetcher<GetAllMovementsQuery, GetAllMovementsQueryVariables>(client, GetAllMovementsDocument, variables, headers),
+      options
+    );
+export const GetMovementByIdDocument = `
+    query GetMovementById($id: String!, $language: String = "en") {
+  movement(id: $id, language: $language) {
+    id
+    extras
+    created
+    createdBy
+    modified
+    modifiedBy
+    originalMovement {
+      id
+      extras
+      quantity
+    }
+    quantity
+    initialStatus
+    finalReservation
+    status
+    code
+    type
+    model
+    finalArticle
+    finalQuantity
+    feedback
+    toBeFeedback
+    comment
+    equipmentBarcode
+    priority
+    stockOwnerId
+    articleId
+    originalLocationId
+    finalLocationId
+    goodsInId
+    purchaseOrderId
+    boxId
+    boxLineId
+    originalMovementId
+    returnCodeId
+    actionCodeId
+    initialStatusText
+    finalStatusText
+    statusText
+    typeText
+    modelText
+    codeText
+    priorityText
+  }
+}
+    `;
+export const useGetMovementByIdQuery = <
+      TData = GetMovementByIdQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: GetMovementByIdQueryVariables,
+      options?: UseQueryOptions<GetMovementByIdQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetMovementByIdQuery, TError, TData>(
+      ['GetMovementById', variables],
+      fetcher<GetMovementByIdQuery, GetMovementByIdQueryVariables>(client, GetMovementByIdDocument, variables, headers),
+      options
+    );
+export const CreateMovementDocument = `
+    mutation CreateMovement($input: CreateMovementInput!) {
+  createMovement(input: $input) {
+    id
+    extras
+    created
+    createdBy
+    modified
+    modifiedBy
+    originalMovement {
+      id
+      extras
+      quantity
+    }
+    quantity
+    initialStatus
+    finalReservation
+    status
+    code
+    type
+    model
+    finalArticle
+    finalQuantity
+    feedback
+    toBeFeedback
+    comment
+    equipmentBarcode
+    priority
+    stockOwnerId
+    articleId
+    originalLocationId
+    finalLocationId
+    goodsInId
+    purchaseOrderId
+    boxId
+    boxLineId
+    originalMovementId
+    returnCodeId
+    actionCodeId
+    initialStatusText
+    finalStatusText
+    statusText
+    typeText
+    modelText
+    codeText
+    priorityText
+  }
+}
+    `;
+export const useCreateMovementMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<CreateMovementMutation, TError, CreateMovementMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<CreateMovementMutation, TError, CreateMovementMutationVariables, TContext>(
+      ['CreateMovement'],
+      (variables?: CreateMovementMutationVariables) => fetcher<CreateMovementMutation, CreateMovementMutationVariables>(client, CreateMovementDocument, variables, headers)(),
+      options
+    );
+export const DeleteMovementDocument = `
+    mutation DeleteMovement($id: String!) {
+  deleteMovement(id: $id)
+}
+    `;
+export const useDeleteMovementMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<DeleteMovementMutation, TError, DeleteMovementMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<DeleteMovementMutation, TError, DeleteMovementMutationVariables, TContext>(
+      ['DeleteMovement'],
+      (variables?: DeleteMovementMutationVariables) => fetcher<DeleteMovementMutation, DeleteMovementMutationVariables>(client, DeleteMovementDocument, variables, headers)(),
+      options
+    );
+export const UpdateMovementDocument = `
+    mutation UpdateMovement($id: String!, $input: UpdateMovementInput!) {
+  updateMovement(id: $id, input: $input) {
+    id
+    extras
+    created
+    createdBy
+    modified
+    modifiedBy
+    originalMovement {
+      id
+      extras
+      quantity
+    }
+    quantity
+    initialStatus
+    finalReservation
+    status
+    code
+    type
+    model
+    finalArticle
+    finalQuantity
+    feedback
+    toBeFeedback
+    comment
+    equipmentBarcode
+    priority
+    stockOwnerId
+    articleId
+    originalLocationId
+    finalLocationId
+    goodsInId
+    purchaseOrderId
+    boxId
+    boxLineId
+    originalMovementId
+    returnCodeId
+    actionCodeId
+    initialStatusText
+    finalStatusText
+    statusText
+    typeText
+    modelText
+    codeText
+    priorityText
+  }
+}
+    `;
+export const useUpdateMovementMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<UpdateMovementMutation, TError, UpdateMovementMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<UpdateMovementMutation, TError, UpdateMovementMutationVariables, TContext>(
+      ['UpdateMovement'],
+      (variables?: UpdateMovementMutationVariables) => fetcher<UpdateMovementMutation, UpdateMovementMutationVariables>(client, UpdateMovementDocument, variables, headers)(),
+      options
+    );
 export const GetAllPurchaseOrdersDocument = `
     query GetAllPurchaseOrders($orderBy: [PurchaseOrderOrderByCriterion!], $filters: PurchaseOrderSearchFilters, $page: Int!, $itemsPerPage: Int!, $language: String) {
   purchaseOrders(
@@ -9563,6 +9999,24 @@ export const useDeletePurchaseOrderMutation = <
     useMutation<DeletePurchaseOrderMutation, TError, DeletePurchaseOrderMutationVariables, TContext>(
       ['DeletePurchaseOrder'],
       (variables?: DeletePurchaseOrderMutationVariables) => fetcher<DeletePurchaseOrderMutation, DeletePurchaseOrderMutationVariables>(client, DeletePurchaseOrderDocument, variables, headers)(),
+      options
+    );
+export const SoftDeletePurchaseOrderDocument = `
+    mutation SoftDeletePurchaseOrder($purchaseOrderId: String!) {
+  softDeletePurchaseOrder(purchaseOrderId: $purchaseOrderId)
+}
+    `;
+export const useSoftDeletePurchaseOrderMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<SoftDeletePurchaseOrderMutation, TError, SoftDeletePurchaseOrderMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<SoftDeletePurchaseOrderMutation, TError, SoftDeletePurchaseOrderMutationVariables, TContext>(
+      ['SoftDeletePurchaseOrder'],
+      (variables?: SoftDeletePurchaseOrderMutationVariables) => fetcher<SoftDeletePurchaseOrderMutation, SoftDeletePurchaseOrderMutationVariables>(client, SoftDeletePurchaseOrderDocument, variables, headers)(),
       options
     );
 export const UpdatePurchaseOrderDocument = `
@@ -9944,6 +10398,186 @@ export const useUpdateReturnCodeMutation = <
       (variables?: UpdateReturnCodeMutationVariables) => fetcher<UpdateReturnCodeMutation, UpdateReturnCodeMutationVariables>(client, UpdateReturnCodeDocument, variables, headers)(),
       options
     );
+export const GetAllStatusEvolutionsDocument = `
+    query GetAllStatusEvolutions($orderBy: [StatusEvolutionOrderByCriterion!], $filters: StatusEvolutionSearchFilters, $page: Int!, $itemsPerPage: Int!, $language: String) {
+  statusEvolutions(
+    orderBy: $orderBy
+    filters: $filters
+    page: $page
+    itemsPerPage: $itemsPerPage
+    language: $language
+  ) {
+    count
+    itemsPerPage
+    totalPages
+    page
+    results {
+      id
+      extras
+      created
+      createdBy
+      modified
+      modifiedBy
+      stockOwner {
+        id
+        name
+      }
+      object
+      objectReference
+      status
+      feedback
+      toBeFeedback
+      stockOwnerId
+      objectText
+      statusText
+    }
+  }
+}
+    `;
+export const useGetAllStatusEvolutionsQuery = <
+      TData = GetAllStatusEvolutionsQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: GetAllStatusEvolutionsQueryVariables,
+      options?: UseQueryOptions<GetAllStatusEvolutionsQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetAllStatusEvolutionsQuery, TError, TData>(
+      ['GetAllStatusEvolutions', variables],
+      fetcher<GetAllStatusEvolutionsQuery, GetAllStatusEvolutionsQueryVariables>(client, GetAllStatusEvolutionsDocument, variables, headers),
+      options
+    );
+export const GetStatusEvolutionByIdDocument = `
+    query GetStatusEvolutionById($id: String!, $language: String = "en") {
+  statusEvolution(id: $id, language: $language) {
+    id
+    extras
+    created
+    createdBy
+    modified
+    modifiedBy
+    stockOwner {
+      id
+      name
+    }
+    object
+    objectReference
+    status
+    feedback
+    toBeFeedback
+    stockOwnerId
+    objectText
+    statusText
+  }
+}
+    `;
+export const useGetStatusEvolutionByIdQuery = <
+      TData = GetStatusEvolutionByIdQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: GetStatusEvolutionByIdQueryVariables,
+      options?: UseQueryOptions<GetStatusEvolutionByIdQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetStatusEvolutionByIdQuery, TError, TData>(
+      ['GetStatusEvolutionById', variables],
+      fetcher<GetStatusEvolutionByIdQuery, GetStatusEvolutionByIdQueryVariables>(client, GetStatusEvolutionByIdDocument, variables, headers),
+      options
+    );
+export const CreateStatusEvolutionDocument = `
+    mutation CreateStatusEvolution($input: CreateStatusEvolutionInput!) {
+  createStatusEvolution(input: $input) {
+    id
+    extras
+    created
+    createdBy
+    modified
+    modifiedBy
+    stockOwner {
+      id
+      name
+    }
+    object
+    objectReference
+    status
+    feedback
+    toBeFeedback
+    stockOwnerId
+    objectText
+    statusText
+  }
+}
+    `;
+export const useCreateStatusEvolutionMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<CreateStatusEvolutionMutation, TError, CreateStatusEvolutionMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<CreateStatusEvolutionMutation, TError, CreateStatusEvolutionMutationVariables, TContext>(
+      ['CreateStatusEvolution'],
+      (variables?: CreateStatusEvolutionMutationVariables) => fetcher<CreateStatusEvolutionMutation, CreateStatusEvolutionMutationVariables>(client, CreateStatusEvolutionDocument, variables, headers)(),
+      options
+    );
+export const DeleteStatusEvolutionDocument = `
+    mutation DeleteStatusEvolution($id: String!) {
+  deleteStatusEvolution(id: $id)
+}
+    `;
+export const useDeleteStatusEvolutionMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<DeleteStatusEvolutionMutation, TError, DeleteStatusEvolutionMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<DeleteStatusEvolutionMutation, TError, DeleteStatusEvolutionMutationVariables, TContext>(
+      ['DeleteStatusEvolution'],
+      (variables?: DeleteStatusEvolutionMutationVariables) => fetcher<DeleteStatusEvolutionMutation, DeleteStatusEvolutionMutationVariables>(client, DeleteStatusEvolutionDocument, variables, headers)(),
+      options
+    );
+export const UpdateStatusEvolutionDocument = `
+    mutation UpdateStatusEvolution($id: String!, $input: UpdateStatusEvolutionInput!) {
+  updateStatusEvolution(id: $id, input: $input) {
+    id
+    extras
+    created
+    createdBy
+    modified
+    modifiedBy
+    stockOwner {
+      id
+      name
+    }
+    object
+    objectReference
+    status
+    feedback
+    toBeFeedback
+    stockOwnerId
+    objectText
+    statusText
+  }
+}
+    `;
+export const useUpdateStatusEvolutionMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<UpdateStatusEvolutionMutation, TError, UpdateStatusEvolutionMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<UpdateStatusEvolutionMutation, TError, UpdateStatusEvolutionMutationVariables, TContext>(
+      ['UpdateStatusEvolution'],
+      (variables?: UpdateStatusEvolutionMutationVariables) => fetcher<UpdateStatusEvolutionMutation, UpdateStatusEvolutionMutationVariables>(client, UpdateStatusEvolutionDocument, variables, headers)(),
+      options
+    );
 export const GetAllStockOwnersDocument = `
     query GetAllStockOwners($orderBy: [StockOwnerOrderByCriterion!], $filters: StockOwnerSearchFilters, $page: Int!, $itemsPerPage: Int!, $language: String) {
   stockOwners(
@@ -10042,6 +10676,30 @@ export const useGetStockOwnerIdsQuery = <
     useQuery<GetStockOwnerIdsQuery, TError, TData>(
       ['GetStockOwnerIds', variables],
       fetcher<GetStockOwnerIdsQuery, GetStockOwnerIdsQueryVariables>(client, GetStockOwnerIdsDocument, variables, headers),
+      options
+    );
+export const ListParametersForAScopeDocument = `
+    query ListParametersForAScope($scope: String!, $code: String, $language: String) {
+  listParametersForAScope(scope: $scope, code: $code, language: $language) {
+    id
+    text
+    scope
+    code
+  }
+}
+    `;
+export const useListParametersForAScopeQuery = <
+      TData = ListParametersForAScopeQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: ListParametersForAScopeQueryVariables,
+      options?: UseQueryOptions<ListParametersForAScopeQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<ListParametersForAScopeQuery, TError, TData>(
+      ['ListParametersForAScope', variables],
+      fetcher<ListParametersForAScopeQuery, ListParametersForAScopeQueryVariables>(client, ListParametersForAScopeDocument, variables, headers),
       options
     );
 export const GetMyInfoDocument = `

@@ -100,7 +100,7 @@ export const EditPurchaseOrderForm: FC<IEditPurchaseOrderFormProps> = ({
         <StyledForm>
             <WrapperForm>
                 <Form form={form} scrollToFirstError>
-                    <PurchaseOrderForm form={form} details={details} id={id}/>
+                    <PurchaseOrderForm form={form} details={details} id={id} mode={'edit'}/>
                 </Form>
                 <div style={{ textAlign: 'right' }}>
                     <Space>

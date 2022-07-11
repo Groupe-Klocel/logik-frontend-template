@@ -94,6 +94,10 @@ mutation DeletePurchaseOrder($id: String!) {
     deletePurchaseOrder(id: $id)
 }
 
+mutation SoftDeletePurchaseOrder($purchaseOrderId: String!) {
+    softDeletePurchaseOrder(purchaseOrderId: $purchaseOrderId)
+}
+
 mutation UpdatePurchaseOrder($id: String!, $input: UpdatePurchaseOrderInput!) {
     updatePurchaseOrder(id: $id, input: $input) {
         id

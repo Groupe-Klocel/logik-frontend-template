@@ -1,0 +1,8 @@
+query ListParametersForAScope($scope: String!, $code: String, $language: String) {
+    listParametersForAScope(scope: $scope, code: $code, language: $language) {
+        id
+        text
+        scope
+        code
+    }
+}
