@@ -123,10 +123,10 @@ export const EditBarcodeForm: FC<EditBarcodeFormProps> = ({
         mutate({ id, input });
     };
 
-    const onBlackListedChange = (e: CheckboxChangeEvent) => {
-        setBlackListedValue(!blackListedValue);
-        form.setFieldsValue({ blackListed: e.target.checked });
-    };
+    // const onBlackListedChange = (e: CheckboxChangeEvent) => {
+    //     setBlackListedValue(!blackListedValue);
+    //     form.setFieldsValue({ blackListed: e.target.checked });
+    // };
 
     const onFinish = () => {
         form.validateFields()
@@ -181,7 +181,7 @@ export const EditBarcodeForm: FC<EditBarcodeFormProps> = ({
                             label={stockOwner}
                             rules={[{ required: true, message: errorMessageEmptyInput }]}
                         >
-                            <Select>
+                            <Select disabled>
                                 <Option value=""> </Option>
                                 {stockOwners?.map((stockOwner: any) => (
                                     <Option key={stockOwner.id} value={stockOwner.id}>
@@ -195,10 +195,10 @@ export const EditBarcodeForm: FC<EditBarcodeFormProps> = ({
                         <Form.Item
                             label={article}
                             name="articleLu"
-                            rules={[{ required: true, message: errorMessageEmptyInput }]}
+                            // rules={[{ required: true, message: errorMessageEmptyInput }]}
                         >
                             {
-                                <AutoComplete style={{ width: '100%' }}>
+                                <AutoComplete disabled style={{ width: '100%' }}>
                                     {/* {articlesList?.map((article: any) => (
                                         <Option key={article.id} value={article.id}>
                                             {article.name}
@@ -212,25 +212,25 @@ export const EditBarcodeForm: FC<EditBarcodeFormProps> = ({
                         <Form.Item
                             label={barcode}
                             name="name"
-                            rules={[{ required: true, message: errorMessageEmptyInput }]}
+                            // rules={[{ required: true, message: errorMessageEmptyInput }]}
                         >
-                            <Input />
+                            <Input disabled />
                         </Form.Item>
                     </Col>
                     <Col xs={8} xl={12}>
                         <Form.Item
                             label={logisticUnit}
                             name="logisticUnit"
-                            rules={[{ required: true, message: errorMessageEmptyInput }]}
+                            // rules={[{ required: true, message: errorMessageEmptyInput }]}
                         >
                             {
-                                <AutoComplete style={{ width: '100%' }}>
+                                <Select disabled style={{ width: '100%' }}>
                                     {/* {articlesList?.map((article: any) => (
                                         <Option key={article.id} value={article.id}>
                                             {article.name}
                                         </Option>
                                     ))} */}
-                                </AutoComplete>
+                                </Select>
                             }
                         </Form.Item>
                     </Col>
