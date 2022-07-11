@@ -7,11 +7,12 @@ import { useDrawerDispatch } from 'context/DrawerContext';
 import useTranslation from 'next-translate/useTranslation';
 import React, { FC, useCallback, useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { cookie } from '@helpers';
+import { cookie, META_DEFAULTS } from '@helpers';
 import { useThemeSwitcher } from "react-css-theme-switcher";
 import Typography from 'antd/lib/typography/Typography';
 import { LogoutOutlined, MenuOutlined } from '@ant-design/icons';
 import Link from 'next/link';
+
 
 const StyledHeader = styled(Layout.Header)`
 padding: 0px 0px 0px 0px !important;
@@ -95,7 +96,7 @@ const Header: FC = () => {
 		<StyledHeader>
 			<Row wrap={false} align='middle' style={{ height: '53px' }}>
 				<Link href='/' passHref><StyledCol><MenuOutlined /></StyledCol></Link>
-				<StyledCol flex="auto"><Logo title='BEE 2.0' /></StyledCol>
+				<StyledCol flex="auto"><Logo title={META_DEFAULTS.title} /></StyledCol>
 				<StyledCol>
 					<Typography>{user.username.toUpperCase()[0]}</Typography>
 				</StyledCol>
