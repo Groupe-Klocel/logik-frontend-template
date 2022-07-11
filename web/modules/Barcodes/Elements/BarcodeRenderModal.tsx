@@ -44,10 +44,12 @@ const BarcodeRenderModal = ({ visible, showhideModal, code }: IBarcodeRenderModa
     };
 
     const onClickOk = () => {
-        // mutate({
-        //     code: code,
-        //     pages: pageNumber
-        // });
+        mutate({
+            templateFilename: 'barcode_template.rml',
+            context: {
+                barcode_code:code,barcode_category:"Code128",pages:pageNumber
+            },
+        });
         showhideModal();
     };
     return (
