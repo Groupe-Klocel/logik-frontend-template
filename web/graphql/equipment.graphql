@@ -34,10 +34,28 @@ query getEquipmentLimitTypeConfigs {
     }
 }
 
+query getPreparationModeParams {
+    listParametersForAScope(scope: "preparation_mode") {
+        id
+        scope
+        code
+        text
+    }
+}
+
 query getListOfPriorities {
     equipments {
         results {
             priority
+            id
+            name
+        }
+    }
+}
+
+query SimpleGetAllPackagingList {
+    packagings {
+        results {
             id
             name
         }
@@ -295,6 +313,9 @@ query GetEquipmentDetailById($id: String!) {
             name
         }
         equipmentId
+        equipment {
+            name
+        }
         packagingId
         packaging {
             name

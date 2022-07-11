@@ -13,3 +13,11 @@ export const addEquipmentRoutes = [
         breadcrumbName: 'actions:add-equipment'
     }
 ];
+
+export const addEquipmentDetailRoutes = [
+    ...equipmentRoutes,
+    {
+        path: '/add-equipment-detail',
+        breadcrumbName: 'actions:add-equipment-detail'
+    }
+];

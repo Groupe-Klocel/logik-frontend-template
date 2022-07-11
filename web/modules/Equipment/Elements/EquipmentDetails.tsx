@@ -8,7 +8,7 @@ import {
     pathParams,
     useEquipmentDetails
 } from '@helpers';
-import { Divider, Space, Typography } from 'antd';
+import { Col, Divider, Row, Space, Typography } from 'antd';
 import { useAppState } from 'context/AppContext';
 import { Table } from 'generated/graphql';
 import useTranslation from 'next-translate/useTranslation';
@@ -88,13 +88,11 @@ const EquipmentDetails = ({ details }: IEquipmentDetailsProps) => {
         }
     }, [data]);
 
-    console.log(equipmentDetails?.count);
-
     const equipmentDetailsColumns = [
         {
             title: 'd:packaging',
-            dataIndex: 'packagingId',
-            key: 'packagingId'
+            dataIndex: ['packaging', 'name'],
+            key: ['packaging', 'name']
         },
         {
             title: 'd:preparationMode',
@@ -110,10 +108,10 @@ const EquipmentDetails = ({ details }: IEquipmentDetailsProps) => {
                         <></>
                     ) : (
                         <>
-                            {/* <LinkButton
+                            <LinkButton
                                 icon={<EyeTwoTone />}
-                                path={pathParams('/goods-in/line/[id]', record.id)}
-                            /> */}
+                                path={pathParams('/equipment/detail/[id]', record.id)}
+                            />
                         </>
                     )}
                 </Space>
@@ -124,10 +122,22 @@ const EquipmentDetails = ({ details }: IEquipmentDetailsProps) => {
         <>
             <DetailsList details={refurbDetails} />
             <Divider />
-            <Title level={4}>
-                {t('common:associated', { name: t('common:equipment-details') })} (
-                {equipmentDetails?.count})
-            </Title>
+            <Row justify="space-between">
+                <Col span={6}>
+                    <Title level={4}>
+                        {t('common:associated', { name: t('common:equipment-details') })} (
+                        {equipmentDetails?.count})
+                    </Title>
+                </Col>
+                <Col span={6}>
+                    <LinkButton
+                        title={t('actions:add2', { name: t('menu:equipment-detail') })}
+                        // path="/add-equipment-detail"
+                        path={pathParams('/add-equipment-detail', details.id)}
+                        type="primary"
+                    />
+                </Col>
+            </Row>
             {equipmentDetails ? (
                 <AppTable
                     type="associatedEquipmentDetails"

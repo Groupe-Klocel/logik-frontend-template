@@ -8391,10 +8391,20 @@ export type GetEquipmentLimitTypeConfigsQueryVariables = Exact<{ [key: string]: 
 
 export type GetEquipmentLimitTypeConfigsQuery = { __typename?: 'Query', listConfigsForAScope: Array<{ __typename?: 'ConfigResults', id: string, scope: string, code: string, text: string }> };
 
+export type GetPreparationModeParamsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetPreparationModeParamsQuery = { __typename?: 'Query', listParametersForAScope: Array<{ __typename?: 'ParameterResults', id: string, scope: string, code: string, text: string }> };
+
 export type GetListOfPrioritiesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type GetListOfPrioritiesQuery = { __typename?: 'Query', equipments: { __typename?: 'EquipmentListResult', results: Array<{ __typename?: 'Equipment', priority?: number | null, id?: string | null, name?: string | null }> } };
+
+export type SimpleGetAllPackagingListQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type SimpleGetAllPackagingListQuery = { __typename?: 'Query', packagings: { __typename?: 'PackagingListResult', results: Array<{ __typename?: 'Packaging', id?: string | null, name?: string | null }> } };
 
 export type GetAllEquipmentQueryVariables = Exact<{
   filters?: InputMaybe<EquipmentSearchFilters>;
@@ -8467,7 +8477,7 @@ export type GetEquipmentDetailByIdQueryVariables = Exact<{
 }>;
 
 
-export type GetEquipmentDetailByIdQuery = { __typename?: 'Query', equipmentDetail?: { __typename?: 'EquipmentDetail', id?: string | null, preparationMode?: number | null, preparationModeText?: string | null, stockOwnerId?: string | null, equipmentId?: string | null, packagingId?: string | null, extras?: any | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, stockOwner: { __typename?: 'StockOwner', name?: string | null }, packaging: { __typename?: 'Packaging', name?: string | null } } | null };
+export type GetEquipmentDetailByIdQuery = { __typename?: 'Query', equipmentDetail?: { __typename?: 'EquipmentDetail', id?: string | null, preparationMode?: number | null, preparationModeText?: string | null, stockOwnerId?: string | null, equipmentId?: string | null, packagingId?: string | null, extras?: any | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, stockOwner: { __typename?: 'StockOwner', name?: string | null }, equipment: { __typename?: 'Equipment', name?: string | null }, packaging: { __typename?: 'Packaging', name?: string | null } } | null };
 
 export type CreateEquipmentDetailMutationVariables = Exact<{
   input: CreateEquipmentDetailInput;
@@ -9146,6 +9156,30 @@ export const useGetEquipmentLimitTypeConfigsQuery = <
       fetcher<GetEquipmentLimitTypeConfigsQuery, GetEquipmentLimitTypeConfigsQueryVariables>(client, GetEquipmentLimitTypeConfigsDocument, variables, headers),
       options
     );
+export const GetPreparationModeParamsDocument = `
+    query getPreparationModeParams {
+  listParametersForAScope(scope: "preparation_mode") {
+    id
+    scope
+    code
+    text
+  }
+}
+    `;
+export const useGetPreparationModeParamsQuery = <
+      TData = GetPreparationModeParamsQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables?: GetPreparationModeParamsQueryVariables,
+      options?: UseQueryOptions<GetPreparationModeParamsQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetPreparationModeParamsQuery, TError, TData>(
+      variables === undefined ? ['getPreparationModeParams'] : ['getPreparationModeParams', variables],
+      fetcher<GetPreparationModeParamsQuery, GetPreparationModeParamsQueryVariables>(client, GetPreparationModeParamsDocument, variables, headers),
+      options
+    );
 export const GetListOfPrioritiesDocument = `
     query getListOfPriorities {
   equipments {
@@ -9169,6 +9203,30 @@ export const useGetListOfPrioritiesQuery = <
     useQuery<GetListOfPrioritiesQuery, TError, TData>(
       variables === undefined ? ['getListOfPriorities'] : ['getListOfPriorities', variables],
       fetcher<GetListOfPrioritiesQuery, GetListOfPrioritiesQueryVariables>(client, GetListOfPrioritiesDocument, variables, headers),
+      options
+    );
+export const SimpleGetAllPackagingListDocument = `
+    query SimpleGetAllPackagingList {
+  packagings {
+    results {
+      id
+      name
+    }
+  }
+}
+    `;
+export const useSimpleGetAllPackagingListQuery = <
+      TData = SimpleGetAllPackagingListQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables?: SimpleGetAllPackagingListQueryVariables,
+      options?: UseQueryOptions<SimpleGetAllPackagingListQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<SimpleGetAllPackagingListQuery, TError, TData>(
+      variables === undefined ? ['SimpleGetAllPackagingList'] : ['SimpleGetAllPackagingList', variables],
+      fetcher<SimpleGetAllPackagingListQuery, SimpleGetAllPackagingListQueryVariables>(client, SimpleGetAllPackagingListDocument, variables, headers),
       options
     );
 export const GetAllEquipmentDocument = `
@@ -9534,6 +9592,9 @@ export const GetEquipmentDetailByIdDocument = `
       name
     }
     equipmentId
+    equipment {
+      name
+    }
     packagingId
     packaging {
       name
