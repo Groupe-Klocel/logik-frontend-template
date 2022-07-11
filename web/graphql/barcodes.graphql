@@ -20,18 +20,15 @@ query GetAllBarcodes(
             name
             supplierName
             supplierArticleCode
-            quantity
+            blacklisted
             rotation
             preparationMode
-            flagDouble
-            blacklisted
-            stockOwnerId
             rotationText
             preparationModeText
-            name
-            quantity
-            rotation
-            blacklisted
+            stockOwnerId
+            stockOwner {
+                name
+            }
         }
     }
 }
@@ -42,14 +39,36 @@ query GetBarcodeById($id: String!) {
         name
         supplierName
         supplierArticleCode
-        quantity
         rotation
         preparationMode
-        flagDouble
         blacklisted
         stockOwnerId
+        stockOwner {
+            name
+        }
         rotationText
         preparationModeText
+    }
+}
+
+query GetArticleLuBarcodeByBarcodeId($id: String!) {
+    articleLuBarcodesByBarcodeId(barcodeId: $id) {
+        id
+        articleId
+        stockOwnerId
+        luId
+        article {
+            name
+            code
+            supplierName
+            length
+            width
+            height
+            baseUnitWeight
+        }
+        lu {
+            name
+        }
     }
 }
 
@@ -59,10 +78,8 @@ mutation CreateBarcode($input: CreateBarcodeInput!) {
         name
         supplierName
         supplierArticleCode
-        quantity
         rotation
         preparationMode
-        flagDouble
         blacklisted
         stockOwnerId
         rotationText
@@ -92,17 +109,17 @@ mutation ExportBarcodes(
     }
 }
 
-mutation RenderBarcode($code: String!, $category: BarcodeCategory, $pages: Int!) {
-    renderBarcode(code: $code, category: $category, pages: $pages) {
-        __typename
-        ... on RenderedDocument {
-            url
-        }
-        ... on BarcodeError {
-            message
-        }
-    }
-}
+# mutation RenderBarcode($code: String!, $category: BarcodeCategory, $pages: Int!) {
+#     renderBarcode(code: $code, category: $category, pages: $pages) {
+#         __typename
+#         ... on RenderedDocument {
+#             url
+#         }
+#         ... on BarcodeError {
+#             message
+#         }
+#     }
+# }
 
 mutation UpdateBarcode($id: String!, $input: UpdateBarcodeInput!) {
     updateBarcode(id: $id, input: $input) {
@@ -110,13 +127,62 @@ mutation UpdateBarcode($id: String!, $input: UpdateBarcodeInput!) {
         name
         supplierName
         supplierArticleCode
-        quantity
         rotation
         preparationMode
-        flagDouble
         blacklisted
         stockOwnerId
         rotationText
         preparationModeText
+    }
+}
+
+query getBarcodesRotationsParams {
+    listParametersForAScope(scope: "rotation") {
+        id
+        scope
+        code
+        text
+    }
+}
+
+query getBarcodesPreparationModesParams {
+    listParametersForAScope(scope: "preparation_mode") {
+        id
+        scope
+        code
+        text
+    }
+}
+
+query SimpleGetAllStockOwners {
+    stockOwners {
+        results {
+            id
+            name
+        }
+    }
+}
+
+query SimpleGetAllArticlesLusBarcodes {
+    stockOwners {
+        results {
+            id
+            name
+        }
+    }
+}
+
+query SimpleGetAllArticlesLus {
+    articleLus {
+        results {
+            article {
+                id
+                name
+            }
+            lu {
+                id
+                name
+            }
+        }
     }
 }

@@ -2,12 +2,7 @@ import { ContentSpin } from '@components';
 import { Layout } from 'antd';
 import { barcodesSubRoutes } from 'modules/Articles/Static/articlesRoutes';
 import useTranslation from 'next-translate/useTranslation';
-import {
-    GetArticleByIdQuery,
-    GetBarcodeByIdQuery,
-    useGetArticleByIdQuery,
-    useGetBarcodeByIdQuery
-} from 'generated/graphql';
+import { GetBarcodeByIdQuery, useGetBarcodeByIdQuery } from 'generated/graphql';
 import { useAuth } from 'context/AuthContext';
 import { FC, useEffect } from 'react';
 import { NextRouter } from 'next/router';
@@ -41,7 +36,7 @@ const EditBarcode: FC<IEditBarcodeProps> = ({ id, router }: IEditBarcodeProps) =
     const breadsCrumb = [
         ...barcodesSubRoutes,
         {
-            breadcrumbName: `${id}`
+            breadcrumbName: `${data?.barcode?.name}`
         }
     ];
 
@@ -54,7 +49,7 @@ const EditBarcode: FC<IEditBarcodeProps> = ({ id, router }: IEditBarcodeProps) =
     return (
         <>
             <HeaderContent
-                title={`${t('common:barcode')} ${id}`}
+                title={`${t('menu:barcode')} ${data?.barcode?.name}`}
                 routes={breadsCrumb}
                 onBack={() => router.back()}
             />

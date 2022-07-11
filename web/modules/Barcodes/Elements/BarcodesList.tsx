@@ -1,4 +1,9 @@
-import { EyeTwoTone, PrinterOutlined } from '@ant-design/icons';
+import {
+    CheckCircleOutlined,
+    CloseSquareOutlined,
+    EyeTwoTone,
+    PrinterOutlined
+} from '@ant-design/icons';
 import { AppTable, ContentSpin, LinkButton } from '@components';
 import {
     DataQueryType,
@@ -10,9 +15,9 @@ import {
     useBarcodes
 } from '@helpers';
 import { Button, Space } from 'antd';
+
 import useTranslation from 'next-translate/useTranslation';
 import { useCallback, useEffect, useState } from 'react';
-import { BarcodeRenderModal } from './BarcodeRenderModal';
 
 export type BarcodesListTypeProps = {
     searchCriteria?: any;
@@ -20,6 +25,19 @@ export type BarcodesListTypeProps = {
 
 const BarcodesList = ({ searchCriteria }: BarcodesListTypeProps) => {
     const { t } = useTranslation();
+    const stockOwner = t('d:stockOwner');
+    const barcode = t('common:barcode');
+    const articleCode = t('d:articleCode');
+    const articleName = t('d:articleName');
+    const supplierName = t('d:supplierName');
+    const rotation = t('d:rotation');
+    const preparationMode = t('d:preparationMode');
+    const articleLuLength = t('d:articleLuLength');
+    const articleLuWidth = t('d:articleLuWidth');
+    const articleLuHeight = t('d:articleLuHeight');
+    const articleLuBaseUnitWeight = t('d:articleLuBaseUnitWeight');
+    const blackListed = t('d:blackListed');
+    const actions = t('actions:actions');
     const [barcodes, setBarcodes] = useState<DataQueryType>();
     const [sort, setSort] = useState<any>(null);
     const [showModal, setShowModal] = useState(false);
@@ -29,6 +47,21 @@ const BarcodesList = ({ searchCriteria }: BarcodesListTypeProps) => {
         current: DEFAULT_PAGE_NUMBER,
         itemsPerPage: DEFAULT_ITEMS_PER_PAGE
     });
+
+    const [articlesLuBarcodes, setArticlesLuBarcodes] = useState<any>();
+
+    // const articlesLuBarcodes = useGetArticleLuBarcodeByBarcodeIdQuery<Partial<GetArticleLuBarcodeByBarcodeIdQuery>, Error>(
+    //     graphqlRequestClient,
+    //     {
+    //         id:
+    //     }
+    // );
+
+    // useEffect(() => {
+    //     if (articlesLuBarcodes) {
+    //         setArticlesLuBarcode(articlesLuBarcodes?.data?.listParametersForAScope);
+    //     }
+    // }, [articlesLuBarcodes]);
 
     // make wrapper function to give child
     const onChangePagination = useCallback(
@@ -61,18 +94,29 @@ const BarcodesList = ({ searchCriteria }: BarcodesListTypeProps) => {
         }
     }, [data]);
 
+    // For pagination
+    // useEffect(() => {
+    //     if (data) {
+    //         setArticlesLuBarcodes(articlesLuBarcodes?.results?.map?.articles);
+    //         setPagination({
+    //             ...pagination,
+    //             total: data?.barcodes?.count
+    //         });
+    //     }
+    // }, [data]);
+
     const handleTableChange = async (_pagination: any, _filter: any, sorter: any) => {
         await setSort(orderByFormater(sorter));
     };
-
+    console.log(data);
     const columns = [
         {
-            title: 'd:stockOwner',
-            dataIndex: 'stockOwner',
-            key: 'stockOwner'
+            title: stockOwner,
+            dataIndex: ['stockOwner', 'name'],
+            key: ['stockOwner', 'name']
         },
         {
-            title: 'd:name',
+            title: barcode,
             dataIndex: 'name',
             key: 'name',
             sorter: {
@@ -81,56 +125,68 @@ const BarcodesList = ({ searchCriteria }: BarcodesListTypeProps) => {
             showSorterTooltip: false
         },
         {
-            title: 'd:articleCode',
-            dataIndex: 'articleCode',
-            key: 'articleCode'
+            title: articleCode,
+            dataIndex: ['article', 'code'],
+            key: ['article', 'code']
         },
         {
-            title: 'd:articleName',
-            dataIndex: 'articleName',
-            key: 'articleName'
+            title: articleName,
+            dataIndex: ['article', 'name'],
+            key: ['article', 'name']
         },
         {
-            title: 'd:supplierName',
-            dataIndex: 'supplierName',
-            key: 'supplierName'
+            title: supplierName,
+            dataIndex: ['article', 'supplierName'],
+            key: ['article', 'supplierName']
         },
         {
-            title: 'd:rotation',
-            dataIndex: 'rotation',
-            key: 'rotation',
+            title: rotation,
+            dataIndex: 'rotationText',
+            key: 'rotationText',
             sorter: {
                 multiple: 3
             },
             showSorterTooltip: false
         },
         {
-            title: 'd:preparationMode',
-            dataIndex: 'preparationMode',
-            key: 'preparationMode'
+            title: preparationMode,
+            dataIndex: 'preparationModeText',
+            key: 'preparationModeText'
         },
         {
-            title: 'd:articleLuLength',
-            dataIndex: 'articleLuLength',
-            key: 'articleLuLength'
+            title: articleLuLength,
+            dataIndex: ['article', 'articleLuLength'],
+            key: ['article', 'articleLuLength']
         },
         {
-            title: 'd:articleLuWidth',
+            title: articleLuWidth,
             dataIndex: 'articleLuWidth',
             key: 'articleLuWidth'
         },
         {
-            title: 'd:articleLuHeight',
+            title: articleLuHeight,
             dataIndex: 'articleLuHeight',
             key: 'articleLuHeight'
         },
         {
-            title: 'd:articleLuBaseUnitWeight',
+            title: articleLuBaseUnitWeight,
             dataIndex: 'articleLuBaseUnitWeight',
             key: 'articleLuBaseUnitWeight'
         },
         {
-            title: 'actions:actions',
+            title: blackListed,
+            dataIndex: 'blackListed',
+            key: 'blackListed',
+            render: (blackListed: Text) => {
+                return blackListed ? (
+                    <CheckCircleOutlined style={{ color: 'green' }} />
+                ) : (
+                    <CloseSquareOutlined style={{ color: 'red' }} />
+                );
+            }
+        },
+        {
+            title: actions,
             key: 'actions',
             render: (record: { id: string; name: string }) => (
                 <Space>
@@ -165,13 +221,6 @@ const BarcodesList = ({ searchCriteria }: BarcodesListTypeProps) => {
             ) : (
                 <ContentSpin />
             )}
-            <BarcodeRenderModal
-                visible={showModal}
-                code={barcodeName}
-                showhideModal={() => {
-                    setShowModal(!showModal);
-                }}
-            />
         </>
     );
 };

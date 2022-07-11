@@ -1,35 +1,29 @@
-import { ContentSpin, LinkButton } from '@components';
-import { Layout, Space, Button } from 'antd';
-import { barcodesRoutes } from 'modules/Barcodes/Static/barcodesRoutes';
-import useTranslation from 'next-translate/useTranslation';
-import {
-    GetBarcodeByIdQuery,
-    useGetBarcodeByIdQuery,
-    useDeleteBarcodeMutation,
-    DeleteBarcodeMutation,
-    DeleteBarcodeMutationVariables
-} from 'generated/graphql';
-import { BarcodeDetails } from 'modules/Barcodes/Elements/BarcodeDetails';
-import { useAuth } from 'context/AuthContext';
-import { FC, useEffect } from 'react';
-import { NextRouter } from 'next/router';
-import styled from 'styled-components';
-import { HeaderContent } from '@components';
+import { ContentSpin, HeaderContent, LinkButton, PageContentWrapper } from '@components';
 import { showError, showSuccess } from '@helpers';
+import { Space, Typography } from 'antd';
+import { useAuth } from 'context/AuthContext';
+import {
+    DeleteBarcodeMutation,
+    DeleteBarcodeMutationVariables,
+    GetBarcodeByIdQuery,
+    useDeleteBarcodeMutation,
+    useGetBarcodeByIdQuery
+} from 'generated/graphql';
+import useTranslation from 'next-translate/useTranslation';
+import { NextRouter } from 'next/router';
+import { FC } from 'react';
+import { BarcodeDetails } from '../Elements/BarcodeDetails';
+import { barcodesRoutes } from '../Static/barcodesRoutes';
 
-const StyledPageContent = styled(Layout.Content)`
-    margin: 15px 30px;
-    padding: 20px;
-`;
-
-export interface ISingleBarcodeProps {
-    id: string | any;
+export type SingleBarcodeTypeProps = {
+    id: any;
     router: NextRouter;
-}
+};
 
-const SingleBarcode: FC<ISingleBarcodeProps> = ({ id, router }: ISingleBarcodeProps) => {
-    const { t } = useTranslation();
+const SingleBarcode: FC<SingleBarcodeTypeProps> = ({ id, router }: SingleBarcodeTypeProps) => {
     const { graphqlRequestClient } = useAuth();
+    const { t } = useTranslation();
+
     const { isLoading, data, error } = useGetBarcodeByIdQuery<GetBarcodeByIdQuery, Error>(
         graphqlRequestClient,
         {
@@ -56,29 +50,23 @@ const SingleBarcode: FC<ISingleBarcodeProps> = ({ id, router }: ISingleBarcodePr
         }
     );
 
-    const deleteBarcode = ({ id }: DeleteBarcodeMutationVariables) => {
-        mutate({ id });
-    };
+    // const deleteBarcode = ({ id }: DeleteBarcodeMutationVariables) => {
+    //     mutate({ id });
+    // };
 
     const breadsCrumb = [
         ...barcodesRoutes,
         {
-            breadcrumbName: `${id}`
+            breadcrumbName: `${data?.barcode?.name}`
         }
     ];
-
-    useEffect(() => {
-        if (error) {
-            showError(t('messages:error-getting-data'));
-        }
-    }, [error]);
 
     return (
         <>
             <HeaderContent
-                title={`${t('common:barcode')} ${id}`}
+                title={`${t('menu:barcode')} ${data?.barcode?.name}`}
                 routes={breadsCrumb}
-                onBack={() => router.back()}
+                onBack={() => router.push('/barcodes')}
                 actionsRight={
                     <Space>
                         <LinkButton
@@ -86,22 +74,25 @@ const SingleBarcode: FC<ISingleBarcodeProps> = ({ id, router }: ISingleBarcodePr
                             path={`/barcode/edit/${id}`}
                             type="primary"
                         />
-                        <Button
-                            loading={deleteLoading}
-                            onClick={() => deleteBarcode({ id: id })}
-                        >
+                        {/* <Button loading={deleteLoading} onClick={() => deleteBarcode({ id: id })}>
                             {t('actions:delete')}
-                        </Button>
+                        </Button> */}
                     </Space>
                 }
             />
-            <StyledPageContent>
-                {data?.barcode && !isLoading ? (
-                    <BarcodeDetails details={data?.barcode} />
+            <PageContentWrapper>
+                {/* {!!data}
+                    <Typography >Content Does not exist</Typography> */}
+                {data && !isLoading ? (
+                    data.barcode !== null ? (
+                        <BarcodeDetails details={data?.barcode} />
+                    ) : (
+                        <Typography>Content Does not exist</Typography>
+                    )
                 ) : (
                     <ContentSpin />
                 )}
-            </StyledPageContent>
+            </PageContentWrapper>
         </>
     );
 };

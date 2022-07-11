@@ -1,7 +1,7 @@
 {
     "id": "ID",
     "accountId": "Account ID ",
-    "available":"Available",
+    "available": "Available",
     "companyId": "Company ID",
     "status": "Status",
     "code": "Code",
@@ -43,15 +43,26 @@
     "comment": "Comment",
     "system": "System",
     "description": "Description",
-	"default": "Default",
-	"dispatchable": "Dispatchable",
-	"bloc": "Bloc",
+    "default": "Default",
+    "dispatchable": "Dispatchable",
+    "bloc": "Bloc",
     "aisle": "Aisle",
     "level": "Level",
     "position": "Position",
-	"replenish": "replenish",
-	"masse": "Masse",
-    "type": "Type"
-
-
+    "replenish": "replenish",
+    "masse": "Masse",
+    "type": "Type",
+    "stockOwner": "Stock Owner",
+    "articleCode": "Article Code",
+    "articleName": "Article Name",
+    "articleLuLength": "Article Length",
+    "articleLuWidth": "Article Width",
+    "articleLuHeight": "Article Height",
+    "articleLuBaseUnitWeight": "Unit Article Weight",
+    "logisticUnit": "Logistic Unit",
+    "blackListed": "Black Listed",
+    "blacklisted": "Black Listed",
+    "rotationText": "Rotation",
+    "preparationModeText": "Preparation Mode",
+    "associatedStockOwner": "Stock Owner"
 }
