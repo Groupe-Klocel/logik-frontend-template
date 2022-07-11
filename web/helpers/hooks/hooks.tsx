@@ -17,7 +17,9 @@ import {
     useGetAllGoodsInsQuery,
     GetAllGoodsInsQuery,
     useGetGoodsInLinesQuery,
-    GetGoodsInLinesQuery
+    GetGoodsInLinesQuery,
+    useListParametersForAScopeQuery,
+    ListParametersForAScopeQuery
 } from 'generated/graphql';
 
 const useArticles = (search: any, page: number, itemsPerPage: number, sort: any) => {
@@ -270,6 +272,19 @@ const useGoodsInLines = (
     return goodsInLine;
 };
 
+const useStockStatuses = () => {
+    const { graphqlRequestClient } = useAuth();
+    const stockStatuses = useListParametersForAScopeQuery<Partial<ListParametersForAScopeQuery>, Error>(
+        graphqlRequestClient,
+        {
+            scope: 'stock_statuses'
+        }
+    );
+
+    return stockStatuses
+}
+
+
 export {
     useArticles,
     useBlocks,
@@ -279,5 +294,6 @@ export {
     useMyInfo,
     useReturnCodes,
     useGoodsIns,
-    useGoodsInLines
+    useGoodsInLines,
+    useStockStatuses
 };

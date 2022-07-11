@@ -1,7 +1,7 @@
 import { AppHead } from '@components';
 import MainLayout from 'components/layouts/MainLayout';
 import { FC } from 'react';
-import { AddStockStatus } from '../modules/Stocks/PagesContainer/AddStockStatus';
+import { AddStockStatus } from 'modules/Stocks/PagesContainer/AddStockStatus';
 
 type PageComponent = FC & { layout: typeof MainLayout };
 

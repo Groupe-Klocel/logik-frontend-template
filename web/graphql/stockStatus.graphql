@@ -1,0 +1,61 @@
+
+query ListParametersForAScope($scope: String!, $code: String, $language: String) {
+    listParametersForAScope(scope: $scope, code: $code, language: $language) {
+        id
+        text
+        scope
+        code
+    }
+}
+
+query GetParameterById($id: String!, $language: String) {
+    parameter(id: $id, language: $language) {
+        id
+        scope
+        code
+        value
+        extras
+        created
+        createdBy
+        modified
+        modifiedBy
+        translation
+        system
+    }
+}
+
+mutation CreateParameter($input: CreateParameterInput!) {
+    createParameter(input: $input) {
+        id
+        scope
+        code
+        value
+        extras
+        created
+        createdBy
+        modified
+        modifiedBy
+        translation
+        system
+    }
+}
+
+mutation UpdateParameter($id: String!, $input: UpdateParameterInput!) {
+    updateParameter(id: $id, input: $input) {
+        id
+        scope
+        code
+        value
+        extras
+        created
+        createdBy
+        modified
+        modifiedBy
+        translation
+        system
+    }
+}
+
+mutation DeleteParameter($parameterId: String!) {
+    deleteParameter(parameterId: $parameterId)
+}
