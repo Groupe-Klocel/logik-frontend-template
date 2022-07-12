@@ -1,11 +1,10 @@
 import { WrapperForm } from '@components';
-import { Button, Col, Input, InputNumber, Row, Form, AutoComplete, Checkbox, Select } from 'antd';
+import { Button, Input, Form, Select } from 'antd';
 import useTranslation from 'next-translate/useTranslation';
 import { FC, useEffect, useState } from 'react';
 import { useAuth } from 'context/AuthContext';
 import { useRouter } from 'next/router';
 import { showError, showSuccess, showInfo } from '@helpers';
-import { CheckboxChangeEvent } from 'antd/lib/checkbox';
 import {
     GetPreparationModeParamsQuery,
     SimpleGetAllPackagingListQuery,

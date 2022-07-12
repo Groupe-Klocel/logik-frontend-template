@@ -1,7 +1,6 @@
 import { WrapperForm } from '@components';
 import { showError, showInfo, showSuccess } from '@helpers';
-import { Button, Checkbox, Col, Form, Input, InputNumber, Row, Select } from 'antd';
-import { CheckboxChangeEvent } from 'antd/lib/checkbox';
+import { Button, Col, Form, Input, Row, Select } from 'antd';
 import {
     CreateEquipmentDetailMutation,
     CreateEquipmentDetailMutationVariables,
@@ -100,7 +99,6 @@ export const AddEquipmentDetailForm = () => {
             .then(() => {
                 // Here make api call of something else
                 const formData = form.getFieldsValue(true);
-                console.log('zzz', formData);
                 delete formData['associatedEquipment'];
                 createEquipmentDetail({ input: formData });
             })
@@ -115,7 +113,6 @@ export const AddEquipmentDetailForm = () => {
         }
     }, [createLoading]);
 
-    console.log(packagings);
     return (
         <WrapperForm>
             <Form form={form} scrollToFirstError>
