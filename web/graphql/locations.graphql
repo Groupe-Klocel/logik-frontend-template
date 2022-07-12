@@ -1,0 +1,182 @@
+query getReplenishTypesConfigs {
+    listConfigsForAScope(scope: "location_replenish_type") {
+        id
+        scope
+        code
+        text
+    }
+}
+
+query getRotationsParams {
+    listParametersForAScope(scope: "rotation") {
+        id
+        scope
+        code
+        text
+    }
+}
+
+query GetAllLocations(
+    $filters: LocationSearchFilters
+    $orderBy: [LocationOrderByCriterion!]
+    $page: Int!
+    $itemsPerPage: Int!
+) {
+    locations(filters: $filters, orderBy: $orderBy, page: $page, itemsPerPage: $itemsPerPage) {
+        count
+        itemsPerPage
+        totalPages
+        results {
+            id
+            name
+            barcode
+            aisle
+            column
+            level
+            position
+            replenish
+            blockId
+            block {
+                name
+            }
+            replenishType
+            rotation
+            constraint
+            comment
+            baseUnitRotation
+            allowCycleCountStockMin
+        }
+    }
+}
+
+query GetLocationById($id: String!) {
+    location(id: $id) {
+        id
+        name
+        barcode
+        aisle
+        column
+        level
+        position
+        replenish
+        blockId
+        block {
+            name
+        }
+        replenishType
+        constraint
+        comment
+        baseUnitRotation
+        allowCycleCountStockMin
+    }
+}
+
+query GetLocationIds(
+    $filters: LocationSearchFilters
+    $orderBy: [LocationOrderByCriterion!]
+    $page: Int!
+    $itemsPerPage: Int!
+) {
+    locations(filters: $filters, orderBy: $orderBy, page: $page, itemsPerPage: $itemsPerPage) {
+        count
+        itemsPerPage
+        totalPages
+        results {
+            name
+            barcode
+            aisle
+            column
+            level
+            position
+            replenish
+            blockId
+            block {
+                name
+            }
+            replenishType
+            constraint
+            comment
+            baseUnitRotation
+            allowCycleCountStockMin
+        }
+    }
+}
+
+mutation CreateLocation($input: CreateLocationInput!) {
+    createLocation(input: $input) {
+        __typename
+        ... on Location {
+            id
+            name
+            barcode
+            aisle
+            column
+            level
+            position
+            replenish
+            blockId
+            block {
+                name
+            }
+            replenishType
+            constraint
+            comment
+            baseUnitRotation
+            allowCycleCountStockMin
+        }
+        ... on ValidationError {
+            message
+        }
+    }
+}
+
+mutation BulkCreateLocations($input: BulkCreateLocationsInput!) {
+    bulkCreateLocations(input: $input) {
+        __typename
+        ... on Location {
+            id
+            name
+            barcode
+            aisle
+            column
+            level
+            position
+            replenish
+            blockId
+            block {
+                name
+            }
+            replenishType
+            constraint
+            comment
+            baseUnitRotation
+            allowCycleCountStockMin
+        }
+    }
+}
+
+mutation DeleteLocation($id: String!) {
+    deleteLocation(id: $id)
+}
+
+mutation UpdateLocation($id: String!, $input: UpdateLocationInput!) {
+    updateLocation(id: $id, input: $input) {
+        id
+        name
+        barcode
+        aisle
+        column
+        level
+        position
+        replenish
+        blockId
+        block {
+            name
+        }
+        replenishType
+        constraint
+        comment
+        baseUnitRotation
+        allowCycleCountStockMin
+    }
+}

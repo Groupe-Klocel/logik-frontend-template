@@ -1,19 +1,19 @@
 import { AppHead } from '@components';
 import MainLayout from 'components/layouts/MainLayout';
+import { Blocks } from 'modules/Cartography/PagesContainer/Blocks';
 import { FC } from 'react';
-import { AddBloc } from '../modules/Cartography/PagesContainer/AddBloc';
 
 type PageComponent = FC & { layout: typeof MainLayout };
 
-const AddBlocPage: PageComponent = () => {
+const BlocksPage: PageComponent = () => {
     return (
         <>
             <AppHead title="Bee V2" />
-            <AddBloc />
+            <Blocks />
         </>
     );
 };
 
-AddBlocPage.layout = MainLayout;
+BlocksPage.layout = MainLayout;
 
-export default AddBlocPage;
+export default BlocksPage;

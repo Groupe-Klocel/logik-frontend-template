@@ -88,8 +88,8 @@ const SideMenu: FC = () => {
                     <Link href="/companies">{t('companies')}</Link>
                 </Menu.Item>
                 <SubMenu key="configuration-cartography" title={t('cartography')}>
-                    <Menu.Item key="configuration-cartography-blocs">
-                        <Link href="/blocs">{t('blocs')}</Link>
+                    <Menu.Item key="configuration-cartography-blocks">
+                        <Link href="/blocks">{t('blocks')}</Link>
                     </Menu.Item>
                     <Menu.Item key="configuration-cartography-locations">
                         <Link href="/locations">{t('locations')}</Link>
