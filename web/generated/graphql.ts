@@ -57,6 +57,7 @@ export type Article = {
   status?: Maybe<Scalars['Int']>;
   /** Text value for field status */
   statusText?: Maybe<Scalars['String']>;
+  stockOwner: StockOwner;
   stockOwnerId?: Maybe<Scalars['String']>;
   subfamily?: Maybe<Scalars['String']>;
   supplierName?: Maybe<Scalars['String']>;
@@ -163,6 +164,7 @@ export type ArticleLu = {
   rotation?: Maybe<Scalars['Int']>;
   /** Text value for field rotation */
   rotationText?: Maybe<Scalars['String']>;
+  stockOwner: StockOwner;
   stockOwnerId?: Maybe<Scalars['String']>;
   width?: Maybe<Scalars['Float']>;
 };
@@ -179,6 +181,7 @@ export type ArticleLuBarcode = {
   luId?: Maybe<Scalars['String']>;
   modified?: Maybe<Scalars['DateTime']>;
   modifiedBy?: Maybe<Scalars['String']>;
+  stockOwner: StockOwner;
   stockOwnerId?: Maybe<Scalars['String']>;
 };
 
@@ -339,6 +342,7 @@ export type ArticleSet = {
   modified?: Maybe<Scalars['DateTime']>;
   modifiedBy?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
+  stockOwner: StockOwner;
   stockOwnerId?: Maybe<Scalars['String']>;
 };
 
@@ -353,6 +357,7 @@ export type ArticleSetDetail = {
   modified?: Maybe<Scalars['DateTime']>;
   modifiedBy?: Maybe<Scalars['String']>;
   quantity?: Maybe<Scalars['Float']>;
+  stockOwner: StockOwner;
   stockOwnerId?: Maybe<Scalars['String']>;
 };
 
@@ -462,6 +467,7 @@ export type Barcode = {
   rotation?: Maybe<Scalars['Int']>;
   /** Text value for field rotation */
   rotationText?: Maybe<Scalars['String']>;
+  stockOwner: StockOwner;
   stockOwnerId?: Maybe<Scalars['String']>;
   supplierArticleCode?: Maybe<Scalars['String']>;
   supplierName?: Maybe<Scalars['String']>;
@@ -632,6 +638,7 @@ export type Box = {
   status?: Maybe<Scalars['Int']>;
   /** Text value for field status */
   statusText?: Maybe<Scalars['String']>;
+  stockOwner: StockOwner;
   stockOwnerId?: Maybe<Scalars['String']>;
   toBeChecked?: Maybe<Scalars['Boolean']>;
   toBePalletized?: Maybe<Scalars['Boolean']>;
@@ -692,6 +699,7 @@ export type BoxLine = {
   status?: Maybe<Scalars['Int']>;
   /** Text value for field status */
   statusText?: Maybe<Scalars['String']>;
+  stockOwner: StockOwner;
   stockOwnerId?: Maybe<Scalars['String']>;
 };
 
@@ -705,6 +713,7 @@ export type BoxLineFeature = {
   id?: Maybe<Scalars['String']>;
   modified?: Maybe<Scalars['DateTime']>;
   modifiedBy?: Maybe<Scalars['String']>;
+  stockOwner: StockOwner;
   stockOwnerId?: Maybe<Scalars['String']>;
   value?: Maybe<Scalars['String']>;
 };
@@ -881,6 +890,8 @@ export type Building = {
   name?: Maybe<Scalars['String']>;
   postCode?: Maybe<Scalars['String']>;
   status?: Maybe<Scalars['Int']>;
+  /** Text value for field status */
+  statusText?: Maybe<Scalars['String']>;
 };
 
 /** Field names for the Building model */
@@ -948,26 +959,26 @@ export type BuildingSearchFilters = {
 };
 
 export type BulkCreateLocationsInput = {
-    aisle: Scalars['String'];
-    /** Eminza : create inventory when stock below quantity */
-    allowCycleCountStockMin?: InputMaybe<Scalars['Boolean']>;
-    baseUnitRotation?: InputMaybe<Scalars['Int']>;
-    blockId: Scalars['String'];
-    column: Scalars['String'];
-    comment?: InputMaybe<Scalars['String']>;
-    constraint?: InputMaybe<Scalars['String']>;
-    /** Semi-structured attributes that can be used to store data for anything that doesn't fit in the default columns */
-    extras?: InputMaybe<Scalars['JSON']>;
-    level: Scalars['String'];
-    levelStep: Scalars['Int'];
-    numberOfAisle: Scalars['Int'];
-    numberOfColumn: Scalars['Int'];
-    numberOfLevel: Scalars['Int'];
-    numberOfPosition: Scalars['Int'];
-    position: Scalars['String'];
-    replenish: Scalars['Boolean'];
-    replenishType?: InputMaybe<Scalars['Int']>;
-    separator?: Scalars['String'];
+  aisle: Scalars['String'];
+  /** Eminza : create inventory when stock below quantity */
+  allowCycleCountStockMin?: InputMaybe<Scalars['Boolean']>;
+  baseUnitRotation?: InputMaybe<Scalars['Int']>;
+  blockId: Scalars['String'];
+  column: Scalars['String'];
+  comment?: InputMaybe<Scalars['String']>;
+  constraint?: InputMaybe<Scalars['String']>;
+  /** Semi-structured attributes that can be used to store data for anything that doesn't fit in the default columns */
+  extras?: InputMaybe<Scalars['JSON']>;
+  level: Scalars['String'];
+  levelStep: Scalars['Int'];
+  numberOfAisle: Scalars['Int'];
+  numberOfColumn: Scalars['Int'];
+  numberOfLevel: Scalars['Int'];
+  numberOfPosition: Scalars['Int'];
+  position: Scalars['String'];
+  replenish?: InputMaybe<Scalars['Boolean']>;
+  replenishType?: InputMaybe<Scalars['Int']>;
+  separator?: Scalars['String'];
 };
 
 export type BulkDeleteLocationsInput = {
@@ -1137,6 +1148,7 @@ export type Content = {
   purchaseOrderId?: Maybe<Scalars['String']>;
   quantity?: Maybe<Scalars['Float']>;
   reservation?: Maybe<Scalars['String']>;
+  stockOwner: StockOwner;
   stockOwnerId?: Maybe<Scalars['String']>;
   stockStatus?: Maybe<Scalars['Int']>;
   /** Text value for field stock_status */
@@ -1271,6 +1283,7 @@ export type Conversion = {
   status?: Maybe<Scalars['Int']>;
   /** Text value for field status */
   statusText?: Maybe<Scalars['String']>;
+  stockOwner: StockOwner;
   stockOwnerId?: Maybe<Scalars['String']>;
   type?: Maybe<Scalars['Int']>;
   /** Text value for field type */
@@ -1783,10 +1796,10 @@ export type CreateFeatureTypeDetailInput = {
 export type CreateFeedbackOverwriteInput = {
   customValue?: InputMaybe<Scalars['Int']>;
   extras?: InputMaybe<Scalars['JSON']>;
-  feedback: Scalars['Boolean'];
+  feedback?: InputMaybe<Scalars['Boolean']>;
   movementCode: Scalars['Int'];
   stockOwnerId?: InputMaybe<Scalars['String']>;
-  system: Scalars['Boolean'];
+  system?: InputMaybe<Scalars['Boolean']>;
 };
 
 export type CreateGoodsInInput = {
@@ -1850,7 +1863,7 @@ export type CreateLocationInput = {
   level: Scalars['String'];
   name: Scalars['String'];
   position: Scalars['String'];
-  replenish: Scalars['Boolean'];
+  replenish?: InputMaybe<Scalars['Boolean']>;
   replenishType?: InputMaybe<Scalars['Int']>;
 };
 
@@ -1862,7 +1875,7 @@ export type CreateLogisticUnitInput = {
   height?: InputMaybe<Scalars['Float']>;
   length?: InputMaybe<Scalars['Float']>;
   luConfigId?: InputMaybe<Scalars['String']>;
-  model: Scalars['Int'];
+  model?: InputMaybe<Scalars['Int']>;
   name: Scalars['String'];
   order?: InputMaybe<Scalars['Int']>;
   /** Logistic Unit with smaller level than this one (e.g. detail to box, box to palett) */
@@ -2051,14 +2064,14 @@ export type CreateStatusEvolutionInput = {
 };
 
 export type CreateStatusFeedbackOverwriteInput = {
-  customValue?: InputMaybe<Scalars['String']>;
+  customValue?: InputMaybe<Scalars['Int']>;
   /** Semi-structured attributes that can be used to store data for anything that doesn't fit in the default columns */
   extras?: InputMaybe<Scalars['JSON']>;
-  feedback: Scalars['Boolean'];
+  feedback?: InputMaybe<Scalars['Boolean']>;
   objectType: Scalars['Int'];
   status: Scalars['Int'];
-  stockOwnerId: Scalars['String'];
-  system: Scalars['Boolean'];
+  stockOwnerId?: InputMaybe<Scalars['String']>;
+  system?: InputMaybe<Scalars['Boolean']>;
 };
 
 export type CreateStockOwnerInput = {
@@ -2151,6 +2164,7 @@ export type CycleCount = {
   status?: Maybe<Scalars['Int']>;
   /** Text value for field status */
   statusText?: Maybe<Scalars['String']>;
+  stockOwner: StockOwner;
   stockOwnerId?: Maybe<Scalars['String']>;
   type?: Maybe<Scalars['Int']>;
   /** Text value for field type */
@@ -2202,6 +2216,7 @@ export type CycleCountLine = {
   status?: Maybe<Scalars['Int']>;
   /** Text value for field status */
   statusText?: Maybe<Scalars['String']>;
+  stockOwner: StockOwner;
   stockOwnerId?: Maybe<Scalars['String']>;
 };
 
@@ -2288,6 +2303,7 @@ export type CycleCountMovement = {
   status?: Maybe<Scalars['Int']>;
   /** Text value for field status */
   statusText?: Maybe<Scalars['String']>;
+  stockOwner: StockOwner;
   stockOwnerId?: Maybe<Scalars['String']>;
   type?: Maybe<Scalars['Int']>;
   /** Text value for field type */
@@ -2458,6 +2474,7 @@ export type Delivery = {
   status?: Maybe<Scalars['Int']>;
   /** Text value for field status */
   statusText?: Maybe<Scalars['String']>;
+  stockOwner: StockOwner;
   stockOwnerId?: Maybe<Scalars['String']>;
   toBePalletized?: Maybe<Scalars['Boolean']>;
   transportationAmount?: Maybe<Scalars['Int']>;
@@ -2549,6 +2566,7 @@ export type DeliveryLine = {
   status?: Maybe<Scalars['Int']>;
   /** Text value for field status */
   statusText?: Maybe<Scalars['String']>;
+  stockOwner: StockOwner;
   stockOwnerId?: Maybe<Scalars['String']>;
   substitutionArticle?: Maybe<Scalars['String']>;
   toBeCubed?: Maybe<Scalars['Boolean']>;
@@ -2738,6 +2756,7 @@ export type Equipment = {
   status?: Maybe<Scalars['Int']>;
   /** Text value for field status */
   statusText?: Maybe<Scalars['String']>;
+  stockOwner: StockOwner;
   stockOwnerId?: Maybe<Scalars['String']>;
   toleranceDimension?: Maybe<Scalars['Int']>;
   type?: Maybe<Scalars['Int']>;
@@ -2920,6 +2939,7 @@ export type FeatureCode = {
   modifiedBy?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   prefixBarcode?: Maybe<Scalars['String']>;
+  stockOwner: StockOwner;
   stockOwnerId?: Maybe<Scalars['String']>;
   suffixBarcode?: Maybe<Scalars['String']>;
   unique?: Maybe<Scalars['Boolean']>;
@@ -3051,6 +3071,7 @@ export type FeedbackOverwrite = {
   movementCode?: Maybe<Scalars['Int']>;
   /** Text value for field movement_code */
   movementCodeText?: Maybe<Scalars['String']>;
+  stockOwner: StockOwner;
   stockOwnerId?: Maybe<Scalars['String']>;
   system?: Maybe<Scalars['Boolean']>;
 };
@@ -3111,6 +3132,7 @@ export type GoodsIn = {
   modified?: Maybe<Scalars['DateTime']>;
   modifiedBy?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
+  stockOwner: StockOwner;
 };
 
 /** Field names for the GoodsIn model */
@@ -3436,6 +3458,7 @@ export type Load = {
   status?: Maybe<Scalars['Int']>;
   /** Text value for field status */
   statusText?: Maybe<Scalars['String']>;
+  stockOwner: StockOwner;
   stockOwnerId?: Maybe<Scalars['String']>;
   weight?: Maybe<Scalars['Float']>;
 };
@@ -3621,6 +3644,7 @@ export type LogisticUnit = {
   status?: Maybe<Scalars['Int']>;
   /** Text value for field status */
   statusText?: Maybe<Scalars['String']>;
+  stockOwner: StockOwner;
   stockOwnerId?: Maybe<Scalars['String']>;
   width?: Maybe<Scalars['Float']>;
 };
@@ -3756,6 +3780,7 @@ export type Movement = {
   status?: Maybe<Scalars['Int']>;
   /** Text value for field status */
   statusText?: Maybe<Scalars['String']>;
+  stockOwner: StockOwner;
   stockOwnerId?: Maybe<Scalars['String']>;
   toBeFeedback?: Maybe<Scalars['Boolean']>;
   type?: Maybe<Scalars['Int']>;
@@ -5511,6 +5536,7 @@ export type Pattern = {
   status?: Maybe<Scalars['Int']>;
   /** Text value for field status */
   statusText?: Maybe<Scalars['String']>;
+  stockOwner: StockOwner;
   stockOwnerId?: Maybe<Scalars['String']>;
 };
 
@@ -5705,6 +5731,7 @@ export type PurchaseOrder = {
   status?: Maybe<Scalars['Int']>;
   /** Text value for field status */
   statusText?: Maybe<Scalars['String']>;
+  stockOwner: StockOwner;
   stockOwnerId?: Maybe<Scalars['String']>;
   supplier?: Maybe<Scalars['String']>;
   type?: Maybe<Scalars['Int']>;
@@ -5753,6 +5780,7 @@ export type PurchaseOrderLine = {
   status?: Maybe<Scalars['Int']>;
   /** Text value for field status */
   statusText?: Maybe<Scalars['String']>;
+  stockOwner: StockOwner;
   stockOwnerId?: Maybe<Scalars['String']>;
 };
 
@@ -5860,6 +5888,14 @@ export type Query = {
   articleLuBarcode?: Maybe<ArticleLuBarcode>;
   /** Get Article_lu_barcode objects */
   articleLuBarcodes: ArticleLuBarcodeListResult;
+  /** Get Articles_lu_barcode objects by article id */
+  articleLuBarcodesByArticleId: Array<ArticleLuBarcode>;
+  /** Get Articles_lu_barcode objects by barcode id */
+  articleLuBarcodesByBarcodeId: Array<ArticleLuBarcode>;
+  /** Get Articles_lu_barcode objects by Logistic Unit id */
+  articleLuBarcodesByLuId: Array<ArticleLuBarcode>;
+  /** Get Articles_lu_barcode objects by Stock Owner id */
+  articleLuBarcodesByStockOwnerId: Array<ArticleLuBarcode>;
   /** Get a Article_lu objects */
   articleLus: ArticleLuListResult;
   /** Get a article_set object */
@@ -6069,6 +6105,26 @@ export type QueryArticleLuBarcodesArgs = {
   language?: InputMaybe<Scalars['String']>;
   orderBy?: InputMaybe<Array<ArticleLuBarcodeOrderByCriterion>>;
   page?: Scalars['Int'];
+};
+
+
+export type QueryArticleLuBarcodesByArticleIdArgs = {
+  articleId: Scalars['String'];
+};
+
+
+export type QueryArticleLuBarcodesByBarcodeIdArgs = {
+  barcodeId: Scalars['String'];
+};
+
+
+export type QueryArticleLuBarcodesByLuIdArgs = {
+  luId: Scalars['String'];
+};
+
+
+export type QueryArticleLuBarcodesByStockOwnerIdArgs = {
+  stockOwnerId: Scalars['String'];
 };
 
 
@@ -7097,6 +7153,7 @@ export type StatusEvolution = {
   status?: Maybe<Scalars['Int']>;
   /** Text value for field status */
   statusText?: Maybe<Scalars['String']>;
+  stockOwner: StockOwner;
   stockOwnerId?: Maybe<Scalars['String']>;
   toBeFeedback?: Maybe<Scalars['Boolean']>;
 };
@@ -7153,7 +7210,7 @@ export type StatusFeedbackOverWrite = {
   __typename?: 'StatusFeedbackOverWrite';
   created?: Maybe<Scalars['DateTime']>;
   createdBy?: Maybe<Scalars['String']>;
-  customValue?: Maybe<Scalars['String']>;
+  customValue?: Maybe<Scalars['Int']>;
   extras?: Maybe<Scalars['JSON']>;
   feedback?: Maybe<Scalars['Boolean']>;
   id?: Maybe<Scalars['String']>;
@@ -7165,6 +7222,7 @@ export type StatusFeedbackOverWrite = {
   status?: Maybe<Scalars['Int']>;
   /** Text value for field status */
   statusText?: Maybe<Scalars['String']>;
+  stockOwner: StockOwner;
   stockOwnerId?: Maybe<Scalars['String']>;
   system?: Maybe<Scalars['Boolean']>;
 };
@@ -7205,7 +7263,7 @@ export type StatusFeedbackOverwriteOrderByCriterion = {
 export type StatusFeedbackOverwriteSearchFilters = {
   created?: InputMaybe<Scalars['DateTime']>;
   createdBy?: InputMaybe<Scalars['String']>;
-  customValue?: InputMaybe<Scalars['String']>;
+  customValue?: InputMaybe<Scalars['Int']>;
   extras?: InputMaybe<Scalars['JSON']>;
   feedback?: InputMaybe<Scalars['Boolean']>;
   id?: InputMaybe<Scalars['String']>;
@@ -8106,7 +8164,7 @@ export type UpdateStatusEvolutionInput = {
 
 /** Values to update the existing record with */
 export type UpdateStatusFeedbackOverwriteInput = {
-  customValue?: InputMaybe<Scalars['String']>;
+  customValue?: InputMaybe<Scalars['Int']>;
   extras?: InputMaybe<Scalars['JSON']>;
   feedback?: InputMaybe<Scalars['Boolean']>;
   objectType?: InputMaybe<Scalars['Int']>;
@@ -8377,6 +8435,125 @@ export type UpdateBarcodeMutationVariables = Exact<{
 
 export type UpdateBarcodeMutation = { __typename?: 'Mutation', updateBarcode?: { __typename?: 'Barcode', id?: string | null, extras?: any | null, name?: string | null, supplierName?: string | null, supplierArticleCode?: string | null, quantity?: number | null, rotation?: number | null, preparationMode?: number | null, flagDouble?: number | null, blacklisted?: boolean | null, stockOwnerId?: string | null, rotationText?: string | null, preparationModeText?: string | null } | null };
 
+export type SimpleGetAllBLocksQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type SimpleGetAllBLocksQuery = { __typename?: 'Query', blocks: { __typename?: 'BlockListResult', results: Array<{ __typename?: 'Block', id?: string | null, name?: string | null }> } };
+
+export type SimpleGetAllBuildingsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type SimpleGetAllBuildingsQuery = { __typename?: 'Query', buildings: { __typename?: 'BuildingListResult', results: Array<{ __typename?: 'Building', id?: string | null, name?: string | null }> } };
+
+export type GetBlockLevelsParamsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetBlockLevelsParamsQuery = { __typename?: 'Query', listParametersForAScope: Array<{ __typename?: 'ParameterResults', id: string, scope: string, code: string, text: string }> };
+
+export type GetAllBlocksQueryVariables = Exact<{
+  filters?: InputMaybe<BlockSearchFilters>;
+  orderBy?: InputMaybe<Array<BlockOrderByCriterion> | BlockOrderByCriterion>;
+  page: Scalars['Int'];
+  itemsPerPage: Scalars['Int'];
+}>;
+
+
+export type GetAllBlocksQuery = { __typename?: 'Query', blocks: { __typename?: 'BlockListResult', count: number, itemsPerPage: number, totalPages: number, results: Array<{ __typename?: 'Block', id?: string | null, name?: string | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, moveable?: boolean | null, bulk?: boolean | null, comment?: string | null, level?: number | null, blockGroup?: number | null, building: { __typename?: 'Building', name?: string | null } }> } };
+
+export type GetBlockByIdQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type GetBlockByIdQuery = { __typename?: 'Query', block?: { __typename?: 'Block', id?: string | null, name?: string | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, moveable?: boolean | null, bulk?: boolean | null, comment?: string | null, level?: number | null, blockGroup?: number | null, building: { __typename?: 'Building', name?: string | null } } | null };
+
+export type GetBlockIdsQueryVariables = Exact<{
+  filters?: InputMaybe<BlockSearchFilters>;
+  orderBy?: InputMaybe<Array<BlockOrderByCriterion> | BlockOrderByCriterion>;
+  page: Scalars['Int'];
+  itemsPerPage: Scalars['Int'];
+}>;
+
+
+export type GetBlockIdsQuery = { __typename?: 'Query', blocks: { __typename?: 'BlockListResult', count: number, itemsPerPage: number, totalPages: number, results: Array<{ __typename?: 'Block', id?: string | null, name?: string | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, moveable?: boolean | null, bulk?: boolean | null, comment?: string | null, level?: number | null, blockGroup?: number | null }> } };
+
+export type CreateBlockMutationVariables = Exact<{
+  input: CreateBlockInput;
+}>;
+
+
+export type CreateBlockMutation = { __typename?: 'Mutation', createBlock: { __typename?: 'Block', id?: string | null, name?: string | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, moveable?: boolean | null, bulk?: boolean | null, comment?: string | null, level?: number | null, blockGroup?: number | null } };
+
+export type DeleteBlockMutationVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type DeleteBlockMutation = { __typename?: 'Mutation', deleteBlock: boolean };
+
+export type UpdateBlockMutationVariables = Exact<{
+  id: Scalars['String'];
+  input: UpdateBlockInput;
+}>;
+
+
+export type UpdateBlockMutation = { __typename?: 'Mutation', updateBlock?: { __typename?: 'Block', id?: string | null, name?: string | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, moveable?: boolean | null, bulk?: boolean | null, comment?: string | null, level?: number | null, blockGroup?: number | null } | null };
+
+export type SimpleGetAllStockOwnersQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type SimpleGetAllStockOwnersQuery = { __typename?: 'Query', stockOwners: { __typename?: 'StockOwnerListResult', results: Array<{ __typename?: 'StockOwner', id?: string | null, name?: string | null }> } };
+
+export type GetAllFeatureCodesQueryVariables = Exact<{
+  filters?: InputMaybe<FeatureCodeSearchFilters>;
+  orderBy?: InputMaybe<Array<FeatureCodeOrderByCriterion> | FeatureCodeOrderByCriterion>;
+  page: Scalars['Int'];
+  itemsPerPage: Scalars['Int'];
+}>;
+
+
+export type GetAllFeatureCodesQuery = { __typename?: 'Query', featureCodes: { __typename?: 'FeatureCodeListResult', count: number, itemsPerPage: number, totalPages: number, results: Array<{ __typename?: 'FeatureCode', id?: string | null, name?: string | null, unique?: boolean | null, dateType?: boolean | null, prefixBarcode?: string | null, lengthBarcode?: string | null, suffixBarcode?: string | null, stockOwnerId?: string | null, extras?: any | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, stockOwner: { __typename?: 'StockOwner', name?: string | null } }> } };
+
+export type GetFeatureCodeByIdQueryVariables = Exact<{
+  id: Scalars['String'];
+  language?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type GetFeatureCodeByIdQuery = { __typename?: 'Query', featureCode?: { __typename?: 'FeatureCode', id?: string | null, name?: string | null, unique?: boolean | null, dateType?: boolean | null, prefixBarcode?: string | null, lengthBarcode?: string | null, suffixBarcode?: string | null, stockOwnerId?: string | null, extras?: any | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, stockOwner: { __typename?: 'StockOwner', name?: string | null } } | null };
+
+export type GetFeatureCodeIdsQueryVariables = Exact<{
+  filters?: InputMaybe<FeatureCodeSearchFilters>;
+  orderBy?: InputMaybe<Array<FeatureCodeOrderByCriterion> | FeatureCodeOrderByCriterion>;
+  page: Scalars['Int'];
+  itemsPerPage: Scalars['Int'];
+}>;
+
+
+export type GetFeatureCodeIdsQuery = { __typename?: 'Query', featureCodes: { __typename?: 'FeatureCodeListResult', count: number, itemsPerPage: number, totalPages: number, results: Array<{ __typename?: 'FeatureCode', id?: string | null, name?: string | null }> } };
+
+export type CreateFeatureCodeMutationVariables = Exact<{
+  input: CreateFeatureCodeInput;
+}>;
+
+
+export type CreateFeatureCodeMutation = { __typename?: 'Mutation', createFeatureCode: { __typename?: 'FeatureCode', id?: string | null, name?: string | null, unique?: boolean | null, dateType?: boolean | null, prefixBarcode?: string | null, lengthBarcode?: string | null, suffixBarcode?: string | null, stockOwnerId?: string | null } };
+
+export type DeleteFeatureCodeMutationVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type DeleteFeatureCodeMutation = { __typename?: 'Mutation', deleteFeatureCode: boolean };
+
+export type UpdateFeatureCodeMutationVariables = Exact<{
+  id: Scalars['String'];
+  input: UpdateFeatureCodeInput;
+}>;
+
+
+export type UpdateFeatureCodeMutation = { __typename?: 'Mutation', updateFeatureCode?: { __typename?: 'FeatureCode', id?: string | null, name?: string | null, unique?: boolean | null, dateType?: boolean | null, prefixBarcode?: string | null, lengthBarcode?: string | null, suffixBarcode?: string | null, stockOwnerId?: string | null } | null };
+
 export type GetAllGoodsInsQueryVariables = Exact<{
   orderBy?: InputMaybe<Array<GoodsInOrderByCriterion> | GoodsInOrderByCriterion>;
   filters?: InputMaybe<GoodsInSearchFilters>;
@@ -8470,383 +8647,66 @@ export type UpdateGoodsInLineMutationVariables = Exact<{
 
 export type UpdateGoodsInLineMutation = { __typename?: 'Mutation', updateGoodsInLine?: { __typename?: 'GoodsInLine', id?: string | null, extras?: any | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, quantity?: number | null, reservation?: string | null, stockOwnerId?: string | null, articleId?: string | null, goodsInId?: string | null, purchaseOrderId?: string | null, purchaseOrderLineId?: string | null } | null };
 
-export type SimpleGetAllBLocksQueryVariables = Exact<{ [key: string]: never }>;
+export type GetReplenishTypesConfigsQueryVariables = Exact<{ [key: string]: never; }>;
 
-export type SimpleGetAllBLocksQuery = {
-    __typename?: 'Query';
-    blocks: {
-        __typename?: 'BlockListResult';
-        results: Array<{ __typename?: 'Block'; id?: string | null; name?: string | null }>;
-    };
-};
 
-export type SimpleGetAllBuildingsQueryVariables = Exact<{ [key: string]: never }>;
-
-export type SimpleGetAllBuildingsQuery = {
-    __typename?: 'Query';
-    buildings: {
-        __typename?: 'BuildingListResult';
-        results: Array<{ __typename?: 'Building'; id?: string | null; name?: string | null }>;
-    };
-};
-
-export type GetBlockLevelsParamsQueryVariables = Exact<{ [key: string]: never }>;
-
-export type GetBlockLevelsParamsQuery = {
-    __typename?: 'Query';
-    listParametersForAScope: Array<{
-        __typename?: 'ParameterResults';
-        id: string;
-        scope: string;
-        code: string;
-        text: string;
-    }>;
-};
-
-export type GetAllBlocksQueryVariables = Exact<{
-    filters?: InputMaybe<BlockSearchFilters>;
-    orderBy?: InputMaybe<Array<BlockOrderByCriterion> | BlockOrderByCriterion>;
-    page: Scalars['Int'];
-    itemsPerPage: Scalars['Int'];
-}>;
-
-export type GetAllBlocksQuery = {
-    __typename?: 'Query';
-    blocks: {
-        __typename?: 'BlockListResult';
-        count: number;
-        itemsPerPage: number;
-        totalPages: number;
-        results: Array<{
-            __typename?: 'Block';
-            id?: string | null;
-            name?: string | null;
-            created?: any | null;
-            createdBy?: string | null;
-            modified?: any | null;
-            modifiedBy?: string | null;
-            moveable?: boolean | null;
-            bulk?: boolean | null;
-            comment?: string | null;
-            level?: number | null;
-            blockGroup?: number | null;
-            building: { __typename?: 'Building'; name?: string | null };
-        }>;
-    };
-};
-
-export type GetBlockByIdQueryVariables = Exact<{
-    id: Scalars['String'];
-}>;
-
-export type GetBlockByIdQuery = {
-    __typename?: 'Query';
-    block?: {
-        __typename?: 'Block';
-        id?: string | null;
-        name?: string | null;
-        created?: any | null;
-        createdBy?: string | null;
-        modified?: any | null;
-        modifiedBy?: string | null;
-        moveable?: boolean | null;
-        bulk?: boolean | null;
-        comment?: string | null;
-        level?: number | null;
-        blockGroup?: number | null;
-        building: { __typename?: 'Building'; name?: string | null };
-    } | null;
-};
-
-export type GetBlockIdsQueryVariables = Exact<{
-    filters?: InputMaybe<BlockSearchFilters>;
-    orderBy?: InputMaybe<Array<BlockOrderByCriterion> | BlockOrderByCriterion>;
-    page: Scalars['Int'];
-    itemsPerPage: Scalars['Int'];
-}>;
-
-export type GetBlockIdsQuery = {
-    __typename?: 'Query';
-    blocks: {
-        __typename?: 'BlockListResult';
-        count: number;
-        itemsPerPage: number;
-        totalPages: number;
-        results: Array<{
-            __typename?: 'Block';
-            id?: string | null;
-            name?: string | null;
-            created?: any | null;
-            createdBy?: string | null;
-            modified?: any | null;
-            modifiedBy?: string | null;
-            moveable?: boolean | null;
-            bulk?: boolean | null;
-            comment?: string | null;
-            level?: number | null;
-            blockGroup?: number | null;
-        }>;
-    };
-};
-
-export type CreateBlockMutationVariables = Exact<{
-    input: CreateBlockInput;
-}>;
-
-export type CreateBlockMutation = {
-    __typename?: 'Mutation';
-    createBlock: {
-        __typename?: 'Block';
-        id?: string | null;
-        name?: string | null;
-        created?: any | null;
-        createdBy?: string | null;
-        modified?: any | null;
-        modifiedBy?: string | null;
-        moveable?: boolean | null;
-        bulk?: boolean | null;
-        comment?: string | null;
-        level?: number | null;
-        blockGroup?: number | null;
-    };
-};
-
-export type DeleteBlockMutationVariables = Exact<{
-    id: Scalars['String'];
-}>;
-
-export type DeleteBlockMutation = { __typename?: 'Mutation'; deleteBlock: boolean };
-
-export type UpdateBlockMutationVariables = Exact<{
-    id: Scalars['String'];
-    input: UpdateBlockInput;
-}>;
-
-export type UpdateBlockMutation = {
-    __typename?: 'Mutation';
-    updateBlock?: {
-        __typename?: 'Block';
-        id?: string | null;
-        name?: string | null;
-        created?: any | null;
-        createdBy?: string | null;
-        modified?: any | null;
-        modifiedBy?: string | null;
-        moveable?: boolean | null;
-        bulk?: boolean | null;
-        comment?: string | null;
-        level?: number | null;
-        blockGroup?: number | null;
-    } | null;
-};
-
-export type GetReplenishTypesConfigsQueryVariables = Exact<{ [key: string]: never }>;
-
-export type GetReplenishTypesConfigsQuery = {
-    __typename?: 'Query';
-    listConfigsForAScope: Array<{
-        __typename?: 'ConfigResults';
-        id: string;
-        scope: string;
-        code: string;
-        text: string;
-    }>;
-};
-
-export type GetRotationsParamsQueryVariables = Exact<{ [key: string]: never }>;
-
-export type GetRotationsParamsQuery = {
-    __typename?: 'Query';
-    listParametersForAScope: Array<{
-        __typename?: 'ParameterResults';
-        id: string;
-        scope: string;
-        code: string;
-        text: string;
-    }>;
-};
+export type GetReplenishTypesConfigsQuery = { __typename?: 'Query', listConfigsForAScope: Array<{ __typename?: 'ConfigResults', id: string, scope: string, code: string, text: string }> };
 
 export type GetAllLocationsQueryVariables = Exact<{
-    filters?: InputMaybe<LocationSearchFilters>;
-    orderBy?: InputMaybe<Array<LocationOrderByCriterion> | LocationOrderByCriterion>;
-    page: Scalars['Int'];
-    itemsPerPage: Scalars['Int'];
+  filters?: InputMaybe<LocationSearchFilters>;
+  orderBy?: InputMaybe<Array<LocationOrderByCriterion> | LocationOrderByCriterion>;
+  page: Scalars['Int'];
+  itemsPerPage: Scalars['Int'];
 }>;
 
-export type GetAllLocationsQuery = {
-    __typename?: 'Query';
-    locations: {
-        __typename?: 'LocationListResult';
-        count: number;
-        itemsPerPage: number;
-        totalPages: number;
-        results: Array<{
-            __typename?: 'Location';
-            id?: string | null;
-            name?: string | null;
-            barcode?: string | null;
-            aisle?: string | null;
-            column?: string | null;
-            level?: string | null;
-            position?: string | null;
-            replenish?: boolean | null;
-            blockId?: string | null;
-            replenishType?: number | null;
-            constraint?: string | null;
-            comment?: string | null;
-            baseUnitRotation?: number | null;
-            allowCycleCountStockMin?: boolean | null;
-            block: { __typename?: 'Block'; name?: string | null };
-        }>;
-    };
-};
+
+export type GetAllLocationsQuery = { __typename?: 'Query', locations: { __typename?: 'LocationListResult', count: number, itemsPerPage: number, totalPages: number, results: Array<{ __typename?: 'Location', id?: string | null, name?: string | null, barcode?: string | null, aisle?: string | null, column?: string | null, level?: string | null, position?: string | null, replenish?: boolean | null, blockId?: string | null, replenishType?: number | null, constraint?: string | null, comment?: string | null, baseUnitRotation?: number | null, allowCycleCountStockMin?: boolean | null, block: { __typename?: 'Block', name?: string | null } }> } };
 
 export type GetLocationByIdQueryVariables = Exact<{
-    id: Scalars['String'];
+  id: Scalars['String'];
 }>;
 
-export type GetLocationByIdQuery = {
-    __typename?: 'Query';
-    location?: {
-        __typename?: 'Location';
-        id?: string | null;
-        name?: string | null;
-        barcode?: string | null;
-        aisle?: string | null;
-        column?: string | null;
-        level?: string | null;
-        position?: string | null;
-        replenish?: boolean | null;
-        blockId?: string | null;
-        replenishType?: number | null;
-        constraint?: string | null;
-        comment?: string | null;
-        baseUnitRotation?: number | null;
-        allowCycleCountStockMin?: boolean | null;
-        block: { __typename?: 'Block'; name?: string | null };
-    } | null;
-};
+
+export type GetLocationByIdQuery = { __typename?: 'Query', location?: { __typename?: 'Location', id?: string | null, name?: string | null, barcode?: string | null, aisle?: string | null, column?: string | null, level?: string | null, position?: string | null, replenish?: boolean | null, blockId?: string | null, replenishType?: number | null, constraint?: string | null, comment?: string | null, baseUnitRotation?: number | null, allowCycleCountStockMin?: boolean | null, block: { __typename?: 'Block', name?: string | null } } | null };
 
 export type GetLocationIdsQueryVariables = Exact<{
-    filters?: InputMaybe<LocationSearchFilters>;
-    orderBy?: InputMaybe<Array<LocationOrderByCriterion> | LocationOrderByCriterion>;
-    page: Scalars['Int'];
-    itemsPerPage: Scalars['Int'];
+  filters?: InputMaybe<LocationSearchFilters>;
+  orderBy?: InputMaybe<Array<LocationOrderByCriterion> | LocationOrderByCriterion>;
+  page: Scalars['Int'];
+  itemsPerPage: Scalars['Int'];
 }>;
 
-export type GetLocationIdsQuery = {
-    __typename?: 'Query';
-    locations: {
-        __typename?: 'LocationListResult';
-        count: number;
-        itemsPerPage: number;
-        totalPages: number;
-        results: Array<{
-            __typename?: 'Location';
-            name?: string | null;
-            barcode?: string | null;
-            aisle?: string | null;
-            column?: string | null;
-            level?: string | null;
-            position?: string | null;
-            replenish?: boolean | null;
-            blockId?: string | null;
-            replenishType?: number | null;
-            constraint?: string | null;
-            comment?: string | null;
-            baseUnitRotation?: number | null;
-            allowCycleCountStockMin?: boolean | null;
-            block: { __typename?: 'Block'; name?: string | null };
-        }>;
-    };
-};
+
+export type GetLocationIdsQuery = { __typename?: 'Query', locations: { __typename?: 'LocationListResult', count: number, itemsPerPage: number, totalPages: number, results: Array<{ __typename?: 'Location', name?: string | null, barcode?: string | null, aisle?: string | null, column?: string | null, level?: string | null, position?: string | null, replenish?: boolean | null, blockId?: string | null, replenishType?: number | null, constraint?: string | null, comment?: string | null, baseUnitRotation?: number | null, allowCycleCountStockMin?: boolean | null, block: { __typename?: 'Block', name?: string | null } }> } };
 
 export type CreateLocationMutationVariables = Exact<{
-    input: CreateLocationInput;
+  input: CreateLocationInput;
 }>;
 
-export type CreateLocationMutation = {
-    __typename?: 'Mutation';
-    createLocation:
-        | {
-              __typename: 'Location';
-              id?: string | null;
-              name?: string | null;
-              barcode?: string | null;
-              aisle?: string | null;
-              column?: string | null;
-              level?: string | null;
-              position?: string | null;
-              replenish?: boolean | null;
-              blockId?: string | null;
-              replenishType?: number | null;
-              constraint?: string | null;
-              comment?: string | null;
-              baseUnitRotation?: number | null;
-              allowCycleCountStockMin?: boolean | null;
-              block: { __typename?: 'Block'; name?: string | null };
-          }
-        | { __typename: 'ValidationError'; message: string };
-};
+
+export type CreateLocationMutation = { __typename?: 'Mutation', createLocation: { __typename: 'Location', id?: string | null, name?: string | null, barcode?: string | null, aisle?: string | null, column?: string | null, level?: string | null, position?: string | null, replenish?: boolean | null, blockId?: string | null, replenishType?: number | null, constraint?: string | null, comment?: string | null, baseUnitRotation?: number | null, allowCycleCountStockMin?: boolean | null, block: { __typename?: 'Block', name?: string | null } } | { __typename: 'ValidationError', message: string } };
 
 export type BulkCreateLocationsMutationVariables = Exact<{
-    input: BulkCreateLocationsInput;
+  input: BulkCreateLocationsInput;
 }>;
 
-export type BulkCreateLocationsMutation = {
-    __typename?: 'Mutation';
-    bulkCreateLocations: Array<{
-        __typename: 'Location';
-        id?: string | null;
-        name?: string | null;
-        barcode?: string | null;
-        aisle?: string | null;
-        column?: string | null;
-        level?: string | null;
-        position?: string | null;
-        replenish?: boolean | null;
-        blockId?: string | null;
-        replenishType?: number | null;
-        constraint?: string | null;
-        comment?: string | null;
-        baseUnitRotation?: number | null;
-        allowCycleCountStockMin?: boolean | null;
-        block: { __typename?: 'Block'; name?: string | null };
-    }>;
-};
+
+export type BulkCreateLocationsMutation = { __typename?: 'Mutation', bulkCreateLocations: Array<{ __typename: 'Location', id?: string | null, name?: string | null, barcode?: string | null, aisle?: string | null, column?: string | null, level?: string | null, position?: string | null, replenish?: boolean | null, blockId?: string | null, replenishType?: number | null, constraint?: string | null, comment?: string | null, baseUnitRotation?: number | null, allowCycleCountStockMin?: boolean | null, block: { __typename?: 'Block', name?: string | null } }> };
 
 export type DeleteLocationMutationVariables = Exact<{
-    id: Scalars['String'];
+  id: Scalars['String'];
 }>;
 
-export type DeleteLocationMutation = { __typename?: 'Mutation'; deleteLocation: boolean };
+
+export type DeleteLocationMutation = { __typename?: 'Mutation', deleteLocation: boolean };
 
 export type UpdateLocationMutationVariables = Exact<{
-    id: Scalars['String'];
-    input: UpdateLocationInput;
+  id: Scalars['String'];
+  input: UpdateLocationInput;
 }>;
 
-export type UpdateLocationMutation = {
-    __typename?: 'Mutation';
-    updateLocation?: {
-        __typename?: 'Location';
-        id?: string | null;
-        name?: string | null;
-        barcode?: string | null;
-        aisle?: string | null;
-        column?: string | null;
-        level?: string | null;
-        position?: string | null;
-        replenish?: boolean | null;
-        blockId?: string | null;
-        replenishType?: number | null;
-        constraint?: string | null;
-        comment?: string | null;
-        baseUnitRotation?: number | null;
-        allowCycleCountStockMin?: boolean | null;
-        block: { __typename?: 'Block'; name?: string | null };
-    } | null;
-};
+
+export type UpdateLocationMutation = { __typename?: 'Mutation', updateLocation?: { __typename?: 'Location', id?: string | null, name?: string | null, barcode?: string | null, aisle?: string | null, column?: string | null, level?: string | null, position?: string | null, replenish?: boolean | null, blockId?: string | null, replenishType?: number | null, constraint?: string | null, comment?: string | null, baseUnitRotation?: number | null, allowCycleCountStockMin?: boolean | null, block: { __typename?: 'Block', name?: string | null } } | null };
 
 export type WarehouseLoginMutationVariables = Exact<{
   username: Scalars['String'];
@@ -8890,40 +8750,15 @@ export type GetAllReturnCodesQueryVariables = Exact<{
   itemsPerPage: Scalars['Int'];
 }>;
 
-export type GetAllReturnCodesQuery = {
-    __typename?: 'Query';
-    returnCodes: {
-        __typename?: 'ReturnCodeListResult';
-        count: number;
-        itemsPerPage: number;
-        totalPages: number;
-        results: Array<{
-            __typename?: 'ReturnCode';
-            id?: string | null;
-            name?: string | null;
-            type?: number | null;
-        }>;
-    };
-};
+
+export type GetAllReturnCodesQuery = { __typename?: 'Query', returnCodes: { __typename?: 'ReturnCodeListResult', count: number, itemsPerPage: number, totalPages: number, results: Array<{ __typename?: 'ReturnCode', id?: string | null, name?: string | null, type?: number | null }> } };
 
 export type GetReturnCodeByIdQueryVariables = Exact<{
   id: Scalars['String'];
 }>;
 
-export type GetReturnCodeByIdQuery = {
-    __typename?: 'Query';
-    returnCode?: {
-        __typename?: 'ReturnCode';
-        id?: string | null;
-        name?: string | null;
-        type?: number | null;
-        description?: string | null;
-        created?: any | null;
-        createdBy?: string | null;
-        modified?: any | null;
-        modifiedBy?: string | null;
-    } | null;
-};
+
+export type GetReturnCodeByIdQuery = { __typename?: 'Query', returnCode?: { __typename?: 'ReturnCode', id?: string | null, name?: string | null, type?: number | null, description?: string | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null } | null };
 
 export type GetReturnCodeIdsQueryVariables = Exact<{
   filters?: InputMaybe<ReturnCodeSearchFilters>;
@@ -8932,46 +8767,22 @@ export type GetReturnCodeIdsQueryVariables = Exact<{
   itemsPerPage: Scalars['Int'];
 }>;
 
-export type GetReturnCodeIdsQuery = {
-    __typename?: 'Query';
-    returnCodes: {
-        __typename?: 'ReturnCodeListResult';
-        count: number;
-        itemsPerPage: number;
-        totalPages: number;
-        results: Array<{
-            __typename?: 'ReturnCode';
-            id?: string | null;
-            name?: string | null;
-            type?: number | null;
-        }>;
-    };
-};
+
+export type GetReturnCodeIdsQuery = { __typename?: 'Query', returnCodes: { __typename?: 'ReturnCodeListResult', count: number, itemsPerPage: number, totalPages: number, results: Array<{ __typename?: 'ReturnCode', id?: string | null, name?: string | null, type?: number | null }> } };
 
 export type CreateReturnCodeMutationVariables = Exact<{
   input: CreateReturnCodeInput;
 }>;
 
-export type CreateReturnCodeMutation = {
-    __typename?: 'Mutation';
-    createReturnCode: {
-        __typename?: 'ReturnCode';
-        id?: string | null;
-        name?: string | null;
-        type?: number | null;
-    };
-};
+
+export type CreateReturnCodeMutation = { __typename?: 'Mutation', createReturnCode: { __typename?: 'ReturnCode', id?: string | null, name?: string | null, type?: number | null } };
 
 export type DeleteReturnCodeMutationVariables = Exact<{
   id: Scalars['String'];
 }>;
 
 
-export type DeleteReturnCodeMutation = {
-    __typename?: 'Mutation';
-    deleteReturnCode: boolean;
-};
-
+export type DeleteReturnCodeMutation = { __typename?: 'Mutation', deleteReturnCode: boolean };
 
 export type UpdateReturnCodeMutationVariables = Exact<{
   id: Scalars['String'];
@@ -8979,70 +8790,12 @@ export type UpdateReturnCodeMutationVariables = Exact<{
 }>;
 
 
+export type UpdateReturnCodeMutation = { __typename?: 'Mutation', updateReturnCode?: { __typename?: 'ReturnCode', id?: string | null, name?: string | null, type?: number | null } | null };
+
 export type GetMyInfoQueryVariables = Exact<{ [key: string]: never; }>;
 
-export type GetMyInfoQuery = {
-  __typename?: 'Query';
-  me:
-  {
-    __typename: 'IntegratorUser';
-    id?: string | null;
-    password: string;
-    email: string;
-    integratorId: string;
-    roleId: string;
-    isAdmin?: boolean | null;
-    integrator: {
-      __typename?: 'Integrator';
-      id?: string | null;
-      name: string;
-      awsAccessKeyId?: string | null;
-      awsSecretAccessKey?: string | null;
-    },
-    role: {
-      __typename?: 'RoleType';
-      id?: string | null;
-      name: string;
-      permissions: Array<{
-        __typename?: 'PermissionType';
-        id?: string | null;
-        table: string;
-        mode: string;
-        roleId: string;
-      }>
-    }
-  }
-  | {
-    __typename: 'WarehouseWorker';
-    id?: string | null;
-    password: string;
-    username: string;
-    warehouseId: string;
-    roleId: string;
-    role: {
-      __typename?: 'RoleType';
-      id?: string | null;
-      name: string;
-      permissions: Array<{
-        __typename?: 'PermissionType';
-        id?: string | null;
-        table: string;
-        mode: string;
-        roleId: string;
-      }>
-    }
-  }
-};
 
-export type UpdateReturnCodeMutation = {
-  __typename?: 'Mutation';
-  updateReturnCode?: {
-    __typename?: 'ReturnCode';
-    id?: string | null;
-    name?: string | null;
-    type?: number | null;
-  } | null;
-};
+export type GetMyInfoQuery = { __typename?: 'Query', me: { __typename: 'IntegratorUser', id?: string | null, password: string, email: string, integratorId: string, roleId: string, isAdmin?: boolean | null, integrator: { __typename?: 'Integrator', id?: string | null, name: string, awsAccessKeyId?: string | null, awsSecretAccessKey?: string | null }, role: { __typename?: 'RoleType', id?: string | null, name: string, permissions: Array<{ __typename?: 'PermissionType', id?: string | null, table: string, mode: string, roleId: string }> } } | { __typename: 'WarehouseWorker', id?: string | null, password: string, username: string, warehouseId: string, roleId: string, role: { __typename?: 'RoleType', id?: string | null, name: string, permissions: Array<{ __typename?: 'PermissionType', id?: string | null, table: string, mode: string, roleId: string }> } } };
 
 
 export const GetAllArticlesDocument = `
@@ -9539,6 +9292,485 @@ export const useUpdateBarcodeMutation = <
       (variables?: UpdateBarcodeMutationVariables) => fetcher<UpdateBarcodeMutation, UpdateBarcodeMutationVariables>(client, UpdateBarcodeDocument, variables, headers)(),
       options
     );
+export const SimpleGetAllBLocksDocument = `
+    query SimpleGetAllBLocks {
+  blocks {
+    results {
+      id
+      name
+    }
+  }
+}
+    `;
+export const useSimpleGetAllBLocksQuery = <
+      TData = SimpleGetAllBLocksQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables?: SimpleGetAllBLocksQueryVariables,
+      options?: UseQueryOptions<SimpleGetAllBLocksQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<SimpleGetAllBLocksQuery, TError, TData>(
+      variables === undefined ? ['SimpleGetAllBLocks'] : ['SimpleGetAllBLocks', variables],
+      fetcher<SimpleGetAllBLocksQuery, SimpleGetAllBLocksQueryVariables>(client, SimpleGetAllBLocksDocument, variables, headers),
+      options
+    );
+export const SimpleGetAllBuildingsDocument = `
+    query SimpleGetAllBuildings {
+  buildings {
+    results {
+      id
+      name
+    }
+  }
+}
+    `;
+export const useSimpleGetAllBuildingsQuery = <
+      TData = SimpleGetAllBuildingsQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables?: SimpleGetAllBuildingsQueryVariables,
+      options?: UseQueryOptions<SimpleGetAllBuildingsQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<SimpleGetAllBuildingsQuery, TError, TData>(
+      variables === undefined ? ['SimpleGetAllBuildings'] : ['SimpleGetAllBuildings', variables],
+      fetcher<SimpleGetAllBuildingsQuery, SimpleGetAllBuildingsQueryVariables>(client, SimpleGetAllBuildingsDocument, variables, headers),
+      options
+    );
+export const GetBlockLevelsParamsDocument = `
+    query getBlockLevelsParams {
+  listParametersForAScope(scope: "block_level") {
+    id
+    scope
+    code
+    text
+  }
+}
+    `;
+export const useGetBlockLevelsParamsQuery = <
+      TData = GetBlockLevelsParamsQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables?: GetBlockLevelsParamsQueryVariables,
+      options?: UseQueryOptions<GetBlockLevelsParamsQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetBlockLevelsParamsQuery, TError, TData>(
+      variables === undefined ? ['getBlockLevelsParams'] : ['getBlockLevelsParams', variables],
+      fetcher<GetBlockLevelsParamsQuery, GetBlockLevelsParamsQueryVariables>(client, GetBlockLevelsParamsDocument, variables, headers),
+      options
+    );
+export const GetAllBlocksDocument = `
+    query GetAllBlocks($filters: BlockSearchFilters, $orderBy: [BlockOrderByCriterion!], $page: Int!, $itemsPerPage: Int!) {
+  blocks(
+    filters: $filters
+    orderBy: $orderBy
+    page: $page
+    itemsPerPage: $itemsPerPage
+  ) {
+    count
+    itemsPerPage
+    totalPages
+    results {
+      id
+      building {
+        name
+      }
+      name
+      created
+      createdBy
+      modified
+      modifiedBy
+      moveable
+      bulk
+      comment
+      level
+      blockGroup
+    }
+  }
+}
+    `;
+export const useGetAllBlocksQuery = <
+      TData = GetAllBlocksQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: GetAllBlocksQueryVariables,
+      options?: UseQueryOptions<GetAllBlocksQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetAllBlocksQuery, TError, TData>(
+      ['GetAllBlocks', variables],
+      fetcher<GetAllBlocksQuery, GetAllBlocksQueryVariables>(client, GetAllBlocksDocument, variables, headers),
+      options
+    );
+export const GetBlockByIdDocument = `
+    query GetBlockById($id: String!) {
+  block(id: $id) {
+    id
+    building {
+      name
+    }
+    name
+    created
+    createdBy
+    modified
+    modifiedBy
+    moveable
+    bulk
+    comment
+    level
+    blockGroup
+  }
+}
+    `;
+export const useGetBlockByIdQuery = <
+      TData = GetBlockByIdQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: GetBlockByIdQueryVariables,
+      options?: UseQueryOptions<GetBlockByIdQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetBlockByIdQuery, TError, TData>(
+      ['GetBlockById', variables],
+      fetcher<GetBlockByIdQuery, GetBlockByIdQueryVariables>(client, GetBlockByIdDocument, variables, headers),
+      options
+    );
+export const GetBlockIdsDocument = `
+    query GetBlockIds($filters: BlockSearchFilters, $orderBy: [BlockOrderByCriterion!], $page: Int!, $itemsPerPage: Int!) {
+  blocks(
+    filters: $filters
+    orderBy: $orderBy
+    page: $page
+    itemsPerPage: $itemsPerPage
+  ) {
+    count
+    itemsPerPage
+    totalPages
+    results {
+      id
+      name
+      created
+      createdBy
+      modified
+      modifiedBy
+      moveable
+      bulk
+      comment
+      level
+      blockGroup
+    }
+  }
+}
+    `;
+export const useGetBlockIdsQuery = <
+      TData = GetBlockIdsQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: GetBlockIdsQueryVariables,
+      options?: UseQueryOptions<GetBlockIdsQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetBlockIdsQuery, TError, TData>(
+      ['GetBlockIds', variables],
+      fetcher<GetBlockIdsQuery, GetBlockIdsQueryVariables>(client, GetBlockIdsDocument, variables, headers),
+      options
+    );
+export const CreateBlockDocument = `
+    mutation CreateBlock($input: CreateBlockInput!) {
+  createBlock(input: $input) {
+    id
+    name
+    created
+    createdBy
+    modified
+    modifiedBy
+    moveable
+    bulk
+    comment
+    level
+    blockGroup
+  }
+}
+    `;
+export const useCreateBlockMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<CreateBlockMutation, TError, CreateBlockMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<CreateBlockMutation, TError, CreateBlockMutationVariables, TContext>(
+      ['CreateBlock'],
+      (variables?: CreateBlockMutationVariables) => fetcher<CreateBlockMutation, CreateBlockMutationVariables>(client, CreateBlockDocument, variables, headers)(),
+      options
+    );
+export const DeleteBlockDocument = `
+    mutation DeleteBlock($id: String!) {
+  deleteBlock(id: $id)
+}
+    `;
+export const useDeleteBlockMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<DeleteBlockMutation, TError, DeleteBlockMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<DeleteBlockMutation, TError, DeleteBlockMutationVariables, TContext>(
+      ['DeleteBlock'],
+      (variables?: DeleteBlockMutationVariables) => fetcher<DeleteBlockMutation, DeleteBlockMutationVariables>(client, DeleteBlockDocument, variables, headers)(),
+      options
+    );
+export const UpdateBlockDocument = `
+    mutation UpdateBlock($id: String!, $input: UpdateBlockInput!) {
+  updateBlock(id: $id, input: $input) {
+    id
+    name
+    created
+    createdBy
+    modified
+    modifiedBy
+    moveable
+    bulk
+    comment
+    level
+    blockGroup
+  }
+}
+    `;
+export const useUpdateBlockMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<UpdateBlockMutation, TError, UpdateBlockMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<UpdateBlockMutation, TError, UpdateBlockMutationVariables, TContext>(
+      ['UpdateBlock'],
+      (variables?: UpdateBlockMutationVariables) => fetcher<UpdateBlockMutation, UpdateBlockMutationVariables>(client, UpdateBlockDocument, variables, headers)(),
+      options
+    );
+export const SimpleGetAllStockOwnersDocument = `
+    query SimpleGetAllStockOwners {
+  stockOwners {
+    results {
+      id
+      name
+    }
+  }
+}
+    `;
+export const useSimpleGetAllStockOwnersQuery = <
+      TData = SimpleGetAllStockOwnersQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables?: SimpleGetAllStockOwnersQueryVariables,
+      options?: UseQueryOptions<SimpleGetAllStockOwnersQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<SimpleGetAllStockOwnersQuery, TError, TData>(
+      variables === undefined ? ['SimpleGetAllStockOwners'] : ['SimpleGetAllStockOwners', variables],
+      fetcher<SimpleGetAllStockOwnersQuery, SimpleGetAllStockOwnersQueryVariables>(client, SimpleGetAllStockOwnersDocument, variables, headers),
+      options
+    );
+export const GetAllFeatureCodesDocument = `
+    query GetAllFeatureCodes($filters: FeatureCodeSearchFilters, $orderBy: [FeatureCodeOrderByCriterion!], $page: Int!, $itemsPerPage: Int!) {
+  featureCodes(
+    filters: $filters
+    orderBy: $orderBy
+    page: $page
+    itemsPerPage: $itemsPerPage
+  ) {
+    count
+    itemsPerPage
+    totalPages
+    results {
+      id
+      name
+      unique
+      dateType
+      prefixBarcode
+      lengthBarcode
+      suffixBarcode
+      stockOwnerId
+      stockOwner {
+        name
+      }
+      extras
+      created
+      createdBy
+      modified
+      modifiedBy
+    }
+  }
+}
+    `;
+export const useGetAllFeatureCodesQuery = <
+      TData = GetAllFeatureCodesQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: GetAllFeatureCodesQueryVariables,
+      options?: UseQueryOptions<GetAllFeatureCodesQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetAllFeatureCodesQuery, TError, TData>(
+      ['GetAllFeatureCodes', variables],
+      fetcher<GetAllFeatureCodesQuery, GetAllFeatureCodesQueryVariables>(client, GetAllFeatureCodesDocument, variables, headers),
+      options
+    );
+export const GetFeatureCodeByIdDocument = `
+    query GetFeatureCodeById($id: String!, $language: String = "en") {
+  featureCode(id: $id, language: $language) {
+    id
+    name
+    unique
+    dateType
+    prefixBarcode
+    lengthBarcode
+    suffixBarcode
+    stockOwnerId
+    stockOwner {
+      name
+    }
+    extras
+    created
+    createdBy
+    modified
+    modifiedBy
+  }
+}
+    `;
+export const useGetFeatureCodeByIdQuery = <
+      TData = GetFeatureCodeByIdQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: GetFeatureCodeByIdQueryVariables,
+      options?: UseQueryOptions<GetFeatureCodeByIdQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetFeatureCodeByIdQuery, TError, TData>(
+      ['GetFeatureCodeById', variables],
+      fetcher<GetFeatureCodeByIdQuery, GetFeatureCodeByIdQueryVariables>(client, GetFeatureCodeByIdDocument, variables, headers),
+      options
+    );
+export const GetFeatureCodeIdsDocument = `
+    query GetFeatureCodeIds($filters: FeatureCodeSearchFilters, $orderBy: [FeatureCodeOrderByCriterion!], $page: Int!, $itemsPerPage: Int!) {
+  featureCodes(
+    filters: $filters
+    orderBy: $orderBy
+    page: $page
+    itemsPerPage: $itemsPerPage
+  ) {
+    count
+    itemsPerPage
+    totalPages
+    results {
+      id
+      name
+    }
+  }
+}
+    `;
+export const useGetFeatureCodeIdsQuery = <
+      TData = GetFeatureCodeIdsQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: GetFeatureCodeIdsQueryVariables,
+      options?: UseQueryOptions<GetFeatureCodeIdsQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetFeatureCodeIdsQuery, TError, TData>(
+      ['GetFeatureCodeIds', variables],
+      fetcher<GetFeatureCodeIdsQuery, GetFeatureCodeIdsQueryVariables>(client, GetFeatureCodeIdsDocument, variables, headers),
+      options
+    );
+export const CreateFeatureCodeDocument = `
+    mutation CreateFeatureCode($input: CreateFeatureCodeInput!) {
+  createFeatureCode(input: $input) {
+    id
+    name
+    unique
+    dateType
+    prefixBarcode
+    lengthBarcode
+    suffixBarcode
+    stockOwnerId
+  }
+}
+    `;
+export const useCreateFeatureCodeMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<CreateFeatureCodeMutation, TError, CreateFeatureCodeMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<CreateFeatureCodeMutation, TError, CreateFeatureCodeMutationVariables, TContext>(
+      ['CreateFeatureCode'],
+      (variables?: CreateFeatureCodeMutationVariables) => fetcher<CreateFeatureCodeMutation, CreateFeatureCodeMutationVariables>(client, CreateFeatureCodeDocument, variables, headers)(),
+      options
+    );
+export const DeleteFeatureCodeDocument = `
+    mutation DeleteFeatureCode($id: String!) {
+  deleteFeatureCode(id: $id)
+}
+    `;
+export const useDeleteFeatureCodeMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<DeleteFeatureCodeMutation, TError, DeleteFeatureCodeMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<DeleteFeatureCodeMutation, TError, DeleteFeatureCodeMutationVariables, TContext>(
+      ['DeleteFeatureCode'],
+      (variables?: DeleteFeatureCodeMutationVariables) => fetcher<DeleteFeatureCodeMutation, DeleteFeatureCodeMutationVariables>(client, DeleteFeatureCodeDocument, variables, headers)(),
+      options
+    );
+export const UpdateFeatureCodeDocument = `
+    mutation UpdateFeatureCode($id: String!, $input: UpdateFeatureCodeInput!) {
+  updateFeatureCode(id: $id, input: $input) {
+    id
+    name
+    unique
+    dateType
+    prefixBarcode
+    lengthBarcode
+    suffixBarcode
+    stockOwnerId
+  }
+}
+    `;
+export const useUpdateFeatureCodeMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<UpdateFeatureCodeMutation, TError, UpdateFeatureCodeMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<UpdateFeatureCodeMutation, TError, UpdateFeatureCodeMutationVariables, TContext>(
+      ['UpdateFeatureCode'],
+      (variables?: UpdateFeatureCodeMutationVariables) => fetcher<UpdateFeatureCodeMutation, UpdateFeatureCodeMutationVariables>(client, UpdateFeatureCodeDocument, variables, headers)(),
+      options
+    );
 export const GetAllGoodsInsDocument = `
     query GetAllGoodsIns($orderBy: [GoodsInOrderByCriterion!], $filters: GoodsInSearchFilters, $page: Int!, $itemsPerPage: Int!, $language: String) {
   goodsIns(
@@ -9865,311 +10097,6 @@ export const useUpdateGoodsInLineMutation = <
       (variables?: UpdateGoodsInLineMutationVariables) => fetcher<UpdateGoodsInLineMutation, UpdateGoodsInLineMutationVariables>(client, UpdateGoodsInLineDocument, variables, headers)(),
       options
     );
-export const SimpleGetAllBLocksDocument = `
-    query SimpleGetAllBLocks {
-  blocks {
-    results {
-      id
-      name
-    }
-  }
-}
-    `;
-export const useSimpleGetAllBLocksQuery = <TData = SimpleGetAllBLocksQuery, TError = unknown>(
-    client: GraphQLClient,
-    variables?: SimpleGetAllBLocksQueryVariables,
-    options?: UseQueryOptions<SimpleGetAllBLocksQuery, TError, TData>,
-    headers?: RequestInit['headers']
-) =>
-    useQuery<SimpleGetAllBLocksQuery, TError, TData>(
-        variables === undefined ? ['SimpleGetAllBLocks'] : ['SimpleGetAllBLocks', variables],
-        fetcher<SimpleGetAllBLocksQuery, SimpleGetAllBLocksQueryVariables>(
-            client,
-            SimpleGetAllBLocksDocument,
-            variables,
-            headers
-        ),
-        options
-    );
-export const SimpleGetAllBuildingsDocument = `
-    query SimpleGetAllBuildings {
-  buildings {
-    results {
-      id
-      name
-    }
-  }
-}
-    `;
-export const useSimpleGetAllBuildingsQuery = <TData = SimpleGetAllBuildingsQuery, TError = unknown>(
-    client: GraphQLClient,
-    variables?: SimpleGetAllBuildingsQueryVariables,
-    options?: UseQueryOptions<SimpleGetAllBuildingsQuery, TError, TData>,
-    headers?: RequestInit['headers']
-) =>
-    useQuery<SimpleGetAllBuildingsQuery, TError, TData>(
-        variables === undefined ? ['SimpleGetAllBuildings'] : ['SimpleGetAllBuildings', variables],
-        fetcher<SimpleGetAllBuildingsQuery, SimpleGetAllBuildingsQueryVariables>(
-            client,
-            SimpleGetAllBuildingsDocument,
-            variables,
-            headers
-        ),
-        options
-    );
-export const GetBlockLevelsParamsDocument = `
-    query getBlockLevelsParams {
-  listParametersForAScope(scope: "block_level") {
-    id
-    scope
-    code
-    text
-  }
-}
-    `;
-export const useGetBlockLevelsParamsQuery = <TData = GetBlockLevelsParamsQuery, TError = unknown>(
-    client: GraphQLClient,
-    variables?: GetBlockLevelsParamsQueryVariables,
-    options?: UseQueryOptions<GetBlockLevelsParamsQuery, TError, TData>,
-    headers?: RequestInit['headers']
-) =>
-    useQuery<GetBlockLevelsParamsQuery, TError, TData>(
-        variables === undefined ? ['getBlockLevelsParams'] : ['getBlockLevelsParams', variables],
-        fetcher<GetBlockLevelsParamsQuery, GetBlockLevelsParamsQueryVariables>(
-            client,
-            GetBlockLevelsParamsDocument,
-            variables,
-            headers
-        ),
-        options
-    );
-export const GetAllBlocksDocument = `
-    query GetAllBlocks($filters: BlockSearchFilters, $orderBy: [BlockOrderByCriterion!], $page: Int!, $itemsPerPage: Int!) {
-  blocks(
-    filters: $filters
-    orderBy: $orderBy
-    page: $page
-    itemsPerPage: $itemsPerPage
-  ) {
-    count
-    itemsPerPage
-    totalPages
-    results {
-      id
-      building {
-        name
-      }
-      name
-      created
-      createdBy
-      modified
-      modifiedBy
-      moveable
-      bulk
-      comment
-      level
-      blockGroup
-    }
-  }
-}
-    `;
-export const useGetAllBlocksQuery = <TData = GetAllBlocksQuery, TError = unknown>(
-    client: GraphQLClient,
-    variables: GetAllBlocksQueryVariables,
-    options?: UseQueryOptions<GetAllBlocksQuery, TError, TData>,
-    headers?: RequestInit['headers']
-) =>
-    useQuery<GetAllBlocksQuery, TError, TData>(
-        ['GetAllBlocks', variables],
-        fetcher<GetAllBlocksQuery, GetAllBlocksQueryVariables>(
-            client,
-            GetAllBlocksDocument,
-            variables,
-            headers
-        ),
-        options
-    );
-export const GetBlockByIdDocument = `
-    query GetBlockById($id: String!) {
-  block(id: $id) {
-    id
-    building {
-      name
-    }
-    name
-    created
-    createdBy
-    modified
-    modifiedBy
-    moveable
-    bulk
-    comment
-    level
-    blockGroup
-  }
-}
-    `;
-export const useGetBlockByIdQuery = <TData = GetBlockByIdQuery, TError = unknown>(
-    client: GraphQLClient,
-    variables: GetBlockByIdQueryVariables,
-    options?: UseQueryOptions<GetBlockByIdQuery, TError, TData>,
-    headers?: RequestInit['headers']
-) =>
-    useQuery<GetBlockByIdQuery, TError, TData>(
-        ['GetBlockById', variables],
-        fetcher<GetBlockByIdQuery, GetBlockByIdQueryVariables>(
-            client,
-            GetBlockByIdDocument,
-            variables,
-            headers
-        ),
-        options
-    );
-export const GetBlockIdsDocument = `
-    query GetBlockIds($filters: BlockSearchFilters, $orderBy: [BlockOrderByCriterion!], $page: Int!, $itemsPerPage: Int!) {
-  blocks(
-    filters: $filters
-    orderBy: $orderBy
-    page: $page
-    itemsPerPage: $itemsPerPage
-  ) {
-    count
-    itemsPerPage
-    totalPages
-    results {
-      id
-      name
-      created
-      createdBy
-      modified
-      modifiedBy
-      moveable
-      bulk
-      comment
-      level
-      blockGroup
-    }
-  }
-}
-    `;
-export const useGetBlockIdsQuery = <TData = GetBlockIdsQuery, TError = unknown>(
-    client: GraphQLClient,
-    variables: GetBlockIdsQueryVariables,
-    options?: UseQueryOptions<GetBlockIdsQuery, TError, TData>,
-    headers?: RequestInit['headers']
-) =>
-    useQuery<GetBlockIdsQuery, TError, TData>(
-        ['GetBlockIds', variables],
-        fetcher<GetBlockIdsQuery, GetBlockIdsQueryVariables>(
-            client,
-            GetBlockIdsDocument,
-            variables,
-            headers
-        ),
-        options
-    );
-export const CreateBlockDocument = `
-    mutation CreateBlock($input: CreateBlockInput!) {
-  createBlock(input: $input) {
-    id
-    name
-    created
-    createdBy
-    modified
-    modifiedBy
-    moveable
-    bulk
-    comment
-    level
-    blockGroup
-  }
-}
-    `;
-export const useCreateBlockMutation = <TError = unknown, TContext = unknown>(
-    client: GraphQLClient,
-    options?: UseMutationOptions<
-        CreateBlockMutation,
-        TError,
-        CreateBlockMutationVariables,
-        TContext
-    >,
-    headers?: RequestInit['headers']
-) =>
-    useMutation<CreateBlockMutation, TError, CreateBlockMutationVariables, TContext>(
-        ['CreateBlock'],
-        (variables?: CreateBlockMutationVariables) =>
-            fetcher<CreateBlockMutation, CreateBlockMutationVariables>(
-                client,
-                CreateBlockDocument,
-                variables,
-                headers
-            )(),
-        options
-    );
-export const DeleteBlockDocument = `
-    mutation DeleteBlock($id: String!) {
-  deleteBlock(id: $id)
-}
-    `;
-export const useDeleteBlockMutation = <TError = unknown, TContext = unknown>(
-    client: GraphQLClient,
-    options?: UseMutationOptions<
-        DeleteBlockMutation,
-        TError,
-        DeleteBlockMutationVariables,
-        TContext
-    >,
-    headers?: RequestInit['headers']
-) =>
-    useMutation<DeleteBlockMutation, TError, DeleteBlockMutationVariables, TContext>(
-        ['DeleteBlock'],
-        (variables?: DeleteBlockMutationVariables) =>
-            fetcher<DeleteBlockMutation, DeleteBlockMutationVariables>(
-                client,
-                DeleteBlockDocument,
-                variables,
-                headers
-            )(),
-        options
-    );
-export const UpdateBlockDocument = `
-    mutation UpdateBlock($id: String!, $input: UpdateBlockInput!) {
-  updateBlock(id: $id, input: $input) {
-    id
-    name
-    created
-    createdBy
-    modified
-    modifiedBy
-    moveable
-    bulk
-    comment
-    level
-    blockGroup
-  }
-}
-    `;
-export const useUpdateBlockMutation = <TError = unknown, TContext = unknown>(
-    client: GraphQLClient,
-    options?: UseMutationOptions<
-        UpdateBlockMutation,
-        TError,
-        UpdateBlockMutationVariables,
-        TContext
-    >,
-    headers?: RequestInit['headers']
-) =>
-    useMutation<UpdateBlockMutation, TError, UpdateBlockMutationVariables, TContext>(
-        ['UpdateBlock'],
-        (variables?: UpdateBlockMutationVariables) =>
-            fetcher<UpdateBlockMutation, UpdateBlockMutationVariables>(
-                client,
-                UpdateBlockDocument,
-                variables,
-                headers
-            )(),
-        options
-    );
 export const GetReplenishTypesConfigsDocument = `
     query getReplenishTypesConfigs {
   listConfigsForAScope(scope: "location_replenish_type") {
@@ -10181,51 +10108,18 @@ export const GetReplenishTypesConfigsDocument = `
 }
     `;
 export const useGetReplenishTypesConfigsQuery = <
-    TData = GetReplenishTypesConfigsQuery,
-    TError = unknown
->(
-    client: GraphQLClient,
-    variables?: GetReplenishTypesConfigsQueryVariables,
-    options?: UseQueryOptions<GetReplenishTypesConfigsQuery, TError, TData>,
-    headers?: RequestInit['headers']
-) =>
+      TData = GetReplenishTypesConfigsQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables?: GetReplenishTypesConfigsQueryVariables,
+      options?: UseQueryOptions<GetReplenishTypesConfigsQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
     useQuery<GetReplenishTypesConfigsQuery, TError, TData>(
-        variables === undefined
-            ? ['getReplenishTypesConfigs']
-            : ['getReplenishTypesConfigs', variables],
-        fetcher<GetReplenishTypesConfigsQuery, GetReplenishTypesConfigsQueryVariables>(
-            client,
-            GetReplenishTypesConfigsDocument,
-            variables,
-            headers
-        ),
-        options
-    );
-export const GetRotationsParamsDocument = `
-    query getRotationsParams {
-  listParametersForAScope(scope: "rotation") {
-    id
-    scope
-    code
-    text
-  }
-}
-    `;
-export const useGetRotationsParamsQuery = <TData = GetRotationsParamsQuery, TError = unknown>(
-    client: GraphQLClient,
-    variables?: GetRotationsParamsQueryVariables,
-    options?: UseQueryOptions<GetRotationsParamsQuery, TError, TData>,
-    headers?: RequestInit['headers']
-) =>
-    useQuery<GetRotationsParamsQuery, TError, TData>(
-        variables === undefined ? ['getRotationsParams'] : ['getRotationsParams', variables],
-        fetcher<GetRotationsParamsQuery, GetRotationsParamsQueryVariables>(
-            client,
-            GetRotationsParamsDocument,
-            variables,
-            headers
-        ),
-        options
+      variables === undefined ? ['getReplenishTypesConfigs'] : ['getReplenishTypesConfigs', variables],
+      fetcher<GetReplenishTypesConfigsQuery, GetReplenishTypesConfigsQueryVariables>(client, GetReplenishTypesConfigsDocument, variables, headers),
+      options
     );
 export const GetAllLocationsDocument = `
     query GetAllLocations($filters: LocationSearchFilters, $orderBy: [LocationOrderByCriterion!], $page: Int!, $itemsPerPage: Int!) {
@@ -10260,21 +10154,19 @@ export const GetAllLocationsDocument = `
   }
 }
     `;
-export const useGetAllLocationsQuery = <TData = GetAllLocationsQuery, TError = unknown>(
-    client: GraphQLClient,
-    variables: GetAllLocationsQueryVariables,
-    options?: UseQueryOptions<GetAllLocationsQuery, TError, TData>,
-    headers?: RequestInit['headers']
-) =>
+export const useGetAllLocationsQuery = <
+      TData = GetAllLocationsQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: GetAllLocationsQueryVariables,
+      options?: UseQueryOptions<GetAllLocationsQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
     useQuery<GetAllLocationsQuery, TError, TData>(
-        ['GetAllLocations', variables],
-        fetcher<GetAllLocationsQuery, GetAllLocationsQueryVariables>(
-            client,
-            GetAllLocationsDocument,
-            variables,
-            headers
-        ),
-        options
+      ['GetAllLocations', variables],
+      fetcher<GetAllLocationsQuery, GetAllLocationsQueryVariables>(client, GetAllLocationsDocument, variables, headers),
+      options
     );
 export const GetLocationByIdDocument = `
     query GetLocationById($id: String!) {
@@ -10299,21 +10191,19 @@ export const GetLocationByIdDocument = `
   }
 }
     `;
-export const useGetLocationByIdQuery = <TData = GetLocationByIdQuery, TError = unknown>(
-    client: GraphQLClient,
-    variables: GetLocationByIdQueryVariables,
-    options?: UseQueryOptions<GetLocationByIdQuery, TError, TData>,
-    headers?: RequestInit['headers']
-) =>
+export const useGetLocationByIdQuery = <
+      TData = GetLocationByIdQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: GetLocationByIdQueryVariables,
+      options?: UseQueryOptions<GetLocationByIdQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
     useQuery<GetLocationByIdQuery, TError, TData>(
-        ['GetLocationById', variables],
-        fetcher<GetLocationByIdQuery, GetLocationByIdQueryVariables>(
-            client,
-            GetLocationByIdDocument,
-            variables,
-            headers
-        ),
-        options
+      ['GetLocationById', variables],
+      fetcher<GetLocationByIdQuery, GetLocationByIdQueryVariables>(client, GetLocationByIdDocument, variables, headers),
+      options
     );
 export const GetLocationIdsDocument = `
     query GetLocationIds($filters: LocationSearchFilters, $orderBy: [LocationOrderByCriterion!], $page: Int!, $itemsPerPage: Int!) {
@@ -10347,21 +10237,19 @@ export const GetLocationIdsDocument = `
   }
 }
     `;
-export const useGetLocationIdsQuery = <TData = GetLocationIdsQuery, TError = unknown>(
-    client: GraphQLClient,
-    variables: GetLocationIdsQueryVariables,
-    options?: UseQueryOptions<GetLocationIdsQuery, TError, TData>,
-    headers?: RequestInit['headers']
-) =>
+export const useGetLocationIdsQuery = <
+      TData = GetLocationIdsQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: GetLocationIdsQueryVariables,
+      options?: UseQueryOptions<GetLocationIdsQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
     useQuery<GetLocationIdsQuery, TError, TData>(
-        ['GetLocationIds', variables],
-        fetcher<GetLocationIdsQuery, GetLocationIdsQueryVariables>(
-            client,
-            GetLocationIdsDocument,
-            variables,
-            headers
-        ),
-        options
+      ['GetLocationIds', variables],
+      fetcher<GetLocationIdsQuery, GetLocationIdsQueryVariables>(client, GetLocationIdsDocument, variables, headers),
+      options
     );
 export const CreateLocationDocument = `
     mutation CreateLocation($input: CreateLocationInput!) {
@@ -10392,26 +10280,18 @@ export const CreateLocationDocument = `
   }
 }
     `;
-export const useCreateLocationMutation = <TError = unknown, TContext = unknown>(
-    client: GraphQLClient,
-    options?: UseMutationOptions<
-        CreateLocationMutation,
-        TError,
-        CreateLocationMutationVariables,
-        TContext
-    >,
-    headers?: RequestInit['headers']
-) =>
+export const useCreateLocationMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<CreateLocationMutation, TError, CreateLocationMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
     useMutation<CreateLocationMutation, TError, CreateLocationMutationVariables, TContext>(
-        ['CreateLocation'],
-        (variables?: CreateLocationMutationVariables) =>
-            fetcher<CreateLocationMutation, CreateLocationMutationVariables>(
-                client,
-                CreateLocationDocument,
-                variables,
-                headers
-            )(),
-        options
+      ['CreateLocation'],
+      (variables?: CreateLocationMutationVariables) => fetcher<CreateLocationMutation, CreateLocationMutationVariables>(client, CreateLocationDocument, variables, headers)(),
+      options
     );
 export const BulkCreateLocationsDocument = `
     mutation BulkCreateLocations($input: BulkCreateLocationsInput!) {
@@ -10439,57 +10319,36 @@ export const BulkCreateLocationsDocument = `
   }
 }
     `;
-export const useBulkCreateLocationsMutation = <TError = unknown, TContext = unknown>(
-    client: GraphQLClient,
-    options?: UseMutationOptions<
-        BulkCreateLocationsMutation,
-        TError,
-        BulkCreateLocationsMutationVariables,
-        TContext
-    >,
-    headers?: RequestInit['headers']
-) =>
-    useMutation<
-        BulkCreateLocationsMutation,
-        TError,
-        BulkCreateLocationsMutationVariables,
-        TContext
+export const useBulkCreateLocationsMutation = <
+      TError = unknown,
+      TContext = unknown
     >(
-        ['BulkCreateLocations'],
-        (variables?: BulkCreateLocationsMutationVariables) =>
-            fetcher<BulkCreateLocationsMutation, BulkCreateLocationsMutationVariables>(
-                client,
-                BulkCreateLocationsDocument,
-                variables,
-                headers
-            )(),
-        options
+      client: GraphQLClient,
+      options?: UseMutationOptions<BulkCreateLocationsMutation, TError, BulkCreateLocationsMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<BulkCreateLocationsMutation, TError, BulkCreateLocationsMutationVariables, TContext>(
+      ['BulkCreateLocations'],
+      (variables?: BulkCreateLocationsMutationVariables) => fetcher<BulkCreateLocationsMutation, BulkCreateLocationsMutationVariables>(client, BulkCreateLocationsDocument, variables, headers)(),
+      options
     );
 export const DeleteLocationDocument = `
     mutation DeleteLocation($id: String!) {
   deleteLocation(id: $id)
 }
     `;
-export const useDeleteLocationMutation = <TError = unknown, TContext = unknown>(
-    client: GraphQLClient,
-    options?: UseMutationOptions<
-        DeleteLocationMutation,
-        TError,
-        DeleteLocationMutationVariables,
-        TContext
-    >,
-    headers?: RequestInit['headers']
-) =>
+export const useDeleteLocationMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<DeleteLocationMutation, TError, DeleteLocationMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
     useMutation<DeleteLocationMutation, TError, DeleteLocationMutationVariables, TContext>(
-        ['DeleteLocation'],
-        (variables?: DeleteLocationMutationVariables) =>
-            fetcher<DeleteLocationMutation, DeleteLocationMutationVariables>(
-                client,
-                DeleteLocationDocument,
-                variables,
-                headers
-            )(),
-        options
+      ['DeleteLocation'],
+      (variables?: DeleteLocationMutationVariables) => fetcher<DeleteLocationMutation, DeleteLocationMutationVariables>(client, DeleteLocationDocument, variables, headers)(),
+      options
     );
 export const UpdateLocationDocument = `
     mutation UpdateLocation($id: String!, $input: UpdateLocationInput!) {
@@ -10514,26 +10373,18 @@ export const UpdateLocationDocument = `
   }
 }
     `;
-export const useUpdateLocationMutation = <TError = unknown, TContext = unknown>(
-    client: GraphQLClient,
-    options?: UseMutationOptions<
-        UpdateLocationMutation,
-        TError,
-        UpdateLocationMutationVariables,
-        TContext
-    >,
-    headers?: RequestInit['headers']
-) =>
+export const useUpdateLocationMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<UpdateLocationMutation, TError, UpdateLocationMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
     useMutation<UpdateLocationMutation, TError, UpdateLocationMutationVariables, TContext>(
-        ['UpdateLocation'],
-        (variables?: UpdateLocationMutationVariables) =>
-            fetcher<UpdateLocationMutation, UpdateLocationMutationVariables>(
-                client,
-                UpdateLocationDocument,
-                variables,
-                headers
-            )(),
-        options
+      ['UpdateLocation'],
+      (variables?: UpdateLocationMutationVariables) => fetcher<UpdateLocationMutation, UpdateLocationMutationVariables>(client, UpdateLocationDocument, variables, headers)(),
+      options
     );
 export const WarehouseLoginDocument = `
     mutation WarehouseLogin($username: String!, $password: String!, $warehouseId: ID!) {
