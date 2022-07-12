@@ -1,0 +1,88 @@
+query GetAllConfigs(
+    $orderBy: [ParameterOrderByCriterion!]
+    $filters: ParameterSearchFilters
+    $page: Int!
+    $itemsPerPage: Int!
+    $language: String
+) {
+    configs(orderBy: $orderBy, filters: $filters, page: $page, itemsPerPage: $itemsPerPage, language: $language) {
+        count
+        itemsPerPage
+        totalPages
+        page
+        results {
+            id
+            scope
+            code
+            value
+            extras
+            created
+            createdBy
+            modified
+            modifiedBy
+            translation
+            system
+        }
+    }
+}
+
+query GetConfigById($id: String!, $language:String = "en") {
+    config(id: $id, language: $language) {
+        id
+        scope
+        code
+        value
+        extras
+        created
+        createdBy
+        modified
+        modifiedBy
+        translation
+        system
+    }
+}
+
+mutation CreateConfig($input: CreateConfigInput!) {
+    createConfig(input: $input) {
+        id
+        scope
+        code
+        value
+        extras
+        created
+        createdBy
+        modified
+        modifiedBy
+        translation
+        system
+    }
+}
+
+mutation DeleteConfig($configId: String!) {
+    deleteConfig(configId: $configId)
+}
+
+mutation UpdateConfig($id: String!, $input: UpdateConfigInput!) {
+    updateConfig(id: $id, input: $input) {
+        id
+        scope
+        code
+        value
+        extras
+        created
+        createdBy
+        modified
+        modifiedBy
+        translation
+        system
+    }
+}
+
+query ListConfigsForAScope($scope: String!, $code: String, $language:String = "en") {
+    listConfigsForAScope(scope: $scope, code: $code, language: $language) {
+        id
+        scope
+        code
+        text
+    }
+}

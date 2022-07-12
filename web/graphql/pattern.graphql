@@ -1,0 +1,124 @@
+query GetAllPatterns(
+    $filters: PatternSearchFilters
+    $orderBy: [PatternOrderByCriterion!]
+    $page: Int!
+    $itemsPerPage: Int!,
+    $language: String
+) {
+    patterns(filters: $filters, orderBy: $orderBy, page: $page, itemsPerPage: $itemsPerPage, language: $language) {
+        count
+        itemsPerPage
+        totalPages
+        results {
+            id
+            paths {
+                id
+                name
+                status
+                extras
+            }
+            stockOwner {
+                id
+                name
+            }
+            extras
+            created
+            createdBy
+            modified
+            modifiedBy
+            name
+            patternType
+            status
+            stockOwnerId
+            patternTypeText
+            statusText
+        }
+    }
+}
+
+query GetPatternById($id: String!, $language:String = "en") {
+    pattern(id: $id, language: $language) {
+        id
+        paths {
+            id
+            name
+            status
+            extras
+        }
+        stockOwner {
+            id
+            name
+        }
+        extras
+        created
+        createdBy
+        modified
+        modifiedBy
+        name
+        patternType
+        status
+        stockOwnerId
+        patternTypeText
+        statusText
+    }
+}
+
+mutation CreatePattern($input: CreatePatternInput!) {
+    createPattern(input: $input) {
+        id
+        paths {
+            id
+            name
+            status
+            extras
+        }
+        stockOwner {
+            id
+            name
+        }
+        extras
+        created
+        createdBy
+        modified
+        modifiedBy
+        name
+        patternType
+        status
+        stockOwnerId
+        patternTypeText
+        statusText
+    }
+}
+
+mutation DeletePattern($id: String!) {
+    deletePattern(id: $id)
+}
+
+mutation UpdatePattern($id: String!, $input: UpdatePatternInput!) {
+    updatePattern(id: $id, input: $input) {
+        id
+        paths {
+            id
+            name
+            status
+            extras
+        }
+        stockOwner {
+            id
+            name
+        }
+        extras
+        created
+        createdBy
+        modified
+        modifiedBy
+        name
+        patternType
+        status
+        stockOwnerId
+        patternTypeText
+        statusText
+    }
+}
+
+
