@@ -28,15 +28,15 @@ export const addFeatureCodeRoutes = [
     ...featuresCodesRoutes,
     {
         path: '/add-feature-code',
-        breadcrumbName: 'menu:add-feature-code'
+        breadcrumbName: 'actions:add-feature-code'
     }
 ];
 
 export const featuresTypesRoutes = [
     ...featuresRoutes,
     {
-        path: '/features-codes',
-        breadcrumbName: 'menu:features-codes'
+        path: '/features-types',
+        breadcrumbName: 'menu:features-types'
     }
 ];
 
@@ -44,7 +44,7 @@ export const addFeatureTypeRoutes = [
     ...featuresTypesRoutes,
     {
         path: '/add-feature-type',
-        breadcrumbName: 'menu:add-feature-type'
+        breadcrumbName: 'actions:add-feature-type'
     }
 ];
 

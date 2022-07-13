@@ -1,7 +1,6 @@
 import { DeleteOutlined, EyeTwoTone, EditTwoTone } from '@ant-design/icons';
-import { Button, Space } from 'antd';
-import { featureTypesData } from 'fake-data/features';
-import { AppTable, ContentSpin } from '@components';
+import { Button, Modal, Space } from 'antd';
+import { AppTable, ContentSpin, LinkButton } from '@components';
 import { useCallback, useEffect, useState } from 'react';
 import {
     DataQueryType,
@@ -9,12 +8,19 @@ import {
     DEFAULT_PAGE_NUMBER,
     orderByFormater,
     PaginationType,
+    pathParams,
     showError,
     showSuccess,
     useFeatureTypes
 } from '@helpers';
 import graphqlRequestClient from 'graphql/graphqlRequestClient';
 import useTranslation from 'next-translate/useTranslation';
+import {
+    DeleteFeatureTypeMutation,
+    DeleteFeatureTypeMutationVariables,
+    useDeleteFeatureTypeMutation
+} from 'generated/graphql';
+import { useAppState } from 'context/AppContext';
 
 export const FeaturesTypesList = () => {
     const { t } = useTranslation();
@@ -57,39 +63,48 @@ export const FeaturesTypesList = () => {
         }
     }, [data]);
 
+    //handle translation on value
+    const { globalLocale } = useAppState();
+    const searchedLanguage = globalLocale == 'en-US' ? 'en' : globalLocale;
+    featureTypes?.results.forEach((e: any) =>
+        globalLocale ? (e.value = e.translation[searchedLanguage]) : e.value
+    );
+
+    // value: globalLocale ? details.translation[searchedLanguage] : details.value
+
     const handleTableChange = async (_pagination: any, _filter: any, sorter: any) => {
         await setSort(orderByFormater(sorter));
     };
 
-    // const { mutate, isLoading: deleteLoading } = useDeleteFeatureTypeMutation<Error>(
-    //     graphqlRequestClient,
-    //     {
-    //         onSuccess: (
-    //             data: DeleteFeatureTypeMutation,
-    //             _variables: DeleteFeatureTypeMutationVariables,
-    //             _context: unknown
-    //         ) => {
-    //             if (!deleteLoading) {
-    //                 refetch();
-    //                 showSuccess(t('messages:success-deleted'));
-    //             }
-    //         },
-    //         onError: () => {
-    //             showError(t('messages:error-deleting-data'));
-    //         }
-    //     }
-    // );
+    const { mutate, isLoading: deleteLoading } = useDeleteFeatureTypeMutation<Error>(
+        graphqlRequestClient,
+        {
+            onSuccess: (
+                data: DeleteFeatureTypeMutation,
+                _variables: DeleteFeatureTypeMutationVariables,
+                _context: unknown
+            ) => {
+                if (!deleteLoading) {
+                    refetch();
+                    showSuccess(t('messages:success-deleted'));
+                }
+            },
+            onError: () => {
+                showError(t('messages:error-deleting-data'));
+            }
+        }
+    );
 
-    // const deleteFeatureType = ({ id }: DeleteFeatureTypeMutationVariables) => {
-    //     Modal.confirm({
-    //         title: t('messages:delete-confirm'),
-    //         onOk: () => {
-    //             mutate({ id });
-    //         },
-    //         okText: t('messages:confirm'),
-    //         cancelText: t('messages:cancel')
-    //     });
-    // };
+    const deleteFeatureType = ({ id }: DeleteFeatureTypeMutationVariables) => {
+        Modal.confirm({
+            title: t('messages:delete-confirm'),
+            onOk: () => {
+                mutate({ id });
+            },
+            okText: t('messages:confirm'),
+            cancelText: t('messages:cancel')
+        });
+    };
 
     const columns = [
         {
@@ -105,15 +120,28 @@ export const FeaturesTypesList = () => {
         {
             title: 'actions:actions',
             key: 'actions',
-            render: (record: { id: number }) => (
+            render: (record: { id: string; system: boolean }) => (
                 <Space>
-                    <Button icon={<EyeTwoTone />} onClick={() => alert(`View ${record.id} `)} />
-                    <Button icon={<EditTwoTone />} onClick={() => alert(`Edit ${record.id} `)} />
-                    <Button
-                        icon={<DeleteOutlined />}
-                        danger
-                        onClick={() => alert(`Delete ${record.id} `)}
+                    <LinkButton
+                        icon={<EyeTwoTone />}
+                        path={pathParams('/feature-type/[id]', record.id)}
                     />
+                    {record.system != true ? (
+                        <>
+                            <Button
+                                icon={<EditTwoTone />}
+                                onClick={() => alert(`Edit ${record.id} `)}
+                            />
+                            <Button
+                                icon={<DeleteOutlined />}
+                                danger
+                                loading={deleteLoading}
+                                onClick={() => deleteFeatureType({ id: record.id })}
+                            />
+                        </>
+                    ) : (
+                        <></>
+                    )}
                 </Space>
             )
         }
