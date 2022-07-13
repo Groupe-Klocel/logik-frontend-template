@@ -128,9 +128,9 @@ export const FeaturesTypesList = () => {
                     />
                     {record.system != true ? (
                         <>
-                            <Button
+                            <LinkButton
                                 icon={<EditTwoTone />}
-                                onClick={() => alert(`Edit ${record.id} `)}
+                                path={pathParams('/feature-type/edit/[id]', record.id)}
                             />
                             <Button
                                 icon={<DeleteOutlined />}

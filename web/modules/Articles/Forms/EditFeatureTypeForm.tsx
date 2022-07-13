@@ -1,48 +1,57 @@
 import { WrapperForm } from '@components';
-import { showError, showInfo, showSuccess } from '@helpers';
-import { Button, Col, Form, Input, InputNumber, Row, Typography } from 'antd';
-import { useAuth } from 'context/AuthContext';
-import {
-    CreateFeatureTypeMutation,
-    CreateFeatureTypeMutationVariables,
-    useCreateFeatureTypeMutation
-} from 'generated/graphql';
+import { Button, Input, Form, Select, Typography, InputNumber } from 'antd';
 import useTranslation from 'next-translate/useTranslation';
+import { FC, useEffect, useState } from 'react';
+import { useAuth } from 'context/AuthContext';
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
+import {
+    useUpdateFeatureTypeMutation,
+    UpdateFeatureTypeMutation,
+    UpdateFeatureTypeMutationVariables
+} from 'generated/graphql';
+import { showError, showSuccess, showInfo } from '@helpers';
 
 const { Title } = Typography;
 
-export const AddFeatureTypeForm = () => {
+export type EditFeatureTypeFormProps = {
+    featureTypeId: string;
+    details: any;
+};
+
+export const EditFeatureTypeForm: FC<EditFeatureTypeFormProps> = ({
+    featureTypeId,
+    details
+}: EditFeatureTypeFormProps) => {
     const { t } = useTranslation('common');
     const { graphqlRequestClient } = useAuth();
     const router = useRouter();
 
+    const errorMessageEmptyInput = t('messages:error-message-empty-input');
+
     // TYPED SAFE ALL
     const [form] = Form.useForm();
 
-    const { mutate, isLoading: createLoading } = useCreateFeatureTypeMutation<Error>(
+    const { mutate, isLoading: updateLoading } = useUpdateFeatureTypeMutation<Error>(
         graphqlRequestClient,
         {
             onSuccess: (
-                data: CreateFeatureTypeMutation,
-                _variables: CreateFeatureTypeMutationVariables,
+                data: UpdateFeatureTypeMutation,
+                _variables: UpdateFeatureTypeMutationVariables,
                 _context: any
             ) => {
-                router.push(`/feature-type/${data.createParameter.id}`);
-                showSuccess(t('messages:success-created'));
+                router.push(`/feature-type/${data.updateParameter?.id}`);
+                showSuccess(t('messages:success-updated'));
             },
             onError: () => {
-                showError(t('messages:error-creating-data'));
+                showError(t('messages:error-update-data'));
             }
         }
     );
 
-    const createFeatureType = ({ input }: CreateFeatureTypeMutationVariables) => {
-        mutate({ input });
+    const updateFeatureType = ({ id, input }: UpdateFeatureTypeMutationVariables) => {
+        mutate({ id, input });
     };
 
-    // Call api to create new group
     const onFinish = () => {
         form.validateFields()
             .then(() => {
@@ -50,23 +59,35 @@ export const AddFeatureTypeForm = () => {
                 const formData = form.getFieldsValue(true);
                 const translation = { en: formData.en, fr: formData.fr };
                 formData['translation'] = translation;
-                formData['scope'] = 'feature_type';
                 formData.code = String(formData.code);
                 delete formData['en'];
                 delete formData['fr'];
-                console.log(formData);
-                createFeatureType({ input: formData });
+                delete formData['system'];
+                console.log('zzz', formData);
+                updateFeatureType({ id: featureTypeId, input: formData });
             })
             .catch((err) => {
-                showError(t('messages:error-creating-data'));
+                showError(t('messages:error-update-data'));
             });
     };
 
     useEffect(() => {
-        if (createLoading) {
+        const tmp_details = {
+            ...details,
+            ...details.translation
+        };
+        delete tmp_details['id'];
+        delete tmp_details['created'];
+        delete tmp_details['createdBy'];
+        delete tmp_details['modified'];
+        delete tmp_details['modifiedBy'];
+        delete tmp_details['translation'];
+        console.log('yyy', tmp_details);
+        form.setFieldsValue(tmp_details);
+        if (updateLoading) {
             showInfo(t('messages:info-create-wip'));
         }
-    }, [createLoading]);
+    }, [updateLoading]);
 
     return (
         <WrapperForm>
@@ -74,7 +95,6 @@ export const AddFeatureTypeForm = () => {
                 <Form.Item
                     label={t('code')}
                     name="code"
-                    initialValue={71400}
                     rules={[{ required: true, message: `${t('error-message-empty-input')}` }]}
                 >
                     <InputNumber min={71400} max={71499} />
@@ -94,14 +114,12 @@ export const AddFeatureTypeForm = () => {
                 <Form.Item label={t('FR')} name="fr">
                     <Input />
                 </Form.Item>
-                <Row>
-                    <Col span={24} style={{ textAlign: 'center' }}>
-                        <Button type="primary" loading={createLoading} onClick={onFinish}>
-                            {t('actions:submit')}
-                        </Button>
-                    </Col>
-                </Row>
             </Form>
+            <div style={{ textAlign: 'center' }}>
+                <Button type="primary" loading={updateLoading} onClick={onFinish}>
+                    {t('actions:submit')}
+                </Button>
+            </div>
         </WrapperForm>
     );
 };
