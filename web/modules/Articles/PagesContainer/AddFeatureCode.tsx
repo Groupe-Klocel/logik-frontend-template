@@ -12,7 +12,7 @@ export const AddFeatureCode = () => {
     return (
         <>
             <HeaderContent
-                title={t('add2', { name: 'Feature Code' })}
+                title={t('add2', { name: t('menu:feature-code') })}
                 routes={addFeatureCodeRoutes}
                 onBack={() => router.push(`/features-codes`)}
             />
