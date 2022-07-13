@@ -19,7 +19,9 @@ import {
     useGetGoodsInLinesQuery,
     GetGoodsInLinesQuery,
     useGetAllFeatureCodesQuery,
-    GetAllFeatureCodesQuery
+    GetAllFeatureCodesQuery,
+    useGetAllParamsQuery,
+    GetAllParamsQuery
 } from 'generated/graphql';
 
 const useArticles = (search: any, page: number, itemsPerPage: number, sort: any) => {
@@ -201,6 +203,47 @@ const useFeatureCodes = (search: any, page: number, itemsPerPage: number, sort: 
     return featureCodes;
 };
 
+const useFeatureTypes = (search: any, page: number, itemsPerPage: number, sort: any) => {
+    const { graphqlRequestClient } = useAuth();
+
+    // default sort by creation date
+    const sortByDate = {
+        field: 'created',
+        ascending: false
+    };
+
+    let newSort;
+
+    if (sort === null) {
+        newSort = sortByDate;
+    } else {
+        newSort = sort;
+    }
+
+    // inject filter on scope
+    const defaultFilter = { scope: 'feature_type' };
+
+    let newFilter;
+
+    if (search === null) {
+        newFilter = defaultFilter;
+    } else {
+        newFilter = { ...search, ...defaultFilter };
+    }
+
+    const featureTypes = useGetAllParamsQuery<Partial<GetAllParamsQuery>, Error>(
+        graphqlRequestClient,
+        {
+            filters: newFilter,
+            orderBy: newSort,
+            page: page,
+            itemsPerPage: itemsPerPage
+        }
+    );
+
+    return featureTypes;
+};
+
 const useReturnCodes = (search: any, page: number, itemsPerPage: number, sort: any) => {
     const { graphqlRequestClient } = useAuth();
 
@@ -308,6 +351,7 @@ export {
     useLocations,
     useBarcodes,
     useFeatureCodes,
+    useFeatureTypes,
     useArticleIds,
     useMyInfo,
     useReturnCodes,

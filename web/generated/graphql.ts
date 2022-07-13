@@ -57,7 +57,6 @@ export type Article = {
   status?: Maybe<Scalars['Int']>;
   /** Text value for field status */
   statusText?: Maybe<Scalars['String']>;
-  stockOwner: StockOwner;
   stockOwnerId?: Maybe<Scalars['String']>;
   subfamily?: Maybe<Scalars['String']>;
   supplierName?: Maybe<Scalars['String']>;
@@ -164,7 +163,6 @@ export type ArticleLu = {
   rotation?: Maybe<Scalars['Int']>;
   /** Text value for field rotation */
   rotationText?: Maybe<Scalars['String']>;
-  stockOwner: StockOwner;
   stockOwnerId?: Maybe<Scalars['String']>;
   width?: Maybe<Scalars['Float']>;
 };
@@ -181,7 +179,6 @@ export type ArticleLuBarcode = {
   luId?: Maybe<Scalars['String']>;
   modified?: Maybe<Scalars['DateTime']>;
   modifiedBy?: Maybe<Scalars['String']>;
-  stockOwner: StockOwner;
   stockOwnerId?: Maybe<Scalars['String']>;
 };
 
@@ -342,7 +339,6 @@ export type ArticleSet = {
   modified?: Maybe<Scalars['DateTime']>;
   modifiedBy?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
-  stockOwner: StockOwner;
   stockOwnerId?: Maybe<Scalars['String']>;
 };
 
@@ -357,7 +353,6 @@ export type ArticleSetDetail = {
   modified?: Maybe<Scalars['DateTime']>;
   modifiedBy?: Maybe<Scalars['String']>;
   quantity?: Maybe<Scalars['Float']>;
-  stockOwner: StockOwner;
   stockOwnerId?: Maybe<Scalars['String']>;
 };
 
@@ -467,7 +462,6 @@ export type Barcode = {
   rotation?: Maybe<Scalars['Int']>;
   /** Text value for field rotation */
   rotationText?: Maybe<Scalars['String']>;
-  stockOwner: StockOwner;
   stockOwnerId?: Maybe<Scalars['String']>;
   supplierArticleCode?: Maybe<Scalars['String']>;
   supplierName?: Maybe<Scalars['String']>;
@@ -638,7 +632,6 @@ export type Box = {
   status?: Maybe<Scalars['Int']>;
   /** Text value for field status */
   statusText?: Maybe<Scalars['String']>;
-  stockOwner: StockOwner;
   stockOwnerId?: Maybe<Scalars['String']>;
   toBeChecked?: Maybe<Scalars['Boolean']>;
   toBePalletized?: Maybe<Scalars['Boolean']>;
@@ -699,7 +692,6 @@ export type BoxLine = {
   status?: Maybe<Scalars['Int']>;
   /** Text value for field status */
   statusText?: Maybe<Scalars['String']>;
-  stockOwner: StockOwner;
   stockOwnerId?: Maybe<Scalars['String']>;
 };
 
@@ -713,7 +705,6 @@ export type BoxLineFeature = {
   id?: Maybe<Scalars['String']>;
   modified?: Maybe<Scalars['DateTime']>;
   modifiedBy?: Maybe<Scalars['String']>;
-  stockOwner: StockOwner;
   stockOwnerId?: Maybe<Scalars['String']>;
   value?: Maybe<Scalars['String']>;
 };
@@ -890,8 +881,6 @@ export type Building = {
   name?: Maybe<Scalars['String']>;
   postCode?: Maybe<Scalars['String']>;
   status?: Maybe<Scalars['Int']>;
-  /** Text value for field status */
-  statusText?: Maybe<Scalars['String']>;
 };
 
 /** Field names for the Building model */
@@ -960,7 +949,7 @@ export type BuildingSearchFilters = {
 
 export type BulkCreateLocationsInput = {
   aisle: Scalars['String'];
-  /** Eminza : create inventory when stock below quantity */
+  /** Eminza: create inventory when stock below quantity */
   allowCycleCountStockMin?: InputMaybe<Scalars['Boolean']>;
   baseUnitRotation?: InputMaybe<Scalars['Int']>;
   blockId: Scalars['String'];
@@ -976,7 +965,7 @@ export type BulkCreateLocationsInput = {
   numberOfLevel: Scalars['Int'];
   numberOfPosition: Scalars['Int'];
   position: Scalars['String'];
-  replenish?: InputMaybe<Scalars['Boolean']>;
+  replenish: Scalars['Boolean'];
   replenishType?: InputMaybe<Scalars['Int']>;
   separator?: Scalars['String'];
 };
@@ -1126,12 +1115,58 @@ export type Config = {
   value: Scalars['String'];
 };
 
+/** Field names for the Config model */
+export enum ConfigFieldName {
+  Code = 'code',
+  Created = 'created',
+  CreatedBy = 'createdBy',
+  Extras = 'extras',
+  Id = 'id',
+  Modified = 'modified',
+  ModifiedBy = 'modifiedBy',
+  Scope = 'scope',
+  System = 'system',
+  Translation = 'translation',
+  Value = 'value'
+}
+
+/** Returns a list of Config */
+export type ConfigListResult = {
+  __typename?: 'ConfigListResult';
+  count: Scalars['Int'];
+  itemsPerPage: Scalars['Int'];
+  page: Scalars['Int'];
+  results: Array<Config>;
+  totalPages: Scalars['Int'];
+};
+
+/** How to order the search results for Config */
+export type ConfigOrderByCriterion = {
+  ascending?: Scalars['Boolean'];
+  field: ConfigFieldName;
+};
+
 export type ConfigResults = {
   __typename?: 'ConfigResults';
   code: Scalars['String'];
   id: Scalars['String'];
   scope: Scalars['String'];
   text: Scalars['String'];
+};
+
+/** Attributes of Config to filter onto */
+export type ConfigSearchFilters = {
+  code?: InputMaybe<Scalars['String']>;
+  created?: InputMaybe<Scalars['DateTime']>;
+  createdBy?: InputMaybe<Scalars['String']>;
+  extras?: InputMaybe<Scalars['JSON']>;
+  id?: InputMaybe<Scalars['String']>;
+  modified?: InputMaybe<Scalars['DateTime']>;
+  modifiedBy?: InputMaybe<Scalars['String']>;
+  scope?: InputMaybe<Scalars['String']>;
+  system?: InputMaybe<Scalars['Boolean']>;
+  translation?: InputMaybe<Scalars['JSON']>;
+  value?: InputMaybe<Scalars['String']>;
 };
 
 export type Content = {
@@ -1148,7 +1183,6 @@ export type Content = {
   purchaseOrderId?: Maybe<Scalars['String']>;
   quantity?: Maybe<Scalars['Float']>;
   reservation?: Maybe<Scalars['String']>;
-  stockOwner: StockOwner;
   stockOwnerId?: Maybe<Scalars['String']>;
   stockStatus?: Maybe<Scalars['Int']>;
   /** Text value for field stock_status */
@@ -1283,7 +1317,6 @@ export type Conversion = {
   status?: Maybe<Scalars['Int']>;
   /** Text value for field status */
   statusText?: Maybe<Scalars['String']>;
-  stockOwner: StockOwner;
   stockOwnerId?: Maybe<Scalars['String']>;
   type?: Maybe<Scalars['Int']>;
   /** Text value for field type */
@@ -1734,7 +1767,7 @@ export type CreateEquipmentDetailInput = {
   extras?: InputMaybe<Scalars['JSON']>;
   packagingId?: InputMaybe<Scalars['String']>;
   preparationMode?: InputMaybe<Scalars['Int']>;
-  stockOwnerId: Scalars['String'];
+  stockOwnerId?: InputMaybe<Scalars['String']>;
 };
 
 export type CreateEquipmentInput = {
@@ -1759,12 +1792,11 @@ export type CreateEquipmentInput = {
   monoCompany?: InputMaybe<Scalars['Boolean']>;
   name: Scalars['String'];
   nbMaxBox?: InputMaybe<Scalars['Int']>;
-  /** Priority given to an equipment in the round calculation */
   priority?: InputMaybe<Scalars['Int']>;
   /** Maximum quantity of boxes that can be picked up for one round */
   qtyMaxArticle?: InputMaybe<Scalars['Int']>;
   status: Scalars['Int'];
-  stockOwnerId: Scalars['String'];
+  stockOwnerId?: InputMaybe<Scalars['String']>;
   toleranceDimension?: InputMaybe<Scalars['Int']>;
   type: Scalars['Int'];
   virtual?: InputMaybe<Scalars['Boolean']>;
@@ -1850,7 +1882,7 @@ export type CreateLoadInput = {
 
 export type CreateLocationInput = {
   aisle: Scalars['String'];
-  /** Eminza : create inventory when stock below quantity */
+  /** Eminza: create inventory when stock below quantity */
   allowCycleCountStockMin?: InputMaybe<Scalars['Boolean']>;
   barcode: Scalars['String'];
   baseUnitRotation?: InputMaybe<Scalars['Int']>;
@@ -1863,7 +1895,7 @@ export type CreateLocationInput = {
   level: Scalars['String'];
   name: Scalars['String'];
   position: Scalars['String'];
-  replenish?: InputMaybe<Scalars['Boolean']>;
+  replenish: Scalars['Boolean'];
   replenishType?: InputMaybe<Scalars['Int']>;
 };
 
@@ -1875,7 +1907,7 @@ export type CreateLogisticUnitInput = {
   height?: InputMaybe<Scalars['Float']>;
   length?: InputMaybe<Scalars['Float']>;
   luConfigId?: InputMaybe<Scalars['String']>;
-  model?: InputMaybe<Scalars['Int']>;
+  model: Scalars['Int'];
   name: Scalars['String'];
   order?: InputMaybe<Scalars['Int']>;
   /** Logistic Unit with smaller level than this one (e.g. detail to box, box to palett) */
@@ -2064,7 +2096,7 @@ export type CreateStatusEvolutionInput = {
 };
 
 export type CreateStatusFeedbackOverwriteInput = {
-  customValue?: InputMaybe<Scalars['Int']>;
+  customValue?: InputMaybe<Scalars['String']>;
   /** Semi-structured attributes that can be used to store data for anything that doesn't fit in the default columns */
   extras?: InputMaybe<Scalars['JSON']>;
   feedback?: InputMaybe<Scalars['Boolean']>;
@@ -2164,7 +2196,6 @@ export type CycleCount = {
   status?: Maybe<Scalars['Int']>;
   /** Text value for field status */
   statusText?: Maybe<Scalars['String']>;
-  stockOwner: StockOwner;
   stockOwnerId?: Maybe<Scalars['String']>;
   type?: Maybe<Scalars['Int']>;
   /** Text value for field type */
@@ -2216,7 +2247,6 @@ export type CycleCountLine = {
   status?: Maybe<Scalars['Int']>;
   /** Text value for field status */
   statusText?: Maybe<Scalars['String']>;
-  stockOwner: StockOwner;
   stockOwnerId?: Maybe<Scalars['String']>;
 };
 
@@ -2303,7 +2333,6 @@ export type CycleCountMovement = {
   status?: Maybe<Scalars['Int']>;
   /** Text value for field status */
   statusText?: Maybe<Scalars['String']>;
-  stockOwner: StockOwner;
   stockOwnerId?: Maybe<Scalars['String']>;
   type?: Maybe<Scalars['Int']>;
   /** Text value for field type */
@@ -2474,7 +2503,6 @@ export type Delivery = {
   status?: Maybe<Scalars['Int']>;
   /** Text value for field status */
   statusText?: Maybe<Scalars['String']>;
-  stockOwner: StockOwner;
   stockOwnerId?: Maybe<Scalars['String']>;
   toBePalletized?: Maybe<Scalars['Boolean']>;
   transportationAmount?: Maybe<Scalars['Int']>;
@@ -2566,7 +2594,6 @@ export type DeliveryLine = {
   status?: Maybe<Scalars['Int']>;
   /** Text value for field status */
   statusText?: Maybe<Scalars['String']>;
-  stockOwner: StockOwner;
   stockOwnerId?: Maybe<Scalars['String']>;
   substitutionArticle?: Maybe<Scalars['String']>;
   toBeCubed?: Maybe<Scalars['Boolean']>;
@@ -2750,8 +2777,6 @@ export type Equipment = {
   name?: Maybe<Scalars['String']>;
   nbMaxBox?: Maybe<Scalars['Int']>;
   priority?: Maybe<Scalars['Int']>;
-  /** Text value for field priority */
-  priorityText?: Maybe<Scalars['String']>;
   qtyMaxArticle?: Maybe<Scalars['Int']>;
   status?: Maybe<Scalars['Int']>;
   /** Text value for field status */
@@ -2770,15 +2795,18 @@ export type EquipmentDetail = {
   __typename?: 'EquipmentDetail';
   created?: Maybe<Scalars['DateTime']>;
   createdBy?: Maybe<Scalars['String']>;
+  equipment: Equipment;
   equipmentId?: Maybe<Scalars['String']>;
   extras?: Maybe<Scalars['JSON']>;
   id?: Maybe<Scalars['String']>;
   modified?: Maybe<Scalars['DateTime']>;
   modifiedBy?: Maybe<Scalars['String']>;
+  packaging: Packaging;
   packagingId?: Maybe<Scalars['String']>;
   preparationMode?: Maybe<Scalars['Int']>;
   /** Text value for field preparation_mode */
   preparationModeText?: Maybe<Scalars['String']>;
+  stockOwner: StockOwner;
   stockOwnerId?: Maybe<Scalars['String']>;
 };
 
@@ -3132,7 +3160,6 @@ export type GoodsIn = {
   modified?: Maybe<Scalars['DateTime']>;
   modifiedBy?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
-  stockOwner: StockOwner;
 };
 
 /** Field names for the GoodsIn model */
@@ -3458,7 +3485,6 @@ export type Load = {
   status?: Maybe<Scalars['Int']>;
   /** Text value for field status */
   statusText?: Maybe<Scalars['String']>;
-  stockOwner: StockOwner;
   stockOwnerId?: Maybe<Scalars['String']>;
   weight?: Maybe<Scalars['Float']>;
 };
@@ -3644,7 +3670,6 @@ export type LogisticUnit = {
   status?: Maybe<Scalars['Int']>;
   /** Text value for field status */
   statusText?: Maybe<Scalars['String']>;
-  stockOwner: StockOwner;
   stockOwnerId?: Maybe<Scalars['String']>;
   width?: Maybe<Scalars['Float']>;
 };
@@ -3780,7 +3805,6 @@ export type Movement = {
   status?: Maybe<Scalars['Int']>;
   /** Text value for field status */
   statusText?: Maybe<Scalars['String']>;
-  stockOwner: StockOwner;
   stockOwnerId?: Maybe<Scalars['String']>;
   toBeFeedback?: Maybe<Scalars['Boolean']>;
   type?: Maybe<Scalars['Int']>;
@@ -5502,6 +5526,7 @@ export type ParameterResults = {
   code: Scalars['String'];
   id: Scalars['String'];
   scope: Scalars['String'];
+  system: Scalars['Boolean'];
   text: Scalars['String'];
 };
 
@@ -5536,7 +5561,6 @@ export type Pattern = {
   status?: Maybe<Scalars['Int']>;
   /** Text value for field status */
   statusText?: Maybe<Scalars['String']>;
-  stockOwner: StockOwner;
   stockOwnerId?: Maybe<Scalars['String']>;
 };
 
@@ -5731,7 +5755,6 @@ export type PurchaseOrder = {
   status?: Maybe<Scalars['Int']>;
   /** Text value for field status */
   statusText?: Maybe<Scalars['String']>;
-  stockOwner: StockOwner;
   stockOwnerId?: Maybe<Scalars['String']>;
   supplier?: Maybe<Scalars['String']>;
   type?: Maybe<Scalars['Int']>;
@@ -5780,7 +5803,6 @@ export type PurchaseOrderLine = {
   status?: Maybe<Scalars['Int']>;
   /** Text value for field status */
   statusText?: Maybe<Scalars['String']>;
-  stockOwner: StockOwner;
   stockOwnerId?: Maybe<Scalars['String']>;
 };
 
@@ -5888,14 +5910,6 @@ export type Query = {
   articleLuBarcode?: Maybe<ArticleLuBarcode>;
   /** Get Article_lu_barcode objects */
   articleLuBarcodes: ArticleLuBarcodeListResult;
-  /** Get Articles_lu_barcode objects by article id */
-  articleLuBarcodesByArticleId: Array<ArticleLuBarcode>;
-  /** Get Articles_lu_barcode objects by barcode id */
-  articleLuBarcodesByBarcodeId: Array<ArticleLuBarcode>;
-  /** Get Articles_lu_barcode objects by Logistic Unit id */
-  articleLuBarcodesByLuId: Array<ArticleLuBarcode>;
-  /** Get Articles_lu_barcode objects by Stock Owner id */
-  articleLuBarcodesByStockOwnerId: Array<ArticleLuBarcode>;
   /** Get a Article_lu objects */
   articleLus: ArticleLuListResult;
   /** Get a article_set object */
@@ -5938,8 +5952,8 @@ export type Query = {
   carriers: CarrierListResult;
   /** Get a Config */
   config?: Maybe<Config>;
-  /** Search parameters */
-  configs: ParameterListResult;
+  /** Search Configs */
+  configs: ConfigListResult;
   /** Get a content object */
   content?: Maybe<Content>;
   /** Get a content_feature object */
@@ -6033,6 +6047,8 @@ export type Query = {
   packagings: PackagingListResult;
   /** Get a parameter */
   parameter?: Maybe<Parameter>;
+  /** Search parameters */
+  parameters: ParameterListResult;
   /** Get a Pattern */
   pattern?: Maybe<Pattern>;
   /** Get a PatternPath */
@@ -6105,26 +6121,6 @@ export type QueryArticleLuBarcodesArgs = {
   language?: InputMaybe<Scalars['String']>;
   orderBy?: InputMaybe<Array<ArticleLuBarcodeOrderByCriterion>>;
   page?: Scalars['Int'];
-};
-
-
-export type QueryArticleLuBarcodesByArticleIdArgs = {
-  articleId: Scalars['String'];
-};
-
-
-export type QueryArticleLuBarcodesByBarcodeIdArgs = {
-  barcodeId: Scalars['String'];
-};
-
-
-export type QueryArticleLuBarcodesByLuIdArgs = {
-  luId: Scalars['String'];
-};
-
-
-export type QueryArticleLuBarcodesByStockOwnerIdArgs = {
-  stockOwnerId: Scalars['String'];
 };
 
 
@@ -6288,10 +6284,10 @@ export type QueryConfigArgs = {
 
 
 export type QueryConfigsArgs = {
-  filters?: InputMaybe<ParameterSearchFilters>;
+  filters?: InputMaybe<ConfigSearchFilters>;
   itemsPerPage?: Scalars['Int'];
   language?: InputMaybe<Scalars['String']>;
-  orderBy?: InputMaybe<Array<ParameterOrderByCriterion>>;
+  orderBy?: InputMaybe<Array<ConfigOrderByCriterion>>;
   page?: Scalars['Int'];
 };
 
@@ -6646,6 +6642,15 @@ export type QueryPackagingsArgs = {
 export type QueryParameterArgs = {
   id: Scalars['String'];
   language?: InputMaybe<Scalars['String']>;
+};
+
+
+export type QueryParametersArgs = {
+  filters?: InputMaybe<ParameterSearchFilters>;
+  itemsPerPage?: Scalars['Int'];
+  language?: InputMaybe<Scalars['String']>;
+  orderBy?: InputMaybe<Array<ParameterOrderByCriterion>>;
+  page?: Scalars['Int'];
 };
 
 
@@ -7153,7 +7158,6 @@ export type StatusEvolution = {
   status?: Maybe<Scalars['Int']>;
   /** Text value for field status */
   statusText?: Maybe<Scalars['String']>;
-  stockOwner: StockOwner;
   stockOwnerId?: Maybe<Scalars['String']>;
   toBeFeedback?: Maybe<Scalars['Boolean']>;
 };
@@ -7210,7 +7214,7 @@ export type StatusFeedbackOverWrite = {
   __typename?: 'StatusFeedbackOverWrite';
   created?: Maybe<Scalars['DateTime']>;
   createdBy?: Maybe<Scalars['String']>;
-  customValue?: Maybe<Scalars['Int']>;
+  customValue?: Maybe<Scalars['String']>;
   extras?: Maybe<Scalars['JSON']>;
   feedback?: Maybe<Scalars['Boolean']>;
   id?: Maybe<Scalars['String']>;
@@ -7263,7 +7267,7 @@ export type StatusFeedbackOverwriteOrderByCriterion = {
 export type StatusFeedbackOverwriteSearchFilters = {
   created?: InputMaybe<Scalars['DateTime']>;
   createdBy?: InputMaybe<Scalars['String']>;
-  customValue?: InputMaybe<Scalars['Int']>;
+  customValue?: InputMaybe<Scalars['String']>;
   extras?: InputMaybe<Scalars['JSON']>;
   feedback?: InputMaybe<Scalars['Boolean']>;
   id?: InputMaybe<Scalars['String']>;
@@ -8164,7 +8168,7 @@ export type UpdateStatusEvolutionInput = {
 
 /** Values to update the existing record with */
 export type UpdateStatusFeedbackOverwriteInput = {
-  customValue?: InputMaybe<Scalars['Int']>;
+  customValue?: InputMaybe<Scalars['String']>;
   extras?: InputMaybe<Scalars['JSON']>;
   feedback?: InputMaybe<Scalars['Boolean']>;
   objectType?: InputMaybe<Scalars['Int']>;
@@ -8553,6 +8557,45 @@ export type UpdateFeatureCodeMutationVariables = Exact<{
 
 
 export type UpdateFeatureCodeMutation = { __typename?: 'Mutation', updateFeatureCode?: { __typename?: 'FeatureCode', id?: string | null, name?: string | null, unique?: boolean | null, dateType?: boolean | null, prefixBarcode?: string | null, lengthBarcode?: string | null, suffixBarcode?: string | null, stockOwnerId?: string | null } | null };
+
+export type GetAllParamsQueryVariables = Exact<{
+  filters?: InputMaybe<ParameterSearchFilters>;
+  orderBy?: InputMaybe<Array<ParameterOrderByCriterion> | ParameterOrderByCriterion>;
+  page: Scalars['Int'];
+  itemsPerPage: Scalars['Int'];
+}>;
+
+
+export type GetAllParamsQuery = { __typename?: 'Query', parameters: { __typename?: 'ParameterListResult', count: number, itemsPerPage: number, totalPages: number, results: Array<{ __typename?: 'Parameter', id?: string | null, scope: string, code: string, value: string, extras?: any | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, translation?: any | null, system?: boolean | null }> } };
+
+export type GetFeatureTypeByIdQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type GetFeatureTypeByIdQuery = { __typename?: 'Query', parameter?: { __typename?: 'Parameter', id?: string | null, scope: string, code: string, value: string, extras?: any | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, translation?: any | null, system?: boolean | null } | null };
+
+export type CreateFeatureTypeMutationVariables = Exact<{
+  input: CreateParameterInput;
+}>;
+
+
+export type CreateFeatureTypeMutation = { __typename?: 'Mutation', createParameter: { __typename?: 'Parameter', id?: string | null, scope: string, code: string, value: string } };
+
+export type DeleteFeatureTypeMutationVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type DeleteFeatureTypeMutation = { __typename?: 'Mutation', deleteParameter: boolean };
+
+export type UpdateFeatureTypeMutationVariables = Exact<{
+  id: Scalars['String'];
+  input: UpdateParameterInput;
+}>;
+
+
+export type UpdateFeatureTypeMutation = { __typename?: 'Mutation', updateParameter?: { __typename?: 'Parameter', id?: string | null, scope: string, code: string, value: string } | null };
 
 export type GetAllGoodsInsQueryVariables = Exact<{
   orderBy?: InputMaybe<Array<GoodsInOrderByCriterion> | GoodsInOrderByCriterion>;
@@ -9769,6 +9812,142 @@ export const useUpdateFeatureCodeMutation = <
     useMutation<UpdateFeatureCodeMutation, TError, UpdateFeatureCodeMutationVariables, TContext>(
       ['UpdateFeatureCode'],
       (variables?: UpdateFeatureCodeMutationVariables) => fetcher<UpdateFeatureCodeMutation, UpdateFeatureCodeMutationVariables>(client, UpdateFeatureCodeDocument, variables, headers)(),
+      options
+    );
+export const GetAllParamsDocument = `
+    query getAllParams($filters: ParameterSearchFilters, $orderBy: [ParameterOrderByCriterion!], $page: Int!, $itemsPerPage: Int!) {
+  parameters(
+    filters: $filters
+    orderBy: $orderBy
+    page: $page
+    itemsPerPage: $itemsPerPage
+  ) {
+    count
+    itemsPerPage
+    totalPages
+    results {
+      id
+      scope
+      code
+      value
+      extras
+      created
+      createdBy
+      modified
+      modifiedBy
+      translation
+      system
+    }
+  }
+}
+    `;
+export const useGetAllParamsQuery = <
+      TData = GetAllParamsQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: GetAllParamsQueryVariables,
+      options?: UseQueryOptions<GetAllParamsQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetAllParamsQuery, TError, TData>(
+      ['getAllParams', variables],
+      fetcher<GetAllParamsQuery, GetAllParamsQueryVariables>(client, GetAllParamsDocument, variables, headers),
+      options
+    );
+export const GetFeatureTypeByIdDocument = `
+    query GetFeatureTypeById($id: String!) {
+  parameter(id: $id) {
+    id
+    scope
+    code
+    value
+    extras
+    created
+    createdBy
+    modified
+    modifiedBy
+    translation
+    system
+  }
+}
+    `;
+export const useGetFeatureTypeByIdQuery = <
+      TData = GetFeatureTypeByIdQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: GetFeatureTypeByIdQueryVariables,
+      options?: UseQueryOptions<GetFeatureTypeByIdQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetFeatureTypeByIdQuery, TError, TData>(
+      ['GetFeatureTypeById', variables],
+      fetcher<GetFeatureTypeByIdQuery, GetFeatureTypeByIdQueryVariables>(client, GetFeatureTypeByIdDocument, variables, headers),
+      options
+    );
+export const CreateFeatureTypeDocument = `
+    mutation CreateFeatureType($input: CreateParameterInput!) {
+  createParameter(input: $input) {
+    id
+    scope
+    code
+    value
+  }
+}
+    `;
+export const useCreateFeatureTypeMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<CreateFeatureTypeMutation, TError, CreateFeatureTypeMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<CreateFeatureTypeMutation, TError, CreateFeatureTypeMutationVariables, TContext>(
+      ['CreateFeatureType'],
+      (variables?: CreateFeatureTypeMutationVariables) => fetcher<CreateFeatureTypeMutation, CreateFeatureTypeMutationVariables>(client, CreateFeatureTypeDocument, variables, headers)(),
+      options
+    );
+export const DeleteFeatureTypeDocument = `
+    mutation DeleteFeatureType($id: String!) {
+  deleteParameter(parameterId: $id)
+}
+    `;
+export const useDeleteFeatureTypeMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<DeleteFeatureTypeMutation, TError, DeleteFeatureTypeMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<DeleteFeatureTypeMutation, TError, DeleteFeatureTypeMutationVariables, TContext>(
+      ['DeleteFeatureType'],
+      (variables?: DeleteFeatureTypeMutationVariables) => fetcher<DeleteFeatureTypeMutation, DeleteFeatureTypeMutationVariables>(client, DeleteFeatureTypeDocument, variables, headers)(),
+      options
+    );
+export const UpdateFeatureTypeDocument = `
+    mutation UpdateFeatureType($id: String!, $input: UpdateParameterInput!) {
+  updateParameter(id: $id, input: $input) {
+    id
+    scope
+    code
+    value
+  }
+}
+    `;
+export const useUpdateFeatureTypeMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<UpdateFeatureTypeMutation, TError, UpdateFeatureTypeMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<UpdateFeatureTypeMutation, TError, UpdateFeatureTypeMutationVariables, TContext>(
+      ['UpdateFeatureType'],
+      (variables?: UpdateFeatureTypeMutationVariables) => fetcher<UpdateFeatureTypeMutation, UpdateFeatureTypeMutationVariables>(client, UpdateFeatureTypeDocument, variables, headers)(),
       options
     );
 export const GetAllGoodsInsDocument = `
