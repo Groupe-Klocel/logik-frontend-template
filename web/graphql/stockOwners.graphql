@@ -1,0 +1,198 @@
+query GetAllStockOwners(
+    $filters: StockOwnerSearchFilters
+    $orderBy: [StockOwnerOrderByCriterion!]
+    $page: Int!
+    $itemsPerPage: Int!
+) {
+    stockOwners(filters: $filters, orderBy: $orderBy, page: $page, itemsPerPage: $itemsPerPage) {
+        count
+        itemsPerPage
+        totalPages
+        results {
+            id
+            name
+            contact
+            address1
+            address2
+            address3
+            postCode
+            city
+            country
+            countryCode
+            phone
+            mobile
+            email
+            senderName
+            senderContact
+            senderAddress1
+            senderAddress2
+            senderAddress3
+            senderPostCode
+            senderCity
+            senderCountry
+            senderCountryCode
+            senderPhone
+            senderMobile
+            senderEmail
+            s3ExchangeDir
+            exchangePrefix
+            logoUrl
+            awsAccessKeyId
+            awsSecretAccessKey
+            status
+            statusText
+        }
+    }
+}
+
+query GetStockOwnerById($id: String!) {
+    stockOwner(id: $id) {
+        id
+        name
+        contact
+        address1
+        address2
+        address3
+        postCode
+        city
+        country
+        countryCode
+        phone
+        mobile
+        email
+        senderName
+        senderContact
+        senderAddress1
+        senderAddress2
+        senderAddress3
+        senderPostCode
+        senderCity
+        senderCountry
+        senderCountryCode
+        senderPhone
+        senderMobile
+        senderEmail
+        s3ExchangeDir
+        exchangePrefix
+        logoUrl
+        awsAccessKeyId
+        awsSecretAccessKey
+        status
+        statusText
+    }
+}
+
+query GetStockOwnerIds(
+    $filters: StockOwnerSearchFilters
+    $orderBy: [StockOwnerOrderByCriterion!]
+    $page: Int!
+    $itemsPerPage: Int!
+) {
+    stockOwners(filters: $filters, orderBy: $orderBy, page: $page, itemsPerPage: $itemsPerPage) {
+        count
+        itemsPerPage
+        totalPages
+        results {
+            id
+            name
+        }
+    }
+}
+
+mutation CreateStockOwner($input: CreateStockOwnerInput!) {
+    createStockOwner(input: $input) {
+        id
+        name
+        contact
+        address1
+        address2
+        address3
+        postCode
+        city
+        country
+        countryCode
+        phone
+        mobile
+        email
+        senderName
+        senderContact
+        senderAddress1
+        senderAddress2
+        senderAddress3
+        senderPostCode
+        senderCity
+        senderCountry
+        senderCountryCode
+        senderPhone
+        senderMobile
+        senderEmail
+        s3ExchangeDir
+        exchangePrefix
+        logoUrl
+        awsAccessKeyId
+        awsSecretAccessKey
+        status
+    }
+}
+
+mutation DeleteStockOwner($id: String!) {
+    deleteStockOwner(id: $id)
+}
+
+mutation SoftDeleteStockOwner($stockOwnerId: String!) {
+    softDeleteStockOwner(stockOwnerId: $stockOwnerId)
+}
+
+mutation UpdateStockOwner($id: String!, $input: UpdateStockOwnerInput!) {
+    updateStockOwner(id: $id, input: $input) {
+        id
+        name
+        contact
+        address1
+        address2
+        address3
+        postCode
+        city
+        country
+        countryCode
+        phone
+        mobile
+        email
+        senderName
+        senderContact
+        senderAddress1
+        senderAddress2
+        senderAddress3
+        senderPostCode
+        senderCity
+        senderCountry
+        senderCountryCode
+        senderPhone
+        senderMobile
+        senderEmail
+        s3ExchangeDir
+        exchangePrefix
+        logoUrl
+        awsAccessKeyId
+        awsSecretAccessKey
+        status
+    }
+}
+
+query getStockOwnersStatusesConfigs {
+    listConfigsForAScope(scope: "stock_owner_status") {
+        id
+        scope
+        code
+        text
+    }
+}
+
+query SimpleGetAllStockowners {
+    stockOwners {
+        results {
+            id
+            name
+        }
+    }
+}

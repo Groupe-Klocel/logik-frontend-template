@@ -17,7 +17,9 @@ import {
     useGetAllGoodsInsQuery,
     GetAllGoodsInsQuery,
     useGetGoodsInLinesQuery,
-    GetGoodsInLinesQuery
+    GetGoodsInLinesQuery,
+    useGetAllStockOwnersQuery,
+    GetAllStockOwnersQuery
 } from 'generated/graphql';
 
 const useArticles = (search: any, page: number, itemsPerPage: number, sort: any) => {
@@ -270,6 +272,35 @@ const useGoodsInLines = (
     return goodsInLine;
 };
 
+const useStockOwners = (search: any, page: number, itemsPerPage: number, sort: any) => {
+    const { graphqlRequestClient } = useAuth();
+
+    const sortByDate = {
+        field: 'created',
+        ascending: false
+    };
+
+    let newSort;
+
+    if (sort === null) {
+        newSort = sortByDate;
+    } else {
+        newSort = sort;
+    }
+
+    const stockOwners = useGetAllStockOwnersQuery<Partial<GetAllStockOwnersQuery>, Error>(
+        graphqlRequestClient,
+        {
+            filters: search,
+            orderBy: newSort,
+            page: page,
+            itemsPerPage: itemsPerPage
+        }
+    );
+
+    return stockOwners;
+};
+
 export {
     useArticles,
     useBlocks,
@@ -279,5 +310,6 @@ export {
     useMyInfo,
     useReturnCodes,
     useGoodsIns,
-    useGoodsInLines
+    useGoodsInLines,
+    useStockOwners
 };

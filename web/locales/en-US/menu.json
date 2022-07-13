@@ -13,7 +13,7 @@
     "location": "Location",
     "cartography": "Cartography",
     "companies": "Companies",
-    "configuration": "onfiguration",
+    "configuration": "Configuration",
     "contents": "Contents",
     "cycle-counts": "Cycle Counts",
     "dashboard": "Dashboard",
@@ -58,5 +58,8 @@
     "users": "Users",
     "users-rights": "Users rights",
     "warning": "Warning",
-    "user-settings": "My Settings"
+    "user-settings": "My Settings",
+    "stock-owner": "Stock Owner",
+    "add-stock-owner": "Add Stock Owner",
+    "stock-owners": "Stock Owners"
 }
