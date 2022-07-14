@@ -122,3 +122,19 @@ mutation UpdatePattern($id: String!, $input: UpdatePatternInput!) {
 }
 
 
+query GetPatternIds(
+    $filters: PatternSearchFilters
+    $orderBy: [PatternOrderByCriterion!]
+    $page: Int!
+    $itemsPerPage: Int!
+) {
+    patterns(filters: $filters, orderBy: $orderBy, page: $page, itemsPerPage: $itemsPerPage) {
+        count
+        itemsPerPage
+        totalPages
+        results {
+            id
+            name
+        }
+    }
+}

@@ -41,8 +41,6 @@ query GetAllStockOwners(
             senderPhone
             senderMobile
             senderEmail
-            s3ExchangeDir
-            exchangePrefix
             logoUrl
             awsAccessKeyId
             awsSecretAccessKey

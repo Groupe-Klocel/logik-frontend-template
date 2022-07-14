@@ -21,6 +21,7 @@ export type Scalars = {
   DateTime: any;
   /** The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf). */
   JSON: any;
+  Upload: any;
 };
 
 export type Article = {
@@ -171,6 +172,7 @@ export type ArticleLu = {
 
 export type ArticleLuBarcode = {
   __typename?: 'ArticleLuBarcode';
+  article: Article;
   articleId?: Maybe<Scalars['String']>;
   barcodeId?: Maybe<Scalars['String']>;
   countryOfOrigin?: Maybe<Scalars['Int']>;
@@ -873,8 +875,6 @@ export type Building = {
   address1?: Maybe<Scalars['String']>;
   address2?: Maybe<Scalars['String']>;
   address3?: Maybe<Scalars['String']>;
-  awsAccessKeyId?: Maybe<Scalars['String']>;
-  awsSecretAccessKey?: Maybe<Scalars['String']>;
   city?: Maybe<Scalars['String']>;
   contactEmail?: Maybe<Scalars['String']>;
   contactMobile?: Maybe<Scalars['String']>;
@@ -899,8 +899,6 @@ export enum BuildingFieldName {
   Address1 = 'address1',
   Address2 = 'address2',
   Address3 = 'address3',
-  AwsAccessKeyId = 'awsAccessKeyId',
-  AwsSecretAccessKey = 'awsSecretAccessKey',
   City = 'city',
   ContactEmail = 'contactEmail',
   ContactMobile = 'contactMobile',
@@ -939,8 +937,6 @@ export type BuildingSearchFilters = {
   address1?: InputMaybe<Scalars['String']>;
   address2?: InputMaybe<Scalars['String']>;
   address3?: InputMaybe<Scalars['String']>;
-  awsAccessKeyId?: InputMaybe<Scalars['String']>;
-  awsSecretAccessKey?: InputMaybe<Scalars['String']>;
   city?: InputMaybe<Scalars['String']>;
   contactEmail?: InputMaybe<Scalars['String']>;
   contactMobile?: InputMaybe<Scalars['String']>;
@@ -1510,8 +1506,6 @@ export type CreateBuildingInput = {
   address1?: InputMaybe<Scalars['String']>;
   address2?: InputMaybe<Scalars['String']>;
   address3?: InputMaybe<Scalars['String']>;
-  awsAccessKeyId?: InputMaybe<Scalars['String']>;
-  awsSecretAccessKey?: InputMaybe<Scalars['String']>;
   city?: InputMaybe<Scalars['String']>;
   contactEmail?: InputMaybe<Scalars['String']>;
   contactMobile?: InputMaybe<Scalars['String']>;
@@ -2078,14 +2072,11 @@ export type CreateStockOwnerInput = {
   address1?: InputMaybe<Scalars['String']>;
   address2?: InputMaybe<Scalars['String']>;
   address3?: InputMaybe<Scalars['String']>;
-  awsAccessKeyId?: InputMaybe<Scalars['String']>;
-  awsSecretAccessKey?: InputMaybe<Scalars['String']>;
   city?: InputMaybe<Scalars['String']>;
   contact?: InputMaybe<Scalars['String']>;
   country?: InputMaybe<Scalars['String']>;
   countryCode?: InputMaybe<Scalars['String']>;
   email?: InputMaybe<Scalars['String']>;
-  exchangePrefix?: InputMaybe<Scalars['String']>;
   /** Semi-structured attributes that can be used to store data for anything that doesn't fit in the default columns */
   extras?: InputMaybe<Scalars['JSON']>;
   logoUrl?: InputMaybe<Scalars['String']>;
@@ -2093,7 +2084,6 @@ export type CreateStockOwnerInput = {
   name: Scalars['String'];
   phone?: InputMaybe<Scalars['String']>;
   postCode?: InputMaybe<Scalars['String']>;
-  s3ExchangeDir?: InputMaybe<Scalars['String']>;
   senderAddress1?: InputMaybe<Scalars['String']>;
   senderAddress2?: InputMaybe<Scalars['String']>;
   senderAddress3?: InputMaybe<Scalars['String']>;
@@ -2108,6 +2098,8 @@ export type CreateStockOwnerInput = {
   senderPostCode?: InputMaybe<Scalars['String']>;
   status?: InputMaybe<Scalars['Int']>;
 };
+
+export type CreateStockOwnerResponse = StockOwner | ValidationError;
 
 export type CreateSystemConfigInput = {
   /** Code of the config info */
@@ -3122,6 +3114,19 @@ export type FeedbackOverwriteSearchFilters = {
   system?: InputMaybe<Scalars['Boolean']>;
 };
 
+export type FileInfo = {
+  __typename?: 'FileInfo';
+  key: Scalars['String'];
+};
+
+export type FileUploadResult = {
+  __typename?: 'FileUploadResult';
+  /** Generated filename during the upload */
+  fileName: Scalars['String'];
+  /** Presigned url of file */
+  presignedUrl: Scalars['String'];
+};
+
 export type GoodsIn = {
   __typename?: 'GoodsIn';
   comment?: Maybe<Scalars['String']>;
@@ -4006,7 +4011,7 @@ export type Mutation = {
   /** Create a Status Feedback Overwrite */
   createStatusFeedbackOverwrite: StatusFeedbackOverWrite;
   /** Create stock owner */
-  createStockOwner: StockOwner;
+  createStockOwner: CreateStockOwnerResponse;
   /** Create a new system config */
   createSystemConfig: Config;
   /** Create a new system parameter */
@@ -4067,12 +4072,15 @@ export type Mutation = {
   deleteFeatureTypeDetail: Scalars['Boolean'];
   /** Delete feedback_overwrite */
   deleteFeedbackOverwrite: Scalars['Boolean'];
+  /** Delete a File */
+  deleteFile: Scalars['Boolean'];
   /** Delete goods-in */
   deleteGoodsIn: Scalars['Boolean'];
   /** Delete goods-in line */
   deleteGoodsInLine: Scalars['Boolean'];
   /** Delete handling_unit */
   deleteHandlingUnit: Scalars['Boolean'];
+  /** Delete an Integrator */
   deleteIntegrator: Scalars['Boolean'];
   /** Delete integrator user. */
   deleteIntegratorUser: Scalars['Boolean'];
@@ -4140,6 +4148,8 @@ export type Mutation = {
   renderDocument: RenderDocumentResponse;
   /** Sends an email to reset the IntegratorUser's password */
   resetPassword: ResetPasswordResponse;
+  /** Reset a StockOwner's access key */
+  resetStockOwnerAccesskey: Scalars['Boolean'];
   /** Delete article => update status */
   softDeleteArticle: Scalars['Boolean'];
   /** Delete Box => update status */
@@ -4266,6 +4276,8 @@ export type Mutation = {
   updateStatusFeedbackOverwrite?: Maybe<StatusFeedbackOverWrite>;
   /** Update stock owner */
   updateStockOwner?: Maybe<StockOwner>;
+  /** Upload File */
+  uploadFile: FileUploadResult;
   /** Obtain a JSON Web Token (JWT) to use in the frontend */
   warehouseLogin?: Maybe<LoginSuccess>;
 };
@@ -4746,6 +4758,12 @@ export type MutationDeleteFeedbackOverwriteArgs = {
 };
 
 
+export type MutationDeleteFileArgs = {
+  fileName: Scalars['String'];
+  stockOwnerId: Scalars['String'];
+};
+
+
 export type MutationDeleteGoodsInArgs = {
   id: Scalars['String'];
 };
@@ -4862,7 +4880,7 @@ export type MutationDeleteSystemParameterArgs = {
 
 
 export type MutationDeleteWarehouseArgs = {
-  id: Scalars['String'];
+  id: Scalars['ID'];
 };
 
 
@@ -4977,6 +4995,11 @@ export type MutationRenderDocumentArgs = {
 export type MutationResetPasswordArgs = {
   callbackUrl: Scalars['String'];
   email: Scalars['String'];
+};
+
+
+export type MutationResetStockOwnerAccesskeyArgs = {
+  id: Scalars['String'];
 };
 
 
@@ -5339,6 +5362,12 @@ export type MutationUpdateStatusFeedbackOverwriteArgs = {
 export type MutationUpdateStockOwnerArgs = {
   id: Scalars['String'];
   input: UpdateStockOwnerInput;
+};
+
+
+export type MutationUploadFileArgs = {
+  file: Scalars['Upload'];
+  stockOwnerId: Scalars['String'];
 };
 
 
@@ -6008,6 +6037,8 @@ export type Query = {
   integrators: IntegratorListResult;
   /** List configs for a scope */
   listConfigsForAScope: Array<ConfigResults>;
+  /** List files in warehouse folder. */
+  listFiles: Array<FileInfo>;
   /** List parameters for a scope */
   listParametersForAScope: Array<ParameterResults>;
   /** Get a Load */
@@ -6558,6 +6589,11 @@ export type QueryListConfigsForAScopeArgs = {
   code?: InputMaybe<Scalars['String']>;
   language?: InputMaybe<Scalars['String']>;
   scope: Scalars['String'];
+};
+
+
+export type QueryListFilesArgs = {
+  stockOwnerId: Scalars['String'];
 };
 
 
@@ -7289,7 +7325,6 @@ export type StockOwner = {
   created?: Maybe<Scalars['DateTime']>;
   createdBy?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
-  exchangePrefix?: Maybe<Scalars['String']>;
   extras?: Maybe<Scalars['JSON']>;
   id?: Maybe<Scalars['String']>;
   logoUrl?: Maybe<Scalars['String']>;
@@ -7299,7 +7334,6 @@ export type StockOwner = {
   name?: Maybe<Scalars['String']>;
   phone?: Maybe<Scalars['String']>;
   postCode?: Maybe<Scalars['String']>;
-  s3ExchangeDir?: Maybe<Scalars['String']>;
   senderAddress1?: Maybe<Scalars['String']>;
   senderAddress2?: Maybe<Scalars['String']>;
   senderAddress3?: Maybe<Scalars['String']>;
@@ -7329,7 +7363,6 @@ export enum StockOwnerFieldName {
   Created = 'created',
   CreatedBy = 'createdBy',
   Email = 'email',
-  ExchangePrefix = 'exchangePrefix',
   Extras = 'extras',
   Id = 'id',
   LogoUrl = 'logoUrl',
@@ -7339,7 +7372,6 @@ export enum StockOwnerFieldName {
   Name = 'name',
   Phone = 'phone',
   PostCode = 'postCode',
-  S3ExchangeDir = 's3ExchangeDir',
   SenderAddress1 = 'senderAddress1',
   SenderAddress2 = 'senderAddress2',
   SenderAddress3 = 'senderAddress3',
@@ -7385,7 +7417,6 @@ export type StockOwnerSearchFilters = {
   created?: InputMaybe<Scalars['DateTime']>;
   createdBy?: InputMaybe<Scalars['String']>;
   email?: InputMaybe<Scalars['String']>;
-  exchangePrefix?: InputMaybe<Scalars['String']>;
   extras?: InputMaybe<Scalars['JSON']>;
   id?: InputMaybe<Scalars['String']>;
   logoUrl?: InputMaybe<Scalars['String']>;
@@ -7395,7 +7426,6 @@ export type StockOwnerSearchFilters = {
   name?: InputMaybe<Scalars['String']>;
   phone?: InputMaybe<Scalars['String']>;
   postCode?: InputMaybe<Scalars['String']>;
-  s3ExchangeDir?: InputMaybe<Scalars['String']>;
   senderAddress1?: InputMaybe<Scalars['String']>;
   senderAddress2?: InputMaybe<Scalars['String']>;
   senderAddress3?: InputMaybe<Scalars['String']>;
@@ -7631,8 +7661,6 @@ export type UpdateBuildingInput = {
   address1?: InputMaybe<Scalars['String']>;
   address2?: InputMaybe<Scalars['String']>;
   address3?: InputMaybe<Scalars['String']>;
-  awsAccessKeyId?: InputMaybe<Scalars['String']>;
-  awsSecretAccessKey?: InputMaybe<Scalars['String']>;
   city?: InputMaybe<Scalars['String']>;
   contactEmail?: InputMaybe<Scalars['String']>;
   contactMobile?: InputMaybe<Scalars['String']>;
@@ -8178,21 +8206,17 @@ export type UpdateStockOwnerInput = {
   address1?: InputMaybe<Scalars['String']>;
   address2?: InputMaybe<Scalars['String']>;
   address3?: InputMaybe<Scalars['String']>;
-  awsAccessKeyId?: InputMaybe<Scalars['String']>;
-  awsSecretAccessKey?: InputMaybe<Scalars['String']>;
   city?: InputMaybe<Scalars['String']>;
   contact?: InputMaybe<Scalars['String']>;
   country?: InputMaybe<Scalars['String']>;
   countryCode?: InputMaybe<Scalars['String']>;
   email?: InputMaybe<Scalars['String']>;
-  exchangePrefix?: InputMaybe<Scalars['String']>;
   extras?: InputMaybe<Scalars['JSON']>;
   logoUrl?: InputMaybe<Scalars['String']>;
   mobile?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
   phone?: InputMaybe<Scalars['String']>;
   postCode?: InputMaybe<Scalars['String']>;
-  s3ExchangeDir?: InputMaybe<Scalars['String']>;
   senderAddress1?: InputMaybe<Scalars['String']>;
   senderAddress2?: InputMaybe<Scalars['String']>;
   senderAddress3?: InputMaybe<Scalars['String']>;
@@ -8784,6 +8808,57 @@ export type UpdatePatternMutationVariables = Exact<{
 
 export type UpdatePatternMutation = { __typename?: 'Mutation', updatePattern?: { __typename?: 'Pattern', id?: string | null, extras?: any | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, name?: string | null, patternType?: string | null, status?: number | null, stockOwnerId?: string | null, patternTypeText?: string | null, statusText?: string | null, paths: Array<{ __typename?: 'PatternPath', id?: string | null, name?: string | null, status?: number | null, extras?: any | null }>, stockOwner: { __typename?: 'StockOwner', id?: string | null, name?: string | null } } | null };
 
+export type GetPatternIdsQueryVariables = Exact<{
+  filters?: InputMaybe<PatternSearchFilters>;
+  orderBy?: InputMaybe<Array<PatternOrderByCriterion> | PatternOrderByCriterion>;
+  page: Scalars['Int'];
+  itemsPerPage: Scalars['Int'];
+}>;
+
+
+export type GetPatternIdsQuery = { __typename?: 'Query', patterns: { __typename?: 'PatternListResult', count: number, itemsPerPage: number, totalPages: number, results: Array<{ __typename?: 'Pattern', id?: string | null, name?: string | null }> } };
+
+export type GetAllPatternPathsQueryVariables = Exact<{
+  filters?: InputMaybe<PatternPathSearchFilters>;
+  orderBy?: InputMaybe<Array<PatternPathOrderByCriterion> | PatternPathOrderByCriterion>;
+  page: Scalars['Int'];
+  itemsPerPage: Scalars['Int'];
+  language?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type GetAllPatternPathsQuery = { __typename?: 'Query', patternPaths: { __typename?: 'PatternPathListResult', count: number, itemsPerPage: number, totalPages: number, results: Array<{ __typename?: 'PatternPath', id?: string | null, extras?: any | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, name?: string | null, status?: number | null, patternId?: string | null }> } };
+
+export type GetPatternPathByIdQueryVariables = Exact<{
+  id: Scalars['String'];
+  language?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type GetPatternPathByIdQuery = { __typename?: 'Query', patternPath?: { __typename?: 'PatternPath', id?: string | null, extras?: any | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, name?: string | null, status?: number | null, patternId?: string | null } | null };
+
+export type CreatePatternPathMutationVariables = Exact<{
+  input: CreatePatternPathInput;
+}>;
+
+
+export type CreatePatternPathMutation = { __typename?: 'Mutation', createPatternPath: { __typename?: 'PatternPath', id?: string | null, extras?: any | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, name?: string | null, status?: number | null, patternId?: string | null } };
+
+export type DeletePatternPathMutationVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type DeletePatternPathMutation = { __typename?: 'Mutation', deletePatternPath: boolean };
+
+export type UpdatePatternPathMutationVariables = Exact<{
+  id: Scalars['String'];
+  input: UpdatePatternPathInput;
+}>;
+
+
+export type UpdatePatternPathMutation = { __typename?: 'Mutation', updatePatternPath?: { __typename?: 'PatternPath', id?: string | null, extras?: any | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, name?: string | null, status?: number | null, patternId?: string | null } | null };
+
 export type GetAllReturnCodesQueryVariables = Exact<{
   filters?: InputMaybe<ReturnCodeSearchFilters>;
   orderBy?: InputMaybe<Array<ReturnCodeOrderByCriterion> | ReturnCodeOrderByCriterion>;
@@ -8842,7 +8917,7 @@ export type GetAllStockOwnersQueryVariables = Exact<{
 }>;
 
 
-export type GetAllStockOwnersQuery = { __typename?: 'Query', stockOwners: { __typename?: 'StockOwnerListResult', count: number, itemsPerPage: number, totalPages: number, page: number, results: Array<{ __typename?: 'StockOwner', id?: string | null, extras?: any | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, name?: string | null, contact?: string | null, address1?: string | null, address2?: string | null, address3?: string | null, postCode?: string | null, city?: string | null, country?: string | null, countryCode?: string | null, phone?: string | null, mobile?: string | null, email?: string | null, senderName?: string | null, senderContact?: string | null, senderAddress1?: string | null, senderAddress2?: string | null, senderAddress3?: string | null, senderPostCode?: string | null, senderCity?: string | null, senderCountry?: string | null, senderCountryCode?: string | null, senderPhone?: string | null, senderMobile?: string | null, senderEmail?: string | null, s3ExchangeDir?: string | null, exchangePrefix?: string | null, logoUrl?: string | null, awsAccessKeyId?: string | null, awsSecretAccessKey?: string | null, status?: number | null }> } };
+export type GetAllStockOwnersQuery = { __typename?: 'Query', stockOwners: { __typename?: 'StockOwnerListResult', count: number, itemsPerPage: number, totalPages: number, page: number, results: Array<{ __typename?: 'StockOwner', id?: string | null, extras?: any | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, name?: string | null, contact?: string | null, address1?: string | null, address2?: string | null, address3?: string | null, postCode?: string | null, city?: string | null, country?: string | null, countryCode?: string | null, phone?: string | null, mobile?: string | null, email?: string | null, senderName?: string | null, senderContact?: string | null, senderAddress1?: string | null, senderAddress2?: string | null, senderAddress3?: string | null, senderPostCode?: string | null, senderCity?: string | null, senderCountry?: string | null, senderCountryCode?: string | null, senderPhone?: string | null, senderMobile?: string | null, senderEmail?: string | null, logoUrl?: string | null, awsAccessKeyId?: string | null, awsSecretAccessKey?: string | null, status?: number | null }> } };
 
 export type GetStockOwnerIdsQueryVariables = Exact<{
   filters?: InputMaybe<StockOwnerSearchFilters>;
@@ -10730,6 +10805,181 @@ export const useUpdatePatternMutation = <
       (variables?: UpdatePatternMutationVariables) => fetcher<UpdatePatternMutation, UpdatePatternMutationVariables>(client, UpdatePatternDocument, variables, headers)(),
       options
     );
+export const GetPatternIdsDocument = `
+    query GetPatternIds($filters: PatternSearchFilters, $orderBy: [PatternOrderByCriterion!], $page: Int!, $itemsPerPage: Int!) {
+  patterns(
+    filters: $filters
+    orderBy: $orderBy
+    page: $page
+    itemsPerPage: $itemsPerPage
+  ) {
+    count
+    itemsPerPage
+    totalPages
+    results {
+      id
+      name
+    }
+  }
+}
+    `;
+export const useGetPatternIdsQuery = <
+      TData = GetPatternIdsQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: GetPatternIdsQueryVariables,
+      options?: UseQueryOptions<GetPatternIdsQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetPatternIdsQuery, TError, TData>(
+      ['GetPatternIds', variables],
+      fetcher<GetPatternIdsQuery, GetPatternIdsQueryVariables>(client, GetPatternIdsDocument, variables, headers),
+      options
+    );
+export const GetAllPatternPathsDocument = `
+    query GetAllPatternPaths($filters: PatternPathSearchFilters, $orderBy: [PatternPathOrderByCriterion!], $page: Int!, $itemsPerPage: Int!, $language: String) {
+  patternPaths(
+    filters: $filters
+    orderBy: $orderBy
+    page: $page
+    itemsPerPage: $itemsPerPage
+    language: $language
+  ) {
+    count
+    itemsPerPage
+    totalPages
+    results {
+      id
+      extras
+      created
+      createdBy
+      modified
+      modifiedBy
+      name
+      status
+      patternId
+    }
+  }
+}
+    `;
+export const useGetAllPatternPathsQuery = <
+      TData = GetAllPatternPathsQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: GetAllPatternPathsQueryVariables,
+      options?: UseQueryOptions<GetAllPatternPathsQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetAllPatternPathsQuery, TError, TData>(
+      ['GetAllPatternPaths', variables],
+      fetcher<GetAllPatternPathsQuery, GetAllPatternPathsQueryVariables>(client, GetAllPatternPathsDocument, variables, headers),
+      options
+    );
+export const GetPatternPathByIdDocument = `
+    query GetPatternPathById($id: String!, $language: String = "en") {
+  patternPath(id: $id, language: $language) {
+    id
+    extras
+    created
+    createdBy
+    modified
+    modifiedBy
+    name
+    status
+    patternId
+  }
+}
+    `;
+export const useGetPatternPathByIdQuery = <
+      TData = GetPatternPathByIdQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: GetPatternPathByIdQueryVariables,
+      options?: UseQueryOptions<GetPatternPathByIdQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetPatternPathByIdQuery, TError, TData>(
+      ['GetPatternPathById', variables],
+      fetcher<GetPatternPathByIdQuery, GetPatternPathByIdQueryVariables>(client, GetPatternPathByIdDocument, variables, headers),
+      options
+    );
+export const CreatePatternPathDocument = `
+    mutation CreatePatternPath($input: CreatePatternPathInput!) {
+  createPatternPath(input: $input) {
+    id
+    extras
+    created
+    createdBy
+    modified
+    modifiedBy
+    name
+    status
+    patternId
+  }
+}
+    `;
+export const useCreatePatternPathMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<CreatePatternPathMutation, TError, CreatePatternPathMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<CreatePatternPathMutation, TError, CreatePatternPathMutationVariables, TContext>(
+      ['CreatePatternPath'],
+      (variables?: CreatePatternPathMutationVariables) => fetcher<CreatePatternPathMutation, CreatePatternPathMutationVariables>(client, CreatePatternPathDocument, variables, headers)(),
+      options
+    );
+export const DeletePatternPathDocument = `
+    mutation DeletePatternPath($id: String!) {
+  deletePatternPath(id: $id)
+}
+    `;
+export const useDeletePatternPathMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<DeletePatternPathMutation, TError, DeletePatternPathMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<DeletePatternPathMutation, TError, DeletePatternPathMutationVariables, TContext>(
+      ['DeletePatternPath'],
+      (variables?: DeletePatternPathMutationVariables) => fetcher<DeletePatternPathMutation, DeletePatternPathMutationVariables>(client, DeletePatternPathDocument, variables, headers)(),
+      options
+    );
+export const UpdatePatternPathDocument = `
+    mutation UpdatePatternPath($id: String!, $input: UpdatePatternPathInput!) {
+  updatePatternPath(id: $id, input: $input) {
+    id
+    extras
+    created
+    createdBy
+    modified
+    modifiedBy
+    name
+    status
+    patternId
+  }
+}
+    `;
+export const useUpdatePatternPathMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<UpdatePatternPathMutation, TError, UpdatePatternPathMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<UpdatePatternPathMutation, TError, UpdatePatternPathMutationVariables, TContext>(
+      ['UpdatePatternPath'],
+      (variables?: UpdatePatternPathMutationVariables) => fetcher<UpdatePatternPathMutation, UpdatePatternPathMutationVariables>(client, UpdatePatternPathDocument, variables, headers)(),
+      options
+    );
 export const GetAllReturnCodesDocument = `
     query GetAllReturnCodes($filters: ReturnCodeSearchFilters, $orderBy: [ReturnCodeOrderByCriterion!], $page: Int!, $itemsPerPage: Int!) {
   returnCodes(
@@ -10930,8 +11180,6 @@ export const GetAllStockOwnersDocument = `
       senderPhone
       senderMobile
       senderEmail
-      s3ExchangeDir
-      exchangePrefix
       logoUrl
       awsAccessKeyId
       awsSecretAccessKey

@@ -21,7 +21,11 @@ import {
     useGetAllPatternsQuery,
     GetAllPatternsQuery,
     useGetStockOwnerIdsQuery,
-    GetStockOwnerIdsQuery
+    GetStockOwnerIdsQuery,
+    GetAllPatternPathsQuery,
+    useGetAllPatternPathsQuery,
+    useGetPatternIdsQuery,
+    GetPatternIdsQuery
 } from 'generated/graphql';
 
 const useArticles = (search: any, page: number, itemsPerPage: number, sort: any) => {
@@ -340,6 +344,73 @@ const usePatterns = (
     return patterns;
 };
 
+
+const usePatternPaths = (
+    search: any,
+    page: number,
+    itemsPerPage: number,
+    sort: any,
+    language = 'en'
+) => {
+    const { graphqlRequestClient } = useAuth();
+
+    const sortByDate = {
+        field: 'created',
+        ascending: false
+    };
+
+    let newSort;
+
+    if (sort === null) {
+        newSort = sortByDate;
+    } else {
+        newSort = sort;
+    }
+
+    const patternPaths = useGetAllPatternPathsQuery<Partial<GetAllPatternPathsQuery>, Error>(
+        graphqlRequestClient,
+        {
+            filters: search,
+            orderBy: newSort,
+            page: page,
+            itemsPerPage: itemsPerPage,
+            language: language
+        }
+    );
+
+    return patternPaths;
+};
+
+
+const usePatternIds = (search: any, page: number, itemsPerPage: number, sort: any) => {
+    const { graphqlRequestClient } = useAuth();
+
+    const sortByDate = {
+        field: 'name',
+        ascending: false
+    };
+
+    let newSort;
+
+    if (sort === null) {
+        newSort = sortByDate;
+    } else {
+        newSort = sort;
+    }
+
+    const patterns = useGetPatternIdsQuery<Partial<GetPatternIdsQuery>, Error>(
+        graphqlRequestClient,
+        {
+            filters: search,
+            orderBy: newSort,
+            page: page,
+            itemsPerPage: itemsPerPage
+        }
+    );
+
+    return patterns;
+};
+
 export {
     useArticles,
     useBlocks,
@@ -351,5 +422,7 @@ export {
     useGoodsIns,
     useGoodsInLines,
     usePatterns,
-    useStockOwnerIds
+    useStockOwnerIds,
+    usePatternPaths,
+    usePatternIds
 };
