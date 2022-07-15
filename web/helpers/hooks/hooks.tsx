@@ -25,7 +25,9 @@ import {
     GetAllPatternPathsQuery,
     useGetAllPatternPathsQuery,
     useGetPatternIdsQuery,
-    GetPatternIdsQuery
+    GetPatternIdsQuery,
+    useGetPatternPathLocationsQuery,
+    GetPatternPathLocationsQuery
 } from 'generated/graphql';
 
 const useArticles = (search: any, page: number, itemsPerPage: number, sort: any) => {
@@ -411,6 +413,35 @@ const usePatternIds = (search: any, page: number, itemsPerPage: number, sort: an
     return patterns;
 };
 
+const usePatternPathLocations = (search: any, page: number, itemsPerPage: number, sort: any) => {
+    const { graphqlRequestClient } = useAuth();
+
+    const sortByDate = {
+        field: 'order',
+        ascending: false
+    };
+
+    let newSort;
+
+    if (sort === null) {
+        newSort = sortByDate;
+    } else {
+        newSort = sort;
+    }
+
+    const patternPathLocations = useGetPatternPathLocationsQuery<Partial<GetPatternPathLocationsQuery>, Error>(
+        graphqlRequestClient,
+        {
+            filters: search,
+            orderBy: newSort,
+            page: page,
+            itemsPerPage: itemsPerPage
+        }
+    );
+
+    return patternPathLocations;
+};
+
 export {
     useArticles,
     useBlocks,
@@ -424,5 +455,6 @@ export {
     usePatterns,
     useStockOwnerIds,
     usePatternPaths,
-    usePatternIds
+    usePatternIds,
+    usePatternPathLocations,
 };

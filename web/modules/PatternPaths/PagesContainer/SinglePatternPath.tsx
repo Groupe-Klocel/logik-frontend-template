@@ -101,6 +101,11 @@ const SinglePatternPath: FC<ISinglePatternPathProps> = ({ id, router }: ISingleP
                 actionsRight={
                     <Space>
                         <LinkButton
+                            title={t('actions:manage-location')}
+                            path={`/pattern-paths/manage/${id}`}
+                            type="primary"
+                        />
+                        <LinkButton
                             title={t('actions:edit')}
                             path={`/pattern-paths/edit/${id}`}
                             type="primary"

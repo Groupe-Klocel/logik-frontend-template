@@ -20,9 +20,12 @@ import {
     ModeEnum,
     DeletePatternMutation,
     DeletePatternMutationVariables,
-    useDeletePatternMutation
+    useDeletePatternMutation,
+    useDeletePatternPathMutation,
+    DeletePatternPathMutation,
+    DeletePatternPathMutationVariables
 } from 'generated/graphql';
-import { EyeTwoTone, DeleteOutlined, UpSquareFilled, DownSquareFilled } from '@ant-design/icons';
+import { EyeTwoTone, DeleteOutlined, ArrowUpOutlined, ArrowDownOutlined } from '@ant-design/icons';
 import { useState, useEffect, useCallback } from 'react';
 import { useAppState } from 'context/AppContext';
 
@@ -82,12 +85,12 @@ const PatternPathsList = ({ searchCriteria }: IPatternPathsListProps) => {
         }
     }, [data]);
 
-    const { mutate: DeleteMutation, isLoading: deleteLoading } = useDeletePatternMutation<Error>(
+    const { mutate: DeleteMutation, isLoading: deleteLoading } = useDeletePatternPathMutation<Error>(
         graphqlRequestClient,
         {
             onSuccess: (
-                data: DeletePatternMutation,
-                _variables: DeletePatternMutationVariables,
+                data: DeletePatternPathMutation,
+                _variables: DeletePatternPathMutationVariables,
                 _context: unknown
             ) => {
                 if (!deleteLoading) {
@@ -135,20 +138,18 @@ const PatternPathsList = ({ searchCriteria }: IPatternPathsListProps) => {
         {
             title: 'd:order',
             key: 'order',
-            render: (record: {id: string}) => {
+            render: (record: {id: string}) => (
                 <Space>                    
                     <Button
-                        icon={<UpSquareFilled />}
-                        danger
+                        icon={<ArrowUpOutlined />}
                         onClick={() => alert( record.id )}
                     />
                     <Button
-                        icon={<DownSquareFilled />}
-                        danger
+                        icon={<ArrowDownOutlined />}
                         onClick={() => alert(record.id)}
                     />
                 </Space>
-            }
+            )
         },
         {
             title: 'actions:actions',

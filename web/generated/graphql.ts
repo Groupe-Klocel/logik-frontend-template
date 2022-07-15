@@ -8859,6 +8859,17 @@ export type UpdatePatternPathMutationVariables = Exact<{
 
 export type UpdatePatternPathMutation = { __typename?: 'Mutation', updatePatternPath?: { __typename?: 'PatternPath', id?: string | null, extras?: any | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, name?: string | null, status?: number | null, patternId?: string | null } | null };
 
+export type GetPatternPathLocationsQueryVariables = Exact<{
+  filters?: InputMaybe<PatternPathLocationSearchFilters>;
+  orderBy?: InputMaybe<Array<PatternPathLocationOrderByCriterion> | PatternPathLocationOrderByCriterion>;
+  page: Scalars['Int'];
+  itemsPerPage: Scalars['Int'];
+  language?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type GetPatternPathLocationsQuery = { __typename?: 'Query', patternPathLocations: { __typename?: 'PatternPathLocationListResult', count: number, totalPages: number, page: number, itemsPerPage: number, results: Array<{ __typename?: 'PatternPathLocation', id?: string | null, extras?: any | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, order?: number | null, locationId?: string | null, patternPathId?: string | null, location: { __typename?: 'Location', id?: string | null, name?: string | null, position?: string | null, column?: string | null, level?: string | null, aisle?: string | null } }> } };
+
 export type GetAllReturnCodesQueryVariables = Exact<{
   filters?: InputMaybe<ReturnCodeSearchFilters>;
   orderBy?: InputMaybe<Array<ReturnCodeOrderByCriterion> | ReturnCodeOrderByCriterion>;
@@ -10978,6 +10989,55 @@ export const useUpdatePatternPathMutation = <
     useMutation<UpdatePatternPathMutation, TError, UpdatePatternPathMutationVariables, TContext>(
       ['UpdatePatternPath'],
       (variables?: UpdatePatternPathMutationVariables) => fetcher<UpdatePatternPathMutation, UpdatePatternPathMutationVariables>(client, UpdatePatternPathDocument, variables, headers)(),
+      options
+    );
+export const GetPatternPathLocationsDocument = `
+    query GetPatternPathLocations($filters: PatternPathLocationSearchFilters, $orderBy: [PatternPathLocationOrderByCriterion!], $page: Int!, $itemsPerPage: Int!, $language: String) {
+  patternPathLocations(
+    filters: $filters
+    orderBy: $orderBy
+    page: $page
+    itemsPerPage: $itemsPerPage
+    language: $language
+  ) {
+    count
+    totalPages
+    page
+    itemsPerPage
+    results {
+      id
+      extras
+      created
+      createdBy
+      modified
+      modifiedBy
+      order
+      locationId
+      patternPathId
+      location {
+        id
+        name
+        position
+        column
+        level
+        aisle
+      }
+    }
+  }
+}
+    `;
+export const useGetPatternPathLocationsQuery = <
+      TData = GetPatternPathLocationsQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: GetPatternPathLocationsQueryVariables,
+      options?: UseQueryOptions<GetPatternPathLocationsQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetPatternPathLocationsQuery, TError, TData>(
+      ['GetPatternPathLocations', variables],
+      fetcher<GetPatternPathLocationsQuery, GetPatternPathLocationsQueryVariables>(client, GetPatternPathLocationsDocument, variables, headers),
       options
     );
 export const GetAllReturnCodesDocument = `

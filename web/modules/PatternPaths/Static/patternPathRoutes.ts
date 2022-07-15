@@ -21,3 +21,11 @@ export const addPatternPathRoutes = [
         breadcrumbName: 'actions:add-patternPath'
     }
 ];
+
+export const managePatternPathLocation = [
+    ...patternPathsSubRoutes,
+    {
+        path: '/manage-pattern-path-location',
+        breadcrumbName: 'actions:manage-pattern-path-location'
+    }
+]
