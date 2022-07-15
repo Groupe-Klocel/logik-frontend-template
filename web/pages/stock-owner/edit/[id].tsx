@@ -9,6 +9,8 @@ type PageComponent = FC & { layout: typeof MainLayout };
 const EditStockOwnerPage: PageComponent = () => {
     const router = useRouter();
     const { id } = router.query;
+
+    console.log('Id de Stock owner : ', id);
     return (
         <>
             <AppHead title="Bee V2" />

@@ -81,17 +81,20 @@ const SingleStockOwner: FC<SingleStockOwnerTypeProps> = ({
                 actionsRight={
                     <Space>
                         {/* ADD HERE*/}
-                        <LinkButton
-                            icon={<EditTwoTone />}
-                            path={pathParams('/stock-owner/edit/[id]', id)}
-                        ></LinkButton>
                         {data?.stockOwner?.status != 1005 ? (
-                            <Button
-                                icon={<DeleteOutlined />}
-                                danger
-                                loading={softDeleteLoading}
-                                onClick={() => softDeleteStockOwner({ stockOwnerId: id })}
-                            ></Button>
+                            <>
+                                <LinkButton
+                                    icon={<EditTwoTone />}
+                                    path={pathParams('/stock-owner/edit/[id]', id)}
+                                ></LinkButton>
+
+                                <Button
+                                    icon={<DeleteOutlined />}
+                                    danger
+                                    loading={softDeleteLoading}
+                                    onClick={() => softDeleteStockOwner({ stockOwnerId: id })}
+                                ></Button>
+                            </>
                         ) : (
                             <></>
                         )}

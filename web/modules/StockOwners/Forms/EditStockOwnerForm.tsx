@@ -6,6 +6,7 @@ import {
     Checkbox,
     Col,
     Descriptions,
+    Divider,
     Form,
     Input,
     InputNumber,
@@ -82,6 +83,8 @@ export const EditStockOwnerForm: FC<EditStockOwnerFormProps> = ({
         }
     });
 
+    //console.log('Stock Owner Id : ', stockOwnerId);
+
     const updateStockOwner = ({ id, input }: UpdateStockOwnerMutationVariables) => {
         mutate({ id, input });
     };
@@ -98,19 +101,17 @@ export const EditStockOwnerForm: FC<EditStockOwnerFormProps> = ({
         }
     }, [stockOwnersList]);
 
-    console.log('Allez', form.getFieldsValue(true));
     const onFinish = () => {
         form.validateFields()
             .then(() => {
                 const formData = form.getFieldsValue(true);
-                if (formData.stockOwnerId == undefined) {
-                    formData.stockOwnerId = stockOwners?.find(
-                        (e: any) => e.name == formData.associatedStockOwner
-                    ).id;
-                }
-                delete formData['associatedStockOwner'];
-                delete formData['stockOwner'];
-                console.log('Apres ', formData);
+                // if (formData.stockOwnerId == undefined) {
+                //     formData.stockOwnerId = stockOwners?.find(
+                //         (e: any) => e.name == formData.associatedStockOwner
+                //     ).id;
+                // }
+                delete formData['statusText'];
+                console.log('Here ', formData);
                 updateStockOwner({
                     id: stockOwnerId,
                     input: formData
@@ -118,7 +119,6 @@ export const EditStockOwnerForm: FC<EditStockOwnerFormProps> = ({
             })
             .catch((err) => showError(t('messages:error-update-data')));
     };
-    console.log(details);
     useEffect(() => {
         const tmp_details = {
             ...details
@@ -141,7 +141,7 @@ export const EditStockOwnerForm: FC<EditStockOwnerFormProps> = ({
         <WrapperForm>
             <Form form={form} scrollToFirstError>
                 <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-                    <Col xs={24} xl={24}>
+                    <Col xs={24} xl={12}>
                         <Form.Item
                             label={name}
                             name="name"
@@ -150,7 +150,7 @@ export const EditStockOwnerForm: FC<EditStockOwnerFormProps> = ({
                             <Input />
                         </Form.Item>
                     </Col>
-                    {/* <Col xs={24} xl={24}>
+                    <Col xs={24} xl={24}>
                         <Form.Item label={logo} name="logoUrl">
                             <Upload>
                                 <Button icon={<UploadOutlined />}>Select a Logo</Button>
@@ -180,127 +180,125 @@ export const EditStockOwnerForm: FC<EditStockOwnerFormProps> = ({
                     </Col>
                 </Row>
                 <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-                    <Descriptions title="Headquarter Address">
-                        <Col xs={24} xl={12}>
-                            <Form.Item label={contactName} name="contact">
-                                <Input />
-                            </Form.Item>
-                        </Col>
-                        <Col xs={24} xl={12}>
-                            <Form.Item label={address1} name="address1">
-                                <Input />
-                            </Form.Item>
-                        </Col>
-                        <Col xs={24} xl={24}>
-                            <Form.Item label={address2} name="address2">
-                                <Input />
-                            </Form.Item>
-                        </Col>
-                        <Col xs={24} xl={12}>
-                            <Form.Item label={address3} name="address3">
-                                <Input />
-                            </Form.Item>
-                        </Col>
-                        <Col xs={24} xl={12}>
-                            <Form.Item label={mobile} name="mobile">
-                                <Input />
-                            </Form.Item>
-                        </Col>
-                        <Col xs={24} xl={24}>
-                            <Form.Item label={postalCode} name="postCode">
-                                <Input />
-                            </Form.Item>
-                        </Col>
-                        <Col xs={24} xl={12}>
-                            <Form.Item label={city} name="city">
-                                <Input />
-                            </Form.Item>
-                        </Col>
-                        <Col xs={24} xl={24}>
-                            <Form.Item label={country} name="country">
-                                <Input />
-                            </Form.Item>
-                        </Col>
-                        <Col xs={24} xl={12}>
-                            <Form.Item label={countryCode} name="countryCode">
-                                <Input />
-                            </Form.Item>
-                        </Col>
-                        <Col xs={24} xl={12}>
-                            <Form.Item label={phone} name="phone">
-                                <Input />
-                            </Form.Item>
-                        </Col>
-                        <Col xs={24} xl={12}>
-                            <Form.Item label={email} name="email">
-                                <Input />
-                            </Form.Item>
-                        </Col>
-                    </Descriptions>
+                    <Divider>Headquarter Address</Divider>
+                    <Col xs={24} xl={12}>
+                        <Form.Item label={contactName} name="contact">
+                            <Input />
+                        </Form.Item>
+                    </Col>
+                    <Col xs={24} xl={12}>
+                        <Form.Item label={address1} name="address1">
+                            <Input />
+                        </Form.Item>
+                    </Col>
+                    <Col xs={24} xl={12}>
+                        <Form.Item label={address2} name="address2">
+                            <Input />
+                        </Form.Item>
+                    </Col>
+                    <Col xs={24} xl={12}>
+                        <Form.Item label={address3} name="address3">
+                            <Input />
+                        </Form.Item>
+                    </Col>
+                    <Col xs={24} xl={4}>
+                        <Form.Item label={postalCode} name="postCode">
+                            <Input />
+                        </Form.Item>
+                    </Col>
+                    <Col xs={24} xl={8}>
+                        <Form.Item label={city} name="city">
+                            <Input />
+                        </Form.Item>
+                    </Col>
+                    <Col xs={24} xl={8}>
+                        <Form.Item label={country} name="country">
+                            <Input />
+                        </Form.Item>
+                    </Col>
+                    <Col xs={24} xl={4}>
+                        <Form.Item label={countryCode} name="countryCode">
+                            <Input />
+                        </Form.Item>
+                    </Col>
+                    <Col xs={24} xl={6}>
+                        <Form.Item label={mobile} name="mobile">
+                            <Input />
+                        </Form.Item>
+                    </Col>
+                    <Col xs={24} xl={6}>
+                        <Form.Item label={phone} name="phone">
+                            <Input />
+                        </Form.Item>
+                    </Col>
+                    <Col xs={24} xl={12}>
+                        <Form.Item label={email} name="email">
+                            <Input />
+                        </Form.Item>
+                    </Col>
                 </Row>
                 <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-                    <Descriptions title="Sender Address">
-                        <Col xs={24} xl={24}>
-                            <Form.Item label={name} name="senderName">
-                                <Input />
-                            </Form.Item>
-                        </Col>
-                        <Col xs={24} xl={24}>
-                            <Form.Item label={contactName} name="senderContact">
-                                <Input />
-                            </Form.Item>
-                        </Col>
-                        <Col xs={24} xl={24}>
-                            <Form.Item label={address1} name="senderAddress1">
-                                <Input />
-                            </Form.Item>
-                        </Col>
-                        <Col xs={24} xl={24}>
-                            <Form.Item label={address2} name="senderAddress2">
-                                <Input />
-                            </Form.Item>
-                        </Col>
-                        <Col xs={24} xl={12}>
-                            <Form.Item label={address3} name="senderAddress3">
-                                <Input />
-                            </Form.Item>
-                        </Col>
-                        <Col xs={24} xl={12}>
-                            <Form.Item label={mobile} name="senderMobile">
-                                <Input />
-                            </Form.Item>
-                        </Col>
-                        <Col xs={24} xl={24}>
-                            <Form.Item label={postalCode} name="senderPostCode">
-                                <Input />
-                            </Form.Item>
-                        </Col>
-                        <Col xs={24} xl={12}>
-                            <Form.Item label={city} name="senderCity">
-                                <Input />
-                            </Form.Item>
-                        </Col>
-                        <Col xs={24} xl={24}>
-                            <Form.Item label={country} name="senderCountry">
-                                <Input />
-                            </Form.Item>
-                        </Col>
-                        <Col xs={24} xl={12}>
-                            <Form.Item label={countryCode} name="senderCountryCode">
-                                <Input />
-                            </Form.Item>
-                        </Col>
-                        <Col xs={24} xl={12}>
-                            <Form.Item label={phone} name="senderPhone">
-                                <Input />
-                            </Form.Item>
-                        </Col>
-                        <Col xs={24} xl={12}>
-                            <Form.Item label={email} name="senderEmail">
-                                <Input />
-                            </Form.Item>
-                        </Col>
-                    </Descriptions> */}
+                    <Divider>Sender Address</Divider>
+                    <Col xs={24} xl={6}>
+                        <Form.Item label={name} name="senderName">
+                            <Input />
+                        </Form.Item>
+                    </Col>
+                    <Col xs={24} xl={6}>
+                        <Form.Item label={contactName} name="senderContact">
+                            <Input />
+                        </Form.Item>
+                    </Col>
+                    <Col xs={24} xl={12}>
+                        <Form.Item label={address1} name="senderAddress1">
+                            <Input />
+                        </Form.Item>
+                    </Col>
+                    <Col xs={24} xl={12}>
+                        <Form.Item label={address2} name="senderAddress2">
+                            <Input />
+                        </Form.Item>
+                    </Col>
+                    <Col xs={24} xl={12}>
+                        <Form.Item label={address3} name="senderAddress3">
+                            <Input />
+                        </Form.Item>
+                    </Col>
+                    <Col xs={24} xl={4}>
+                        <Form.Item label={postalCode} name="senderPostCode">
+                            <Input />
+                        </Form.Item>
+                    </Col>
+                    <Col xs={24} xl={8}>
+                        <Form.Item label={city} name="senderCity">
+                            <Input />
+                        </Form.Item>
+                    </Col>
+                    <Col xs={24} xl={8}>
+                        <Form.Item label={country} name="senderCountry">
+                            <Input />
+                        </Form.Item>
+                    </Col>
+                    <Col xs={24} xl={4}>
+                        <Form.Item label={countryCode} name="senderCountryCode">
+                            <Input />
+                        </Form.Item>
+                    </Col>
+                    <Col xs={24} xl={6}>
+                        <Form.Item label={mobile} name="senderMobile">
+                            <Input />
+                        </Form.Item>
+                    </Col>
+                    <Col xs={24} xl={6}>
+                        <Form.Item label={phone} name="senderPhone">
+                            <Input />
+                        </Form.Item>
+                    </Col>
+                    <Col xs={24} xl={12}>
+                        <Form.Item label={email} name="senderEmail">
+                            <Input />
+                        </Form.Item>
+                    </Col>
                 </Row>
             </Form>
             <div style={{ textAlign: 'center' }}>
