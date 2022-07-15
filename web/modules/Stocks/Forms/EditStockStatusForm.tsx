@@ -77,7 +77,7 @@ export const EditStockStatusForm: FC<IEditStockStatusFormProps> = ({
 
     return (
         <StyledForm>
-            <Form form={form} scrollToFirstError initialValues={details}>
+            <Form form={form} scrollToFirstError >
                 <StockStatusForm/>
                 <div style={{ textAlign: 'right' }}>
                     <Space>
