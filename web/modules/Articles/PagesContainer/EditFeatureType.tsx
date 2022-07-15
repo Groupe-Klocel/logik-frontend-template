@@ -2,7 +2,7 @@ import { ContentSpin } from '@components';
 import { Layout } from 'antd';
 import { featuresTypesRoutes } from 'modules/Articles/Static/articlesRoutes';
 import useTranslation from 'next-translate/useTranslation';
-import { GetFeatureTypeByIdQuery, useGetFeatureTypeByIdQuery } from 'generated/graphql';
+import { GetParameterByIdQuery, useGetParameterByIdQuery } from 'generated/graphql';
 import { useAuth } from 'context/AuthContext';
 import { FC, useEffect } from 'react';
 import { NextRouter } from 'next/router';
@@ -26,7 +26,7 @@ const EditFeatureType: FC<IEditFeatureTypeProps> = ({ id, router }: IEditFeature
 
     const { graphqlRequestClient } = useAuth();
 
-    const { isLoading, data, error } = useGetFeatureTypeByIdQuery<GetFeatureTypeByIdQuery, Error>(
+    const { isLoading, data, error } = useGetParameterByIdQuery<GetParameterByIdQuery, Error>(
         graphqlRequestClient,
         {
             id: id

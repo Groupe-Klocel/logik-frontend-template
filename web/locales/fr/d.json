@@ -4,6 +4,8 @@
     "allowCycleCountStockMin": "Inventaire sur stock minimum",
     "associatedBlock": "Bloc associé",
     "associatedBuilding": "Bâtiment associé",
+    "atPreparation": "A préparation",
+    "atReception": "A réception",
     "available": "Disponible",
     "barcode": "Code-barre",
     "blockId": "ID Bloc",

@@ -4,6 +4,8 @@
     "allowCycleCountStockMin": "Cycle count on minimum stock",
     "associatedBlock": "Associated block",
     "associatedBuilding": "Associated building",
+    "atPreparation": "At preparation",
+    "atReception": "At reception",
     "available": "Available",
     "barcode": "Barcode",
     "blockId": "Block ID",

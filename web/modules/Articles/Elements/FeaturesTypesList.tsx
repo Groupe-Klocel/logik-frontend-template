@@ -16,9 +16,9 @@ import {
 import graphqlRequestClient from 'graphql/graphqlRequestClient';
 import useTranslation from 'next-translate/useTranslation';
 import {
-    DeleteFeatureTypeMutation,
-    DeleteFeatureTypeMutationVariables,
-    useDeleteFeatureTypeMutation
+    DeleteParameterMutation,
+    DeleteParameterMutationVariables,
+    useDeleteParameterMutation
 } from 'generated/graphql';
 import { useAppState } from 'context/AppContext';
 
@@ -76,12 +76,12 @@ export const FeaturesTypesList = () => {
         await setSort(orderByFormater(sorter));
     };
 
-    const { mutate, isLoading: deleteLoading } = useDeleteFeatureTypeMutation<Error>(
+    const { mutate, isLoading: deleteLoading } = useDeleteParameterMutation<Error>(
         graphqlRequestClient,
         {
             onSuccess: (
-                data: DeleteFeatureTypeMutation,
-                _variables: DeleteFeatureTypeMutationVariables,
+                data: DeleteParameterMutation,
+                _variables: DeleteParameterMutationVariables,
                 _context: unknown
             ) => {
                 if (!deleteLoading) {
@@ -95,7 +95,7 @@ export const FeaturesTypesList = () => {
         }
     );
 
-    const deleteFeatureType = ({ id }: DeleteFeatureTypeMutationVariables) => {
+    const deleteFeatureType = ({ id }: DeleteParameterMutationVariables) => {
         Modal.confirm({
             title: t('messages:delete-confirm'),
             onOk: () => {

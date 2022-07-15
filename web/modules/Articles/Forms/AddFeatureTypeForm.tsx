@@ -3,9 +3,9 @@ import { showError, showInfo, showSuccess } from '@helpers';
 import { Button, Col, Form, Input, InputNumber, Row, Typography } from 'antd';
 import { useAuth } from 'context/AuthContext';
 import {
-    CreateFeatureTypeMutation,
-    CreateFeatureTypeMutationVariables,
-    useCreateFeatureTypeMutation
+    CreateParameterMutation,
+    CreateParameterMutationVariables,
+    useCreateParameterMutation
 } from 'generated/graphql';
 import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
@@ -21,12 +21,12 @@ export const AddFeatureTypeForm = () => {
     // TYPED SAFE ALL
     const [form] = Form.useForm();
 
-    const { mutate, isLoading: createLoading } = useCreateFeatureTypeMutation<Error>(
+    const { mutate, isLoading: createLoading } = useCreateParameterMutation<Error>(
         graphqlRequestClient,
         {
             onSuccess: (
-                data: CreateFeatureTypeMutation,
-                _variables: CreateFeatureTypeMutationVariables,
+                data: CreateParameterMutation,
+                _variables: CreateParameterMutationVariables,
                 _context: any
             ) => {
                 router.push(`/feature-type/${data.createParameter.id}`);
@@ -38,7 +38,7 @@ export const AddFeatureTypeForm = () => {
         }
     );
 
-    const createFeatureType = ({ input }: CreateFeatureTypeMutationVariables) => {
+    const createFeatureType = ({ input }: CreateParameterMutationVariables) => {
         mutate({ input });
     };
 

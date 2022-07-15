@@ -1,10 +1,10 @@
 import { useAuth } from 'context/AuthContext';
 import {
-    GetFeatureTypeByIdQuery,
-    DeleteFeatureTypeMutation,
-    DeleteFeatureTypeMutationVariables,
-    useGetFeatureTypeByIdQuery,
-    useDeleteFeatureTypeMutation
+    GetParameterByIdQuery,
+    DeleteParameterMutation,
+    DeleteParameterMutationVariables,
+    useGetParameterByIdQuery,
+    useDeleteParameterMutation
 } from 'generated/graphql';
 import { NextRouter } from 'next/router';
 import { FC } from 'react';
@@ -28,7 +28,7 @@ const SingleFeatureType: FC<SingleFeatureTypeTypeProps> = ({
     const { graphqlRequestClient } = useAuth();
     const { t } = useTranslation();
 
-    const { isLoading, data, error } = useGetFeatureTypeByIdQuery<GetFeatureTypeByIdQuery, Error>(
+    const { isLoading, data, error } = useGetParameterByIdQuery<GetParameterByIdQuery, Error>(
         graphqlRequestClient,
         {
             id: id
@@ -42,12 +42,12 @@ const SingleFeatureType: FC<SingleFeatureTypeTypeProps> = ({
         }
     ];
 
-    const { mutate, isLoading: deleteLoading } = useDeleteFeatureTypeMutation<Error>(
+    const { mutate, isLoading: deleteLoading } = useDeleteParameterMutation<Error>(
         graphqlRequestClient,
         {
             onSuccess: (
-                data: DeleteFeatureTypeMutation,
-                _variables: DeleteFeatureTypeMutationVariables,
+                data: DeleteParameterMutation,
+                _variables: DeleteParameterMutationVariables,
                 _context: unknown
             ) => {
                 router.back();
@@ -61,7 +61,7 @@ const SingleFeatureType: FC<SingleFeatureTypeTypeProps> = ({
         }
     );
 
-    const deleteFeatureType = ({ id }: DeleteFeatureTypeMutationVariables) => {
+    const deleteFeatureType = ({ id }: DeleteParameterMutationVariables) => {
         Modal.confirm({
             title: t('messages:delete-confirm'),
             onOk: () => {

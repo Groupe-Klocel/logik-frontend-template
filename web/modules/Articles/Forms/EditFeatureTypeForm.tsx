@@ -5,9 +5,9 @@ import { FC, useEffect, useState } from 'react';
 import { useAuth } from 'context/AuthContext';
 import { useRouter } from 'next/router';
 import {
-    useUpdateFeatureTypeMutation,
-    UpdateFeatureTypeMutation,
-    UpdateFeatureTypeMutationVariables
+    useUpdateParameterMutation,
+    UpdateParameterMutation,
+    UpdateParameterMutationVariables
 } from 'generated/graphql';
 import { showError, showSuccess, showInfo } from '@helpers';
 
@@ -31,12 +31,12 @@ export const EditFeatureTypeForm: FC<EditFeatureTypeFormProps> = ({
     // TYPED SAFE ALL
     const [form] = Form.useForm();
 
-    const { mutate, isLoading: updateLoading } = useUpdateFeatureTypeMutation<Error>(
+    const { mutate, isLoading: updateLoading } = useUpdateParameterMutation<Error>(
         graphqlRequestClient,
         {
             onSuccess: (
-                data: UpdateFeatureTypeMutation,
-                _variables: UpdateFeatureTypeMutationVariables,
+                data: UpdateParameterMutation,
+                _variables: UpdateParameterMutationVariables,
                 _context: any
             ) => {
                 router.push(`/feature-type/${data.updateParameter?.id}`);
@@ -48,9 +48,11 @@ export const EditFeatureTypeForm: FC<EditFeatureTypeFormProps> = ({
         }
     );
 
-    const updateFeatureType = ({ id, input }: UpdateFeatureTypeMutationVariables) => {
+    const updateFeatureType = ({ id, input }: UpdateParameterMutationVariables) => {
         mutate({ id, input });
     };
+
+    console.log('yoyo', form.getFieldsValue(true));
 
     const onFinish = () => {
         form.validateFields()

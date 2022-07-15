@@ -949,7 +949,7 @@ export type BuildingSearchFilters = {
 
 export type BulkCreateLocationsInput = {
   aisle: Scalars['String'];
-  /** Eminza: create inventory when stock below quantity */
+  /** Eminza : create inventory when stock below quantity */
   allowCycleCountStockMin?: InputMaybe<Scalars['Boolean']>;
   baseUnitRotation?: InputMaybe<Scalars['Int']>;
   blockId: Scalars['String'];
@@ -1882,7 +1882,7 @@ export type CreateLoadInput = {
 
 export type CreateLocationInput = {
   aisle: Scalars['String'];
-  /** Eminza: create inventory when stock below quantity */
+  /** Eminza : create inventory when stock below quantity */
   allowCycleCountStockMin?: InputMaybe<Scalars['Boolean']>;
   barcode: Scalars['String'];
   baseUnitRotation?: InputMaybe<Scalars['Int']>;
@@ -3030,6 +3030,7 @@ export type FeatureTypeDetail = {
   created?: Maybe<Scalars['DateTime']>;
   createdBy?: Maybe<Scalars['String']>;
   extras?: Maybe<Scalars['JSON']>;
+  featureCode: FeatureCode;
   featureCodeId?: Maybe<Scalars['String']>;
   featureType?: Maybe<Scalars['Int']>;
   /** Text value for field feature_type */
@@ -3037,6 +3038,7 @@ export type FeatureTypeDetail = {
   id?: Maybe<Scalars['String']>;
   modified?: Maybe<Scalars['DateTime']>;
   modifiedBy?: Maybe<Scalars['String']>;
+  stockOwner: StockOwner;
   stockOwnerId?: Maybe<Scalars['String']>;
 };
 
@@ -5526,7 +5528,6 @@ export type ParameterResults = {
   code: Scalars['String'];
   id: Scalars['String'];
   scope: Scalars['String'];
-  system: Scalars['Boolean'];
   text: Scalars['String'];
 };
 
@@ -8558,44 +8559,44 @@ export type UpdateFeatureCodeMutationVariables = Exact<{
 
 export type UpdateFeatureCodeMutation = { __typename?: 'Mutation', updateFeatureCode?: { __typename?: 'FeatureCode', id?: string | null, name?: string | null, unique?: boolean | null, dateType?: boolean | null, prefixBarcode?: string | null, lengthBarcode?: string | null, suffixBarcode?: string | null, stockOwnerId?: string | null } | null };
 
-export type GetAllParamsQueryVariables = Exact<{
-  filters?: InputMaybe<ParameterSearchFilters>;
-  orderBy?: InputMaybe<Array<ParameterOrderByCriterion> | ParameterOrderByCriterion>;
+export type GetAllFeatureTypeDetailsQueryVariables = Exact<{
+  filters?: InputMaybe<FeatureTypeDetailSearchFilters>;
+  orderBy?: InputMaybe<Array<FeatureTypeDetailOrderByCriterion> | FeatureTypeDetailOrderByCriterion>;
   page: Scalars['Int'];
   itemsPerPage: Scalars['Int'];
 }>;
 
 
-export type GetAllParamsQuery = { __typename?: 'Query', parameters: { __typename?: 'ParameterListResult', count: number, itemsPerPage: number, totalPages: number, results: Array<{ __typename?: 'Parameter', id?: string | null, scope: string, code: string, value: string, extras?: any | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, translation?: any | null, system?: boolean | null }> } };
+export type GetAllFeatureTypeDetailsQuery = { __typename?: 'Query', featureTypeDetails: { __typename?: 'FeatureTypeDetailListResult', count: number, itemsPerPage: number, totalPages: number, results: Array<{ __typename?: 'FeatureTypeDetail', id?: string | null, featureType?: number | null, featureTypeText?: string | null, featureCodeId?: string | null, stockOwnerId?: string | null, atReception?: boolean | null, atPreparation?: boolean | null, extras?: any | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, featureCode: { __typename?: 'FeatureCode', id?: string | null, name?: string | null }, stockOwner: { __typename?: 'StockOwner', name?: string | null } }> } };
 
-export type GetFeatureTypeByIdQueryVariables = Exact<{
+export type GetFeatureTypeDetailByIdQueryVariables = Exact<{
   id: Scalars['String'];
 }>;
 
 
-export type GetFeatureTypeByIdQuery = { __typename?: 'Query', parameter?: { __typename?: 'Parameter', id?: string | null, scope: string, code: string, value: string, extras?: any | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, translation?: any | null, system?: boolean | null } | null };
+export type GetFeatureTypeDetailByIdQuery = { __typename?: 'Query', featureTypeDetail?: { __typename?: 'FeatureTypeDetail', id?: string | null, featureType?: number | null, featureTypeText?: string | null, featureCodeId?: string | null, stockOwnerId?: string | null, atReception?: boolean | null, atPreparation?: boolean | null, extras?: any | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, featureCode: { __typename?: 'FeatureCode', id?: string | null, name?: string | null }, stockOwner: { __typename?: 'StockOwner', name?: string | null } } | null };
 
-export type CreateFeatureTypeMutationVariables = Exact<{
-  input: CreateParameterInput;
+export type CreateFeatureTypeDetailMutationVariables = Exact<{
+  input: CreateFeatureTypeDetailInput;
 }>;
 
 
-export type CreateFeatureTypeMutation = { __typename?: 'Mutation', createParameter: { __typename?: 'Parameter', id?: string | null, scope: string, code: string, value: string } };
+export type CreateFeatureTypeDetailMutation = { __typename?: 'Mutation', createFeatureTypeDetail: { __typename?: 'FeatureTypeDetail', id?: string | null, featureType?: number | null, featureCodeId?: string | null, stockOwnerId?: string | null, atReception?: boolean | null, atPreparation?: boolean | null } };
 
-export type DeleteFeatureTypeMutationVariables = Exact<{
+export type DeleteFeatureTypeDetailMutationVariables = Exact<{
   id: Scalars['String'];
 }>;
 
 
-export type DeleteFeatureTypeMutation = { __typename?: 'Mutation', deleteParameter: boolean };
+export type DeleteFeatureTypeDetailMutation = { __typename?: 'Mutation', deleteFeatureTypeDetail: boolean };
 
-export type UpdateFeatureTypeMutationVariables = Exact<{
+export type UpdateFeatureTypeDetailMutationVariables = Exact<{
   id: Scalars['String'];
-  input: UpdateParameterInput;
+  input: UpdateFeatureTypeDetailInput;
 }>;
 
 
-export type UpdateFeatureTypeMutation = { __typename?: 'Mutation', updateParameter?: { __typename?: 'Parameter', id?: string | null, scope: string, code: string, value: string } | null };
+export type UpdateFeatureTypeDetailMutation = { __typename?: 'Mutation', updateFeatureTypeDetail?: { __typename?: 'FeatureTypeDetail', id?: string | null, featureType?: number | null, featureCodeId?: string | null, stockOwnerId?: string | null, atReception?: boolean | null, atPreparation?: boolean | null } | null };
 
 export type GetAllGoodsInsQueryVariables = Exact<{
   orderBy?: InputMaybe<Array<GoodsInOrderByCriterion> | GoodsInOrderByCriterion>;
@@ -8785,6 +8786,45 @@ export type ChangePasswordMutationVariables = Exact<{
 
 
 export type ChangePasswordMutation = { __typename?: 'Mutation', changePassword: { __typename: 'ChangePasswordFailure', message: string } | { __typename: 'ChangePasswordSuccess', message: string } };
+
+export type GetAllParamsQueryVariables = Exact<{
+  filters?: InputMaybe<ParameterSearchFilters>;
+  orderBy?: InputMaybe<Array<ParameterOrderByCriterion> | ParameterOrderByCriterion>;
+  page: Scalars['Int'];
+  itemsPerPage: Scalars['Int'];
+}>;
+
+
+export type GetAllParamsQuery = { __typename?: 'Query', parameters: { __typename?: 'ParameterListResult', count: number, itemsPerPage: number, totalPages: number, results: Array<{ __typename?: 'Parameter', id?: string | null, scope: string, code: string, value: string, extras?: any | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, translation?: any | null, system?: boolean | null }> } };
+
+export type GetParameterByIdQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type GetParameterByIdQuery = { __typename?: 'Query', parameter?: { __typename?: 'Parameter', id?: string | null, scope: string, code: string, value: string, extras?: any | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, translation?: any | null, system?: boolean | null } | null };
+
+export type CreateParameterMutationVariables = Exact<{
+  input: CreateParameterInput;
+}>;
+
+
+export type CreateParameterMutation = { __typename?: 'Mutation', createParameter: { __typename?: 'Parameter', id?: string | null, scope: string, code: string, value: string } };
+
+export type DeleteParameterMutationVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type DeleteParameterMutation = { __typename?: 'Mutation', deleteParameter: boolean };
+
+export type UpdateParameterMutationVariables = Exact<{
+  id: Scalars['String'];
+  input: UpdateParameterInput;
+}>;
+
+
+export type UpdateParameterMutation = { __typename?: 'Mutation', updateParameter?: { __typename?: 'Parameter', id?: string | null, scope: string, code: string, value: string } | null };
 
 export type GetAllReturnCodesQueryVariables = Exact<{
   filters?: InputMaybe<ReturnCodeSearchFilters>;
@@ -9814,9 +9854,9 @@ export const useUpdateFeatureCodeMutation = <
       (variables?: UpdateFeatureCodeMutationVariables) => fetcher<UpdateFeatureCodeMutation, UpdateFeatureCodeMutationVariables>(client, UpdateFeatureCodeDocument, variables, headers)(),
       options
     );
-export const GetAllParamsDocument = `
-    query getAllParams($filters: ParameterSearchFilters, $orderBy: [ParameterOrderByCriterion!], $page: Int!, $itemsPerPage: Int!) {
-  parameters(
+export const GetAllFeatureTypeDetailsDocument = `
+    query GetAllFeatureTypeDetails($filters: FeatureTypeDetailSearchFilters, $orderBy: [FeatureTypeDetailOrderByCriterion!], $page: Int!, $itemsPerPage: Int!) {
+  featureTypeDetails(
     filters: $filters
     orderBy: $orderBy
     page: $page
@@ -9827,127 +9867,147 @@ export const GetAllParamsDocument = `
     totalPages
     results {
       id
-      scope
-      code
-      value
+      featureType
+      featureTypeText
+      featureCodeId
+      featureCode {
+        id
+        name
+      }
+      stockOwnerId
+      stockOwner {
+        name
+      }
+      atReception
+      atPreparation
       extras
       created
       createdBy
       modified
       modifiedBy
-      translation
-      system
     }
   }
 }
     `;
-export const useGetAllParamsQuery = <
-      TData = GetAllParamsQuery,
+export const useGetAllFeatureTypeDetailsQuery = <
+      TData = GetAllFeatureTypeDetailsQuery,
       TError = unknown
     >(
       client: GraphQLClient,
-      variables: GetAllParamsQueryVariables,
-      options?: UseQueryOptions<GetAllParamsQuery, TError, TData>,
+      variables: GetAllFeatureTypeDetailsQueryVariables,
+      options?: UseQueryOptions<GetAllFeatureTypeDetailsQuery, TError, TData>,
       headers?: RequestInit['headers']
     ) =>
-    useQuery<GetAllParamsQuery, TError, TData>(
-      ['getAllParams', variables],
-      fetcher<GetAllParamsQuery, GetAllParamsQueryVariables>(client, GetAllParamsDocument, variables, headers),
+    useQuery<GetAllFeatureTypeDetailsQuery, TError, TData>(
+      ['GetAllFeatureTypeDetails', variables],
+      fetcher<GetAllFeatureTypeDetailsQuery, GetAllFeatureTypeDetailsQueryVariables>(client, GetAllFeatureTypeDetailsDocument, variables, headers),
       options
     );
-export const GetFeatureTypeByIdDocument = `
-    query GetFeatureTypeById($id: String!) {
-  parameter(id: $id) {
+export const GetFeatureTypeDetailByIdDocument = `
+    query GetFeatureTypeDetailById($id: String!) {
+  featureTypeDetail(id: $id) {
     id
-    scope
-    code
-    value
+    featureType
+    featureTypeText
+    featureCodeId
+    featureCode {
+      id
+      name
+    }
+    stockOwnerId
+    stockOwner {
+      name
+    }
+    atReception
+    atPreparation
     extras
     created
     createdBy
     modified
     modifiedBy
-    translation
-    system
   }
 }
     `;
-export const useGetFeatureTypeByIdQuery = <
-      TData = GetFeatureTypeByIdQuery,
+export const useGetFeatureTypeDetailByIdQuery = <
+      TData = GetFeatureTypeDetailByIdQuery,
       TError = unknown
     >(
       client: GraphQLClient,
-      variables: GetFeatureTypeByIdQueryVariables,
-      options?: UseQueryOptions<GetFeatureTypeByIdQuery, TError, TData>,
+      variables: GetFeatureTypeDetailByIdQueryVariables,
+      options?: UseQueryOptions<GetFeatureTypeDetailByIdQuery, TError, TData>,
       headers?: RequestInit['headers']
     ) =>
-    useQuery<GetFeatureTypeByIdQuery, TError, TData>(
-      ['GetFeatureTypeById', variables],
-      fetcher<GetFeatureTypeByIdQuery, GetFeatureTypeByIdQueryVariables>(client, GetFeatureTypeByIdDocument, variables, headers),
+    useQuery<GetFeatureTypeDetailByIdQuery, TError, TData>(
+      ['GetFeatureTypeDetailById', variables],
+      fetcher<GetFeatureTypeDetailByIdQuery, GetFeatureTypeDetailByIdQueryVariables>(client, GetFeatureTypeDetailByIdDocument, variables, headers),
       options
     );
-export const CreateFeatureTypeDocument = `
-    mutation CreateFeatureType($input: CreateParameterInput!) {
-  createParameter(input: $input) {
+export const CreateFeatureTypeDetailDocument = `
+    mutation CreateFeatureTypeDetail($input: CreateFeatureTypeDetailInput!) {
+  createFeatureTypeDetail(input: $input) {
     id
-    scope
-    code
-    value
+    featureType
+    featureCodeId
+    stockOwnerId
+    atReception
+    atPreparation
   }
 }
     `;
-export const useCreateFeatureTypeMutation = <
+export const useCreateFeatureTypeDetailMutation = <
       TError = unknown,
       TContext = unknown
     >(
       client: GraphQLClient,
-      options?: UseMutationOptions<CreateFeatureTypeMutation, TError, CreateFeatureTypeMutationVariables, TContext>,
+      options?: UseMutationOptions<CreateFeatureTypeDetailMutation, TError, CreateFeatureTypeDetailMutationVariables, TContext>,
       headers?: RequestInit['headers']
     ) =>
-    useMutation<CreateFeatureTypeMutation, TError, CreateFeatureTypeMutationVariables, TContext>(
-      ['CreateFeatureType'],
-      (variables?: CreateFeatureTypeMutationVariables) => fetcher<CreateFeatureTypeMutation, CreateFeatureTypeMutationVariables>(client, CreateFeatureTypeDocument, variables, headers)(),
+    useMutation<CreateFeatureTypeDetailMutation, TError, CreateFeatureTypeDetailMutationVariables, TContext>(
+      ['CreateFeatureTypeDetail'],
+      (variables?: CreateFeatureTypeDetailMutationVariables) => fetcher<CreateFeatureTypeDetailMutation, CreateFeatureTypeDetailMutationVariables>(client, CreateFeatureTypeDetailDocument, variables, headers)(),
       options
     );
-export const DeleteFeatureTypeDocument = `
-    mutation DeleteFeatureType($id: String!) {
-  deleteParameter(parameterId: $id)
+export const DeleteFeatureTypeDetailDocument = `
+    mutation DeleteFeatureTypeDetail($id: String!) {
+  deleteFeatureTypeDetail(id: $id)
 }
     `;
-export const useDeleteFeatureTypeMutation = <
+export const useDeleteFeatureTypeDetailMutation = <
       TError = unknown,
       TContext = unknown
     >(
       client: GraphQLClient,
-      options?: UseMutationOptions<DeleteFeatureTypeMutation, TError, DeleteFeatureTypeMutationVariables, TContext>,
+      options?: UseMutationOptions<DeleteFeatureTypeDetailMutation, TError, DeleteFeatureTypeDetailMutationVariables, TContext>,
       headers?: RequestInit['headers']
     ) =>
-    useMutation<DeleteFeatureTypeMutation, TError, DeleteFeatureTypeMutationVariables, TContext>(
-      ['DeleteFeatureType'],
-      (variables?: DeleteFeatureTypeMutationVariables) => fetcher<DeleteFeatureTypeMutation, DeleteFeatureTypeMutationVariables>(client, DeleteFeatureTypeDocument, variables, headers)(),
+    useMutation<DeleteFeatureTypeDetailMutation, TError, DeleteFeatureTypeDetailMutationVariables, TContext>(
+      ['DeleteFeatureTypeDetail'],
+      (variables?: DeleteFeatureTypeDetailMutationVariables) => fetcher<DeleteFeatureTypeDetailMutation, DeleteFeatureTypeDetailMutationVariables>(client, DeleteFeatureTypeDetailDocument, variables, headers)(),
       options
     );
-export const UpdateFeatureTypeDocument = `
-    mutation UpdateFeatureType($id: String!, $input: UpdateParameterInput!) {
-  updateParameter(id: $id, input: $input) {
+export const UpdateFeatureTypeDetailDocument = `
+    mutation UpdateFeatureTypeDetail($id: String!, $input: UpdateFeatureTypeDetailInput!) {
+  updateFeatureTypeDetail(id: $id, input: $input) {
     id
-    scope
-    code
-    value
+    featureType
+    featureCodeId
+    stockOwnerId
+    atReception
+    atPreparation
   }
 }
     `;
-export const useUpdateFeatureTypeMutation = <
+export const useUpdateFeatureTypeDetailMutation = <
       TError = unknown,
       TContext = unknown
     >(
       client: GraphQLClient,
-      options?: UseMutationOptions<UpdateFeatureTypeMutation, TError, UpdateFeatureTypeMutationVariables, TContext>,
+      options?: UseMutationOptions<UpdateFeatureTypeDetailMutation, TError, UpdateFeatureTypeDetailMutationVariables, TContext>,
       headers?: RequestInit['headers']
     ) =>
-    useMutation<UpdateFeatureTypeMutation, TError, UpdateFeatureTypeMutationVariables, TContext>(
-      ['UpdateFeatureType'],
-      (variables?: UpdateFeatureTypeMutationVariables) => fetcher<UpdateFeatureTypeMutation, UpdateFeatureTypeMutationVariables>(client, UpdateFeatureTypeDocument, variables, headers)(),
+    useMutation<UpdateFeatureTypeDetailMutation, TError, UpdateFeatureTypeDetailMutationVariables, TContext>(
+      ['UpdateFeatureTypeDetail'],
+      (variables?: UpdateFeatureTypeDetailMutationVariables) => fetcher<UpdateFeatureTypeDetailMutation, UpdateFeatureTypeDetailMutationVariables>(client, UpdateFeatureTypeDetailDocument, variables, headers)(),
       options
     );
 export const GetAllGoodsInsDocument = `
@@ -10659,6 +10719,142 @@ export const useChangePasswordMutation = <
     useMutation<ChangePasswordMutation, TError, ChangePasswordMutationVariables, TContext>(
       ['ChangePassword'],
       (variables?: ChangePasswordMutationVariables) => fetcher<ChangePasswordMutation, ChangePasswordMutationVariables>(client, ChangePasswordDocument, variables, headers)(),
+      options
+    );
+export const GetAllParamsDocument = `
+    query getAllParams($filters: ParameterSearchFilters, $orderBy: [ParameterOrderByCriterion!], $page: Int!, $itemsPerPage: Int!) {
+  parameters(
+    filters: $filters
+    orderBy: $orderBy
+    page: $page
+    itemsPerPage: $itemsPerPage
+  ) {
+    count
+    itemsPerPage
+    totalPages
+    results {
+      id
+      scope
+      code
+      value
+      extras
+      created
+      createdBy
+      modified
+      modifiedBy
+      translation
+      system
+    }
+  }
+}
+    `;
+export const useGetAllParamsQuery = <
+      TData = GetAllParamsQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: GetAllParamsQueryVariables,
+      options?: UseQueryOptions<GetAllParamsQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetAllParamsQuery, TError, TData>(
+      ['getAllParams', variables],
+      fetcher<GetAllParamsQuery, GetAllParamsQueryVariables>(client, GetAllParamsDocument, variables, headers),
+      options
+    );
+export const GetParameterByIdDocument = `
+    query GetParameterById($id: String!) {
+  parameter(id: $id) {
+    id
+    scope
+    code
+    value
+    extras
+    created
+    createdBy
+    modified
+    modifiedBy
+    translation
+    system
+  }
+}
+    `;
+export const useGetParameterByIdQuery = <
+      TData = GetParameterByIdQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: GetParameterByIdQueryVariables,
+      options?: UseQueryOptions<GetParameterByIdQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetParameterByIdQuery, TError, TData>(
+      ['GetParameterById', variables],
+      fetcher<GetParameterByIdQuery, GetParameterByIdQueryVariables>(client, GetParameterByIdDocument, variables, headers),
+      options
+    );
+export const CreateParameterDocument = `
+    mutation CreateParameter($input: CreateParameterInput!) {
+  createParameter(input: $input) {
+    id
+    scope
+    code
+    value
+  }
+}
+    `;
+export const useCreateParameterMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<CreateParameterMutation, TError, CreateParameterMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<CreateParameterMutation, TError, CreateParameterMutationVariables, TContext>(
+      ['CreateParameter'],
+      (variables?: CreateParameterMutationVariables) => fetcher<CreateParameterMutation, CreateParameterMutationVariables>(client, CreateParameterDocument, variables, headers)(),
+      options
+    );
+export const DeleteParameterDocument = `
+    mutation DeleteParameter($id: String!) {
+  deleteParameter(parameterId: $id)
+}
+    `;
+export const useDeleteParameterMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<DeleteParameterMutation, TError, DeleteParameterMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<DeleteParameterMutation, TError, DeleteParameterMutationVariables, TContext>(
+      ['DeleteParameter'],
+      (variables?: DeleteParameterMutationVariables) => fetcher<DeleteParameterMutation, DeleteParameterMutationVariables>(client, DeleteParameterDocument, variables, headers)(),
+      options
+    );
+export const UpdateParameterDocument = `
+    mutation UpdateParameter($id: String!, $input: UpdateParameterInput!) {
+  updateParameter(id: $id, input: $input) {
+    id
+    scope
+    code
+    value
+  }
+}
+    `;
+export const useUpdateParameterMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<UpdateParameterMutation, TError, UpdateParameterMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<UpdateParameterMutation, TError, UpdateParameterMutationVariables, TContext>(
+      ['UpdateParameter'],
+      (variables?: UpdateParameterMutationVariables) => fetcher<UpdateParameterMutation, UpdateParameterMutationVariables>(client, UpdateParameterDocument, variables, headers)(),
       options
     );
 export const GetAllReturnCodesDocument = `

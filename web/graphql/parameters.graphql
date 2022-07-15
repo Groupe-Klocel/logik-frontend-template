@@ -24,7 +24,7 @@ query getAllParams(
     }
 }
 
-query GetFeatureTypeById($id: String!) {
+query GetParameterById($id: String!) {
     parameter(id: $id) {
         id
         scope
@@ -40,7 +40,7 @@ query GetFeatureTypeById($id: String!) {
     }
 }
 
-mutation CreateFeatureType($input: CreateParameterInput!) {
+mutation CreateParameter($input: CreateParameterInput!) {
     createParameter(input: $input) {
         id
         scope
@@ -49,11 +49,11 @@ mutation CreateFeatureType($input: CreateParameterInput!) {
     }
 }
 
-mutation DeleteFeatureType($id: String!) {
+mutation DeleteParameter($id: String!) {
     deleteParameter(parameterId: $id)
 }
 
-mutation UpdateFeatureType($id: String!, $input: UpdateParameterInput!) {
+mutation UpdateParameter($id: String!, $input: UpdateParameterInput!) {
     updateParameter(id: $id, input: $input) {
         id
         scope
