@@ -98,19 +98,22 @@ const SingleStockStatus: FC<ISingleStockStatusProps> = ({ id, router }: ISingleS
                 routes={breadsCrumb}
                 onBack={() => router.back()}
                 actionsRight={
-                    <Space>
-                        <LinkButton
-                            title={t('actions:edit')}
-                            path={`/stock-statuses/edit/${id}`}
-                            type="primary"
-                        />
-                        <Button
-                            loading={deleteLoading}
-                            onClick={() => deleteParameter({ parameterId: id })}
-                        >
-                            {t('actions:delete')}
-                        </Button>
-                    </Space>
+                    (data?.parameter?.system) ? (<></>) :(
+                        <Space>
+                            <LinkButton
+                                title={t('actions:edit')}
+                                path={`/stock-statuses/edit/${id}`}
+                                type="primary"
+                            />
+                            <Button
+                                loading={deleteLoading}
+                                onClick={() => deleteParameter({ parameterId: id })}
+                            >
+                                {t('actions:delete')}
+                            </Button>
+                        </Space>
+
+                    )
                 }
             />
             <StyledPageContent>

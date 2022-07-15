@@ -114,7 +114,7 @@ const StockStatusesList = ({ searchCriteria }: IStockStatusesListProps) => {
         {
             title: 'actions:actions',
             key: 'actions',
-            render: (record: { id: string; name: string }) => (
+            render: (record: { id: string; system: boolean }) => (
                 <Space>
                     <LinkButton
                         icon={<EyeTwoTone />}
@@ -125,13 +125,17 @@ const StockStatusesList = ({ searchCriteria }: IStockStatusesListProps) => {
                         icon={<EditOutlined />}
                         path={pathParams('/stock-statuses/edit/[id]', record.id)}
                     />
+                    {
+                        (record.system) ? 
+                        (<></>) : (
+                            <Button
+                                icon={<DeleteOutlined />}
+                                danger
+                                onClick={() => {deleteParameter({parameterId: record.id})}}
+                            />
+                        )
+                    }
 
-                    <Button
-                        icon={<DeleteOutlined />}
-                        danger
-                        onClick={() => {deleteParameter({parameterId: record.id})}}
-                    />
-                    
                 </Space>
             )
         }
