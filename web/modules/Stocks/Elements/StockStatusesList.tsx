@@ -1,52 +1,5 @@
-// import { EyeTwoTone, EditTwoTone } from '@ant-design/icons';
-// import { Button, Space } from 'antd';
-// import { AppTable } from '@components';
-// // import { stockData } from 'fake-data/stock';
-// import { DataQueryType, useStockStatuses } from '@helpers';
-// import { useState } from 'react';
-
-// export const StockStatusesList = () => {
-//     const [stockStatuses, setStockStatuses] = useState<DataQueryType>();
-
-//     const {isLoading, data, error} = useStockStatuses();
-//     const columns = [
-//         {
-//             title: 'd:name',
-//             dataIndex: 'name',
-//             key: 'name'
-//         },
-//         {
-//             title: 'd:value',
-//             dataIndex: 'value',
-//             key: 'value'
-//         },
-//         {
-//             title: 'd:system',
-//             dataIndex: 'system',
-//             key: 'system'
-//         },
-//         {
-//             title: 'd:comment',
-//             dataIndex: 'comment',
-//             key: 'comment'
-//         },
-//         {
-//             title: 'actions:actions',
-//             key: 'actions',
-//             render: (record: { id: number }) => (
-//                 <Space>
-//                     <Button icon={<EyeTwoTone />} onClick={() => alert(`View ${record.id} `)} />
-//                     <Button icon={<EditTwoTone />} onClick={() => alert(`Edit ${record.id} `)} />
-//                 </Space>
-//             )
-//         }
-//     ];
-//     return <AppTable type="stock-statuses" columns={columns} data={stockData} />;
-// };
-
-
 import { AppTable, LinkButton, ContentSpin } from '@components';
-import { Button, Space } from 'antd';
+import { Button, Modal, Space } from 'antd';
 import { DeleteOutlined, EditOutlined, EditTwoTone, EyeTwoTone, PrinterOutlined } from '@ant-design/icons';
 import { useState, useEffect, useCallback } from 'react';
 import {
@@ -56,9 +9,13 @@ import {
     DataQueryType,
     PaginationType,
     orderByFormater,
-    useStockStatuses
+    useStockStatuses,
+    showError,
+    showSuccess
 } from '@helpers';
 import useTranslation from 'next-translate/useTranslation';
+import { DeleteParameterMutation, DeleteParameterMutationVariables, useDeleteParameterMutation } from 'generated/graphql';
+import { useAuth } from 'context/AuthContext';
 
 export interface IStockStatusesListProps {
     searchCriteria?: any;
@@ -66,19 +23,49 @@ export interface IStockStatusesListProps {
 
 const StockStatusesList = ({ searchCriteria }: IStockStatusesListProps) => {
     const { t } = useTranslation();
+    const { graphqlRequestClient } = useAuth();
+    
     const [stockStatuses, setStockStatuses] = useState<Array<any>>();
 
     const [sort, setSort] = useState<any>(null);
-    const [showModal, setShowModal] = useState(false);
-    const [purchaseOrderName, setStockStatusesName] = useState('');
-
+    
     const [pagination, setPagination] = useState<PaginationType>({
         total: undefined,
         current: DEFAULT_PAGE_NUMBER,
         itemsPerPage: DEFAULT_ITEMS_PER_PAGE
     });
 
-    const { isLoading, data, error } = useStockStatuses();
+    const { isLoading, data, error, refetch } = useStockStatuses();
+
+    const { mutate, isLoading: deleteLoading } = useDeleteParameterMutation<Error>(
+        graphqlRequestClient,
+        {
+            onSuccess: (
+                data: DeleteParameterMutation,
+                _variables: DeleteParameterMutationVariables,
+                _context: any
+            ) => {
+                refetch();
+                if (!deleteLoading) {
+                    showSuccess(t('messages:success-deleted'));
+                }
+            },
+            onError: () => {
+                showError(t('messages:error-deleting-data'));
+            }
+        }
+    );
+
+    const deleteParameter = ({ parameterId }: DeleteParameterMutationVariables) => {
+        Modal.confirm({
+            title: t('messages:delete-confirm'),
+            onOk: () => {
+                mutate({ parameterId });
+            },
+            okText: t('messages:confirm'),
+            cancelText: t('messages:cancel')
+        });
+    };
 
     // make wrapper function to give child
     const onChangePagination = useCallback(
@@ -111,34 +98,19 @@ const StockStatusesList = ({ searchCriteria }: IStockStatusesListProps) => {
     const columns = [
         {
             title: 'd:name',
-            dataIndex: 'name',
-            key: 'name'
+            dataIndex: 'text',
+            key: 'text'
         },
         {
-            title: 'd:value',
-            dataIndex: 'value',
-            key: 'value'
+            title: 'd:code',
+            dataIndex: 'code',
+            key: 'code'
         },
         {
             title: 'd:system',
             dataIndex: 'system',
             key: 'system'
         },
-        {
-            title: 'd:comment',
-            dataIndex: 'comment',
-            key: 'comment'
-        },
-        // {
-        //     title: 'actions:actions',
-        //     key: 'actions',
-        //     render: (record: { id: number }) => (
-        //         <Space>
-        //             <Button icon={<EyeTwoTone />} onClick={() => alert(`View ${record.id} `)} />
-        //             <Button icon={<EditTwoTone />} onClick={() => alert(`Edit ${record.id} `)} />
-        //         </Space>
-        //     )
-        // }
         {
             title: 'actions:actions',
             key: 'actions',
@@ -157,7 +129,7 @@ const StockStatusesList = ({ searchCriteria }: IStockStatusesListProps) => {
                     <Button
                         icon={<DeleteOutlined />}
                         danger
-                        onClick={() => alert(`delete stock status ${record.id}`)}
+                        onClick={() => {deleteParameter({parameterId: record.id})}}
                     />
                     
                 </Space>

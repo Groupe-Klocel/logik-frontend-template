@@ -1,44 +1,3 @@
-// import { WrapperForm } from '@components';
-// import { Button, Col, Form, Input, Row } from 'antd';
-// import useTranslation from 'next-translate/useTranslation';
-// import { StockStatusForm } from './StockStatusForm';
-
-// export const EditStockStatusForm = () => {
-//     const { t } = useTranslation('common');
-
-//     // Call api to create new user
-//     const onFinish = () => {
-//         alert('update Success');
-//     };
-
-//     const onFinishFailed = () => {
-//         alert('Failed');
-//     };
-
-//     return (
-//         <WrapperForm>
-//             <Form
-//                 name="basic"
-//                 layout="vertical"
-//                 onFinish={onFinish}
-//                 onFinishFailed={onFinishFailed}
-//                 autoComplete="off"
-//                 scrollToFirstError
-//             >
-//                 <StockStatusForm/>
-//                 <Row>
-//                     <Col span={24} style={{ textAlign: 'right' }}>
-//                         <Button type="primary" htmlType="submit">
-//                             {t('update')}
-//                         </Button>
-//                     </Col>
-//                 </Row>
-//             </Form>
-//         </WrapperForm>
-//     );
-// };
-
-
 import { FC, useEffect } from 'react';
 import { Button, Form, Space } from 'antd';
 import { StyledForm } from '@components';
@@ -95,7 +54,7 @@ export const EditStockStatusForm: FC<IEditStockStatusFormProps> = ({
             .then(() => {
                 updateParameter({
                     id: id,
-                    input: { ...form.getFieldsValue(true), accountId: 1 }
+                    input: { ...form.getFieldsValue(true) }
                 });
             })
             .catch((err) => showError(t('messages:error-update-data')));
@@ -105,8 +64,11 @@ export const EditStockStatusForm: FC<IEditStockStatusFormProps> = ({
         const tmp_details = { ...details };
         delete tmp_details['id'];
         delete tmp_details['created'];
+        delete tmp_details['createdBy'];
         delete tmp_details['modified'];
+        delete tmp_details['modifiedBy'];
         delete tmp_details['translation'];
+        delete tmp_details['system'];
         form.setFieldsValue(tmp_details);
         if (updateLoading) {
             showInfo(t('messages:info-update-wip'));
@@ -115,7 +77,7 @@ export const EditStockStatusForm: FC<IEditStockStatusFormProps> = ({
 
     return (
         <StyledForm>
-            <Form form={form} scrollToFirstError>
+            <Form form={form} scrollToFirstError initialValues={details}>
                 <StockStatusForm/>
                 <div style={{ textAlign: 'right' }}>
                     <Space>

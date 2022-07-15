@@ -41,7 +41,7 @@ export const AddStockStatusForm = () => {
         form.validateFields()
             .then(() => {
                 createParameter({
-                    input: { ...form.getFieldsValue(true), accountId: 1 }
+                    input: { ...form.getFieldsValue(true), scope: 'stock_statuses' }
                 });
             })
             .catch((err) => showError(t('messages:error-update-data')));
@@ -55,7 +55,7 @@ export const AddStockStatusForm = () => {
     return (
         <WrapperForm>
             <Form
-                name="basic"
+                form={form}
                 layout="vertical"
                 onFinish={onFinish}
                 autoComplete="off"

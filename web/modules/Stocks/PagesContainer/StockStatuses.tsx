@@ -14,7 +14,7 @@ export const StockStatuses = () => {
                 actionsRight={
                     <LinkButton
                         title={t('actions:add-stock-status')}
-                        path="/add-stock-status"
+                        path="/stock-statuses/add"
                         type="primary"
                     />
                 }

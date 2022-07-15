@@ -8,15 +8,15 @@ const StockStatusForm = () => {
         <>
             <Form.Item
                 label={t('name')}
-                name="name"
+                name="value"
                 rules={[{ required: true, message: `${t('error-message-empty-input')}` }]}
             >
                 <Input />
             </Form.Item>
 
             <Form.Item
-                label={t('value')}
-                name="value"
+                label={t('code')}
+                name="code"
                 rules={[{ required: true, message: `${t('error-message-empty-input')}` }]}
             >
                 <Input />
@@ -27,9 +27,9 @@ const StockStatusForm = () => {
             >
                 <Checkbox/>
             </Form.Item>
-            <Form.Item label={t('comment')} name="comment">
+            {/* <Form.Item label={t('comment')} name="comment">
                 <Input />
-            </Form.Item>
+            </Form.Item> */}
         </>
     )
 }
