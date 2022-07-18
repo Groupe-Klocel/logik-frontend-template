@@ -8707,6 +8707,11 @@ export type GetReplenishTypesConfigsQueryVariables = Exact<{ [key: string]: neve
 
 export type GetReplenishTypesConfigsQuery = { __typename?: 'Query', listConfigsForAScope: Array<{ __typename?: 'ConfigResults', id: string, scope: string, code: string, text: string }> };
 
+export type GetRotationsParamsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetRotationsParamsQuery = { __typename?: 'Query', listParametersForAScope: Array<{ __typename?: 'ParameterResults', id: string, scope: string, code: string, text: string }> };
+
 export type GetAllLocationsQueryVariables = Exact<{
   filters?: InputMaybe<LocationSearchFilters>;
   orderBy?: InputMaybe<Array<LocationOrderByCriterion> | LocationOrderByCriterion>;
@@ -10418,6 +10423,30 @@ export const useGetReplenishTypesConfigsQuery = <
     useQuery<GetReplenishTypesConfigsQuery, TError, TData>(
       variables === undefined ? ['getReplenishTypesConfigs'] : ['getReplenishTypesConfigs', variables],
       fetcher<GetReplenishTypesConfigsQuery, GetReplenishTypesConfigsQueryVariables>(client, GetReplenishTypesConfigsDocument, variables, headers),
+      options
+    );
+export const GetRotationsParamsDocument = `
+    query getRotationsParams {
+  listParametersForAScope(scope: "rotation") {
+    id
+    scope
+    code
+    text
+  }
+}
+    `;
+export const useGetRotationsParamsQuery = <
+      TData = GetRotationsParamsQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables?: GetRotationsParamsQueryVariables,
+      options?: UseQueryOptions<GetRotationsParamsQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetRotationsParamsQuery, TError, TData>(
+      variables === undefined ? ['getRotationsParams'] : ['getRotationsParams', variables],
+      fetcher<GetRotationsParamsQuery, GetRotationsParamsQueryVariables>(client, GetRotationsParamsDocument, variables, headers),
       options
     );
 export const GetAllLocationsDocument = `
