@@ -39,7 +39,7 @@ const EditFeatureTypeDetail: FC<EditFeatureTypeDetailProps> = ({
     const breadsCrumb = [
         ...featuresTypesRoutes,
         {
-            breadcrumbName: `${data?.featureTypeDetail?.featureTypeText}`
+            breadcrumbName: `${data?.featureTypeDetail?.featureTypeText}_${data?.featureTypeDetail?.featureCode?.name}`
         }
     ];
 
@@ -54,7 +54,7 @@ const EditFeatureTypeDetail: FC<EditFeatureTypeDetailProps> = ({
             <HeaderContent
                 title={`${t('menu:feature-type-detail')}: ${
                     data?.featureTypeDetail?.featureTypeText
-                }`}
+                }_${data?.featureTypeDetail?.featureCode?.name}`}
                 routes={breadsCrumb}
                 onBack={() => router.back()}
                 // actionsRight={
