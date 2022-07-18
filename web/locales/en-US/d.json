@@ -87,8 +87,6 @@
     "stockOwner": "Stock Owner",
     "awsAccessKeyId": "Access Key",
     "awsSecretAccessKey": "Secret Key",
-    "s3ExchangeDir": "Exchange Directory",
-    "exchangePrefix": "Exchange Prefix",
     "contactName": "Contact Name",
     "logoUrl": "Logo",
     "mobile": "Mobile",

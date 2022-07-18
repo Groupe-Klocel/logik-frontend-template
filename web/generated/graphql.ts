@@ -21,6 +21,7 @@ export type Scalars = {
   DateTime: any;
   /** The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf). */
   JSON: any;
+  Upload: any;
 };
 
 export type Article = {
@@ -171,6 +172,7 @@ export type ArticleLu = {
 
 export type ArticleLuBarcode = {
   __typename?: 'ArticleLuBarcode';
+  article: Article;
   articleId?: Maybe<Scalars['String']>;
   barcodeId?: Maybe<Scalars['String']>;
   countryOfOrigin?: Maybe<Scalars['Int']>;
@@ -451,11 +453,11 @@ export type ArticleSetSearchFilters = {
 
 export type Barcode = {
   __typename?: 'Barcode';
+  articleLuBarcode: ArticleLuBarcode;
   blacklisted?: Maybe<Scalars['Boolean']>;
   created?: Maybe<Scalars['DateTime']>;
   createdBy?: Maybe<Scalars['String']>;
   extras?: Maybe<Scalars['JSON']>;
-  flagDouble?: Maybe<Scalars['Int']>;
   id?: Maybe<Scalars['String']>;
   modified?: Maybe<Scalars['DateTime']>;
   modifiedBy?: Maybe<Scalars['String']>;
@@ -463,7 +465,6 @@ export type Barcode = {
   preparationMode?: Maybe<Scalars['Int']>;
   /** Text value for field preparation_mode */
   preparationModeText?: Maybe<Scalars['String']>;
-  quantity?: Maybe<Scalars['Float']>;
   rotation?: Maybe<Scalars['Int']>;
   /** Text value for field rotation */
   rotationText?: Maybe<Scalars['String']>;
@@ -477,10 +478,8 @@ export type Barcode = {
 export type BarcodeExportFilters = {
   blacklisted?: InputMaybe<Scalars['Boolean']>;
   extras?: InputMaybe<Scalars['JSON']>;
-  flagDouble?: InputMaybe<Scalars['Int']>;
   name?: InputMaybe<Scalars['String']>;
   preparationMode?: InputMaybe<Scalars['Int']>;
-  quantity?: InputMaybe<Scalars['Float']>;
   rotation?: InputMaybe<Scalars['Int']>;
   stockOwnerId?: InputMaybe<Scalars['String']>;
   supplierArticleCode?: InputMaybe<Scalars['String']>;
@@ -493,13 +492,11 @@ export enum BarcodeFieldName {
   Created = 'created',
   CreatedBy = 'createdBy',
   Extras = 'extras',
-  FlagDouble = 'flagDouble',
   Id = 'id',
   Modified = 'modified',
   ModifiedBy = 'modifiedBy',
   Name = 'name',
   PreparationMode = 'preparationMode',
-  Quantity = 'quantity',
   Rotation = 'rotation',
   StockOwnerId = 'stockOwnerId',
   SupplierArticleCode = 'supplierArticleCode',
@@ -528,13 +525,11 @@ export type BarcodeSearchFilters = {
   created?: InputMaybe<Scalars['DateTime']>;
   createdBy?: InputMaybe<Scalars['String']>;
   extras?: InputMaybe<Scalars['JSON']>;
-  flagDouble?: InputMaybe<Scalars['Int']>;
   id?: InputMaybe<Scalars['String']>;
   modified?: InputMaybe<Scalars['DateTime']>;
   modifiedBy?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
   preparationMode?: InputMaybe<Scalars['Int']>;
-  quantity?: InputMaybe<Scalars['Float']>;
   rotation?: InputMaybe<Scalars['Int']>;
   stockOwnerId?: InputMaybe<Scalars['String']>;
   supplierArticleCode?: InputMaybe<Scalars['String']>;
@@ -873,8 +868,6 @@ export type Building = {
   address1?: Maybe<Scalars['String']>;
   address2?: Maybe<Scalars['String']>;
   address3?: Maybe<Scalars['String']>;
-  awsAccessKeyId?: Maybe<Scalars['String']>;
-  awsSecretAccessKey?: Maybe<Scalars['String']>;
   city?: Maybe<Scalars['String']>;
   contactEmail?: Maybe<Scalars['String']>;
   contactMobile?: Maybe<Scalars['String']>;
@@ -899,8 +892,6 @@ export enum BuildingFieldName {
   Address1 = 'address1',
   Address2 = 'address2',
   Address3 = 'address3',
-  AwsAccessKeyId = 'awsAccessKeyId',
-  AwsSecretAccessKey = 'awsSecretAccessKey',
   City = 'city',
   ContactEmail = 'contactEmail',
   ContactMobile = 'contactMobile',
@@ -939,8 +930,6 @@ export type BuildingSearchFilters = {
   address1?: InputMaybe<Scalars['String']>;
   address2?: InputMaybe<Scalars['String']>;
   address3?: InputMaybe<Scalars['String']>;
-  awsAccessKeyId?: InputMaybe<Scalars['String']>;
-  awsSecretAccessKey?: InputMaybe<Scalars['String']>;
   city?: InputMaybe<Scalars['String']>;
   contactEmail?: InputMaybe<Scalars['String']>;
   contactMobile?: InputMaybe<Scalars['String']>;
@@ -1433,11 +1422,9 @@ export type CreateBarcodeInput = {
   blacklisted?: InputMaybe<Scalars['Boolean']>;
   /** Semi-structured attributes that can be used to store data for anything that doesn't fit in the default columns */
   extras?: InputMaybe<Scalars['JSON']>;
-  flagDouble?: InputMaybe<Scalars['Int']>;
   name: Scalars['String'];
   preparationMode: Scalars['Int'];
-  quantity?: InputMaybe<Scalars['Float']>;
-  rotation: Scalars['Int'];
+  rotation?: InputMaybe<Scalars['Int']>;
   stockOwnerId: Scalars['String'];
   supplierArticleCode?: InputMaybe<Scalars['String']>;
   supplierName?: InputMaybe<Scalars['String']>;
@@ -1510,8 +1497,6 @@ export type CreateBuildingInput = {
   address1?: InputMaybe<Scalars['String']>;
   address2?: InputMaybe<Scalars['String']>;
   address3?: InputMaybe<Scalars['String']>;
-  awsAccessKeyId?: InputMaybe<Scalars['String']>;
-  awsSecretAccessKey?: InputMaybe<Scalars['String']>;
   city?: InputMaybe<Scalars['String']>;
   contactEmail?: InputMaybe<Scalars['String']>;
   contactMobile?: InputMaybe<Scalars['String']>;
@@ -1734,7 +1719,7 @@ export type CreateEquipmentDetailInput = {
   extras?: InputMaybe<Scalars['JSON']>;
   packagingId?: InputMaybe<Scalars['String']>;
   preparationMode?: InputMaybe<Scalars['Int']>;
-  stockOwnerId: Scalars['String'];
+  stockOwnerId?: InputMaybe<Scalars['String']>;
 };
 
 export type CreateEquipmentInput = {
@@ -1759,12 +1744,11 @@ export type CreateEquipmentInput = {
   monoCompany?: InputMaybe<Scalars['Boolean']>;
   name: Scalars['String'];
   nbMaxBox?: InputMaybe<Scalars['Int']>;
-  /** Priority given to an equipment in the round calculation */
   priority?: InputMaybe<Scalars['Int']>;
   /** Maximum quantity of boxes that can be picked up for one round */
   qtyMaxArticle?: InputMaybe<Scalars['Int']>;
   status: Scalars['Int'];
-  stockOwnerId: Scalars['String'];
+  stockOwnerId?: InputMaybe<Scalars['String']>;
   toleranceDimension?: InputMaybe<Scalars['Int']>;
   type: Scalars['Int'];
   virtual?: InputMaybe<Scalars['Boolean']>;
@@ -1821,20 +1805,113 @@ export type CreateGoodsInLineInput = {
   stockOwnerId: Scalars['String'];
 };
 
+export type CreateHandlingUnitContentInboundInput = {
+  comment?: InputMaybe<Scalars['String']>;
+  extras?: InputMaybe<Scalars['JSON']>;
+  handlingUnitContentId: Scalars['String'];
+  inboundLocationId?: InputMaybe<Scalars['String']>;
+  missingQuantity?: InputMaybe<Scalars['Float']>;
+  preparationMode?: InputMaybe<Scalars['Int']>;
+  purchaseOrderId: Scalars['String'];
+  purchaseOrderLineId: Scalars['String'];
+  receivedQuantity?: InputMaybe<Scalars['Float']>;
+  status: Scalars['Int'];
+};
+
+export type CreateHandlingUnitContentInput = {
+  articleId: Scalars['String'];
+  articleLuBarcodeId: Scalars['String'];
+  extras?: InputMaybe<Scalars['JSON']>;
+  handlingUnitId: Scalars['String'];
+  quantity?: InputMaybe<Scalars['Float']>;
+  reservation?: InputMaybe<Scalars['String']>;
+  stockStatus: Scalars['Int'];
+};
+
+export type CreateHandlingUnitContentOutboundInput = {
+  comment?: InputMaybe<Scalars['String']>;
+  deliveryId: Scalars['String'];
+  deliveryLineId: Scalars['String'];
+  extras?: InputMaybe<Scalars['JSON']>;
+  handlingUnitContentId: Scalars['String'];
+  missingQuantity?: InputMaybe<Scalars['Float']>;
+  pickedQuantity?: InputMaybe<Scalars['Float']>;
+  pickingLocationId?: InputMaybe<Scalars['String']>;
+  preparationMode?: InputMaybe<Scalars['Int']>;
+  quantityToBePicked?: InputMaybe<Scalars['Float']>;
+  status: Scalars['Int'];
+};
+
+export type CreateHandlingUnitContentXxboundFeatureInput = {
+  extras?: InputMaybe<Scalars['JSON']>;
+  featureCodeId: Scalars['String'];
+  handlingUnitContentOutboundId: Scalars['String'];
+  value?: InputMaybe<Scalars['String']>;
+};
+
+export type CreateHandlingUnitInboundInput = {
+  carrierBox?: InputMaybe<Scalars['String']>;
+  carrierId: Scalars['String'];
+  checkingTime?: InputMaybe<Scalars['DateTime']>;
+  comment?: InputMaybe<Scalars['String']>;
+  extras?: InputMaybe<Scalars['JSON']>;
+  handlingUnitId: Scalars['String'];
+  purchaseOrderId: Scalars['String'];
+  toBeChecked?: InputMaybe<Scalars['Boolean']>;
+};
+
 export type CreateHandlingUnitInput = {
-  barcodeId: Scalars['String'];
+  barcodeId?: InputMaybe<Scalars['String']>;
   category: Scalars['Int'];
-  description?: InputMaybe<Scalars['String']>;
-  /** Semi-structured attributes that can be used to store data for anything that doesn't fit in the default columns */
+  /** Handling_unit_model.name */
+  code: Scalars['String'];
+  comment?: InputMaybe<Scalars['String']>;
+  extras?: InputMaybe<Scalars['JSON']>;
+  height?: InputMaybe<Scalars['Float']>;
+  length?: InputMaybe<Scalars['Float']>;
+  locationId?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
+  parentHandlingUnitId?: InputMaybe<Scalars['String']>;
+  reservation?: InputMaybe<Scalars['String']>;
+  status: Scalars['Int'];
+  stockOwnerId: Scalars['String'];
+  warehouseCode?: InputMaybe<Scalars['String']>;
+  weight?: InputMaybe<Scalars['Float']>;
+  width?: InputMaybe<Scalars['Float']>;
+};
+
+export type CreateHandlingUnitModelInput = {
+  category: Scalars['Int'];
   extras?: InputMaybe<Scalars['JSON']>;
   height?: InputMaybe<Scalars['Float']>;
   length?: InputMaybe<Scalars['Float']>;
   name: Scalars['String'];
-  parentHandlingUnitId?: InputMaybe<Scalars['String']>;
+  parentHandlingUnitModelId?: InputMaybe<Scalars['String']>;
+  preparationMode?: InputMaybe<Scalars['Int']>;
   status: Scalars['Int'];
   type: Scalars['Int'];
   weight?: InputMaybe<Scalars['Float']>;
   width?: InputMaybe<Scalars['Float']>;
+};
+
+export type CreateHandlingUnitOutboundInput = {
+  carrierBox?: InputMaybe<Scalars['String']>;
+  carrierId: Scalars['String'];
+  carrierSerivce: Scalars['String'];
+  checkingTime?: InputMaybe<Scalars['DateTime']>;
+  comment?: InputMaybe<Scalars['String']>;
+  extras?: InputMaybe<Scalars['JSON']>;
+  finalWeight?: InputMaybe<Scalars['Float']>;
+  handlingUnitId: Scalars['String'];
+  intermediateWeight1?: InputMaybe<Scalars['Float']>;
+  intermediateWeight2?: InputMaybe<Scalars['Float']>;
+  loadId: Scalars['String'];
+  preparationMode?: InputMaybe<Scalars['Int']>;
+  roundId: Scalars['String'];
+  roundPosition?: InputMaybe<Scalars['Int']>;
+  theoriticalWeight?: InputMaybe<Scalars['Float']>;
+  toBeChecked?: InputMaybe<Scalars['Boolean']>;
+  toBePalletized?: InputMaybe<Scalars['Boolean']>;
 };
 
 export type CreateLoadInput = {
@@ -2085,7 +2162,6 @@ export type CreateStockOwnerInput = {
   country?: InputMaybe<Scalars['String']>;
   countryCode?: InputMaybe<Scalars['String']>;
   email?: InputMaybe<Scalars['String']>;
-  exchangePrefix?: InputMaybe<Scalars['String']>;
   /** Semi-structured attributes that can be used to store data for anything that doesn't fit in the default columns */
   extras?: InputMaybe<Scalars['JSON']>;
   logoUrl?: InputMaybe<Scalars['String']>;
@@ -2093,7 +2169,6 @@ export type CreateStockOwnerInput = {
   name: Scalars['String'];
   phone?: InputMaybe<Scalars['String']>;
   postCode?: InputMaybe<Scalars['String']>;
-  s3ExchangeDir?: InputMaybe<Scalars['String']>;
   senderAddress1?: InputMaybe<Scalars['String']>;
   senderAddress2?: InputMaybe<Scalars['String']>;
   senderAddress3?: InputMaybe<Scalars['String']>;
@@ -2108,6 +2183,8 @@ export type CreateStockOwnerInput = {
   senderPostCode?: InputMaybe<Scalars['String']>;
   status?: InputMaybe<Scalars['Int']>;
 };
+
+export type CreateStockOwnerResponse = StockOwner | ValidationError;
 
 export type CreateSystemConfigInput = {
   /** Code of the config info */
@@ -2750,8 +2827,6 @@ export type Equipment = {
   name?: Maybe<Scalars['String']>;
   nbMaxBox?: Maybe<Scalars['Int']>;
   priority?: Maybe<Scalars['Int']>;
-  /** Text value for field priority */
-  priorityText?: Maybe<Scalars['String']>;
   qtyMaxArticle?: Maybe<Scalars['Int']>;
   status?: Maybe<Scalars['Int']>;
   /** Text value for field status */
@@ -2770,15 +2845,18 @@ export type EquipmentDetail = {
   __typename?: 'EquipmentDetail';
   created?: Maybe<Scalars['DateTime']>;
   createdBy?: Maybe<Scalars['String']>;
+  equipment: Equipment;
   equipmentId?: Maybe<Scalars['String']>;
   extras?: Maybe<Scalars['JSON']>;
   id?: Maybe<Scalars['String']>;
   modified?: Maybe<Scalars['DateTime']>;
   modifiedBy?: Maybe<Scalars['String']>;
+  packaging: Packaging;
   packagingId?: Maybe<Scalars['String']>;
   preparationMode?: Maybe<Scalars['Int']>;
   /** Text value for field preparation_mode */
   preparationModeText?: Maybe<Scalars['String']>;
+  stockOwner: StockOwner;
   stockOwnerId?: Maybe<Scalars['String']>;
 };
 
@@ -3122,6 +3200,19 @@ export type FeedbackOverwriteSearchFilters = {
   system?: InputMaybe<Scalars['Boolean']>;
 };
 
+export type FileInfo = {
+  __typename?: 'FileInfo';
+  key: Scalars['String'];
+};
+
+export type FileUploadResult = {
+  __typename?: 'FileUploadResult';
+  /** Generated filename during the upload */
+  fileName: Scalars['String'];
+  /** Presigned url of file */
+  presignedUrl: Scalars['String'];
+};
+
 export type GoodsIn = {
   __typename?: 'GoodsIn';
   comment?: Maybe<Scalars['String']>;
@@ -3248,48 +3339,400 @@ export type HandlingUnit = {
   category?: Maybe<Scalars['Int']>;
   /** Text value for field category */
   categoryText?: Maybe<Scalars['String']>;
+  code?: Maybe<Scalars['String']>;
+  comment?: Maybe<Scalars['String']>;
   created?: Maybe<Scalars['DateTime']>;
   createdBy?: Maybe<Scalars['String']>;
-  description?: Maybe<Scalars['String']>;
   extras?: Maybe<Scalars['JSON']>;
   height?: Maybe<Scalars['Float']>;
   id?: Maybe<Scalars['String']>;
   length?: Maybe<Scalars['Float']>;
+  locationId?: Maybe<Scalars['String']>;
   modified?: Maybe<Scalars['DateTime']>;
   modifiedBy?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   parentHandlingUnit: Array<HandlingUnit>;
   parentHandlingUnitId?: Maybe<Scalars['String']>;
+  reservation?: Maybe<Scalars['String']>;
   status?: Maybe<Scalars['Int']>;
   /** Text value for field status */
   statusText?: Maybe<Scalars['String']>;
-  type?: Maybe<Scalars['Int']>;
-  /** Text value for field type */
-  typeText?: Maybe<Scalars['String']>;
+  stockOwner: StockOwner;
+  stockOwnerId?: Maybe<Scalars['String']>;
+  warehouseCode?: Maybe<Scalars['String']>;
   weight?: Maybe<Scalars['Float']>;
   width?: Maybe<Scalars['Float']>;
+};
+
+export type HandlingUnitContent = {
+  __typename?: 'HandlingUnitContent';
+  articleId?: Maybe<Scalars['String']>;
+  articleLuBarcodeId?: Maybe<Scalars['String']>;
+  created?: Maybe<Scalars['DateTime']>;
+  createdBy?: Maybe<Scalars['String']>;
+  extras?: Maybe<Scalars['JSON']>;
+  handlingUnitId?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+  modified?: Maybe<Scalars['DateTime']>;
+  modifiedBy?: Maybe<Scalars['String']>;
+  quantity?: Maybe<Scalars['Float']>;
+  reservation?: Maybe<Scalars['String']>;
+  stockStatus?: Maybe<Scalars['Int']>;
+  /** Text value for field stock_status */
+  stockStatusText?: Maybe<Scalars['String']>;
+};
+
+/** Field names for the HandlingUnitContent model */
+export enum HandlingUnitContentFieldName {
+  ArticleId = 'articleId',
+  ArticleLuBarcodeId = 'articleLuBarcodeId',
+  Created = 'created',
+  CreatedBy = 'createdBy',
+  Extras = 'extras',
+  HandlingUnitId = 'handlingUnitId',
+  Id = 'id',
+  Modified = 'modified',
+  ModifiedBy = 'modifiedBy',
+  Quantity = 'quantity',
+  Reservation = 'reservation',
+  StockStatus = 'stockStatus'
+}
+
+export type HandlingUnitContentInbound = {
+  __typename?: 'HandlingUnitContentInbound';
+  comment?: Maybe<Scalars['String']>;
+  created?: Maybe<Scalars['DateTime']>;
+  createdBy?: Maybe<Scalars['String']>;
+  extras?: Maybe<Scalars['JSON']>;
+  handlingUnitContentId?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+  inboundLocationId?: Maybe<Scalars['String']>;
+  missingQuantity?: Maybe<Scalars['Float']>;
+  modified?: Maybe<Scalars['DateTime']>;
+  modifiedBy?: Maybe<Scalars['String']>;
+  preparationMode?: Maybe<Scalars['Int']>;
+  /** Text value for field preparation_mode */
+  preparationModeText?: Maybe<Scalars['String']>;
+  purchaseOrderId?: Maybe<Scalars['String']>;
+  purchaseOrderLineId?: Maybe<Scalars['String']>;
+  receivedQuantity?: Maybe<Scalars['Float']>;
+  status?: Maybe<Scalars['Int']>;
+  /** Text value for field status */
+  statusText?: Maybe<Scalars['String']>;
+};
+
+/** Field names for the HandlingUnitContentInbound model */
+export enum HandlingUnitContentInboundFieldName {
+  Comment = 'comment',
+  Created = 'created',
+  CreatedBy = 'createdBy',
+  Extras = 'extras',
+  HandlingUnitContentId = 'handlingUnitContentId',
+  Id = 'id',
+  InboundLocationId = 'inboundLocationId',
+  MissingQuantity = 'missingQuantity',
+  Modified = 'modified',
+  ModifiedBy = 'modifiedBy',
+  PreparationMode = 'preparationMode',
+  PurchaseOrderId = 'purchaseOrderId',
+  PurchaseOrderLineId = 'purchaseOrderLineId',
+  ReceivedQuantity = 'receivedQuantity',
+  Status = 'status'
+}
+
+/** Returns a list of HandlingUnitContentInbound */
+export type HandlingUnitContentInboundListResult = {
+  __typename?: 'HandlingUnitContentInboundListResult';
+  count: Scalars['Int'];
+  itemsPerPage: Scalars['Int'];
+  page: Scalars['Int'];
+  results: Array<HandlingUnitContentInbound>;
+  totalPages: Scalars['Int'];
+};
+
+/** How to order the search results for HandlingUnitContentInbound */
+export type HandlingUnitContentInboundOrderByCriterion = {
+  ascending?: Scalars['Boolean'];
+  field: HandlingUnitContentInboundFieldName;
+};
+
+/** Attributes of HandlingUnitContentInbound to filter onto */
+export type HandlingUnitContentInboundSearchFilters = {
+  comment?: InputMaybe<Scalars['String']>;
+  created?: InputMaybe<Scalars['DateTime']>;
+  createdBy?: InputMaybe<Scalars['String']>;
+  extras?: InputMaybe<Scalars['JSON']>;
+  handlingUnitContentId?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['String']>;
+  inboundLocationId?: InputMaybe<Scalars['String']>;
+  missingQuantity?: InputMaybe<Scalars['Float']>;
+  modified?: InputMaybe<Scalars['DateTime']>;
+  modifiedBy?: InputMaybe<Scalars['String']>;
+  preparationMode?: InputMaybe<Scalars['Int']>;
+  purchaseOrderId?: InputMaybe<Scalars['String']>;
+  purchaseOrderLineId?: InputMaybe<Scalars['String']>;
+  receivedQuantity?: InputMaybe<Scalars['Float']>;
+  status?: InputMaybe<Scalars['Int']>;
+};
+
+/** Returns a list of HandlingUnitContent */
+export type HandlingUnitContentListResult = {
+  __typename?: 'HandlingUnitContentListResult';
+  count: Scalars['Int'];
+  itemsPerPage: Scalars['Int'];
+  page: Scalars['Int'];
+  results: Array<HandlingUnitContent>;
+  totalPages: Scalars['Int'];
+};
+
+/** How to order the search results for HandlingUnitContent */
+export type HandlingUnitContentOrderByCriterion = {
+  ascending?: Scalars['Boolean'];
+  field: HandlingUnitContentFieldName;
+};
+
+export type HandlingUnitContentOutbound = {
+  __typename?: 'HandlingUnitContentOutbound';
+  comment?: Maybe<Scalars['String']>;
+  created?: Maybe<Scalars['DateTime']>;
+  createdBy?: Maybe<Scalars['String']>;
+  deliveryId?: Maybe<Scalars['String']>;
+  deliveryLineId?: Maybe<Scalars['String']>;
+  extras?: Maybe<Scalars['JSON']>;
+  handlingUnitContentId?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+  missingQuantity?: Maybe<Scalars['Float']>;
+  modified?: Maybe<Scalars['DateTime']>;
+  modifiedBy?: Maybe<Scalars['String']>;
+  pickedQuantity?: Maybe<Scalars['Float']>;
+  pickingLocationId?: Maybe<Scalars['String']>;
+  preparationMode?: Maybe<Scalars['Int']>;
+  /** Text value for field preparation_mode */
+  preparationModeText?: Maybe<Scalars['String']>;
+  quantityToBePicked?: Maybe<Scalars['Float']>;
+  status?: Maybe<Scalars['Int']>;
+  /** Text value for field status */
+  statusText?: Maybe<Scalars['String']>;
+};
+
+/** Field names for the HandlingUnitContentOutbound model */
+export enum HandlingUnitContentOutboundFieldName {
+  Comment = 'comment',
+  Created = 'created',
+  CreatedBy = 'createdBy',
+  DeliveryId = 'deliveryId',
+  DeliveryLineId = 'deliveryLineId',
+  Extras = 'extras',
+  HandlingUnitContentId = 'handlingUnitContentId',
+  Id = 'id',
+  MissingQuantity = 'missingQuantity',
+  Modified = 'modified',
+  ModifiedBy = 'modifiedBy',
+  PickedQuantity = 'pickedQuantity',
+  PickingLocationId = 'pickingLocationId',
+  PreparationMode = 'preparationMode',
+  QuantityToBePicked = 'quantityToBePicked',
+  Status = 'status'
+}
+
+/** Returns a list of HandlingUnitContentOutbound */
+export type HandlingUnitContentOutboundListResult = {
+  __typename?: 'HandlingUnitContentOutboundListResult';
+  count: Scalars['Int'];
+  itemsPerPage: Scalars['Int'];
+  page: Scalars['Int'];
+  results: Array<HandlingUnitContentOutbound>;
+  totalPages: Scalars['Int'];
+};
+
+/** How to order the search results for HandlingUnitContentOutbound */
+export type HandlingUnitContentOutboundOrderByCriterion = {
+  ascending?: Scalars['Boolean'];
+  field: HandlingUnitContentOutboundFieldName;
+};
+
+/** Attributes of HandlingUnitContentOutbound to filter onto */
+export type HandlingUnitContentOutboundSearchFilters = {
+  comment?: InputMaybe<Scalars['String']>;
+  created?: InputMaybe<Scalars['DateTime']>;
+  createdBy?: InputMaybe<Scalars['String']>;
+  deliveryId?: InputMaybe<Scalars['String']>;
+  deliveryLineId?: InputMaybe<Scalars['String']>;
+  extras?: InputMaybe<Scalars['JSON']>;
+  handlingUnitContentId?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['String']>;
+  missingQuantity?: InputMaybe<Scalars['Float']>;
+  modified?: InputMaybe<Scalars['DateTime']>;
+  modifiedBy?: InputMaybe<Scalars['String']>;
+  pickedQuantity?: InputMaybe<Scalars['Float']>;
+  pickingLocationId?: InputMaybe<Scalars['String']>;
+  preparationMode?: InputMaybe<Scalars['Int']>;
+  quantityToBePicked?: InputMaybe<Scalars['Float']>;
+  status?: InputMaybe<Scalars['Int']>;
+};
+
+/** Attributes of HandlingUnitContent to filter onto */
+export type HandlingUnitContentSearchFilters = {
+  articleId?: InputMaybe<Scalars['String']>;
+  articleLuBarcodeId?: InputMaybe<Scalars['String']>;
+  created?: InputMaybe<Scalars['DateTime']>;
+  createdBy?: InputMaybe<Scalars['String']>;
+  extras?: InputMaybe<Scalars['JSON']>;
+  handlingUnitId?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['String']>;
+  modified?: InputMaybe<Scalars['DateTime']>;
+  modifiedBy?: InputMaybe<Scalars['String']>;
+  quantity?: InputMaybe<Scalars['Float']>;
+  reservation?: InputMaybe<Scalars['String']>;
+  stockStatus?: InputMaybe<Scalars['Int']>;
+};
+
+export type HandlingUnitContentXxboundFeature = {
+  __typename?: 'HandlingUnitContentXxboundFeature';
+  created?: Maybe<Scalars['DateTime']>;
+  createdBy?: Maybe<Scalars['String']>;
+  extras?: Maybe<Scalars['JSON']>;
+  featureCodeId?: Maybe<Scalars['String']>;
+  handlingUnitContentOutboundId?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+  modified?: Maybe<Scalars['DateTime']>;
+  modifiedBy?: Maybe<Scalars['String']>;
+  value?: Maybe<Scalars['String']>;
+};
+
+/** Field names for the HandlingUnitContentXxboundFeature model */
+export enum HandlingUnitContentXxboundFeatureFieldName {
+  Created = 'created',
+  CreatedBy = 'createdBy',
+  Extras = 'extras',
+  FeatureCodeId = 'featureCodeId',
+  HandlingUnitContentOutboundId = 'handlingUnitContentOutboundId',
+  Id = 'id',
+  Modified = 'modified',
+  ModifiedBy = 'modifiedBy',
+  Value = 'value'
+}
+
+/** Returns a list of HandlingUnitContentXxboundFeature */
+export type HandlingUnitContentXxboundFeatureListResult = {
+  __typename?: 'HandlingUnitContentXxboundFeatureListResult';
+  count: Scalars['Int'];
+  itemsPerPage: Scalars['Int'];
+  page: Scalars['Int'];
+  results: Array<HandlingUnitContentXxboundFeature>;
+  totalPages: Scalars['Int'];
+};
+
+/** How to order the search results for HandlingUnitContentXxboundFeature */
+export type HandlingUnitContentXxboundFeatureOrderByCriterion = {
+  ascending?: Scalars['Boolean'];
+  field: HandlingUnitContentXxboundFeatureFieldName;
+};
+
+/** Attributes of HandlingUnitContentXxboundFeature to filter onto */
+export type HandlingUnitContentXxboundFeatureSearchFilters = {
+  created?: InputMaybe<Scalars['DateTime']>;
+  createdBy?: InputMaybe<Scalars['String']>;
+  extras?: InputMaybe<Scalars['JSON']>;
+  featureCodeId?: InputMaybe<Scalars['String']>;
+  handlingUnitContentOutboundId?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['String']>;
+  modified?: InputMaybe<Scalars['DateTime']>;
+  modifiedBy?: InputMaybe<Scalars['String']>;
+  value?: InputMaybe<Scalars['String']>;
 };
 
 /** Field names for the HandlingUnit model */
 export enum HandlingUnitFieldName {
   BarcodeId = 'barcodeId',
   Category = 'category',
+  Code = 'code',
+  Comment = 'comment',
   Created = 'created',
   CreatedBy = 'createdBy',
-  Description = 'description',
   Extras = 'extras',
   Height = 'height',
   Id = 'id',
   Length = 'length',
+  LocationId = 'locationId',
   Modified = 'modified',
   ModifiedBy = 'modifiedBy',
   Name = 'name',
   ParentHandlingUnitId = 'parentHandlingUnitId',
+  Reservation = 'reservation',
   Status = 'status',
-  Type = 'type',
+  StockOwnerId = 'stockOwnerId',
+  WarehouseCode = 'warehouseCode',
   Weight = 'weight',
   Width = 'width'
 }
+
+export type HandlingUnitInbound = {
+  __typename?: 'HandlingUnitInbound';
+  carrierBox?: Maybe<Scalars['String']>;
+  carrierId?: Maybe<Scalars['String']>;
+  checkingTime?: Maybe<Scalars['DateTime']>;
+  comment?: Maybe<Scalars['String']>;
+  created?: Maybe<Scalars['DateTime']>;
+  createdBy?: Maybe<Scalars['String']>;
+  extras?: Maybe<Scalars['JSON']>;
+  handlingUnitId?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+  modified?: Maybe<Scalars['DateTime']>;
+  modifiedBy?: Maybe<Scalars['String']>;
+  purchaseOrderId?: Maybe<Scalars['String']>;
+  toBeChecked?: Maybe<Scalars['Boolean']>;
+};
+
+/** Field names for the HandlingUnitInbound model */
+export enum HandlingUnitInboundFieldName {
+  CarrierBox = 'carrierBox',
+  CarrierId = 'carrierId',
+  CheckingTime = 'checkingTime',
+  Comment = 'comment',
+  Created = 'created',
+  CreatedBy = 'createdBy',
+  Extras = 'extras',
+  HandlingUnitId = 'handlingUnitId',
+  Id = 'id',
+  Modified = 'modified',
+  ModifiedBy = 'modifiedBy',
+  PurchaseOrderId = 'purchaseOrderId',
+  ToBeChecked = 'toBeChecked'
+}
+
+/** Returns a list of HandlingUnitInbound */
+export type HandlingUnitInboundListResult = {
+  __typename?: 'HandlingUnitInboundListResult';
+  count: Scalars['Int'];
+  itemsPerPage: Scalars['Int'];
+  page: Scalars['Int'];
+  results: Array<HandlingUnitInbound>;
+  totalPages: Scalars['Int'];
+};
+
+/** How to order the search results for HandlingUnitInbound */
+export type HandlingUnitInboundOrderByCriterion = {
+  ascending?: Scalars['Boolean'];
+  field: HandlingUnitInboundFieldName;
+};
+
+/** Attributes of HandlingUnitInbound to filter onto */
+export type HandlingUnitInboundSearchFilters = {
+  carrierBox?: InputMaybe<Scalars['String']>;
+  carrierId?: InputMaybe<Scalars['String']>;
+  checkingTime?: InputMaybe<Scalars['DateTime']>;
+  comment?: InputMaybe<Scalars['String']>;
+  created?: InputMaybe<Scalars['DateTime']>;
+  createdBy?: InputMaybe<Scalars['String']>;
+  extras?: InputMaybe<Scalars['JSON']>;
+  handlingUnitId?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['String']>;
+  modified?: InputMaybe<Scalars['DateTime']>;
+  modifiedBy?: InputMaybe<Scalars['String']>;
+  purchaseOrderId?: InputMaybe<Scalars['String']>;
+  toBeChecked?: InputMaybe<Scalars['Boolean']>;
+};
 
 /** Returns a list of HandlingUnit */
 export type HandlingUnitListResult = {
@@ -3301,19 +3744,76 @@ export type HandlingUnitListResult = {
   totalPages: Scalars['Int'];
 };
 
-/** How to order the search results for HandlingUnit */
-export type HandlingUnitOrderByCriterion = {
-  ascending?: Scalars['Boolean'];
-  field: HandlingUnitFieldName;
+export type HandlingUnitModel = {
+  __typename?: 'HandlingUnitModel';
+  category?: Maybe<Scalars['Int']>;
+  /** Text value for field category */
+  categoryText?: Maybe<Scalars['String']>;
+  created?: Maybe<Scalars['DateTime']>;
+  createdBy?: Maybe<Scalars['String']>;
+  extras?: Maybe<Scalars['JSON']>;
+  height?: Maybe<Scalars['Float']>;
+  id?: Maybe<Scalars['String']>;
+  length?: Maybe<Scalars['Float']>;
+  modified?: Maybe<Scalars['DateTime']>;
+  modifiedBy?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  parentHandlingUnitModel: Array<HandlingUnitModel>;
+  parentHandlingUnitModelId?: Maybe<Scalars['String']>;
+  preparationMode?: Maybe<Scalars['Int']>;
+  /** Text value for field preparation_mode */
+  preparationModeText?: Maybe<Scalars['String']>;
+  status?: Maybe<Scalars['Int']>;
+  /** Text value for field status */
+  statusText?: Maybe<Scalars['String']>;
+  type?: Maybe<Scalars['Int']>;
+  /** Text value for field type */
+  typeText?: Maybe<Scalars['String']>;
+  weight?: Maybe<Scalars['Float']>;
+  width?: Maybe<Scalars['Float']>;
 };
 
-/** Attributes of HandlingUnit to filter onto */
-export type HandlingUnitSearchFilters = {
-  barcodeId?: InputMaybe<Scalars['String']>;
+/** Field names for the HandlingUnitModel model */
+export enum HandlingUnitModelFieldName {
+  Category = 'category',
+  Created = 'created',
+  CreatedBy = 'createdBy',
+  Extras = 'extras',
+  Height = 'height',
+  Id = 'id',
+  Length = 'length',
+  Modified = 'modified',
+  ModifiedBy = 'modifiedBy',
+  Name = 'name',
+  ParentHandlingUnitModelId = 'parentHandlingUnitModelId',
+  PreparationMode = 'preparationMode',
+  Status = 'status',
+  Type = 'type',
+  Weight = 'weight',
+  Width = 'width'
+}
+
+/** Returns a list of HandlingUnitModel */
+export type HandlingUnitModelListResult = {
+  __typename?: 'HandlingUnitModelListResult';
+  count: Scalars['Int'];
+  itemsPerPage: Scalars['Int'];
+  page: Scalars['Int'];
+  results: Array<HandlingUnitModel>;
+  totalPages: Scalars['Int'];
+};
+
+/** How to order the search results for HandlingUnitModel */
+export type HandlingUnitModelOrderByCriterion = {
+  ascending?: Scalars['Boolean'];
+  field: HandlingUnitModelFieldName;
+};
+
+/** Attributes of HandlingUnitModel to filter onto */
+export type HandlingUnitModelSearchFilters = {
   category?: InputMaybe<Scalars['Int']>;
   created?: InputMaybe<Scalars['DateTime']>;
   createdBy?: InputMaybe<Scalars['String']>;
-  description?: InputMaybe<Scalars['String']>;
   extras?: InputMaybe<Scalars['JSON']>;
   height?: InputMaybe<Scalars['Float']>;
   id?: InputMaybe<Scalars['String']>;
@@ -3321,9 +3821,137 @@ export type HandlingUnitSearchFilters = {
   modified?: InputMaybe<Scalars['DateTime']>;
   modifiedBy?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
-  parentHandlingUnitId?: InputMaybe<Scalars['String']>;
+  parentHandlingUnitModelId?: InputMaybe<Scalars['String']>;
+  preparationMode?: InputMaybe<Scalars['Int']>;
   status?: InputMaybe<Scalars['Int']>;
   type?: InputMaybe<Scalars['Int']>;
+  weight?: InputMaybe<Scalars['Float']>;
+  width?: InputMaybe<Scalars['Float']>;
+};
+
+/** How to order the search results for HandlingUnit */
+export type HandlingUnitOrderByCriterion = {
+  ascending?: Scalars['Boolean'];
+  field: HandlingUnitFieldName;
+};
+
+export type HandlingUnitOutbound = {
+  __typename?: 'HandlingUnitOutbound';
+  carrierBox?: Maybe<Scalars['String']>;
+  carrierId?: Maybe<Scalars['String']>;
+  carrierSerivce?: Maybe<Scalars['String']>;
+  checkingTime?: Maybe<Scalars['DateTime']>;
+  comment?: Maybe<Scalars['String']>;
+  created?: Maybe<Scalars['DateTime']>;
+  createdBy?: Maybe<Scalars['String']>;
+  extras?: Maybe<Scalars['JSON']>;
+  finalWeight?: Maybe<Scalars['Float']>;
+  handlingUnitId?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+  intermediateWeight1?: Maybe<Scalars['Float']>;
+  intermediateWeight2?: Maybe<Scalars['Float']>;
+  loadId?: Maybe<Scalars['String']>;
+  modified?: Maybe<Scalars['DateTime']>;
+  modifiedBy?: Maybe<Scalars['String']>;
+  preparationMode?: Maybe<Scalars['Int']>;
+  /** Text value for field preparation_mode */
+  preparationModeText?: Maybe<Scalars['String']>;
+  roundId?: Maybe<Scalars['String']>;
+  roundPosition?: Maybe<Scalars['Int']>;
+  theoriticalWeight?: Maybe<Scalars['Float']>;
+  toBeChecked?: Maybe<Scalars['Boolean']>;
+  toBePalletized?: Maybe<Scalars['Boolean']>;
+};
+
+/** Field names for the HandlingUnitOutbound model */
+export enum HandlingUnitOutboundFieldName {
+  CarrierBox = 'carrierBox',
+  CarrierId = 'carrierId',
+  CarrierSerivce = 'carrierSerivce',
+  CheckingTime = 'checkingTime',
+  Comment = 'comment',
+  Created = 'created',
+  CreatedBy = 'createdBy',
+  Extras = 'extras',
+  FinalWeight = 'finalWeight',
+  HandlingUnitId = 'handlingUnitId',
+  Id = 'id',
+  IntermediateWeight1 = 'intermediateWeight1',
+  IntermediateWeight2 = 'intermediateWeight2',
+  LoadId = 'loadId',
+  Modified = 'modified',
+  ModifiedBy = 'modifiedBy',
+  PreparationMode = 'preparationMode',
+  RoundId = 'roundId',
+  RoundPosition = 'roundPosition',
+  TheoriticalWeight = 'theoriticalWeight',
+  ToBeChecked = 'toBeChecked',
+  ToBePalletized = 'toBePalletized'
+}
+
+/** Returns a list of HandlingUnitOutbound */
+export type HandlingUnitOutboundListResult = {
+  __typename?: 'HandlingUnitOutboundListResult';
+  count: Scalars['Int'];
+  itemsPerPage: Scalars['Int'];
+  page: Scalars['Int'];
+  results: Array<HandlingUnitOutbound>;
+  totalPages: Scalars['Int'];
+};
+
+/** How to order the search results for HandlingUnitOutbound */
+export type HandlingUnitOutboundOrderByCriterion = {
+  ascending?: Scalars['Boolean'];
+  field: HandlingUnitOutboundFieldName;
+};
+
+/** Attributes of HandlingUnitOutbound to filter onto */
+export type HandlingUnitOutboundSearchFilters = {
+  carrierBox?: InputMaybe<Scalars['String']>;
+  carrierId?: InputMaybe<Scalars['String']>;
+  carrierSerivce?: InputMaybe<Scalars['String']>;
+  checkingTime?: InputMaybe<Scalars['DateTime']>;
+  comment?: InputMaybe<Scalars['String']>;
+  created?: InputMaybe<Scalars['DateTime']>;
+  createdBy?: InputMaybe<Scalars['String']>;
+  extras?: InputMaybe<Scalars['JSON']>;
+  finalWeight?: InputMaybe<Scalars['Float']>;
+  handlingUnitId?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['String']>;
+  intermediateWeight1?: InputMaybe<Scalars['Float']>;
+  intermediateWeight2?: InputMaybe<Scalars['Float']>;
+  loadId?: InputMaybe<Scalars['String']>;
+  modified?: InputMaybe<Scalars['DateTime']>;
+  modifiedBy?: InputMaybe<Scalars['String']>;
+  preparationMode?: InputMaybe<Scalars['Int']>;
+  roundId?: InputMaybe<Scalars['String']>;
+  roundPosition?: InputMaybe<Scalars['Int']>;
+  theoriticalWeight?: InputMaybe<Scalars['Float']>;
+  toBeChecked?: InputMaybe<Scalars['Boolean']>;
+  toBePalletized?: InputMaybe<Scalars['Boolean']>;
+};
+
+/** Attributes of HandlingUnit to filter onto */
+export type HandlingUnitSearchFilters = {
+  barcodeId?: InputMaybe<Scalars['String']>;
+  category?: InputMaybe<Scalars['Int']>;
+  code?: InputMaybe<Scalars['String']>;
+  comment?: InputMaybe<Scalars['String']>;
+  created?: InputMaybe<Scalars['DateTime']>;
+  createdBy?: InputMaybe<Scalars['String']>;
+  extras?: InputMaybe<Scalars['JSON']>;
+  height?: InputMaybe<Scalars['Float']>;
+  id?: InputMaybe<Scalars['String']>;
+  length?: InputMaybe<Scalars['Float']>;
+  locationId?: InputMaybe<Scalars['String']>;
+  modified?: InputMaybe<Scalars['DateTime']>;
+  modifiedBy?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
+  parentHandlingUnitId?: InputMaybe<Scalars['String']>;
+  reservation?: InputMaybe<Scalars['String']>;
+  status?: InputMaybe<Scalars['Int']>;
+  stockOwnerId?: InputMaybe<Scalars['String']>;
+  warehouseCode?: InputMaybe<Scalars['String']>;
   weight?: InputMaybe<Scalars['Float']>;
   width?: InputMaybe<Scalars['Float']>;
 };
@@ -3970,6 +4598,20 @@ export type Mutation = {
   createGoodsInLine: GoodsInLine;
   /** Create handling_unit */
   createHandlingUnit: HandlingUnit;
+  /** Create handling_unit_content */
+  createHandlingUnitContent: HandlingUnitContent;
+  /** Create handling_unit_content_inbound */
+  createHandlingUnitContentInbound: HandlingUnitContentInbound;
+  /** Create handling_unit_content_outbound */
+  createHandlingUnitContentOutbound: HandlingUnitContentOutbound;
+  /** Create handling_unit_content_xxbound_feature */
+  createHandlingUnitContentXxboundFeature: HandlingUnitContentXxboundFeature;
+  /** Create handling_unit_inbound */
+  createHandlingUnitInbound: HandlingUnitInbound;
+  /** Create handling_unit_model */
+  createHandlingUnitModel: HandlingUnitModel;
+  /** Create handling_unit_outbound */
+  createHandlingUnitOutbound: HandlingUnitOutbound;
   /** Create an IntegratorOrganization */
   createIntegratorOrganization: Integrator;
   /** Create integrator as superadmin */
@@ -4006,7 +4648,7 @@ export type Mutation = {
   /** Create a Status Feedback Overwrite */
   createStatusFeedbackOverwrite: StatusFeedbackOverWrite;
   /** Create stock owner */
-  createStockOwner: StockOwner;
+  createStockOwner: CreateStockOwnerResponse;
   /** Create a new system config */
   createSystemConfig: Config;
   /** Create a new system parameter */
@@ -4067,12 +4709,29 @@ export type Mutation = {
   deleteFeatureTypeDetail: Scalars['Boolean'];
   /** Delete feedback_overwrite */
   deleteFeedbackOverwrite: Scalars['Boolean'];
+  /** Delete a File */
+  deleteFile: Scalars['Boolean'];
   /** Delete goods-in */
   deleteGoodsIn: Scalars['Boolean'];
   /** Delete goods-in line */
   deleteGoodsInLine: Scalars['Boolean'];
   /** Delete handling_unit */
   deleteHandlingUnit: Scalars['Boolean'];
+  /** Delete handling_unit_content */
+  deleteHandlingUnitContent: Scalars['Boolean'];
+  /** Delete handling_unit_content_inbound */
+  deleteHandlingUnitContentInbound: Scalars['Boolean'];
+  /** Delete handling_unit_content_outbound */
+  deleteHandlingUnitContentOutbound: Scalars['Boolean'];
+  /** Delete handling_unit_content_xxbound_feature */
+  deleteHandlingUnitContentXxboundFeature: Scalars['Boolean'];
+  /** Delete handling_unit_inbound */
+  deleteHandlingUnitInbound: Scalars['Boolean'];
+  /** Delete handling_unit_model */
+  deleteHandlingUnitModel: Scalars['Boolean'];
+  /** Delete handling_unit_outbound */
+  deleteHandlingUnitOutbound: Scalars['Boolean'];
+  /** Delete an Integrator */
   deleteIntegrator: Scalars['Boolean'];
   /** Delete integrator user. */
   deleteIntegratorUser: Scalars['Boolean'];
@@ -4142,6 +4801,8 @@ export type Mutation = {
   renderDocument: RenderDocumentResponse;
   /** Sends an email to reset the IntegratorUser's password */
   resetPassword: ResetPasswordResponse;
+  /** Reset a StockOwner's access key */
+  resetStockOwnerAccesskey: Scalars['Boolean'];
   /** Delete article => update status */
   softDeleteArticle: Scalars['Boolean'];
   /** Delete Box => update status */
@@ -4164,6 +4825,12 @@ export type Mutation = {
   softDeleteEquipment: Scalars['Boolean'];
   /** Delete HandlingUnit => update status */
   softDeleteHandlingUnit: Scalars['Boolean'];
+  /** Delete HandlingUnitContentInbound => update status */
+  softDeleteHandlingUnitContentInbound: Scalars['Boolean'];
+  /** Delete HandlingUnitContentOutbound => update status */
+  softDeleteHandlingUnitContentOutbound: Scalars['Boolean'];
+  /** Delete HandlingUnitModel => update status */
+  softDeleteHandlingUnitModel: Scalars['Boolean'];
   /** Delete Load => update status */
   softDeleteLoad: Scalars['Boolean'];
   /** Delete Package => update status */
@@ -4234,6 +4901,20 @@ export type Mutation = {
   updateGoodsInLine?: Maybe<GoodsInLine>;
   /** Update handling_unit */
   updateHandlingUnit?: Maybe<HandlingUnit>;
+  /** Update handling_unit_content */
+  updateHandlingUnitContent?: Maybe<HandlingUnitContent>;
+  /** Update handling_unit_content_inbound */
+  updateHandlingUnitContentInbound?: Maybe<HandlingUnitContentInbound>;
+  /** Update handling_unit_content_outbound */
+  updateHandlingUnitContentOutbound?: Maybe<HandlingUnitContentOutbound>;
+  /** Update handling_unit_content_xxbound_feature */
+  updateHandlingUnitContentXxboundFeature?: Maybe<HandlingUnitContentXxboundFeature>;
+  /** Update handling_unit_inbound */
+  updateHandlingUnitInbound?: Maybe<HandlingUnitInbound>;
+  /** Update handling_unit_model */
+  updateHandlingUnitModel?: Maybe<HandlingUnitModel>;
+  /** Update handling_unit_outbound */
+  updateHandlingUnitOutbound?: Maybe<HandlingUnitOutbound>;
   /** Update load */
   updateLoad?: Maybe<Load>;
   /** Update Location */
@@ -4268,6 +4949,8 @@ export type Mutation = {
   updateStatusFeedbackOverwrite?: Maybe<StatusFeedbackOverWrite>;
   /** Update stock owner */
   updateStockOwner?: Maybe<StockOwner>;
+  /** Upload File */
+  uploadFile: FileUploadResult;
   /** Obtain a JSON Web Token (JWT) to use in the frontend */
   warehouseLogin?: Maybe<LoginSuccess>;
 };
@@ -4490,6 +5173,41 @@ export type MutationCreateGoodsInLineArgs = {
 
 export type MutationCreateHandlingUnitArgs = {
   input: CreateHandlingUnitInput;
+};
+
+
+export type MutationCreateHandlingUnitContentArgs = {
+  input: CreateHandlingUnitContentInput;
+};
+
+
+export type MutationCreateHandlingUnitContentInboundArgs = {
+  input: CreateHandlingUnitContentInboundInput;
+};
+
+
+export type MutationCreateHandlingUnitContentOutboundArgs = {
+  input: CreateHandlingUnitContentOutboundInput;
+};
+
+
+export type MutationCreateHandlingUnitContentXxboundFeatureArgs = {
+  input: CreateHandlingUnitContentXxboundFeatureInput;
+};
+
+
+export type MutationCreateHandlingUnitInboundArgs = {
+  input: CreateHandlingUnitInboundInput;
+};
+
+
+export type MutationCreateHandlingUnitModelArgs = {
+  input: CreateHandlingUnitModelInput;
+};
+
+
+export type MutationCreateHandlingUnitOutboundArgs = {
+  input: CreateHandlingUnitOutboundInput;
 };
 
 
@@ -4748,6 +5466,12 @@ export type MutationDeleteFeedbackOverwriteArgs = {
 };
 
 
+export type MutationDeleteFileArgs = {
+  fileName: Scalars['String'];
+  stockOwnerId: Scalars['String'];
+};
+
+
 export type MutationDeleteGoodsInArgs = {
   id: Scalars['String'];
 };
@@ -4759,6 +5483,41 @@ export type MutationDeleteGoodsInLineArgs = {
 
 
 export type MutationDeleteHandlingUnitArgs = {
+  id: Scalars['String'];
+};
+
+
+export type MutationDeleteHandlingUnitContentArgs = {
+  id: Scalars['String'];
+};
+
+
+export type MutationDeleteHandlingUnitContentInboundArgs = {
+  id: Scalars['String'];
+};
+
+
+export type MutationDeleteHandlingUnitContentOutboundArgs = {
+  id: Scalars['String'];
+};
+
+
+export type MutationDeleteHandlingUnitContentXxboundFeatureArgs = {
+  id: Scalars['String'];
+};
+
+
+export type MutationDeleteHandlingUnitInboundArgs = {
+  id: Scalars['String'];
+};
+
+
+export type MutationDeleteHandlingUnitModelArgs = {
+  id: Scalars['String'];
+};
+
+
+export type MutationDeleteHandlingUnitOutboundArgs = {
   id: Scalars['String'];
 };
 
@@ -4869,7 +5628,7 @@ export type MutationDeleteSystemParameterArgs = {
 
 
 export type MutationDeleteWarehouseArgs = {
-  id: Scalars['String'];
+  id: Scalars['ID'];
 };
 
 
@@ -4987,6 +5746,11 @@ export type MutationResetPasswordArgs = {
 };
 
 
+export type MutationResetStockOwnerAccesskeyArgs = {
+  id: Scalars['String'];
+};
+
+
 export type MutationSoftDeleteArticleArgs = {
   articleId: Scalars['String'];
 };
@@ -5039,6 +5803,21 @@ export type MutationSoftDeleteEquipmentArgs = {
 
 export type MutationSoftDeleteHandlingUnitArgs = {
   handlingUnitId: Scalars['String'];
+};
+
+
+export type MutationSoftDeleteHandlingUnitContentInboundArgs = {
+  handlingUnitContentInboundId: Scalars['String'];
+};
+
+
+export type MutationSoftDeleteHandlingUnitContentOutboundArgs = {
+  handlingUnitContentOutboundId: Scalars['String'];
+};
+
+
+export type MutationSoftDeleteHandlingUnitModelArgs = {
+  handlingUnitModelId: Scalars['String'];
 };
 
 
@@ -5246,6 +6025,48 @@ export type MutationUpdateHandlingUnitArgs = {
 };
 
 
+export type MutationUpdateHandlingUnitContentArgs = {
+  id: Scalars['String'];
+  input: UpdateHandlingUnitContentInput;
+};
+
+
+export type MutationUpdateHandlingUnitContentInboundArgs = {
+  id: Scalars['String'];
+  input: UpdateHandlingUnitContentInboundInput;
+};
+
+
+export type MutationUpdateHandlingUnitContentOutboundArgs = {
+  id: Scalars['String'];
+  input: UpdateHandlingUnitContentOutboundInput;
+};
+
+
+export type MutationUpdateHandlingUnitContentXxboundFeatureArgs = {
+  id: Scalars['String'];
+  input: UpdateHandlingUnitContentXxboundFeatureInput;
+};
+
+
+export type MutationUpdateHandlingUnitInboundArgs = {
+  id: Scalars['String'];
+  input: UpdateHandlingUnitInboundInput;
+};
+
+
+export type MutationUpdateHandlingUnitModelArgs = {
+  id: Scalars['String'];
+  input: UpdateHandlingUnitModelInput;
+};
+
+
+export type MutationUpdateHandlingUnitOutboundArgs = {
+  id: Scalars['String'];
+  input: UpdateHandlingUnitOutboundInput;
+};
+
+
 export type MutationUpdateLoadArgs = {
   id: Scalars['String'];
   input: UpdateLoadInput;
@@ -5346,6 +6167,12 @@ export type MutationUpdateStatusFeedbackOverwriteArgs = {
 export type MutationUpdateStockOwnerArgs = {
   id: Scalars['String'];
   input: UpdateStockOwnerInput;
+};
+
+
+export type MutationUploadFileArgs = {
+  file: Scalars['Upload'];
+  stockOwnerId: Scalars['String'];
 };
 
 
@@ -6009,12 +6836,42 @@ export type Query = {
   goodsIns: GoodsInListResult;
   /** Get a handling_unit object */
   handlingUnit?: Maybe<HandlingUnit>;
+  /** Get a handling_unit_content object */
+  handlingUnitContent?: Maybe<HandlingUnitContent>;
+  /** Get a handling_unit_content_inbound object */
+  handlingUnitContentInbound?: Maybe<HandlingUnitContentInbound>;
+  /** Get handling_unit_content_inbound objects */
+  handlingUnitContentInbounds: HandlingUnitContentInboundListResult;
+  /** Get a handling_unit_content_outbound object */
+  handlingUnitContentOutbound?: Maybe<HandlingUnitContentOutbound>;
+  /** Get handling_unit_content_outbound objects */
+  handlingUnitContentOutbounds: HandlingUnitContentOutboundListResult;
+  /** Get a handling_unit_content_xxbound_feature object */
+  handlingUnitContentXxboundFeature?: Maybe<HandlingUnitContentXxboundFeature>;
+  /** Get handling_unit_content_xxbound_feature objects */
+  handlingUnitContentXxboundFeatures: HandlingUnitContentXxboundFeatureListResult;
+  /** Get handling_unit_content objects */
+  handlingUnitContents: HandlingUnitContentListResult;
+  /** Get a handling_unit_inbound object */
+  handlingUnitInbound?: Maybe<HandlingUnitInbound>;
+  /** Get handling_unit_inbound objects */
+  handlingUnitInbounds: HandlingUnitInboundListResult;
+  /** Get a handling_unit_model object */
+  handlingUnitModel?: Maybe<HandlingUnitModel>;
+  /** Get handling_unit_model objects */
+  handlingUnitModels: HandlingUnitModelListResult;
+  /** Get a handling_unit_outbound object */
+  handlingUnitOutbound?: Maybe<HandlingUnitOutbound>;
+  /** Get handling_unit_outbound objects */
+  handlingUnitOutbounds: HandlingUnitOutboundListResult;
   /** Get handling_unit objects */
   handlingUnits: HandlingUnitListResult;
   integratorUsers: IntegratorUserListResult;
   integrators: IntegratorListResult;
   /** List configs for a scope */
   listConfigsForAScope: Array<ConfigResults>;
+  /** List files in warehouse folder. */
+  listFiles: Array<FileInfo>;
   /** List parameters for a scope */
   listParametersForAScope: Array<ParameterResults>;
   /** Get a Load */
@@ -6534,6 +7391,111 @@ export type QueryHandlingUnitArgs = {
 };
 
 
+export type QueryHandlingUnitContentArgs = {
+  id: Scalars['String'];
+  language?: InputMaybe<Scalars['String']>;
+};
+
+
+export type QueryHandlingUnitContentInboundArgs = {
+  id: Scalars['String'];
+  language?: InputMaybe<Scalars['String']>;
+};
+
+
+export type QueryHandlingUnitContentInboundsArgs = {
+  filters?: InputMaybe<HandlingUnitContentInboundSearchFilters>;
+  itemsPerPage?: Scalars['Int'];
+  language?: InputMaybe<Scalars['String']>;
+  orderBy?: InputMaybe<Array<HandlingUnitContentInboundOrderByCriterion>>;
+  page?: Scalars['Int'];
+};
+
+
+export type QueryHandlingUnitContentOutboundArgs = {
+  id: Scalars['String'];
+  language?: InputMaybe<Scalars['String']>;
+};
+
+
+export type QueryHandlingUnitContentOutboundsArgs = {
+  filters?: InputMaybe<HandlingUnitContentOutboundSearchFilters>;
+  itemsPerPage?: Scalars['Int'];
+  language?: InputMaybe<Scalars['String']>;
+  orderBy?: InputMaybe<Array<HandlingUnitContentOutboundOrderByCriterion>>;
+  page?: Scalars['Int'];
+};
+
+
+export type QueryHandlingUnitContentXxboundFeatureArgs = {
+  id: Scalars['String'];
+  language?: InputMaybe<Scalars['String']>;
+};
+
+
+export type QueryHandlingUnitContentXxboundFeaturesArgs = {
+  filters?: InputMaybe<HandlingUnitContentXxboundFeatureSearchFilters>;
+  itemsPerPage?: Scalars['Int'];
+  language?: InputMaybe<Scalars['String']>;
+  orderBy?: InputMaybe<Array<HandlingUnitContentXxboundFeatureOrderByCriterion>>;
+  page?: Scalars['Int'];
+};
+
+
+export type QueryHandlingUnitContentsArgs = {
+  filters?: InputMaybe<HandlingUnitContentSearchFilters>;
+  itemsPerPage?: Scalars['Int'];
+  language?: InputMaybe<Scalars['String']>;
+  orderBy?: InputMaybe<Array<HandlingUnitContentOrderByCriterion>>;
+  page?: Scalars['Int'];
+};
+
+
+export type QueryHandlingUnitInboundArgs = {
+  id: Scalars['String'];
+  language?: InputMaybe<Scalars['String']>;
+};
+
+
+export type QueryHandlingUnitInboundsArgs = {
+  filters?: InputMaybe<HandlingUnitInboundSearchFilters>;
+  itemsPerPage?: Scalars['Int'];
+  language?: InputMaybe<Scalars['String']>;
+  orderBy?: InputMaybe<Array<HandlingUnitInboundOrderByCriterion>>;
+  page?: Scalars['Int'];
+};
+
+
+export type QueryHandlingUnitModelArgs = {
+  id: Scalars['String'];
+  language?: InputMaybe<Scalars['String']>;
+};
+
+
+export type QueryHandlingUnitModelsArgs = {
+  filters?: InputMaybe<HandlingUnitModelSearchFilters>;
+  itemsPerPage?: Scalars['Int'];
+  language?: InputMaybe<Scalars['String']>;
+  orderBy?: InputMaybe<Array<HandlingUnitModelOrderByCriterion>>;
+  page?: Scalars['Int'];
+};
+
+
+export type QueryHandlingUnitOutboundArgs = {
+  id: Scalars['String'];
+  language?: InputMaybe<Scalars['String']>;
+};
+
+
+export type QueryHandlingUnitOutboundsArgs = {
+  filters?: InputMaybe<HandlingUnitOutboundSearchFilters>;
+  itemsPerPage?: Scalars['Int'];
+  language?: InputMaybe<Scalars['String']>;
+  orderBy?: InputMaybe<Array<HandlingUnitOutboundOrderByCriterion>>;
+  page?: Scalars['Int'];
+};
+
+
 export type QueryHandlingUnitsArgs = {
   filters?: InputMaybe<HandlingUnitSearchFilters>;
   itemsPerPage?: Scalars['Int'];
@@ -6565,6 +7527,11 @@ export type QueryListConfigsForAScopeArgs = {
   code?: InputMaybe<Scalars['String']>;
   language?: InputMaybe<Scalars['String']>;
   scope: Scalars['String'];
+};
+
+
+export type QueryListFilesArgs = {
+  stockOwnerId: Scalars['String'];
 };
 
 
@@ -7296,7 +8263,6 @@ export type StockOwner = {
   created?: Maybe<Scalars['DateTime']>;
   createdBy?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
-  exchangePrefix?: Maybe<Scalars['String']>;
   extras?: Maybe<Scalars['JSON']>;
   id?: Maybe<Scalars['String']>;
   logoUrl?: Maybe<Scalars['String']>;
@@ -7306,7 +8272,6 @@ export type StockOwner = {
   name?: Maybe<Scalars['String']>;
   phone?: Maybe<Scalars['String']>;
   postCode?: Maybe<Scalars['String']>;
-  s3ExchangeDir?: Maybe<Scalars['String']>;
   senderAddress1?: Maybe<Scalars['String']>;
   senderAddress2?: Maybe<Scalars['String']>;
   senderAddress3?: Maybe<Scalars['String']>;
@@ -7338,7 +8303,6 @@ export enum StockOwnerFieldName {
   Created = 'created',
   CreatedBy = 'createdBy',
   Email = 'email',
-  ExchangePrefix = 'exchangePrefix',
   Extras = 'extras',
   Id = 'id',
   LogoUrl = 'logoUrl',
@@ -7348,7 +8312,6 @@ export enum StockOwnerFieldName {
   Name = 'name',
   Phone = 'phone',
   PostCode = 'postCode',
-  S3ExchangeDir = 's3ExchangeDir',
   SenderAddress1 = 'senderAddress1',
   SenderAddress2 = 'senderAddress2',
   SenderAddress3 = 'senderAddress3',
@@ -7394,7 +8357,6 @@ export type StockOwnerSearchFilters = {
   created?: InputMaybe<Scalars['DateTime']>;
   createdBy?: InputMaybe<Scalars['String']>;
   email?: InputMaybe<Scalars['String']>;
-  exchangePrefix?: InputMaybe<Scalars['String']>;
   extras?: InputMaybe<Scalars['JSON']>;
   id?: InputMaybe<Scalars['String']>;
   logoUrl?: InputMaybe<Scalars['String']>;
@@ -7404,7 +8366,6 @@ export type StockOwnerSearchFilters = {
   name?: InputMaybe<Scalars['String']>;
   phone?: InputMaybe<Scalars['String']>;
   postCode?: InputMaybe<Scalars['String']>;
-  s3ExchangeDir?: InputMaybe<Scalars['String']>;
   senderAddress1?: InputMaybe<Scalars['String']>;
   senderAddress2?: InputMaybe<Scalars['String']>;
   senderAddress3?: InputMaybe<Scalars['String']>;
@@ -7450,6 +8411,13 @@ export enum Table {
   GoodsIn = 'GOODS_IN',
   GoodsInLine = 'GOODS_IN_LINE',
   HandlingUnit = 'HANDLING_UNIT',
+  HandlingUnitContent = 'HANDLING_UNIT_CONTENT',
+  HandlingUnitContentInbound = 'HANDLING_UNIT_CONTENT_INBOUND',
+  HandlingUnitContentOutbound = 'HANDLING_UNIT_CONTENT_OUTBOUND',
+  HandlingUnitContentXxboundFeature = 'HANDLING_UNIT_CONTENT_XXBOUND_FEATURE',
+  HandlingUnitInbound = 'HANDLING_UNIT_INBOUND',
+  HandlingUnitModel = 'HANDLING_UNIT_MODEL',
+  HandlingUnitOutbound = 'HANDLING_UNIT_OUTBOUND',
   Integrator = 'INTEGRATOR',
   IntegratorUser = 'INTEGRATOR_USER',
   Load = 'LOAD',
@@ -7460,6 +8428,7 @@ export enum Table {
   Parameter = 'PARAMETER',
   Pattern = 'PATTERN',
   PatternPath = 'PATTERN_PATH',
+  PatternPathLocation = 'PATTERN_PATH_LOCATION',
   PurchaseOrder = 'PURCHASE_ORDER',
   PurchaseOrderLine = 'PURCHASE_ORDER_LINE',
   ReturnCode = 'RETURN_CODE',
@@ -7562,10 +8531,8 @@ export type UpdateArticleSetInput = {
 export type UpdateBarcodeInput = {
   blacklisted?: InputMaybe<Scalars['Boolean']>;
   extras?: InputMaybe<Scalars['JSON']>;
-  flagDouble?: InputMaybe<Scalars['Int']>;
   name?: InputMaybe<Scalars['String']>;
   preparationMode?: InputMaybe<Scalars['Int']>;
-  quantity?: InputMaybe<Scalars['Float']>;
   rotation?: InputMaybe<Scalars['Int']>;
   stockOwnerId?: InputMaybe<Scalars['String']>;
   supplierArticleCode?: InputMaybe<Scalars['String']>;
@@ -7640,8 +8607,6 @@ export type UpdateBuildingInput = {
   address1?: InputMaybe<Scalars['String']>;
   address2?: InputMaybe<Scalars['String']>;
   address3?: InputMaybe<Scalars['String']>;
-  awsAccessKeyId?: InputMaybe<Scalars['String']>;
-  awsSecretAccessKey?: InputMaybe<Scalars['String']>;
   city?: InputMaybe<Scalars['String']>;
   contactEmail?: InputMaybe<Scalars['String']>;
   contactMobile?: InputMaybe<Scalars['String']>;
@@ -7945,19 +8910,119 @@ export type UpdateGoodsInLineInput = {
 };
 
 /** Values to update the existing record with */
+export type UpdateHandlingUnitContentInboundInput = {
+  comment?: InputMaybe<Scalars['String']>;
+  extras?: InputMaybe<Scalars['JSON']>;
+  handlingUnitContentId?: InputMaybe<Scalars['String']>;
+  inboundLocationId?: InputMaybe<Scalars['String']>;
+  missingQuantity?: InputMaybe<Scalars['Float']>;
+  preparationMode?: InputMaybe<Scalars['Int']>;
+  purchaseOrderId?: InputMaybe<Scalars['String']>;
+  purchaseOrderLineId?: InputMaybe<Scalars['String']>;
+  receivedQuantity?: InputMaybe<Scalars['Float']>;
+  status?: InputMaybe<Scalars['Int']>;
+};
+
+/** Values to update the existing record with */
+export type UpdateHandlingUnitContentInput = {
+  articleId?: InputMaybe<Scalars['String']>;
+  articleLuBarcodeId?: InputMaybe<Scalars['String']>;
+  extras?: InputMaybe<Scalars['JSON']>;
+  handlingUnitId?: InputMaybe<Scalars['String']>;
+  quantity?: InputMaybe<Scalars['Float']>;
+  reservation?: InputMaybe<Scalars['String']>;
+  stockStatus?: InputMaybe<Scalars['Int']>;
+};
+
+/** Values to update the existing record with */
+export type UpdateHandlingUnitContentOutboundInput = {
+  comment?: InputMaybe<Scalars['String']>;
+  deliveryId?: InputMaybe<Scalars['String']>;
+  deliveryLineId?: InputMaybe<Scalars['String']>;
+  extras?: InputMaybe<Scalars['JSON']>;
+  handlingUnitContentId?: InputMaybe<Scalars['String']>;
+  missingQuantity?: InputMaybe<Scalars['Float']>;
+  pickedQuantity?: InputMaybe<Scalars['Float']>;
+  pickingLocationId?: InputMaybe<Scalars['String']>;
+  preparationMode?: InputMaybe<Scalars['Int']>;
+  quantityToBePicked?: InputMaybe<Scalars['Float']>;
+  status?: InputMaybe<Scalars['Int']>;
+};
+
+/** Values to update the existing record with */
+export type UpdateHandlingUnitContentXxboundFeatureInput = {
+  extras?: InputMaybe<Scalars['JSON']>;
+  featureCodeId?: InputMaybe<Scalars['String']>;
+  handlingUnitContentOutboundId?: InputMaybe<Scalars['String']>;
+  value?: InputMaybe<Scalars['String']>;
+};
+
+/** Values to update the existing record with */
+export type UpdateHandlingUnitInboundInput = {
+  carrierBox?: InputMaybe<Scalars['String']>;
+  carrierId?: InputMaybe<Scalars['String']>;
+  checkingTime?: InputMaybe<Scalars['DateTime']>;
+  comment?: InputMaybe<Scalars['String']>;
+  extras?: InputMaybe<Scalars['JSON']>;
+  handlingUnitId?: InputMaybe<Scalars['String']>;
+  purchaseOrderId?: InputMaybe<Scalars['String']>;
+  toBeChecked?: InputMaybe<Scalars['Boolean']>;
+};
+
+/** Values to update the existing record with */
 export type UpdateHandlingUnitInput = {
   barcodeId?: InputMaybe<Scalars['String']>;
   category?: InputMaybe<Scalars['Int']>;
-  description?: InputMaybe<Scalars['String']>;
+  code?: InputMaybe<Scalars['String']>;
+  comment?: InputMaybe<Scalars['String']>;
+  extras?: InputMaybe<Scalars['JSON']>;
+  height?: InputMaybe<Scalars['Float']>;
+  length?: InputMaybe<Scalars['Float']>;
+  locationId?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
+  parentHandlingUnitId?: InputMaybe<Scalars['String']>;
+  reservation?: InputMaybe<Scalars['String']>;
+  status?: InputMaybe<Scalars['Int']>;
+  stockOwnerId?: InputMaybe<Scalars['String']>;
+  warehouseCode?: InputMaybe<Scalars['String']>;
+  weight?: InputMaybe<Scalars['Float']>;
+  width?: InputMaybe<Scalars['Float']>;
+};
+
+/** Values to update the existing record with */
+export type UpdateHandlingUnitModelInput = {
+  category?: InputMaybe<Scalars['Int']>;
   extras?: InputMaybe<Scalars['JSON']>;
   height?: InputMaybe<Scalars['Float']>;
   length?: InputMaybe<Scalars['Float']>;
   name?: InputMaybe<Scalars['String']>;
-  parentHandlingUnitId?: InputMaybe<Scalars['String']>;
+  parentHandlingUnitModelId?: InputMaybe<Scalars['String']>;
+  preparationMode?: InputMaybe<Scalars['Int']>;
   status?: InputMaybe<Scalars['Int']>;
   type?: InputMaybe<Scalars['Int']>;
   weight?: InputMaybe<Scalars['Float']>;
   width?: InputMaybe<Scalars['Float']>;
+};
+
+/** Values to update the existing record with */
+export type UpdateHandlingUnitOutboundInput = {
+  carrierBox?: InputMaybe<Scalars['String']>;
+  carrierId?: InputMaybe<Scalars['String']>;
+  carrierSerivce?: InputMaybe<Scalars['String']>;
+  checkingTime?: InputMaybe<Scalars['DateTime']>;
+  comment?: InputMaybe<Scalars['String']>;
+  extras?: InputMaybe<Scalars['JSON']>;
+  finalWeight?: InputMaybe<Scalars['Float']>;
+  handlingUnitId?: InputMaybe<Scalars['String']>;
+  intermediateWeight1?: InputMaybe<Scalars['Float']>;
+  intermediateWeight2?: InputMaybe<Scalars['Float']>;
+  loadId?: InputMaybe<Scalars['String']>;
+  preparationMode?: InputMaybe<Scalars['Int']>;
+  roundId?: InputMaybe<Scalars['String']>;
+  roundPosition?: InputMaybe<Scalars['Int']>;
+  theoriticalWeight?: InputMaybe<Scalars['Float']>;
+  toBeChecked?: InputMaybe<Scalars['Boolean']>;
+  toBePalletized?: InputMaybe<Scalars['Boolean']>;
 };
 
 /** Values to update the existing record with */
@@ -8194,14 +9259,12 @@ export type UpdateStockOwnerInput = {
   country?: InputMaybe<Scalars['String']>;
   countryCode?: InputMaybe<Scalars['String']>;
   email?: InputMaybe<Scalars['String']>;
-  exchangePrefix?: InputMaybe<Scalars['String']>;
   extras?: InputMaybe<Scalars['JSON']>;
   logoUrl?: InputMaybe<Scalars['String']>;
   mobile?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
   phone?: InputMaybe<Scalars['String']>;
   postCode?: InputMaybe<Scalars['String']>;
-  s3ExchangeDir?: InputMaybe<Scalars['String']>;
   senderAddress1?: InputMaybe<Scalars['String']>;
   senderAddress2?: InputMaybe<Scalars['String']>;
   senderAddress3?: InputMaybe<Scalars['String']>;
@@ -8405,21 +9468,21 @@ export type GetAllBarcodesQueryVariables = Exact<{
 }>;
 
 
-export type GetAllBarcodesQuery = { __typename?: 'Query', barcodes: { __typename?: 'BarcodeListResult', count: number, itemsPerPage: number, totalPages: number, results: Array<{ __typename?: 'Barcode', id?: string | null, extras?: any | null, name?: string | null, supplierName?: string | null, supplierArticleCode?: string | null, quantity?: number | null, rotation?: number | null, preparationMode?: number | null, flagDouble?: number | null, blacklisted?: boolean | null, stockOwnerId?: string | null, rotationText?: string | null, preparationModeText?: string | null }> } };
+export type GetAllBarcodesQuery = { __typename?: 'Query', barcodes: { __typename?: 'BarcodeListResult', count: number, itemsPerPage: number, totalPages: number, results: Array<{ __typename?: 'Barcode', id?: string | null, extras?: any | null, name?: string | null, supplierName?: string | null, supplierArticleCode?: string | null, rotation?: number | null, preparationMode?: number | null, blacklisted?: boolean | null, stockOwnerId?: string | null, rotationText?: string | null, preparationModeText?: string | null }> } };
 
 export type GetBarcodeByIdQueryVariables = Exact<{
   id: Scalars['String'];
 }>;
 
 
-export type GetBarcodeByIdQuery = { __typename?: 'Query', barcode?: { __typename?: 'Barcode', id?: string | null, extras?: any | null, name?: string | null, supplierName?: string | null, supplierArticleCode?: string | null, quantity?: number | null, rotation?: number | null, preparationMode?: number | null, flagDouble?: number | null, blacklisted?: boolean | null, stockOwnerId?: string | null, rotationText?: string | null, preparationModeText?: string | null } | null };
+export type GetBarcodeByIdQuery = { __typename?: 'Query', barcode?: { __typename?: 'Barcode', id?: string | null, extras?: any | null, name?: string | null, supplierName?: string | null, supplierArticleCode?: string | null, rotation?: number | null, preparationMode?: number | null, blacklisted?: boolean | null, stockOwnerId?: string | null, rotationText?: string | null, preparationModeText?: string | null } | null };
 
 export type CreateBarcodeMutationVariables = Exact<{
   input: CreateBarcodeInput;
 }>;
 
 
-export type CreateBarcodeMutation = { __typename?: 'Mutation', createBarcode: { __typename?: 'Barcode', id?: string | null, extras?: any | null, name?: string | null, supplierName?: string | null, supplierArticleCode?: string | null, quantity?: number | null, rotation?: number | null, preparationMode?: number | null, flagDouble?: number | null, blacklisted?: boolean | null, stockOwnerId?: string | null, rotationText?: string | null, preparationModeText?: string | null } };
+export type CreateBarcodeMutation = { __typename?: 'Mutation', createBarcode: { __typename?: 'Barcode', id?: string | null, extras?: any | null, name?: string | null, supplierName?: string | null, supplierArticleCode?: string | null, rotation?: number | null, preparationMode?: number | null, blacklisted?: boolean | null, stockOwnerId?: string | null, rotationText?: string | null, preparationModeText?: string | null } };
 
 export type DeleteBarcodeMutationVariables = Exact<{
   id: Scalars['String'];
@@ -8442,7 +9505,7 @@ export type UpdateBarcodeMutationVariables = Exact<{
 }>;
 
 
-export type UpdateBarcodeMutation = { __typename?: 'Mutation', updateBarcode?: { __typename?: 'Barcode', id?: string | null, extras?: any | null, name?: string | null, supplierName?: string | null, supplierArticleCode?: string | null, quantity?: number | null, rotation?: number | null, preparationMode?: number | null, flagDouble?: number | null, blacklisted?: boolean | null, stockOwnerId?: string | null, rotationText?: string | null, preparationModeText?: string | null } | null };
+export type UpdateBarcodeMutation = { __typename?: 'Mutation', updateBarcode?: { __typename?: 'Barcode', id?: string | null, extras?: any | null, name?: string | null, supplierName?: string | null, supplierArticleCode?: string | null, rotation?: number | null, preparationMode?: number | null, blacklisted?: boolean | null, stockOwnerId?: string | null, rotationText?: string | null, preparationModeText?: string | null } | null };
 
 export type SimpleGetAllBLocksQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -8759,14 +9822,14 @@ export type GetAllStockOwnersQueryVariables = Exact<{
 }>;
 
 
-export type GetAllStockOwnersQuery = { __typename?: 'Query', stockOwners: { __typename?: 'StockOwnerListResult', count: number, itemsPerPage: number, totalPages: number, results: Array<{ __typename?: 'StockOwner', id?: string | null, name?: string | null, contact?: string | null, address1?: string | null, address2?: string | null, address3?: string | null, postCode?: string | null, city?: string | null, country?: string | null, countryCode?: string | null, phone?: string | null, mobile?: string | null, email?: string | null, senderName?: string | null, senderContact?: string | null, senderAddress1?: string | null, senderAddress2?: string | null, senderAddress3?: string | null, senderPostCode?: string | null, senderCity?: string | null, senderCountry?: string | null, senderCountryCode?: string | null, senderPhone?: string | null, senderMobile?: string | null, senderEmail?: string | null, s3ExchangeDir?: string | null, exchangePrefix?: string | null, logoUrl?: string | null, awsAccessKeyId?: string | null, awsSecretAccessKey?: string | null, status?: number | null, statusText?: string | null }> } };
+export type GetAllStockOwnersQuery = { __typename?: 'Query', stockOwners: { __typename?: 'StockOwnerListResult', count: number, itemsPerPage: number, totalPages: number, results: Array<{ __typename?: 'StockOwner', id?: string | null, name?: string | null, contact?: string | null, address1?: string | null, address2?: string | null, address3?: string | null, postCode?: string | null, city?: string | null, country?: string | null, countryCode?: string | null, phone?: string | null, mobile?: string | null, email?: string | null, senderName?: string | null, senderContact?: string | null, senderAddress1?: string | null, senderAddress2?: string | null, senderAddress3?: string | null, senderPostCode?: string | null, senderCity?: string | null, senderCountry?: string | null, senderCountryCode?: string | null, senderPhone?: string | null, senderMobile?: string | null, senderEmail?: string | null, logoUrl?: string | null, awsAccessKeyId?: string | null, awsSecretAccessKey?: string | null, status?: number | null, statusText?: string | null }> } };
 
 export type GetStockOwnerByIdQueryVariables = Exact<{
   id: Scalars['String'];
 }>;
 
 
-export type GetStockOwnerByIdQuery = { __typename?: 'Query', stockOwner?: { __typename?: 'StockOwner', id?: string | null, name?: string | null, contact?: string | null, address1?: string | null, address2?: string | null, address3?: string | null, postCode?: string | null, city?: string | null, country?: string | null, countryCode?: string | null, phone?: string | null, mobile?: string | null, email?: string | null, senderName?: string | null, senderContact?: string | null, senderAddress1?: string | null, senderAddress2?: string | null, senderAddress3?: string | null, senderPostCode?: string | null, senderCity?: string | null, senderCountry?: string | null, senderCountryCode?: string | null, senderPhone?: string | null, senderMobile?: string | null, senderEmail?: string | null, s3ExchangeDir?: string | null, exchangePrefix?: string | null, logoUrl?: string | null, awsAccessKeyId?: string | null, awsSecretAccessKey?: string | null, status?: number | null, statusText?: string | null } | null };
+export type GetStockOwnerByIdQuery = { __typename?: 'Query', stockOwner?: { __typename?: 'StockOwner', id?: string | null, name?: string | null, contact?: string | null, address1?: string | null, address2?: string | null, address3?: string | null, postCode?: string | null, city?: string | null, country?: string | null, countryCode?: string | null, phone?: string | null, mobile?: string | null, email?: string | null, senderName?: string | null, senderContact?: string | null, senderAddress1?: string | null, senderAddress2?: string | null, senderAddress3?: string | null, senderPostCode?: string | null, senderCity?: string | null, senderCountry?: string | null, senderCountryCode?: string | null, senderPhone?: string | null, senderMobile?: string | null, senderEmail?: string | null, logoUrl?: string | null, awsAccessKeyId?: string | null, awsSecretAccessKey?: string | null, status?: number | null, statusText?: string | null } | null };
 
 export type GetStockOwnerIdsQueryVariables = Exact<{
   filters?: InputMaybe<StockOwnerSearchFilters>;
@@ -8783,7 +9846,7 @@ export type CreateStockOwnerMutationVariables = Exact<{
 }>;
 
 
-export type CreateStockOwnerMutation = { __typename?: 'Mutation', createStockOwner: { __typename?: 'StockOwner', id?: string | null, name?: string | null, contact?: string | null, address1?: string | null, address2?: string | null, address3?: string | null, postCode?: string | null, city?: string | null, country?: string | null, countryCode?: string | null, phone?: string | null, mobile?: string | null, email?: string | null, senderName?: string | null, senderContact?: string | null, senderAddress1?: string | null, senderAddress2?: string | null, senderAddress3?: string | null, senderPostCode?: string | null, senderCity?: string | null, senderCountry?: string | null, senderCountryCode?: string | null, senderPhone?: string | null, senderMobile?: string | null, senderEmail?: string | null, s3ExchangeDir?: string | null, exchangePrefix?: string | null, logoUrl?: string | null, awsAccessKeyId?: string | null, awsSecretAccessKey?: string | null, status?: number | null } };
+export type CreateStockOwnerMutation = { __typename?: 'Mutation', createStockOwner: { __typename: 'StockOwner', id?: string | null, name?: string | null } | { __typename: 'ValidationError' } };
 
 export type DeleteStockOwnerMutationVariables = Exact<{
   id: Scalars['String'];
@@ -8805,7 +9868,7 @@ export type UpdateStockOwnerMutationVariables = Exact<{
 }>;
 
 
-export type UpdateStockOwnerMutation = { __typename?: 'Mutation', updateStockOwner?: { __typename?: 'StockOwner', id?: string | null, name?: string | null, contact?: string | null, address1?: string | null, address2?: string | null, address3?: string | null, postCode?: string | null, city?: string | null, country?: string | null, countryCode?: string | null, phone?: string | null, mobile?: string | null, email?: string | null, senderName?: string | null, senderContact?: string | null, senderAddress1?: string | null, senderAddress2?: string | null, senderAddress3?: string | null, senderPostCode?: string | null, senderCity?: string | null, senderCountry?: string | null, senderCountryCode?: string | null, senderPhone?: string | null, senderMobile?: string | null, senderEmail?: string | null, s3ExchangeDir?: string | null, exchangePrefix?: string | null, logoUrl?: string | null, awsAccessKeyId?: string | null, awsSecretAccessKey?: string | null, status?: number | null } | null };
+export type UpdateStockOwnerMutation = { __typename?: 'Mutation', updateStockOwner?: { __typename?: 'StockOwner', id?: string | null, name?: string | null } | null };
 
 export type GetStockOwnersStatusesConfigsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -9144,10 +10207,8 @@ export const GetAllBarcodesDocument = `
       name
       supplierName
       supplierArticleCode
-      quantity
       rotation
       preparationMode
-      flagDouble
       blacklisted
       stockOwnerId
       rotationText
@@ -9178,10 +10239,8 @@ export const GetBarcodeByIdDocument = `
     name
     supplierName
     supplierArticleCode
-    quantity
     rotation
     preparationMode
-    flagDouble
     blacklisted
     stockOwnerId
     rotationText
@@ -9211,10 +10270,8 @@ export const CreateBarcodeDocument = `
     name
     supplierName
     supplierArticleCode
-    quantity
     rotation
     preparationMode
-    flagDouble
     blacklisted
     stockOwnerId
     rotationText
@@ -9293,10 +10350,8 @@ export const UpdateBarcodeDocument = `
     name
     supplierName
     supplierArticleCode
-    quantity
     rotation
     preparationMode
-    flagDouble
     blacklisted
     stockOwnerId
     rotationText
@@ -10514,8 +11569,6 @@ export const GetAllStockOwnersDocument = `
       senderPhone
       senderMobile
       senderEmail
-      s3ExchangeDir
-      exchangePrefix
       logoUrl
       awsAccessKeyId
       awsSecretAccessKey
@@ -10567,8 +11620,6 @@ export const GetStockOwnerByIdDocument = `
     senderPhone
     senderMobile
     senderEmail
-    s3ExchangeDir
-    exchangePrefix
     logoUrl
     awsAccessKeyId
     awsSecretAccessKey
@@ -10626,37 +11677,11 @@ export const useGetStockOwnerIdsQuery = <
 export const CreateStockOwnerDocument = `
     mutation CreateStockOwner($input: CreateStockOwnerInput!) {
   createStockOwner(input: $input) {
-    id
-    name
-    contact
-    address1
-    address2
-    address3
-    postCode
-    city
-    country
-    countryCode
-    phone
-    mobile
-    email
-    senderName
-    senderContact
-    senderAddress1
-    senderAddress2
-    senderAddress3
-    senderPostCode
-    senderCity
-    senderCountry
-    senderCountryCode
-    senderPhone
-    senderMobile
-    senderEmail
-    s3ExchangeDir
-    exchangePrefix
-    logoUrl
-    awsAccessKeyId
-    awsSecretAccessKey
-    status
+    __typename
+    ... on StockOwner {
+      id
+      name
+    }
   }
 }
     `;
@@ -10714,35 +11739,6 @@ export const UpdateStockOwnerDocument = `
   updateStockOwner(id: $id, input: $input) {
     id
     name
-    contact
-    address1
-    address2
-    address3
-    postCode
-    city
-    country
-    countryCode
-    phone
-    mobile
-    email
-    senderName
-    senderContact
-    senderAddress1
-    senderAddress2
-    senderAddress3
-    senderPostCode
-    senderCity
-    senderCountry
-    senderCountryCode
-    senderPhone
-    senderMobile
-    senderEmail
-    s3ExchangeDir
-    exchangePrefix
-    logoUrl
-    awsAccessKeyId
-    awsSecretAccessKey
-    status
   }
 }
     `;

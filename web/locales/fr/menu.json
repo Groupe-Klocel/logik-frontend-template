@@ -55,6 +55,8 @@
     "status-evolutions": "Evolution états",
     "stock-management": "Gestion de stock",
     "stock-statuses": "Etats de stock",
+    "stock-owner": "Propriétaire du stock",
+    "stock-owners": "Propriétaires des stocks",
     "users": "Utilisateurs",
     "users-rights": "Droits utilisateurs",
     "warning": "Alertes",

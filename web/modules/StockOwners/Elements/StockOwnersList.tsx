@@ -38,8 +38,6 @@ const StockOwnersList = ({ searchCriteria }: StockOwnersListTypeProps) => {
     const logo = t('d:logoUrl');
     const awsAccessKeyId = t('d:awsAccessKeyId');
     const awsSecretAccessKey = t('d:awsSecretAccessKey');
-    const s3ExchangeDir = t('d:s3ExchangeDir');
-    const exchangePrefix = t('d:exchangePrefix');
     const contactName = t('d:contactName');
     const address2 = t('d:address2');
     const address3 = t('d:address3');
@@ -122,7 +120,7 @@ const StockOwnersList = ({ searchCriteria }: StockOwnersListTypeProps) => {
     const handleTableChange = async (_pagination: any, _filter: any, sorter: any) => {
         await setSort(orderByFormater(sorter));
     };
-    //console.log('JND', stockOwners);
+
     const { mutate, isLoading: softDeleteLoading } = useSoftDeleteStockOwnerMutation<Error>(
         graphqlRequestClient,
         {
@@ -197,16 +195,6 @@ const StockOwnersList = ({ searchCriteria }: StockOwnersListTypeProps) => {
             title: awsSecretAccessKey,
             dataIndex: 'awsSecretAccessKey',
             key: 'awsSecretAccessKey'
-        },
-        {
-            title: s3ExchangeDir,
-            dataIndex: 's3ExchangeDir',
-            key: 's3ExchangeDir'
-        },
-        {
-            title: exchangePrefix,
-            dataIndex: 'exchangePrefix',
-            key: 'exchangePrefix'
         },
         {
             title: contactName,
@@ -305,10 +293,8 @@ const StockOwnersList = ({ searchCriteria }: StockOwnersListTypeProps) => {
         },
         {
             title: status,
-            dataIndex: 'status',
-            key: 'status',
-            render: (status: any) =>
-                status ? stockOwnerStatuses.find((e: any) => e.code == status).text : 'N/A'
+            dataIndex: 'statusText',
+            key: 'statusText'
         },
         {
             title: actions,

@@ -13,7 +13,7 @@ export const StockOwners = () => {
                 routes={stockOwnersRoutes}
                 actionsRight={
                     <LinkButton
-                        title={t('actions:add2', { name: t('common:stock-owner') })}
+                        title={t('actions:add2', { name: t('menu:stock-owner') })}
                         path="/add-stock-owner"
                         type="primary"
                     />

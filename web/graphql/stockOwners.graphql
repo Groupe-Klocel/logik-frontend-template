@@ -34,8 +34,6 @@ query GetAllStockOwners(
             senderPhone
             senderMobile
             senderEmail
-            s3ExchangeDir
-            exchangePrefix
             logoUrl
             awsAccessKeyId
             awsSecretAccessKey
@@ -72,8 +70,6 @@ query GetStockOwnerById($id: String!) {
         senderPhone
         senderMobile
         senderEmail
-        s3ExchangeDir
-        exchangePrefix
         logoUrl
         awsAccessKeyId
         awsSecretAccessKey
@@ -101,37 +97,11 @@ query GetStockOwnerIds(
 
 mutation CreateStockOwner($input: CreateStockOwnerInput!) {
     createStockOwner(input: $input) {
-        id
-        name
-        contact
-        address1
-        address2
-        address3
-        postCode
-        city
-        country
-        countryCode
-        phone
-        mobile
-        email
-        senderName
-        senderContact
-        senderAddress1
-        senderAddress2
-        senderAddress3
-        senderPostCode
-        senderCity
-        senderCountry
-        senderCountryCode
-        senderPhone
-        senderMobile
-        senderEmail
-        s3ExchangeDir
-        exchangePrefix
-        logoUrl
-        awsAccessKeyId
-        awsSecretAccessKey
-        status
+        __typename
+        ... on StockOwner {
+            id
+            name
+        }
     }
 }
 
@@ -147,35 +117,6 @@ mutation UpdateStockOwner($id: String!, $input: UpdateStockOwnerInput!) {
     updateStockOwner(id: $id, input: $input) {
         id
         name
-        contact
-        address1
-        address2
-        address3
-        postCode
-        city
-        country
-        countryCode
-        phone
-        mobile
-        email
-        senderName
-        senderContact
-        senderAddress1
-        senderAddress2
-        senderAddress3
-        senderPostCode
-        senderCity
-        senderCountry
-        senderCountryCode
-        senderPhone
-        senderMobile
-        senderEmail
-        s3ExchangeDir
-        exchangePrefix
-        logoUrl
-        awsAccessKeyId
-        awsSecretAccessKey
-        status
     }
 }
 
