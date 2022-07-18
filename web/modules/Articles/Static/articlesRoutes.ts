@@ -48,6 +48,14 @@ export const addFeatureTypeRoutes = [
     }
 ];
 
+export const addFeatureTypeDetailRoutes = [
+    ...featuresTypesRoutes,
+    {
+        path: '/add-feature-type-detail',
+        breadcrumbName: 'actions:add-feature-type-detail'
+    }
+];
+
 export const articlesSubRoutes = [
     ...articlesRoutes,
     {

@@ -79,8 +79,6 @@ const FeatureTypeDetails = ({ details }: IFeatureTypeDetailsProps) => {
         }
     }, [data]);
 
-    console.log('zzz', data);
-
     const featureTypeDetailsColumns = [
         {
             title: 'menu:feature-code',

@@ -1,7 +1,7 @@
 import { WrapperForm } from '@components';
 import { Button, Input, Form, Select, Typography, InputNumber } from 'antd';
 import useTranslation from 'next-translate/useTranslation';
-import { FC, useEffect, useState } from 'react';
+import { FC, useEffect } from 'react';
 import { useAuth } from 'context/AuthContext';
 import { useRouter } from 'next/router';
 import {
@@ -25,8 +25,6 @@ export const EditFeatureTypeForm: FC<EditFeatureTypeFormProps> = ({
     const { t } = useTranslation('common');
     const { graphqlRequestClient } = useAuth();
     const router = useRouter();
-
-    const errorMessageEmptyInput = t('messages:error-message-empty-input');
 
     // TYPED SAFE ALL
     const [form] = Form.useForm();
@@ -52,8 +50,6 @@ export const EditFeatureTypeForm: FC<EditFeatureTypeFormProps> = ({
         mutate({ id, input });
     };
 
-    console.log('yoyo', form.getFieldsValue(true));
-
     const onFinish = () => {
         form.validateFields()
             .then(() => {
@@ -65,7 +61,6 @@ export const EditFeatureTypeForm: FC<EditFeatureTypeFormProps> = ({
                 delete formData['en'];
                 delete formData['fr'];
                 delete formData['system'];
-                console.log('zzz', formData);
                 updateFeatureType({ id: featureTypeId, input: formData });
             })
             .catch((err) => {
@@ -84,7 +79,6 @@ export const EditFeatureTypeForm: FC<EditFeatureTypeFormProps> = ({
         delete tmp_details['modified'];
         delete tmp_details['modifiedBy'];
         delete tmp_details['translation'];
-        console.log('yyy', tmp_details);
         form.setFieldsValue(tmp_details);
         if (updateLoading) {
             showInfo(t('messages:info-create-wip'));

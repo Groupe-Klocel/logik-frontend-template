@@ -7456,6 +7456,7 @@ export enum Table {
   Parameter = 'PARAMETER',
   Pattern = 'PATTERN',
   PatternPath = 'PATTERN_PATH',
+  PatternPathLocation = 'PATTERN_PATH_LOCATION',
   PurchaseOrder = 'PURCHASE_ORDER',
   PurchaseOrderLine = 'PURCHASE_ORDER_LINE',
   ReturnCode = 'RETURN_CODE',
@@ -8558,6 +8559,16 @@ export type UpdateFeatureCodeMutationVariables = Exact<{
 
 
 export type UpdateFeatureCodeMutation = { __typename?: 'Mutation', updateFeatureCode?: { __typename?: 'FeatureCode', id?: string | null, name?: string | null, unique?: boolean | null, dateType?: boolean | null, prefixBarcode?: string | null, lengthBarcode?: string | null, suffixBarcode?: string | null, stockOwnerId?: string | null } | null };
+
+export type GetFeatureTypesParamsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetFeatureTypesParamsQuery = { __typename?: 'Query', listParametersForAScope: Array<{ __typename?: 'ParameterResults', id: string, scope: string, code: string, text: string }> };
+
+export type SimpleGetAllFeatureCodesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type SimpleGetAllFeatureCodesQuery = { __typename?: 'Query', featureCodes: { __typename?: 'FeatureCodeListResult', results: Array<{ __typename?: 'FeatureCode', id?: string | null, name?: string | null, stockOwnerId?: string | null }> } };
 
 export type GetAllFeatureTypeDetailsQueryVariables = Exact<{
   filters?: InputMaybe<FeatureTypeDetailSearchFilters>;
@@ -9852,6 +9863,55 @@ export const useUpdateFeatureCodeMutation = <
     useMutation<UpdateFeatureCodeMutation, TError, UpdateFeatureCodeMutationVariables, TContext>(
       ['UpdateFeatureCode'],
       (variables?: UpdateFeatureCodeMutationVariables) => fetcher<UpdateFeatureCodeMutation, UpdateFeatureCodeMutationVariables>(client, UpdateFeatureCodeDocument, variables, headers)(),
+      options
+    );
+export const GetFeatureTypesParamsDocument = `
+    query getFeatureTypesParams {
+  listParametersForAScope(scope: "feature_type") {
+    id
+    scope
+    code
+    text
+  }
+}
+    `;
+export const useGetFeatureTypesParamsQuery = <
+      TData = GetFeatureTypesParamsQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables?: GetFeatureTypesParamsQueryVariables,
+      options?: UseQueryOptions<GetFeatureTypesParamsQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetFeatureTypesParamsQuery, TError, TData>(
+      variables === undefined ? ['getFeatureTypesParams'] : ['getFeatureTypesParams', variables],
+      fetcher<GetFeatureTypesParamsQuery, GetFeatureTypesParamsQueryVariables>(client, GetFeatureTypesParamsDocument, variables, headers),
+      options
+    );
+export const SimpleGetAllFeatureCodesDocument = `
+    query SimpleGetAllFeatureCodes {
+  featureCodes {
+    results {
+      id
+      name
+      stockOwnerId
+    }
+  }
+}
+    `;
+export const useSimpleGetAllFeatureCodesQuery = <
+      TData = SimpleGetAllFeatureCodesQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables?: SimpleGetAllFeatureCodesQueryVariables,
+      options?: UseQueryOptions<SimpleGetAllFeatureCodesQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<SimpleGetAllFeatureCodesQuery, TError, TData>(
+      variables === undefined ? ['SimpleGetAllFeatureCodes'] : ['SimpleGetAllFeatureCodes', variables],
+      fetcher<SimpleGetAllFeatureCodesQuery, SimpleGetAllFeatureCodesQueryVariables>(client, SimpleGetAllFeatureCodesDocument, variables, headers),
       options
     );
 export const GetAllFeatureTypeDetailsDocument = `

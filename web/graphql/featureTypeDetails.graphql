@@ -1,3 +1,22 @@
+query getFeatureTypesParams {
+    listParametersForAScope(scope: "feature_type") {
+        id
+        scope
+        code
+        text
+    }
+}
+
+query SimpleGetAllFeatureCodes {
+    featureCodes {
+        results {
+            id
+            name
+            stockOwnerId
+        }
+    }
+}
+
 query GetAllFeatureTypeDetails(
     $filters: FeatureTypeDetailSearchFilters
     $orderBy: [FeatureTypeDetailOrderByCriterion!]

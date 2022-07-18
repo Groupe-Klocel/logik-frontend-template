@@ -22,6 +22,7 @@
     "features": "Traçabilités",
     "feature-code": "Donnée traçable",
     "feature-type": "Règle de traçabilité",
+    "feature-type-detail": "Détail règle de traçabilité",
     "features-codes": "Données traçables",
     "features-types": "Règles de traçabilité",
     "feedbacks": "Remontées",
