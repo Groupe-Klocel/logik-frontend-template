@@ -1,0 +1,186 @@
+query SimpleGetAllStockOwners {
+    stockOwners {
+        results {
+            id
+            name
+        }
+    }
+}
+
+query GetAllArticleSet(
+    $filters: ArticleSetSearchFilters
+    $orderBy: [ArticleSetOrderByCriterion!]
+    $page: Int!
+    $itemsPerPage: Int!
+) {
+    articleSets(filters: $filters, orderBy: $orderBy, page: $page, itemsPerPage: $itemsPerPage) {
+        count
+        itemsPerPage
+        totalPages
+        results {
+            id
+            name
+            comment
+            stockOwnerId
+            stockOwner {
+                name
+            }
+            articleId
+            article {
+                name
+            }
+            extras
+            created
+            createdBy
+            modified
+            modifiedBy
+        }
+    }
+}
+
+query GetArticleSetById($id: String!) {
+    articleSet(id: $id) {
+        id
+        name
+        comment
+        stockOwnerId
+        stockOwner {
+            name
+        }
+        articleId
+        article {
+            name
+        }
+        extras
+        created
+        createdBy
+        modified
+        modifiedBy
+    }
+}
+
+query GetArticleSetIds(
+    $filters: ArticleSetSearchFilters
+    $orderBy: [ArticleSetOrderByCriterion!]
+    $page: Int!
+    $itemsPerPage: Int!
+) {
+    articleSets(filters: $filters, orderBy: $orderBy, page: $page, itemsPerPage: $itemsPerPage) {
+        count
+        itemsPerPage
+        totalPages
+        results {
+            id
+            name
+        }
+    }
+}
+
+mutation CreateArticleSet($input: CreateArticleSetInput!) {
+    createArticleSet(input: $input) {
+        id
+        name
+        comment
+        stockOwnerId
+        articleId
+    }
+}
+
+mutation DeleteArticleSet($id: String!) {
+    deleteArticleSet(id: $id)
+}
+
+mutation UpdateArticleSet($id: String!, $input: UpdateArticleSetInput!) {
+    updateArticleSet(id: $id, input: $input) {
+        id
+        name
+        comment
+        stockOwnerId
+        articleId
+    }
+}
+
+query GetAllArticleSetDetails(
+    $filters: ArticleSetDetailSearchFilters
+    $orderBy: [ArticleSetDetailOrderByCriterion!]
+    $page: Int!
+    $itemsPerPage: Int!
+) {
+    articleSetDetails(
+        filters: $filters
+        orderBy: $orderBy
+        page: $page
+        itemsPerPage: $itemsPerPage
+    ) {
+        count
+        itemsPerPage
+        totalPages
+        results {
+            id
+            articleSetId
+            articleSet {
+                name
+            }
+            stockOwnerId
+            stockOwner {
+                name
+            }
+            articleId
+            article {
+                name
+            }
+            quantity
+            extras
+            created
+            createdBy
+            modified
+            modifiedBy
+        }
+    }
+}
+
+query GetArticleSetDetailById($id: String!) {
+    articleSetDetail(id: $id) {
+        id
+        articleSetId
+        articleSet {
+            name
+        }
+        stockOwnerId
+        stockOwner {
+            name
+        }
+        articleId
+        article {
+            name
+        }
+        quantity
+        extras
+        created
+        createdBy
+        modified
+        modifiedBy
+    }
+}
+
+mutation CreateArticleSetDetail($input: CreateArticleSetDetailInput!) {
+    createArticleSetDetail(input: $input) {
+        id
+        articleSetId
+        stockOwnerId
+        articleId
+    }
+}
+
+mutation DeleteArticleSetDetail($id: String!) {
+    deleteArticleSetDetail(id: $id)
+}
+
+mutation UpdateArticleSetDetail($id: String!, $input: UpdateArticleSetDetailInput!) {
+    updateArticleSetDetail(id: $id, input: $input) {
+        id
+        articleSetId
+        stockOwnerId
+        articleId
+    }
+}
