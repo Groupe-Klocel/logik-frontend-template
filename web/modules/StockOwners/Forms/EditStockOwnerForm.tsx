@@ -1,25 +1,11 @@
 import { UploadOutlined } from '@ant-design/icons';
 import { WrapperForm } from '@components';
 import { showError, showInfo, showSuccess } from '@helpers';
-import {
-    Button,
-    Checkbox,
-    Col,
-    Descriptions,
-    Divider,
-    Form,
-    Input,
-    InputNumber,
-    Row,
-    Select,
-    Upload
-} from 'antd';
+import { Button, Col, Divider, Form, Input, Row, Select, Upload } from 'antd';
 import { useAuth } from 'context/AuthContext';
 import {
-    SimpleGetAllStockownersQuery,
     UpdateStockOwnerMutation,
     UpdateStockOwnerMutationVariables,
-    useSimpleGetAllStockownersQuery,
     useUpdateStockOwnerMutation
 } from 'generated/graphql';
 import useTranslation from 'next-translate/useTranslation';
@@ -31,8 +17,6 @@ export type EditStockOwnerFormProps = {
     details: any;
 };
 
-const { Option } = Select;
-
 export const EditStockOwnerForm: FC<EditStockOwnerFormProps> = ({
     stockOwnerId,
     details
@@ -41,13 +25,10 @@ export const EditStockOwnerForm: FC<EditStockOwnerFormProps> = ({
     const { graphqlRequestClient } = useAuth();
     const router = useRouter();
     const name = t('common:name');
-    const accesKey = t('common:access-key');
-    const secretKey = t('common:secret-key');
-    const exchangeDirectory = t('common:exchange-directory');
-    const exchangePrefix = t('common:exchange-prefix');
-    const contactName = t('common:contact-name');
-    const senderName = t('common:sender-name');
-    const senderContact = t('common:sender-contact');
+    const accesKey = t('d:awsAccessKeyId');
+    const secretKey = t('d:awsSecretAccessKey');
+    const exchangePrefix = t('d:exchange-prefix');
+    const contactName = t('d:contactName');
     const address1 = t('common:address1');
     const address2 = t('common:address2');
     const address3 = t('common:address3');
@@ -55,15 +36,14 @@ export const EditStockOwnerForm: FC<EditStockOwnerFormProps> = ({
     const city = t('common:city');
     const country = t('common:country');
     const countryCode = t('common:country-code');
-    const phone = t('common:phone');
-    const mobile = t('common:mobile');
-    const email = t('common:email');
-    const logo = t('common:logo');
+    const phone = t('d:phone');
+    const mobile = t('d:mobile');
+    const email = t('d:email');
+    const logo = t('d:logoUrl');
     const errorMessageEmptyInput = t('messages:error-message-empty-input');
     const submit = t('actions:submit');
     const cancel = t('actions:cancel');
     const [form] = Form.useForm();
-    const [stockOwners, setStockOwners] = useState<any>();
 
     const {
         mutate,
@@ -83,35 +63,15 @@ export const EditStockOwnerForm: FC<EditStockOwnerFormProps> = ({
         }
     });
 
-    //console.log('Stock Owner Id : ', stockOwnerId);
-
     const updateStockOwner = ({ id, input }: UpdateStockOwnerMutationVariables) => {
         mutate({ id, input });
     };
-
-    //To render Simple stockOwners list
-    const stockOwnersList = useSimpleGetAllStockownersQuery<
-        Partial<SimpleGetAllStockownersQuery>,
-        Error
-    >(graphqlRequestClient);
-
-    useEffect(() => {
-        if (stockOwnersList) {
-            setStockOwners(stockOwnersList?.data?.stockOwners?.results);
-        }
-    }, [stockOwnersList]);
 
     const onFinish = () => {
         form.validateFields()
             .then(() => {
                 const formData = form.getFieldsValue(true);
-                // if (formData.stockOwnerId == undefined) {
-                //     formData.stockOwnerId = stockOwners?.find(
-                //         (e: any) => e.name == formData.associatedStockOwner
-                //     ).id;
-                // }
                 delete formData['statusText'];
-                console.log('Here ', formData);
                 updateStockOwner({
                     id: stockOwnerId,
                     input: formData
@@ -122,7 +82,6 @@ export const EditStockOwnerForm: FC<EditStockOwnerFormProps> = ({
     useEffect(() => {
         const tmp_details = {
             ...details
-            //associatedStockOwner: details.stockOwner.name
         };
         delete tmp_details['id'];
         delete tmp_details['created'];
@@ -165,11 +124,6 @@ export const EditStockOwnerForm: FC<EditStockOwnerFormProps> = ({
                     </Col>
                     <Col xs={24} xl={12}>
                         <Form.Item label={secretKey} name="awsSecretAccessKey">
-                            <Input />
-                        </Form.Item>
-                    </Col>
-                    <Col xs={24} xl={12}>
-                        <Form.Item label={exchangeDirectory} name="s3ExchangeDir">
                             <Input />
                         </Form.Item>
                     </Col>

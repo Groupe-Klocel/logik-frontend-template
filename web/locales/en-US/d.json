@@ -88,6 +88,7 @@
     "awsAccessKeyId": "Access Key",
     "awsSecretAccessKey": "Secret Key",
     "contactName": "Contact Name",
+    "exchange-prefix": "Exchange prefix",
     "logoUrl": "Logo",
     "mobile": "Mobile",
     "countryCode": "Country Code",

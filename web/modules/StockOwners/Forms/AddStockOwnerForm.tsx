@@ -1,7 +1,7 @@
 import { UploadOutlined } from '@ant-design/icons';
 import { WrapperForm } from '@components';
 import { showError, showInfo, showSuccess } from '@helpers';
-import { Button, Col, Descriptions, Divider, Form, Input, InputNumber, Row, Upload } from 'antd';
+import { Button, Col, Divider, Form, Input, Row, Upload } from 'antd';
 import {
     CreateStockOwnerMutation,
     CreateStockOwnerMutationVariables,
@@ -15,11 +15,10 @@ import { useEffect } from 'react';
 export const AddStockOwnerForm = () => {
     const { t } = useTranslation();
     const name = t('common:name');
-    const accesKey = t('common:access-key');
-    const secretKey = t('common:secret-key');
-    const exchangeDirectory = t('common:exchange-directory');
-    const exchangePrefix = t('common:exchange-prefix');
-    const contactName = t('common:contact-name');
+    const accesKey = t('d:awsAccessKeyId');
+    const secretKey = t('d:awsSecretAccessKey');
+    const exchangePrefix = t('d:exchange-prefix');
+    const contactName = t('d:contactName');
     const address1 = t('common:address1');
     const address2 = t('common:address2');
     const address3 = t('common:address3');
@@ -27,10 +26,10 @@ export const AddStockOwnerForm = () => {
     const city = t('common:city');
     const country = t('common:country');
     const countryCode = t('common:country-code');
-    const phone = t('common:phone');
-    const mobile = t('common:mobile');
-    const email = t('common:email');
-    const logo = t('common:logo');
+    const phone = t('d:phone');
+    const mobile = t('d:mobile');
+    const email = t('d:email');
+    const logo = t('d:logoUrl');
     const errorMessageEmptyInput = t('messages:error-message-empty-input');
     const submit = t('actions:submit');
     const cancel = t('actions:cancel');
@@ -45,7 +44,9 @@ export const AddStockOwnerForm = () => {
                 _variables: CreateStockOwnerMutationVariables,
                 _context: any
             ) => {
-                router.push(`/stock-owner/${data.createStockOwner.id}`);
+                if (data.createStockOwner.__typename == 'StockOwner') {
+                    router.push(`/stock-owner/${data.createStockOwner.id}`);
+                }
                 showSuccess(t('messages:success-created'));
             },
             onError: () => {
@@ -63,7 +64,6 @@ export const AddStockOwnerForm = () => {
             .then(() => {
                 // Here make api call of something else
                 const formData = form.getFieldsValue(true);
-                //delete formData.stockOwnerName;
                 createStockOwner({ input: formData });
             })
             .catch((err) => {
@@ -71,7 +71,6 @@ export const AddStockOwnerForm = () => {
             });
     };
 
-    //TODO FETCH GROUP'S NAME
     // TYPED SAFE ALL
     useEffect(() => {
         if (createLoading) {
@@ -107,11 +106,6 @@ export const AddStockOwnerForm = () => {
                     </Col>
                     <Col xs={24} xl={12}>
                         <Form.Item label={secretKey} name="awsSecretAccessKey">
-                            <Input />
-                        </Form.Item>
-                    </Col>
-                    <Col xs={24} xl={12}>
-                        <Form.Item label={exchangeDirectory} name="s3ExchangeDir">
                             <Input />
                         </Form.Item>
                     </Col>
@@ -243,7 +237,7 @@ export const AddStockOwnerForm = () => {
                     </Col>
                 </Row>
             </Form>
-            <div style={{ textAlign: 'center' }}>
+            <div style={{ textAlign: 'center', marginBottom: 1000 }}>
                 <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
                     <Col xs={24} xl={12}>
                         <Button type="primary" loading={createLoading} onClick={onFinish}>

@@ -137,3 +137,20 @@ query SimpleGetAllStockowners {
         }
     }
 }
+
+mutation uploadFileByStockOwner($file: Upload!) {
+    uploadFile(stockOwnerId: "id_str", file: $file) {
+        fileName
+        presignedUrl
+    }
+}
+
+mutation deleteFileByStockOwner {
+    deleteFile(stockOwnerId: "id_str", fileName: "aaa.pdf")
+}
+
+query getFilesByStockOwner {
+    listFiles(stockOwnerId: "id_str") {
+        key
+    }
+}

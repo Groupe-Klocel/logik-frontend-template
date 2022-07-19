@@ -14,6 +14,6 @@ export const addstockOwnerRoutes = [
     ...stockOwnersRoutes,
     {
         path: '/add-stock-owner',
-        breadcrumbName: 'menu:add-stock-owner'
+        breadcrumbName: 'actions:add-stock-owner'
     }
 ];

@@ -13,6 +13,7 @@
     "add-packaging": "Add Packaging",
     "add-return-code": "Add Return Code",
     "add-status-config-feedback": "Add Status Config Feedback",
+    "add-stock-owner": "Add Stock Owner",
     "add-stock-status": "Add Stock Status",
     "add-user": "Add User",
     "add-your": "Add your {{name}}",
@@ -42,6 +43,5 @@
     "update-quantity": "Update box quantity",
     "update": "Update",
     "view": "View",
-    "enter-page-number": "Please enter the number of pages to print PDF",
-    "add-stock-owner": "Add Stock Owner"
+    "enter-page-number": "Please enter the number of pages to print PDF"
 }

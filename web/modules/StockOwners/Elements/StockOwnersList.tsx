@@ -305,7 +305,7 @@ const StockOwnersList = ({ searchCriteria }: StockOwnersListTypeProps) => {
                         icon={<EyeTwoTone />}
                         path={pathParams('/stock-owner/[id]', record.id)}
                     />
-                    {/* {record.status != 1005 ? (
+                    {record.status != 1005 ? (
                         <>
                             <LinkButton
                                 icon={<EditTwoTone />}
@@ -314,13 +314,12 @@ const StockOwnersList = ({ searchCriteria }: StockOwnersListTypeProps) => {
                             <Button
                                 icon={<DeleteOutlined />}
                                 danger
-                                disabled
                                 onClick={() => softDeleteStockOwner({ stockOwnerId: record.id })}
                             />
                         </>
                     ) : (
                         <></>
-                    )} */}
+                    )}
                 </Space>
             )
         }

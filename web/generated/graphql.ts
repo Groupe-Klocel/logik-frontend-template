@@ -9880,6 +9880,23 @@ export type SimpleGetAllStockownersQueryVariables = Exact<{ [key: string]: never
 
 export type SimpleGetAllStockownersQuery = { __typename?: 'Query', stockOwners: { __typename?: 'StockOwnerListResult', results: Array<{ __typename?: 'StockOwner', id?: string | null, name?: string | null }> } };
 
+export type UploadFileByStockOwnerMutationVariables = Exact<{
+  file: Scalars['Upload'];
+}>;
+
+
+export type UploadFileByStockOwnerMutation = { __typename?: 'Mutation', uploadFile: { __typename?: 'FileUploadResult', fileName: string, presignedUrl: string } };
+
+export type DeleteFileByStockOwnerMutationVariables = Exact<{ [key: string]: never; }>;
+
+
+export type DeleteFileByStockOwnerMutation = { __typename?: 'Mutation', deleteFile: boolean };
+
+export type GetFilesByStockOwnerQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetFilesByStockOwnerQuery = { __typename?: 'Query', listFiles: Array<{ __typename?: 'FileInfo', key: string }> };
+
 export type GetMyInfoQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -11801,6 +11818,66 @@ export const useSimpleGetAllStockownersQuery = <
     useQuery<SimpleGetAllStockownersQuery, TError, TData>(
       variables === undefined ? ['SimpleGetAllStockowners'] : ['SimpleGetAllStockowners', variables],
       fetcher<SimpleGetAllStockownersQuery, SimpleGetAllStockownersQueryVariables>(client, SimpleGetAllStockownersDocument, variables, headers),
+      options
+    );
+export const UploadFileByStockOwnerDocument = `
+    mutation uploadFileByStockOwner($file: Upload!) {
+  uploadFile(stockOwnerId: "id_str", file: $file) {
+    fileName
+    presignedUrl
+  }
+}
+    `;
+export const useUploadFileByStockOwnerMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<UploadFileByStockOwnerMutation, TError, UploadFileByStockOwnerMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<UploadFileByStockOwnerMutation, TError, UploadFileByStockOwnerMutationVariables, TContext>(
+      ['uploadFileByStockOwner'],
+      (variables?: UploadFileByStockOwnerMutationVariables) => fetcher<UploadFileByStockOwnerMutation, UploadFileByStockOwnerMutationVariables>(client, UploadFileByStockOwnerDocument, variables, headers)(),
+      options
+    );
+export const DeleteFileByStockOwnerDocument = `
+    mutation deleteFileByStockOwner {
+  deleteFile(stockOwnerId: "id_str", fileName: "aaa.pdf")
+}
+    `;
+export const useDeleteFileByStockOwnerMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<DeleteFileByStockOwnerMutation, TError, DeleteFileByStockOwnerMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<DeleteFileByStockOwnerMutation, TError, DeleteFileByStockOwnerMutationVariables, TContext>(
+      ['deleteFileByStockOwner'],
+      (variables?: DeleteFileByStockOwnerMutationVariables) => fetcher<DeleteFileByStockOwnerMutation, DeleteFileByStockOwnerMutationVariables>(client, DeleteFileByStockOwnerDocument, variables, headers)(),
+      options
+    );
+export const GetFilesByStockOwnerDocument = `
+    query getFilesByStockOwner {
+  listFiles(stockOwnerId: "id_str") {
+    key
+  }
+}
+    `;
+export const useGetFilesByStockOwnerQuery = <
+      TData = GetFilesByStockOwnerQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables?: GetFilesByStockOwnerQueryVariables,
+      options?: UseQueryOptions<GetFilesByStockOwnerQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetFilesByStockOwnerQuery, TError, TData>(
+      variables === undefined ? ['getFilesByStockOwner'] : ['getFilesByStockOwner', variables],
+      fetcher<GetFilesByStockOwnerQuery, GetFilesByStockOwnerQueryVariables>(client, GetFilesByStockOwnerDocument, variables, headers),
       options
     );
 export const GetMyInfoDocument = `
