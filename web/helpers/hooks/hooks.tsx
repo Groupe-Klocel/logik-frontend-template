@@ -19,6 +19,72 @@ import {
     useGetGoodsInLinesQuery,
     GetGoodsInLinesQuery
 } from 'generated/graphql';
+import { gql } from 'graphql-request';
+import { useEffect, useState } from 'react';
+
+const useList = (
+    fields: Array<string>,
+    search: any,
+    page: number,
+    itemsPerPage: number,
+    sort: any
+) => {
+    const { graphqlRequestClient } = useAuth();
+
+    const sortByDate = {
+        field: 'created',
+        ascending: false
+    };
+    const name = 'Article';
+
+    const query = gql`
+        query CustomListQuery(
+            $filters: ${name}SearchFilters
+            $orderBy: [${name}OrderByCriterion!]
+            $page: Int!
+            $itemsPerPage: Int!
+        ) {
+            articles(
+                filters: $filters
+                orderBy: $orderBy
+                page: $page
+                itemsPerPage: $itemsPerPage
+            ) {
+                count
+                itemsPerPage
+                totalPages
+                results {
+                    ${fields.join('\n')}
+                }
+            }
+        }
+    `;
+
+    const [data, setData] = useState<any>({ isLoading: true, data: [] });
+
+    useEffect(() => {
+        let newSort;
+
+        if (sort === null) {
+            newSort = sortByDate;
+        } else {
+            newSort = sort;
+        }
+
+        let variables = {
+            filters: search,
+            orderBy: newSort,
+            page: page,
+            itemsPerPage: itemsPerPage
+        };
+
+        graphqlRequestClient.request(query, variables).then((result: any) => {
+            setData({ isLoading: false, data: result });
+        });
+    }, [search, page, itemsPerPage, sort]);
+
+    return data;
+};
 
 const useArticles = (search: any, page: number, itemsPerPage: number, sort: any) => {
     const { graphqlRequestClient } = useAuth();
@@ -271,6 +337,7 @@ const useGoodsInLines = (
 };
 
 export {
+    useList,
     useArticles,
     useBlocks,
     useLocations,
