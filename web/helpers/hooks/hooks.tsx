@@ -23,6 +23,8 @@ import { gql } from 'graphql-request';
 import { useEffect, useState } from 'react';
 
 const useList = (
+    resolverName: string,
+    queryName: string,
     fields: Array<string>,
     search: any,
     page: number,
@@ -39,12 +41,12 @@ const useList = (
 
     const query = gql`
         query CustomListQuery(
-            $filters: ${name}SearchFilters
-            $orderBy: [${name}OrderByCriterion!]
+            $filters: ${resolverName}SearchFilters
+            $orderBy: [${resolverName}OrderByCriterion!]
             $page: Int!
             $itemsPerPage: Int!
         ) {
-            articles(
+            ${queryName}(
                 filters: $filters
                 orderBy: $orderBy
                 page: $page

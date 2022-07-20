@@ -26,24 +26,20 @@ import { EyeTwoTone, DeleteOutlined } from '@ant-design/icons';
 import { useState, useEffect, useCallback } from 'react';
 import { useAppState } from 'context/AppContext';
 
-export interface IArticlesListProps {
+export interface IGeneralListProps {
     searchCriteria?: any;
-    useColumns?: Array<string>;
-    sortableColumns?: Array<string>;
-    query: string;
+    useColumns: Array<string>;
+    sortableColumns: Array<string>;
+    queryName: string;
+    resolverName: string;
+    table: string;
 }
 
-const ListComponent = (props: IArticlesListProps) => {
-    const defaultProps = {
-        useColumns: [],
-        sortableColumns: []
-    };
-    props = { ...defaultProps, ...props };
-
+const ListComponent = (props: IGeneralListProps) => {
     const { t } = useTranslation();
     const { graphqlRequestClient } = useAuth();
 
-    const [articles, setArticles] = useState<DataQueryType>();
+    const [rows, setRows] = useState<DataQueryType>();
     const [columns, setColumns] = useState<Array<any>>([]);
 
     const [sort, setSort] = useState<any>(null);
@@ -58,18 +54,19 @@ const ListComponent = (props: IArticlesListProps) => {
     const mode =
         !!permissions &&
         permissions.find((p: any) => {
-            return p.table.toUpperCase() == Table.Article;
+            return p.table.toUpperCase() == props.table.toUpperCase();
         })?.mode;
 
     const { isLoading, data } = useList(
-        props.useColumns!,
+        props.resolverName,
+        props.queryName,
+        props.useColumns,
         props.searchCriteria,
         pagination.current,
         pagination.itemsPerPage,
         sort
     );
 
-    //Object.keys(data['articles']['results'][0]).toString()
     // EXPORT ARTICLES SECTION
     const {
         mutate,
@@ -118,23 +115,24 @@ const ListComponent = (props: IArticlesListProps) => {
         (currentPage, itemsPerPage) => {
             // Re fetch data for new current page or items per page
             setPagination({
-                total: articles?.count,
+                total: rows?.count,
                 current: currentPage,
                 itemsPerPage: itemsPerPage
             });
         },
-        [setPagination, articles]
+        [setPagination, rows]
     );
 
     // For pagination
     useEffect(() => {
         if (data) {
-            if (data?.articles && data?.articles?.results && data.articles.results.length > 0) {
+            let listData: any = data?.[props.queryName];
+            if (listData && listData['results'] && listData['results'].length > 0) {
                 let result_list: Array<any> = [];
                 let sort_index: number = 1;
-                Object.keys(data.articles.results[0]).forEach((column_name) => {
-                    let useCols = props.useColumns!;
-                    let sortableColumns = props.sortableColumns!;
+                Object.keys(listData['results'][0]).forEach((column_name) => {
+                    let useCols = props.useColumns;
+                    let sortableColumns = props.sortableColumns;
                     if (useCols.length > 0 && !useCols.includes(column_name)) return;
 
                     let row_data: any = {
@@ -152,12 +150,12 @@ const ListComponent = (props: IArticlesListProps) => {
                     result_list.push(row_data);
                 });
                 setColumns(result_list);
+                setRows(listData);
+                setPagination({
+                    ...pagination,
+                    total: listData['count']
+                });
             }
-            setArticles(data?.articles);
-            setPagination({
-                ...pagination,
-                total: data?.articles?.count
-            });
         }
     }, [data]);
 
@@ -189,95 +187,13 @@ const ListComponent = (props: IArticlesListProps) => {
         }
     ];
 
-    // to refactor to be automatique when fetching data
-    const columns_deprecated_old = [
-        {
-            title: 'd:name',
-            dataIndex: 'name',
-            key: 'name',
-            sorter: {
-                multiple: 1
-            },
-            showSorterTooltip: false
-        },
-        {
-            title: 'd:additionalDescription',
-            dataIndex: 'additionalDescription',
-            key: 'additionalDescription',
-            sorter: {
-                multiple: 2
-            },
-            showSorterTooltip: false
-        },
-        {
-            title: 'd:code',
-            dataIndex: 'code',
-            key: 'code',
-            sorter: {
-                multiple: 3
-            },
-            showSorterTooltip: false
-        },
-        {
-            title: 'd:status',
-            dataIndex: 'status',
-            key: 'status'
-        },
-        {
-            title: 'd:length',
-            dataIndex: 'length',
-            key: 'length'
-        },
-        {
-            title: 'd:width',
-            dataIndex: 'width',
-            key: 'width'
-        },
-        {
-            title: 'd:height',
-            dataIndex: 'height',
-            key: 'height'
-        },
-        {
-            title: 'd:baseUnitWeight',
-            dataIndex: 'baseUnitWeight',
-            key: 'baseUnitWeight'
-        },
-        {
-            title: 'd:boxWeight',
-            dataIndex: 'boxWeight',
-            key: 'boxWeight'
-        },
-        {
-            title: 'actions:actions',
-            key: 'actions',
-            render: (record: { id: string }) => (
-                <Space>
-                    <LinkButton
-                        icon={<EyeTwoTone />}
-                        path={pathParams('/article/[id]', record.id)}
-                    />
-                    {!!mode && mode.toUpperCase() == ModeEnum.Write ? (
-                        <Button
-                            icon={<DeleteOutlined />}
-                            danger
-                            onClick={() => alert(`delete article N° ${record.id}`)}
-                        />
-                    ) : (
-                        <></>
-                    )}
-                </Space>
-            )
-        }
-    ];
-
     return (
         <>
-            {articles ? (
+            {rows ? (
                 <AppTable
-                    type="articles"
+                    type={props.queryName}
                     columns={columns.concat(static_columns)}
-                    data={articles!.results}
+                    data={rows!.results}
                     pagination={pagination}
                     isLoading={isLoading}
                     setPagination={onChangePagination}

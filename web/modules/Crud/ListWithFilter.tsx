@@ -1,22 +1,39 @@
 import { SearchOutlined } from '@ant-design/icons';
-import { HeaderContent, LinkButton, ArticlesSearch } from '@components';
+import { HeaderContent, LinkButton } from '@components';
 import { Space, Form, Button } from 'antd';
 import { useDrawerDispatch } from 'context/DrawerContext';
-import { ListComponent } from 'modules/Crud/ArticlesList';
+import { ListComponent } from 'modules/Crud/ListComponent';
 import { articlesSubRoutes } from 'modules/Articles/Static/articlesRoutes';
 import useTranslation from 'next-translate/useTranslation';
 import { showError } from '@helpers';
 import { useCallback, useState } from 'react';
 import { useAppState } from 'context/AppContext';
-import { ModeEnum, Table } from 'generated/graphql';
+import { ModeEnum } from 'generated/graphql';
+import { ListSearch, SearchFilter } from './ListSearch';
 
-const Articles = () => {
+export interface IListProps {
+    useColumns?: Array<string>;
+    sortableColumns?: Array<string>;
+    filterColumns?: Array<SearchFilter>;
+    queryName: string;
+    resolverName: string;
+    tableName: string;
+}
+
+const ListWithFilter = (props: IListProps) => {
+    const defaultProps = {
+        useColumns: [],
+        sortableColumns: [],
+        filterColumns: []
+    };
+    props = { ...defaultProps, ...props };
+
     const { t } = useTranslation();
     const { permissions } = useAppState();
     const mode =
         !!permissions &&
         permissions.find((p: any) => {
-            return p.table.toUpperCase() == Table.Article;
+            return p.table.toUpperCase() == props.tableName.toUpperCase();
         })?.mode;
     console.log('mode', mode);
 
@@ -38,7 +55,7 @@ const Articles = () => {
                 cancelButtonTitle: 'actions:reset',
                 cancelButton: true,
                 submit: true,
-                content: <ArticlesSearch form={formSearch} />,
+                content: <ListSearch form={formSearch} columns={props.filterColumns!} />,
                 onCancel: () => handleReset(),
                 onComfirm: () => handleSubmit()
             }),
@@ -87,24 +104,15 @@ const Articles = () => {
             />
             <ListComponent
                 searchCriteria={search}
-                useColumns={[
-                    'id',
-                    'extras',
-                    'created',
-                    'createdBy',
-                    'modified',
-                    'modifiedBy',
-                    'status',
-                    'code',
-                    'name'
-                ]}
-                sortableColumns={['name', 'code']}
-                query={'articles'}
+                useColumns={props.useColumns!}
+                sortableColumns={props.sortableColumns!}
+                queryName={props.queryName}
+                resolverName={props.resolverName}
+                table={props.tableName}
             />
         </>
     );
 };
 
-Articles.displayName = 'Articles';
-
-export { Articles };
+ListWithFilter.displayName = 'ListWithFilter';
+export { ListWithFilter };
