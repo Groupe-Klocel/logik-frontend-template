@@ -9817,10 +9817,15 @@ export type UpdateReturnCodeMutationVariables = Exact<{
 
 export type UpdateReturnCodeMutation = { __typename?: 'Mutation', updateReturnCode?: { __typename?: 'ReturnCode', id?: string | null, name?: string | null, type?: number | null } | null };
 
-export type SimpleGetAllStockOwnersQueryVariables = Exact<{ [key: string]: never; }>;
+export type SimpleGetInProgressStockOwnersQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type SimpleGetAllStockOwnersQuery = { __typename?: 'Query', stockOwners: { __typename?: 'StockOwnerListResult', results: Array<{ __typename?: 'StockOwner', id?: string | null, name?: string | null }> } };
+export type SimpleGetInProgressStockOwnersQuery = { __typename?: 'Query', stockOwners: { __typename?: 'StockOwnerListResult', results: Array<{ __typename?: 'StockOwner', id?: string | null, name?: string | null }> } };
+
+export type SimpleGetAllArticlesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type SimpleGetAllArticlesQuery = { __typename?: 'Query', articles: { __typename?: 'ArticleListResult', results: Array<{ __typename?: 'Article', id?: string | null, name?: string | null }> } };
 
 export type GetAllArticleSetQueryVariables = Exact<{
   filters?: InputMaybe<ArticleSetSearchFilters>;
@@ -9830,14 +9835,14 @@ export type GetAllArticleSetQueryVariables = Exact<{
 }>;
 
 
-export type GetAllArticleSetQuery = { __typename?: 'Query', articleSets: { __typename?: 'ArticleSetListResult', count: number, itemsPerPage: number, totalPages: number, results: Array<{ __typename?: 'ArticleSet', id?: string | null, name?: string | null, comment?: string | null, stockOwnerId?: string | null, articleId?: string | null, extras?: any | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, stockOwner: { __typename?: 'StockOwner', name?: string | null }, article: { __typename?: 'Article', name?: string | null } }> } };
+export type GetAllArticleSetQuery = { __typename?: 'Query', articleSets: { __typename?: 'ArticleSetListResult', count: number, itemsPerPage: number, totalPages: number, results: Array<{ __typename?: 'ArticleSet', id?: string | null, name?: string | null, comment?: string | null, stockOwnerId?: string | null, articleId?: string | null, extras?: any | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, stockOwner: { __typename?: 'StockOwner', name?: string | null }, article: { __typename?: 'Article', name?: string | null, additionalDescription?: string | null } }> } };
 
 export type GetArticleSetByIdQueryVariables = Exact<{
   id: Scalars['String'];
 }>;
 
 
-export type GetArticleSetByIdQuery = { __typename?: 'Query', articleSet?: { __typename?: 'ArticleSet', id?: string | null, name?: string | null, comment?: string | null, stockOwnerId?: string | null, articleId?: string | null, extras?: any | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, stockOwner: { __typename?: 'StockOwner', name?: string | null }, article: { __typename?: 'Article', name?: string | null } } | null };
+export type GetArticleSetByIdQuery = { __typename?: 'Query', articleSet?: { __typename?: 'ArticleSet', id?: string | null, name?: string | null, comment?: string | null, stockOwnerId?: string | null, articleId?: string | null, extras?: any | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, stockOwner: { __typename?: 'StockOwner', name?: string | null }, article: { __typename?: 'Article', name?: string | null, additionalDescription?: string | null } } | null };
 
 export type GetArticleSetIdsQueryVariables = Exact<{
   filters?: InputMaybe<ArticleSetSearchFilters>;
@@ -9879,14 +9884,14 @@ export type GetAllArticleSetDetailsQueryVariables = Exact<{
 }>;
 
 
-export type GetAllArticleSetDetailsQuery = { __typename?: 'Query', articleSetDetails: { __typename?: 'ArticleSetDetailListResult', count: number, itemsPerPage: number, totalPages: number, results: Array<{ __typename?: 'ArticleSetDetail', id?: string | null, articleSetId?: string | null, stockOwnerId?: string | null, articleId?: string | null, quantity?: number | null, extras?: any | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, articleSet: { __typename?: 'ArticleSet', name?: string | null }, stockOwner: { __typename?: 'StockOwner', name?: string | null }, article: { __typename?: 'Article', name?: string | null } }> } };
+export type GetAllArticleSetDetailsQuery = { __typename?: 'Query', articleSetDetails: { __typename?: 'ArticleSetDetailListResult', count: number, itemsPerPage: number, totalPages: number, results: Array<{ __typename?: 'ArticleSetDetail', id?: string | null, articleSetId?: string | null, stockOwnerId?: string | null, articleId?: string | null, quantity?: number | null, extras?: any | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, articleSet: { __typename?: 'ArticleSet', name?: string | null }, stockOwner: { __typename?: 'StockOwner', name?: string | null }, article: { __typename?: 'Article', name?: string | null, additionalDescription?: string | null } }> } };
 
 export type GetArticleSetDetailByIdQueryVariables = Exact<{
   id: Scalars['String'];
 }>;
 
 
-export type GetArticleSetDetailByIdQuery = { __typename?: 'Query', articleSetDetail?: { __typename?: 'ArticleSetDetail', id?: string | null, articleSetId?: string | null, stockOwnerId?: string | null, articleId?: string | null, quantity?: number | null, extras?: any | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, articleSet: { __typename?: 'ArticleSet', name?: string | null }, stockOwner: { __typename?: 'StockOwner', name?: string | null }, article: { __typename?: 'Article', name?: string | null } } | null };
+export type GetArticleSetDetailByIdQuery = { __typename?: 'Query', articleSetDetail?: { __typename?: 'ArticleSetDetail', id?: string | null, articleSetId?: string | null, stockOwnerId?: string | null, articleId?: string | null, quantity?: number | null, extras?: any | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, articleSet: { __typename?: 'ArticleSet', name?: string | null }, stockOwner: { __typename?: 'StockOwner', name?: string | null }, article: { __typename?: 'Article', name?: string | null, additionalDescription?: string | null } } | null };
 
 export type CreateArticleSetDetailMutationVariables = Exact<{
   input: CreateArticleSetDetailInput;
@@ -11562,9 +11567,9 @@ export const useUpdateReturnCodeMutation = <
       (variables?: UpdateReturnCodeMutationVariables) => fetcher<UpdateReturnCodeMutation, UpdateReturnCodeMutationVariables>(client, UpdateReturnCodeDocument, variables, headers)(),
       options
     );
-export const SimpleGetAllStockOwnersDocument = `
-    query SimpleGetAllStockOwners {
-  stockOwners {
+export const SimpleGetInProgressStockOwnersDocument = `
+    query SimpleGetInProgressStockOwners {
+  stockOwners(filters: {status: 450}) {
     results {
       id
       name
@@ -11572,18 +11577,42 @@ export const SimpleGetAllStockOwnersDocument = `
   }
 }
     `;
-export const useSimpleGetAllStockOwnersQuery = <
-      TData = SimpleGetAllStockOwnersQuery,
+export const useSimpleGetInProgressStockOwnersQuery = <
+      TData = SimpleGetInProgressStockOwnersQuery,
       TError = unknown
     >(
       client: GraphQLClient,
-      variables?: SimpleGetAllStockOwnersQueryVariables,
-      options?: UseQueryOptions<SimpleGetAllStockOwnersQuery, TError, TData>,
+      variables?: SimpleGetInProgressStockOwnersQueryVariables,
+      options?: UseQueryOptions<SimpleGetInProgressStockOwnersQuery, TError, TData>,
       headers?: RequestInit['headers']
     ) =>
-    useQuery<SimpleGetAllStockOwnersQuery, TError, TData>(
-      variables === undefined ? ['SimpleGetAllStockOwners'] : ['SimpleGetAllStockOwners', variables],
-      fetcher<SimpleGetAllStockOwnersQuery, SimpleGetAllStockOwnersQueryVariables>(client, SimpleGetAllStockOwnersDocument, variables, headers),
+    useQuery<SimpleGetInProgressStockOwnersQuery, TError, TData>(
+      variables === undefined ? ['SimpleGetInProgressStockOwners'] : ['SimpleGetInProgressStockOwners', variables],
+      fetcher<SimpleGetInProgressStockOwnersQuery, SimpleGetInProgressStockOwnersQueryVariables>(client, SimpleGetInProgressStockOwnersDocument, variables, headers),
+      options
+    );
+export const SimpleGetAllArticlesDocument = `
+    query SimpleGetAllArticles {
+  articles {
+    results {
+      id
+      name
+    }
+  }
+}
+    `;
+export const useSimpleGetAllArticlesQuery = <
+      TData = SimpleGetAllArticlesQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables?: SimpleGetAllArticlesQueryVariables,
+      options?: UseQueryOptions<SimpleGetAllArticlesQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<SimpleGetAllArticlesQuery, TError, TData>(
+      variables === undefined ? ['SimpleGetAllArticles'] : ['SimpleGetAllArticles', variables],
+      fetcher<SimpleGetAllArticlesQuery, SimpleGetAllArticlesQueryVariables>(client, SimpleGetAllArticlesDocument, variables, headers),
       options
     );
 export const GetAllArticleSetDocument = `
@@ -11608,6 +11637,7 @@ export const GetAllArticleSetDocument = `
       articleId
       article {
         name
+        additionalDescription
       }
       extras
       created
@@ -11645,6 +11675,7 @@ export const GetArticleSetByIdDocument = `
     articleId
     article {
       name
+      additionalDescription
     }
     extras
     created
@@ -11790,6 +11821,7 @@ export const GetAllArticleSetDetailsDocument = `
       articleId
       article {
         name
+        additionalDescription
       }
       quantity
       extras
@@ -11830,6 +11862,7 @@ export const GetArticleSetDetailByIdDocument = `
     articleId
     article {
       name
+      additionalDescription
     }
     quantity
     extras

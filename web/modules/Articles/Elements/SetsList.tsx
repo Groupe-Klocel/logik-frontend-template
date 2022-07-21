@@ -1,7 +1,6 @@
 import { DeleteOutlined, EyeTwoTone, EditTwoTone } from '@ant-design/icons';
 import { Button, Modal, Space } from 'antd';
-import { AppTable, ContentSpin } from '@components';
-import { setsData } from 'fake-data/sets';
+import { AppTable, ContentSpin, LinkButton } from '@components';
 import useTranslation from 'next-translate/useTranslation';
 import { useCallback, useEffect, useState } from 'react';
 import {
@@ -10,6 +9,7 @@ import {
     DEFAULT_PAGE_NUMBER,
     orderByFormater,
     PaginationType,
+    pathParams,
     showError,
     showSuccess,
     useArticleSets
@@ -101,36 +101,56 @@ export const SetsList = ({ searchCriteria }: ArticleSetsListTypeProps) => {
 
     const columns = [
         {
-            title: 'common:company',
-            dataIndex: 'company',
-            key: 'company'
+            title: 'common:stockOwner',
+            dataIndex: ['stockOwner', 'name'],
+            key: ['stockOwner', 'name'],
+            sorter: {
+                multiple: 1
+            },
+            showSorterTooltip: false
         },
         {
             title: 'd:name',
             dataIndex: 'name',
-            key: 'name'
+            key: 'name',
+            sorter: {
+                multiple: 2
+            },
+            showSorterTooltip: false
         },
         {
             title: 'common:article',
-            dataIndex: 'article',
-            key: 'article'
+            dataIndex: ['article', 'name'],
+            key: ['article', 'name'],
+            sorter: {
+                multiple: 3
+            },
+            showSorterTooltip: false
         },
         {
             title: 'd:description',
-            dataIndex: 'product-description',
-            key: 'product-description'
+            dataIndex: ['article', 'additionalDescription'],
+            key: ['article', 'additionalDescription'],
+            sorter: {
+                multiple: 4
+            },
+            showSorterTooltip: false
         },
         {
             title: 'actions:actions',
             key: 'actions',
-            render: (record: { id: number }) => (
+            render: (record: { id: string }) => (
                 <Space>
-                    <Button icon={<EyeTwoTone />} onClick={() => alert(`View ${record.id} `)} />
-                    <Button icon={<EditTwoTone />} onClick={() => alert(`Edit ${record.id} `)} />
+                    <LinkButton icon={<EyeTwoTone />} path={pathParams('/set/[id]', record.id)} />
+                    <LinkButton
+                        icon={<EditTwoTone />}
+                        path={pathParams('/set/edit/[id]', record.id)}
+                    />
                     <Button
                         icon={<DeleteOutlined />}
                         danger
-                        onClick={() => alert(`Delete ${record.id} `)}
+                        loading={deleteLoading}
+                        onClick={() => deleteArticleSet({ id: record.id })}
                     />
                 </Space>
             )

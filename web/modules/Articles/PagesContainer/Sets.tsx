@@ -4,10 +4,11 @@ import useTranslation from 'next-translate/useTranslation';
 import { SetsList } from 'modules/Articles/Elements/SetsList';
 import { LinkButton } from 'components/common/dumb/Buttons/LinkButton';
 import { useCallback, useState } from 'react';
-import { Form } from 'antd';
+import { Button, Form, Space } from 'antd';
 import { useDrawerDispatch } from 'context/DrawerContext';
 import { showError } from '@helpers';
 import { SetsSearch } from '../Forms/SetsSearch';
+import { SearchOutlined } from '@ant-design/icons';
 
 export const Sets = () => {
     const { t } = useTranslation();
@@ -44,19 +45,15 @@ export const Sets = () => {
             .then(() => {
                 const searchValues = formSearch.getFieldsValue(true);
                 const newSearchValues = {
-                    ...searchValues,
-                    unique: searchValues['unique'] == 'true',
-                    dateType: searchValues['dateType'] == 'true'
+                    ...searchValues
                 };
-                if (searchValues['unique'] == '' || searchValues['unique'] === undefined)
-                    delete newSearchValues['unique'];
-                if (searchValues['dateType'] == '' || searchValues['dateType'] === undefined)
-                    delete newSearchValues['dateType'];
                 if (
                     searchValues['stockOwnerId'] == '' ||
                     searchValues['stockOwnerId'] === undefined
                 )
                     delete newSearchValues['stockOwnerId'];
+                if (searchValues['articleId'] == '' || searchValues['articleId'] === undefined)
+                    delete newSearchValues['articleId'];
                 setSearch(newSearchValues);
                 closeDrawer();
             })
@@ -73,11 +70,14 @@ export const Sets = () => {
                 title={t('menu:sets')}
                 routes={setsRoutes}
                 actionsRight={
-                    <LinkButton
-                        title={t('actions:add2', { name: t('menu:article-set') })}
-                        path="/add-article-set"
-                        type="primary"
-                    />
+                    <Space>
+                        <Button icon={<SearchOutlined />} onClick={() => openSearchDrawer()} />
+                        <LinkButton
+                            title={t('actions:add2', { name: t('menu:article-set') })}
+                            path="/add-set"
+                            type="primary"
+                        />
+                    </Space>
                 }
             />
             <SetsList searchCriteria={search} />

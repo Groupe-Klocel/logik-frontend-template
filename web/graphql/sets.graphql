@@ -1,5 +1,14 @@
-query SimpleGetAllStockOwners {
-    stockOwners {
+query SimpleGetInProgressStockOwners {
+    stockOwners(filters: { status: 450 }) {
+        results {
+            id
+            name
+        }
+    }
+}
+
+query SimpleGetAllArticles {
+    articles {
         results {
             id
             name
@@ -28,6 +37,7 @@ query GetAllArticleSet(
             articleId
             article {
                 name
+                additionalDescription
             }
             extras
             created
@@ -50,6 +60,7 @@ query GetArticleSetById($id: String!) {
         articleId
         article {
             name
+            additionalDescription
         }
         extras
         created
@@ -128,6 +139,7 @@ query GetAllArticleSetDetails(
             articleId
             article {
                 name
+                additionalDescription
             }
             quantity
             extras
@@ -153,6 +165,7 @@ query GetArticleSetDetailById($id: String!) {
         articleId
         article {
             name
+            additionalDescription
         }
         quantity
         extras
