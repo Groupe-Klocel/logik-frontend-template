@@ -37,7 +37,6 @@ const useList = (
         field: 'created',
         ascending: false
     };
-    const name = 'Article';
 
     const query = gql`
         query CustomListQuery(
@@ -85,6 +84,31 @@ const useList = (
         });
     }, [search, page, itemsPerPage, sort]);
 
+    return data;
+};
+
+const useDetail = (id: string, queryName: string, fields: Array<string>) => {
+    const { graphqlRequestClient } = useAuth();
+
+    const query = gql`query GetArticleById($id: String!, $language: String = "en") {
+        ${queryName}(id: $id, language: $language) {
+            ${fields.join('\n')}
+        }
+    }`;
+
+    const [data, setData] = useState<any>({ isLoading: true, data: [], error: false });
+    useEffect(() => {
+        let variables = {
+            id: id
+        };
+        console.log(query);
+        graphqlRequestClient
+            .request(query, variables)
+            .then((result: any) => {
+                setData({ isLoading: false, data: result, error: false });
+            })
+            .catch((error: any) => setData({ isLoading: false, error: true }));
+    }, [id]);
     return data;
 };
 
@@ -340,6 +364,7 @@ const useGoodsInLines = (
 
 export {
     useList,
+    useDetail,
     useArticles,
     useBlocks,
     useLocations,

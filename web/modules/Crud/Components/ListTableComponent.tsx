@@ -1,10 +1,8 @@
-import { AppTable, LinkButton, ContentSpin } from '@components';
-import { Space, Button } from 'antd';
+import { AppTable, ContentSpin } from '@components';
 import {
     DEFAULT_ITEMS_PER_PAGE,
     DEFAULT_PAGE_NUMBER,
     useList,
-    pathParams,
     DataQueryType,
     PaginationType,
     showInfo,
@@ -32,10 +30,10 @@ export interface IGeneralListProps {
     sortableColumns: Array<string>;
     queryName: string;
     resolverName: string;
-    table: string;
+    actionColumns?: any;
 }
 
-const ListComponent = (props: IGeneralListProps) => {
+const ListTableComponent = (props: IGeneralListProps) => {
     const { t } = useTranslation();
     const { graphqlRequestClient } = useAuth();
 
@@ -49,13 +47,6 @@ const ListComponent = (props: IGeneralListProps) => {
         current: DEFAULT_PAGE_NUMBER,
         itemsPerPage: DEFAULT_ITEMS_PER_PAGE
     });
-
-    const { permissions } = useAppState();
-    const mode =
-        !!permissions &&
-        permissions.find((p: any) => {
-            return p.table.toUpperCase() == props.table.toUpperCase();
-        })?.mode;
 
     const { isLoading, data } = useList(
         props.resolverName,
@@ -163,36 +154,12 @@ const ListComponent = (props: IGeneralListProps) => {
         await setSort(orderByFormater(sorter));
     };
 
-    const static_columns = [
-        {
-            title: 'actions:actions',
-            key: 'actions',
-            render: (record: { id: string }) => (
-                <Space>
-                    <LinkButton
-                        icon={<EyeTwoTone />}
-                        path={pathParams('/article/[id]', record.id)}
-                    />
-                    {!!mode && mode.toUpperCase() == ModeEnum.Write ? (
-                        <Button
-                            icon={<DeleteOutlined />}
-                            danger
-                            onClick={() => alert(`delete article N° ${record.id}`)}
-                        />
-                    ) : (
-                        <></>
-                    )}
-                </Space>
-            )
-        }
-    ];
-
     return (
         <>
             {rows ? (
                 <AppTable
                     type={props.queryName}
-                    columns={columns.concat(static_columns)}
+                    columns={columns.concat(props.actionColumns)}
                     data={rows!.results}
                     pagination={pagination}
                     isLoading={isLoading}
@@ -207,4 +174,4 @@ const ListComponent = (props: IGeneralListProps) => {
     );
 };
 
-export { ListComponent };
+export { ListTableComponent };

@@ -17,7 +17,7 @@ export interface IGeneralSearchProps {
     columns: Array<SearchFilter>;
 }
 
-const ListSearch: FC<IGeneralSearchProps> = ({ form, columns }: IGeneralSearchProps) => {
+const ListSearchComponent: FC<IGeneralSearchProps> = ({ form, columns }: IGeneralSearchProps) => {
     const { t } = useTranslation();
 
     // For multi selection field
@@ -66,7 +66,7 @@ const ListSearch: FC<IGeneralSearchProps> = ({ form, columns }: IGeneralSearchPr
     );
 };
 
-ListSearch.displayName = 'ListSearch';
+ListSearchComponent.displayName = 'ListSearchComponent';
 
-export { FilterTypeEnum, ListSearch };
+export { FilterTypeEnum, ListSearchComponent };
 export type { SearchFilter };

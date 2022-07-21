@@ -2,14 +2,14 @@ import { SearchOutlined } from '@ant-design/icons';
 import { HeaderContent, LinkButton } from '@components';
 import { Space, Form, Button } from 'antd';
 import { useDrawerDispatch } from 'context/DrawerContext';
-import { ListComponent } from 'modules/Crud/ListComponent';
+import { ListTableComponent } from 'modules/Crud/Components/ListTableComponent';
 import { articlesSubRoutes } from 'modules/Articles/Static/articlesRoutes';
 import useTranslation from 'next-translate/useTranslation';
 import { showError } from '@helpers';
 import { useCallback, useState } from 'react';
 import { useAppState } from 'context/AppContext';
 import { ModeEnum } from 'generated/graphql';
-import { ListSearch, SearchFilter } from './ListSearch';
+import { ListSearchComponent, SearchFilter } from './Components/ListSearchComponent';
 
 export interface IListProps {
     useColumns?: Array<string>;
@@ -18,13 +18,15 @@ export interface IListProps {
     queryName: string;
     resolverName: string;
     tableName: string;
+    actionColumns?: any;
 }
 
 const ListWithFilter = (props: IListProps) => {
     const defaultProps = {
         useColumns: [],
         sortableColumns: [],
-        filterColumns: []
+        filterColumns: [],
+        actionColumns: []
     };
     props = { ...defaultProps, ...props };
 
@@ -55,7 +57,7 @@ const ListWithFilter = (props: IListProps) => {
                 cancelButtonTitle: 'actions:reset',
                 cancelButton: true,
                 submit: true,
-                content: <ListSearch form={formSearch} columns={props.filterColumns!} />,
+                content: <ListSearchComponent form={formSearch} columns={props.filterColumns!} />,
                 onCancel: () => handleReset(),
                 onComfirm: () => handleSubmit()
             }),
@@ -102,13 +104,13 @@ const ListWithFilter = (props: IListProps) => {
                     </Space>
                 }
             />
-            <ListComponent
+            <ListTableComponent
                 searchCriteria={search}
                 useColumns={props.useColumns!}
                 sortableColumns={props.sortableColumns!}
                 queryName={props.queryName}
                 resolverName={props.resolverName}
-                table={props.tableName}
+                actionColumns={props.actionColumns}
             />
         </>
     );
