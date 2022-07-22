@@ -36,11 +36,12 @@ function purgeSorter(data: Array<any> | any): Array<any> | null {
             return null;
         } else {
             if (Array.isArray(data.field)) {
-                data.field=data.field.slice(-1)[0] }
+                data.field = data.field.slice(-1)[0];
+            }
             newSorter = [data];
         }
-    } else {   
-        data.map(e => (Array.isArray(e.field) ? e.field=e.field.slice(-1)[0] : e.field));
+    } else {
+        data.map((e) => (Array.isArray(e.field) ? (e.field = e.field.slice(-1)[0]) : e.field));
         newSorter = data;
     }
 
@@ -230,6 +231,20 @@ const checkKeyPresenceInArray = (key: any, array: any[]) =>
 const checkValuePresenceInArray = (value: any, array: any[]) =>
     array.some((obj) => obj.field === value);
 
+const getModesFromPermissions = (permissions: any, tableName: string) => {
+    let modes: Array<string> = [];
+    if (permissions) {
+        permissions
+            .filter((p: any) => {
+                return p.table.toUpperCase() == tableName.toUpperCase();
+            })
+            .forEach((p: any) => {
+                modes.push(p.mode.toUpperCase());
+            });
+    }
+    return modes;
+};
+
 export {
     isNumeric,
     formatDigitsForData,
@@ -256,5 +271,6 @@ export {
     stringToBoolean,
     isVisible,
     getLanguageNameFromISOCode,
-    getKeys
+    getKeys,
+    getModesFromPermissions
 };

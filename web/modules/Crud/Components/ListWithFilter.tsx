@@ -3,14 +3,17 @@ import { HeaderContent, LinkButton } from '@components';
 import { Space, Form, Button } from 'antd';
 import { useDrawerDispatch } from 'context/DrawerContext';
 import { ListTableComponent } from 'modules/Crud/Components/ListTableComponent';
-import { articlesSubRoutes } from 'modules/Articles/Static/articlesRoutes';
 import useTranslation from 'next-translate/useTranslation';
 import { showError } from '@helpers';
 import { useCallback, useState } from 'react';
 import { useAppState } from 'context/AppContext';
-import { ModeEnum } from 'generated/graphql';
-import { ListSearchComponent, SearchFilter } from './Components/ListSearchComponent';
+import { ListSearchComponent, SearchFilter } from './ListSearchComponent';
 
+export type HeaderData = {
+    title: string;
+    routes: Array<any>;
+    actionsComponent: any;
+};
 export interface IListProps {
     useColumns?: Array<string>;
     sortableColumns?: Array<string>;
@@ -19,6 +22,7 @@ export interface IListProps {
     resolverName: string;
     tableName: string;
     actionColumns?: any;
+    headerData: HeaderData;
 }
 
 const ListWithFilter = (props: IListProps) => {
@@ -31,13 +35,6 @@ const ListWithFilter = (props: IListProps) => {
     props = { ...defaultProps, ...props };
 
     const { t } = useTranslation();
-    const { permissions } = useAppState();
-    const mode =
-        !!permissions &&
-        permissions.find((p: any) => {
-            return p.table.toUpperCase() == props.tableName.toUpperCase();
-        })?.mode;
-    console.log('mode', mode);
 
     const [search, setSearch] = useState({});
     console.log(search);
@@ -87,17 +84,13 @@ const ListWithFilter = (props: IListProps) => {
     return (
         <>
             <HeaderContent
-                title={t('common:articles')}
-                routes={articlesSubRoutes}
+                title={props.headerData.title}
+                routes={props.headerData.routes}
                 actionsRight={
                     <Space>
                         <Button icon={<SearchOutlined />} onClick={() => openSearchDrawer()} />
-                        {!!mode && mode.toUpperCase() == ModeEnum.Write ? (
-                            <LinkButton
-                                title={t('actions:add2', { name: t('common:article') })}
-                                path="/add-article"
-                                type="primary"
-                            />
+                        {props.headerData.actionsComponent != null ? (
+                            props.headerData.actionsComponent
                         ) : (
                             <></>
                         )}

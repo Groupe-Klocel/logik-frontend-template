@@ -20,19 +20,6 @@ export interface IGeneralSearchProps {
 const ListSearchComponent: FC<IGeneralSearchProps> = ({ form, columns }: IGeneralSearchProps) => {
     const { t } = useTranslation();
 
-    // For multi selection field
-    // const companies = [];
-    // for (let i = 0; i < 10; i++) {
-    //     const value = `${i.toString(36)}${i}`;
-    //     companies.push({
-    //         value,
-    //         disabled: i === 10
-    //     });
-    // }
-    // function handleCompaniesSelect(value: string[]) {
-    //     console.log(`selected ${value}`);
-    // }
-
     return (
         <>
             <Form form={form} name="control-hooks">

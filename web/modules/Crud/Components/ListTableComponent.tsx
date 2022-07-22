@@ -1,3 +1,5 @@
+//CRUDTODO: Convert export components.
+
 import { AppTable, ContentSpin } from '@components';
 import {
     DEFAULT_ITEMS_PER_PAGE,
@@ -31,6 +33,7 @@ export interface IGeneralListProps {
     queryName: string;
     resolverName: string;
     actionColumns?: any;
+    disableFilters?: boolean;
 }
 
 const ListTableComponent = (props: IGeneralListProps) => {
@@ -166,6 +169,7 @@ const ListTableComponent = (props: IGeneralListProps) => {
                     setPagination={onChangePagination}
                     stickyActions={stickyActions}
                     onChange={handleTableChange}
+                    filter={!props.disableFilters}
                 />
             ) : (
                 <ContentSpin />
