@@ -4,6 +4,7 @@
     "allowCycleCountStockMin": "Cycle count on minimum stock",
     "articleDescription": "Article Description",
     "associatedArticle": "Associated article",
+    "associatedArticleSet": "Associated article set",
     "associatedBlock": "Associated block",
     "associatedBuilding": "Associated building",
     "associatedStockOwner": "Associated stock owner",

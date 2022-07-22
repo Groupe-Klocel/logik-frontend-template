@@ -87,3 +87,11 @@ export const addArticleSetRoutes = [
         breadcrumbName: 'actions:add-set'
     }
 ];
+
+export const addArticleSetDetailRoutes = [
+    ...setsRoutes,
+    {
+        path: '/add-article-set-detail',
+        breadcrumbName: 'actions:add-article-set-detail'
+    }
+];
