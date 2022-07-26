@@ -9658,6 +9658,130 @@ export type UpdateBlockMutation = {
     } | null;
 };
 
+export type GetAllConfigsQueryVariables = Exact<{
+    orderBy?: InputMaybe<Array<ConfigOrderByCriterion> | ConfigOrderByCriterion>;
+    filters?: InputMaybe<ConfigSearchFilters>;
+    page: Scalars['Int'];
+    itemsPerPage: Scalars['Int'];
+    language?: InputMaybe<Scalars['String']>;
+}>;
+
+export type GetAllConfigsQuery = {
+    __typename?: 'Query';
+    configs: {
+        __typename?: 'ConfigListResult';
+        count: number;
+        itemsPerPage: number;
+        totalPages: number;
+        page: number;
+        results: Array<{
+            __typename?: 'Config';
+            id?: string | null;
+            scope: string;
+            code: string;
+            value: string;
+            extras?: any | null;
+            created?: any | null;
+            createdBy?: string | null;
+            modified?: any | null;
+            modifiedBy?: string | null;
+            translation?: any | null;
+            system?: boolean | null;
+        }>;
+    };
+};
+
+export type GetConfigByIdQueryVariables = Exact<{
+    id: Scalars['String'];
+    language?: InputMaybe<Scalars['String']>;
+}>;
+
+export type GetConfigByIdQuery = {
+    __typename?: 'Query';
+    config?: {
+        __typename?: 'Config';
+        id?: string | null;
+        scope: string;
+        code: string;
+        value: string;
+        extras?: any | null;
+        created?: any | null;
+        createdBy?: string | null;
+        modified?: any | null;
+        modifiedBy?: string | null;
+        translation?: any | null;
+        system?: boolean | null;
+    } | null;
+};
+
+export type CreateConfigMutationVariables = Exact<{
+    input: CreateConfigInput;
+}>;
+
+export type CreateConfigMutation = {
+    __typename?: 'Mutation';
+    createConfig: {
+        __typename?: 'Config';
+        id?: string | null;
+        scope: string;
+        code: string;
+        value: string;
+        extras?: any | null;
+        created?: any | null;
+        createdBy?: string | null;
+        modified?: any | null;
+        modifiedBy?: string | null;
+        translation?: any | null;
+        system?: boolean | null;
+    };
+};
+
+export type DeleteConfigMutationVariables = Exact<{
+    configId: Scalars['String'];
+}>;
+
+export type DeleteConfigMutation = { __typename?: 'Mutation'; deleteConfig: boolean };
+
+export type UpdateConfigMutationVariables = Exact<{
+    id: Scalars['String'];
+    input: UpdateConfigInput;
+}>;
+
+export type UpdateConfigMutation = {
+    __typename?: 'Mutation';
+    updateConfig?: {
+        __typename?: 'Config';
+        id?: string | null;
+        scope: string;
+        code: string;
+        value: string;
+        extras?: any | null;
+        created?: any | null;
+        createdBy?: string | null;
+        modified?: any | null;
+        modifiedBy?: string | null;
+        translation?: any | null;
+        system?: boolean | null;
+    } | null;
+};
+
+export type ListConfigsForAScopeQueryVariables = Exact<{
+    scope: Scalars['String'];
+    code?: InputMaybe<Scalars['String']>;
+    language?: InputMaybe<Scalars['String']>;
+}>;
+
+export type ListConfigsForAScopeQuery = {
+    __typename?: 'Query';
+    listConfigsForAScope: Array<{
+        __typename?: 'ConfigResults';
+        id: string;
+        scope: string;
+        code: string;
+        text: string;
+    }>;
+};
+
 export type SimpleGetAllStockOwnersQueryVariables = Exact<{ [key: string]: never }>;
 
 export type SimpleGetAllStockOwnersQuery = {
@@ -10696,6 +10820,306 @@ export type UpdateParameterMutation = {
     } | null;
 };
 
+export type GetAllPatternsQueryVariables = Exact<{
+    filters?: InputMaybe<PatternSearchFilters>;
+    orderBy?: InputMaybe<Array<PatternOrderByCriterion> | PatternOrderByCriterion>;
+    page: Scalars['Int'];
+    itemsPerPage: Scalars['Int'];
+    language?: InputMaybe<Scalars['String']>;
+}>;
+
+export type GetAllPatternsQuery = {
+    __typename?: 'Query';
+    patterns: {
+        __typename?: 'PatternListResult';
+        count: number;
+        itemsPerPage: number;
+        totalPages: number;
+        results: Array<{
+            __typename?: 'Pattern';
+            id?: string | null;
+            extras?: any | null;
+            created?: any | null;
+            createdBy?: string | null;
+            modified?: any | null;
+            modifiedBy?: string | null;
+            name?: string | null;
+            patternType?: string | null;
+            status?: number | null;
+            stockOwnerId?: string | null;
+            patternTypeText?: string | null;
+            statusText?: string | null;
+            paths: Array<{
+                __typename?: 'PatternPath';
+                id?: string | null;
+                name?: string | null;
+                status?: number | null;
+                extras?: any | null;
+            }>;
+            stockOwner: { __typename?: 'StockOwner'; id?: string | null; name?: string | null };
+        }>;
+    };
+};
+
+export type GetPatternByIdQueryVariables = Exact<{
+    id: Scalars['String'];
+    language?: InputMaybe<Scalars['String']>;
+}>;
+
+export type GetPatternByIdQuery = {
+    __typename?: 'Query';
+    pattern?: {
+        __typename?: 'Pattern';
+        id?: string | null;
+        extras?: any | null;
+        created?: any | null;
+        createdBy?: string | null;
+        modified?: any | null;
+        modifiedBy?: string | null;
+        name?: string | null;
+        patternType?: string | null;
+        status?: number | null;
+        stockOwnerId?: string | null;
+        patternTypeText?: string | null;
+        statusText?: string | null;
+        paths: Array<{
+            __typename?: 'PatternPath';
+            id?: string | null;
+            name?: string | null;
+            status?: number | null;
+            extras?: any | null;
+        }>;
+        stockOwner: { __typename?: 'StockOwner'; id?: string | null; name?: string | null };
+    } | null;
+};
+
+export type CreatePatternMutationVariables = Exact<{
+    input: CreatePatternInput;
+}>;
+
+export type CreatePatternMutation = {
+    __typename?: 'Mutation';
+    createPattern: {
+        __typename?: 'Pattern';
+        id?: string | null;
+        extras?: any | null;
+        created?: any | null;
+        createdBy?: string | null;
+        modified?: any | null;
+        modifiedBy?: string | null;
+        name?: string | null;
+        patternType?: string | null;
+        status?: number | null;
+        stockOwnerId?: string | null;
+        patternTypeText?: string | null;
+        statusText?: string | null;
+        paths: Array<{
+            __typename?: 'PatternPath';
+            id?: string | null;
+            name?: string | null;
+            status?: number | null;
+            extras?: any | null;
+        }>;
+        stockOwner: { __typename?: 'StockOwner'; id?: string | null; name?: string | null };
+    };
+};
+
+export type DeletePatternMutationVariables = Exact<{
+    id: Scalars['String'];
+}>;
+
+export type DeletePatternMutation = { __typename?: 'Mutation'; deletePattern: boolean };
+
+export type UpdatePatternMutationVariables = Exact<{
+    id: Scalars['String'];
+    input: UpdatePatternInput;
+}>;
+
+export type UpdatePatternMutation = {
+    __typename?: 'Mutation';
+    updatePattern?: {
+        __typename?: 'Pattern';
+        id?: string | null;
+        extras?: any | null;
+        created?: any | null;
+        createdBy?: string | null;
+        modified?: any | null;
+        modifiedBy?: string | null;
+        name?: string | null;
+        patternType?: string | null;
+        status?: number | null;
+        stockOwnerId?: string | null;
+        patternTypeText?: string | null;
+        statusText?: string | null;
+        paths: Array<{
+            __typename?: 'PatternPath';
+            id?: string | null;
+            name?: string | null;
+            status?: number | null;
+            extras?: any | null;
+        }>;
+        stockOwner: { __typename?: 'StockOwner'; id?: string | null; name?: string | null };
+    } | null;
+};
+
+export type GetPatternIdsQueryVariables = Exact<{
+    filters?: InputMaybe<PatternSearchFilters>;
+    orderBy?: InputMaybe<Array<PatternOrderByCriterion> | PatternOrderByCriterion>;
+    page: Scalars['Int'];
+    itemsPerPage: Scalars['Int'];
+}>;
+
+export type GetPatternIdsQuery = {
+    __typename?: 'Query';
+    patterns: {
+        __typename?: 'PatternListResult';
+        count: number;
+        itemsPerPage: number;
+        totalPages: number;
+        results: Array<{ __typename?: 'Pattern'; id?: string | null; name?: string | null }>;
+    };
+};
+
+export type GetAllPatternPathsQueryVariables = Exact<{
+    filters?: InputMaybe<PatternPathSearchFilters>;
+    orderBy?: InputMaybe<Array<PatternPathOrderByCriterion> | PatternPathOrderByCriterion>;
+    page: Scalars['Int'];
+    itemsPerPage: Scalars['Int'];
+    language?: InputMaybe<Scalars['String']>;
+}>;
+
+export type GetAllPatternPathsQuery = {
+    __typename?: 'Query';
+    patternPaths: {
+        __typename?: 'PatternPathListResult';
+        count: number;
+        itemsPerPage: number;
+        totalPages: number;
+        results: Array<{
+            __typename?: 'PatternPath';
+            id?: string | null;
+            extras?: any | null;
+            created?: any | null;
+            createdBy?: string | null;
+            modified?: any | null;
+            modifiedBy?: string | null;
+            name?: string | null;
+            status?: number | null;
+            patternId?: string | null;
+        }>;
+    };
+};
+
+export type GetPatternPathByIdQueryVariables = Exact<{
+    id: Scalars['String'];
+    language?: InputMaybe<Scalars['String']>;
+}>;
+
+export type GetPatternPathByIdQuery = {
+    __typename?: 'Query';
+    patternPath?: {
+        __typename?: 'PatternPath';
+        id?: string | null;
+        extras?: any | null;
+        created?: any | null;
+        createdBy?: string | null;
+        modified?: any | null;
+        modifiedBy?: string | null;
+        name?: string | null;
+        status?: number | null;
+        patternId?: string | null;
+    } | null;
+};
+
+export type CreatePatternPathMutationVariables = Exact<{
+    input: CreatePatternPathInput;
+}>;
+
+export type CreatePatternPathMutation = {
+    __typename?: 'Mutation';
+    createPatternPath: {
+        __typename?: 'PatternPath';
+        id?: string | null;
+        extras?: any | null;
+        created?: any | null;
+        createdBy?: string | null;
+        modified?: any | null;
+        modifiedBy?: string | null;
+        name?: string | null;
+        status?: number | null;
+        patternId?: string | null;
+    };
+};
+
+export type DeletePatternPathMutationVariables = Exact<{
+    id: Scalars['String'];
+}>;
+
+export type DeletePatternPathMutation = { __typename?: 'Mutation'; deletePatternPath: boolean };
+
+export type UpdatePatternPathMutationVariables = Exact<{
+    id: Scalars['String'];
+    input: UpdatePatternPathInput;
+}>;
+
+export type UpdatePatternPathMutation = {
+    __typename?: 'Mutation';
+    updatePatternPath?: {
+        __typename?: 'PatternPath';
+        id?: string | null;
+        extras?: any | null;
+        created?: any | null;
+        createdBy?: string | null;
+        modified?: any | null;
+        modifiedBy?: string | null;
+        name?: string | null;
+        status?: number | null;
+        patternId?: string | null;
+    } | null;
+};
+
+export type GetPatternPathLocationsQueryVariables = Exact<{
+    filters?: InputMaybe<PatternPathLocationSearchFilters>;
+    orderBy?: InputMaybe<
+        Array<PatternPathLocationOrderByCriterion> | PatternPathLocationOrderByCriterion
+    >;
+    page: Scalars['Int'];
+    itemsPerPage: Scalars['Int'];
+    language?: InputMaybe<Scalars['String']>;
+}>;
+
+export type GetPatternPathLocationsQuery = {
+    __typename?: 'Query';
+    patternPathLocations: {
+        __typename?: 'PatternPathLocationListResult';
+        count: number;
+        totalPages: number;
+        page: number;
+        itemsPerPage: number;
+        results: Array<{
+            __typename?: 'PatternPathLocation';
+            id?: string | null;
+            extras?: any | null;
+            created?: any | null;
+            createdBy?: string | null;
+            modified?: any | null;
+            modifiedBy?: string | null;
+            order?: number | null;
+            locationId?: string | null;
+            patternPathId?: string | null;
+            location: {
+                __typename?: 'Location';
+                id?: string | null;
+                name?: string | null;
+                position?: string | null;
+                column?: string | null;
+                level?: string | null;
+                aisle?: string | null;
+            };
+        }>;
+    };
+};
+
 export type GetAllReturnCodesQueryVariables = Exact<{
     filters?: InputMaybe<ReturnCodeSearchFilters>;
     orderBy?: InputMaybe<Array<ReturnCodeOrderByCriterion> | ReturnCodeOrderByCriterion>;
@@ -11041,6 +11465,80 @@ export type UpdateArticleSetDetailMutation = {
         stockOwnerId?: string | null;
         articleId?: string | null;
     } | null;
+};
+
+export type GetAllStockOwnersQueryVariables = Exact<{
+    orderBy?: InputMaybe<Array<StockOwnerOrderByCriterion> | StockOwnerOrderByCriterion>;
+    filters?: InputMaybe<StockOwnerSearchFilters>;
+    page: Scalars['Int'];
+    itemsPerPage: Scalars['Int'];
+    language?: InputMaybe<Scalars['String']>;
+}>;
+
+export type GetAllStockOwnersQuery = {
+    __typename?: 'Query';
+    stockOwners: {
+        __typename?: 'StockOwnerListResult';
+        count: number;
+        itemsPerPage: number;
+        totalPages: number;
+        page: number;
+        results: Array<{
+            __typename?: 'StockOwner';
+            id?: string | null;
+            extras?: any | null;
+            created?: any | null;
+            createdBy?: string | null;
+            modified?: any | null;
+            modifiedBy?: string | null;
+            name?: string | null;
+            contact?: string | null;
+            address1?: string | null;
+            address2?: string | null;
+            address3?: string | null;
+            postCode?: string | null;
+            city?: string | null;
+            country?: string | null;
+            countryCode?: string | null;
+            phone?: string | null;
+            mobile?: string | null;
+            email?: string | null;
+            senderName?: string | null;
+            senderContact?: string | null;
+            senderAddress1?: string | null;
+            senderAddress2?: string | null;
+            senderAddress3?: string | null;
+            senderPostCode?: string | null;
+            senderCity?: string | null;
+            senderCountry?: string | null;
+            senderCountryCode?: string | null;
+            senderPhone?: string | null;
+            senderMobile?: string | null;
+            senderEmail?: string | null;
+            logoUrl?: string | null;
+            awsAccessKeyId?: string | null;
+            awsSecretAccessKey?: string | null;
+            status?: number | null;
+        }>;
+    };
+};
+
+export type GetStockOwnerIdsQueryVariables = Exact<{
+    filters?: InputMaybe<StockOwnerSearchFilters>;
+    orderBy?: InputMaybe<Array<StockOwnerOrderByCriterion> | StockOwnerOrderByCriterion>;
+    page: Scalars['Int'];
+    itemsPerPage: Scalars['Int'];
+}>;
+
+export type GetStockOwnerIdsQuery = {
+    __typename?: 'Query';
+    stockOwners: {
+        __typename?: 'StockOwnerListResult';
+        count: number;
+        itemsPerPage: number;
+        totalPages: number;
+        results: Array<{ __typename?: 'StockOwner'; id?: string | null; name?: string | null }>;
+    };
 };
 
 export type GetMyInfoQueryVariables = Exact<{ [key: string]: never }>;
@@ -11961,6 +12459,212 @@ export const useUpdateBlockMutation = <TError = unknown, TContext = unknown>(
                 variables,
                 headers
             )(),
+        options
+    );
+export const GetAllConfigsDocument = `
+    query GetAllConfigs($orderBy: [ConfigOrderByCriterion!], $filters: ConfigSearchFilters, $page: Int!, $itemsPerPage: Int!, $language: String) {
+  configs(
+    orderBy: $orderBy
+    filters: $filters
+    page: $page
+    itemsPerPage: $itemsPerPage
+    language: $language
+  ) {
+    count
+    itemsPerPage
+    totalPages
+    page
+    results {
+      id
+      scope
+      code
+      value
+      extras
+      created
+      createdBy
+      modified
+      modifiedBy
+      translation
+      system
+    }
+  }
+}
+    `;
+export const useGetAllConfigsQuery = <TData = GetAllConfigsQuery, TError = unknown>(
+    client: GraphQLClient,
+    variables: GetAllConfigsQueryVariables,
+    options?: UseQueryOptions<GetAllConfigsQuery, TError, TData>,
+    headers?: RequestInit['headers']
+) =>
+    useQuery<GetAllConfigsQuery, TError, TData>(
+        ['GetAllConfigs', variables],
+        fetcher<GetAllConfigsQuery, GetAllConfigsQueryVariables>(
+            client,
+            GetAllConfigsDocument,
+            variables,
+            headers
+        ),
+        options
+    );
+export const GetConfigByIdDocument = `
+    query GetConfigById($id: String!, $language: String = "en") {
+  config(id: $id, language: $language) {
+    id
+    scope
+    code
+    value
+    extras
+    created
+    createdBy
+    modified
+    modifiedBy
+    translation
+    system
+  }
+}
+    `;
+export const useGetConfigByIdQuery = <TData = GetConfigByIdQuery, TError = unknown>(
+    client: GraphQLClient,
+    variables: GetConfigByIdQueryVariables,
+    options?: UseQueryOptions<GetConfigByIdQuery, TError, TData>,
+    headers?: RequestInit['headers']
+) =>
+    useQuery<GetConfigByIdQuery, TError, TData>(
+        ['GetConfigById', variables],
+        fetcher<GetConfigByIdQuery, GetConfigByIdQueryVariables>(
+            client,
+            GetConfigByIdDocument,
+            variables,
+            headers
+        ),
+        options
+    );
+export const CreateConfigDocument = `
+    mutation CreateConfig($input: CreateConfigInput!) {
+  createConfig(input: $input) {
+    id
+    scope
+    code
+    value
+    extras
+    created
+    createdBy
+    modified
+    modifiedBy
+    translation
+    system
+  }
+}
+    `;
+export const useCreateConfigMutation = <TError = unknown, TContext = unknown>(
+    client: GraphQLClient,
+    options?: UseMutationOptions<
+        CreateConfigMutation,
+        TError,
+        CreateConfigMutationVariables,
+        TContext
+    >,
+    headers?: RequestInit['headers']
+) =>
+    useMutation<CreateConfigMutation, TError, CreateConfigMutationVariables, TContext>(
+        ['CreateConfig'],
+        (variables?: CreateConfigMutationVariables) =>
+            fetcher<CreateConfigMutation, CreateConfigMutationVariables>(
+                client,
+                CreateConfigDocument,
+                variables,
+                headers
+            )(),
+        options
+    );
+export const DeleteConfigDocument = `
+    mutation DeleteConfig($configId: String!) {
+  deleteConfig(configId: $configId)
+}
+    `;
+export const useDeleteConfigMutation = <TError = unknown, TContext = unknown>(
+    client: GraphQLClient,
+    options?: UseMutationOptions<
+        DeleteConfigMutation,
+        TError,
+        DeleteConfigMutationVariables,
+        TContext
+    >,
+    headers?: RequestInit['headers']
+) =>
+    useMutation<DeleteConfigMutation, TError, DeleteConfigMutationVariables, TContext>(
+        ['DeleteConfig'],
+        (variables?: DeleteConfigMutationVariables) =>
+            fetcher<DeleteConfigMutation, DeleteConfigMutationVariables>(
+                client,
+                DeleteConfigDocument,
+                variables,
+                headers
+            )(),
+        options
+    );
+export const UpdateConfigDocument = `
+    mutation UpdateConfig($id: String!, $input: UpdateConfigInput!) {
+  updateConfig(id: $id, input: $input) {
+    id
+    scope
+    code
+    value
+    extras
+    created
+    createdBy
+    modified
+    modifiedBy
+    translation
+    system
+  }
+}
+    `;
+export const useUpdateConfigMutation = <TError = unknown, TContext = unknown>(
+    client: GraphQLClient,
+    options?: UseMutationOptions<
+        UpdateConfigMutation,
+        TError,
+        UpdateConfigMutationVariables,
+        TContext
+    >,
+    headers?: RequestInit['headers']
+) =>
+    useMutation<UpdateConfigMutation, TError, UpdateConfigMutationVariables, TContext>(
+        ['UpdateConfig'],
+        (variables?: UpdateConfigMutationVariables) =>
+            fetcher<UpdateConfigMutation, UpdateConfigMutationVariables>(
+                client,
+                UpdateConfigDocument,
+                variables,
+                headers
+            )(),
+        options
+    );
+export const ListConfigsForAScopeDocument = `
+    query ListConfigsForAScope($scope: String!, $code: String, $language: String = "en") {
+  listConfigsForAScope(scope: $scope, code: $code, language: $language) {
+    id
+    scope
+    code
+    text
+  }
+}
+    `;
+export const useListConfigsForAScopeQuery = <TData = ListConfigsForAScopeQuery, TError = unknown>(
+    client: GraphQLClient,
+    variables: ListConfigsForAScopeQueryVariables,
+    options?: UseQueryOptions<ListConfigsForAScopeQuery, TError, TData>,
+    headers?: RequestInit['headers']
+) =>
+    useQuery<ListConfigsForAScopeQuery, TError, TData>(
+        ['ListConfigsForAScope', variables],
+        fetcher<ListConfigsForAScopeQuery, ListConfigsForAScopeQueryVariables>(
+            client,
+            ListConfigsForAScopeDocument,
+            variables,
+            headers
+        ),
         options
     );
 export const SimpleGetAllStockOwnersDocument = `
@@ -13869,6 +14573,488 @@ export const useUpdateParameterMutation = <TError = unknown, TContext = unknown>
             )(),
         options
     );
+export const GetAllPatternsDocument = `
+    query GetAllPatterns($filters: PatternSearchFilters, $orderBy: [PatternOrderByCriterion!], $page: Int!, $itemsPerPage: Int!, $language: String) {
+  patterns(
+    filters: $filters
+    orderBy: $orderBy
+    page: $page
+    itemsPerPage: $itemsPerPage
+    language: $language
+  ) {
+    count
+    itemsPerPage
+    totalPages
+    results {
+      id
+      paths {
+        id
+        name
+        status
+        extras
+      }
+      stockOwner {
+        id
+        name
+      }
+      extras
+      created
+      createdBy
+      modified
+      modifiedBy
+      name
+      patternType
+      status
+      stockOwnerId
+      patternTypeText
+      statusText
+    }
+  }
+}
+    `;
+export const useGetAllPatternsQuery = <TData = GetAllPatternsQuery, TError = unknown>(
+    client: GraphQLClient,
+    variables: GetAllPatternsQueryVariables,
+    options?: UseQueryOptions<GetAllPatternsQuery, TError, TData>,
+    headers?: RequestInit['headers']
+) =>
+    useQuery<GetAllPatternsQuery, TError, TData>(
+        ['GetAllPatterns', variables],
+        fetcher<GetAllPatternsQuery, GetAllPatternsQueryVariables>(
+            client,
+            GetAllPatternsDocument,
+            variables,
+            headers
+        ),
+        options
+    );
+export const GetPatternByIdDocument = `
+    query GetPatternById($id: String!, $language: String = "en") {
+  pattern(id: $id, language: $language) {
+    id
+    paths {
+      id
+      name
+      status
+      extras
+    }
+    stockOwner {
+      id
+      name
+    }
+    extras
+    created
+    createdBy
+    modified
+    modifiedBy
+    name
+    patternType
+    status
+    stockOwnerId
+    patternTypeText
+    statusText
+  }
+}
+    `;
+export const useGetPatternByIdQuery = <TData = GetPatternByIdQuery, TError = unknown>(
+    client: GraphQLClient,
+    variables: GetPatternByIdQueryVariables,
+    options?: UseQueryOptions<GetPatternByIdQuery, TError, TData>,
+    headers?: RequestInit['headers']
+) =>
+    useQuery<GetPatternByIdQuery, TError, TData>(
+        ['GetPatternById', variables],
+        fetcher<GetPatternByIdQuery, GetPatternByIdQueryVariables>(
+            client,
+            GetPatternByIdDocument,
+            variables,
+            headers
+        ),
+        options
+    );
+export const CreatePatternDocument = `
+    mutation CreatePattern($input: CreatePatternInput!) {
+  createPattern(input: $input) {
+    id
+    paths {
+      id
+      name
+      status
+      extras
+    }
+    stockOwner {
+      id
+      name
+    }
+    extras
+    created
+    createdBy
+    modified
+    modifiedBy
+    name
+    patternType
+    status
+    stockOwnerId
+    patternTypeText
+    statusText
+  }
+}
+    `;
+export const useCreatePatternMutation = <TError = unknown, TContext = unknown>(
+    client: GraphQLClient,
+    options?: UseMutationOptions<
+        CreatePatternMutation,
+        TError,
+        CreatePatternMutationVariables,
+        TContext
+    >,
+    headers?: RequestInit['headers']
+) =>
+    useMutation<CreatePatternMutation, TError, CreatePatternMutationVariables, TContext>(
+        ['CreatePattern'],
+        (variables?: CreatePatternMutationVariables) =>
+            fetcher<CreatePatternMutation, CreatePatternMutationVariables>(
+                client,
+                CreatePatternDocument,
+                variables,
+                headers
+            )(),
+        options
+    );
+export const DeletePatternDocument = `
+    mutation DeletePattern($id: String!) {
+  deletePattern(id: $id)
+}
+    `;
+export const useDeletePatternMutation = <TError = unknown, TContext = unknown>(
+    client: GraphQLClient,
+    options?: UseMutationOptions<
+        DeletePatternMutation,
+        TError,
+        DeletePatternMutationVariables,
+        TContext
+    >,
+    headers?: RequestInit['headers']
+) =>
+    useMutation<DeletePatternMutation, TError, DeletePatternMutationVariables, TContext>(
+        ['DeletePattern'],
+        (variables?: DeletePatternMutationVariables) =>
+            fetcher<DeletePatternMutation, DeletePatternMutationVariables>(
+                client,
+                DeletePatternDocument,
+                variables,
+                headers
+            )(),
+        options
+    );
+export const UpdatePatternDocument = `
+    mutation UpdatePattern($id: String!, $input: UpdatePatternInput!) {
+  updatePattern(id: $id, input: $input) {
+    id
+    paths {
+      id
+      name
+      status
+      extras
+    }
+    stockOwner {
+      id
+      name
+    }
+    extras
+    created
+    createdBy
+    modified
+    modifiedBy
+    name
+    patternType
+    status
+    stockOwnerId
+    patternTypeText
+    statusText
+  }
+}
+    `;
+export const useUpdatePatternMutation = <TError = unknown, TContext = unknown>(
+    client: GraphQLClient,
+    options?: UseMutationOptions<
+        UpdatePatternMutation,
+        TError,
+        UpdatePatternMutationVariables,
+        TContext
+    >,
+    headers?: RequestInit['headers']
+) =>
+    useMutation<UpdatePatternMutation, TError, UpdatePatternMutationVariables, TContext>(
+        ['UpdatePattern'],
+        (variables?: UpdatePatternMutationVariables) =>
+            fetcher<UpdatePatternMutation, UpdatePatternMutationVariables>(
+                client,
+                UpdatePatternDocument,
+                variables,
+                headers
+            )(),
+        options
+    );
+export const GetPatternIdsDocument = `
+    query GetPatternIds($filters: PatternSearchFilters, $orderBy: [PatternOrderByCriterion!], $page: Int!, $itemsPerPage: Int!) {
+  patterns(
+    filters: $filters
+    orderBy: $orderBy
+    page: $page
+    itemsPerPage: $itemsPerPage
+  ) {
+    count
+    itemsPerPage
+    totalPages
+    results {
+      id
+      name
+    }
+  }
+}
+    `;
+export const useGetPatternIdsQuery = <TData = GetPatternIdsQuery, TError = unknown>(
+    client: GraphQLClient,
+    variables: GetPatternIdsQueryVariables,
+    options?: UseQueryOptions<GetPatternIdsQuery, TError, TData>,
+    headers?: RequestInit['headers']
+) =>
+    useQuery<GetPatternIdsQuery, TError, TData>(
+        ['GetPatternIds', variables],
+        fetcher<GetPatternIdsQuery, GetPatternIdsQueryVariables>(
+            client,
+            GetPatternIdsDocument,
+            variables,
+            headers
+        ),
+        options
+    );
+export const GetAllPatternPathsDocument = `
+    query GetAllPatternPaths($filters: PatternPathSearchFilters, $orderBy: [PatternPathOrderByCriterion!], $page: Int!, $itemsPerPage: Int!, $language: String) {
+  patternPaths(
+    filters: $filters
+    orderBy: $orderBy
+    page: $page
+    itemsPerPage: $itemsPerPage
+    language: $language
+  ) {
+    count
+    itemsPerPage
+    totalPages
+    results {
+      id
+      extras
+      created
+      createdBy
+      modified
+      modifiedBy
+      name
+      status
+      patternId
+    }
+  }
+}
+    `;
+export const useGetAllPatternPathsQuery = <TData = GetAllPatternPathsQuery, TError = unknown>(
+    client: GraphQLClient,
+    variables: GetAllPatternPathsQueryVariables,
+    options?: UseQueryOptions<GetAllPatternPathsQuery, TError, TData>,
+    headers?: RequestInit['headers']
+) =>
+    useQuery<GetAllPatternPathsQuery, TError, TData>(
+        ['GetAllPatternPaths', variables],
+        fetcher<GetAllPatternPathsQuery, GetAllPatternPathsQueryVariables>(
+            client,
+            GetAllPatternPathsDocument,
+            variables,
+            headers
+        ),
+        options
+    );
+export const GetPatternPathByIdDocument = `
+    query GetPatternPathById($id: String!, $language: String = "en") {
+  patternPath(id: $id, language: $language) {
+    id
+    extras
+    created
+    createdBy
+    modified
+    modifiedBy
+    name
+    status
+    patternId
+  }
+}
+    `;
+export const useGetPatternPathByIdQuery = <TData = GetPatternPathByIdQuery, TError = unknown>(
+    client: GraphQLClient,
+    variables: GetPatternPathByIdQueryVariables,
+    options?: UseQueryOptions<GetPatternPathByIdQuery, TError, TData>,
+    headers?: RequestInit['headers']
+) =>
+    useQuery<GetPatternPathByIdQuery, TError, TData>(
+        ['GetPatternPathById', variables],
+        fetcher<GetPatternPathByIdQuery, GetPatternPathByIdQueryVariables>(
+            client,
+            GetPatternPathByIdDocument,
+            variables,
+            headers
+        ),
+        options
+    );
+export const CreatePatternPathDocument = `
+    mutation CreatePatternPath($input: CreatePatternPathInput!) {
+  createPatternPath(input: $input) {
+    id
+    extras
+    created
+    createdBy
+    modified
+    modifiedBy
+    name
+    status
+    patternId
+  }
+}
+    `;
+export const useCreatePatternPathMutation = <TError = unknown, TContext = unknown>(
+    client: GraphQLClient,
+    options?: UseMutationOptions<
+        CreatePatternPathMutation,
+        TError,
+        CreatePatternPathMutationVariables,
+        TContext
+    >,
+    headers?: RequestInit['headers']
+) =>
+    useMutation<CreatePatternPathMutation, TError, CreatePatternPathMutationVariables, TContext>(
+        ['CreatePatternPath'],
+        (variables?: CreatePatternPathMutationVariables) =>
+            fetcher<CreatePatternPathMutation, CreatePatternPathMutationVariables>(
+                client,
+                CreatePatternPathDocument,
+                variables,
+                headers
+            )(),
+        options
+    );
+export const DeletePatternPathDocument = `
+    mutation DeletePatternPath($id: String!) {
+  deletePatternPath(id: $id)
+}
+    `;
+export const useDeletePatternPathMutation = <TError = unknown, TContext = unknown>(
+    client: GraphQLClient,
+    options?: UseMutationOptions<
+        DeletePatternPathMutation,
+        TError,
+        DeletePatternPathMutationVariables,
+        TContext
+    >,
+    headers?: RequestInit['headers']
+) =>
+    useMutation<DeletePatternPathMutation, TError, DeletePatternPathMutationVariables, TContext>(
+        ['DeletePatternPath'],
+        (variables?: DeletePatternPathMutationVariables) =>
+            fetcher<DeletePatternPathMutation, DeletePatternPathMutationVariables>(
+                client,
+                DeletePatternPathDocument,
+                variables,
+                headers
+            )(),
+        options
+    );
+export const UpdatePatternPathDocument = `
+    mutation UpdatePatternPath($id: String!, $input: UpdatePatternPathInput!) {
+  updatePatternPath(id: $id, input: $input) {
+    id
+    extras
+    created
+    createdBy
+    modified
+    modifiedBy
+    name
+    status
+    patternId
+  }
+}
+    `;
+export const useUpdatePatternPathMutation = <TError = unknown, TContext = unknown>(
+    client: GraphQLClient,
+    options?: UseMutationOptions<
+        UpdatePatternPathMutation,
+        TError,
+        UpdatePatternPathMutationVariables,
+        TContext
+    >,
+    headers?: RequestInit['headers']
+) =>
+    useMutation<UpdatePatternPathMutation, TError, UpdatePatternPathMutationVariables, TContext>(
+        ['UpdatePatternPath'],
+        (variables?: UpdatePatternPathMutationVariables) =>
+            fetcher<UpdatePatternPathMutation, UpdatePatternPathMutationVariables>(
+                client,
+                UpdatePatternPathDocument,
+                variables,
+                headers
+            )(),
+        options
+    );
+export const GetPatternPathLocationsDocument = `
+    query GetPatternPathLocations($filters: PatternPathLocationSearchFilters, $orderBy: [PatternPathLocationOrderByCriterion!], $page: Int!, $itemsPerPage: Int!, $language: String) {
+  patternPathLocations(
+    filters: $filters
+    orderBy: $orderBy
+    page: $page
+    itemsPerPage: $itemsPerPage
+    language: $language
+  ) {
+    count
+    totalPages
+    page
+    itemsPerPage
+    results {
+      id
+      extras
+      created
+      createdBy
+      modified
+      modifiedBy
+      order
+      locationId
+      patternPathId
+      location {
+        id
+        name
+        position
+        column
+        level
+        aisle
+      }
+    }
+  }
+}
+    `;
+export const useGetPatternPathLocationsQuery = <
+    TData = GetPatternPathLocationsQuery,
+    TError = unknown
+>(
+    client: GraphQLClient,
+    variables: GetPatternPathLocationsQueryVariables,
+    options?: UseQueryOptions<GetPatternPathLocationsQuery, TError, TData>,
+    headers?: RequestInit['headers']
+) =>
+    useQuery<GetPatternPathLocationsQuery, TError, TData>(
+        ['GetPatternPathLocations', variables],
+        fetcher<GetPatternPathLocationsQuery, GetPatternPathLocationsQueryVariables>(
+            client,
+            GetPatternPathLocationsDocument,
+            variables,
+            headers
+        ),
+        options
+    );
 export const GetAllReturnCodesDocument = `
     query GetAllReturnCodes($filters: ReturnCodeSearchFilters, $orderBy: [ReturnCodeOrderByCriterion!], $page: Int!, $itemsPerPage: Int!) {
   returnCodes(
@@ -14525,6 +15711,108 @@ export const useUpdateArticleSetDetailMutation = <TError = unknown, TContext = u
                 variables,
                 headers
             )(),
+        options
+    );
+export const GetAllStockOwnersDocument = `
+    query GetAllStockOwners($orderBy: [StockOwnerOrderByCriterion!], $filters: StockOwnerSearchFilters, $page: Int!, $itemsPerPage: Int!, $language: String) {
+  stockOwners(
+    orderBy: $orderBy
+    filters: $filters
+    page: $page
+    itemsPerPage: $itemsPerPage
+    language: $language
+  ) {
+    count
+    itemsPerPage
+    totalPages
+    page
+    results {
+      id
+      extras
+      created
+      createdBy
+      modified
+      modifiedBy
+      name
+      contact
+      address1
+      address2
+      address3
+      postCode
+      city
+      country
+      countryCode
+      phone
+      mobile
+      email
+      senderName
+      senderContact
+      senderAddress1
+      senderAddress2
+      senderAddress3
+      senderPostCode
+      senderCity
+      senderCountry
+      senderCountryCode
+      senderPhone
+      senderMobile
+      senderEmail
+      logoUrl
+      awsAccessKeyId
+      awsSecretAccessKey
+      status
+    }
+  }
+}
+    `;
+export const useGetAllStockOwnersQuery = <TData = GetAllStockOwnersQuery, TError = unknown>(
+    client: GraphQLClient,
+    variables: GetAllStockOwnersQueryVariables,
+    options?: UseQueryOptions<GetAllStockOwnersQuery, TError, TData>,
+    headers?: RequestInit['headers']
+) =>
+    useQuery<GetAllStockOwnersQuery, TError, TData>(
+        ['GetAllStockOwners', variables],
+        fetcher<GetAllStockOwnersQuery, GetAllStockOwnersQueryVariables>(
+            client,
+            GetAllStockOwnersDocument,
+            variables,
+            headers
+        ),
+        options
+    );
+export const GetStockOwnerIdsDocument = `
+    query GetStockOwnerIds($filters: StockOwnerSearchFilters, $orderBy: [StockOwnerOrderByCriterion!], $page: Int!, $itemsPerPage: Int!) {
+  stockOwners(
+    filters: $filters
+    orderBy: $orderBy
+    page: $page
+    itemsPerPage: $itemsPerPage
+  ) {
+    count
+    itemsPerPage
+    totalPages
+    results {
+      id
+      name
+    }
+  }
+}
+    `;
+export const useGetStockOwnerIdsQuery = <TData = GetStockOwnerIdsQuery, TError = unknown>(
+    client: GraphQLClient,
+    variables: GetStockOwnerIdsQueryVariables,
+    options?: UseQueryOptions<GetStockOwnerIdsQuery, TError, TData>,
+    headers?: RequestInit['headers']
+) =>
+    useQuery<GetStockOwnerIdsQuery, TError, TData>(
+        ['GetStockOwnerIds', variables],
+        fetcher<GetStockOwnerIdsQuery, GetStockOwnerIdsQueryVariables>(
+            client,
+            GetStockOwnerIdsDocument,
+            variables,
+            headers
+        ),
         options
     );
 export const GetMyInfoDocument = `

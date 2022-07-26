@@ -18,6 +18,16 @@ import {
     GetAllGoodsInsQuery,
     useGetGoodsInLinesQuery,
     GetGoodsInLinesQuery,
+    useGetAllPatternsQuery,
+    GetAllPatternsQuery,
+    useGetStockOwnerIdsQuery,
+    GetStockOwnerIdsQuery,
+    GetAllPatternPathsQuery,
+    useGetAllPatternPathsQuery,
+    useGetPatternIdsQuery,
+    GetPatternIdsQuery,
+    useGetPatternPathLocationsQuery,
+    GetPatternPathLocationsQuery,
     useGetAllFeatureCodesQuery,
     GetAllFeatureCodesQuery,
     useGetAllParamsQuery,
@@ -397,6 +407,35 @@ const useReturnCodes = (search: any, page: number, itemsPerPage: number, sort: a
     return returnCodes;
 };
 
+const useStockOwnerIds = (search: any, page: number, itemsPerPage: number, sort: any) => {
+    const { graphqlRequestClient } = useAuth();
+
+    const sortByDate = {
+        field: 'name',
+        ascending: false
+    };
+
+    let newSort;
+
+    if (sort === null) {
+        newSort = sortByDate;
+    } else {
+        newSort = sort;
+    }
+
+    const stockOwners = useGetStockOwnerIdsQuery<Partial<GetStockOwnerIdsQuery>, Error>(
+        graphqlRequestClient,
+        {
+            filters: search,
+            orderBy: newSort,
+            page: page,
+            itemsPerPage: itemsPerPage
+        }
+    );
+
+    return stockOwners;
+};
+
 const useGoodsIns = (
     search: any,
     page: number,
@@ -469,6 +508,136 @@ const useGoodsInLines = (
     return goodsInLine;
 };
 
+const usePatterns = (
+    search: any,
+    page: number,
+    itemsPerPage: number,
+    sort: any,
+    language = 'en'
+) => {
+    const { graphqlRequestClient } = useAuth();
+
+    const sortByDate = {
+        field: 'created',
+        ascending: false
+    };
+
+    let newSort;
+
+    if (sort === null) {
+        newSort = sortByDate;
+    } else {
+        newSort = sort;
+    }
+
+    const patterns = useGetAllPatternsQuery<Partial<GetAllPatternsQuery>, Error>(
+        graphqlRequestClient,
+        {
+            filters: search,
+            orderBy: newSort,
+            page: page,
+            itemsPerPage: itemsPerPage,
+            language: language
+        }
+    );
+
+    return patterns;
+};
+
+const usePatternPaths = (
+    search: any,
+    page: number,
+    itemsPerPage: number,
+    sort: any,
+    language = 'en'
+) => {
+    const { graphqlRequestClient } = useAuth();
+
+    const sortByDate = {
+        field: 'created',
+        ascending: false
+    };
+
+    let newSort;
+
+    if (sort === null) {
+        newSort = sortByDate;
+    } else {
+        newSort = sort;
+    }
+
+    const patternPaths = useGetAllPatternPathsQuery<Partial<GetAllPatternPathsQuery>, Error>(
+        graphqlRequestClient,
+        {
+            filters: search,
+            orderBy: newSort,
+            page: page,
+            itemsPerPage: itemsPerPage,
+            language: language
+        }
+    );
+
+    return patternPaths;
+};
+
+const usePatternIds = (search: any, page: number, itemsPerPage: number, sort: any) => {
+    const { graphqlRequestClient } = useAuth();
+
+    const sortByDate = {
+        field: 'name',
+        ascending: false
+    };
+
+    let newSort;
+
+    if (sort === null) {
+        newSort = sortByDate;
+    } else {
+        newSort = sort;
+    }
+
+    const patterns = useGetPatternIdsQuery<Partial<GetPatternIdsQuery>, Error>(
+        graphqlRequestClient,
+        {
+            filters: search,
+            orderBy: newSort,
+            page: page,
+            itemsPerPage: itemsPerPage
+        }
+    );
+
+    return patterns;
+};
+
+const usePatternPathLocations = (search: any, page: number, itemsPerPage: number, sort: any) => {
+    const { graphqlRequestClient } = useAuth();
+
+    const sortByDate = {
+        field: 'order',
+        ascending: false
+    };
+
+    let newSort;
+
+    if (sort === null) {
+        newSort = sortByDate;
+    } else {
+        newSort = sort;
+    }
+
+    const patternPathLocations = useGetPatternPathLocationsQuery<
+        Partial<GetPatternPathLocationsQuery>,
+        Error
+    >(graphqlRequestClient, {
+        filters: search,
+        orderBy: newSort,
+        page: page,
+        itemsPerPage: itemsPerPage
+    });
+
+    return patternPathLocations;
+};
+
 export {
     useArticles,
     useBlocks,
@@ -484,5 +653,10 @@ export {
     usePackagings,
     useReturnCodes,
     useGoodsIns,
-    useGoodsInLines
+    useGoodsInLines,
+    usePatterns,
+    useStockOwnerIds,
+    usePatternPaths,
+    usePatternIds,
+    usePatternPathLocations
 };
