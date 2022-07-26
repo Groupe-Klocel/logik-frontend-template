@@ -14,6 +14,10 @@ import {
     useGetAllLocationsQuery,
     useGetAllReturnCodesQuery,
     GetAllReturnCodesQuery,
+    useGetAllEquipmentQuery,
+    GetAllEquipmentQuery,
+    useGetAllEquipmentDetailsQuery,
+    GetAllEquipmentDetailsQuery,
     useGetAllGoodsInsQuery,
     GetAllGoodsInsQuery,
     useGetGoodsInLinesQuery,
@@ -239,6 +243,64 @@ const useBarcodes = (search: any, page: number, itemsPerPage: number, sort: any)
     );
 
     return barcodes;
+};
+
+const useEquipment = (search: any, page: number, itemsPerPage: number, sort: any) => {
+    const { graphqlRequestClient } = useAuth();
+
+    const sortByDate = {
+        field: 'created',
+        ascending: false
+    };
+
+    let newSort;
+
+    if (sort === null) {
+        newSort = sortByDate;
+    } else {
+        newSort = sort;
+    }
+
+    const equipment = useGetAllEquipmentQuery<Partial<GetAllEquipmentQuery>, Error>(
+        graphqlRequestClient,
+        {
+            filters: search,
+            orderBy: newSort,
+            page: page,
+            itemsPerPage: itemsPerPage
+        }
+    );
+
+    return equipment;
+};
+
+const useEquipmentDetails = (search: any, page: number, itemsPerPage: number, sort: any) => {
+    const { graphqlRequestClient } = useAuth();
+
+    const sortByDate = {
+        field: 'created',
+        ascending: false
+    };
+
+    let newSort;
+
+    if (sort === null) {
+        newSort = sortByDate;
+    } else {
+        newSort = sort;
+    }
+
+    const equipmentDetails = useGetAllEquipmentDetailsQuery<
+        Partial<GetAllEquipmentDetailsQuery>,
+        Error
+    >(graphqlRequestClient, {
+        filters: search,
+        orderBy: newSort,
+        page: page,
+        itemsPerPage: itemsPerPage
+    });
+
+    return equipmentDetails;
 };
 
 const useMyInfo = () => {
@@ -641,6 +703,8 @@ const usePatternPathLocations = (search: any, page: number, itemsPerPage: number
 export {
     useArticles,
     useBlocks,
+    useEquipment,
+    useEquipmentDetails,
     useArticleSets,
     useArticleSetDetails,
     useLocations,
