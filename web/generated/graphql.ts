@@ -1123,12 +1123,58 @@ export type Config = {
     value: Scalars['String'];
 };
 
+/** Field names for the Config model */
+export enum ConfigFieldName {
+    Code = 'code',
+    Created = 'created',
+    CreatedBy = 'createdBy',
+    Extras = 'extras',
+    Id = 'id',
+    Modified = 'modified',
+    ModifiedBy = 'modifiedBy',
+    Scope = 'scope',
+    System = 'system',
+    Translation = 'translation',
+    Value = 'value'
+}
+
+/** Returns a list of Config */
+export type ConfigListResult = {
+    __typename?: 'ConfigListResult';
+    count: Scalars['Int'];
+    itemsPerPage: Scalars['Int'];
+    page: Scalars['Int'];
+    results: Array<Config>;
+    totalPages: Scalars['Int'];
+};
+
+/** How to order the search results for Config */
+export type ConfigOrderByCriterion = {
+    ascending?: Scalars['Boolean'];
+    field: ConfigFieldName;
+};
+
 export type ConfigResults = {
     __typename?: 'ConfigResults';
     code: Scalars['String'];
     id: Scalars['String'];
     scope: Scalars['String'];
     text: Scalars['String'];
+};
+
+/** Attributes of Config to filter onto */
+export type ConfigSearchFilters = {
+    code?: InputMaybe<Scalars['String']>;
+    created?: InputMaybe<Scalars['DateTime']>;
+    createdBy?: InputMaybe<Scalars['String']>;
+    extras?: InputMaybe<Scalars['JSON']>;
+    id?: InputMaybe<Scalars['String']>;
+    modified?: InputMaybe<Scalars['DateTime']>;
+    modifiedBy?: InputMaybe<Scalars['String']>;
+    scope?: InputMaybe<Scalars['String']>;
+    system?: InputMaybe<Scalars['Boolean']>;
+    translation?: InputMaybe<Scalars['JSON']>;
+    value?: InputMaybe<Scalars['String']>;
 };
 
 export type Content = {
@@ -3089,6 +3135,7 @@ export type FeatureTypeDetail = {
     created?: Maybe<Scalars['DateTime']>;
     createdBy?: Maybe<Scalars['String']>;
     extras?: Maybe<Scalars['JSON']>;
+    featureCode: FeatureCode;
     featureCodeId?: Maybe<Scalars['String']>;
     featureType?: Maybe<Scalars['Int']>;
     /** Text value for field feature_type */
@@ -3096,6 +3143,7 @@ export type FeatureTypeDetail = {
     id?: Maybe<Scalars['String']>;
     modified?: Maybe<Scalars['DateTime']>;
     modifiedBy?: Maybe<Scalars['String']>;
+    stockOwner: StockOwner;
     stockOwnerId?: Maybe<Scalars['String']>;
 };
 
@@ -6561,8 +6609,8 @@ export type Query = {
     carriers: CarrierListResult;
     /** Get a Config */
     config?: Maybe<Config>;
-    /** Search parameters */
-    configs: ParameterListResult;
+    /** Search Configs */
+    configs: ConfigListResult;
     /** Get a content object */
     content?: Maybe<Content>;
     /** Get a content_feature object */
@@ -6686,6 +6734,8 @@ export type Query = {
     packagings: PackagingListResult;
     /** Get a parameter */
     parameter?: Maybe<Parameter>;
+    /** Search parameters */
+    parameters: ParameterListResult;
     /** Get a Pattern */
     pattern?: Maybe<Pattern>;
     /** Get a PatternPath */
@@ -6911,10 +6961,10 @@ export type QueryConfigArgs = {
 };
 
 export type QueryConfigsArgs = {
-    filters?: InputMaybe<ParameterSearchFilters>;
+    filters?: InputMaybe<ConfigSearchFilters>;
     itemsPerPage?: Scalars['Int'];
     language?: InputMaybe<Scalars['String']>;
-    orderBy?: InputMaybe<Array<ParameterOrderByCriterion>>;
+    orderBy?: InputMaybe<Array<ConfigOrderByCriterion>>;
     page?: Scalars['Int'];
 };
 
@@ -7317,6 +7367,14 @@ export type QueryPackagingsArgs = {
 export type QueryParameterArgs = {
     id: Scalars['String'];
     language?: InputMaybe<Scalars['String']>;
+};
+
+export type QueryParametersArgs = {
+    filters?: InputMaybe<ParameterSearchFilters>;
+    itemsPerPage?: Scalars['Int'];
+    language?: InputMaybe<Scalars['String']>;
+    orderBy?: InputMaybe<Array<ParameterOrderByCriterion>>;
+    page?: Scalars['Int'];
 };
 
 export type QueryPatternArgs = {
@@ -9600,6 +9658,272 @@ export type UpdateBlockMutation = {
     } | null;
 };
 
+export type SimpleGetAllStockOwnersQueryVariables = Exact<{ [key: string]: never }>;
+
+export type SimpleGetAllStockOwnersQuery = {
+    __typename?: 'Query';
+    stockOwners: {
+        __typename?: 'StockOwnerListResult';
+        results: Array<{ __typename?: 'StockOwner'; id?: string | null; name?: string | null }>;
+    };
+};
+
+export type GetAllFeatureCodesQueryVariables = Exact<{
+    filters?: InputMaybe<FeatureCodeSearchFilters>;
+    orderBy?: InputMaybe<Array<FeatureCodeOrderByCriterion> | FeatureCodeOrderByCriterion>;
+    page: Scalars['Int'];
+    itemsPerPage: Scalars['Int'];
+}>;
+
+export type GetAllFeatureCodesQuery = {
+    __typename?: 'Query';
+    featureCodes: {
+        __typename?: 'FeatureCodeListResult';
+        count: number;
+        itemsPerPage: number;
+        totalPages: number;
+        results: Array<{
+            __typename?: 'FeatureCode';
+            id?: string | null;
+            name?: string | null;
+            unique?: boolean | null;
+            dateType?: boolean | null;
+            prefixBarcode?: string | null;
+            lengthBarcode?: string | null;
+            suffixBarcode?: string | null;
+            stockOwnerId?: string | null;
+            extras?: any | null;
+            created?: any | null;
+            createdBy?: string | null;
+            modified?: any | null;
+            modifiedBy?: string | null;
+            stockOwner: { __typename?: 'StockOwner'; name?: string | null };
+        }>;
+    };
+};
+
+export type GetFeatureCodeByIdQueryVariables = Exact<{
+    id: Scalars['String'];
+    language?: InputMaybe<Scalars['String']>;
+}>;
+
+export type GetFeatureCodeByIdQuery = {
+    __typename?: 'Query';
+    featureCode?: {
+        __typename?: 'FeatureCode';
+        id?: string | null;
+        name?: string | null;
+        unique?: boolean | null;
+        dateType?: boolean | null;
+        prefixBarcode?: string | null;
+        lengthBarcode?: string | null;
+        suffixBarcode?: string | null;
+        stockOwnerId?: string | null;
+        extras?: any | null;
+        created?: any | null;
+        createdBy?: string | null;
+        modified?: any | null;
+        modifiedBy?: string | null;
+        stockOwner: { __typename?: 'StockOwner'; name?: string | null };
+    } | null;
+};
+
+export type GetFeatureCodeIdsQueryVariables = Exact<{
+    filters?: InputMaybe<FeatureCodeSearchFilters>;
+    orderBy?: InputMaybe<Array<FeatureCodeOrderByCriterion> | FeatureCodeOrderByCriterion>;
+    page: Scalars['Int'];
+    itemsPerPage: Scalars['Int'];
+}>;
+
+export type GetFeatureCodeIdsQuery = {
+    __typename?: 'Query';
+    featureCodes: {
+        __typename?: 'FeatureCodeListResult';
+        count: number;
+        itemsPerPage: number;
+        totalPages: number;
+        results: Array<{ __typename?: 'FeatureCode'; id?: string | null; name?: string | null }>;
+    };
+};
+
+export type CreateFeatureCodeMutationVariables = Exact<{
+    input: CreateFeatureCodeInput;
+}>;
+
+export type CreateFeatureCodeMutation = {
+    __typename?: 'Mutation';
+    createFeatureCode: {
+        __typename?: 'FeatureCode';
+        id?: string | null;
+        name?: string | null;
+        unique?: boolean | null;
+        dateType?: boolean | null;
+        prefixBarcode?: string | null;
+        lengthBarcode?: string | null;
+        suffixBarcode?: string | null;
+        stockOwnerId?: string | null;
+    };
+};
+
+export type DeleteFeatureCodeMutationVariables = Exact<{
+    id: Scalars['String'];
+}>;
+
+export type DeleteFeatureCodeMutation = { __typename?: 'Mutation'; deleteFeatureCode: boolean };
+
+export type UpdateFeatureCodeMutationVariables = Exact<{
+    id: Scalars['String'];
+    input: UpdateFeatureCodeInput;
+}>;
+
+export type UpdateFeatureCodeMutation = {
+    __typename?: 'Mutation';
+    updateFeatureCode?: {
+        __typename?: 'FeatureCode';
+        id?: string | null;
+        name?: string | null;
+        unique?: boolean | null;
+        dateType?: boolean | null;
+        prefixBarcode?: string | null;
+        lengthBarcode?: string | null;
+        suffixBarcode?: string | null;
+        stockOwnerId?: string | null;
+    } | null;
+};
+
+export type GetFeatureTypesParamsQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetFeatureTypesParamsQuery = {
+    __typename?: 'Query';
+    listParametersForAScope: Array<{
+        __typename?: 'ParameterResults';
+        id: string;
+        scope: string;
+        code: string;
+        text: string;
+    }>;
+};
+
+export type SimpleGetAllFeatureCodesQueryVariables = Exact<{ [key: string]: never }>;
+
+export type SimpleGetAllFeatureCodesQuery = {
+    __typename?: 'Query';
+    featureCodes: {
+        __typename?: 'FeatureCodeListResult';
+        results: Array<{
+            __typename?: 'FeatureCode';
+            id?: string | null;
+            name?: string | null;
+            stockOwnerId?: string | null;
+        }>;
+    };
+};
+
+export type GetAllFeatureTypeDetailsQueryVariables = Exact<{
+    filters?: InputMaybe<FeatureTypeDetailSearchFilters>;
+    orderBy?: InputMaybe<
+        Array<FeatureTypeDetailOrderByCriterion> | FeatureTypeDetailOrderByCriterion
+    >;
+    page: Scalars['Int'];
+    itemsPerPage: Scalars['Int'];
+}>;
+
+export type GetAllFeatureTypeDetailsQuery = {
+    __typename?: 'Query';
+    featureTypeDetails: {
+        __typename?: 'FeatureTypeDetailListResult';
+        count: number;
+        itemsPerPage: number;
+        totalPages: number;
+        results: Array<{
+            __typename?: 'FeatureTypeDetail';
+            id?: string | null;
+            featureType?: number | null;
+            featureTypeText?: string | null;
+            featureCodeId?: string | null;
+            stockOwnerId?: string | null;
+            atReception?: boolean | null;
+            atPreparation?: boolean | null;
+            extras?: any | null;
+            created?: any | null;
+            createdBy?: string | null;
+            modified?: any | null;
+            modifiedBy?: string | null;
+            featureCode: { __typename?: 'FeatureCode'; id?: string | null; name?: string | null };
+            stockOwner: { __typename?: 'StockOwner'; name?: string | null };
+        }>;
+    };
+};
+
+export type GetFeatureTypeDetailByIdQueryVariables = Exact<{
+    id: Scalars['String'];
+}>;
+
+export type GetFeatureTypeDetailByIdQuery = {
+    __typename?: 'Query';
+    featureTypeDetail?: {
+        __typename?: 'FeatureTypeDetail';
+        id?: string | null;
+        featureType?: number | null;
+        featureTypeText?: string | null;
+        featureCodeId?: string | null;
+        stockOwnerId?: string | null;
+        atReception?: boolean | null;
+        atPreparation?: boolean | null;
+        extras?: any | null;
+        created?: any | null;
+        createdBy?: string | null;
+        modified?: any | null;
+        modifiedBy?: string | null;
+        featureCode: { __typename?: 'FeatureCode'; id?: string | null; name?: string | null };
+        stockOwner: { __typename?: 'StockOwner'; name?: string | null };
+    } | null;
+};
+
+export type CreateFeatureTypeDetailMutationVariables = Exact<{
+    input: CreateFeatureTypeDetailInput;
+}>;
+
+export type CreateFeatureTypeDetailMutation = {
+    __typename?: 'Mutation';
+    createFeatureTypeDetail: {
+        __typename?: 'FeatureTypeDetail';
+        id?: string | null;
+        featureType?: number | null;
+        featureCodeId?: string | null;
+        stockOwnerId?: string | null;
+        atReception?: boolean | null;
+        atPreparation?: boolean | null;
+    };
+};
+
+export type DeleteFeatureTypeDetailMutationVariables = Exact<{
+    id: Scalars['String'];
+}>;
+
+export type DeleteFeatureTypeDetailMutation = {
+    __typename?: 'Mutation';
+    deleteFeatureTypeDetail: boolean;
+};
+
+export type UpdateFeatureTypeDetailMutationVariables = Exact<{
+    id: Scalars['String'];
+    input: UpdateFeatureTypeDetailInput;
+}>;
+
+export type UpdateFeatureTypeDetailMutation = {
+    __typename?: 'Mutation';
+    updateFeatureTypeDetail?: {
+        __typename?: 'FeatureTypeDetail';
+        id?: string | null;
+        featureType?: number | null;
+        featureCodeId?: string | null;
+        stockOwnerId?: string | null;
+        atReception?: boolean | null;
+        atPreparation?: boolean | null;
+    } | null;
+};
+
 export type GetAllGoodsInsQueryVariables = Exact<{
     orderBy?: InputMaybe<Array<GoodsInOrderByCriterion> | GoodsInOrderByCriterion>;
     filters?: InputMaybe<GoodsInSearchFilters>;
@@ -10280,6 +10604,96 @@ export type UpdateDefaultPackagingMutation = {
         name?: string | null;
         default?: boolean | null;
     };
+};
+
+export type GetAllParamsQueryVariables = Exact<{
+    filters?: InputMaybe<ParameterSearchFilters>;
+    orderBy?: InputMaybe<Array<ParameterOrderByCriterion> | ParameterOrderByCriterion>;
+    page: Scalars['Int'];
+    itemsPerPage: Scalars['Int'];
+}>;
+
+export type GetAllParamsQuery = {
+    __typename?: 'Query';
+    parameters: {
+        __typename?: 'ParameterListResult';
+        count: number;
+        itemsPerPage: number;
+        totalPages: number;
+        results: Array<{
+            __typename?: 'Parameter';
+            id?: string | null;
+            scope: string;
+            code: string;
+            value: string;
+            extras?: any | null;
+            created?: any | null;
+            createdBy?: string | null;
+            modified?: any | null;
+            modifiedBy?: string | null;
+            translation?: any | null;
+            system?: boolean | null;
+        }>;
+    };
+};
+
+export type GetParameterByIdQueryVariables = Exact<{
+    id: Scalars['String'];
+}>;
+
+export type GetParameterByIdQuery = {
+    __typename?: 'Query';
+    parameter?: {
+        __typename?: 'Parameter';
+        id?: string | null;
+        scope: string;
+        code: string;
+        value: string;
+        extras?: any | null;
+        created?: any | null;
+        createdBy?: string | null;
+        modified?: any | null;
+        modifiedBy?: string | null;
+        translation?: any | null;
+        system?: boolean | null;
+    } | null;
+};
+
+export type CreateParameterMutationVariables = Exact<{
+    input: CreateParameterInput;
+}>;
+
+export type CreateParameterMutation = {
+    __typename?: 'Mutation';
+    createParameter: {
+        __typename?: 'Parameter';
+        id?: string | null;
+        scope: string;
+        code: string;
+        value: string;
+    };
+};
+
+export type DeleteParameterMutationVariables = Exact<{
+    id: Scalars['String'];
+}>;
+
+export type DeleteParameterMutation = { __typename?: 'Mutation'; deleteParameter: boolean };
+
+export type UpdateParameterMutationVariables = Exact<{
+    id: Scalars['String'];
+    input: UpdateParameterInput;
+}>;
+
+export type UpdateParameterMutation = {
+    __typename?: 'Mutation';
+    updateParameter?: {
+        __typename?: 'Parameter';
+        id?: string | null;
+        scope: string;
+        code: string;
+        value: string;
+    } | null;
 };
 
 export type GetAllReturnCodesQueryVariables = Exact<{
@@ -11549,6 +11963,516 @@ export const useUpdateBlockMutation = <TError = unknown, TContext = unknown>(
             )(),
         options
     );
+export const SimpleGetAllStockOwnersDocument = `
+    query SimpleGetAllStockOwners {
+  stockOwners {
+    results {
+      id
+      name
+    }
+  }
+}
+    `;
+export const useSimpleGetAllStockOwnersQuery = <
+    TData = SimpleGetAllStockOwnersQuery,
+    TError = unknown
+>(
+    client: GraphQLClient,
+    variables?: SimpleGetAllStockOwnersQueryVariables,
+    options?: UseQueryOptions<SimpleGetAllStockOwnersQuery, TError, TData>,
+    headers?: RequestInit['headers']
+) =>
+    useQuery<SimpleGetAllStockOwnersQuery, TError, TData>(
+        variables === undefined
+            ? ['SimpleGetAllStockOwners']
+            : ['SimpleGetAllStockOwners', variables],
+        fetcher<SimpleGetAllStockOwnersQuery, SimpleGetAllStockOwnersQueryVariables>(
+            client,
+            SimpleGetAllStockOwnersDocument,
+            variables,
+            headers
+        ),
+        options
+    );
+export const GetAllFeatureCodesDocument = `
+    query GetAllFeatureCodes($filters: FeatureCodeSearchFilters, $orderBy: [FeatureCodeOrderByCriterion!], $page: Int!, $itemsPerPage: Int!) {
+  featureCodes(
+    filters: $filters
+    orderBy: $orderBy
+    page: $page
+    itemsPerPage: $itemsPerPage
+  ) {
+    count
+    itemsPerPage
+    totalPages
+    results {
+      id
+      name
+      unique
+      dateType
+      prefixBarcode
+      lengthBarcode
+      suffixBarcode
+      stockOwnerId
+      stockOwner {
+        name
+      }
+      extras
+      created
+      createdBy
+      modified
+      modifiedBy
+    }
+  }
+}
+    `;
+export const useGetAllFeatureCodesQuery = <TData = GetAllFeatureCodesQuery, TError = unknown>(
+    client: GraphQLClient,
+    variables: GetAllFeatureCodesQueryVariables,
+    options?: UseQueryOptions<GetAllFeatureCodesQuery, TError, TData>,
+    headers?: RequestInit['headers']
+) =>
+    useQuery<GetAllFeatureCodesQuery, TError, TData>(
+        ['GetAllFeatureCodes', variables],
+        fetcher<GetAllFeatureCodesQuery, GetAllFeatureCodesQueryVariables>(
+            client,
+            GetAllFeatureCodesDocument,
+            variables,
+            headers
+        ),
+        options
+    );
+export const GetFeatureCodeByIdDocument = `
+    query GetFeatureCodeById($id: String!, $language: String = "en") {
+  featureCode(id: $id, language: $language) {
+    id
+    name
+    unique
+    dateType
+    prefixBarcode
+    lengthBarcode
+    suffixBarcode
+    stockOwnerId
+    stockOwner {
+      name
+    }
+    extras
+    created
+    createdBy
+    modified
+    modifiedBy
+  }
+}
+    `;
+export const useGetFeatureCodeByIdQuery = <TData = GetFeatureCodeByIdQuery, TError = unknown>(
+    client: GraphQLClient,
+    variables: GetFeatureCodeByIdQueryVariables,
+    options?: UseQueryOptions<GetFeatureCodeByIdQuery, TError, TData>,
+    headers?: RequestInit['headers']
+) =>
+    useQuery<GetFeatureCodeByIdQuery, TError, TData>(
+        ['GetFeatureCodeById', variables],
+        fetcher<GetFeatureCodeByIdQuery, GetFeatureCodeByIdQueryVariables>(
+            client,
+            GetFeatureCodeByIdDocument,
+            variables,
+            headers
+        ),
+        options
+    );
+export const GetFeatureCodeIdsDocument = `
+    query GetFeatureCodeIds($filters: FeatureCodeSearchFilters, $orderBy: [FeatureCodeOrderByCriterion!], $page: Int!, $itemsPerPage: Int!) {
+  featureCodes(
+    filters: $filters
+    orderBy: $orderBy
+    page: $page
+    itemsPerPage: $itemsPerPage
+  ) {
+    count
+    itemsPerPage
+    totalPages
+    results {
+      id
+      name
+    }
+  }
+}
+    `;
+export const useGetFeatureCodeIdsQuery = <TData = GetFeatureCodeIdsQuery, TError = unknown>(
+    client: GraphQLClient,
+    variables: GetFeatureCodeIdsQueryVariables,
+    options?: UseQueryOptions<GetFeatureCodeIdsQuery, TError, TData>,
+    headers?: RequestInit['headers']
+) =>
+    useQuery<GetFeatureCodeIdsQuery, TError, TData>(
+        ['GetFeatureCodeIds', variables],
+        fetcher<GetFeatureCodeIdsQuery, GetFeatureCodeIdsQueryVariables>(
+            client,
+            GetFeatureCodeIdsDocument,
+            variables,
+            headers
+        ),
+        options
+    );
+export const CreateFeatureCodeDocument = `
+    mutation CreateFeatureCode($input: CreateFeatureCodeInput!) {
+  createFeatureCode(input: $input) {
+    id
+    name
+    unique
+    dateType
+    prefixBarcode
+    lengthBarcode
+    suffixBarcode
+    stockOwnerId
+  }
+}
+    `;
+export const useCreateFeatureCodeMutation = <TError = unknown, TContext = unknown>(
+    client: GraphQLClient,
+    options?: UseMutationOptions<
+        CreateFeatureCodeMutation,
+        TError,
+        CreateFeatureCodeMutationVariables,
+        TContext
+    >,
+    headers?: RequestInit['headers']
+) =>
+    useMutation<CreateFeatureCodeMutation, TError, CreateFeatureCodeMutationVariables, TContext>(
+        ['CreateFeatureCode'],
+        (variables?: CreateFeatureCodeMutationVariables) =>
+            fetcher<CreateFeatureCodeMutation, CreateFeatureCodeMutationVariables>(
+                client,
+                CreateFeatureCodeDocument,
+                variables,
+                headers
+            )(),
+        options
+    );
+export const DeleteFeatureCodeDocument = `
+    mutation DeleteFeatureCode($id: String!) {
+  deleteFeatureCode(id: $id)
+}
+    `;
+export const useDeleteFeatureCodeMutation = <TError = unknown, TContext = unknown>(
+    client: GraphQLClient,
+    options?: UseMutationOptions<
+        DeleteFeatureCodeMutation,
+        TError,
+        DeleteFeatureCodeMutationVariables,
+        TContext
+    >,
+    headers?: RequestInit['headers']
+) =>
+    useMutation<DeleteFeatureCodeMutation, TError, DeleteFeatureCodeMutationVariables, TContext>(
+        ['DeleteFeatureCode'],
+        (variables?: DeleteFeatureCodeMutationVariables) =>
+            fetcher<DeleteFeatureCodeMutation, DeleteFeatureCodeMutationVariables>(
+                client,
+                DeleteFeatureCodeDocument,
+                variables,
+                headers
+            )(),
+        options
+    );
+export const UpdateFeatureCodeDocument = `
+    mutation UpdateFeatureCode($id: String!, $input: UpdateFeatureCodeInput!) {
+  updateFeatureCode(id: $id, input: $input) {
+    id
+    name
+    unique
+    dateType
+    prefixBarcode
+    lengthBarcode
+    suffixBarcode
+    stockOwnerId
+  }
+}
+    `;
+export const useUpdateFeatureCodeMutation = <TError = unknown, TContext = unknown>(
+    client: GraphQLClient,
+    options?: UseMutationOptions<
+        UpdateFeatureCodeMutation,
+        TError,
+        UpdateFeatureCodeMutationVariables,
+        TContext
+    >,
+    headers?: RequestInit['headers']
+) =>
+    useMutation<UpdateFeatureCodeMutation, TError, UpdateFeatureCodeMutationVariables, TContext>(
+        ['UpdateFeatureCode'],
+        (variables?: UpdateFeatureCodeMutationVariables) =>
+            fetcher<UpdateFeatureCodeMutation, UpdateFeatureCodeMutationVariables>(
+                client,
+                UpdateFeatureCodeDocument,
+                variables,
+                headers
+            )(),
+        options
+    );
+export const GetFeatureTypesParamsDocument = `
+    query getFeatureTypesParams {
+  listParametersForAScope(scope: "feature_type") {
+    id
+    scope
+    code
+    text
+  }
+}
+    `;
+export const useGetFeatureTypesParamsQuery = <TData = GetFeatureTypesParamsQuery, TError = unknown>(
+    client: GraphQLClient,
+    variables?: GetFeatureTypesParamsQueryVariables,
+    options?: UseQueryOptions<GetFeatureTypesParamsQuery, TError, TData>,
+    headers?: RequestInit['headers']
+) =>
+    useQuery<GetFeatureTypesParamsQuery, TError, TData>(
+        variables === undefined ? ['getFeatureTypesParams'] : ['getFeatureTypesParams', variables],
+        fetcher<GetFeatureTypesParamsQuery, GetFeatureTypesParamsQueryVariables>(
+            client,
+            GetFeatureTypesParamsDocument,
+            variables,
+            headers
+        ),
+        options
+    );
+export const SimpleGetAllFeatureCodesDocument = `
+    query SimpleGetAllFeatureCodes {
+  featureCodes {
+    results {
+      id
+      name
+      stockOwnerId
+    }
+  }
+}
+    `;
+export const useSimpleGetAllFeatureCodesQuery = <
+    TData = SimpleGetAllFeatureCodesQuery,
+    TError = unknown
+>(
+    client: GraphQLClient,
+    variables?: SimpleGetAllFeatureCodesQueryVariables,
+    options?: UseQueryOptions<SimpleGetAllFeatureCodesQuery, TError, TData>,
+    headers?: RequestInit['headers']
+) =>
+    useQuery<SimpleGetAllFeatureCodesQuery, TError, TData>(
+        variables === undefined
+            ? ['SimpleGetAllFeatureCodes']
+            : ['SimpleGetAllFeatureCodes', variables],
+        fetcher<SimpleGetAllFeatureCodesQuery, SimpleGetAllFeatureCodesQueryVariables>(
+            client,
+            SimpleGetAllFeatureCodesDocument,
+            variables,
+            headers
+        ),
+        options
+    );
+export const GetAllFeatureTypeDetailsDocument = `
+    query GetAllFeatureTypeDetails($filters: FeatureTypeDetailSearchFilters, $orderBy: [FeatureTypeDetailOrderByCriterion!], $page: Int!, $itemsPerPage: Int!) {
+  featureTypeDetails(
+    filters: $filters
+    orderBy: $orderBy
+    page: $page
+    itemsPerPage: $itemsPerPage
+  ) {
+    count
+    itemsPerPage
+    totalPages
+    results {
+      id
+      featureType
+      featureTypeText
+      featureCodeId
+      featureCode {
+        id
+        name
+      }
+      stockOwnerId
+      stockOwner {
+        name
+      }
+      atReception
+      atPreparation
+      extras
+      created
+      createdBy
+      modified
+      modifiedBy
+    }
+  }
+}
+    `;
+export const useGetAllFeatureTypeDetailsQuery = <
+    TData = GetAllFeatureTypeDetailsQuery,
+    TError = unknown
+>(
+    client: GraphQLClient,
+    variables: GetAllFeatureTypeDetailsQueryVariables,
+    options?: UseQueryOptions<GetAllFeatureTypeDetailsQuery, TError, TData>,
+    headers?: RequestInit['headers']
+) =>
+    useQuery<GetAllFeatureTypeDetailsQuery, TError, TData>(
+        ['GetAllFeatureTypeDetails', variables],
+        fetcher<GetAllFeatureTypeDetailsQuery, GetAllFeatureTypeDetailsQueryVariables>(
+            client,
+            GetAllFeatureTypeDetailsDocument,
+            variables,
+            headers
+        ),
+        options
+    );
+export const GetFeatureTypeDetailByIdDocument = `
+    query GetFeatureTypeDetailById($id: String!) {
+  featureTypeDetail(id: $id) {
+    id
+    featureType
+    featureTypeText
+    featureCodeId
+    featureCode {
+      id
+      name
+    }
+    stockOwnerId
+    stockOwner {
+      name
+    }
+    atReception
+    atPreparation
+    extras
+    created
+    createdBy
+    modified
+    modifiedBy
+  }
+}
+    `;
+export const useGetFeatureTypeDetailByIdQuery = <
+    TData = GetFeatureTypeDetailByIdQuery,
+    TError = unknown
+>(
+    client: GraphQLClient,
+    variables: GetFeatureTypeDetailByIdQueryVariables,
+    options?: UseQueryOptions<GetFeatureTypeDetailByIdQuery, TError, TData>,
+    headers?: RequestInit['headers']
+) =>
+    useQuery<GetFeatureTypeDetailByIdQuery, TError, TData>(
+        ['GetFeatureTypeDetailById', variables],
+        fetcher<GetFeatureTypeDetailByIdQuery, GetFeatureTypeDetailByIdQueryVariables>(
+            client,
+            GetFeatureTypeDetailByIdDocument,
+            variables,
+            headers
+        ),
+        options
+    );
+export const CreateFeatureTypeDetailDocument = `
+    mutation CreateFeatureTypeDetail($input: CreateFeatureTypeDetailInput!) {
+  createFeatureTypeDetail(input: $input) {
+    id
+    featureType
+    featureCodeId
+    stockOwnerId
+    atReception
+    atPreparation
+  }
+}
+    `;
+export const useCreateFeatureTypeDetailMutation = <TError = unknown, TContext = unknown>(
+    client: GraphQLClient,
+    options?: UseMutationOptions<
+        CreateFeatureTypeDetailMutation,
+        TError,
+        CreateFeatureTypeDetailMutationVariables,
+        TContext
+    >,
+    headers?: RequestInit['headers']
+) =>
+    useMutation<
+        CreateFeatureTypeDetailMutation,
+        TError,
+        CreateFeatureTypeDetailMutationVariables,
+        TContext
+    >(
+        ['CreateFeatureTypeDetail'],
+        (variables?: CreateFeatureTypeDetailMutationVariables) =>
+            fetcher<CreateFeatureTypeDetailMutation, CreateFeatureTypeDetailMutationVariables>(
+                client,
+                CreateFeatureTypeDetailDocument,
+                variables,
+                headers
+            )(),
+        options
+    );
+export const DeleteFeatureTypeDetailDocument = `
+    mutation DeleteFeatureTypeDetail($id: String!) {
+  deleteFeatureTypeDetail(id: $id)
+}
+    `;
+export const useDeleteFeatureTypeDetailMutation = <TError = unknown, TContext = unknown>(
+    client: GraphQLClient,
+    options?: UseMutationOptions<
+        DeleteFeatureTypeDetailMutation,
+        TError,
+        DeleteFeatureTypeDetailMutationVariables,
+        TContext
+    >,
+    headers?: RequestInit['headers']
+) =>
+    useMutation<
+        DeleteFeatureTypeDetailMutation,
+        TError,
+        DeleteFeatureTypeDetailMutationVariables,
+        TContext
+    >(
+        ['DeleteFeatureTypeDetail'],
+        (variables?: DeleteFeatureTypeDetailMutationVariables) =>
+            fetcher<DeleteFeatureTypeDetailMutation, DeleteFeatureTypeDetailMutationVariables>(
+                client,
+                DeleteFeatureTypeDetailDocument,
+                variables,
+                headers
+            )(),
+        options
+    );
+export const UpdateFeatureTypeDetailDocument = `
+    mutation UpdateFeatureTypeDetail($id: String!, $input: UpdateFeatureTypeDetailInput!) {
+  updateFeatureTypeDetail(id: $id, input: $input) {
+    id
+    featureType
+    featureCodeId
+    stockOwnerId
+    atReception
+    atPreparation
+  }
+}
+    `;
+export const useUpdateFeatureTypeDetailMutation = <TError = unknown, TContext = unknown>(
+    client: GraphQLClient,
+    options?: UseMutationOptions<
+        UpdateFeatureTypeDetailMutation,
+        TError,
+        UpdateFeatureTypeDetailMutationVariables,
+        TContext
+    >,
+    headers?: RequestInit['headers']
+) =>
+    useMutation<
+        UpdateFeatureTypeDetailMutation,
+        TError,
+        UpdateFeatureTypeDetailMutationVariables,
+        TContext
+    >(
+        ['UpdateFeatureTypeDetail'],
+        (variables?: UpdateFeatureTypeDetailMutationVariables) =>
+            fetcher<UpdateFeatureTypeDetailMutation, UpdateFeatureTypeDetailMutationVariables>(
+                client,
+                UpdateFeatureTypeDetailDocument,
+                variables,
+                headers
+            )(),
+        options
+    );
 export const GetAllGoodsInsDocument = `
     query GetAllGoodsIns($orderBy: [GoodsInOrderByCriterion!], $filters: GoodsInSearchFilters, $page: Int!, $itemsPerPage: Int!, $language: String) {
   goodsIns(
@@ -12776,6 +13700,170 @@ export const useUpdateDefaultPackagingMutation = <TError = unknown, TContext = u
             fetcher<UpdateDefaultPackagingMutation, UpdateDefaultPackagingMutationVariables>(
                 client,
                 UpdateDefaultPackagingDocument,
+                variables,
+                headers
+            )(),
+        options
+    );
+export const GetAllParamsDocument = `
+    query getAllParams($filters: ParameterSearchFilters, $orderBy: [ParameterOrderByCriterion!], $page: Int!, $itemsPerPage: Int!) {
+  parameters(
+    filters: $filters
+    orderBy: $orderBy
+    page: $page
+    itemsPerPage: $itemsPerPage
+  ) {
+    count
+    itemsPerPage
+    totalPages
+    results {
+      id
+      scope
+      code
+      value
+      extras
+      created
+      createdBy
+      modified
+      modifiedBy
+      translation
+      system
+    }
+  }
+}
+    `;
+export const useGetAllParamsQuery = <TData = GetAllParamsQuery, TError = unknown>(
+    client: GraphQLClient,
+    variables: GetAllParamsQueryVariables,
+    options?: UseQueryOptions<GetAllParamsQuery, TError, TData>,
+    headers?: RequestInit['headers']
+) =>
+    useQuery<GetAllParamsQuery, TError, TData>(
+        ['getAllParams', variables],
+        fetcher<GetAllParamsQuery, GetAllParamsQueryVariables>(
+            client,
+            GetAllParamsDocument,
+            variables,
+            headers
+        ),
+        options
+    );
+export const GetParameterByIdDocument = `
+    query GetParameterById($id: String!) {
+  parameter(id: $id) {
+    id
+    scope
+    code
+    value
+    extras
+    created
+    createdBy
+    modified
+    modifiedBy
+    translation
+    system
+  }
+}
+    `;
+export const useGetParameterByIdQuery = <TData = GetParameterByIdQuery, TError = unknown>(
+    client: GraphQLClient,
+    variables: GetParameterByIdQueryVariables,
+    options?: UseQueryOptions<GetParameterByIdQuery, TError, TData>,
+    headers?: RequestInit['headers']
+) =>
+    useQuery<GetParameterByIdQuery, TError, TData>(
+        ['GetParameterById', variables],
+        fetcher<GetParameterByIdQuery, GetParameterByIdQueryVariables>(
+            client,
+            GetParameterByIdDocument,
+            variables,
+            headers
+        ),
+        options
+    );
+export const CreateParameterDocument = `
+    mutation CreateParameter($input: CreateParameterInput!) {
+  createParameter(input: $input) {
+    id
+    scope
+    code
+    value
+  }
+}
+    `;
+export const useCreateParameterMutation = <TError = unknown, TContext = unknown>(
+    client: GraphQLClient,
+    options?: UseMutationOptions<
+        CreateParameterMutation,
+        TError,
+        CreateParameterMutationVariables,
+        TContext
+    >,
+    headers?: RequestInit['headers']
+) =>
+    useMutation<CreateParameterMutation, TError, CreateParameterMutationVariables, TContext>(
+        ['CreateParameter'],
+        (variables?: CreateParameterMutationVariables) =>
+            fetcher<CreateParameterMutation, CreateParameterMutationVariables>(
+                client,
+                CreateParameterDocument,
+                variables,
+                headers
+            )(),
+        options
+    );
+export const DeleteParameterDocument = `
+    mutation DeleteParameter($id: String!) {
+  deleteParameter(parameterId: $id)
+}
+    `;
+export const useDeleteParameterMutation = <TError = unknown, TContext = unknown>(
+    client: GraphQLClient,
+    options?: UseMutationOptions<
+        DeleteParameterMutation,
+        TError,
+        DeleteParameterMutationVariables,
+        TContext
+    >,
+    headers?: RequestInit['headers']
+) =>
+    useMutation<DeleteParameterMutation, TError, DeleteParameterMutationVariables, TContext>(
+        ['DeleteParameter'],
+        (variables?: DeleteParameterMutationVariables) =>
+            fetcher<DeleteParameterMutation, DeleteParameterMutationVariables>(
+                client,
+                DeleteParameterDocument,
+                variables,
+                headers
+            )(),
+        options
+    );
+export const UpdateParameterDocument = `
+    mutation UpdateParameter($id: String!, $input: UpdateParameterInput!) {
+  updateParameter(id: $id, input: $input) {
+    id
+    scope
+    code
+    value
+  }
+}
+    `;
+export const useUpdateParameterMutation = <TError = unknown, TContext = unknown>(
+    client: GraphQLClient,
+    options?: UseMutationOptions<
+        UpdateParameterMutation,
+        TError,
+        UpdateParameterMutationVariables,
+        TContext
+    >,
+    headers?: RequestInit['headers']
+) =>
+    useMutation<UpdateParameterMutation, TError, UpdateParameterMutationVariables, TContext>(
+        ['UpdateParameter'],
+        (variables?: UpdateParameterMutationVariables) =>
+            fetcher<UpdateParameterMutation, UpdateParameterMutationVariables>(
+                client,
+                UpdateParameterDocument,
                 variables,
                 headers
             )(),
