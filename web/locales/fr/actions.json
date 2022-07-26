@@ -20,9 +20,11 @@
     "add-stock-status": "Ajouter Stock Status",
     "add-user": "Ajouter Utilisateur",
     "add-your": "Ajouter votre {{name}}",
+    "add-purchase-order": "Ajouter Commandes fournisseur",
     "add2": "Ajouter {{name}}",
     "back-step": "Etape précédente",
     "cancel": "Annuler",
+    "close": "Close",
     "collapse-menu": "Fermer Menu",
     "dark-mode": "Mode Dark",
     "delete": "Supprimer",
@@ -46,5 +48,6 @@
     "update-quantity": "Mettre à jour la quantité",
     "update": "Mettre à jour",
     "view": "Voir",
+    "export": "Export",
     "enter-page-number": "Veuillez saisir le nombre de pages à imprimer"
 }

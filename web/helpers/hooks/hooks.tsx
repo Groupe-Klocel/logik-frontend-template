@@ -14,6 +14,16 @@ import {
     useGetAllLocationsQuery,
     useGetAllReturnCodesQuery,
     GetAllReturnCodesQuery,
+    useGetAllPurchaseOrdersQuery,
+    GetAllPurchaseOrdersQuery,
+    useGetAllPurchaseOrderLinesQuery,
+    GetAllPurchaseOrderLinesQuery,
+    useGetAllMovementsQuery,
+    GetAllMovementsQuery,
+    ListParametersForAScopeQuery,
+    useListParametersForAScopeQuery,
+    useGetAllStatusEvolutionsQuery,
+    GetAllStatusEvolutionsQuery,
     useGetAllEquipmentQuery,
     GetAllEquipmentQuery,
     useGetAllEquipmentDetailsQuery,
@@ -498,6 +508,94 @@ const useStockOwnerIds = (search: any, page: number, itemsPerPage: number, sort:
     return stockOwners;
 };
 
+const usePurchaseOrders = (search: any, page: number, itemsPerPage: number, sort: any) => {
+    const { graphqlRequestClient } = useAuth();
+
+    const sortByDate = {
+        field: 'created',
+        ascending: false
+    };
+
+    let newSort;
+
+    if (sort === null) {
+        newSort = sortByDate;
+    } else {
+        newSort = sort;
+    }
+
+    const purchaseOrders = useGetAllPurchaseOrdersQuery<Partial<GetAllPurchaseOrdersQuery>, Error>(
+        graphqlRequestClient,
+        {
+            filters: search,
+            orderBy: newSort,
+            page: page,
+            itemsPerPage: itemsPerPage
+        }
+    );
+
+    return purchaseOrders;
+};
+
+const usePurchaseOrderLines = (search: any, page: number, itemsPerPage: number, sort: any) => {
+    const { graphqlRequestClient } = useAuth();
+
+    const sortByDate = {
+        field: 'created',
+        ascending: false
+    };
+
+    let newSort;
+
+    if (sort === null) {
+        newSort = sortByDate;
+    } else {
+        newSort = sort;
+    }
+
+    const poLines = useGetAllPurchaseOrderLinesQuery<Partial<GetAllPurchaseOrderLinesQuery>, Error>(
+        graphqlRequestClient,
+        {
+            filters: search,
+            orderBy: newSort,
+            page: page,
+            itemsPerPage: itemsPerPage
+        }
+    );
+
+    return poLines;
+};
+
+const useMovements = (search: any, page: number, itemsPerPage: number, sort: any) => {
+    const { graphqlRequestClient } = useAuth();
+
+    const sortByDate = {
+        field: 'created',
+        ascending: false
+    };
+
+    let newSort;
+
+    if (sort === null) {
+        newSort = sortByDate;
+    } else {
+        newSort = sort;
+    }
+
+    const movements = useGetAllMovementsQuery<Partial<GetAllMovementsQuery>, Error>(
+        graphqlRequestClient,
+        {
+            filters: search,
+            orderBy: newSort,
+            page: page,
+
+            itemsPerPage: itemsPerPage
+        }
+    );
+
+    return movements;
+};
+
 const useGoodsIns = (
     search: any,
     page: number,
@@ -526,12 +624,52 @@ const useGoodsIns = (
             filters: search,
             orderBy: newSort,
             page: page,
-            itemsPerPage: itemsPerPage,
-            language: language
+
+            itemsPerPage: itemsPerPage
         }
     );
 
     return goodsIns;
+};
+const useStockStatuses = () => {
+    const { graphqlRequestClient } = useAuth();
+    const stockStatuses = useListParametersForAScopeQuery<
+        Partial<ListParametersForAScopeQuery>,
+        Error
+    >(graphqlRequestClient, {
+        scope: 'stock_statuses'
+    });
+
+    return stockStatuses;
+};
+
+const useStatusEvolutions = (search: any, page: number, itemsPerPage: number, sort: any) => {
+    const { graphqlRequestClient } = useAuth();
+
+    const sortByDate = {
+        field: 'created',
+        ascending: false
+    };
+
+    let newSort;
+
+    if (sort === null) {
+        newSort = sortByDate;
+    } else {
+        newSort = sort;
+    }
+
+    const statusEvolutions = useGetAllStatusEvolutionsQuery<
+        Partial<GetAllStatusEvolutionsQuery>,
+        Error
+    >(graphqlRequestClient, {
+        filters: search,
+        orderBy: newSort,
+        page: page,
+        itemsPerPage: itemsPerPage
+    });
+
+    return statusEvolutions;
 };
 
 const useGoodsInLines = (
@@ -722,5 +860,10 @@ export {
     useStockOwnerIds,
     usePatternPaths,
     usePatternIds,
-    usePatternPathLocations
+    usePatternPathLocations,
+    usePurchaseOrders,
+    usePurchaseOrderLines,
+    useMovements,
+    useStockStatuses,
+    useStatusEvolutions
 };

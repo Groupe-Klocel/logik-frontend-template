@@ -77,7 +77,6 @@ mutation RenderDocument($templateFilename: String!, $context: JSON!) {
         }
     }
 }
-
 mutation UpdateBarcode($id: String!, $input: UpdateBarcodeInput!) {
     updateBarcode(id: $id, input: $input) {
         id

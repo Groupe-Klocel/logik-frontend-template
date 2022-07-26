@@ -47,6 +47,8 @@
     "packaging": "Emballage",
     "packagings": "Emballages",
     "preparation-management": "Préparation",
+    "purchase-order-line": "Ligne de commande fournisseur",
+    "purchase-order": "Commande fournisseur",
     "purchase-orders": "Commandes fournisseurs",
     "recommended": "Conseillés",
     "return-code": "Code retour",
