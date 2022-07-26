@@ -2,7 +2,8 @@
     "action-impossible": "{{name}} n'est pas possible, vous devez sélectionner un enregistrement",
     "cancel": "Retour",
     "confirm": "OK",
-    "delete-confirm":"Etes-vous sûr(e) de vouloir supprimer cet enregistrement ?",
+    "delete-confirm": "Etes-vous sûr(e) de vouloir supprimer cet enregistrement ?",
+    "delete-not-possible": "Suppression impossible en l'état",
     "error-message-empty-input": "Le champ ne doit pas être vide",
     "error-message-requiered-input": "Le champ est requis",
     "error-message-select-1": "Vous devez sélectionner un {{name}}",
@@ -10,8 +11,8 @@
     "please-fill-your": "Veuillez remplir votre {{name}}",
     "please-input": "Veuillez saisir {{name}}",
     "please-select": "Veuillez sélectionner {{name}}",
-    "please-select-a": "Veuillez sélectionner un {{name}}",
-    "please-select-an": "Veuillez sélectionner un {{name}}",
+    "please-select-a": "Veuillez sélectionner un/une {{name}}",
+    "please-select-an": "Veuillez sélectionner un/une {{name}}",
     "please-select-your": "Veuillez sélectionner votre {{name}}",
     "login-success": "Vous êtes maintenant connecté",
     "filter_only_actions_visibles_warn": "Vous n'êtes pas autorisé à afficher uniquement la colonne des actions",
@@ -34,5 +35,6 @@
     "error-barcode-not-render": "Une erreur est survenue lors de la génération du code à barres",
     "error-selected-article-not-exist": "L'article sélectionné n'existe pas",
     "error-permission": "Permissions insuffisantes",
-    "replenish-validation-error": "Le type doit être vide lorsque Réapprovisionner n'est pas coché"
+    "replenish-validation-error": "Le type doit être vide lorsque Réapprovisionner n'est pas coché",
+    "update-default-first": "Merci de vous assurer qu'un autre emballage est défini par défaut avant la suppression"
 }

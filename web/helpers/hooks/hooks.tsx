@@ -27,7 +27,19 @@ import {
     useGetPatternIdsQuery,
     GetPatternIdsQuery,
     useGetPatternPathLocationsQuery,
-    GetPatternPathLocationsQuery
+    GetPatternPathLocationsQuery,
+    useGetAllFeatureCodesQuery,
+    GetAllFeatureCodesQuery,
+    useGetAllParamsQuery,
+    GetAllParamsQuery,
+    useGetAllFeatureTypeDetailsQuery,
+    GetAllFeatureTypeDetailsQuery,
+    useGetAllArticleSetQuery,
+    GetAllArticleSetQuery,
+    useGetAllArticleSetDetailsQuery,
+    GetAllArticleSetDetailsQuery,
+    useGetAllPackagingsQuery,
+    GetAllPackagingsQuery
 } from 'generated/graphql';
 
 const useArticles = (search: any, page: number, itemsPerPage: number, sort: any) => {
@@ -86,6 +98,64 @@ const useArticleIds = (search: any, page: number, itemsPerPage: number, sort: an
     );
 
     return articles;
+};
+
+const useArticleSets = (search: any, page: number, itemsPerPage: number, sort: any) => {
+    const { graphqlRequestClient } = useAuth();
+
+    const sortByDate = {
+        field: 'created',
+        ascending: false
+    };
+
+    let newSort;
+
+    if (sort === null) {
+        newSort = sortByDate;
+    } else {
+        newSort = sort;
+    }
+
+    const articleSets = useGetAllArticleSetQuery<Partial<GetAllArticleSetQuery>, Error>(
+        graphqlRequestClient,
+        {
+            filters: search,
+            orderBy: newSort,
+            page: page,
+            itemsPerPage: itemsPerPage
+        }
+    );
+
+    return articleSets;
+};
+
+const useArticleSetDetails = (search: any, page: number, itemsPerPage: number, sort: any) => {
+    const { graphqlRequestClient } = useAuth();
+
+    const sortByDate = {
+        field: 'created',
+        ascending: false
+    };
+
+    let newSort;
+
+    if (sort === null) {
+        newSort = sortByDate;
+    } else {
+        newSort = sort;
+    }
+
+    const articleSetDetails = useGetAllArticleSetDetailsQuery<
+        Partial<GetAllArticleSetDetailsQuery>,
+        Error
+    >(graphqlRequestClient, {
+        filters: search,
+        orderBy: newSort,
+        page: page,
+        itemsPerPage: itemsPerPage
+    });
+
+    return articleSetDetails;
 };
 
 const useBlocks = (search: any, page: number, itemsPerPage: number, sort: any) => {
@@ -177,6 +247,135 @@ const useMyInfo = () => {
     const myInfo = useGetMyInfoQuery<Partial<GetMyInfoQuery>, Error>(graphqlRequestClient);
 
     return myInfo;
+};
+
+const useFeatureCodes = (search: any, page: number, itemsPerPage: number, sort: any) => {
+    const { graphqlRequestClient } = useAuth();
+
+    // default sort by creation date
+    const sortByDate = {
+        field: 'created',
+        ascending: false
+    };
+
+    let newSort;
+
+    if (sort === null) {
+        newSort = sortByDate;
+    } else {
+        newSort = sort;
+    }
+
+    const featureCodes = useGetAllFeatureCodesQuery<Partial<GetAllFeatureCodesQuery>, Error>(
+        graphqlRequestClient,
+        {
+            filters: search,
+            orderBy: newSort,
+            page: page,
+            itemsPerPage: itemsPerPage
+        }
+    );
+
+    return featureCodes;
+};
+
+const useFeatureTypes = (search: any, page: number, itemsPerPage: number, sort: any) => {
+    const { graphqlRequestClient } = useAuth();
+
+    // default sort by creation date
+    const sortByDate = {
+        field: 'created',
+        ascending: false
+    };
+
+    let newSort;
+
+    if (sort === null) {
+        newSort = sortByDate;
+    } else {
+        newSort = sort;
+    }
+
+    // inject filter on scope
+    const defaultFilter = { scope: 'feature_type' };
+
+    let newFilter;
+
+    if (search === null) {
+        newFilter = defaultFilter;
+    } else {
+        newFilter = { ...search, ...defaultFilter };
+    }
+
+    const featureTypes = useGetAllParamsQuery<Partial<GetAllParamsQuery>, Error>(
+        graphqlRequestClient,
+        {
+            filters: newFilter,
+            orderBy: newSort,
+            page: page,
+            itemsPerPage: itemsPerPage
+        }
+    );
+
+    return featureTypes;
+};
+
+const useFeatureTypeDetails = (search: any, page: number, itemsPerPage: number, sort: any) => {
+    const { graphqlRequestClient } = useAuth();
+
+    const sortByDate = {
+        field: 'created',
+        ascending: false
+    };
+
+    let newSort;
+
+    if (sort === null) {
+        newSort = sortByDate;
+    } else {
+        newSort = sort;
+    }
+
+    const featureTypeDetails = useGetAllFeatureTypeDetailsQuery<
+        Partial<GetAllFeatureTypeDetailsQuery>,
+        Error
+    >(graphqlRequestClient, {
+        filters: search,
+        orderBy: newSort,
+        page: page,
+        itemsPerPage: itemsPerPage
+    });
+
+    return featureTypeDetails;
+};
+
+const usePackagings = (search: any, page: number, itemsPerPage: number, sort: any) => {
+    const { graphqlRequestClient } = useAuth();
+
+    const sortByDate = {
+        field: 'created',
+        ascending: false
+    };
+
+    let newSort;
+
+    if (sort === null) {
+        newSort = sortByDate;
+    } else {
+        newSort = sort;
+    }
+
+    const packagings = useGetAllPackagingsQuery<Partial<GetAllPackagingsQuery>, Error>(
+        graphqlRequestClient,
+        {
+            filters: search,
+            orderBy: newSort,
+            page: page,
+            itemsPerPage: itemsPerPage
+        }
+    );
+
+    return packagings;
 };
 
 const useReturnCodes = (search: any, page: number, itemsPerPage: number, sort: any) => {
@@ -309,7 +508,6 @@ const useGoodsInLines = (
     return goodsInLine;
 };
 
-
 const usePatterns = (
     search: any,
     page: number,
@@ -346,7 +544,6 @@ const usePatterns = (
     return patterns;
 };
 
-
 const usePatternPaths = (
     search: any,
     page: number,
@@ -382,7 +579,6 @@ const usePatternPaths = (
 
     return patternPaths;
 };
-
 
 const usePatternIds = (search: any, page: number, itemsPerPage: number, sort: any) => {
     const { graphqlRequestClient } = useAuth();
@@ -429,15 +625,15 @@ const usePatternPathLocations = (search: any, page: number, itemsPerPage: number
         newSort = sort;
     }
 
-    const patternPathLocations = useGetPatternPathLocationsQuery<Partial<GetPatternPathLocationsQuery>, Error>(
-        graphqlRequestClient,
-        {
-            filters: search,
-            orderBy: newSort,
-            page: page,
-            itemsPerPage: itemsPerPage
-        }
-    );
+    const patternPathLocations = useGetPatternPathLocationsQuery<
+        Partial<GetPatternPathLocationsQuery>,
+        Error
+    >(graphqlRequestClient, {
+        filters: search,
+        orderBy: newSort,
+        page: page,
+        itemsPerPage: itemsPerPage
+    });
 
     return patternPathLocations;
 };
@@ -445,10 +641,16 @@ const usePatternPathLocations = (search: any, page: number, itemsPerPage: number
 export {
     useArticles,
     useBlocks,
+    useArticleSets,
+    useArticleSetDetails,
     useLocations,
     useBarcodes,
+    useFeatureCodes,
+    useFeatureTypes,
+    useFeatureTypeDetails,
     useArticleIds,
     useMyInfo,
+    usePackagings,
     useReturnCodes,
     useGoodsIns,
     useGoodsInLines,
@@ -456,5 +658,5 @@ export {
     useStockOwnerIds,
     usePatternPaths,
     usePatternIds,
-    usePatternPathLocations,
+    usePatternPathLocations
 };
