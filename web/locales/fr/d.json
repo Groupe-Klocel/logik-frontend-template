@@ -60,11 +60,14 @@
     "productDescription": "Description Produit",
     "dateType": "Type Date",
     "value": "Valeur",
+    "closureWeight": "Poids fermeture",
     "comment": "Commentaire",
     "system": "Système",
     "description": "Description",
-    "default": "Defaut",
-    "dispatchable": "Dispatchable",
+    "default": "Défaut",
+    "dispatchable": "Expédiable",
+    "emptyWeight": "Poids vide",
+    "empty-weight": "Poids vide",
     "block": "Bloc",
     "aisle": "Allée",
     "level": "Niveau",
@@ -83,5 +86,6 @@
     "purchaseOrderLine": "Purchase Order Line",
     "purchaseOrderLineId": "Purchase Order Line Id",
     "goodsInId": "Goods In Id",
-    "stockOwnerId": "Stock Owner Id"
+    "stockOwnerId": "Stock Owner Id",
+    "statusText": "Statut"
 }
