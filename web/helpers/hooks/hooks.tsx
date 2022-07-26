@@ -14,6 +14,8 @@ import {
     useGetAllLocationsQuery,
     useGetAllReturnCodesQuery,
     GetAllReturnCodesQuery,
+    GetAllBuildingsQuery,
+    useGetAllBuildingsQuery,
     useGetAllPurchaseOrdersQuery,
     GetAllPurchaseOrdersQuery,
     useGetAllPurchaseOrderLinesQuery,
@@ -253,6 +255,35 @@ const useBarcodes = (search: any, page: number, itemsPerPage: number, sort: any)
     );
 
     return barcodes;
+};
+
+const useBuildings = (search: any, page: number, itemsPerPage: number, sort: any) => {
+    const { graphqlRequestClient } = useAuth();
+
+    const sortByDate = {
+        field: 'created',
+        ascending: false
+    };
+
+    let newSort;
+
+    if (sort === null) {
+        newSort = sortByDate;
+    } else {
+        newSort = sort;
+    }
+
+    const buildings = useGetAllBuildingsQuery<Partial<GetAllBuildingsQuery>, Error>(
+        graphqlRequestClient,
+        {
+            filters: search,
+            orderBy: newSort,
+            page: page,
+            itemsPerPage: itemsPerPage
+        }
+    );
+
+    return buildings;
 };
 
 const useEquipment = (search: any, page: number, itemsPerPage: number, sort: any) => {
@@ -841,6 +872,7 @@ const usePatternPathLocations = (search: any, page: number, itemsPerPage: number
 export {
     useArticles,
     useBlocks,
+    useBuildings,
     useEquipment,
     useEquipmentDetails,
     useArticleSets,
