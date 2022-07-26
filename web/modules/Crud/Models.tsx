@@ -1,11 +1,20 @@
-export enum FilterTypeEnum {
+export enum FormDataType {
     Number,
     String,
-    Boolean
+    Boolean,
+    TextArea
 }
+
+export type FormRuleType = {
+    required: boolean;
+    message: string;
+};
+
 export type FilterColumn = {
     name: string;
-    type: FilterTypeEnum;
+    type: FormDataType;
+    numberPrecision?: number;
+    rules?: Array<FormRuleType>;
 };
 export type ModelType = {
     tableName: string;
@@ -17,11 +26,13 @@ export type ModelType = {
 
     listQueryName: string;
     exportQueryName: string;
+    updateQueryName: string;
     resolverName: string;
 };
 
 var articleLuBarcodeModel: ModelType = {
     tableName: 'barcode',
+    updateQueryName: 'updateBarcode',
     detailQueryName: 'barcode',
     listQueryName: 'articleLuBarcodes',
     resolverName: 'ArticleLuBarcode',
@@ -38,6 +49,7 @@ var articleModel: ModelType = {
     listQueryName: 'articles',
     resolverName: 'Article',
     exportQueryName: 'exportArticles',
+    updateQueryName: 'updateArticle',
 
     detailColumns: [
         'id',
@@ -89,15 +101,15 @@ var articleModel: ModelType = {
     ],
     sortableColumns: ['name', 'code'],
     filterColumns: [
-        { name: 'name', type: FilterTypeEnum.String },
-        { name: 'code', type: FilterTypeEnum.String },
-        { name: 'status', type: FilterTypeEnum.Number },
-        { name: 'length', type: FilterTypeEnum.Number },
-        { name: 'width', type: FilterTypeEnum.Number },
-        { name: 'height', type: FilterTypeEnum.Number },
-        { name: 'baseUnitWeight', type: FilterTypeEnum.Number },
-        { name: 'boxWeight', type: FilterTypeEnum.Number },
-        { name: 'permanentProduct', type: FilterTypeEnum.Boolean }
+        { name: 'name', type: FormDataType.String },
+        { name: 'code', type: FormDataType.String },
+        { name: 'status', type: FormDataType.Number },
+        { name: 'length', type: FormDataType.Number },
+        { name: 'width', type: FormDataType.Number },
+        { name: 'height', type: FormDataType.Number },
+        { name: 'baseUnitWeight', type: FormDataType.Number },
+        { name: 'boxWeight', type: FormDataType.Number },
+        { name: 'permanentProduct', type: FormDataType.Boolean }
     ]
 };
 

@@ -90,7 +90,7 @@ const useList = (
 const useDetail = (id: string, queryName: string, fields: Array<string>) => {
     const { graphqlRequestClient } = useAuth();
 
-    const query = gql`query GetArticleById($id: String!, $language: String = "en") {
+    const query = gql`query ${queryName}($id: String!, $language: String = "en") {
         ${queryName}(id: $id, language: $language) {
             ${fields.join('\n')}
         }
@@ -110,6 +110,35 @@ const useDetail = (id: string, queryName: string, fields: Array<string>) => {
             .catch((error: any) => setData({ isLoading: false, error: true }));
     }, [id]);
     return data;
+};
+
+const useUpdate = (resolverName: string, id: string, queryName: string, fields: Array<string>) => {
+    const { graphqlRequestClient } = useAuth();
+
+    const query = gql`mutation ${queryName}($id: String!, $input: Update${resolverName}Input!) {
+        ${queryName}(id: $id, input: $input) {
+            ${fields.join('\n')}
+        }
+      }`;
+
+    const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [result, setResult] = useState<any>({ data: null, success: false });
+
+    let mutate = (variables: any) => {
+        setIsLoading(true);
+        graphqlRequestClient
+            .request(query, variables)
+            .then((result: any) => {
+                setIsLoading(false);
+                setResult({ data: result, success: true });
+            })
+            .catch((error: any) => {
+                setResult({ data: null, success: false });
+                setIsLoading(false);
+            });
+    };
+
+    return { isLoading, result, mutate };
 };
 
 const useExport = (resolverName: string, queryName: string) => {
@@ -400,6 +429,7 @@ const useGoodsInLines = (
 export {
     useList,
     useDetail,
+    useUpdate,
     useExport,
     useArticles,
     useBlocks,

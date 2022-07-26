@@ -15,7 +15,7 @@ const AddArticleStep1 = () => {
     const name = t('common:name');
     const supplierName = t('d:supplierName');
     const code = t('d:code');
-    const companyId = t('d:companyId');
+    const stockOwnerId = t('d:stockOwnerId');
     const errorMessageEmptyInput = t('messages:error-message-empty-input');
     const additionalDescription = t('d:additionalDescription');
 
@@ -50,14 +50,6 @@ const AddArticleStep1 = () => {
                 <Input.TextArea />
             </Form.Item>
 
-            <Form.Item
-                label={companyId}
-                name="companyId"
-                rules={[{ required: true, message: errorMessageEmptyInput }]}
-            >
-                <InputNumber style={{ width: '100%' }} />
-            </Form.Item>
-
             <Form.Item label={supplierName} name="supplierName">
                 <Input />
             </Form.Item>
@@ -73,6 +65,13 @@ const AddArticleStep1 = () => {
             <Form.Item
                 label={code}
                 name="code"
+                rules={[{ required: true, message: errorMessageEmptyInput }]}
+            >
+                <Input />
+            </Form.Item>
+            <Form.Item
+                label={stockOwnerId}
+                name="stockOwnerId"
                 rules={[{ required: true, message: errorMessageEmptyInput }]}
             >
                 <Input />

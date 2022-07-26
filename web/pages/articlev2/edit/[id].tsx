@@ -1,18 +1,41 @@
-import { AppHead } from '@components';
-import { EditArticle } from 'modules/Articles/PagesContainer/EditArticle';
+import { AppHead, HeaderContent } from '@components';
 import { useRouter } from 'next/router';
 import { FC } from 'react';
 import MainLayout from '../../../components/layouts/MainLayout';
+import { articleModel } from 'modules/Crud/Models';
+import { EditItem } from 'modules/Crud/Components/EditItem';
+import { articlesSubRoutes } from 'modules/Articles/Static/articlesRoutes';
+import useTranslation from 'next-translate/useTranslation';
 
 type PageComponent = FC & { layout: typeof MainLayout };
 
 const EditArticlePage: PageComponent = () => {
+    const { t } = useTranslation();
     const router = useRouter();
     const { id } = router.query;
+
+    const breadsCrumb = [
+        ...articlesSubRoutes,
+        {
+            breadcrumbName: `${id!}`
+        }
+    ];
+
     return (
         <>
             <AppHead title="Bee V2" />
-            <EditArticle router={router} id={id!} />
+            <EditItem
+                id={id!}
+                dataModel={articleModel}
+                headerComponent={
+                    <HeaderContent
+                        title={`${t('common:article')} ${id!}`}
+                        routes={breadsCrumb}
+                        onBack={() => router.back()}
+                    />
+                }
+                routeAfterSuccess={`/article/:id`}
+            />
         </>
     );
 };

@@ -1,7 +1,7 @@
 import { Form, Input, InputNumber, Checkbox } from 'antd';
 import useTranslation from 'next-translate/useTranslation';
 import { FC } from 'react';
-import { FilterColumn, FilterTypeEnum } from '../Models';
+import { FilterColumn, FormDataType } from '../Models';
 
 export interface IGeneralSearchProps {
     form: any;
@@ -15,13 +15,13 @@ const ListSearchComponent: FC<IGeneralSearchProps> = ({ form, columns }: IGenera
         <>
             <Form form={form} name="control-hooks">
                 {columns.map((item: FilterColumn, number) => {
-                    if (item.type === FilterTypeEnum.Number)
+                    if (item.type === FormDataType.Number)
                         return (
                             <Form.Item name={item.name} label={t(`d:${item.name}`)} key={item.name}>
                                 <InputNumber style={{ width: '100%' }} />
                             </Form.Item>
                         );
-                    else if (item.type == FilterTypeEnum.String)
+                    else if (item.type == FormDataType.String)
                         return (
                             <Form.Item name={item.name} label={t(`d:${item.name}`)} key={item.name}>
                                 <Input />
