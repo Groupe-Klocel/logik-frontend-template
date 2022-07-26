@@ -14,10 +14,8 @@ query GetAllBarcodes(
             name
             supplierName
             supplierArticleCode
-            quantity
             rotation
             preparationMode
-            flagDouble
             blacklisted
             stockOwnerId
             rotationText
@@ -33,10 +31,8 @@ query GetBarcodeById($id: String!) {
         name
         supplierName
         supplierArticleCode
-        quantity
         rotation
         preparationMode
-        flagDouble
         blacklisted
         stockOwnerId
         rotationText
@@ -51,10 +47,8 @@ mutation CreateBarcode($input: CreateBarcodeInput!) {
         name
         supplierName
         supplierArticleCode
-        quantity
         rotation
         preparationMode
-        flagDouble
         blacklisted
         stockOwnerId
         rotationText
@@ -72,7 +66,7 @@ mutation RenderDocument($templateFilename: String!, $context: JSON!) {
         ... on RenderedDocument {
             url
         }
-        ...on TemplateDoesNotExist {
+        ... on TemplateDoesNotExist {
             message
         }
         ... on TemplateError {
@@ -91,10 +85,8 @@ mutation UpdateBarcode($id: String!, $input: UpdateBarcodeInput!) {
         name
         supplierName
         supplierArticleCode
-        quantity
         rotation
         preparationMode
-        flagDouble
         blacklisted
         stockOwnerId
         rotationText
