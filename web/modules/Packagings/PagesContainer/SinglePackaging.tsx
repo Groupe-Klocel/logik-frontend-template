@@ -60,16 +60,22 @@ const SinglePackaging: FC<SinglePackagingTypeProps> = ({
             }
         }
     );
-
     const softDeletePackaging = ({ packagingId }: SoftDeletePackagingMutationVariables) => {
-        Modal.confirm({
-            title: t('messages:delete-confirm'),
-            onOk: () => {
-                mutate({ packagingId });
-            },
-            okText: t('messages:confirm'),
-            cancelText: t('messages:cancel')
-        });
+        if (data?.packaging?.default == true) {
+            Modal.error({
+                title: t('messages:delete-not-possible'),
+                content: t('messages:update-default-first')
+            });
+        } else {
+            Modal.confirm({
+                title: t('messages:delete-confirm'),
+                onOk: () => {
+                    mutate({ packagingId });
+                },
+                okText: t('messages:confirm'),
+                cancelText: t('messages:cancel')
+            });
+        }
     };
 
     return (

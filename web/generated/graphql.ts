@@ -456,7 +456,7 @@ export type ArticleSetSearchFilters = {
 
 export type Barcode = {
   __typename?: 'Barcode';
-  articleLuBarcode: Array<ArticleLuBarcode>;
+  articleLuBarcodes: Array<ArticleLuBarcode>;
   blacklisted?: Maybe<Scalars['Boolean']>;
   created?: Maybe<Scalars['DateTime']>;
   createdBy?: Maybe<Scalars['String']>;
@@ -2165,6 +2165,7 @@ export type CreateStockOwnerInput = {
   country?: InputMaybe<Scalars['String']>;
   countryCode?: InputMaybe<Scalars['String']>;
   email?: InputMaybe<Scalars['String']>;
+  exchangePrefix?: InputMaybe<Scalars['String']>;
   /** Semi-structured attributes that can be used to store data for anything that doesn't fit in the default columns */
   extras?: InputMaybe<Scalars['JSON']>;
   logoUrl?: InputMaybe<Scalars['String']>;
@@ -4928,6 +4929,8 @@ export type Mutation = {
   updateMovement?: Maybe<Movement>;
   /** Update package */
   updatePackaging?: Maybe<Packaging>;
+  /** Update package with default value */
+  updatePackagingDefault: Packaging;
   /** Update a parameter */
   updateParameter?: Maybe<Parameter>;
   /** Update Pattern */
@@ -8266,6 +8269,7 @@ export type StockOwner = {
   created?: Maybe<Scalars['DateTime']>;
   createdBy?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
+  exchangePrefix?: Maybe<Scalars['String']>;
   extras?: Maybe<Scalars['JSON']>;
   id?: Maybe<Scalars['String']>;
   logoUrl?: Maybe<Scalars['String']>;
@@ -8306,6 +8310,7 @@ export enum StockOwnerFieldName {
   Created = 'created',
   CreatedBy = 'createdBy',
   Email = 'email',
+  ExchangePrefix = 'exchangePrefix',
   Extras = 'extras',
   Id = 'id',
   LogoUrl = 'logoUrl',
@@ -8360,6 +8365,7 @@ export type StockOwnerSearchFilters = {
   created?: InputMaybe<Scalars['DateTime']>;
   createdBy?: InputMaybe<Scalars['String']>;
   email?: InputMaybe<Scalars['String']>;
+  exchangePrefix?: InputMaybe<Scalars['String']>;
   extras?: InputMaybe<Scalars['JSON']>;
   id?: InputMaybe<Scalars['String']>;
   logoUrl?: InputMaybe<Scalars['String']>;
@@ -9262,6 +9268,7 @@ export type UpdateStockOwnerInput = {
   country?: InputMaybe<Scalars['String']>;
   countryCode?: InputMaybe<Scalars['String']>;
   email?: InputMaybe<Scalars['String']>;
+  exchangePrefix?: InputMaybe<Scalars['String']>;
   extras?: InputMaybe<Scalars['JSON']>;
   logoUrl?: InputMaybe<Scalars['String']>;
   mobile?: InputMaybe<Scalars['String']>;
@@ -9802,6 +9809,13 @@ export type CreatePackagingMutationVariables = Exact<{
 
 export type CreatePackagingMutation = { __typename?: 'Mutation', createPackaging: { __typename?: 'Packaging', id?: string | null, name?: string | null, description?: string | null, default?: boolean | null, dispatchable?: boolean | null, status?: number | null, statusText?: string | null, weight?: number | null, length?: number | null, height?: number | null, width?: number | null, closureWeight?: number | null, system?: boolean | null } };
 
+export type CreateDefaultPackagingMutationVariables = Exact<{
+  input: CreatePackagingInput;
+}>;
+
+
+export type CreateDefaultPackagingMutation = { __typename?: 'Mutation', createPackaging: { __typename?: 'Packaging', id?: string | null, name?: string | null, description?: string | null, default?: boolean | null, dispatchable?: boolean | null, status?: number | null, statusText?: string | null, weight?: number | null, length?: number | null, height?: number | null, width?: number | null, closureWeight?: number | null, system?: boolean | null }, updatePackagingDefault: { __typename?: 'Packaging', id?: string | null, name?: string | null, default?: boolean | null } };
+
 export type DeletePackagingMutationVariables = Exact<{
   id: Scalars['String'];
 }>;
@@ -9823,6 +9837,14 @@ export type UpdatePackagingMutationVariables = Exact<{
 
 
 export type UpdatePackagingMutation = { __typename?: 'Mutation', updatePackaging?: { __typename?: 'Packaging', id?: string | null, name?: string | null, description?: string | null, default?: boolean | null, dispatchable?: boolean | null, status?: number | null, statusText?: string | null, weight?: number | null, length?: number | null, height?: number | null, width?: number | null, closureWeight?: number | null, system?: boolean | null } | null };
+
+export type UpdateDefaultPackagingMutationVariables = Exact<{
+  id: Scalars['String'];
+  input: UpdatePackagingInput;
+}>;
+
+
+export type UpdateDefaultPackagingMutation = { __typename?: 'Mutation', updatePackaging?: { __typename?: 'Packaging', id?: string | null, name?: string | null, description?: string | null, default?: boolean | null, dispatchable?: boolean | null, status?: number | null, statusText?: string | null, weight?: number | null, length?: number | null, height?: number | null, width?: number | null, closureWeight?: number | null, system?: boolean | null } | null, updatePackagingDefault: { __typename?: 'Packaging', id?: string | null, name?: string | null, default?: boolean | null } };
 
 export type GetAllReturnCodesQueryVariables = Exact<{
   filters?: InputMaybe<ReturnCodeSearchFilters>;
@@ -11513,6 +11535,43 @@ export const useCreatePackagingMutation = <
       (variables?: CreatePackagingMutationVariables) => fetcher<CreatePackagingMutation, CreatePackagingMutationVariables>(client, CreatePackagingDocument, variables, headers)(),
       options
     );
+export const CreateDefaultPackagingDocument = `
+    mutation CreateDefaultPackaging($input: CreatePackagingInput!) {
+  createPackaging(input: $input) {
+    id
+    name
+    description
+    default
+    dispatchable
+    status
+    statusText
+    weight
+    length
+    height
+    width
+    closureWeight
+    system
+  }
+  updatePackagingDefault {
+    id
+    name
+    default
+  }
+}
+    `;
+export const useCreateDefaultPackagingMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<CreateDefaultPackagingMutation, TError, CreateDefaultPackagingMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<CreateDefaultPackagingMutation, TError, CreateDefaultPackagingMutationVariables, TContext>(
+      ['CreateDefaultPackaging'],
+      (variables?: CreateDefaultPackagingMutationVariables) => fetcher<CreateDefaultPackagingMutation, CreateDefaultPackagingMutationVariables>(client, CreateDefaultPackagingDocument, variables, headers)(),
+      options
+    );
 export const DeletePackagingDocument = `
     mutation DeletePackaging($id: String!) {
   deletePackaging(id: $id)
@@ -11579,6 +11638,43 @@ export const useUpdatePackagingMutation = <
     useMutation<UpdatePackagingMutation, TError, UpdatePackagingMutationVariables, TContext>(
       ['UpdatePackaging'],
       (variables?: UpdatePackagingMutationVariables) => fetcher<UpdatePackagingMutation, UpdatePackagingMutationVariables>(client, UpdatePackagingDocument, variables, headers)(),
+      options
+    );
+export const UpdateDefaultPackagingDocument = `
+    mutation UpdateDefaultPackaging($id: String!, $input: UpdatePackagingInput!) {
+  updatePackaging(id: $id, input: $input) {
+    id
+    name
+    description
+    default
+    dispatchable
+    status
+    statusText
+    weight
+    length
+    height
+    width
+    closureWeight
+    system
+  }
+  updatePackagingDefault {
+    id
+    name
+    default
+  }
+}
+    `;
+export const useUpdateDefaultPackagingMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<UpdateDefaultPackagingMutation, TError, UpdateDefaultPackagingMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<UpdateDefaultPackagingMutation, TError, UpdateDefaultPackagingMutationVariables, TContext>(
+      ['UpdateDefaultPackaging'],
+      (variables?: UpdateDefaultPackagingMutationVariables) => fetcher<UpdateDefaultPackagingMutation, UpdateDefaultPackagingMutationVariables>(client, UpdateDefaultPackagingDocument, variables, headers)(),
       options
     );
 export const GetAllReturnCodesDocument = `

@@ -2,6 +2,7 @@ import {
     CheckCircleOutlined,
     CloseSquareOutlined,
     DeleteOutlined,
+    EditTwoTone,
     EyeTwoTone,
     PrinterOutlined
 } from '@ant-design/icons';
@@ -94,14 +95,21 @@ export const PackagingsList = () => {
     );
 
     const softDeletePackaging = ({ packagingId }: SoftDeletePackagingMutationVariables) => {
-        Modal.confirm({
-            title: t('messages:delete-confirm'),
-            onOk: () => {
-                mutate({ packagingId });
-            },
-            okText: t('messages:confirm'),
-            cancelText: t('messages:cancel')
-        });
+        if (packagings?.results.find((e: any) => e.id == packagingId).default == true) {
+            Modal.error({
+                title: t('messages:delete-not-possible'),
+                content: t('messages:update-default-first')
+            });
+        } else {
+            Modal.confirm({
+                title: t('messages:delete-confirm'),
+                onOk: () => {
+                    mutate({ packagingId });
+                },
+                okText: t('messages:confirm'),
+                cancelText: t('messages:cancel')
+            });
+        }
     };
 
     const columns = [
@@ -171,10 +179,10 @@ export const PackagingsList = () => {
                         icon={<EyeTwoTone />}
                         path={pathParams('/packaging/[id]', record.id)}
                     />
-                    {/* <LinkButton
+                    <LinkButton
                         icon={<EditTwoTone />}
-                        path={pathParams('/feedback-overwrite/edit/[id]', record.id)}
-                    /> */}
+                        path={pathParams('/packaging/edit/[id]', record.id)}
+                    />
                     {/* <Button
                         icon={<PrinterOutlined />}
                         onClick={() => alert(`Print ${record.id} - ${record.name}`)}

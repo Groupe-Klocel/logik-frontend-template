@@ -83,6 +83,29 @@ mutation CreatePackaging($input: CreatePackagingInput!) {
     }
 }
 
+mutation CreateDefaultPackaging($input: CreatePackagingInput!) {
+    createPackaging(input: $input) {
+        id
+        name
+        description
+        default
+        dispatchable
+        status
+        statusText
+        weight
+        length
+        height
+        width
+        closureWeight
+        system
+    }
+    updatePackagingDefault {
+        id
+        name
+        default
+    }
+}
+
 mutation DeletePackaging($id: String!) {
     deletePackaging(id: $id)
 }
@@ -106,5 +129,28 @@ mutation UpdatePackaging($id: String!, $input: UpdatePackagingInput!) {
         width
         closureWeight
         system
+    }
+}
+
+mutation UpdateDefaultPackaging($id: String!, $input: UpdatePackagingInput!) {
+    updatePackaging(id: $id, input: $input) {
+        id
+        name
+        description
+        default
+        dispatchable
+        status
+        statusText
+        weight
+        length
+        height
+        width
+        closureWeight
+        system
+    }
+    updatePackagingDefault {
+        id
+        name
+        default
     }
 }
