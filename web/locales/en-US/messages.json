@@ -3,10 +3,7 @@
     "cancel": "Back",
     "confirm": "OK",
     "delete-confirm": "Are you sure you want to delete this record?",
-<<<<<<< HEAD
-=======
     "delete-not-possible": "Delete not possibble in the current state",
->>>>>>> master
     "error-message-empty-input": "Field must not be empty",
     "error-message-requiered-input": "Field is requiered",
     "error-message-select-1": "You must select a {{name}}",

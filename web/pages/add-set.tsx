@@ -1,11 +1,11 @@
 import { AppHead } from '@components';
 import MainLayout from 'components/layouts/MainLayout';
 import { FC } from 'react';
-import { AddArticleSet } from '../modules/Articles/PagesContainer/AddArticleSet';
+import { AddArticleSet } from '../modules/Articles/PagesContainer/AddSet';
 
 type PageComponent = FC & { layout: typeof MainLayout };
 
-const AddArticleSetPage: PageComponent = () => {
+const AddSetPage: PageComponent = () => {
     return (
         <>
             <AppHead title="Bee V2" />
@@ -14,6 +14,6 @@ const AddArticleSetPage: PageComponent = () => {
     );
 };
 
-AddArticleSetPage.layout = MainLayout;
+AddSetPage.layout = MainLayout;
 
-export default AddArticleSetPage;
+export default AddSetPage;

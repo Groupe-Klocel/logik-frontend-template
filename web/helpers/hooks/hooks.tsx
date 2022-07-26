@@ -24,6 +24,10 @@ import {
     GetAllParamsQuery,
     useGetAllFeatureTypeDetailsQuery,
     GetAllFeatureTypeDetailsQuery,
+    useGetAllArticleSetQuery,
+    GetAllArticleSetQuery,
+    useGetAllArticleSetDetailsQuery,
+    GetAllArticleSetDetailsQuery,
     useGetAllPackagingsQuery,
     GetAllPackagingsQuery
 } from 'generated/graphql';
@@ -84,6 +88,64 @@ const useArticleIds = (search: any, page: number, itemsPerPage: number, sort: an
     );
 
     return articles;
+};
+
+const useArticleSets = (search: any, page: number, itemsPerPage: number, sort: any) => {
+    const { graphqlRequestClient } = useAuth();
+
+    const sortByDate = {
+        field: 'created',
+        ascending: false
+    };
+
+    let newSort;
+
+    if (sort === null) {
+        newSort = sortByDate;
+    } else {
+        newSort = sort;
+    }
+
+    const articleSets = useGetAllArticleSetQuery<Partial<GetAllArticleSetQuery>, Error>(
+        graphqlRequestClient,
+        {
+            filters: search,
+            orderBy: newSort,
+            page: page,
+            itemsPerPage: itemsPerPage
+        }
+    );
+
+    return articleSets;
+};
+
+const useArticleSetDetails = (search: any, page: number, itemsPerPage: number, sort: any) => {
+    const { graphqlRequestClient } = useAuth();
+
+    const sortByDate = {
+        field: 'created',
+        ascending: false
+    };
+
+    let newSort;
+
+    if (sort === null) {
+        newSort = sortByDate;
+    } else {
+        newSort = sort;
+    }
+
+    const articleSetDetails = useGetAllArticleSetDetailsQuery<
+        Partial<GetAllArticleSetDetailsQuery>,
+        Error
+    >(graphqlRequestClient, {
+        filters: search,
+        orderBy: newSort,
+        page: page,
+        itemsPerPage: itemsPerPage
+    });
+
+    return articleSetDetails;
 };
 
 const useBlocks = (search: any, page: number, itemsPerPage: number, sort: any) => {
@@ -410,6 +472,8 @@ const useGoodsInLines = (
 export {
     useArticles,
     useBlocks,
+    useArticleSets,
+    useArticleSetDetails,
     useLocations,
     useBarcodes,
     useFeatureCodes,

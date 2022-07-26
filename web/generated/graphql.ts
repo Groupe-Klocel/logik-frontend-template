@@ -10796,6 +10796,253 @@ export type UpdateReturnCodeMutation = {
     } | null;
 };
 
+export type SimpleGetInProgressStockOwnersQueryVariables = Exact<{ [key: string]: never }>;
+
+export type SimpleGetInProgressStockOwnersQuery = {
+    __typename?: 'Query';
+    stockOwners: {
+        __typename?: 'StockOwnerListResult';
+        results: Array<{ __typename?: 'StockOwner'; id?: string | null; name?: string | null }>;
+    };
+};
+
+export type SimpleGetAllArticlesQueryVariables = Exact<{ [key: string]: never }>;
+
+export type SimpleGetAllArticlesQuery = {
+    __typename?: 'Query';
+    articles: {
+        __typename?: 'ArticleListResult';
+        results: Array<{ __typename?: 'Article'; id?: string | null; name?: string | null }>;
+    };
+};
+
+export type GetAllArticleSetQueryVariables = Exact<{
+    filters?: InputMaybe<ArticleSetSearchFilters>;
+    orderBy?: InputMaybe<Array<ArticleSetOrderByCriterion> | ArticleSetOrderByCriterion>;
+    page: Scalars['Int'];
+    itemsPerPage: Scalars['Int'];
+}>;
+
+export type GetAllArticleSetQuery = {
+    __typename?: 'Query';
+    articleSets: {
+        __typename?: 'ArticleSetListResult';
+        count: number;
+        itemsPerPage: number;
+        totalPages: number;
+        results: Array<{
+            __typename?: 'ArticleSet';
+            id?: string | null;
+            name?: string | null;
+            comment?: string | null;
+            stockOwnerId?: string | null;
+            articleId?: string | null;
+            extras?: any | null;
+            created?: any | null;
+            createdBy?: string | null;
+            modified?: any | null;
+            modifiedBy?: string | null;
+            stockOwner: { __typename?: 'StockOwner'; name?: string | null };
+            article: {
+                __typename?: 'Article';
+                name?: string | null;
+                additionalDescription?: string | null;
+            };
+        }>;
+    };
+};
+
+export type GetArticleSetByIdQueryVariables = Exact<{
+    id: Scalars['String'];
+}>;
+
+export type GetArticleSetByIdQuery = {
+    __typename?: 'Query';
+    articleSet?: {
+        __typename?: 'ArticleSet';
+        id?: string | null;
+        name?: string | null;
+        comment?: string | null;
+        stockOwnerId?: string | null;
+        articleId?: string | null;
+        extras?: any | null;
+        created?: any | null;
+        createdBy?: string | null;
+        modified?: any | null;
+        modifiedBy?: string | null;
+        stockOwner: { __typename?: 'StockOwner'; name?: string | null };
+        article: {
+            __typename?: 'Article';
+            name?: string | null;
+            additionalDescription?: string | null;
+        };
+    } | null;
+};
+
+export type GetArticleSetIdsQueryVariables = Exact<{
+    filters?: InputMaybe<ArticleSetSearchFilters>;
+    orderBy?: InputMaybe<Array<ArticleSetOrderByCriterion> | ArticleSetOrderByCriterion>;
+    page: Scalars['Int'];
+    itemsPerPage: Scalars['Int'];
+}>;
+
+export type GetArticleSetIdsQuery = {
+    __typename?: 'Query';
+    articleSets: {
+        __typename?: 'ArticleSetListResult';
+        count: number;
+        itemsPerPage: number;
+        totalPages: number;
+        results: Array<{ __typename?: 'ArticleSet'; id?: string | null; name?: string | null }>;
+    };
+};
+
+export type CreateArticleSetMutationVariables = Exact<{
+    input: CreateArticleSetInput;
+}>;
+
+export type CreateArticleSetMutation = {
+    __typename?: 'Mutation';
+    createArticleSet: {
+        __typename?: 'ArticleSet';
+        id?: string | null;
+        name?: string | null;
+        comment?: string | null;
+        stockOwnerId?: string | null;
+        articleId?: string | null;
+    };
+};
+
+export type DeleteArticleSetMutationVariables = Exact<{
+    id: Scalars['String'];
+}>;
+
+export type DeleteArticleSetMutation = { __typename?: 'Mutation'; deleteArticleSet: boolean };
+
+export type UpdateArticleSetMutationVariables = Exact<{
+    id: Scalars['String'];
+    input: UpdateArticleSetInput;
+}>;
+
+export type UpdateArticleSetMutation = {
+    __typename?: 'Mutation';
+    updateArticleSet?: {
+        __typename?: 'ArticleSet';
+        id?: string | null;
+        name?: string | null;
+        comment?: string | null;
+        stockOwnerId?: string | null;
+        articleId?: string | null;
+    } | null;
+};
+
+export type GetAllArticleSetDetailsQueryVariables = Exact<{
+    filters?: InputMaybe<ArticleSetDetailSearchFilters>;
+    orderBy?: InputMaybe<
+        Array<ArticleSetDetailOrderByCriterion> | ArticleSetDetailOrderByCriterion
+    >;
+    page: Scalars['Int'];
+    itemsPerPage: Scalars['Int'];
+}>;
+
+export type GetAllArticleSetDetailsQuery = {
+    __typename?: 'Query';
+    articleSetDetails: {
+        __typename?: 'ArticleSetDetailListResult';
+        count: number;
+        itemsPerPage: number;
+        totalPages: number;
+        results: Array<{
+            __typename?: 'ArticleSetDetail';
+            id?: string | null;
+            articleSetId?: string | null;
+            stockOwnerId?: string | null;
+            articleId?: string | null;
+            quantity?: number | null;
+            extras?: any | null;
+            created?: any | null;
+            createdBy?: string | null;
+            modified?: any | null;
+            modifiedBy?: string | null;
+            articleSet: { __typename?: 'ArticleSet'; name?: string | null };
+            stockOwner: { __typename?: 'StockOwner'; name?: string | null };
+            article: {
+                __typename?: 'Article';
+                name?: string | null;
+                additionalDescription?: string | null;
+            };
+        }>;
+    };
+};
+
+export type GetArticleSetDetailByIdQueryVariables = Exact<{
+    id: Scalars['String'];
+}>;
+
+export type GetArticleSetDetailByIdQuery = {
+    __typename?: 'Query';
+    articleSetDetail?: {
+        __typename?: 'ArticleSetDetail';
+        id?: string | null;
+        articleSetId?: string | null;
+        stockOwnerId?: string | null;
+        articleId?: string | null;
+        quantity?: number | null;
+        extras?: any | null;
+        created?: any | null;
+        createdBy?: string | null;
+        modified?: any | null;
+        modifiedBy?: string | null;
+        articleSet: { __typename?: 'ArticleSet'; name?: string | null };
+        stockOwner: { __typename?: 'StockOwner'; name?: string | null };
+        article: {
+            __typename?: 'Article';
+            name?: string | null;
+            additionalDescription?: string | null;
+        };
+    } | null;
+};
+
+export type CreateArticleSetDetailMutationVariables = Exact<{
+    input: CreateArticleSetDetailInput;
+}>;
+
+export type CreateArticleSetDetailMutation = {
+    __typename?: 'Mutation';
+    createArticleSetDetail: {
+        __typename?: 'ArticleSetDetail';
+        id?: string | null;
+        articleSetId?: string | null;
+        stockOwnerId?: string | null;
+        articleId?: string | null;
+    };
+};
+
+export type DeleteArticleSetDetailMutationVariables = Exact<{
+    id: Scalars['String'];
+}>;
+
+export type DeleteArticleSetDetailMutation = {
+    __typename?: 'Mutation';
+    deleteArticleSetDetail: boolean;
+};
+
+export type UpdateArticleSetDetailMutationVariables = Exact<{
+    id: Scalars['String'];
+    input: UpdateArticleSetDetailInput;
+}>;
+
+export type UpdateArticleSetDetailMutation = {
+    __typename?: 'Mutation';
+    updateArticleSetDetail?: {
+        __typename?: 'ArticleSetDetail';
+        id?: string | null;
+        articleSetId?: string | null;
+        stockOwnerId?: string | null;
+        articleId?: string | null;
+    } | null;
+};
+
 export type GetMyInfoQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GetMyInfoQuery = {
@@ -13803,6 +14050,478 @@ export const useUpdateReturnCodeMutation = <TError = unknown, TContext = unknown
             fetcher<UpdateReturnCodeMutation, UpdateReturnCodeMutationVariables>(
                 client,
                 UpdateReturnCodeDocument,
+                variables,
+                headers
+            )(),
+        options
+    );
+export const SimpleGetInProgressStockOwnersDocument = `
+    query SimpleGetInProgressStockOwners {
+  stockOwners(filters: {status: 450}) {
+    results {
+      id
+      name
+    }
+  }
+}
+    `;
+export const useSimpleGetInProgressStockOwnersQuery = <
+    TData = SimpleGetInProgressStockOwnersQuery,
+    TError = unknown
+>(
+    client: GraphQLClient,
+    variables?: SimpleGetInProgressStockOwnersQueryVariables,
+    options?: UseQueryOptions<SimpleGetInProgressStockOwnersQuery, TError, TData>,
+    headers?: RequestInit['headers']
+) =>
+    useQuery<SimpleGetInProgressStockOwnersQuery, TError, TData>(
+        variables === undefined
+            ? ['SimpleGetInProgressStockOwners']
+            : ['SimpleGetInProgressStockOwners', variables],
+        fetcher<SimpleGetInProgressStockOwnersQuery, SimpleGetInProgressStockOwnersQueryVariables>(
+            client,
+            SimpleGetInProgressStockOwnersDocument,
+            variables,
+            headers
+        ),
+        options
+    );
+export const SimpleGetAllArticlesDocument = `
+    query SimpleGetAllArticles {
+  articles {
+    results {
+      id
+      name
+    }
+  }
+}
+    `;
+export const useSimpleGetAllArticlesQuery = <TData = SimpleGetAllArticlesQuery, TError = unknown>(
+    client: GraphQLClient,
+    variables?: SimpleGetAllArticlesQueryVariables,
+    options?: UseQueryOptions<SimpleGetAllArticlesQuery, TError, TData>,
+    headers?: RequestInit['headers']
+) =>
+    useQuery<SimpleGetAllArticlesQuery, TError, TData>(
+        variables === undefined ? ['SimpleGetAllArticles'] : ['SimpleGetAllArticles', variables],
+        fetcher<SimpleGetAllArticlesQuery, SimpleGetAllArticlesQueryVariables>(
+            client,
+            SimpleGetAllArticlesDocument,
+            variables,
+            headers
+        ),
+        options
+    );
+export const GetAllArticleSetDocument = `
+    query GetAllArticleSet($filters: ArticleSetSearchFilters, $orderBy: [ArticleSetOrderByCriterion!], $page: Int!, $itemsPerPage: Int!) {
+  articleSets(
+    filters: $filters
+    orderBy: $orderBy
+    page: $page
+    itemsPerPage: $itemsPerPage
+  ) {
+    count
+    itemsPerPage
+    totalPages
+    results {
+      id
+      name
+      comment
+      stockOwnerId
+      stockOwner {
+        name
+      }
+      articleId
+      article {
+        name
+        additionalDescription
+      }
+      extras
+      created
+      createdBy
+      modified
+      modifiedBy
+    }
+  }
+}
+    `;
+export const useGetAllArticleSetQuery = <TData = GetAllArticleSetQuery, TError = unknown>(
+    client: GraphQLClient,
+    variables: GetAllArticleSetQueryVariables,
+    options?: UseQueryOptions<GetAllArticleSetQuery, TError, TData>,
+    headers?: RequestInit['headers']
+) =>
+    useQuery<GetAllArticleSetQuery, TError, TData>(
+        ['GetAllArticleSet', variables],
+        fetcher<GetAllArticleSetQuery, GetAllArticleSetQueryVariables>(
+            client,
+            GetAllArticleSetDocument,
+            variables,
+            headers
+        ),
+        options
+    );
+export const GetArticleSetByIdDocument = `
+    query GetArticleSetById($id: String!) {
+  articleSet(id: $id) {
+    id
+    name
+    comment
+    stockOwnerId
+    stockOwner {
+      name
+    }
+    articleId
+    article {
+      name
+      additionalDescription
+    }
+    extras
+    created
+    createdBy
+    modified
+    modifiedBy
+  }
+}
+    `;
+export const useGetArticleSetByIdQuery = <TData = GetArticleSetByIdQuery, TError = unknown>(
+    client: GraphQLClient,
+    variables: GetArticleSetByIdQueryVariables,
+    options?: UseQueryOptions<GetArticleSetByIdQuery, TError, TData>,
+    headers?: RequestInit['headers']
+) =>
+    useQuery<GetArticleSetByIdQuery, TError, TData>(
+        ['GetArticleSetById', variables],
+        fetcher<GetArticleSetByIdQuery, GetArticleSetByIdQueryVariables>(
+            client,
+            GetArticleSetByIdDocument,
+            variables,
+            headers
+        ),
+        options
+    );
+export const GetArticleSetIdsDocument = `
+    query GetArticleSetIds($filters: ArticleSetSearchFilters, $orderBy: [ArticleSetOrderByCriterion!], $page: Int!, $itemsPerPage: Int!) {
+  articleSets(
+    filters: $filters
+    orderBy: $orderBy
+    page: $page
+    itemsPerPage: $itemsPerPage
+  ) {
+    count
+    itemsPerPage
+    totalPages
+    results {
+      id
+      name
+    }
+  }
+}
+    `;
+export const useGetArticleSetIdsQuery = <TData = GetArticleSetIdsQuery, TError = unknown>(
+    client: GraphQLClient,
+    variables: GetArticleSetIdsQueryVariables,
+    options?: UseQueryOptions<GetArticleSetIdsQuery, TError, TData>,
+    headers?: RequestInit['headers']
+) =>
+    useQuery<GetArticleSetIdsQuery, TError, TData>(
+        ['GetArticleSetIds', variables],
+        fetcher<GetArticleSetIdsQuery, GetArticleSetIdsQueryVariables>(
+            client,
+            GetArticleSetIdsDocument,
+            variables,
+            headers
+        ),
+        options
+    );
+export const CreateArticleSetDocument = `
+    mutation CreateArticleSet($input: CreateArticleSetInput!) {
+  createArticleSet(input: $input) {
+    id
+    name
+    comment
+    stockOwnerId
+    articleId
+  }
+}
+    `;
+export const useCreateArticleSetMutation = <TError = unknown, TContext = unknown>(
+    client: GraphQLClient,
+    options?: UseMutationOptions<
+        CreateArticleSetMutation,
+        TError,
+        CreateArticleSetMutationVariables,
+        TContext
+    >,
+    headers?: RequestInit['headers']
+) =>
+    useMutation<CreateArticleSetMutation, TError, CreateArticleSetMutationVariables, TContext>(
+        ['CreateArticleSet'],
+        (variables?: CreateArticleSetMutationVariables) =>
+            fetcher<CreateArticleSetMutation, CreateArticleSetMutationVariables>(
+                client,
+                CreateArticleSetDocument,
+                variables,
+                headers
+            )(),
+        options
+    );
+export const DeleteArticleSetDocument = `
+    mutation DeleteArticleSet($id: String!) {
+  deleteArticleSet(id: $id)
+}
+    `;
+export const useDeleteArticleSetMutation = <TError = unknown, TContext = unknown>(
+    client: GraphQLClient,
+    options?: UseMutationOptions<
+        DeleteArticleSetMutation,
+        TError,
+        DeleteArticleSetMutationVariables,
+        TContext
+    >,
+    headers?: RequestInit['headers']
+) =>
+    useMutation<DeleteArticleSetMutation, TError, DeleteArticleSetMutationVariables, TContext>(
+        ['DeleteArticleSet'],
+        (variables?: DeleteArticleSetMutationVariables) =>
+            fetcher<DeleteArticleSetMutation, DeleteArticleSetMutationVariables>(
+                client,
+                DeleteArticleSetDocument,
+                variables,
+                headers
+            )(),
+        options
+    );
+export const UpdateArticleSetDocument = `
+    mutation UpdateArticleSet($id: String!, $input: UpdateArticleSetInput!) {
+  updateArticleSet(id: $id, input: $input) {
+    id
+    name
+    comment
+    stockOwnerId
+    articleId
+  }
+}
+    `;
+export const useUpdateArticleSetMutation = <TError = unknown, TContext = unknown>(
+    client: GraphQLClient,
+    options?: UseMutationOptions<
+        UpdateArticleSetMutation,
+        TError,
+        UpdateArticleSetMutationVariables,
+        TContext
+    >,
+    headers?: RequestInit['headers']
+) =>
+    useMutation<UpdateArticleSetMutation, TError, UpdateArticleSetMutationVariables, TContext>(
+        ['UpdateArticleSet'],
+        (variables?: UpdateArticleSetMutationVariables) =>
+            fetcher<UpdateArticleSetMutation, UpdateArticleSetMutationVariables>(
+                client,
+                UpdateArticleSetDocument,
+                variables,
+                headers
+            )(),
+        options
+    );
+export const GetAllArticleSetDetailsDocument = `
+    query GetAllArticleSetDetails($filters: ArticleSetDetailSearchFilters, $orderBy: [ArticleSetDetailOrderByCriterion!], $page: Int!, $itemsPerPage: Int!) {
+  articleSetDetails(
+    filters: $filters
+    orderBy: $orderBy
+    page: $page
+    itemsPerPage: $itemsPerPage
+  ) {
+    count
+    itemsPerPage
+    totalPages
+    results {
+      id
+      articleSetId
+      articleSet {
+        name
+      }
+      stockOwnerId
+      stockOwner {
+        name
+      }
+      articleId
+      article {
+        name
+        additionalDescription
+      }
+      quantity
+      extras
+      created
+      createdBy
+      modified
+      modifiedBy
+    }
+  }
+}
+    `;
+export const useGetAllArticleSetDetailsQuery = <
+    TData = GetAllArticleSetDetailsQuery,
+    TError = unknown
+>(
+    client: GraphQLClient,
+    variables: GetAllArticleSetDetailsQueryVariables,
+    options?: UseQueryOptions<GetAllArticleSetDetailsQuery, TError, TData>,
+    headers?: RequestInit['headers']
+) =>
+    useQuery<GetAllArticleSetDetailsQuery, TError, TData>(
+        ['GetAllArticleSetDetails', variables],
+        fetcher<GetAllArticleSetDetailsQuery, GetAllArticleSetDetailsQueryVariables>(
+            client,
+            GetAllArticleSetDetailsDocument,
+            variables,
+            headers
+        ),
+        options
+    );
+export const GetArticleSetDetailByIdDocument = `
+    query GetArticleSetDetailById($id: String!) {
+  articleSetDetail(id: $id) {
+    id
+    articleSetId
+    articleSet {
+      name
+    }
+    stockOwnerId
+    stockOwner {
+      name
+    }
+    articleId
+    article {
+      name
+      additionalDescription
+    }
+    quantity
+    extras
+    created
+    createdBy
+    modified
+    modifiedBy
+  }
+}
+    `;
+export const useGetArticleSetDetailByIdQuery = <
+    TData = GetArticleSetDetailByIdQuery,
+    TError = unknown
+>(
+    client: GraphQLClient,
+    variables: GetArticleSetDetailByIdQueryVariables,
+    options?: UseQueryOptions<GetArticleSetDetailByIdQuery, TError, TData>,
+    headers?: RequestInit['headers']
+) =>
+    useQuery<GetArticleSetDetailByIdQuery, TError, TData>(
+        ['GetArticleSetDetailById', variables],
+        fetcher<GetArticleSetDetailByIdQuery, GetArticleSetDetailByIdQueryVariables>(
+            client,
+            GetArticleSetDetailByIdDocument,
+            variables,
+            headers
+        ),
+        options
+    );
+export const CreateArticleSetDetailDocument = `
+    mutation CreateArticleSetDetail($input: CreateArticleSetDetailInput!) {
+  createArticleSetDetail(input: $input) {
+    id
+    articleSetId
+    stockOwnerId
+    articleId
+  }
+}
+    `;
+export const useCreateArticleSetDetailMutation = <TError = unknown, TContext = unknown>(
+    client: GraphQLClient,
+    options?: UseMutationOptions<
+        CreateArticleSetDetailMutation,
+        TError,
+        CreateArticleSetDetailMutationVariables,
+        TContext
+    >,
+    headers?: RequestInit['headers']
+) =>
+    useMutation<
+        CreateArticleSetDetailMutation,
+        TError,
+        CreateArticleSetDetailMutationVariables,
+        TContext
+    >(
+        ['CreateArticleSetDetail'],
+        (variables?: CreateArticleSetDetailMutationVariables) =>
+            fetcher<CreateArticleSetDetailMutation, CreateArticleSetDetailMutationVariables>(
+                client,
+                CreateArticleSetDetailDocument,
+                variables,
+                headers
+            )(),
+        options
+    );
+export const DeleteArticleSetDetailDocument = `
+    mutation DeleteArticleSetDetail($id: String!) {
+  deleteArticleSetDetail(id: $id)
+}
+    `;
+export const useDeleteArticleSetDetailMutation = <TError = unknown, TContext = unknown>(
+    client: GraphQLClient,
+    options?: UseMutationOptions<
+        DeleteArticleSetDetailMutation,
+        TError,
+        DeleteArticleSetDetailMutationVariables,
+        TContext
+    >,
+    headers?: RequestInit['headers']
+) =>
+    useMutation<
+        DeleteArticleSetDetailMutation,
+        TError,
+        DeleteArticleSetDetailMutationVariables,
+        TContext
+    >(
+        ['DeleteArticleSetDetail'],
+        (variables?: DeleteArticleSetDetailMutationVariables) =>
+            fetcher<DeleteArticleSetDetailMutation, DeleteArticleSetDetailMutationVariables>(
+                client,
+                DeleteArticleSetDetailDocument,
+                variables,
+                headers
+            )(),
+        options
+    );
+export const UpdateArticleSetDetailDocument = `
+    mutation UpdateArticleSetDetail($id: String!, $input: UpdateArticleSetDetailInput!) {
+  updateArticleSetDetail(id: $id, input: $input) {
+    id
+    articleSetId
+    stockOwnerId
+    articleId
+  }
+}
+    `;
+export const useUpdateArticleSetDetailMutation = <TError = unknown, TContext = unknown>(
+    client: GraphQLClient,
+    options?: UseMutationOptions<
+        UpdateArticleSetDetailMutation,
+        TError,
+        UpdateArticleSetDetailMutationVariables,
+        TContext
+    >,
+    headers?: RequestInit['headers']
+) =>
+    useMutation<
+        UpdateArticleSetDetailMutation,
+        TError,
+        UpdateArticleSetDetailMutationVariables,
+        TContext
+    >(
+        ['UpdateArticleSetDetail'],
+        (variables?: UpdateArticleSetDetailMutationVariables) =>
+            fetcher<UpdateArticleSetDetailMutation, UpdateArticleSetDetailMutationVariables>(
+                client,
+                UpdateArticleSetDetailDocument,
                 variables,
                 headers
             )(),
