@@ -1,0 +1,107 @@
+query SimpleGetAllStockOwners {
+    stockOwners {
+        results {
+            id
+            name
+        }
+    }
+}
+
+query GetAllFeatureCodes(
+    $filters: FeatureCodeSearchFilters
+    $orderBy: [FeatureCodeOrderByCriterion!]
+    $page: Int!
+    $itemsPerPage: Int!
+) {
+    featureCodes(filters: $filters, orderBy: $orderBy, page: $page, itemsPerPage: $itemsPerPage) {
+        count
+        itemsPerPage
+        totalPages
+        results {
+            id
+            name
+            unique
+            dateType
+            prefixBarcode
+            lengthBarcode
+            suffixBarcode
+            stockOwnerId
+            stockOwner {
+                name
+            }
+            extras
+            created
+            createdBy
+            modified
+            modifiedBy
+        }
+    }
+}
+
+query GetFeatureCodeById($id: String!, $language: String = "en") {
+    featureCode(id: $id, language: $language) {
+        id
+        name
+        unique
+        dateType
+        prefixBarcode
+        lengthBarcode
+        suffixBarcode
+        stockOwnerId
+        stockOwner {
+            name
+        }
+        extras
+        created
+        createdBy
+        modified
+        modifiedBy
+    }
+}
+
+query GetFeatureCodeIds(
+    $filters: FeatureCodeSearchFilters
+    $orderBy: [FeatureCodeOrderByCriterion!]
+    $page: Int!
+    $itemsPerPage: Int!
+) {
+    featureCodes(filters: $filters, orderBy: $orderBy, page: $page, itemsPerPage: $itemsPerPage) {
+        count
+        itemsPerPage
+        totalPages
+        results {
+            id
+            name
+        }
+    }
+}
+
+mutation CreateFeatureCode($input: CreateFeatureCodeInput!) {
+    createFeatureCode(input: $input) {
+        id
+        name
+        unique
+        dateType
+        prefixBarcode
+        lengthBarcode
+        suffixBarcode
+        stockOwnerId
+    }
+}
+
+mutation DeleteFeatureCode($id: String!) {
+    deleteFeatureCode(id: $id)
+}
+
+mutation UpdateFeatureCode($id: String!, $input: UpdateFeatureCodeInput!) {
+    updateFeatureCode(id: $id, input: $input) {
+        id
+        name
+        unique
+        dateType
+        prefixBarcode
+        lengthBarcode
+        suffixBarcode
+        stockOwnerId
+    }
+}

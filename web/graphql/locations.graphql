@@ -40,7 +40,6 @@ query GetAllLocations(
                 name
             }
             replenishType
-            rotation
             constraint
             comment
             baseUnitRotation

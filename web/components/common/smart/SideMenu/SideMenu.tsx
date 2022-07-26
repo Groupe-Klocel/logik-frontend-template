@@ -94,6 +94,12 @@ const SideMenu: FC = () => {
                     <Menu.Item key="configuration-cartography-locations">
                         <Link href="/locations">{t('locations')}</Link>
                     </Menu.Item>
+                    <Menu.Item key="configuration-cartography-patterns">
+                        <Link href="/patterns">{t('patterns')}</Link>
+                    </Menu.Item>
+                    <Menu.Item key="configuration-cartography-pattern-paths">
+                        <Link href="/pattern-paths">{t('pattern-paths')}</Link>
+                    </Menu.Item>
                 </SubMenu>
                 <Menu.Item key="configuration-stock-statuses">
                     <Link href="/stock-statuses">{t('stock-statuses')}</Link>
@@ -139,8 +145,8 @@ const SideMenu: FC = () => {
                 <Menu.Item key="configuration-carriers">
                     <Link href="/carriers">{t('carriers')}</Link>
                 </Menu.Item>
-                <Menu.Item key="configuration-equipments">
-                    <Link href="/equipments">{t('equipments')}</Link>
+                <Menu.Item key="configuration-equipment">
+                    <Link href="/equipment">{t('equipment')}</Link>
                 </Menu.Item>
                 <Menu.Item key="configuration-return-codes">
                     <Link href="/return-codes">{t('return-codes')}</Link>
