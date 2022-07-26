@@ -1,11 +1,17 @@
 query GetAllConfigs(
-    $orderBy: [ParameterOrderByCriterion!]
-    $filters: ParameterSearchFilters
+    $orderBy: [ConfigOrderByCriterion!]
+    $filters: ConfigSearchFilters
     $page: Int!
     $itemsPerPage: Int!
     $language: String
 ) {
-    configs(orderBy: $orderBy, filters: $filters, page: $page, itemsPerPage: $itemsPerPage, language: $language) {
+    configs(
+        orderBy: $orderBy
+        filters: $filters
+        page: $page
+        itemsPerPage: $itemsPerPage
+        language: $language
+    ) {
         count
         itemsPerPage
         totalPages
@@ -26,7 +32,7 @@ query GetAllConfigs(
     }
 }
 
-query GetConfigById($id: String!, $language:String = "en") {
+query GetConfigById($id: String!, $language: String = "en") {
     config(id: $id, language: $language) {
         id
         scope
@@ -78,7 +84,7 @@ mutation UpdateConfig($id: String!, $input: UpdateConfigInput!) {
     }
 }
 
-query ListConfigsForAScope($scope: String!, $code: String, $language:String = "en") {
+query ListConfigsForAScope($scope: String!, $code: String, $language: String = "en") {
     listConfigsForAScope(scope: $scope, code: $code, language: $language) {
         id
         scope

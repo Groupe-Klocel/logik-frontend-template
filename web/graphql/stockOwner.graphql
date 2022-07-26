@@ -5,7 +5,13 @@ query GetAllStockOwners(
     $itemsPerPage: Int!
     $language: String
 ) {
-    stockOwners(orderBy: $orderBy, filters: $filters, page: $page, itemsPerPage: $itemsPerPage, language: $language) {
+    stockOwners(
+        orderBy: $orderBy
+        filters: $filters
+        page: $page
+        itemsPerPage: $itemsPerPage
+        language: $language
+    ) {
         count
         itemsPerPage
         totalPages
@@ -41,7 +47,6 @@ query GetAllStockOwners(
             senderPhone
             senderMobile
             senderEmail
-            s3ExchangeDir
             exchangePrefix
             logoUrl
             awsAccessKeyId

@@ -28,15 +28,15 @@ export const addFeatureCodeRoutes = [
     ...featuresCodesRoutes,
     {
         path: '/add-feature-code',
-        breadcrumbName: 'menu:add-feature-code'
+        breadcrumbName: 'actions:add-feature-code'
     }
 ];
 
 export const featuresTypesRoutes = [
     ...featuresRoutes,
     {
-        path: '/features-codes',
-        breadcrumbName: 'menu:features-codes'
+        path: '/features-types',
+        breadcrumbName: 'menu:features-types'
     }
 ];
 
@@ -44,7 +44,15 @@ export const addFeatureTypeRoutes = [
     ...featuresTypesRoutes,
     {
         path: '/add-feature-type',
-        breadcrumbName: 'menu:add-feature-type'
+        breadcrumbName: 'actions:add-feature-type'
+    }
+];
+
+export const addFeatureTypeDetailRoutes = [
+    ...featuresTypesRoutes,
+    {
+        path: '/add-feature-type-detail',
+        breadcrumbName: 'actions:add-feature-type-detail'
     }
 ];
 
@@ -83,7 +91,15 @@ export const setsRoutes = [
 export const addArticleSetRoutes = [
     ...setsRoutes,
     {
-        path: '/add-article-set',
-        breadcrumbName: 'menu:add-article-set'
+        path: '/add-set',
+        breadcrumbName: 'actions:add-set'
+    }
+];
+
+export const addArticleSetDetailRoutes = [
+    ...setsRoutes,
+    {
+        path: '/add-article-set-detail',
+        breadcrumbName: 'actions:add-article-set-detail'
     }
 ];
