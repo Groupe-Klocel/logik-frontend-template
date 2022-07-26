@@ -2,9 +2,9 @@ import { AppHead, LinkButton } from '@components';
 import MainLayout from 'components/layouts/MainLayout';
 import { FC } from 'react';
 
+import { articleModel } from 'modules/Crud/Models';
 import { HeaderData, ListWithFilter } from '../modules/Crud/Components/ListWithFilter';
-import { FilterTypeEnum } from '../modules/Crud/Components/ListSearchComponent';
-import { ModeEnum, Table } from 'generated/graphql';
+import { ModeEnum } from 'generated/graphql';
 import { DeleteOutlined, EyeTwoTone } from '@ant-design/icons';
 import { Button, Space } from 'antd';
 import { useAppState } from 'context/AppContext';
@@ -15,13 +15,9 @@ import useTranslation from 'next-translate/useTranslation';
 type PageComponent = FC & { layout: typeof MainLayout };
 
 const ArticlesPage: PageComponent = () => {
-    const tableName = Table.Article;
-    const queryName = 'articles';
-    const resolverName = 'Article';
-
     const { permissions } = useAppState();
     const { t } = useTranslation();
-    const modes = getModesFromPermissions(permissions, tableName);
+    const modes = getModesFromPermissions(permissions, articleModel.tableName);
 
     let headerData: HeaderData = {
         title: t('common:articles'),
@@ -42,32 +38,7 @@ const ArticlesPage: PageComponent = () => {
             <AppHead title="Bee V2" />
             <ListWithFilter
                 headerData={headerData}
-                useColumns={[
-                    'id',
-                    'extras',
-                    'created',
-                    'createdBy',
-                    'modified',
-                    'modifiedBy',
-                    'status',
-                    'code',
-                    'name'
-                ]}
-                sortableColumns={['name', 'code']}
-                queryName={queryName}
-                resolverName={resolverName}
-                tableName={tableName}
-                filterColumns={[
-                    { name: 'name', type: FilterTypeEnum.String },
-                    { name: 'code', type: FilterTypeEnum.String },
-                    { name: 'status', type: FilterTypeEnum.Number },
-                    { name: 'length', type: FilterTypeEnum.Number },
-                    { name: 'width', type: FilterTypeEnum.Number },
-                    { name: 'height', type: FilterTypeEnum.Number },
-                    { name: 'baseUnitWeight', type: FilterTypeEnum.Number },
-                    { name: 'boxWeight', type: FilterTypeEnum.Number },
-                    { name: 'permanentProduct', type: FilterTypeEnum.Boolean }
-                ]}
+                dataModel={articleModel}
                 actionColumns={[
                     {
                         title: 'actions:actions',

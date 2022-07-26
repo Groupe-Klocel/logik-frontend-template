@@ -112,6 +112,41 @@ const useDetail = (id: string, queryName: string, fields: Array<string>) => {
     return data;
 };
 
+const useExport = (resolverName: string, queryName: string) => {
+    const { graphqlRequestClient } = useAuth();
+
+    const query = gql`mutation ${queryName}($format: ExportFormat, $compression: ExportCompression, $separator: String, $orderBy: [${resolverName}OrderByCriterion!], $filters: ${resolverName}ExportFilters) {
+        ${queryName}(
+          format: $format
+          compression: $compression
+          separator: $separator
+          orderBy: $orderBy
+          filters: $filters
+        ) {
+          url
+        }
+      }`;
+
+    const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [result, setResult] = useState<any>({ data: null, success: false });
+
+    let mutate = (variables: any) => {
+        setIsLoading(true);
+        graphqlRequestClient
+            .request(query, variables)
+            .then((result: any) => {
+                setIsLoading(false);
+                setResult({ data: result, success: true });
+            })
+            .catch((error: any) => {
+                setResult({ data: null, success: false });
+                setIsLoading(false);
+            });
+    };
+
+    return { isLoading, result, mutate };
+};
+
 const useArticles = (search: any, page: number, itemsPerPage: number, sort: any) => {
     const { graphqlRequestClient } = useAuth();
 
@@ -365,6 +400,7 @@ const useGoodsInLines = (
 export {
     useList,
     useDetail,
+    useExport,
     useArticles,
     useBlocks,
     useLocations,

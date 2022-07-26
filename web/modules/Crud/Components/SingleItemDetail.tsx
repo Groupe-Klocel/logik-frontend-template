@@ -1,11 +1,11 @@
-import { ContentSpin } from '@components';
+import { ContentSpin, DetailsList } from '@components';
 import { Layout, Typography } from 'antd';
 import useTranslation from 'next-translate/useTranslation';
 import { FC, useEffect } from 'react';
 import { NextRouter } from 'next/router';
 import styled from 'styled-components';
 import { showError, useDetail } from '@helpers';
-import { ItemDetails } from '../ItemDetails';
+import { ModelType } from '../Models';
 
 const StyledPageContent = styled(Layout.Content)`
     margin: 15px 30px;
@@ -15,9 +15,7 @@ const StyledPageContent = styled(Layout.Content)`
 export interface ISingleItemProps {
     id: string | any;
     router: NextRouter;
-    tableName: string;
-    queryName: string;
-    useColumns: Array<string>;
+    dataModel: ModelType;
     headerComponent: any;
     extraDataComponent: any;
 }
@@ -25,7 +23,11 @@ export interface ISingleItemProps {
 const SingleItemDetail: FC<ISingleItemProps> = (props: ISingleItemProps) => {
     const { t } = useTranslation();
 
-    const { isLoading, data, error } = useDetail(props.id, props.queryName, props.useColumns);
+    const { isLoading, data, error } = useDetail(
+        props.id,
+        props.dataModel.detailQueryName,
+        props.dataModel.detailColumns
+    );
 
     useEffect(() => {
         if (error) {
@@ -38,9 +40,9 @@ const SingleItemDetail: FC<ISingleItemProps> = (props: ISingleItemProps) => {
             {props.headerComponent}
             <StyledPageContent>
                 {data && !isLoading ? (
-                    data[props.queryName] !== null ? (
+                    data[props.dataModel.detailQueryName] !== null ? (
                         <>
-                            <ItemDetails details={data[props.queryName]} />
+                            <DetailsList details={data[props.dataModel.detailQueryName]} />
                             {props.extraDataComponent}
                         </>
                     ) : (

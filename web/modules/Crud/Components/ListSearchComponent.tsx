@@ -1,20 +1,11 @@
 import { Form, Input, InputNumber, Checkbox } from 'antd';
 import useTranslation from 'next-translate/useTranslation';
 import { FC } from 'react';
+import { FilterColumn, FilterTypeEnum } from '../Models';
 
-enum FilterTypeEnum {
-    Number,
-    String,
-    Boolean
-}
-
-type SearchFilter = {
-    name: string;
-    type: FilterTypeEnum;
-};
 export interface IGeneralSearchProps {
     form: any;
-    columns: Array<SearchFilter>;
+    columns: Array<FilterColumn>;
 }
 
 const ListSearchComponent: FC<IGeneralSearchProps> = ({ form, columns }: IGeneralSearchProps) => {
@@ -23,7 +14,7 @@ const ListSearchComponent: FC<IGeneralSearchProps> = ({ form, columns }: IGenera
     return (
         <>
             <Form form={form} name="control-hooks">
-                {columns.map((item: SearchFilter, number) => {
+                {columns.map((item: FilterColumn, number) => {
                     if (item.type === FilterTypeEnum.Number)
                         return (
                             <Form.Item name={item.name} label={t(`d:${item.name}`)} key={item.name}>
@@ -55,5 +46,4 @@ const ListSearchComponent: FC<IGeneralSearchProps> = ({ form, columns }: IGenera
 
 ListSearchComponent.displayName = 'ListSearchComponent';
 
-export { FilterTypeEnum, ListSearchComponent };
-export type { SearchFilter };
+export { ListSearchComponent };

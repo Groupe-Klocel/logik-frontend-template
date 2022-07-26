@@ -1,13 +1,13 @@
 import { SearchOutlined } from '@ant-design/icons';
-import { HeaderContent, LinkButton } from '@components';
+import { HeaderContent } from '@components';
 import { Space, Form, Button } from 'antd';
 import { useDrawerDispatch } from 'context/DrawerContext';
 import { ListTableComponent } from 'modules/Crud/Components/ListTableComponent';
 import useTranslation from 'next-translate/useTranslation';
 import { showError } from '@helpers';
 import { useCallback, useState } from 'react';
-import { useAppState } from 'context/AppContext';
-import { ListSearchComponent, SearchFilter } from './ListSearchComponent';
+import { ListSearchComponent } from './ListSearchComponent';
+import { ModelType } from '../Models';
 
 export type HeaderData = {
     title: string;
@@ -15,21 +15,13 @@ export type HeaderData = {
     actionsComponent: any;
 };
 export interface IListProps {
-    useColumns?: Array<string>;
-    sortableColumns?: Array<string>;
-    filterColumns?: Array<SearchFilter>;
-    queryName: string;
-    resolverName: string;
-    tableName: string;
+    dataModel: ModelType;
     actionColumns?: any;
     headerData: HeaderData;
 }
 
 const ListWithFilter = (props: IListProps) => {
     const defaultProps = {
-        useColumns: [],
-        sortableColumns: [],
-        filterColumns: [],
         actionColumns: []
     };
     props = { ...defaultProps, ...props };
@@ -54,7 +46,12 @@ const ListWithFilter = (props: IListProps) => {
                 cancelButtonTitle: 'actions:reset',
                 cancelButton: true,
                 submit: true,
-                content: <ListSearchComponent form={formSearch} columns={props.filterColumns!} />,
+                content: (
+                    <ListSearchComponent
+                        form={formSearch}
+                        columns={props.dataModel.filterColumns}
+                    />
+                ),
                 onCancel: () => handleReset(),
                 onComfirm: () => handleSubmit()
             }),
@@ -99,11 +96,8 @@ const ListWithFilter = (props: IListProps) => {
             />
             <ListTableComponent
                 searchCriteria={search}
-                useColumns={props.useColumns!}
-                sortableColumns={props.sortableColumns!}
-                queryName={props.queryName}
-                resolverName={props.resolverName}
                 actionColumns={props.actionColumns}
+                dataModel={props.dataModel}
             />
         </>
     );

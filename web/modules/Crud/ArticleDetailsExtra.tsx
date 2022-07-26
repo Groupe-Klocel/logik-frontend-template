@@ -8,6 +8,7 @@ import { BarcodeRenderModal } from 'modules/Barcodes/Elements/BarcodeRenderModal
 import { useAppState } from 'context/AppContext';
 import { ModeEnum, Table } from 'generated/graphql';
 import { ListTableComponent } from './Components/ListTableComponent';
+import { articleLuBarcodeModel } from './Models';
 
 const { Title } = Typography;
 
@@ -29,10 +30,7 @@ const ArticleDetailsExtra = ({ articleId }: IItemDetailsProps) => {
             <Title level={4}>{t('common:associated', { name: t('common:barcodes') })}</Title>
             <ListTableComponent
                 searchCriteria={{ articleId: articleId }}
-                useColumns={['id', 'barcodeId']}
-                sortableColumns={[]}
-                queryName={'articleLuBarcodes'}
-                resolverName={'ArticleLuBarcode'}
+                dataModel={articleLuBarcodeModel}
                 actionColumns={[
                     {
                         title: 'actions:actions',

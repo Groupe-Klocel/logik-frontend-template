@@ -1,7 +1,8 @@
 import { AppHead } from '@components';
-import { Table } from 'generated/graphql';
+
 import { ArticleDetailsExtra } from 'modules/Crud/ArticleDetailsExtra';
 import { ArticleDetailsHeader } from 'modules/Crud/ArticleDetailsHeader';
+import { articleModel } from 'modules/Crud/Models';
 import { SingleItemDetail } from 'modules/Crud/Components/SingleItemDetail';
 import { useRouter } from 'next/router';
 import { FC } from 'react';
@@ -10,9 +11,7 @@ import MainLayout from '../../components/layouts/MainLayout';
 type PageComponent = FC & { layout: typeof MainLayout };
 
 const ArticlePage: PageComponent = () => {
-    const tableName = Table.Article;
-    const queryName = 'article';
-    const useColumns = ['id', 'name'];
+    const tableName = articleModel.tableName;
 
     const router = useRouter();
     const { id } = router.query;
@@ -26,9 +25,7 @@ const ArticlePage: PageComponent = () => {
                 }
                 router={router}
                 id={id!}
-                tableName={tableName}
-                queryName={queryName}
-                useColumns={useColumns}
+                dataModel={articleModel}
             />
         </>
     );

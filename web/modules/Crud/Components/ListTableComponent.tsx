@@ -5,6 +5,7 @@ import {
     DEFAULT_ITEMS_PER_PAGE,
     DEFAULT_PAGE_NUMBER,
     useList,
+    useExport,
     DataQueryType,
     PaginationType,
     showInfo,
@@ -12,33 +13,20 @@ import {
     showSuccess,
     orderByFormater
 } from '@helpers';
-import { useAuth } from 'context/AuthContext';
 import useTranslation from 'next-translate/useTranslation';
-import {
-    ExportArticlesMutationVariables,
-    ExportArticlesMutation,
-    useExportArticlesMutation,
-    ExportFormat,
-    Table,
-    ModeEnum
-} from 'generated/graphql';
-import { EyeTwoTone, DeleteOutlined } from '@ant-design/icons';
+import { ExportFormat } from 'generated/graphql';
 import { useState, useEffect, useCallback } from 'react';
-import { useAppState } from 'context/AppContext';
+import { ModelType } from '../Models';
 
 export interface IGeneralListProps {
     searchCriteria?: any;
-    useColumns: Array<string>;
-    sortableColumns: Array<string>;
-    queryName: string;
-    resolverName: string;
+    dataModel: ModelType;
     actionColumns?: any;
     disableFilters?: boolean;
 }
 
 const ListTableComponent = (props: IGeneralListProps) => {
     const { t } = useTranslation();
-    const { graphqlRequestClient } = useAuth();
 
     const [rows, setRows] = useState<DataQueryType>();
     const [columns, setColumns] = useState<Array<any>>([]);
@@ -52,34 +40,23 @@ const ListTableComponent = (props: IGeneralListProps) => {
     });
 
     const { isLoading, data } = useList(
-        props.resolverName,
-        props.queryName,
-        props.useColumns,
+        props.dataModel.resolverName,
+        props.dataModel.listQueryName,
+        props.dataModel.listColumns,
         props.searchCriteria,
         pagination.current,
         pagination.itemsPerPage,
         sort
     );
 
-    // EXPORT ARTICLES SECTION
+    // EXPORT DATA SECTION
     const {
-        mutate,
         isLoading: exportLoading,
-        data: exportData
-    } = useExportArticlesMutation<Error>(graphqlRequestClient, {
-        onSuccess: (
-            data: ExportArticlesMutation,
-            _variables: ExportArticlesMutationVariables,
-            _context: any
-        ) => {
-            showSuccess(t('messages:success-exported'));
-        },
-        onError: () => {
-            showError(t('messages:error-exporting-data'));
-        }
-    });
+        result: exportResult,
+        mutate
+    } = useExport(props.dataModel.resolverName, props.dataModel.exportQueryName);
 
-    const exportArticles = () => {
+    const exportData = () => {
         mutate({
             format: ExportFormat.Csv,
             compression: null,
@@ -95,12 +72,22 @@ const ListTableComponent = (props: IGeneralListProps) => {
         }
     }, [exportLoading]);
 
+    useEffect(() => {
+        if (!(exportResult && exportResult.data)) return;
+
+        if (exportResult.success) {
+            showSuccess(t('messages:success-exported'));
+        } else {
+            showError(t('messages:error-exporting-data'));
+        }
+    }, [exportResult]);
+
     // END EXPORT
 
     const stickyActions = {
         export: {
             active: true,
-            function: () => exportArticles()
+            function: () => exportData()
         }
     };
 
@@ -120,13 +107,13 @@ const ListTableComponent = (props: IGeneralListProps) => {
     // For pagination
     useEffect(() => {
         if (data) {
-            let listData: any = data?.[props.queryName];
+            let listData: any = data?.[props.dataModel.listQueryName];
             if (listData && listData['results'] && listData['results'].length > 0) {
                 let result_list: Array<any> = [];
                 let sort_index: number = 1;
                 Object.keys(listData['results'][0]).forEach((column_name) => {
-                    let useCols = props.useColumns;
-                    let sortableColumns = props.sortableColumns;
+                    let useCols = props.dataModel.listColumns;
+                    let sortableColumns = props.dataModel.sortableColumns;
                     if (useCols.length > 0 && !useCols.includes(column_name)) return;
 
                     let row_data: any = {
@@ -161,7 +148,7 @@ const ListTableComponent = (props: IGeneralListProps) => {
         <>
             {rows ? (
                 <AppTable
-                    type={props.queryName}
+                    type={props.dataModel.listQueryName}
                     columns={columns.concat(props.actionColumns)}
                     data={rows!.results}
                     pagination={pagination}
