@@ -51,7 +51,6 @@ const SingleArticle: FC<ISingleArticleProps> = ({ id, router }: ISingleArticlePr
             id: id
         }
     );
-    console.log(data);
 
     const breadsCrumb = [
         ...articlesSubRoutes,

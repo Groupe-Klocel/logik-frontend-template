@@ -21,6 +21,7 @@ export type Scalars = {
   DateTime: any;
   /** The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf). */
   JSON: any;
+  Upload: any;
 };
 
 export type Article = {
@@ -171,6 +172,7 @@ export type ArticleLu = {
 
 export type ArticleLuBarcode = {
   __typename?: 'ArticleLuBarcode';
+  article: Article;
   articleId?: Maybe<Scalars['String']>;
   barcodeId?: Maybe<Scalars['String']>;
   countryOfOrigin?: Maybe<Scalars['Int']>;
@@ -333,6 +335,7 @@ export type ArticleSearchFilters = {
 
 export type ArticleSet = {
   __typename?: 'ArticleSet';
+  article: Article;
   articleId?: Maybe<Scalars['String']>;
   comment?: Maybe<Scalars['String']>;
   created?: Maybe<Scalars['DateTime']>;
@@ -348,7 +351,9 @@ export type ArticleSet = {
 
 export type ArticleSetDetail = {
   __typename?: 'ArticleSetDetail';
+  article: Article;
   articleId?: Maybe<Scalars['String']>;
+  articleSet: ArticleSet;
   articleSetId?: Maybe<Scalars['String']>;
   created?: Maybe<Scalars['DateTime']>;
   createdBy?: Maybe<Scalars['String']>;
@@ -451,11 +456,11 @@ export type ArticleSetSearchFilters = {
 
 export type Barcode = {
   __typename?: 'Barcode';
+  articleLuBarcodes: Array<ArticleLuBarcode>;
   blacklisted?: Maybe<Scalars['Boolean']>;
   created?: Maybe<Scalars['DateTime']>;
   createdBy?: Maybe<Scalars['String']>;
   extras?: Maybe<Scalars['JSON']>;
-  flagDouble?: Maybe<Scalars['Int']>;
   id?: Maybe<Scalars['String']>;
   modified?: Maybe<Scalars['DateTime']>;
   modifiedBy?: Maybe<Scalars['String']>;
@@ -463,7 +468,6 @@ export type Barcode = {
   preparationMode?: Maybe<Scalars['Int']>;
   /** Text value for field preparation_mode */
   preparationModeText?: Maybe<Scalars['String']>;
-  quantity?: Maybe<Scalars['Float']>;
   rotation?: Maybe<Scalars['Int']>;
   /** Text value for field rotation */
   rotationText?: Maybe<Scalars['String']>;
@@ -477,10 +481,8 @@ export type Barcode = {
 export type BarcodeExportFilters = {
   blacklisted?: InputMaybe<Scalars['Boolean']>;
   extras?: InputMaybe<Scalars['JSON']>;
-  flagDouble?: InputMaybe<Scalars['Int']>;
   name?: InputMaybe<Scalars['String']>;
   preparationMode?: InputMaybe<Scalars['Int']>;
-  quantity?: InputMaybe<Scalars['Float']>;
   rotation?: InputMaybe<Scalars['Int']>;
   stockOwnerId?: InputMaybe<Scalars['String']>;
   supplierArticleCode?: InputMaybe<Scalars['String']>;
@@ -493,13 +495,11 @@ export enum BarcodeFieldName {
   Created = 'created',
   CreatedBy = 'createdBy',
   Extras = 'extras',
-  FlagDouble = 'flagDouble',
   Id = 'id',
   Modified = 'modified',
   ModifiedBy = 'modifiedBy',
   Name = 'name',
   PreparationMode = 'preparationMode',
-  Quantity = 'quantity',
   Rotation = 'rotation',
   StockOwnerId = 'stockOwnerId',
   SupplierArticleCode = 'supplierArticleCode',
@@ -528,13 +528,11 @@ export type BarcodeSearchFilters = {
   created?: InputMaybe<Scalars['DateTime']>;
   createdBy?: InputMaybe<Scalars['String']>;
   extras?: InputMaybe<Scalars['JSON']>;
-  flagDouble?: InputMaybe<Scalars['Int']>;
   id?: InputMaybe<Scalars['String']>;
   modified?: InputMaybe<Scalars['DateTime']>;
   modifiedBy?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
   preparationMode?: InputMaybe<Scalars['Int']>;
-  quantity?: InputMaybe<Scalars['Float']>;
   rotation?: InputMaybe<Scalars['Int']>;
   stockOwnerId?: InputMaybe<Scalars['String']>;
   supplierArticleCode?: InputMaybe<Scalars['String']>;
@@ -873,8 +871,6 @@ export type Building = {
   address1?: Maybe<Scalars['String']>;
   address2?: Maybe<Scalars['String']>;
   address3?: Maybe<Scalars['String']>;
-  awsAccessKeyId?: Maybe<Scalars['String']>;
-  awsSecretAccessKey?: Maybe<Scalars['String']>;
   city?: Maybe<Scalars['String']>;
   contactEmail?: Maybe<Scalars['String']>;
   contactMobile?: Maybe<Scalars['String']>;
@@ -899,8 +895,6 @@ export enum BuildingFieldName {
   Address1 = 'address1',
   Address2 = 'address2',
   Address3 = 'address3',
-  AwsAccessKeyId = 'awsAccessKeyId',
-  AwsSecretAccessKey = 'awsSecretAccessKey',
   City = 'city',
   ContactEmail = 'contactEmail',
   ContactMobile = 'contactMobile',
@@ -939,8 +933,6 @@ export type BuildingSearchFilters = {
   address1?: InputMaybe<Scalars['String']>;
   address2?: InputMaybe<Scalars['String']>;
   address3?: InputMaybe<Scalars['String']>;
-  awsAccessKeyId?: InputMaybe<Scalars['String']>;
-  awsSecretAccessKey?: InputMaybe<Scalars['String']>;
   city?: InputMaybe<Scalars['String']>;
   contactEmail?: InputMaybe<Scalars['String']>;
   contactMobile?: InputMaybe<Scalars['String']>;
@@ -1126,12 +1118,58 @@ export type Config = {
   value: Scalars['String'];
 };
 
+/** Field names for the Config model */
+export enum ConfigFieldName {
+  Code = 'code',
+  Created = 'created',
+  CreatedBy = 'createdBy',
+  Extras = 'extras',
+  Id = 'id',
+  Modified = 'modified',
+  ModifiedBy = 'modifiedBy',
+  Scope = 'scope',
+  System = 'system',
+  Translation = 'translation',
+  Value = 'value'
+}
+
+/** Returns a list of Config */
+export type ConfigListResult = {
+  __typename?: 'ConfigListResult';
+  count: Scalars['Int'];
+  itemsPerPage: Scalars['Int'];
+  page: Scalars['Int'];
+  results: Array<Config>;
+  totalPages: Scalars['Int'];
+};
+
+/** How to order the search results for Config */
+export type ConfigOrderByCriterion = {
+  ascending?: Scalars['Boolean'];
+  field: ConfigFieldName;
+};
+
 export type ConfigResults = {
   __typename?: 'ConfigResults';
   code: Scalars['String'];
   id: Scalars['String'];
   scope: Scalars['String'];
   text: Scalars['String'];
+};
+
+/** Attributes of Config to filter onto */
+export type ConfigSearchFilters = {
+  code?: InputMaybe<Scalars['String']>;
+  created?: InputMaybe<Scalars['DateTime']>;
+  createdBy?: InputMaybe<Scalars['String']>;
+  extras?: InputMaybe<Scalars['JSON']>;
+  id?: InputMaybe<Scalars['String']>;
+  modified?: InputMaybe<Scalars['DateTime']>;
+  modifiedBy?: InputMaybe<Scalars['String']>;
+  scope?: InputMaybe<Scalars['String']>;
+  system?: InputMaybe<Scalars['Boolean']>;
+  translation?: InputMaybe<Scalars['JSON']>;
+  value?: InputMaybe<Scalars['String']>;
 };
 
 export type Content = {
@@ -1433,11 +1471,9 @@ export type CreateBarcodeInput = {
   blacklisted?: InputMaybe<Scalars['Boolean']>;
   /** Semi-structured attributes that can be used to store data for anything that doesn't fit in the default columns */
   extras?: InputMaybe<Scalars['JSON']>;
-  flagDouble?: InputMaybe<Scalars['Int']>;
   name: Scalars['String'];
   preparationMode: Scalars['Int'];
-  quantity?: InputMaybe<Scalars['Float']>;
-  rotation: Scalars['Int'];
+  rotation?: InputMaybe<Scalars['Int']>;
   stockOwnerId: Scalars['String'];
   supplierArticleCode?: InputMaybe<Scalars['String']>;
   supplierName?: InputMaybe<Scalars['String']>;
@@ -1510,8 +1546,6 @@ export type CreateBuildingInput = {
   address1?: InputMaybe<Scalars['String']>;
   address2?: InputMaybe<Scalars['String']>;
   address3?: InputMaybe<Scalars['String']>;
-  awsAccessKeyId?: InputMaybe<Scalars['String']>;
-  awsSecretAccessKey?: InputMaybe<Scalars['String']>;
   city?: InputMaybe<Scalars['String']>;
   contactEmail?: InputMaybe<Scalars['String']>;
   contactMobile?: InputMaybe<Scalars['String']>;
@@ -1734,7 +1768,7 @@ export type CreateEquipmentDetailInput = {
   extras?: InputMaybe<Scalars['JSON']>;
   packagingId?: InputMaybe<Scalars['String']>;
   preparationMode?: InputMaybe<Scalars['Int']>;
-  stockOwnerId: Scalars['String'];
+  stockOwnerId?: InputMaybe<Scalars['String']>;
 };
 
 export type CreateEquipmentInput = {
@@ -1759,12 +1793,11 @@ export type CreateEquipmentInput = {
   monoCompany?: InputMaybe<Scalars['Boolean']>;
   name: Scalars['String'];
   nbMaxBox?: InputMaybe<Scalars['Int']>;
-  /** Priority given to an equipment in the round calculation */
   priority?: InputMaybe<Scalars['Int']>;
   /** Maximum quantity of boxes that can be picked up for one round */
   qtyMaxArticle?: InputMaybe<Scalars['Int']>;
   status: Scalars['Int'];
-  stockOwnerId: Scalars['String'];
+  stockOwnerId?: InputMaybe<Scalars['String']>;
   toleranceDimension?: InputMaybe<Scalars['Int']>;
   type: Scalars['Int'];
   virtual?: InputMaybe<Scalars['Boolean']>;
@@ -1821,20 +1854,113 @@ export type CreateGoodsInLineInput = {
   stockOwnerId: Scalars['String'];
 };
 
+export type CreateHandlingUnitContentInboundInput = {
+  comment?: InputMaybe<Scalars['String']>;
+  extras?: InputMaybe<Scalars['JSON']>;
+  handlingUnitContentId: Scalars['String'];
+  inboundLocationId?: InputMaybe<Scalars['String']>;
+  missingQuantity?: InputMaybe<Scalars['Float']>;
+  preparationMode?: InputMaybe<Scalars['Int']>;
+  purchaseOrderId: Scalars['String'];
+  purchaseOrderLineId: Scalars['String'];
+  receivedQuantity?: InputMaybe<Scalars['Float']>;
+  status: Scalars['Int'];
+};
+
+export type CreateHandlingUnitContentInput = {
+  articleId: Scalars['String'];
+  articleLuBarcodeId: Scalars['String'];
+  extras?: InputMaybe<Scalars['JSON']>;
+  handlingUnitId: Scalars['String'];
+  quantity?: InputMaybe<Scalars['Float']>;
+  reservation?: InputMaybe<Scalars['String']>;
+  stockStatus: Scalars['Int'];
+};
+
+export type CreateHandlingUnitContentOutboundInput = {
+  comment?: InputMaybe<Scalars['String']>;
+  deliveryId: Scalars['String'];
+  deliveryLineId: Scalars['String'];
+  extras?: InputMaybe<Scalars['JSON']>;
+  handlingUnitContentId: Scalars['String'];
+  missingQuantity?: InputMaybe<Scalars['Float']>;
+  pickedQuantity?: InputMaybe<Scalars['Float']>;
+  pickingLocationId?: InputMaybe<Scalars['String']>;
+  preparationMode?: InputMaybe<Scalars['Int']>;
+  quantityToBePicked?: InputMaybe<Scalars['Float']>;
+  status: Scalars['Int'];
+};
+
+export type CreateHandlingUnitContentXxboundFeatureInput = {
+  extras?: InputMaybe<Scalars['JSON']>;
+  featureCodeId: Scalars['String'];
+  handlingUnitContentOutboundId: Scalars['String'];
+  value?: InputMaybe<Scalars['String']>;
+};
+
+export type CreateHandlingUnitInboundInput = {
+  carrierBox?: InputMaybe<Scalars['String']>;
+  carrierId: Scalars['String'];
+  checkingTime?: InputMaybe<Scalars['DateTime']>;
+  comment?: InputMaybe<Scalars['String']>;
+  extras?: InputMaybe<Scalars['JSON']>;
+  handlingUnitId: Scalars['String'];
+  purchaseOrderId: Scalars['String'];
+  toBeChecked?: InputMaybe<Scalars['Boolean']>;
+};
+
 export type CreateHandlingUnitInput = {
-  barcodeId: Scalars['String'];
+  barcodeId?: InputMaybe<Scalars['String']>;
   category: Scalars['Int'];
-  description?: InputMaybe<Scalars['String']>;
-  /** Semi-structured attributes that can be used to store data for anything that doesn't fit in the default columns */
+  /** Handling_unit_model.name */
+  code: Scalars['String'];
+  comment?: InputMaybe<Scalars['String']>;
+  extras?: InputMaybe<Scalars['JSON']>;
+  height?: InputMaybe<Scalars['Float']>;
+  length?: InputMaybe<Scalars['Float']>;
+  locationId?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
+  parentHandlingUnitId?: InputMaybe<Scalars['String']>;
+  reservation?: InputMaybe<Scalars['String']>;
+  status: Scalars['Int'];
+  stockOwnerId: Scalars['String'];
+  warehouseCode?: InputMaybe<Scalars['String']>;
+  weight?: InputMaybe<Scalars['Float']>;
+  width?: InputMaybe<Scalars['Float']>;
+};
+
+export type CreateHandlingUnitModelInput = {
+  category: Scalars['Int'];
   extras?: InputMaybe<Scalars['JSON']>;
   height?: InputMaybe<Scalars['Float']>;
   length?: InputMaybe<Scalars['Float']>;
   name: Scalars['String'];
-  parentHandlingUnitId?: InputMaybe<Scalars['String']>;
+  parentHandlingUnitModelId?: InputMaybe<Scalars['String']>;
+  preparationMode?: InputMaybe<Scalars['Int']>;
   status: Scalars['Int'];
   type: Scalars['Int'];
   weight?: InputMaybe<Scalars['Float']>;
   width?: InputMaybe<Scalars['Float']>;
+};
+
+export type CreateHandlingUnitOutboundInput = {
+  carrierBox?: InputMaybe<Scalars['String']>;
+  carrierId: Scalars['String'];
+  carrierSerivce: Scalars['String'];
+  checkingTime?: InputMaybe<Scalars['DateTime']>;
+  comment?: InputMaybe<Scalars['String']>;
+  extras?: InputMaybe<Scalars['JSON']>;
+  finalWeight?: InputMaybe<Scalars['Float']>;
+  handlingUnitId: Scalars['String'];
+  intermediateWeight1?: InputMaybe<Scalars['Float']>;
+  intermediateWeight2?: InputMaybe<Scalars['Float']>;
+  loadId: Scalars['String'];
+  preparationMode?: InputMaybe<Scalars['Int']>;
+  roundId: Scalars['String'];
+  roundPosition?: InputMaybe<Scalars['Int']>;
+  theoriticalWeight?: InputMaybe<Scalars['Float']>;
+  toBeChecked?: InputMaybe<Scalars['Boolean']>;
+  toBePalletized?: InputMaybe<Scalars['Boolean']>;
 };
 
 export type CreateLoadInput = {
@@ -2093,7 +2219,6 @@ export type CreateStockOwnerInput = {
   name: Scalars['String'];
   phone?: InputMaybe<Scalars['String']>;
   postCode?: InputMaybe<Scalars['String']>;
-  s3ExchangeDir?: InputMaybe<Scalars['String']>;
   senderAddress1?: InputMaybe<Scalars['String']>;
   senderAddress2?: InputMaybe<Scalars['String']>;
   senderAddress3?: InputMaybe<Scalars['String']>;
@@ -2108,6 +2233,8 @@ export type CreateStockOwnerInput = {
   senderPostCode?: InputMaybe<Scalars['String']>;
   status?: InputMaybe<Scalars['Int']>;
 };
+
+export type CreateStockOwnerResponse = StockOwner | ValidationError;
 
 export type CreateSystemConfigInput = {
   /** Code of the config info */
@@ -2750,8 +2877,6 @@ export type Equipment = {
   name?: Maybe<Scalars['String']>;
   nbMaxBox?: Maybe<Scalars['Int']>;
   priority?: Maybe<Scalars['Int']>;
-  /** Text value for field priority */
-  priorityText?: Maybe<Scalars['String']>;
   qtyMaxArticle?: Maybe<Scalars['Int']>;
   status?: Maybe<Scalars['Int']>;
   /** Text value for field status */
@@ -2770,15 +2895,18 @@ export type EquipmentDetail = {
   __typename?: 'EquipmentDetail';
   created?: Maybe<Scalars['DateTime']>;
   createdBy?: Maybe<Scalars['String']>;
+  equipment: Equipment;
   equipmentId?: Maybe<Scalars['String']>;
   extras?: Maybe<Scalars['JSON']>;
   id?: Maybe<Scalars['String']>;
   modified?: Maybe<Scalars['DateTime']>;
   modifiedBy?: Maybe<Scalars['String']>;
+  packaging: Packaging;
   packagingId?: Maybe<Scalars['String']>;
   preparationMode?: Maybe<Scalars['Int']>;
   /** Text value for field preparation_mode */
   preparationModeText?: Maybe<Scalars['String']>;
+  stockOwner: StockOwner;
   stockOwnerId?: Maybe<Scalars['String']>;
 };
 
@@ -3002,6 +3130,7 @@ export type FeatureTypeDetail = {
   created?: Maybe<Scalars['DateTime']>;
   createdBy?: Maybe<Scalars['String']>;
   extras?: Maybe<Scalars['JSON']>;
+  featureCode: FeatureCode;
   featureCodeId?: Maybe<Scalars['String']>;
   featureType?: Maybe<Scalars['Int']>;
   /** Text value for field feature_type */
@@ -3009,6 +3138,7 @@ export type FeatureTypeDetail = {
   id?: Maybe<Scalars['String']>;
   modified?: Maybe<Scalars['DateTime']>;
   modifiedBy?: Maybe<Scalars['String']>;
+  stockOwner: StockOwner;
   stockOwnerId?: Maybe<Scalars['String']>;
 };
 
@@ -3120,6 +3250,19 @@ export type FeedbackOverwriteSearchFilters = {
   movementCode?: InputMaybe<Scalars['Int']>;
   stockOwnerId?: InputMaybe<Scalars['String']>;
   system?: InputMaybe<Scalars['Boolean']>;
+};
+
+export type FileInfo = {
+  __typename?: 'FileInfo';
+  key: Scalars['String'];
+};
+
+export type FileUploadResult = {
+  __typename?: 'FileUploadResult';
+  /** Generated filename during the upload */
+  fileName: Scalars['String'];
+  /** Presigned url of file */
+  presignedUrl: Scalars['String'];
 };
 
 export type GoodsIn = {
@@ -3248,48 +3391,400 @@ export type HandlingUnit = {
   category?: Maybe<Scalars['Int']>;
   /** Text value for field category */
   categoryText?: Maybe<Scalars['String']>;
+  code?: Maybe<Scalars['String']>;
+  comment?: Maybe<Scalars['String']>;
   created?: Maybe<Scalars['DateTime']>;
   createdBy?: Maybe<Scalars['String']>;
-  description?: Maybe<Scalars['String']>;
   extras?: Maybe<Scalars['JSON']>;
   height?: Maybe<Scalars['Float']>;
   id?: Maybe<Scalars['String']>;
   length?: Maybe<Scalars['Float']>;
+  locationId?: Maybe<Scalars['String']>;
   modified?: Maybe<Scalars['DateTime']>;
   modifiedBy?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   parentHandlingUnit: Array<HandlingUnit>;
   parentHandlingUnitId?: Maybe<Scalars['String']>;
+  reservation?: Maybe<Scalars['String']>;
   status?: Maybe<Scalars['Int']>;
   /** Text value for field status */
   statusText?: Maybe<Scalars['String']>;
-  type?: Maybe<Scalars['Int']>;
-  /** Text value for field type */
-  typeText?: Maybe<Scalars['String']>;
+  stockOwner: StockOwner;
+  stockOwnerId?: Maybe<Scalars['String']>;
+  warehouseCode?: Maybe<Scalars['String']>;
   weight?: Maybe<Scalars['Float']>;
   width?: Maybe<Scalars['Float']>;
+};
+
+export type HandlingUnitContent = {
+  __typename?: 'HandlingUnitContent';
+  articleId?: Maybe<Scalars['String']>;
+  articleLuBarcodeId?: Maybe<Scalars['String']>;
+  created?: Maybe<Scalars['DateTime']>;
+  createdBy?: Maybe<Scalars['String']>;
+  extras?: Maybe<Scalars['JSON']>;
+  handlingUnitId?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+  modified?: Maybe<Scalars['DateTime']>;
+  modifiedBy?: Maybe<Scalars['String']>;
+  quantity?: Maybe<Scalars['Float']>;
+  reservation?: Maybe<Scalars['String']>;
+  stockStatus?: Maybe<Scalars['Int']>;
+  /** Text value for field stock_status */
+  stockStatusText?: Maybe<Scalars['String']>;
+};
+
+/** Field names for the HandlingUnitContent model */
+export enum HandlingUnitContentFieldName {
+  ArticleId = 'articleId',
+  ArticleLuBarcodeId = 'articleLuBarcodeId',
+  Created = 'created',
+  CreatedBy = 'createdBy',
+  Extras = 'extras',
+  HandlingUnitId = 'handlingUnitId',
+  Id = 'id',
+  Modified = 'modified',
+  ModifiedBy = 'modifiedBy',
+  Quantity = 'quantity',
+  Reservation = 'reservation',
+  StockStatus = 'stockStatus'
+}
+
+export type HandlingUnitContentInbound = {
+  __typename?: 'HandlingUnitContentInbound';
+  comment?: Maybe<Scalars['String']>;
+  created?: Maybe<Scalars['DateTime']>;
+  createdBy?: Maybe<Scalars['String']>;
+  extras?: Maybe<Scalars['JSON']>;
+  handlingUnitContentId?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+  inboundLocationId?: Maybe<Scalars['String']>;
+  missingQuantity?: Maybe<Scalars['Float']>;
+  modified?: Maybe<Scalars['DateTime']>;
+  modifiedBy?: Maybe<Scalars['String']>;
+  preparationMode?: Maybe<Scalars['Int']>;
+  /** Text value for field preparation_mode */
+  preparationModeText?: Maybe<Scalars['String']>;
+  purchaseOrderId?: Maybe<Scalars['String']>;
+  purchaseOrderLineId?: Maybe<Scalars['String']>;
+  receivedQuantity?: Maybe<Scalars['Float']>;
+  status?: Maybe<Scalars['Int']>;
+  /** Text value for field status */
+  statusText?: Maybe<Scalars['String']>;
+};
+
+/** Field names for the HandlingUnitContentInbound model */
+export enum HandlingUnitContentInboundFieldName {
+  Comment = 'comment',
+  Created = 'created',
+  CreatedBy = 'createdBy',
+  Extras = 'extras',
+  HandlingUnitContentId = 'handlingUnitContentId',
+  Id = 'id',
+  InboundLocationId = 'inboundLocationId',
+  MissingQuantity = 'missingQuantity',
+  Modified = 'modified',
+  ModifiedBy = 'modifiedBy',
+  PreparationMode = 'preparationMode',
+  PurchaseOrderId = 'purchaseOrderId',
+  PurchaseOrderLineId = 'purchaseOrderLineId',
+  ReceivedQuantity = 'receivedQuantity',
+  Status = 'status'
+}
+
+/** Returns a list of HandlingUnitContentInbound */
+export type HandlingUnitContentInboundListResult = {
+  __typename?: 'HandlingUnitContentInboundListResult';
+  count: Scalars['Int'];
+  itemsPerPage: Scalars['Int'];
+  page: Scalars['Int'];
+  results: Array<HandlingUnitContentInbound>;
+  totalPages: Scalars['Int'];
+};
+
+/** How to order the search results for HandlingUnitContentInbound */
+export type HandlingUnitContentInboundOrderByCriterion = {
+  ascending?: Scalars['Boolean'];
+  field: HandlingUnitContentInboundFieldName;
+};
+
+/** Attributes of HandlingUnitContentInbound to filter onto */
+export type HandlingUnitContentInboundSearchFilters = {
+  comment?: InputMaybe<Scalars['String']>;
+  created?: InputMaybe<Scalars['DateTime']>;
+  createdBy?: InputMaybe<Scalars['String']>;
+  extras?: InputMaybe<Scalars['JSON']>;
+  handlingUnitContentId?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['String']>;
+  inboundLocationId?: InputMaybe<Scalars['String']>;
+  missingQuantity?: InputMaybe<Scalars['Float']>;
+  modified?: InputMaybe<Scalars['DateTime']>;
+  modifiedBy?: InputMaybe<Scalars['String']>;
+  preparationMode?: InputMaybe<Scalars['Int']>;
+  purchaseOrderId?: InputMaybe<Scalars['String']>;
+  purchaseOrderLineId?: InputMaybe<Scalars['String']>;
+  receivedQuantity?: InputMaybe<Scalars['Float']>;
+  status?: InputMaybe<Scalars['Int']>;
+};
+
+/** Returns a list of HandlingUnitContent */
+export type HandlingUnitContentListResult = {
+  __typename?: 'HandlingUnitContentListResult';
+  count: Scalars['Int'];
+  itemsPerPage: Scalars['Int'];
+  page: Scalars['Int'];
+  results: Array<HandlingUnitContent>;
+  totalPages: Scalars['Int'];
+};
+
+/** How to order the search results for HandlingUnitContent */
+export type HandlingUnitContentOrderByCriterion = {
+  ascending?: Scalars['Boolean'];
+  field: HandlingUnitContentFieldName;
+};
+
+export type HandlingUnitContentOutbound = {
+  __typename?: 'HandlingUnitContentOutbound';
+  comment?: Maybe<Scalars['String']>;
+  created?: Maybe<Scalars['DateTime']>;
+  createdBy?: Maybe<Scalars['String']>;
+  deliveryId?: Maybe<Scalars['String']>;
+  deliveryLineId?: Maybe<Scalars['String']>;
+  extras?: Maybe<Scalars['JSON']>;
+  handlingUnitContentId?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+  missingQuantity?: Maybe<Scalars['Float']>;
+  modified?: Maybe<Scalars['DateTime']>;
+  modifiedBy?: Maybe<Scalars['String']>;
+  pickedQuantity?: Maybe<Scalars['Float']>;
+  pickingLocationId?: Maybe<Scalars['String']>;
+  preparationMode?: Maybe<Scalars['Int']>;
+  /** Text value for field preparation_mode */
+  preparationModeText?: Maybe<Scalars['String']>;
+  quantityToBePicked?: Maybe<Scalars['Float']>;
+  status?: Maybe<Scalars['Int']>;
+  /** Text value for field status */
+  statusText?: Maybe<Scalars['String']>;
+};
+
+/** Field names for the HandlingUnitContentOutbound model */
+export enum HandlingUnitContentOutboundFieldName {
+  Comment = 'comment',
+  Created = 'created',
+  CreatedBy = 'createdBy',
+  DeliveryId = 'deliveryId',
+  DeliveryLineId = 'deliveryLineId',
+  Extras = 'extras',
+  HandlingUnitContentId = 'handlingUnitContentId',
+  Id = 'id',
+  MissingQuantity = 'missingQuantity',
+  Modified = 'modified',
+  ModifiedBy = 'modifiedBy',
+  PickedQuantity = 'pickedQuantity',
+  PickingLocationId = 'pickingLocationId',
+  PreparationMode = 'preparationMode',
+  QuantityToBePicked = 'quantityToBePicked',
+  Status = 'status'
+}
+
+/** Returns a list of HandlingUnitContentOutbound */
+export type HandlingUnitContentOutboundListResult = {
+  __typename?: 'HandlingUnitContentOutboundListResult';
+  count: Scalars['Int'];
+  itemsPerPage: Scalars['Int'];
+  page: Scalars['Int'];
+  results: Array<HandlingUnitContentOutbound>;
+  totalPages: Scalars['Int'];
+};
+
+/** How to order the search results for HandlingUnitContentOutbound */
+export type HandlingUnitContentOutboundOrderByCriterion = {
+  ascending?: Scalars['Boolean'];
+  field: HandlingUnitContentOutboundFieldName;
+};
+
+/** Attributes of HandlingUnitContentOutbound to filter onto */
+export type HandlingUnitContentOutboundSearchFilters = {
+  comment?: InputMaybe<Scalars['String']>;
+  created?: InputMaybe<Scalars['DateTime']>;
+  createdBy?: InputMaybe<Scalars['String']>;
+  deliveryId?: InputMaybe<Scalars['String']>;
+  deliveryLineId?: InputMaybe<Scalars['String']>;
+  extras?: InputMaybe<Scalars['JSON']>;
+  handlingUnitContentId?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['String']>;
+  missingQuantity?: InputMaybe<Scalars['Float']>;
+  modified?: InputMaybe<Scalars['DateTime']>;
+  modifiedBy?: InputMaybe<Scalars['String']>;
+  pickedQuantity?: InputMaybe<Scalars['Float']>;
+  pickingLocationId?: InputMaybe<Scalars['String']>;
+  preparationMode?: InputMaybe<Scalars['Int']>;
+  quantityToBePicked?: InputMaybe<Scalars['Float']>;
+  status?: InputMaybe<Scalars['Int']>;
+};
+
+/** Attributes of HandlingUnitContent to filter onto */
+export type HandlingUnitContentSearchFilters = {
+  articleId?: InputMaybe<Scalars['String']>;
+  articleLuBarcodeId?: InputMaybe<Scalars['String']>;
+  created?: InputMaybe<Scalars['DateTime']>;
+  createdBy?: InputMaybe<Scalars['String']>;
+  extras?: InputMaybe<Scalars['JSON']>;
+  handlingUnitId?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['String']>;
+  modified?: InputMaybe<Scalars['DateTime']>;
+  modifiedBy?: InputMaybe<Scalars['String']>;
+  quantity?: InputMaybe<Scalars['Float']>;
+  reservation?: InputMaybe<Scalars['String']>;
+  stockStatus?: InputMaybe<Scalars['Int']>;
+};
+
+export type HandlingUnitContentXxboundFeature = {
+  __typename?: 'HandlingUnitContentXxboundFeature';
+  created?: Maybe<Scalars['DateTime']>;
+  createdBy?: Maybe<Scalars['String']>;
+  extras?: Maybe<Scalars['JSON']>;
+  featureCodeId?: Maybe<Scalars['String']>;
+  handlingUnitContentOutboundId?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+  modified?: Maybe<Scalars['DateTime']>;
+  modifiedBy?: Maybe<Scalars['String']>;
+  value?: Maybe<Scalars['String']>;
+};
+
+/** Field names for the HandlingUnitContentXxboundFeature model */
+export enum HandlingUnitContentXxboundFeatureFieldName {
+  Created = 'created',
+  CreatedBy = 'createdBy',
+  Extras = 'extras',
+  FeatureCodeId = 'featureCodeId',
+  HandlingUnitContentOutboundId = 'handlingUnitContentOutboundId',
+  Id = 'id',
+  Modified = 'modified',
+  ModifiedBy = 'modifiedBy',
+  Value = 'value'
+}
+
+/** Returns a list of HandlingUnitContentXxboundFeature */
+export type HandlingUnitContentXxboundFeatureListResult = {
+  __typename?: 'HandlingUnitContentXxboundFeatureListResult';
+  count: Scalars['Int'];
+  itemsPerPage: Scalars['Int'];
+  page: Scalars['Int'];
+  results: Array<HandlingUnitContentXxboundFeature>;
+  totalPages: Scalars['Int'];
+};
+
+/** How to order the search results for HandlingUnitContentXxboundFeature */
+export type HandlingUnitContentXxboundFeatureOrderByCriterion = {
+  ascending?: Scalars['Boolean'];
+  field: HandlingUnitContentXxboundFeatureFieldName;
+};
+
+/** Attributes of HandlingUnitContentXxboundFeature to filter onto */
+export type HandlingUnitContentXxboundFeatureSearchFilters = {
+  created?: InputMaybe<Scalars['DateTime']>;
+  createdBy?: InputMaybe<Scalars['String']>;
+  extras?: InputMaybe<Scalars['JSON']>;
+  featureCodeId?: InputMaybe<Scalars['String']>;
+  handlingUnitContentOutboundId?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['String']>;
+  modified?: InputMaybe<Scalars['DateTime']>;
+  modifiedBy?: InputMaybe<Scalars['String']>;
+  value?: InputMaybe<Scalars['String']>;
 };
 
 /** Field names for the HandlingUnit model */
 export enum HandlingUnitFieldName {
   BarcodeId = 'barcodeId',
   Category = 'category',
+  Code = 'code',
+  Comment = 'comment',
   Created = 'created',
   CreatedBy = 'createdBy',
-  Description = 'description',
   Extras = 'extras',
   Height = 'height',
   Id = 'id',
   Length = 'length',
+  LocationId = 'locationId',
   Modified = 'modified',
   ModifiedBy = 'modifiedBy',
   Name = 'name',
   ParentHandlingUnitId = 'parentHandlingUnitId',
+  Reservation = 'reservation',
   Status = 'status',
-  Type = 'type',
+  StockOwnerId = 'stockOwnerId',
+  WarehouseCode = 'warehouseCode',
   Weight = 'weight',
   Width = 'width'
 }
+
+export type HandlingUnitInbound = {
+  __typename?: 'HandlingUnitInbound';
+  carrierBox?: Maybe<Scalars['String']>;
+  carrierId?: Maybe<Scalars['String']>;
+  checkingTime?: Maybe<Scalars['DateTime']>;
+  comment?: Maybe<Scalars['String']>;
+  created?: Maybe<Scalars['DateTime']>;
+  createdBy?: Maybe<Scalars['String']>;
+  extras?: Maybe<Scalars['JSON']>;
+  handlingUnitId?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+  modified?: Maybe<Scalars['DateTime']>;
+  modifiedBy?: Maybe<Scalars['String']>;
+  purchaseOrderId?: Maybe<Scalars['String']>;
+  toBeChecked?: Maybe<Scalars['Boolean']>;
+};
+
+/** Field names for the HandlingUnitInbound model */
+export enum HandlingUnitInboundFieldName {
+  CarrierBox = 'carrierBox',
+  CarrierId = 'carrierId',
+  CheckingTime = 'checkingTime',
+  Comment = 'comment',
+  Created = 'created',
+  CreatedBy = 'createdBy',
+  Extras = 'extras',
+  HandlingUnitId = 'handlingUnitId',
+  Id = 'id',
+  Modified = 'modified',
+  ModifiedBy = 'modifiedBy',
+  PurchaseOrderId = 'purchaseOrderId',
+  ToBeChecked = 'toBeChecked'
+}
+
+/** Returns a list of HandlingUnitInbound */
+export type HandlingUnitInboundListResult = {
+  __typename?: 'HandlingUnitInboundListResult';
+  count: Scalars['Int'];
+  itemsPerPage: Scalars['Int'];
+  page: Scalars['Int'];
+  results: Array<HandlingUnitInbound>;
+  totalPages: Scalars['Int'];
+};
+
+/** How to order the search results for HandlingUnitInbound */
+export type HandlingUnitInboundOrderByCriterion = {
+  ascending?: Scalars['Boolean'];
+  field: HandlingUnitInboundFieldName;
+};
+
+/** Attributes of HandlingUnitInbound to filter onto */
+export type HandlingUnitInboundSearchFilters = {
+  carrierBox?: InputMaybe<Scalars['String']>;
+  carrierId?: InputMaybe<Scalars['String']>;
+  checkingTime?: InputMaybe<Scalars['DateTime']>;
+  comment?: InputMaybe<Scalars['String']>;
+  created?: InputMaybe<Scalars['DateTime']>;
+  createdBy?: InputMaybe<Scalars['String']>;
+  extras?: InputMaybe<Scalars['JSON']>;
+  handlingUnitId?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['String']>;
+  modified?: InputMaybe<Scalars['DateTime']>;
+  modifiedBy?: InputMaybe<Scalars['String']>;
+  purchaseOrderId?: InputMaybe<Scalars['String']>;
+  toBeChecked?: InputMaybe<Scalars['Boolean']>;
+};
 
 /** Returns a list of HandlingUnit */
 export type HandlingUnitListResult = {
@@ -3301,19 +3796,76 @@ export type HandlingUnitListResult = {
   totalPages: Scalars['Int'];
 };
 
-/** How to order the search results for HandlingUnit */
-export type HandlingUnitOrderByCriterion = {
-  ascending?: Scalars['Boolean'];
-  field: HandlingUnitFieldName;
+export type HandlingUnitModel = {
+  __typename?: 'HandlingUnitModel';
+  category?: Maybe<Scalars['Int']>;
+  /** Text value for field category */
+  categoryText?: Maybe<Scalars['String']>;
+  created?: Maybe<Scalars['DateTime']>;
+  createdBy?: Maybe<Scalars['String']>;
+  extras?: Maybe<Scalars['JSON']>;
+  height?: Maybe<Scalars['Float']>;
+  id?: Maybe<Scalars['String']>;
+  length?: Maybe<Scalars['Float']>;
+  modified?: Maybe<Scalars['DateTime']>;
+  modifiedBy?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  parentHandlingUnitModel: Array<HandlingUnitModel>;
+  parentHandlingUnitModelId?: Maybe<Scalars['String']>;
+  preparationMode?: Maybe<Scalars['Int']>;
+  /** Text value for field preparation_mode */
+  preparationModeText?: Maybe<Scalars['String']>;
+  status?: Maybe<Scalars['Int']>;
+  /** Text value for field status */
+  statusText?: Maybe<Scalars['String']>;
+  type?: Maybe<Scalars['Int']>;
+  /** Text value for field type */
+  typeText?: Maybe<Scalars['String']>;
+  weight?: Maybe<Scalars['Float']>;
+  width?: Maybe<Scalars['Float']>;
 };
 
-/** Attributes of HandlingUnit to filter onto */
-export type HandlingUnitSearchFilters = {
-  barcodeId?: InputMaybe<Scalars['String']>;
+/** Field names for the HandlingUnitModel model */
+export enum HandlingUnitModelFieldName {
+  Category = 'category',
+  Created = 'created',
+  CreatedBy = 'createdBy',
+  Extras = 'extras',
+  Height = 'height',
+  Id = 'id',
+  Length = 'length',
+  Modified = 'modified',
+  ModifiedBy = 'modifiedBy',
+  Name = 'name',
+  ParentHandlingUnitModelId = 'parentHandlingUnitModelId',
+  PreparationMode = 'preparationMode',
+  Status = 'status',
+  Type = 'type',
+  Weight = 'weight',
+  Width = 'width'
+}
+
+/** Returns a list of HandlingUnitModel */
+export type HandlingUnitModelListResult = {
+  __typename?: 'HandlingUnitModelListResult';
+  count: Scalars['Int'];
+  itemsPerPage: Scalars['Int'];
+  page: Scalars['Int'];
+  results: Array<HandlingUnitModel>;
+  totalPages: Scalars['Int'];
+};
+
+/** How to order the search results for HandlingUnitModel */
+export type HandlingUnitModelOrderByCriterion = {
+  ascending?: Scalars['Boolean'];
+  field: HandlingUnitModelFieldName;
+};
+
+/** Attributes of HandlingUnitModel to filter onto */
+export type HandlingUnitModelSearchFilters = {
   category?: InputMaybe<Scalars['Int']>;
   created?: InputMaybe<Scalars['DateTime']>;
   createdBy?: InputMaybe<Scalars['String']>;
-  description?: InputMaybe<Scalars['String']>;
   extras?: InputMaybe<Scalars['JSON']>;
   height?: InputMaybe<Scalars['Float']>;
   id?: InputMaybe<Scalars['String']>;
@@ -3321,9 +3873,137 @@ export type HandlingUnitSearchFilters = {
   modified?: InputMaybe<Scalars['DateTime']>;
   modifiedBy?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
-  parentHandlingUnitId?: InputMaybe<Scalars['String']>;
+  parentHandlingUnitModelId?: InputMaybe<Scalars['String']>;
+  preparationMode?: InputMaybe<Scalars['Int']>;
   status?: InputMaybe<Scalars['Int']>;
   type?: InputMaybe<Scalars['Int']>;
+  weight?: InputMaybe<Scalars['Float']>;
+  width?: InputMaybe<Scalars['Float']>;
+};
+
+/** How to order the search results for HandlingUnit */
+export type HandlingUnitOrderByCriterion = {
+  ascending?: Scalars['Boolean'];
+  field: HandlingUnitFieldName;
+};
+
+export type HandlingUnitOutbound = {
+  __typename?: 'HandlingUnitOutbound';
+  carrierBox?: Maybe<Scalars['String']>;
+  carrierId?: Maybe<Scalars['String']>;
+  carrierSerivce?: Maybe<Scalars['String']>;
+  checkingTime?: Maybe<Scalars['DateTime']>;
+  comment?: Maybe<Scalars['String']>;
+  created?: Maybe<Scalars['DateTime']>;
+  createdBy?: Maybe<Scalars['String']>;
+  extras?: Maybe<Scalars['JSON']>;
+  finalWeight?: Maybe<Scalars['Float']>;
+  handlingUnitId?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+  intermediateWeight1?: Maybe<Scalars['Float']>;
+  intermediateWeight2?: Maybe<Scalars['Float']>;
+  loadId?: Maybe<Scalars['String']>;
+  modified?: Maybe<Scalars['DateTime']>;
+  modifiedBy?: Maybe<Scalars['String']>;
+  preparationMode?: Maybe<Scalars['Int']>;
+  /** Text value for field preparation_mode */
+  preparationModeText?: Maybe<Scalars['String']>;
+  roundId?: Maybe<Scalars['String']>;
+  roundPosition?: Maybe<Scalars['Int']>;
+  theoriticalWeight?: Maybe<Scalars['Float']>;
+  toBeChecked?: Maybe<Scalars['Boolean']>;
+  toBePalletized?: Maybe<Scalars['Boolean']>;
+};
+
+/** Field names for the HandlingUnitOutbound model */
+export enum HandlingUnitOutboundFieldName {
+  CarrierBox = 'carrierBox',
+  CarrierId = 'carrierId',
+  CarrierSerivce = 'carrierSerivce',
+  CheckingTime = 'checkingTime',
+  Comment = 'comment',
+  Created = 'created',
+  CreatedBy = 'createdBy',
+  Extras = 'extras',
+  FinalWeight = 'finalWeight',
+  HandlingUnitId = 'handlingUnitId',
+  Id = 'id',
+  IntermediateWeight1 = 'intermediateWeight1',
+  IntermediateWeight2 = 'intermediateWeight2',
+  LoadId = 'loadId',
+  Modified = 'modified',
+  ModifiedBy = 'modifiedBy',
+  PreparationMode = 'preparationMode',
+  RoundId = 'roundId',
+  RoundPosition = 'roundPosition',
+  TheoriticalWeight = 'theoriticalWeight',
+  ToBeChecked = 'toBeChecked',
+  ToBePalletized = 'toBePalletized'
+}
+
+/** Returns a list of HandlingUnitOutbound */
+export type HandlingUnitOutboundListResult = {
+  __typename?: 'HandlingUnitOutboundListResult';
+  count: Scalars['Int'];
+  itemsPerPage: Scalars['Int'];
+  page: Scalars['Int'];
+  results: Array<HandlingUnitOutbound>;
+  totalPages: Scalars['Int'];
+};
+
+/** How to order the search results for HandlingUnitOutbound */
+export type HandlingUnitOutboundOrderByCriterion = {
+  ascending?: Scalars['Boolean'];
+  field: HandlingUnitOutboundFieldName;
+};
+
+/** Attributes of HandlingUnitOutbound to filter onto */
+export type HandlingUnitOutboundSearchFilters = {
+  carrierBox?: InputMaybe<Scalars['String']>;
+  carrierId?: InputMaybe<Scalars['String']>;
+  carrierSerivce?: InputMaybe<Scalars['String']>;
+  checkingTime?: InputMaybe<Scalars['DateTime']>;
+  comment?: InputMaybe<Scalars['String']>;
+  created?: InputMaybe<Scalars['DateTime']>;
+  createdBy?: InputMaybe<Scalars['String']>;
+  extras?: InputMaybe<Scalars['JSON']>;
+  finalWeight?: InputMaybe<Scalars['Float']>;
+  handlingUnitId?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['String']>;
+  intermediateWeight1?: InputMaybe<Scalars['Float']>;
+  intermediateWeight2?: InputMaybe<Scalars['Float']>;
+  loadId?: InputMaybe<Scalars['String']>;
+  modified?: InputMaybe<Scalars['DateTime']>;
+  modifiedBy?: InputMaybe<Scalars['String']>;
+  preparationMode?: InputMaybe<Scalars['Int']>;
+  roundId?: InputMaybe<Scalars['String']>;
+  roundPosition?: InputMaybe<Scalars['Int']>;
+  theoriticalWeight?: InputMaybe<Scalars['Float']>;
+  toBeChecked?: InputMaybe<Scalars['Boolean']>;
+  toBePalletized?: InputMaybe<Scalars['Boolean']>;
+};
+
+/** Attributes of HandlingUnit to filter onto */
+export type HandlingUnitSearchFilters = {
+  barcodeId?: InputMaybe<Scalars['String']>;
+  category?: InputMaybe<Scalars['Int']>;
+  code?: InputMaybe<Scalars['String']>;
+  comment?: InputMaybe<Scalars['String']>;
+  created?: InputMaybe<Scalars['DateTime']>;
+  createdBy?: InputMaybe<Scalars['String']>;
+  extras?: InputMaybe<Scalars['JSON']>;
+  height?: InputMaybe<Scalars['Float']>;
+  id?: InputMaybe<Scalars['String']>;
+  length?: InputMaybe<Scalars['Float']>;
+  locationId?: InputMaybe<Scalars['String']>;
+  modified?: InputMaybe<Scalars['DateTime']>;
+  modifiedBy?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
+  parentHandlingUnitId?: InputMaybe<Scalars['String']>;
+  reservation?: InputMaybe<Scalars['String']>;
+  status?: InputMaybe<Scalars['Int']>;
+  stockOwnerId?: InputMaybe<Scalars['String']>;
+  warehouseCode?: InputMaybe<Scalars['String']>;
   weight?: InputMaybe<Scalars['Float']>;
   width?: InputMaybe<Scalars['Float']>;
 };
@@ -3970,6 +4650,20 @@ export type Mutation = {
   createGoodsInLine: GoodsInLine;
   /** Create handling_unit */
   createHandlingUnit: HandlingUnit;
+  /** Create handling_unit_content */
+  createHandlingUnitContent: HandlingUnitContent;
+  /** Create handling_unit_content_inbound */
+  createHandlingUnitContentInbound: HandlingUnitContentInbound;
+  /** Create handling_unit_content_outbound */
+  createHandlingUnitContentOutbound: HandlingUnitContentOutbound;
+  /** Create handling_unit_content_xxbound_feature */
+  createHandlingUnitContentXxboundFeature: HandlingUnitContentXxboundFeature;
+  /** Create handling_unit_inbound */
+  createHandlingUnitInbound: HandlingUnitInbound;
+  /** Create handling_unit_model */
+  createHandlingUnitModel: HandlingUnitModel;
+  /** Create handling_unit_outbound */
+  createHandlingUnitOutbound: HandlingUnitOutbound;
   /** Create an IntegratorOrganization */
   createIntegratorOrganization: Integrator;
   /** Create integrator as superadmin */
@@ -4006,7 +4700,7 @@ export type Mutation = {
   /** Create a Status Feedback Overwrite */
   createStatusFeedbackOverwrite: StatusFeedbackOverWrite;
   /** Create stock owner */
-  createStockOwner: StockOwner;
+  createStockOwner: CreateStockOwnerResponse;
   /** Create a new system config */
   createSystemConfig: Config;
   /** Create a new system parameter */
@@ -4067,12 +4761,29 @@ export type Mutation = {
   deleteFeatureTypeDetail: Scalars['Boolean'];
   /** Delete feedback_overwrite */
   deleteFeedbackOverwrite: Scalars['Boolean'];
+  /** Delete a File */
+  deleteFile: Scalars['Boolean'];
   /** Delete goods-in */
   deleteGoodsIn: Scalars['Boolean'];
   /** Delete goods-in line */
   deleteGoodsInLine: Scalars['Boolean'];
   /** Delete handling_unit */
   deleteHandlingUnit: Scalars['Boolean'];
+  /** Delete handling_unit_content */
+  deleteHandlingUnitContent: Scalars['Boolean'];
+  /** Delete handling_unit_content_inbound */
+  deleteHandlingUnitContentInbound: Scalars['Boolean'];
+  /** Delete handling_unit_content_outbound */
+  deleteHandlingUnitContentOutbound: Scalars['Boolean'];
+  /** Delete handling_unit_content_xxbound_feature */
+  deleteHandlingUnitContentXxboundFeature: Scalars['Boolean'];
+  /** Delete handling_unit_inbound */
+  deleteHandlingUnitInbound: Scalars['Boolean'];
+  /** Delete handling_unit_model */
+  deleteHandlingUnitModel: Scalars['Boolean'];
+  /** Delete handling_unit_outbound */
+  deleteHandlingUnitOutbound: Scalars['Boolean'];
+  /** Delete an Integrator */
   deleteIntegrator: Scalars['Boolean'];
   /** Delete integrator user. */
   deleteIntegratorUser: Scalars['Boolean'];
@@ -4107,6 +4818,8 @@ export type Mutation = {
   deleteStatusEvolution: Scalars['Boolean'];
   /** Delete a Status Feedback Overwrite */
   deleteStatusFeedbackOverwrite: Scalars['Boolean'];
+  /** Delete a Stock Owner */
+  deleteStockOwner: Scalars['Boolean'];
   /** Delete a system Config (reserved for super admin) */
   deleteSystemConfig: Scalars['Boolean'];
   /** Delete a system parameter (reserved for super admin) */
@@ -4140,6 +4853,8 @@ export type Mutation = {
   renderDocument: RenderDocumentResponse;
   /** Sends an email to reset the IntegratorUser's password */
   resetPassword: ResetPasswordResponse;
+  /** Reset a StockOwner's access key */
+  resetStockOwnerAccesskey: Scalars['Boolean'];
   /** Delete article => update status */
   softDeleteArticle: Scalars['Boolean'];
   /** Delete Box => update status */
@@ -4162,6 +4877,12 @@ export type Mutation = {
   softDeleteEquipment: Scalars['Boolean'];
   /** Delete HandlingUnit => update status */
   softDeleteHandlingUnit: Scalars['Boolean'];
+  /** Delete HandlingUnitContentInbound => update status */
+  softDeleteHandlingUnitContentInbound: Scalars['Boolean'];
+  /** Delete HandlingUnitContentOutbound => update status */
+  softDeleteHandlingUnitContentOutbound: Scalars['Boolean'];
+  /** Delete HandlingUnitModel => update status */
+  softDeleteHandlingUnitModel: Scalars['Boolean'];
   /** Delete Load => update status */
   softDeleteLoad: Scalars['Boolean'];
   /** Delete Package => update status */
@@ -4232,6 +4953,20 @@ export type Mutation = {
   updateGoodsInLine?: Maybe<GoodsInLine>;
   /** Update handling_unit */
   updateHandlingUnit?: Maybe<HandlingUnit>;
+  /** Update handling_unit_content */
+  updateHandlingUnitContent?: Maybe<HandlingUnitContent>;
+  /** Update handling_unit_content_inbound */
+  updateHandlingUnitContentInbound?: Maybe<HandlingUnitContentInbound>;
+  /** Update handling_unit_content_outbound */
+  updateHandlingUnitContentOutbound?: Maybe<HandlingUnitContentOutbound>;
+  /** Update handling_unit_content_xxbound_feature */
+  updateHandlingUnitContentXxboundFeature?: Maybe<HandlingUnitContentXxboundFeature>;
+  /** Update handling_unit_inbound */
+  updateHandlingUnitInbound?: Maybe<HandlingUnitInbound>;
+  /** Update handling_unit_model */
+  updateHandlingUnitModel?: Maybe<HandlingUnitModel>;
+  /** Update handling_unit_outbound */
+  updateHandlingUnitOutbound?: Maybe<HandlingUnitOutbound>;
   /** Update load */
   updateLoad?: Maybe<Load>;
   /** Update Location */
@@ -4242,6 +4977,8 @@ export type Mutation = {
   updateMovement?: Maybe<Movement>;
   /** Update package */
   updatePackaging?: Maybe<Packaging>;
+  /** Update package with default value */
+  updatePackagingDefault: Packaging;
   /** Update a parameter */
   updateParameter?: Maybe<Parameter>;
   /** Update Pattern */
@@ -4266,6 +5003,8 @@ export type Mutation = {
   updateStatusFeedbackOverwrite?: Maybe<StatusFeedbackOverWrite>;
   /** Update stock owner */
   updateStockOwner?: Maybe<StockOwner>;
+  /** Upload File */
+  uploadFile: FileUploadResult;
   /** Obtain a JSON Web Token (JWT) to use in the frontend */
   warehouseLogin?: Maybe<LoginSuccess>;
 };
@@ -4488,6 +5227,41 @@ export type MutationCreateGoodsInLineArgs = {
 
 export type MutationCreateHandlingUnitArgs = {
   input: CreateHandlingUnitInput;
+};
+
+
+export type MutationCreateHandlingUnitContentArgs = {
+  input: CreateHandlingUnitContentInput;
+};
+
+
+export type MutationCreateHandlingUnitContentInboundArgs = {
+  input: CreateHandlingUnitContentInboundInput;
+};
+
+
+export type MutationCreateHandlingUnitContentOutboundArgs = {
+  input: CreateHandlingUnitContentOutboundInput;
+};
+
+
+export type MutationCreateHandlingUnitContentXxboundFeatureArgs = {
+  input: CreateHandlingUnitContentXxboundFeatureInput;
+};
+
+
+export type MutationCreateHandlingUnitInboundArgs = {
+  input: CreateHandlingUnitInboundInput;
+};
+
+
+export type MutationCreateHandlingUnitModelArgs = {
+  input: CreateHandlingUnitModelInput;
+};
+
+
+export type MutationCreateHandlingUnitOutboundArgs = {
+  input: CreateHandlingUnitOutboundInput;
 };
 
 
@@ -4746,6 +5520,12 @@ export type MutationDeleteFeedbackOverwriteArgs = {
 };
 
 
+export type MutationDeleteFileArgs = {
+  fileName: Scalars['String'];
+  stockOwnerId: Scalars['String'];
+};
+
+
 export type MutationDeleteGoodsInArgs = {
   id: Scalars['String'];
 };
@@ -4757,6 +5537,41 @@ export type MutationDeleteGoodsInLineArgs = {
 
 
 export type MutationDeleteHandlingUnitArgs = {
+  id: Scalars['String'];
+};
+
+
+export type MutationDeleteHandlingUnitContentArgs = {
+  id: Scalars['String'];
+};
+
+
+export type MutationDeleteHandlingUnitContentInboundArgs = {
+  id: Scalars['String'];
+};
+
+
+export type MutationDeleteHandlingUnitContentOutboundArgs = {
+  id: Scalars['String'];
+};
+
+
+export type MutationDeleteHandlingUnitContentXxboundFeatureArgs = {
+  id: Scalars['String'];
+};
+
+
+export type MutationDeleteHandlingUnitInboundArgs = {
+  id: Scalars['String'];
+};
+
+
+export type MutationDeleteHandlingUnitModelArgs = {
+  id: Scalars['String'];
+};
+
+
+export type MutationDeleteHandlingUnitOutboundArgs = {
   id: Scalars['String'];
 };
 
@@ -4851,6 +5666,11 @@ export type MutationDeleteStatusFeedbackOverwriteArgs = {
 };
 
 
+export type MutationDeleteStockOwnerArgs = {
+  id: Scalars['String'];
+};
+
+
 export type MutationDeleteSystemConfigArgs = {
   id: Scalars['String'];
 };
@@ -4862,7 +5682,7 @@ export type MutationDeleteSystemParameterArgs = {
 
 
 export type MutationDeleteWarehouseArgs = {
-  id: Scalars['String'];
+  id: Scalars['ID'];
 };
 
 
@@ -4980,6 +5800,11 @@ export type MutationResetPasswordArgs = {
 };
 
 
+export type MutationResetStockOwnerAccesskeyArgs = {
+  id: Scalars['String'];
+};
+
+
 export type MutationSoftDeleteArticleArgs = {
   articleId: Scalars['String'];
 };
@@ -5032,6 +5857,21 @@ export type MutationSoftDeleteEquipmentArgs = {
 
 export type MutationSoftDeleteHandlingUnitArgs = {
   handlingUnitId: Scalars['String'];
+};
+
+
+export type MutationSoftDeleteHandlingUnitContentInboundArgs = {
+  handlingUnitContentInboundId: Scalars['String'];
+};
+
+
+export type MutationSoftDeleteHandlingUnitContentOutboundArgs = {
+  handlingUnitContentOutboundId: Scalars['String'];
+};
+
+
+export type MutationSoftDeleteHandlingUnitModelArgs = {
+  handlingUnitModelId: Scalars['String'];
 };
 
 
@@ -5239,6 +6079,48 @@ export type MutationUpdateHandlingUnitArgs = {
 };
 
 
+export type MutationUpdateHandlingUnitContentArgs = {
+  id: Scalars['String'];
+  input: UpdateHandlingUnitContentInput;
+};
+
+
+export type MutationUpdateHandlingUnitContentInboundArgs = {
+  id: Scalars['String'];
+  input: UpdateHandlingUnitContentInboundInput;
+};
+
+
+export type MutationUpdateHandlingUnitContentOutboundArgs = {
+  id: Scalars['String'];
+  input: UpdateHandlingUnitContentOutboundInput;
+};
+
+
+export type MutationUpdateHandlingUnitContentXxboundFeatureArgs = {
+  id: Scalars['String'];
+  input: UpdateHandlingUnitContentXxboundFeatureInput;
+};
+
+
+export type MutationUpdateHandlingUnitInboundArgs = {
+  id: Scalars['String'];
+  input: UpdateHandlingUnitInboundInput;
+};
+
+
+export type MutationUpdateHandlingUnitModelArgs = {
+  id: Scalars['String'];
+  input: UpdateHandlingUnitModelInput;
+};
+
+
+export type MutationUpdateHandlingUnitOutboundArgs = {
+  id: Scalars['String'];
+  input: UpdateHandlingUnitOutboundInput;
+};
+
+
 export type MutationUpdateLoadArgs = {
   id: Scalars['String'];
   input: UpdateLoadInput;
@@ -5339,6 +6221,12 @@ export type MutationUpdateStatusFeedbackOverwriteArgs = {
 export type MutationUpdateStockOwnerArgs = {
   id: Scalars['String'];
   input: UpdateStockOwnerInput;
+};
+
+
+export type MutationUploadFileArgs = {
+  file: Scalars['Upload'];
+  stockOwnerId: Scalars['String'];
 };
 
 
@@ -5938,8 +6826,8 @@ export type Query = {
   carriers: CarrierListResult;
   /** Get a Config */
   config?: Maybe<Config>;
-  /** Search parameters */
-  configs: ParameterListResult;
+  /** Search Configs */
+  configs: ConfigListResult;
   /** Get a content object */
   content?: Maybe<Content>;
   /** Get a content_feature object */
@@ -6002,12 +6890,42 @@ export type Query = {
   goodsIns: GoodsInListResult;
   /** Get a handling_unit object */
   handlingUnit?: Maybe<HandlingUnit>;
+  /** Get a handling_unit_content object */
+  handlingUnitContent?: Maybe<HandlingUnitContent>;
+  /** Get a handling_unit_content_inbound object */
+  handlingUnitContentInbound?: Maybe<HandlingUnitContentInbound>;
+  /** Get handling_unit_content_inbound objects */
+  handlingUnitContentInbounds: HandlingUnitContentInboundListResult;
+  /** Get a handling_unit_content_outbound object */
+  handlingUnitContentOutbound?: Maybe<HandlingUnitContentOutbound>;
+  /** Get handling_unit_content_outbound objects */
+  handlingUnitContentOutbounds: HandlingUnitContentOutboundListResult;
+  /** Get a handling_unit_content_xxbound_feature object */
+  handlingUnitContentXxboundFeature?: Maybe<HandlingUnitContentXxboundFeature>;
+  /** Get handling_unit_content_xxbound_feature objects */
+  handlingUnitContentXxboundFeatures: HandlingUnitContentXxboundFeatureListResult;
+  /** Get handling_unit_content objects */
+  handlingUnitContents: HandlingUnitContentListResult;
+  /** Get a handling_unit_inbound object */
+  handlingUnitInbound?: Maybe<HandlingUnitInbound>;
+  /** Get handling_unit_inbound objects */
+  handlingUnitInbounds: HandlingUnitInboundListResult;
+  /** Get a handling_unit_model object */
+  handlingUnitModel?: Maybe<HandlingUnitModel>;
+  /** Get handling_unit_model objects */
+  handlingUnitModels: HandlingUnitModelListResult;
+  /** Get a handling_unit_outbound object */
+  handlingUnitOutbound?: Maybe<HandlingUnitOutbound>;
+  /** Get handling_unit_outbound objects */
+  handlingUnitOutbounds: HandlingUnitOutboundListResult;
   /** Get handling_unit objects */
   handlingUnits: HandlingUnitListResult;
   integratorUsers: IntegratorUserListResult;
   integrators: IntegratorListResult;
   /** List configs for a scope */
   listConfigsForAScope: Array<ConfigResults>;
+  /** List files in warehouse folder. */
+  listFiles: Array<FileInfo>;
   /** List parameters for a scope */
   listParametersForAScope: Array<ParameterResults>;
   /** Get a Load */
@@ -6033,6 +6951,8 @@ export type Query = {
   packagings: PackagingListResult;
   /** Get a parameter */
   parameter?: Maybe<Parameter>;
+  /** Search parameters */
+  parameters: ParameterListResult;
   /** Get a Pattern */
   pattern?: Maybe<Pattern>;
   /** Get a PatternPath */
@@ -6288,10 +7208,10 @@ export type QueryConfigArgs = {
 
 
 export type QueryConfigsArgs = {
-  filters?: InputMaybe<ParameterSearchFilters>;
+  filters?: InputMaybe<ConfigSearchFilters>;
   itemsPerPage?: Scalars['Int'];
   language?: InputMaybe<Scalars['String']>;
-  orderBy?: InputMaybe<Array<ParameterOrderByCriterion>>;
+  orderBy?: InputMaybe<Array<ConfigOrderByCriterion>>;
   page?: Scalars['Int'];
 };
 
@@ -6527,6 +7447,111 @@ export type QueryHandlingUnitArgs = {
 };
 
 
+export type QueryHandlingUnitContentArgs = {
+  id: Scalars['String'];
+  language?: InputMaybe<Scalars['String']>;
+};
+
+
+export type QueryHandlingUnitContentInboundArgs = {
+  id: Scalars['String'];
+  language?: InputMaybe<Scalars['String']>;
+};
+
+
+export type QueryHandlingUnitContentInboundsArgs = {
+  filters?: InputMaybe<HandlingUnitContentInboundSearchFilters>;
+  itemsPerPage?: Scalars['Int'];
+  language?: InputMaybe<Scalars['String']>;
+  orderBy?: InputMaybe<Array<HandlingUnitContentInboundOrderByCriterion>>;
+  page?: Scalars['Int'];
+};
+
+
+export type QueryHandlingUnitContentOutboundArgs = {
+  id: Scalars['String'];
+  language?: InputMaybe<Scalars['String']>;
+};
+
+
+export type QueryHandlingUnitContentOutboundsArgs = {
+  filters?: InputMaybe<HandlingUnitContentOutboundSearchFilters>;
+  itemsPerPage?: Scalars['Int'];
+  language?: InputMaybe<Scalars['String']>;
+  orderBy?: InputMaybe<Array<HandlingUnitContentOutboundOrderByCriterion>>;
+  page?: Scalars['Int'];
+};
+
+
+export type QueryHandlingUnitContentXxboundFeatureArgs = {
+  id: Scalars['String'];
+  language?: InputMaybe<Scalars['String']>;
+};
+
+
+export type QueryHandlingUnitContentXxboundFeaturesArgs = {
+  filters?: InputMaybe<HandlingUnitContentXxboundFeatureSearchFilters>;
+  itemsPerPage?: Scalars['Int'];
+  language?: InputMaybe<Scalars['String']>;
+  orderBy?: InputMaybe<Array<HandlingUnitContentXxboundFeatureOrderByCriterion>>;
+  page?: Scalars['Int'];
+};
+
+
+export type QueryHandlingUnitContentsArgs = {
+  filters?: InputMaybe<HandlingUnitContentSearchFilters>;
+  itemsPerPage?: Scalars['Int'];
+  language?: InputMaybe<Scalars['String']>;
+  orderBy?: InputMaybe<Array<HandlingUnitContentOrderByCriterion>>;
+  page?: Scalars['Int'];
+};
+
+
+export type QueryHandlingUnitInboundArgs = {
+  id: Scalars['String'];
+  language?: InputMaybe<Scalars['String']>;
+};
+
+
+export type QueryHandlingUnitInboundsArgs = {
+  filters?: InputMaybe<HandlingUnitInboundSearchFilters>;
+  itemsPerPage?: Scalars['Int'];
+  language?: InputMaybe<Scalars['String']>;
+  orderBy?: InputMaybe<Array<HandlingUnitInboundOrderByCriterion>>;
+  page?: Scalars['Int'];
+};
+
+
+export type QueryHandlingUnitModelArgs = {
+  id: Scalars['String'];
+  language?: InputMaybe<Scalars['String']>;
+};
+
+
+export type QueryHandlingUnitModelsArgs = {
+  filters?: InputMaybe<HandlingUnitModelSearchFilters>;
+  itemsPerPage?: Scalars['Int'];
+  language?: InputMaybe<Scalars['String']>;
+  orderBy?: InputMaybe<Array<HandlingUnitModelOrderByCriterion>>;
+  page?: Scalars['Int'];
+};
+
+
+export type QueryHandlingUnitOutboundArgs = {
+  id: Scalars['String'];
+  language?: InputMaybe<Scalars['String']>;
+};
+
+
+export type QueryHandlingUnitOutboundsArgs = {
+  filters?: InputMaybe<HandlingUnitOutboundSearchFilters>;
+  itemsPerPage?: Scalars['Int'];
+  language?: InputMaybe<Scalars['String']>;
+  orderBy?: InputMaybe<Array<HandlingUnitOutboundOrderByCriterion>>;
+  page?: Scalars['Int'];
+};
+
+
 export type QueryHandlingUnitsArgs = {
   filters?: InputMaybe<HandlingUnitSearchFilters>;
   itemsPerPage?: Scalars['Int'];
@@ -6558,6 +7583,11 @@ export type QueryListConfigsForAScopeArgs = {
   code?: InputMaybe<Scalars['String']>;
   language?: InputMaybe<Scalars['String']>;
   scope: Scalars['String'];
+};
+
+
+export type QueryListFilesArgs = {
+  stockOwnerId: Scalars['String'];
 };
 
 
@@ -6646,6 +7676,15 @@ export type QueryPackagingsArgs = {
 export type QueryParameterArgs = {
   id: Scalars['String'];
   language?: InputMaybe<Scalars['String']>;
+};
+
+
+export type QueryParametersArgs = {
+  filters?: InputMaybe<ParameterSearchFilters>;
+  itemsPerPage?: Scalars['Int'];
+  language?: InputMaybe<Scalars['String']>;
+  orderBy?: InputMaybe<Array<ParameterOrderByCriterion>>;
+  page?: Scalars['Int'];
 };
 
 
@@ -7299,7 +8338,6 @@ export type StockOwner = {
   name?: Maybe<Scalars['String']>;
   phone?: Maybe<Scalars['String']>;
   postCode?: Maybe<Scalars['String']>;
-  s3ExchangeDir?: Maybe<Scalars['String']>;
   senderAddress1?: Maybe<Scalars['String']>;
   senderAddress2?: Maybe<Scalars['String']>;
   senderAddress3?: Maybe<Scalars['String']>;
@@ -7313,6 +8351,8 @@ export type StockOwner = {
   senderPhone?: Maybe<Scalars['String']>;
   senderPostCode?: Maybe<Scalars['String']>;
   status?: Maybe<Scalars['Int']>;
+  /** Text value for field status */
+  statusText?: Maybe<Scalars['String']>;
 };
 
 /** Field names for the StockOwner model */
@@ -7339,7 +8379,6 @@ export enum StockOwnerFieldName {
   Name = 'name',
   Phone = 'phone',
   PostCode = 'postCode',
-  S3ExchangeDir = 's3ExchangeDir',
   SenderAddress1 = 'senderAddress1',
   SenderAddress2 = 'senderAddress2',
   SenderAddress3 = 'senderAddress3',
@@ -7395,7 +8434,6 @@ export type StockOwnerSearchFilters = {
   name?: InputMaybe<Scalars['String']>;
   phone?: InputMaybe<Scalars['String']>;
   postCode?: InputMaybe<Scalars['String']>;
-  s3ExchangeDir?: InputMaybe<Scalars['String']>;
   senderAddress1?: InputMaybe<Scalars['String']>;
   senderAddress2?: InputMaybe<Scalars['String']>;
   senderAddress3?: InputMaybe<Scalars['String']>;
@@ -7441,6 +8479,13 @@ export enum Table {
   GoodsIn = 'GOODS_IN',
   GoodsInLine = 'GOODS_IN_LINE',
   HandlingUnit = 'HANDLING_UNIT',
+  HandlingUnitContent = 'HANDLING_UNIT_CONTENT',
+  HandlingUnitContentInbound = 'HANDLING_UNIT_CONTENT_INBOUND',
+  HandlingUnitContentOutbound = 'HANDLING_UNIT_CONTENT_OUTBOUND',
+  HandlingUnitContentXxboundFeature = 'HANDLING_UNIT_CONTENT_XXBOUND_FEATURE',
+  HandlingUnitInbound = 'HANDLING_UNIT_INBOUND',
+  HandlingUnitModel = 'HANDLING_UNIT_MODEL',
+  HandlingUnitOutbound = 'HANDLING_UNIT_OUTBOUND',
   Integrator = 'INTEGRATOR',
   IntegratorUser = 'INTEGRATOR_USER',
   Load = 'LOAD',
@@ -7451,6 +8496,7 @@ export enum Table {
   Parameter = 'PARAMETER',
   Pattern = 'PATTERN',
   PatternPath = 'PATTERN_PATH',
+  PatternPathLocation = 'PATTERN_PATH_LOCATION',
   PurchaseOrder = 'PURCHASE_ORDER',
   PurchaseOrderLine = 'PURCHASE_ORDER_LINE',
   ReturnCode = 'RETURN_CODE',
@@ -7553,10 +8599,8 @@ export type UpdateArticleSetInput = {
 export type UpdateBarcodeInput = {
   blacklisted?: InputMaybe<Scalars['Boolean']>;
   extras?: InputMaybe<Scalars['JSON']>;
-  flagDouble?: InputMaybe<Scalars['Int']>;
   name?: InputMaybe<Scalars['String']>;
   preparationMode?: InputMaybe<Scalars['Int']>;
-  quantity?: InputMaybe<Scalars['Float']>;
   rotation?: InputMaybe<Scalars['Int']>;
   stockOwnerId?: InputMaybe<Scalars['String']>;
   supplierArticleCode?: InputMaybe<Scalars['String']>;
@@ -7631,8 +8675,6 @@ export type UpdateBuildingInput = {
   address1?: InputMaybe<Scalars['String']>;
   address2?: InputMaybe<Scalars['String']>;
   address3?: InputMaybe<Scalars['String']>;
-  awsAccessKeyId?: InputMaybe<Scalars['String']>;
-  awsSecretAccessKey?: InputMaybe<Scalars['String']>;
   city?: InputMaybe<Scalars['String']>;
   contactEmail?: InputMaybe<Scalars['String']>;
   contactMobile?: InputMaybe<Scalars['String']>;
@@ -7936,19 +8978,119 @@ export type UpdateGoodsInLineInput = {
 };
 
 /** Values to update the existing record with */
+export type UpdateHandlingUnitContentInboundInput = {
+  comment?: InputMaybe<Scalars['String']>;
+  extras?: InputMaybe<Scalars['JSON']>;
+  handlingUnitContentId?: InputMaybe<Scalars['String']>;
+  inboundLocationId?: InputMaybe<Scalars['String']>;
+  missingQuantity?: InputMaybe<Scalars['Float']>;
+  preparationMode?: InputMaybe<Scalars['Int']>;
+  purchaseOrderId?: InputMaybe<Scalars['String']>;
+  purchaseOrderLineId?: InputMaybe<Scalars['String']>;
+  receivedQuantity?: InputMaybe<Scalars['Float']>;
+  status?: InputMaybe<Scalars['Int']>;
+};
+
+/** Values to update the existing record with */
+export type UpdateHandlingUnitContentInput = {
+  articleId?: InputMaybe<Scalars['String']>;
+  articleLuBarcodeId?: InputMaybe<Scalars['String']>;
+  extras?: InputMaybe<Scalars['JSON']>;
+  handlingUnitId?: InputMaybe<Scalars['String']>;
+  quantity?: InputMaybe<Scalars['Float']>;
+  reservation?: InputMaybe<Scalars['String']>;
+  stockStatus?: InputMaybe<Scalars['Int']>;
+};
+
+/** Values to update the existing record with */
+export type UpdateHandlingUnitContentOutboundInput = {
+  comment?: InputMaybe<Scalars['String']>;
+  deliveryId?: InputMaybe<Scalars['String']>;
+  deliveryLineId?: InputMaybe<Scalars['String']>;
+  extras?: InputMaybe<Scalars['JSON']>;
+  handlingUnitContentId?: InputMaybe<Scalars['String']>;
+  missingQuantity?: InputMaybe<Scalars['Float']>;
+  pickedQuantity?: InputMaybe<Scalars['Float']>;
+  pickingLocationId?: InputMaybe<Scalars['String']>;
+  preparationMode?: InputMaybe<Scalars['Int']>;
+  quantityToBePicked?: InputMaybe<Scalars['Float']>;
+  status?: InputMaybe<Scalars['Int']>;
+};
+
+/** Values to update the existing record with */
+export type UpdateHandlingUnitContentXxboundFeatureInput = {
+  extras?: InputMaybe<Scalars['JSON']>;
+  featureCodeId?: InputMaybe<Scalars['String']>;
+  handlingUnitContentOutboundId?: InputMaybe<Scalars['String']>;
+  value?: InputMaybe<Scalars['String']>;
+};
+
+/** Values to update the existing record with */
+export type UpdateHandlingUnitInboundInput = {
+  carrierBox?: InputMaybe<Scalars['String']>;
+  carrierId?: InputMaybe<Scalars['String']>;
+  checkingTime?: InputMaybe<Scalars['DateTime']>;
+  comment?: InputMaybe<Scalars['String']>;
+  extras?: InputMaybe<Scalars['JSON']>;
+  handlingUnitId?: InputMaybe<Scalars['String']>;
+  purchaseOrderId?: InputMaybe<Scalars['String']>;
+  toBeChecked?: InputMaybe<Scalars['Boolean']>;
+};
+
+/** Values to update the existing record with */
 export type UpdateHandlingUnitInput = {
   barcodeId?: InputMaybe<Scalars['String']>;
   category?: InputMaybe<Scalars['Int']>;
-  description?: InputMaybe<Scalars['String']>;
+  code?: InputMaybe<Scalars['String']>;
+  comment?: InputMaybe<Scalars['String']>;
+  extras?: InputMaybe<Scalars['JSON']>;
+  height?: InputMaybe<Scalars['Float']>;
+  length?: InputMaybe<Scalars['Float']>;
+  locationId?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
+  parentHandlingUnitId?: InputMaybe<Scalars['String']>;
+  reservation?: InputMaybe<Scalars['String']>;
+  status?: InputMaybe<Scalars['Int']>;
+  stockOwnerId?: InputMaybe<Scalars['String']>;
+  warehouseCode?: InputMaybe<Scalars['String']>;
+  weight?: InputMaybe<Scalars['Float']>;
+  width?: InputMaybe<Scalars['Float']>;
+};
+
+/** Values to update the existing record with */
+export type UpdateHandlingUnitModelInput = {
+  category?: InputMaybe<Scalars['Int']>;
   extras?: InputMaybe<Scalars['JSON']>;
   height?: InputMaybe<Scalars['Float']>;
   length?: InputMaybe<Scalars['Float']>;
   name?: InputMaybe<Scalars['String']>;
-  parentHandlingUnitId?: InputMaybe<Scalars['String']>;
+  parentHandlingUnitModelId?: InputMaybe<Scalars['String']>;
+  preparationMode?: InputMaybe<Scalars['Int']>;
   status?: InputMaybe<Scalars['Int']>;
   type?: InputMaybe<Scalars['Int']>;
   weight?: InputMaybe<Scalars['Float']>;
   width?: InputMaybe<Scalars['Float']>;
+};
+
+/** Values to update the existing record with */
+export type UpdateHandlingUnitOutboundInput = {
+  carrierBox?: InputMaybe<Scalars['String']>;
+  carrierId?: InputMaybe<Scalars['String']>;
+  carrierSerivce?: InputMaybe<Scalars['String']>;
+  checkingTime?: InputMaybe<Scalars['DateTime']>;
+  comment?: InputMaybe<Scalars['String']>;
+  extras?: InputMaybe<Scalars['JSON']>;
+  finalWeight?: InputMaybe<Scalars['Float']>;
+  handlingUnitId?: InputMaybe<Scalars['String']>;
+  intermediateWeight1?: InputMaybe<Scalars['Float']>;
+  intermediateWeight2?: InputMaybe<Scalars['Float']>;
+  loadId?: InputMaybe<Scalars['String']>;
+  preparationMode?: InputMaybe<Scalars['Int']>;
+  roundId?: InputMaybe<Scalars['String']>;
+  roundPosition?: InputMaybe<Scalars['Int']>;
+  theoriticalWeight?: InputMaybe<Scalars['Float']>;
+  toBeChecked?: InputMaybe<Scalars['Boolean']>;
+  toBePalletized?: InputMaybe<Scalars['Boolean']>;
 };
 
 /** Values to update the existing record with */
@@ -8192,7 +9334,6 @@ export type UpdateStockOwnerInput = {
   name?: InputMaybe<Scalars['String']>;
   phone?: InputMaybe<Scalars['String']>;
   postCode?: InputMaybe<Scalars['String']>;
-  s3ExchangeDir?: InputMaybe<Scalars['String']>;
   senderAddress1?: InputMaybe<Scalars['String']>;
   senderAddress2?: InputMaybe<Scalars['String']>;
   senderAddress3?: InputMaybe<Scalars['String']>;
@@ -8396,21 +9537,21 @@ export type GetAllBarcodesQueryVariables = Exact<{
 }>;
 
 
-export type GetAllBarcodesQuery = { __typename?: 'Query', barcodes: { __typename?: 'BarcodeListResult', count: number, itemsPerPage: number, totalPages: number, results: Array<{ __typename?: 'Barcode', id?: string | null, extras?: any | null, name?: string | null, supplierName?: string | null, supplierArticleCode?: string | null, quantity?: number | null, rotation?: number | null, preparationMode?: number | null, flagDouble?: number | null, blacklisted?: boolean | null, stockOwnerId?: string | null, rotationText?: string | null, preparationModeText?: string | null }> } };
+export type GetAllBarcodesQuery = { __typename?: 'Query', barcodes: { __typename?: 'BarcodeListResult', count: number, itemsPerPage: number, totalPages: number, results: Array<{ __typename?: 'Barcode', id?: string | null, extras?: any | null, name?: string | null, supplierName?: string | null, supplierArticleCode?: string | null, rotation?: number | null, preparationMode?: number | null, blacklisted?: boolean | null, stockOwnerId?: string | null, rotationText?: string | null, preparationModeText?: string | null }> } };
 
 export type GetBarcodeByIdQueryVariables = Exact<{
   id: Scalars['String'];
 }>;
 
 
-export type GetBarcodeByIdQuery = { __typename?: 'Query', barcode?: { __typename?: 'Barcode', id?: string | null, extras?: any | null, name?: string | null, supplierName?: string | null, supplierArticleCode?: string | null, quantity?: number | null, rotation?: number | null, preparationMode?: number | null, flagDouble?: number | null, blacklisted?: boolean | null, stockOwnerId?: string | null, rotationText?: string | null, preparationModeText?: string | null } | null };
+export type GetBarcodeByIdQuery = { __typename?: 'Query', barcode?: { __typename?: 'Barcode', id?: string | null, extras?: any | null, name?: string | null, supplierName?: string | null, supplierArticleCode?: string | null, rotation?: number | null, preparationMode?: number | null, blacklisted?: boolean | null, stockOwnerId?: string | null, rotationText?: string | null, preparationModeText?: string | null } | null };
 
 export type CreateBarcodeMutationVariables = Exact<{
   input: CreateBarcodeInput;
 }>;
 
 
-export type CreateBarcodeMutation = { __typename?: 'Mutation', createBarcode: { __typename?: 'Barcode', id?: string | null, extras?: any | null, name?: string | null, supplierName?: string | null, supplierArticleCode?: string | null, quantity?: number | null, rotation?: number | null, preparationMode?: number | null, flagDouble?: number | null, blacklisted?: boolean | null, stockOwnerId?: string | null, rotationText?: string | null, preparationModeText?: string | null } };
+export type CreateBarcodeMutation = { __typename?: 'Mutation', createBarcode: { __typename?: 'Barcode', id?: string | null, extras?: any | null, name?: string | null, supplierName?: string | null, supplierArticleCode?: string | null, rotation?: number | null, preparationMode?: number | null, blacklisted?: boolean | null, stockOwnerId?: string | null, rotationText?: string | null, preparationModeText?: string | null } };
 
 export type DeleteBarcodeMutationVariables = Exact<{
   id: Scalars['String'];
@@ -8419,13 +9560,85 @@ export type DeleteBarcodeMutationVariables = Exact<{
 
 export type DeleteBarcodeMutation = { __typename?: 'Mutation', deleteBarcode: boolean };
 
+export type RenderDocumentMutationVariables = Exact<{
+  templateFilename: Scalars['String'];
+  context: Scalars['JSON'];
+}>;
+
+
+export type RenderDocumentMutation = { __typename?: 'Mutation', renderDocument: { __typename: 'MissingContext', message: string } | { __typename: 'RenderedDocument', url: string } | { __typename: 'TemplateDoesNotExist', message: string } | { __typename: 'TemplateError', message: string } };
+
 export type UpdateBarcodeMutationVariables = Exact<{
   id: Scalars['String'];
   input: UpdateBarcodeInput;
 }>;
 
 
-export type UpdateBarcodeMutation = { __typename?: 'Mutation', updateBarcode?: { __typename?: 'Barcode', id?: string | null, extras?: any | null, name?: string | null, supplierName?: string | null, supplierArticleCode?: string | null, quantity?: number | null, rotation?: number | null, preparationMode?: number | null, flagDouble?: number | null, blacklisted?: boolean | null, stockOwnerId?: string | null, rotationText?: string | null, preparationModeText?: string | null } | null };
+export type UpdateBarcodeMutation = { __typename?: 'Mutation', updateBarcode?: { __typename?: 'Barcode', id?: string | null, extras?: any | null, name?: string | null, supplierName?: string | null, supplierArticleCode?: string | null, rotation?: number | null, preparationMode?: number | null, blacklisted?: boolean | null, stockOwnerId?: string | null, rotationText?: string | null, preparationModeText?: string | null } | null };
+
+export type SimpleGetAllBLocksQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type SimpleGetAllBLocksQuery = { __typename?: 'Query', blocks: { __typename?: 'BlockListResult', results: Array<{ __typename?: 'Block', id?: string | null, name?: string | null }> } };
+
+export type SimpleGetAllBuildingsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type SimpleGetAllBuildingsQuery = { __typename?: 'Query', buildings: { __typename?: 'BuildingListResult', results: Array<{ __typename?: 'Building', id?: string | null, name?: string | null }> } };
+
+export type GetBlockLevelsParamsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetBlockLevelsParamsQuery = { __typename?: 'Query', listParametersForAScope: Array<{ __typename?: 'ParameterResults', id: string, scope: string, code: string, text: string }> };
+
+export type GetAllBlocksQueryVariables = Exact<{
+  filters?: InputMaybe<BlockSearchFilters>;
+  orderBy?: InputMaybe<Array<BlockOrderByCriterion> | BlockOrderByCriterion>;
+  page: Scalars['Int'];
+  itemsPerPage: Scalars['Int'];
+}>;
+
+
+export type GetAllBlocksQuery = { __typename?: 'Query', blocks: { __typename?: 'BlockListResult', count: number, itemsPerPage: number, totalPages: number, results: Array<{ __typename?: 'Block', id?: string | null, name?: string | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, moveable?: boolean | null, bulk?: boolean | null, comment?: string | null, level?: number | null, blockGroup?: number | null, building: { __typename?: 'Building', name?: string | null } }> } };
+
+export type GetBlockByIdQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type GetBlockByIdQuery = { __typename?: 'Query', block?: { __typename?: 'Block', id?: string | null, name?: string | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, moveable?: boolean | null, bulk?: boolean | null, comment?: string | null, level?: number | null, blockGroup?: number | null, building: { __typename?: 'Building', name?: string | null } } | null };
+
+export type GetBlockIdsQueryVariables = Exact<{
+  filters?: InputMaybe<BlockSearchFilters>;
+  orderBy?: InputMaybe<Array<BlockOrderByCriterion> | BlockOrderByCriterion>;
+  page: Scalars['Int'];
+  itemsPerPage: Scalars['Int'];
+}>;
+
+
+export type GetBlockIdsQuery = { __typename?: 'Query', blocks: { __typename?: 'BlockListResult', count: number, itemsPerPage: number, totalPages: number, results: Array<{ __typename?: 'Block', id?: string | null, name?: string | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, moveable?: boolean | null, bulk?: boolean | null, comment?: string | null, level?: number | null, blockGroup?: number | null }> } };
+
+export type CreateBlockMutationVariables = Exact<{
+  input: CreateBlockInput;
+}>;
+
+
+export type CreateBlockMutation = { __typename?: 'Mutation', createBlock: { __typename?: 'Block', id?: string | null, name?: string | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, moveable?: boolean | null, bulk?: boolean | null, comment?: string | null, level?: number | null, blockGroup?: number | null } };
+
+export type DeleteBlockMutationVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type DeleteBlockMutation = { __typename?: 'Mutation', deleteBlock: boolean };
+
+export type UpdateBlockMutationVariables = Exact<{
+  id: Scalars['String'];
+  input: UpdateBlockInput;
+}>;
+
+
+export type UpdateBlockMutation = { __typename?: 'Mutation', updateBlock?: { __typename?: 'Block', id?: string | null, name?: string | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, moveable?: boolean | null, bulk?: boolean | null, comment?: string | null, level?: number | null, blockGroup?: number | null } | null };
 
 export type GetBuildingStatusConfigsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -8440,21 +9653,21 @@ export type GetAllBuildingsQueryVariables = Exact<{
 }>;
 
 
-export type GetAllBuildingsQuery = { __typename?: 'Query', buildings: { __typename?: 'BuildingListResult', count: number, itemsPerPage: number, totalPages: number, results: Array<{ __typename?: 'Building', id?: string | null, name?: string | null, address1?: string | null, address2?: string | null, address3?: string | null, postCode?: string | null, city?: string | null, country?: string | null, contactName?: string | null, contactPhone?: string | null, contactMobile?: string | null, contactEmail?: string | null, awsAccessKeyId?: string | null, awsSecretAccessKey?: string | null, status?: number | null, statusText?: string | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null }> } };
+export type GetAllBuildingsQuery = { __typename?: 'Query', buildings: { __typename?: 'BuildingListResult', count: number, itemsPerPage: number, totalPages: number, results: Array<{ __typename?: 'Building', id?: string | null, name?: string | null, address1?: string | null, address2?: string | null, address3?: string | null, postCode?: string | null, city?: string | null, country?: string | null, contactName?: string | null, contactPhone?: string | null, contactMobile?: string | null, contactEmail?: string | null, status?: number | null, statusText?: string | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null }> } };
 
 export type GetBuildingByIdQueryVariables = Exact<{
   id: Scalars['String'];
 }>;
 
 
-export type GetBuildingByIdQuery = { __typename?: 'Query', building?: { __typename?: 'Building', id?: string | null, name?: string | null, address1?: string | null, address2?: string | null, address3?: string | null, postCode?: string | null, city?: string | null, country?: string | null, contactName?: string | null, contactPhone?: string | null, contactMobile?: string | null, contactEmail?: string | null, awsAccessKeyId?: string | null, awsSecretAccessKey?: string | null, status?: number | null, statusText?: string | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null } | null };
+export type GetBuildingByIdQuery = { __typename?: 'Query', building?: { __typename?: 'Building', id?: string | null, name?: string | null, address1?: string | null, address2?: string | null, address3?: string | null, postCode?: string | null, city?: string | null, country?: string | null, contactName?: string | null, contactPhone?: string | null, contactMobile?: string | null, contactEmail?: string | null, status?: number | null, statusText?: string | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null } | null };
 
 export type CreateBuildingMutationVariables = Exact<{
   input: CreateBuildingInput;
 }>;
 
 
-export type CreateBuildingMutation = { __typename?: 'Mutation', createBuilding: { __typename?: 'Building', id?: string | null, name?: string | null, address1?: string | null, address2?: string | null, address3?: string | null, postCode?: string | null, city?: string | null, country?: string | null, contactName?: string | null, contactPhone?: string | null, contactMobile?: string | null, contactEmail?: string | null, awsAccessKeyId?: string | null, awsSecretAccessKey?: string | null, status?: number | null } };
+export type CreateBuildingMutation = { __typename?: 'Mutation', createBuilding: { __typename?: 'Building', id?: string | null, name?: string | null, address1?: string | null, address2?: string | null, address3?: string | null, postCode?: string | null, city?: string | null, country?: string | null, contactName?: string | null, contactPhone?: string | null, contactMobile?: string | null, contactEmail?: string | null, status?: number | null } };
 
 export type DeleteBuildingMutationVariables = Exact<{
   id: Scalars['String'];
@@ -8469,7 +9682,7 @@ export type UpdateBuildingMutationVariables = Exact<{
 }>;
 
 
-export type UpdateBuildingMutation = { __typename?: 'Mutation', updateBuilding?: { __typename?: 'Building', id?: string | null, name?: string | null, address1?: string | null, address2?: string | null, address3?: string | null, postCode?: string | null, city?: string | null, country?: string | null, contactName?: string | null, contactPhone?: string | null, contactMobile?: string | null, contactEmail?: string | null, awsAccessKeyId?: string | null, awsSecretAccessKey?: string | null, status?: number | null } | null };
+export type UpdateBuildingMutation = { __typename?: 'Mutation', updateBuilding?: { __typename?: 'Building', id?: string | null, name?: string | null, address1?: string | null, address2?: string | null, address3?: string | null, postCode?: string | null, city?: string | null, country?: string | null, contactName?: string | null, contactPhone?: string | null, contactMobile?: string | null, contactEmail?: string | null, status?: number | null } | null };
 
 export type SoftDeleteBuildingMutationVariables = Exact<{
   buildingId: Scalars['String'];
@@ -8477,6 +9690,451 @@ export type SoftDeleteBuildingMutationVariables = Exact<{
 
 
 export type SoftDeleteBuildingMutation = { __typename?: 'Mutation', softDeleteBuilding: boolean };
+
+export type GetAllConfigsQueryVariables = Exact<{
+  orderBy?: InputMaybe<Array<ConfigOrderByCriterion> | ConfigOrderByCriterion>;
+  filters?: InputMaybe<ConfigSearchFilters>;
+  page: Scalars['Int'];
+  itemsPerPage: Scalars['Int'];
+  language?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type GetAllConfigsQuery = { __typename?: 'Query', configs: { __typename?: 'ConfigListResult', count: number, itemsPerPage: number, totalPages: number, page: number, results: Array<{ __typename?: 'Config', id?: string | null, scope: string, code: string, value: string, extras?: any | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, translation?: any | null, system?: boolean | null }> } };
+
+export type GetConfigByIdQueryVariables = Exact<{
+  id: Scalars['String'];
+  language?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type GetConfigByIdQuery = { __typename?: 'Query', config?: { __typename?: 'Config', id?: string | null, scope: string, code: string, value: string, extras?: any | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, translation?: any | null, system?: boolean | null } | null };
+
+export type CreateConfigMutationVariables = Exact<{
+  input: CreateConfigInput;
+}>;
+
+
+export type CreateConfigMutation = { __typename?: 'Mutation', createConfig: { __typename?: 'Config', id?: string | null, scope: string, code: string, value: string, extras?: any | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, translation?: any | null, system?: boolean | null } };
+
+export type DeleteConfigMutationVariables = Exact<{
+  configId: Scalars['String'];
+}>;
+
+
+export type DeleteConfigMutation = { __typename?: 'Mutation', deleteConfig: boolean };
+
+export type UpdateConfigMutationVariables = Exact<{
+  id: Scalars['String'];
+  input: UpdateConfigInput;
+}>;
+
+
+export type UpdateConfigMutation = { __typename?: 'Mutation', updateConfig?: { __typename?: 'Config', id?: string | null, scope: string, code: string, value: string, extras?: any | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, translation?: any | null, system?: boolean | null } | null };
+
+export type ListConfigsForAScopeQueryVariables = Exact<{
+  scope: Scalars['String'];
+  code?: InputMaybe<Scalars['String']>;
+  language?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type ListConfigsForAScopeQuery = { __typename?: 'Query', listConfigsForAScope: Array<{ __typename?: 'ConfigResults', id: string, scope: string, code: string, text: string }> };
+
+export type SimpleGetAllStockOwnersQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type SimpleGetAllStockOwnersQuery = { __typename?: 'Query', stockOwners: { __typename?: 'StockOwnerListResult', results: Array<{ __typename?: 'StockOwner', id?: string | null, name?: string | null }> } };
+
+export type GetEquipmentTypesConfigsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetEquipmentTypesConfigsQuery = { __typename?: 'Query', listConfigsForAScope: Array<{ __typename?: 'ConfigResults', id: string, scope: string, code: string, text: string }> };
+
+export type GetEquipmentStatusesConfigsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetEquipmentStatusesConfigsQuery = { __typename?: 'Query', listConfigsForAScope: Array<{ __typename?: 'ConfigResults', id: string, scope: string, code: string, text: string }> };
+
+export type GetEquipmentLimitTypeConfigsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetEquipmentLimitTypeConfigsQuery = { __typename?: 'Query', listConfigsForAScope: Array<{ __typename?: 'ConfigResults', id: string, scope: string, code: string, text: string }> };
+
+export type GetPreparationModeParamsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetPreparationModeParamsQuery = { __typename?: 'Query', listParametersForAScope: Array<{ __typename?: 'ParameterResults', id: string, scope: string, code: string, text: string }> };
+
+export type GetListOfPrioritiesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetListOfPrioritiesQuery = { __typename?: 'Query', equipments: { __typename?: 'EquipmentListResult', results: Array<{ __typename?: 'Equipment', priority?: number | null, id?: string | null, name?: string | null }> } };
+
+export type SimpleGetAllPackagingListQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type SimpleGetAllPackagingListQuery = { __typename?: 'Query', packagings: { __typename?: 'PackagingListResult', results: Array<{ __typename?: 'Packaging', id?: string | null, name?: string | null }> } };
+
+export type GetAllEquipmentQueryVariables = Exact<{
+  filters?: InputMaybe<EquipmentSearchFilters>;
+  orderBy?: InputMaybe<Array<EquipmentOrderByCriterion> | EquipmentOrderByCriterion>;
+  page: Scalars['Int'];
+  itemsPerPage: Scalars['Int'];
+}>;
+
+
+export type GetAllEquipmentQuery = { __typename?: 'Query', equipments: { __typename?: 'EquipmentListResult', count: number, itemsPerPage: number, totalPages: number, results: Array<{ __typename?: 'Equipment', id?: string | null, stockOwnerId?: string | null, name?: string | null, type?: number | null, typeText?: string | null, priority?: number | null, status?: number | null, statusText?: string | null, available?: boolean | null, distributed?: boolean | null, monoCompany?: boolean | null, monoCarrier?: boolean | null, boxLineGrouped?: boolean | null, boxMonoArticle?: boolean | null, qtyMaxArticle?: number | null, nbMaxBox?: number | null, checkPosition?: boolean | null, comment?: string | null, virtual?: boolean | null, limitType?: number | null, limitTypeText?: string | null, length?: number | null, width?: number | null, height?: number | null, toleranceDimension?: number | null, allowPickingOrderFree?: boolean | null, extras?: any | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, stockOwner: { __typename?: 'StockOwner', name?: string | null } }> } };
+
+export type GetEquipmentByIdQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type GetEquipmentByIdQuery = { __typename?: 'Query', equipment?: { __typename?: 'Equipment', id?: string | null, stockOwnerId?: string | null, name?: string | null, type?: number | null, typeText?: string | null, priority?: number | null, status?: number | null, statusText?: string | null, available?: boolean | null, distributed?: boolean | null, monoCompany?: boolean | null, monoCarrier?: boolean | null, boxLineGrouped?: boolean | null, boxMonoArticle?: boolean | null, qtyMaxArticle?: number | null, nbMaxBox?: number | null, checkPosition?: boolean | null, comment?: string | null, virtual?: boolean | null, limitType?: number | null, limitTypeText?: string | null, length?: number | null, width?: number | null, height?: number | null, toleranceDimension?: number | null, allowPickingOrderFree?: boolean | null, extras?: any | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, stockOwner: { __typename?: 'StockOwner', name?: string | null } } | null };
+
+export type GetEquipmentIdsQueryVariables = Exact<{
+  filters?: InputMaybe<EquipmentSearchFilters>;
+  orderBy?: InputMaybe<Array<EquipmentOrderByCriterion> | EquipmentOrderByCriterion>;
+  page: Scalars['Int'];
+  itemsPerPage: Scalars['Int'];
+}>;
+
+
+export type GetEquipmentIdsQuery = { __typename?: 'Query', equipments: { __typename?: 'EquipmentListResult', count: number, itemsPerPage: number, totalPages: number, results: Array<{ __typename?: 'Equipment', id?: string | null, stockOwnerId?: string | null, name?: string | null, type?: number | null, typeText?: string | null, priority?: number | null, status?: number | null, statusText?: string | null, available?: boolean | null, distributed?: boolean | null, monoCompany?: boolean | null, monoCarrier?: boolean | null, boxLineGrouped?: boolean | null, boxMonoArticle?: boolean | null, qtyMaxArticle?: number | null, nbMaxBox?: number | null, checkPosition?: boolean | null, comment?: string | null, virtual?: boolean | null, limitType?: number | null, limitTypeText?: string | null, length?: number | null, width?: number | null, height?: number | null, toleranceDimension?: number | null, allowPickingOrderFree?: boolean | null, extras?: any | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, stockOwner: { __typename?: 'StockOwner', name?: string | null } }> } };
+
+export type CreateEquipmentMutationVariables = Exact<{
+  input: CreateEquipmentInput;
+}>;
+
+
+export type CreateEquipmentMutation = { __typename?: 'Mutation', createEquipment: { __typename?: 'Equipment', id?: string | null, stockOwnerId?: string | null, name?: string | null, type?: number | null, priority?: number | null, status?: number | null, available?: boolean | null, distributed?: boolean | null, monoCompany?: boolean | null, monoCarrier?: boolean | null, boxLineGrouped?: boolean | null, boxMonoArticle?: boolean | null, qtyMaxArticle?: number | null, nbMaxBox?: number | null, checkPosition?: boolean | null, comment?: string | null, virtual?: boolean | null, limitType?: number | null, length?: number | null, width?: number | null, height?: number | null, toleranceDimension?: number | null, allowPickingOrderFree?: boolean | null } };
+
+export type DeleteEquipmentMutationVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type DeleteEquipmentMutation = { __typename?: 'Mutation', deleteEquipment: boolean };
+
+export type SoftDeleteEquipmentMutationVariables = Exact<{
+  equipmentId: Scalars['String'];
+}>;
+
+
+export type SoftDeleteEquipmentMutation = { __typename?: 'Mutation', softDeleteEquipment: boolean };
+
+export type UpdateEquipmentMutationVariables = Exact<{
+  id: Scalars['String'];
+  input: UpdateEquipmentInput;
+}>;
+
+
+export type UpdateEquipmentMutation = { __typename?: 'Mutation', updateEquipment?: { __typename?: 'Equipment', id?: string | null, stockOwnerId?: string | null, name?: string | null, type?: number | null, priority?: number | null, status?: number | null, available?: boolean | null, distributed?: boolean | null, monoCompany?: boolean | null, monoCarrier?: boolean | null, boxLineGrouped?: boolean | null, boxMonoArticle?: boolean | null, qtyMaxArticle?: number | null, nbMaxBox?: number | null, checkPosition?: boolean | null, comment?: string | null, virtual?: boolean | null, limitType?: number | null, length?: number | null, width?: number | null, height?: number | null, toleranceDimension?: number | null, allowPickingOrderFree?: boolean | null } | null };
+
+export type GetAllEquipmentDetailsQueryVariables = Exact<{
+  filters?: InputMaybe<EquipmentDetailSearchFilters>;
+  orderBy?: InputMaybe<Array<EquipmentDetailOrderByCriterion> | EquipmentDetailOrderByCriterion>;
+  page: Scalars['Int'];
+  itemsPerPage: Scalars['Int'];
+}>;
+
+
+export type GetAllEquipmentDetailsQuery = { __typename?: 'Query', equipmentDetails: { __typename?: 'EquipmentDetailListResult', count: number, itemsPerPage: number, totalPages: number, results: Array<{ __typename?: 'EquipmentDetail', id?: string | null, preparationMode?: number | null, preparationModeText?: string | null, stockOwnerId?: string | null, equipmentId?: string | null, packagingId?: string | null, extras?: any | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, stockOwner: { __typename?: 'StockOwner', name?: string | null }, equipment: { __typename?: 'Equipment', name?: string | null }, packaging: { __typename?: 'Packaging', name?: string | null } }> } };
+
+export type GetEquipmentDetailByIdQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type GetEquipmentDetailByIdQuery = { __typename?: 'Query', equipmentDetail?: { __typename?: 'EquipmentDetail', id?: string | null, preparationMode?: number | null, preparationModeText?: string | null, stockOwnerId?: string | null, equipmentId?: string | null, packagingId?: string | null, extras?: any | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, stockOwner: { __typename?: 'StockOwner', name?: string | null }, equipment: { __typename?: 'Equipment', name?: string | null }, packaging: { __typename?: 'Packaging', name?: string | null } } | null };
+
+export type CreateEquipmentDetailMutationVariables = Exact<{
+  input: CreateEquipmentDetailInput;
+}>;
+
+
+export type CreateEquipmentDetailMutation = { __typename?: 'Mutation', createEquipmentDetail: { __typename?: 'EquipmentDetail', id?: string | null, preparationMode?: number | null, stockOwnerId?: string | null, equipmentId?: string | null, packagingId?: string | null } };
+
+export type DeleteEquipmentDetailMutationVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type DeleteEquipmentDetailMutation = { __typename?: 'Mutation', deleteEquipmentDetail: boolean };
+
+export type BulkDeleteEquipmentDetailsMutationVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type BulkDeleteEquipmentDetailsMutation = { __typename?: 'Mutation', bulkDeleteEquipmentDetails: boolean };
+
+export type UpdateEquipmentDetailMutationVariables = Exact<{
+  id: Scalars['String'];
+  input: UpdateEquipmentDetailInput;
+}>;
+
+
+export type UpdateEquipmentDetailMutation = { __typename?: 'Mutation', updateEquipmentDetail?: { __typename?: 'EquipmentDetail', id?: string | null, preparationMode?: number | null, stockOwnerId?: string | null, equipmentId?: string | null, packagingId?: string | null } | null };
+
+export type GetAllFeatureCodesQueryVariables = Exact<{
+  filters?: InputMaybe<FeatureCodeSearchFilters>;
+  orderBy?: InputMaybe<Array<FeatureCodeOrderByCriterion> | FeatureCodeOrderByCriterion>;
+  page: Scalars['Int'];
+  itemsPerPage: Scalars['Int'];
+}>;
+
+
+export type GetAllFeatureCodesQuery = { __typename?: 'Query', featureCodes: { __typename?: 'FeatureCodeListResult', count: number, itemsPerPage: number, totalPages: number, results: Array<{ __typename?: 'FeatureCode', id?: string | null, name?: string | null, unique?: boolean | null, dateType?: boolean | null, prefixBarcode?: string | null, lengthBarcode?: string | null, suffixBarcode?: string | null, stockOwnerId?: string | null, extras?: any | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, stockOwner: { __typename?: 'StockOwner', name?: string | null } }> } };
+
+export type GetFeatureCodeByIdQueryVariables = Exact<{
+  id: Scalars['String'];
+  language?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type GetFeatureCodeByIdQuery = { __typename?: 'Query', featureCode?: { __typename?: 'FeatureCode', id?: string | null, name?: string | null, unique?: boolean | null, dateType?: boolean | null, prefixBarcode?: string | null, lengthBarcode?: string | null, suffixBarcode?: string | null, stockOwnerId?: string | null, extras?: any | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, stockOwner: { __typename?: 'StockOwner', name?: string | null } } | null };
+
+export type GetFeatureCodeIdsQueryVariables = Exact<{
+  filters?: InputMaybe<FeatureCodeSearchFilters>;
+  orderBy?: InputMaybe<Array<FeatureCodeOrderByCriterion> | FeatureCodeOrderByCriterion>;
+  page: Scalars['Int'];
+  itemsPerPage: Scalars['Int'];
+}>;
+
+
+export type GetFeatureCodeIdsQuery = { __typename?: 'Query', featureCodes: { __typename?: 'FeatureCodeListResult', count: number, itemsPerPage: number, totalPages: number, results: Array<{ __typename?: 'FeatureCode', id?: string | null, name?: string | null }> } };
+
+export type CreateFeatureCodeMutationVariables = Exact<{
+  input: CreateFeatureCodeInput;
+}>;
+
+
+export type CreateFeatureCodeMutation = { __typename?: 'Mutation', createFeatureCode: { __typename?: 'FeatureCode', id?: string | null, name?: string | null, unique?: boolean | null, dateType?: boolean | null, prefixBarcode?: string | null, lengthBarcode?: string | null, suffixBarcode?: string | null, stockOwnerId?: string | null } };
+
+export type DeleteFeatureCodeMutationVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type DeleteFeatureCodeMutation = { __typename?: 'Mutation', deleteFeatureCode: boolean };
+
+export type UpdateFeatureCodeMutationVariables = Exact<{
+  id: Scalars['String'];
+  input: UpdateFeatureCodeInput;
+}>;
+
+
+export type UpdateFeatureCodeMutation = { __typename?: 'Mutation', updateFeatureCode?: { __typename?: 'FeatureCode', id?: string | null, name?: string | null, unique?: boolean | null, dateType?: boolean | null, prefixBarcode?: string | null, lengthBarcode?: string | null, suffixBarcode?: string | null, stockOwnerId?: string | null } | null };
+
+export type GetFeatureTypesParamsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetFeatureTypesParamsQuery = { __typename?: 'Query', listParametersForAScope: Array<{ __typename?: 'ParameterResults', id: string, scope: string, code: string, text: string }> };
+
+export type SimpleGetAllFeatureCodesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type SimpleGetAllFeatureCodesQuery = { __typename?: 'Query', featureCodes: { __typename?: 'FeatureCodeListResult', results: Array<{ __typename?: 'FeatureCode', id?: string | null, name?: string | null, stockOwnerId?: string | null }> } };
+
+export type GetAllFeatureTypeDetailsQueryVariables = Exact<{
+  filters?: InputMaybe<FeatureTypeDetailSearchFilters>;
+  orderBy?: InputMaybe<Array<FeatureTypeDetailOrderByCriterion> | FeatureTypeDetailOrderByCriterion>;
+  page: Scalars['Int'];
+  itemsPerPage: Scalars['Int'];
+}>;
+
+
+export type GetAllFeatureTypeDetailsQuery = { __typename?: 'Query', featureTypeDetails: { __typename?: 'FeatureTypeDetailListResult', count: number, itemsPerPage: number, totalPages: number, results: Array<{ __typename?: 'FeatureTypeDetail', id?: string | null, featureType?: number | null, featureTypeText?: string | null, featureCodeId?: string | null, stockOwnerId?: string | null, atReception?: boolean | null, atPreparation?: boolean | null, extras?: any | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, featureCode: { __typename?: 'FeatureCode', id?: string | null, name?: string | null }, stockOwner: { __typename?: 'StockOwner', name?: string | null } }> } };
+
+export type GetFeatureTypeDetailByIdQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type GetFeatureTypeDetailByIdQuery = { __typename?: 'Query', featureTypeDetail?: { __typename?: 'FeatureTypeDetail', id?: string | null, featureType?: number | null, featureTypeText?: string | null, featureCodeId?: string | null, stockOwnerId?: string | null, atReception?: boolean | null, atPreparation?: boolean | null, extras?: any | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, featureCode: { __typename?: 'FeatureCode', id?: string | null, name?: string | null }, stockOwner: { __typename?: 'StockOwner', name?: string | null } } | null };
+
+export type CreateFeatureTypeDetailMutationVariables = Exact<{
+  input: CreateFeatureTypeDetailInput;
+}>;
+
+
+export type CreateFeatureTypeDetailMutation = { __typename?: 'Mutation', createFeatureTypeDetail: { __typename?: 'FeatureTypeDetail', id?: string | null, featureType?: number | null, featureCodeId?: string | null, stockOwnerId?: string | null, atReception?: boolean | null, atPreparation?: boolean | null } };
+
+export type DeleteFeatureTypeDetailMutationVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type DeleteFeatureTypeDetailMutation = { __typename?: 'Mutation', deleteFeatureTypeDetail: boolean };
+
+export type UpdateFeatureTypeDetailMutationVariables = Exact<{
+  id: Scalars['String'];
+  input: UpdateFeatureTypeDetailInput;
+}>;
+
+
+export type UpdateFeatureTypeDetailMutation = { __typename?: 'Mutation', updateFeatureTypeDetail?: { __typename?: 'FeatureTypeDetail', id?: string | null, featureType?: number | null, featureCodeId?: string | null, stockOwnerId?: string | null, atReception?: boolean | null, atPreparation?: boolean | null } | null };
+
+export type GetAllGoodsInsQueryVariables = Exact<{
+  orderBy?: InputMaybe<Array<GoodsInOrderByCriterion> | GoodsInOrderByCriterion>;
+  filters?: InputMaybe<GoodsInSearchFilters>;
+  page: Scalars['Int'];
+  itemsPerPage: Scalars['Int'];
+  language?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type GetAllGoodsInsQuery = { __typename?: 'Query', goodsIns: { __typename?: 'GoodsInListResult', count: number, itemsPerPage: number, totalPages: number, page: number, results: Array<{ __typename?: 'GoodsIn', id?: string | null, extras?: any | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, name?: string | null, comment?: string | null }> } };
+
+export type GetGoodsInByIdQueryVariables = Exact<{
+  id: Scalars['String'];
+  language?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type GetGoodsInByIdQuery = { __typename?: 'Query', goodsIn?: { __typename?: 'GoodsIn', id?: string | null, extras?: any | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, name?: string | null, comment?: string | null } | null };
+
+export type GetGoodsInIdsQueryVariables = Exact<{
+  filters?: InputMaybe<GoodsInSearchFilters>;
+  orderBy?: InputMaybe<Array<GoodsInOrderByCriterion> | GoodsInOrderByCriterion>;
+  page: Scalars['Int'];
+  itemsPerPage: Scalars['Int'];
+  language?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type GetGoodsInIdsQuery = { __typename?: 'Query', goodsIns: { __typename?: 'GoodsInListResult', count: number, itemsPerPage: number, totalPages: number, results: Array<{ __typename?: 'GoodsIn', id?: string | null, name?: string | null, comment?: string | null }> } };
+
+export type CreateGoodsInMutationVariables = Exact<{
+  input: CreateGoodsInInput;
+}>;
+
+
+export type CreateGoodsInMutation = { __typename?: 'Mutation', createGoodsIn: { __typename?: 'GoodsIn', id?: string | null, extras?: any | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, name?: string | null, comment?: string | null } };
+
+export type DeleteGoodsInMutationVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type DeleteGoodsInMutation = { __typename?: 'Mutation', deleteGoodsIn: boolean };
+
+export type UpdateGoodsInMutationVariables = Exact<{
+  id: Scalars['String'];
+  input: UpdateGoodsInInput;
+}>;
+
+
+export type UpdateGoodsInMutation = { __typename?: 'Mutation', updateGoodsIn?: { __typename?: 'GoodsIn', id?: string | null, extras?: any | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, name?: string | null, comment?: string | null } | null };
+
+export type GetGoodsInLineByIdQueryVariables = Exact<{
+  id: Scalars['String'];
+  language?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type GetGoodsInLineByIdQuery = { __typename?: 'Query', goodsInLine?: { __typename?: 'GoodsInLine', id?: string | null, extras?: any | null, quantity?: number | null, reservation?: string | null, stockOwnerId?: string | null, articleId?: string | null, goodsInId?: string | null, purchaseOrderId?: string | null, purchaseOrderLineId?: string | null } | null };
+
+export type GetGoodsInLinesQueryVariables = Exact<{
+  orderBy?: InputMaybe<Array<GoodsInLineOrderByCriterion> | GoodsInLineOrderByCriterion>;
+  filters?: InputMaybe<GoodsInLineSearchFilters>;
+  page: Scalars['Int'];
+  itemsPerPage: Scalars['Int'];
+  language?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type GetGoodsInLinesQuery = { __typename?: 'Query', goodsInLines: { __typename?: 'GoodsInLineListResult', count: number, itemsPerPage: number, totalPages: number, page: number, results: Array<{ __typename?: 'GoodsInLine', id?: string | null, extras?: any | null, quantity?: number | null, reservation?: string | null, stockOwnerId?: string | null, articleId?: string | null, goodsInId?: string | null, purchaseOrderId?: string | null, purchaseOrderLineId?: string | null }> } };
+
+export type CreateGoodsInLineMutationVariables = Exact<{
+  input: CreateGoodsInLineInput;
+}>;
+
+
+export type CreateGoodsInLineMutation = { __typename?: 'Mutation', createGoodsInLine: { __typename?: 'GoodsInLine', id?: string | null, extras?: any | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, quantity?: number | null, reservation?: string | null, stockOwnerId?: string | null, articleId?: string | null, goodsInId?: string | null, purchaseOrderId?: string | null, purchaseOrderLineId?: string | null } };
+
+export type DeleteGoodsInLineMutationVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type DeleteGoodsInLineMutation = { __typename?: 'Mutation', deleteGoodsInLine: boolean };
+
+export type UpdateGoodsInLineMutationVariables = Exact<{
+  id: Scalars['String'];
+  input: UpdateGoodsInLineInput;
+}>;
+
+
+export type UpdateGoodsInLineMutation = { __typename?: 'Mutation', updateGoodsInLine?: { __typename?: 'GoodsInLine', id?: string | null, extras?: any | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, quantity?: number | null, reservation?: string | null, stockOwnerId?: string | null, articleId?: string | null, goodsInId?: string | null, purchaseOrderId?: string | null, purchaseOrderLineId?: string | null } | null };
+
+export type GetReplenishTypesConfigsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetReplenishTypesConfigsQuery = { __typename?: 'Query', listConfigsForAScope: Array<{ __typename?: 'ConfigResults', id: string, scope: string, code: string, text: string }> };
+
+export type GetRotationsParamsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetRotationsParamsQuery = { __typename?: 'Query', listParametersForAScope: Array<{ __typename?: 'ParameterResults', id: string, scope: string, code: string, text: string }> };
+
+export type GetAllLocationsQueryVariables = Exact<{
+  filters?: InputMaybe<LocationSearchFilters>;
+  orderBy?: InputMaybe<Array<LocationOrderByCriterion> | LocationOrderByCriterion>;
+  page: Scalars['Int'];
+  itemsPerPage: Scalars['Int'];
+}>;
+
+
+export type GetAllLocationsQuery = { __typename?: 'Query', locations: { __typename?: 'LocationListResult', count: number, itemsPerPage: number, totalPages: number, results: Array<{ __typename?: 'Location', id?: string | null, name?: string | null, barcode?: string | null, aisle?: string | null, column?: string | null, level?: string | null, position?: string | null, replenish?: boolean | null, blockId?: string | null, replenishType?: number | null, constraint?: string | null, comment?: string | null, baseUnitRotation?: number | null, allowCycleCountStockMin?: boolean | null, block: { __typename?: 'Block', name?: string | null } }> } };
+
+export type GetLocationByIdQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type GetLocationByIdQuery = { __typename?: 'Query', location?: { __typename?: 'Location', id?: string | null, name?: string | null, barcode?: string | null, aisle?: string | null, column?: string | null, level?: string | null, position?: string | null, replenish?: boolean | null, blockId?: string | null, replenishType?: number | null, constraint?: string | null, comment?: string | null, baseUnitRotation?: number | null, allowCycleCountStockMin?: boolean | null, block: { __typename?: 'Block', name?: string | null } } | null };
+
+export type GetLocationIdsQueryVariables = Exact<{
+  filters?: InputMaybe<LocationSearchFilters>;
+  orderBy?: InputMaybe<Array<LocationOrderByCriterion> | LocationOrderByCriterion>;
+  page: Scalars['Int'];
+  itemsPerPage: Scalars['Int'];
+}>;
+
+
+export type GetLocationIdsQuery = { __typename?: 'Query', locations: { __typename?: 'LocationListResult', count: number, itemsPerPage: number, totalPages: number, results: Array<{ __typename?: 'Location', name?: string | null, barcode?: string | null, aisle?: string | null, column?: string | null, level?: string | null, position?: string | null, replenish?: boolean | null, blockId?: string | null, replenishType?: number | null, constraint?: string | null, comment?: string | null, baseUnitRotation?: number | null, allowCycleCountStockMin?: boolean | null, block: { __typename?: 'Block', name?: string | null } }> } };
+
+export type CreateLocationMutationVariables = Exact<{
+  input: CreateLocationInput;
+}>;
+
+
+export type CreateLocationMutation = { __typename?: 'Mutation', createLocation: { __typename: 'Location', id?: string | null, name?: string | null, barcode?: string | null, aisle?: string | null, column?: string | null, level?: string | null, position?: string | null, replenish?: boolean | null, blockId?: string | null, replenishType?: number | null, constraint?: string | null, comment?: string | null, baseUnitRotation?: number | null, allowCycleCountStockMin?: boolean | null, block: { __typename?: 'Block', name?: string | null } } | { __typename: 'ValidationError', message: string } };
+
+export type BulkCreateLocationsMutationVariables = Exact<{
+  input: BulkCreateLocationsInput;
+}>;
+
+
+export type BulkCreateLocationsMutation = { __typename?: 'Mutation', bulkCreateLocations: Array<{ __typename: 'Location', id?: string | null, name?: string | null, barcode?: string | null, aisle?: string | null, column?: string | null, level?: string | null, position?: string | null, replenish?: boolean | null, blockId?: string | null, replenishType?: number | null, constraint?: string | null, comment?: string | null, baseUnitRotation?: number | null, allowCycleCountStockMin?: boolean | null, block: { __typename?: 'Block', name?: string | null } }> };
+
+export type DeleteLocationMutationVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type DeleteLocationMutation = { __typename?: 'Mutation', deleteLocation: boolean };
+
+export type UpdateLocationMutationVariables = Exact<{
+  id: Scalars['String'];
+  input: UpdateLocationInput;
+}>;
+
+
+export type UpdateLocationMutation = { __typename?: 'Mutation', updateLocation?: { __typename?: 'Location', id?: string | null, name?: string | null, barcode?: string | null, aisle?: string | null, column?: string | null, level?: string | null, position?: string | null, replenish?: boolean | null, blockId?: string | null, replenishType?: number | null, constraint?: string | null, comment?: string | null, baseUnitRotation?: number | null, allowCycleCountStockMin?: boolean | null, block: { __typename?: 'Block', name?: string | null } } | null };
 
 export type WarehouseLoginMutationVariables = Exact<{
   username: Scalars['String'];
@@ -8512,6 +10170,359 @@ export type ChangePasswordMutationVariables = Exact<{
 
 
 export type ChangePasswordMutation = { __typename?: 'Mutation', changePassword: { __typename: 'ChangePasswordFailure', message: string } | { __typename: 'ChangePasswordSuccess', message: string } };
+
+export type GetAllMovementsQueryVariables = Exact<{
+  orderBy?: InputMaybe<Array<MovementOrderByCriterion> | MovementOrderByCriterion>;
+  filters?: InputMaybe<MovementSearchFilters>;
+  page: Scalars['Int'];
+  itemsPerPage: Scalars['Int'];
+  language?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type GetAllMovementsQuery = { __typename?: 'Query', movements: { __typename?: 'MovementListResult', count: number, itemsPerPage: number, totalPages: number, page: number, results: Array<{ __typename?: 'Movement', id?: string | null, extras?: any | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, quantity?: number | null, initialStatus?: number | null, finalReservation?: string | null, status?: number | null, code?: number | null, type?: number | null, model?: number | null, finalArticle?: number | null, finalQuantity?: number | null, feedback?: boolean | null, toBeFeedback?: boolean | null, comment?: string | null, equipmentBarcode?: string | null, priority?: number | null, stockOwnerId?: string | null, articleId?: string | null, originalLocationId?: string | null, finalLocationId?: string | null, goodsInId?: string | null, purchaseOrderId?: string | null, boxId?: string | null, boxLineId?: string | null, originalMovementId?: string | null, returnCodeId?: string | null, actionCodeId?: string | null, initialStatusText?: string | null, finalStatusText?: string | null, statusText?: string | null, typeText?: string | null, modelText?: string | null, codeText?: string | null, priorityText?: string | null, originalMovement: Array<{ __typename?: 'Movement', id?: string | null, extras?: any | null, quantity?: number | null }> }> } };
+
+export type GetMovementByIdQueryVariables = Exact<{
+  id: Scalars['String'];
+  language?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type GetMovementByIdQuery = { __typename?: 'Query', movement?: { __typename?: 'Movement', id?: string | null, extras?: any | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, quantity?: number | null, initialStatus?: number | null, finalReservation?: string | null, status?: number | null, code?: number | null, type?: number | null, model?: number | null, finalArticle?: number | null, finalQuantity?: number | null, feedback?: boolean | null, toBeFeedback?: boolean | null, comment?: string | null, equipmentBarcode?: string | null, priority?: number | null, stockOwnerId?: string | null, articleId?: string | null, originalLocationId?: string | null, finalLocationId?: string | null, goodsInId?: string | null, purchaseOrderId?: string | null, boxId?: string | null, boxLineId?: string | null, originalMovementId?: string | null, returnCodeId?: string | null, actionCodeId?: string | null, initialStatusText?: string | null, finalStatusText?: string | null, statusText?: string | null, typeText?: string | null, modelText?: string | null, codeText?: string | null, priorityText?: string | null, originalMovement: Array<{ __typename?: 'Movement', id?: string | null, extras?: any | null, quantity?: number | null }> } | null };
+
+export type CreateMovementMutationVariables = Exact<{
+  input: CreateMovementInput;
+}>;
+
+
+export type CreateMovementMutation = { __typename?: 'Mutation', createMovement: { __typename?: 'Movement', id?: string | null, extras?: any | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, quantity?: number | null, initialStatus?: number | null, finalReservation?: string | null, status?: number | null, code?: number | null, type?: number | null, model?: number | null, finalArticle?: number | null, finalQuantity?: number | null, feedback?: boolean | null, toBeFeedback?: boolean | null, comment?: string | null, equipmentBarcode?: string | null, priority?: number | null, stockOwnerId?: string | null, articleId?: string | null, originalLocationId?: string | null, finalLocationId?: string | null, goodsInId?: string | null, purchaseOrderId?: string | null, boxId?: string | null, boxLineId?: string | null, originalMovementId?: string | null, returnCodeId?: string | null, actionCodeId?: string | null, initialStatusText?: string | null, finalStatusText?: string | null, statusText?: string | null, typeText?: string | null, modelText?: string | null, codeText?: string | null, priorityText?: string | null, originalMovement: Array<{ __typename?: 'Movement', id?: string | null, extras?: any | null, quantity?: number | null }> } };
+
+export type DeleteMovementMutationVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type DeleteMovementMutation = { __typename?: 'Mutation', deleteMovement: boolean };
+
+export type UpdateMovementMutationVariables = Exact<{
+  id: Scalars['String'];
+  input: UpdateMovementInput;
+}>;
+
+
+export type UpdateMovementMutation = { __typename?: 'Mutation', updateMovement?: { __typename?: 'Movement', id?: string | null, extras?: any | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, quantity?: number | null, initialStatus?: number | null, finalReservation?: string | null, status?: number | null, code?: number | null, type?: number | null, model?: number | null, finalArticle?: number | null, finalQuantity?: number | null, feedback?: boolean | null, toBeFeedback?: boolean | null, comment?: string | null, equipmentBarcode?: string | null, priority?: number | null, stockOwnerId?: string | null, articleId?: string | null, originalLocationId?: string | null, finalLocationId?: string | null, goodsInId?: string | null, purchaseOrderId?: string | null, boxId?: string | null, boxLineId?: string | null, originalMovementId?: string | null, returnCodeId?: string | null, actionCodeId?: string | null, initialStatusText?: string | null, finalStatusText?: string | null, statusText?: string | null, typeText?: string | null, modelText?: string | null, codeText?: string | null, priorityText?: string | null, originalMovement: Array<{ __typename?: 'Movement', id?: string | null, extras?: any | null, quantity?: number | null }> } | null };
+
+export type GetAllPackagingsQueryVariables = Exact<{
+  filters?: InputMaybe<PackagingSearchFilters>;
+  orderBy?: InputMaybe<Array<PackagingOrderByCriterion> | PackagingOrderByCriterion>;
+  page: Scalars['Int'];
+  itemsPerPage: Scalars['Int'];
+}>;
+
+
+export type GetAllPackagingsQuery = { __typename?: 'Query', packagings: { __typename?: 'PackagingListResult', count: number, itemsPerPage: number, totalPages: number, results: Array<{ __typename?: 'Packaging', id?: string | null, name?: string | null, description?: string | null, default?: boolean | null, dispatchable?: boolean | null, status?: number | null, statusText?: string | null, weight?: number | null, length?: number | null, height?: number | null, width?: number | null, system?: boolean | null }> } };
+
+export type GetPackagingByIdQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type GetPackagingByIdQuery = { __typename?: 'Query', packaging?: { __typename?: 'Packaging', id?: string | null, name?: string | null, description?: string | null, default?: boolean | null, dispatchable?: boolean | null, status?: number | null, statusText?: string | null, weight?: number | null, length?: number | null, height?: number | null, width?: number | null, closureWeight?: number | null, system?: boolean | null, extras?: any | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null } | null };
+
+export type GetPackagingIdsQueryVariables = Exact<{
+  filters?: InputMaybe<PackagingSearchFilters>;
+  orderBy?: InputMaybe<Array<PackagingOrderByCriterion> | PackagingOrderByCriterion>;
+  page: Scalars['Int'];
+  itemsPerPage: Scalars['Int'];
+}>;
+
+
+export type GetPackagingIdsQuery = { __typename?: 'Query', packagings: { __typename?: 'PackagingListResult', count: number, itemsPerPage: number, totalPages: number, results: Array<{ __typename?: 'Packaging', id?: string | null, name?: string | null }> } };
+
+export type CreatePackagingMutationVariables = Exact<{
+  input: CreatePackagingInput;
+}>;
+
+
+export type CreatePackagingMutation = { __typename?: 'Mutation', createPackaging: { __typename?: 'Packaging', id?: string | null, name?: string | null, description?: string | null, default?: boolean | null, dispatchable?: boolean | null, status?: number | null, statusText?: string | null, weight?: number | null, length?: number | null, height?: number | null, width?: number | null, closureWeight?: number | null, system?: boolean | null } };
+
+export type CreateDefaultPackagingMutationVariables = Exact<{
+  input: CreatePackagingInput;
+}>;
+
+
+export type CreateDefaultPackagingMutation = { __typename?: 'Mutation', createPackaging: { __typename?: 'Packaging', id?: string | null, name?: string | null, description?: string | null, default?: boolean | null, dispatchable?: boolean | null, status?: number | null, statusText?: string | null, weight?: number | null, length?: number | null, height?: number | null, width?: number | null, closureWeight?: number | null, system?: boolean | null }, updatePackagingDefault: { __typename?: 'Packaging', id?: string | null, name?: string | null, default?: boolean | null } };
+
+export type DeletePackagingMutationVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type DeletePackagingMutation = { __typename?: 'Mutation', deletePackaging: boolean };
+
+export type SoftDeletePackagingMutationVariables = Exact<{
+  packagingId: Scalars['String'];
+}>;
+
+
+export type SoftDeletePackagingMutation = { __typename?: 'Mutation', softDeletePackaging: boolean };
+
+export type UpdatePackagingMutationVariables = Exact<{
+  id: Scalars['String'];
+  input: UpdatePackagingInput;
+}>;
+
+
+export type UpdatePackagingMutation = { __typename?: 'Mutation', updatePackaging?: { __typename?: 'Packaging', id?: string | null, name?: string | null, description?: string | null, default?: boolean | null, dispatchable?: boolean | null, status?: number | null, statusText?: string | null, weight?: number | null, length?: number | null, height?: number | null, width?: number | null, closureWeight?: number | null, system?: boolean | null } | null };
+
+export type UpdateDefaultPackagingMutationVariables = Exact<{
+  id: Scalars['String'];
+  input: UpdatePackagingInput;
+}>;
+
+
+export type UpdateDefaultPackagingMutation = { __typename?: 'Mutation', updatePackaging?: { __typename?: 'Packaging', id?: string | null, name?: string | null, description?: string | null, default?: boolean | null, dispatchable?: boolean | null, status?: number | null, statusText?: string | null, weight?: number | null, length?: number | null, height?: number | null, width?: number | null, closureWeight?: number | null, system?: boolean | null } | null, updatePackagingDefault: { __typename?: 'Packaging', id?: string | null, name?: string | null, default?: boolean | null } };
+
+export type GetAllParamsQueryVariables = Exact<{
+  filters?: InputMaybe<ParameterSearchFilters>;
+  orderBy?: InputMaybe<Array<ParameterOrderByCriterion> | ParameterOrderByCriterion>;
+  page: Scalars['Int'];
+  itemsPerPage: Scalars['Int'];
+}>;
+
+
+export type GetAllParamsQuery = { __typename?: 'Query', parameters: { __typename?: 'ParameterListResult', count: number, itemsPerPage: number, totalPages: number, results: Array<{ __typename?: 'Parameter', id?: string | null, scope: string, code: string, value: string, extras?: any | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, translation?: any | null, system?: boolean | null }> } };
+
+export type GetParameterByIdQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type GetParameterByIdQuery = { __typename?: 'Query', parameter?: { __typename?: 'Parameter', id?: string | null, scope: string, code: string, value: string, extras?: any | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, translation?: any | null, system?: boolean | null } | null };
+
+export type CreateParameterMutationVariables = Exact<{
+  input: CreateParameterInput;
+}>;
+
+
+export type CreateParameterMutation = { __typename?: 'Mutation', createParameter: { __typename?: 'Parameter', id?: string | null, scope: string, code: string, value: string } };
+
+export type DeleteParameterMutationVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type DeleteParameterMutation = { __typename?: 'Mutation', deleteParameter: boolean };
+
+export type UpdateParameterMutationVariables = Exact<{
+  id: Scalars['String'];
+  input: UpdateParameterInput;
+}>;
+
+
+export type UpdateParameterMutation = { __typename?: 'Mutation', updateParameter?: { __typename?: 'Parameter', id?: string | null, scope: string, code: string, value: string } | null };
+
+export type GetAllPatternsQueryVariables = Exact<{
+  filters?: InputMaybe<PatternSearchFilters>;
+  orderBy?: InputMaybe<Array<PatternOrderByCriterion> | PatternOrderByCriterion>;
+  page: Scalars['Int'];
+  itemsPerPage: Scalars['Int'];
+  language?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type GetAllPatternsQuery = { __typename?: 'Query', patterns: { __typename?: 'PatternListResult', count: number, itemsPerPage: number, totalPages: number, results: Array<{ __typename?: 'Pattern', id?: string | null, extras?: any | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, name?: string | null, patternType?: string | null, status?: number | null, stockOwnerId?: string | null, patternTypeText?: string | null, statusText?: string | null, paths: Array<{ __typename?: 'PatternPath', id?: string | null, name?: string | null, status?: number | null, extras?: any | null }>, stockOwner: { __typename?: 'StockOwner', id?: string | null, name?: string | null } }> } };
+
+export type GetPatternByIdQueryVariables = Exact<{
+  id: Scalars['String'];
+  language?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type GetPatternByIdQuery = { __typename?: 'Query', pattern?: { __typename?: 'Pattern', id?: string | null, extras?: any | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, name?: string | null, patternType?: string | null, status?: number | null, stockOwnerId?: string | null, patternTypeText?: string | null, statusText?: string | null, paths: Array<{ __typename?: 'PatternPath', id?: string | null, name?: string | null, status?: number | null, extras?: any | null }>, stockOwner: { __typename?: 'StockOwner', id?: string | null, name?: string | null } } | null };
+
+export type CreatePatternMutationVariables = Exact<{
+  input: CreatePatternInput;
+}>;
+
+
+export type CreatePatternMutation = { __typename?: 'Mutation', createPattern: { __typename?: 'Pattern', id?: string | null, extras?: any | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, name?: string | null, patternType?: string | null, status?: number | null, stockOwnerId?: string | null, patternTypeText?: string | null, statusText?: string | null, paths: Array<{ __typename?: 'PatternPath', id?: string | null, name?: string | null, status?: number | null, extras?: any | null }>, stockOwner: { __typename?: 'StockOwner', id?: string | null, name?: string | null } } };
+
+export type DeletePatternMutationVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type DeletePatternMutation = { __typename?: 'Mutation', deletePattern: boolean };
+
+export type UpdatePatternMutationVariables = Exact<{
+  id: Scalars['String'];
+  input: UpdatePatternInput;
+}>;
+
+
+export type UpdatePatternMutation = { __typename?: 'Mutation', updatePattern?: { __typename?: 'Pattern', id?: string | null, extras?: any | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, name?: string | null, patternType?: string | null, status?: number | null, stockOwnerId?: string | null, patternTypeText?: string | null, statusText?: string | null, paths: Array<{ __typename?: 'PatternPath', id?: string | null, name?: string | null, status?: number | null, extras?: any | null }>, stockOwner: { __typename?: 'StockOwner', id?: string | null, name?: string | null } } | null };
+
+export type GetPatternIdsQueryVariables = Exact<{
+  filters?: InputMaybe<PatternSearchFilters>;
+  orderBy?: InputMaybe<Array<PatternOrderByCriterion> | PatternOrderByCriterion>;
+  page: Scalars['Int'];
+  itemsPerPage: Scalars['Int'];
+}>;
+
+
+export type GetPatternIdsQuery = { __typename?: 'Query', patterns: { __typename?: 'PatternListResult', count: number, itemsPerPage: number, totalPages: number, results: Array<{ __typename?: 'Pattern', id?: string | null, name?: string | null }> } };
+
+export type GetAllPatternPathsQueryVariables = Exact<{
+  filters?: InputMaybe<PatternPathSearchFilters>;
+  orderBy?: InputMaybe<Array<PatternPathOrderByCriterion> | PatternPathOrderByCriterion>;
+  page: Scalars['Int'];
+  itemsPerPage: Scalars['Int'];
+  language?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type GetAllPatternPathsQuery = { __typename?: 'Query', patternPaths: { __typename?: 'PatternPathListResult', count: number, itemsPerPage: number, totalPages: number, results: Array<{ __typename?: 'PatternPath', id?: string | null, extras?: any | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, name?: string | null, status?: number | null, patternId?: string | null }> } };
+
+export type GetPatternPathByIdQueryVariables = Exact<{
+  id: Scalars['String'];
+  language?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type GetPatternPathByIdQuery = { __typename?: 'Query', patternPath?: { __typename?: 'PatternPath', id?: string | null, extras?: any | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, name?: string | null, status?: number | null, patternId?: string | null } | null };
+
+export type CreatePatternPathMutationVariables = Exact<{
+  input: CreatePatternPathInput;
+}>;
+
+
+export type CreatePatternPathMutation = { __typename?: 'Mutation', createPatternPath: { __typename?: 'PatternPath', id?: string | null, extras?: any | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, name?: string | null, status?: number | null, patternId?: string | null } };
+
+export type DeletePatternPathMutationVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type DeletePatternPathMutation = { __typename?: 'Mutation', deletePatternPath: boolean };
+
+export type UpdatePatternPathMutationVariables = Exact<{
+  id: Scalars['String'];
+  input: UpdatePatternPathInput;
+}>;
+
+
+export type UpdatePatternPathMutation = { __typename?: 'Mutation', updatePatternPath?: { __typename?: 'PatternPath', id?: string | null, extras?: any | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, name?: string | null, status?: number | null, patternId?: string | null } | null };
+
+export type GetPatternPathLocationsQueryVariables = Exact<{
+  filters?: InputMaybe<PatternPathLocationSearchFilters>;
+  orderBy?: InputMaybe<Array<PatternPathLocationOrderByCriterion> | PatternPathLocationOrderByCriterion>;
+  page: Scalars['Int'];
+  itemsPerPage: Scalars['Int'];
+  language?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type GetPatternPathLocationsQuery = { __typename?: 'Query', patternPathLocations: { __typename?: 'PatternPathLocationListResult', count: number, totalPages: number, page: number, itemsPerPage: number, results: Array<{ __typename?: 'PatternPathLocation', id?: string | null, extras?: any | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, order?: number | null, locationId?: string | null, patternPathId?: string | null, location: { __typename?: 'Location', id?: string | null, name?: string | null, position?: string | null, column?: string | null, level?: string | null, aisle?: string | null } }> } };
+
+export type GetAllPurchaseOrdersQueryVariables = Exact<{
+  orderBy?: InputMaybe<Array<PurchaseOrderOrderByCriterion> | PurchaseOrderOrderByCriterion>;
+  filters?: InputMaybe<PurchaseOrderSearchFilters>;
+  page: Scalars['Int'];
+  itemsPerPage: Scalars['Int'];
+  language?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type GetAllPurchaseOrdersQuery = { __typename?: 'Query', purchaseOrders: { __typename?: 'PurchaseOrderListResult', count: number, itemsPerPage: number, totalPages: number, page: number, results: Array<{ __typename?: 'PurchaseOrder', id?: string | null, extras?: any | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, name?: string | null, status?: number | null, type?: number | null, supplier?: string | null, orderDate?: any | null, expectedGoodsInDate?: any | null, comment?: string | null, stockOwnerId?: string | null, statusText?: string | null, typeText?: string | null }> } };
+
+export type GetPurchaseOrderIdsQueryVariables = Exact<{
+  filters?: InputMaybe<PurchaseOrderSearchFilters>;
+  orderBy?: InputMaybe<Array<PurchaseOrderOrderByCriterion> | PurchaseOrderOrderByCriterion>;
+  page: Scalars['Int'];
+  itemsPerPage: Scalars['Int'];
+}>;
+
+
+export type GetPurchaseOrderIdsQuery = { __typename?: 'Query', purchaseOrders: { __typename?: 'PurchaseOrderListResult', count: number, itemsPerPage: number, totalPages: number, results: Array<{ __typename?: 'PurchaseOrder', id?: string | null, name?: string | null }> } };
+
+export type GetPurchaseOrderByIdQueryVariables = Exact<{
+  id: Scalars['String'];
+  language?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type GetPurchaseOrderByIdQuery = { __typename?: 'Query', purchaseOrder?: { __typename?: 'PurchaseOrder', id?: string | null, extras?: any | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, name?: string | null, status?: number | null, type?: number | null, supplier?: string | null, orderDate?: any | null, expectedGoodsInDate?: any | null, comment?: string | null, stockOwnerId?: string | null, statusText?: string | null, typeText?: string | null } | null };
+
+export type CreatePurchaseOrderMutationVariables = Exact<{
+  input: CreatePurchaseOrderInput;
+}>;
+
+
+export type CreatePurchaseOrderMutation = { __typename?: 'Mutation', createPurchaseOrder: { __typename?: 'PurchaseOrder', id?: string | null, extras?: any | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, name?: string | null, status?: number | null, type?: number | null, supplier?: string | null, orderDate?: any | null, expectedGoodsInDate?: any | null, comment?: string | null, stockOwnerId?: string | null, statusText?: string | null, typeText?: string | null } };
+
+export type DeletePurchaseOrderMutationVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type DeletePurchaseOrderMutation = { __typename?: 'Mutation', deletePurchaseOrder: boolean };
+
+export type SoftDeletePurchaseOrderMutationVariables = Exact<{
+  purchaseOrderId: Scalars['String'];
+}>;
+
+
+export type SoftDeletePurchaseOrderMutation = { __typename?: 'Mutation', softDeletePurchaseOrder: boolean };
+
+export type UpdatePurchaseOrderMutationVariables = Exact<{
+  id: Scalars['String'];
+  input: UpdatePurchaseOrderInput;
+}>;
+
+
+export type UpdatePurchaseOrderMutation = { __typename?: 'Mutation', updatePurchaseOrder?: { __typename?: 'PurchaseOrder', id?: string | null, extras?: any | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, name?: string | null, status?: number | null, type?: number | null, supplier?: string | null, orderDate?: any | null, expectedGoodsInDate?: any | null, comment?: string | null, stockOwnerId?: string | null, statusText?: string | null, typeText?: string | null } | null };
+
+export type GetAllPurchaseOrderLinesQueryVariables = Exact<{
+  orderBy?: InputMaybe<Array<PurchaseOrderLineOrderByCriterion> | PurchaseOrderLineOrderByCriterion>;
+  filters?: InputMaybe<PurchaseOrderLineSearchFilters>;
+  page: Scalars['Int'];
+  itemsPerPage: Scalars['Int'];
+  language?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type GetAllPurchaseOrderLinesQuery = { __typename?: 'Query', purchaseOrderLines: { __typename?: 'PurchaseOrderLineListResult', count: number, itemsPerPage: number, totalPages: number, page: number, results: Array<{ __typename?: 'PurchaseOrderLine', id?: string | null, extras?: any | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, quantity?: number | null, quantityMax?: number | null, receivedQuantity?: number | null, reservedQuantity?: number | null, status?: number | null, reservation?: string | null, blockingStatus?: number | null, stockOwnerId?: string | null, purchaseOrderId?: string | null, articleId?: string | null, originalPurchaseOrder?: string | null, originalPurchaseOrderLine?: string | null, statusText?: string | null, blockingStatusText?: string | null }> } };
+
+export type GetPurchaseOrderLineByIdQueryVariables = Exact<{
+  id: Scalars['String'];
+  language?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type GetPurchaseOrderLineByIdQuery = { __typename?: 'Query', purchaseOrderLine?: { __typename?: 'PurchaseOrderLine', id?: string | null, extras?: any | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, quantity?: number | null, quantityMax?: number | null, receivedQuantity?: number | null, reservedQuantity?: number | null, status?: number | null, reservation?: string | null, blockingStatus?: number | null, stockOwnerId?: string | null, purchaseOrderId?: string | null, articleId?: string | null, originalPurchaseOrder?: string | null, originalPurchaseOrderLine?: string | null, statusText?: string | null, blockingStatusText?: string | null } | null };
+
+export type CreatePurchaseOrderLineMutationVariables = Exact<{
+  input: CreatePurchaseOrderLineInput;
+}>;
+
+
+export type CreatePurchaseOrderLineMutation = { __typename?: 'Mutation', createPurchaseOrderLine: { __typename?: 'PurchaseOrderLine', id?: string | null, extras?: any | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, quantity?: number | null, quantityMax?: number | null, receivedQuantity?: number | null, reservedQuantity?: number | null, status?: number | null, reservation?: string | null, blockingStatus?: number | null, stockOwnerId?: string | null, purchaseOrderId?: string | null, articleId?: string | null, originalPurchaseOrder?: string | null, originalPurchaseOrderLine?: string | null, statusText?: string | null, blockingStatusText?: string | null } };
+
+export type DeletePurchaseOrderLineMutationVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type DeletePurchaseOrderLineMutation = { __typename?: 'Mutation', deletePurchaseOrderLine: boolean };
+
+export type UpdatePurchaseOrderLineMutationVariables = Exact<{
+  id: Scalars['String'];
+  input: UpdatePurchaseOrderLineInput;
+}>;
+
+
+export type UpdatePurchaseOrderLineMutation = { __typename?: 'Mutation', updatePurchaseOrderLine?: { __typename?: 'PurchaseOrderLine', id?: string | null, extras?: any | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, quantity?: number | null, quantityMax?: number | null, receivedQuantity?: number | null, reservedQuantity?: number | null, status?: number | null, reservation?: string | null, blockingStatus?: number | null, stockOwnerId?: string | null, purchaseOrderId?: string | null, articleId?: string | null, originalPurchaseOrder?: string | null, originalPurchaseOrderLine?: string | null, statusText?: string | null, blockingStatusText?: string | null } | null };
 
 export type GetAllReturnCodesQueryVariables = Exact<{
   filters?: InputMaybe<ReturnCodeSearchFilters>;
@@ -8561,6 +10572,175 @@ export type UpdateReturnCodeMutationVariables = Exact<{
 
 
 export type UpdateReturnCodeMutation = { __typename?: 'Mutation', updateReturnCode?: { __typename?: 'ReturnCode', id?: string | null, name?: string | null, type?: number | null } | null };
+
+export type SimpleGetInProgressStockOwnersQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type SimpleGetInProgressStockOwnersQuery = { __typename?: 'Query', stockOwners: { __typename?: 'StockOwnerListResult', results: Array<{ __typename?: 'StockOwner', id?: string | null, name?: string | null }> } };
+
+export type SimpleGetAllArticlesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type SimpleGetAllArticlesQuery = { __typename?: 'Query', articles: { __typename?: 'ArticleListResult', results: Array<{ __typename?: 'Article', id?: string | null, name?: string | null }> } };
+
+export type GetAllArticleSetQueryVariables = Exact<{
+  filters?: InputMaybe<ArticleSetSearchFilters>;
+  orderBy?: InputMaybe<Array<ArticleSetOrderByCriterion> | ArticleSetOrderByCriterion>;
+  page: Scalars['Int'];
+  itemsPerPage: Scalars['Int'];
+}>;
+
+
+export type GetAllArticleSetQuery = { __typename?: 'Query', articleSets: { __typename?: 'ArticleSetListResult', count: number, itemsPerPage: number, totalPages: number, results: Array<{ __typename?: 'ArticleSet', id?: string | null, name?: string | null, comment?: string | null, stockOwnerId?: string | null, articleId?: string | null, extras?: any | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, stockOwner: { __typename?: 'StockOwner', name?: string | null }, article: { __typename?: 'Article', name?: string | null, additionalDescription?: string | null } }> } };
+
+export type GetArticleSetByIdQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type GetArticleSetByIdQuery = { __typename?: 'Query', articleSet?: { __typename?: 'ArticleSet', id?: string | null, name?: string | null, comment?: string | null, stockOwnerId?: string | null, articleId?: string | null, extras?: any | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, stockOwner: { __typename?: 'StockOwner', name?: string | null }, article: { __typename?: 'Article', name?: string | null, additionalDescription?: string | null } } | null };
+
+export type GetArticleSetIdsQueryVariables = Exact<{
+  filters?: InputMaybe<ArticleSetSearchFilters>;
+  orderBy?: InputMaybe<Array<ArticleSetOrderByCriterion> | ArticleSetOrderByCriterion>;
+  page: Scalars['Int'];
+  itemsPerPage: Scalars['Int'];
+}>;
+
+
+export type GetArticleSetIdsQuery = { __typename?: 'Query', articleSets: { __typename?: 'ArticleSetListResult', count: number, itemsPerPage: number, totalPages: number, results: Array<{ __typename?: 'ArticleSet', id?: string | null, name?: string | null }> } };
+
+export type CreateArticleSetMutationVariables = Exact<{
+  input: CreateArticleSetInput;
+}>;
+
+
+export type CreateArticleSetMutation = { __typename?: 'Mutation', createArticleSet: { __typename?: 'ArticleSet', id?: string | null, name?: string | null, comment?: string | null, stockOwnerId?: string | null, articleId?: string | null } };
+
+export type DeleteArticleSetMutationVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type DeleteArticleSetMutation = { __typename?: 'Mutation', deleteArticleSet: boolean };
+
+export type UpdateArticleSetMutationVariables = Exact<{
+  id: Scalars['String'];
+  input: UpdateArticleSetInput;
+}>;
+
+
+export type UpdateArticleSetMutation = { __typename?: 'Mutation', updateArticleSet?: { __typename?: 'ArticleSet', id?: string | null, name?: string | null, comment?: string | null, stockOwnerId?: string | null, articleId?: string | null } | null };
+
+export type GetAllArticleSetDetailsQueryVariables = Exact<{
+  filters?: InputMaybe<ArticleSetDetailSearchFilters>;
+  orderBy?: InputMaybe<Array<ArticleSetDetailOrderByCriterion> | ArticleSetDetailOrderByCriterion>;
+  page: Scalars['Int'];
+  itemsPerPage: Scalars['Int'];
+}>;
+
+
+export type GetAllArticleSetDetailsQuery = { __typename?: 'Query', articleSetDetails: { __typename?: 'ArticleSetDetailListResult', count: number, itemsPerPage: number, totalPages: number, results: Array<{ __typename?: 'ArticleSetDetail', id?: string | null, articleSetId?: string | null, stockOwnerId?: string | null, articleId?: string | null, quantity?: number | null, extras?: any | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, articleSet: { __typename?: 'ArticleSet', name?: string | null }, stockOwner: { __typename?: 'StockOwner', name?: string | null }, article: { __typename?: 'Article', name?: string | null, additionalDescription?: string | null } }> } };
+
+export type GetArticleSetDetailByIdQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type GetArticleSetDetailByIdQuery = { __typename?: 'Query', articleSetDetail?: { __typename?: 'ArticleSetDetail', id?: string | null, articleSetId?: string | null, stockOwnerId?: string | null, articleId?: string | null, quantity?: number | null, extras?: any | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, articleSet: { __typename?: 'ArticleSet', name?: string | null }, stockOwner: { __typename?: 'StockOwner', name?: string | null }, article: { __typename?: 'Article', name?: string | null, additionalDescription?: string | null } } | null };
+
+export type CreateArticleSetDetailMutationVariables = Exact<{
+  input: CreateArticleSetDetailInput;
+}>;
+
+
+export type CreateArticleSetDetailMutation = { __typename?: 'Mutation', createArticleSetDetail: { __typename?: 'ArticleSetDetail', id?: string | null, articleSetId?: string | null, stockOwnerId?: string | null, articleId?: string | null } };
+
+export type DeleteArticleSetDetailMutationVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type DeleteArticleSetDetailMutation = { __typename?: 'Mutation', deleteArticleSetDetail: boolean };
+
+export type UpdateArticleSetDetailMutationVariables = Exact<{
+  id: Scalars['String'];
+  input: UpdateArticleSetDetailInput;
+}>;
+
+
+export type UpdateArticleSetDetailMutation = { __typename?: 'Mutation', updateArticleSetDetail?: { __typename?: 'ArticleSetDetail', id?: string | null, articleSetId?: string | null, stockOwnerId?: string | null, articleId?: string | null } | null };
+
+export type GetAllStatusEvolutionsQueryVariables = Exact<{
+  orderBy?: InputMaybe<Array<StatusEvolutionOrderByCriterion> | StatusEvolutionOrderByCriterion>;
+  filters?: InputMaybe<StatusEvolutionSearchFilters>;
+  page: Scalars['Int'];
+  itemsPerPage: Scalars['Int'];
+  language?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type GetAllStatusEvolutionsQuery = { __typename?: 'Query', statusEvolutions: { __typename?: 'StatusEvolutionListResult', count: number, itemsPerPage: number, totalPages: number, page: number, results: Array<{ __typename?: 'StatusEvolution', id?: string | null, extras?: any | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, object?: number | null, objectReference?: string | null, status?: number | null, feedback?: boolean | null, toBeFeedback?: boolean | null, stockOwnerId?: string | null, objectText?: string | null, statusText?: string | null, stockOwner: { __typename?: 'StockOwner', id?: string | null, name?: string | null } }> } };
+
+export type GetStatusEvolutionByIdQueryVariables = Exact<{
+  id: Scalars['String'];
+  language?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type GetStatusEvolutionByIdQuery = { __typename?: 'Query', statusEvolution?: { __typename?: 'StatusEvolution', id?: string | null, extras?: any | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, object?: number | null, objectReference?: string | null, status?: number | null, feedback?: boolean | null, toBeFeedback?: boolean | null, stockOwnerId?: string | null, objectText?: string | null, statusText?: string | null, stockOwner: { __typename?: 'StockOwner', id?: string | null, name?: string | null } } | null };
+
+export type CreateStatusEvolutionMutationVariables = Exact<{
+  input: CreateStatusEvolutionInput;
+}>;
+
+
+export type CreateStatusEvolutionMutation = { __typename?: 'Mutation', createStatusEvolution: { __typename?: 'StatusEvolution', id?: string | null, extras?: any | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, object?: number | null, objectReference?: string | null, status?: number | null, feedback?: boolean | null, toBeFeedback?: boolean | null, stockOwnerId?: string | null, objectText?: string | null, statusText?: string | null, stockOwner: { __typename?: 'StockOwner', id?: string | null, name?: string | null } } };
+
+export type DeleteStatusEvolutionMutationVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type DeleteStatusEvolutionMutation = { __typename?: 'Mutation', deleteStatusEvolution: boolean };
+
+export type UpdateStatusEvolutionMutationVariables = Exact<{
+  id: Scalars['String'];
+  input: UpdateStatusEvolutionInput;
+}>;
+
+
+export type UpdateStatusEvolutionMutation = { __typename?: 'Mutation', updateStatusEvolution?: { __typename?: 'StatusEvolution', id?: string | null, extras?: any | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, object?: number | null, objectReference?: string | null, status?: number | null, feedback?: boolean | null, toBeFeedback?: boolean | null, stockOwnerId?: string | null, objectText?: string | null, statusText?: string | null, stockOwner: { __typename?: 'StockOwner', id?: string | null, name?: string | null } } | null };
+
+export type GetAllStockOwnersQueryVariables = Exact<{
+  orderBy?: InputMaybe<Array<StockOwnerOrderByCriterion> | StockOwnerOrderByCriterion>;
+  filters?: InputMaybe<StockOwnerSearchFilters>;
+  page: Scalars['Int'];
+  itemsPerPage: Scalars['Int'];
+  language?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type GetAllStockOwnersQuery = { __typename?: 'Query', stockOwners: { __typename?: 'StockOwnerListResult', count: number, itemsPerPage: number, totalPages: number, page: number, results: Array<{ __typename?: 'StockOwner', id?: string | null, extras?: any | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, name?: string | null, contact?: string | null, address1?: string | null, address2?: string | null, address3?: string | null, postCode?: string | null, city?: string | null, country?: string | null, countryCode?: string | null, phone?: string | null, mobile?: string | null, email?: string | null, senderName?: string | null, senderContact?: string | null, senderAddress1?: string | null, senderAddress2?: string | null, senderAddress3?: string | null, senderPostCode?: string | null, senderCity?: string | null, senderCountry?: string | null, senderCountryCode?: string | null, senderPhone?: string | null, senderMobile?: string | null, senderEmail?: string | null, exchangePrefix?: string | null, logoUrl?: string | null, awsAccessKeyId?: string | null, awsSecretAccessKey?: string | null, status?: number | null }> } };
+
+export type GetStockOwnerIdsQueryVariables = Exact<{
+  filters?: InputMaybe<StockOwnerSearchFilters>;
+  orderBy?: InputMaybe<Array<StockOwnerOrderByCriterion> | StockOwnerOrderByCriterion>;
+  page: Scalars['Int'];
+  itemsPerPage: Scalars['Int'];
+}>;
+
+
+export type GetStockOwnerIdsQuery = { __typename?: 'Query', stockOwners: { __typename?: 'StockOwnerListResult', count: number, itemsPerPage: number, totalPages: number, results: Array<{ __typename?: 'StockOwner', id?: string | null, name?: string | null }> } };
+
+export type ListParametersForAScopeQueryVariables = Exact<{
+  scope: Scalars['String'];
+  code?: InputMaybe<Scalars['String']>;
+  language?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type ListParametersForAScopeQuery = { __typename?: 'Query', listParametersForAScope: Array<{ __typename?: 'ParameterResults', id: string, text: string, scope: string, code: string }> };
 
 export type GetMyInfoQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -8889,10 +11069,8 @@ export const GetAllBarcodesDocument = `
       name
       supplierName
       supplierArticleCode
-      quantity
       rotation
       preparationMode
-      flagDouble
       blacklisted
       stockOwnerId
       rotationText
@@ -8923,10 +11101,8 @@ export const GetBarcodeByIdDocument = `
     name
     supplierName
     supplierArticleCode
-    quantity
     rotation
     preparationMode
-    flagDouble
     blacklisted
     stockOwnerId
     rotationText
@@ -8956,10 +11132,8 @@ export const CreateBarcodeDocument = `
     name
     supplierName
     supplierArticleCode
-    quantity
     rotation
     preparationMode
-    flagDouble
     blacklisted
     stockOwnerId
     rotationText
@@ -8998,6 +11172,38 @@ export const useDeleteBarcodeMutation = <
       (variables?: DeleteBarcodeMutationVariables) => fetcher<DeleteBarcodeMutation, DeleteBarcodeMutationVariables>(client, DeleteBarcodeDocument, variables, headers)(),
       options
     );
+export const RenderDocumentDocument = `
+    mutation RenderDocument($templateFilename: String!, $context: JSON!) {
+  renderDocument(templateFilename: $templateFilename, context: $context) {
+    __typename
+    ... on RenderedDocument {
+      url
+    }
+    ... on TemplateDoesNotExist {
+      message
+    }
+    ... on TemplateError {
+      message
+    }
+    ... on MissingContext {
+      message
+    }
+  }
+}
+    `;
+export const useRenderDocumentMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<RenderDocumentMutation, TError, RenderDocumentMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<RenderDocumentMutation, TError, RenderDocumentMutationVariables, TContext>(
+      ['RenderDocument'],
+      (variables?: RenderDocumentMutationVariables) => fetcher<RenderDocumentMutation, RenderDocumentMutationVariables>(client, RenderDocumentDocument, variables, headers)(),
+      options
+    );
 export const UpdateBarcodeDocument = `
     mutation UpdateBarcode($id: String!, $input: UpdateBarcodeInput!) {
   updateBarcode(id: $id, input: $input) {
@@ -9006,10 +11212,8 @@ export const UpdateBarcodeDocument = `
     name
     supplierName
     supplierArticleCode
-    quantity
     rotation
     preparationMode
-    flagDouble
     blacklisted
     stockOwnerId
     rotationText
@@ -9028,6 +11232,275 @@ export const useUpdateBarcodeMutation = <
     useMutation<UpdateBarcodeMutation, TError, UpdateBarcodeMutationVariables, TContext>(
       ['UpdateBarcode'],
       (variables?: UpdateBarcodeMutationVariables) => fetcher<UpdateBarcodeMutation, UpdateBarcodeMutationVariables>(client, UpdateBarcodeDocument, variables, headers)(),
+      options
+    );
+export const SimpleGetAllBLocksDocument = `
+    query SimpleGetAllBLocks {
+  blocks {
+    results {
+      id
+      name
+    }
+  }
+}
+    `;
+export const useSimpleGetAllBLocksQuery = <
+      TData = SimpleGetAllBLocksQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables?: SimpleGetAllBLocksQueryVariables,
+      options?: UseQueryOptions<SimpleGetAllBLocksQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<SimpleGetAllBLocksQuery, TError, TData>(
+      variables === undefined ? ['SimpleGetAllBLocks'] : ['SimpleGetAllBLocks', variables],
+      fetcher<SimpleGetAllBLocksQuery, SimpleGetAllBLocksQueryVariables>(client, SimpleGetAllBLocksDocument, variables, headers),
+      options
+    );
+export const SimpleGetAllBuildingsDocument = `
+    query SimpleGetAllBuildings {
+  buildings {
+    results {
+      id
+      name
+    }
+  }
+}
+    `;
+export const useSimpleGetAllBuildingsQuery = <
+      TData = SimpleGetAllBuildingsQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables?: SimpleGetAllBuildingsQueryVariables,
+      options?: UseQueryOptions<SimpleGetAllBuildingsQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<SimpleGetAllBuildingsQuery, TError, TData>(
+      variables === undefined ? ['SimpleGetAllBuildings'] : ['SimpleGetAllBuildings', variables],
+      fetcher<SimpleGetAllBuildingsQuery, SimpleGetAllBuildingsQueryVariables>(client, SimpleGetAllBuildingsDocument, variables, headers),
+      options
+    );
+export const GetBlockLevelsParamsDocument = `
+    query getBlockLevelsParams {
+  listParametersForAScope(scope: "block_level") {
+    id
+    scope
+    code
+    text
+  }
+}
+    `;
+export const useGetBlockLevelsParamsQuery = <
+      TData = GetBlockLevelsParamsQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables?: GetBlockLevelsParamsQueryVariables,
+      options?: UseQueryOptions<GetBlockLevelsParamsQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetBlockLevelsParamsQuery, TError, TData>(
+      variables === undefined ? ['getBlockLevelsParams'] : ['getBlockLevelsParams', variables],
+      fetcher<GetBlockLevelsParamsQuery, GetBlockLevelsParamsQueryVariables>(client, GetBlockLevelsParamsDocument, variables, headers),
+      options
+    );
+export const GetAllBlocksDocument = `
+    query GetAllBlocks($filters: BlockSearchFilters, $orderBy: [BlockOrderByCriterion!], $page: Int!, $itemsPerPage: Int!) {
+  blocks(
+    filters: $filters
+    orderBy: $orderBy
+    page: $page
+    itemsPerPage: $itemsPerPage
+  ) {
+    count
+    itemsPerPage
+    totalPages
+    results {
+      id
+      building {
+        name
+      }
+      name
+      created
+      createdBy
+      modified
+      modifiedBy
+      moveable
+      bulk
+      comment
+      level
+      blockGroup
+    }
+  }
+}
+    `;
+export const useGetAllBlocksQuery = <
+      TData = GetAllBlocksQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: GetAllBlocksQueryVariables,
+      options?: UseQueryOptions<GetAllBlocksQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetAllBlocksQuery, TError, TData>(
+      ['GetAllBlocks', variables],
+      fetcher<GetAllBlocksQuery, GetAllBlocksQueryVariables>(client, GetAllBlocksDocument, variables, headers),
+      options
+    );
+export const GetBlockByIdDocument = `
+    query GetBlockById($id: String!) {
+  block(id: $id) {
+    id
+    building {
+      name
+    }
+    name
+    created
+    createdBy
+    modified
+    modifiedBy
+    moveable
+    bulk
+    comment
+    level
+    blockGroup
+  }
+}
+    `;
+export const useGetBlockByIdQuery = <
+      TData = GetBlockByIdQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: GetBlockByIdQueryVariables,
+      options?: UseQueryOptions<GetBlockByIdQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetBlockByIdQuery, TError, TData>(
+      ['GetBlockById', variables],
+      fetcher<GetBlockByIdQuery, GetBlockByIdQueryVariables>(client, GetBlockByIdDocument, variables, headers),
+      options
+    );
+export const GetBlockIdsDocument = `
+    query GetBlockIds($filters: BlockSearchFilters, $orderBy: [BlockOrderByCriterion!], $page: Int!, $itemsPerPage: Int!) {
+  blocks(
+    filters: $filters
+    orderBy: $orderBy
+    page: $page
+    itemsPerPage: $itemsPerPage
+  ) {
+    count
+    itemsPerPage
+    totalPages
+    results {
+      id
+      name
+      created
+      createdBy
+      modified
+      modifiedBy
+      moveable
+      bulk
+      comment
+      level
+      blockGroup
+    }
+  }
+}
+    `;
+export const useGetBlockIdsQuery = <
+      TData = GetBlockIdsQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: GetBlockIdsQueryVariables,
+      options?: UseQueryOptions<GetBlockIdsQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetBlockIdsQuery, TError, TData>(
+      ['GetBlockIds', variables],
+      fetcher<GetBlockIdsQuery, GetBlockIdsQueryVariables>(client, GetBlockIdsDocument, variables, headers),
+      options
+    );
+export const CreateBlockDocument = `
+    mutation CreateBlock($input: CreateBlockInput!) {
+  createBlock(input: $input) {
+    id
+    name
+    created
+    createdBy
+    modified
+    modifiedBy
+    moveable
+    bulk
+    comment
+    level
+    blockGroup
+  }
+}
+    `;
+export const useCreateBlockMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<CreateBlockMutation, TError, CreateBlockMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<CreateBlockMutation, TError, CreateBlockMutationVariables, TContext>(
+      ['CreateBlock'],
+      (variables?: CreateBlockMutationVariables) => fetcher<CreateBlockMutation, CreateBlockMutationVariables>(client, CreateBlockDocument, variables, headers)(),
+      options
+    );
+export const DeleteBlockDocument = `
+    mutation DeleteBlock($id: String!) {
+  deleteBlock(id: $id)
+}
+    `;
+export const useDeleteBlockMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<DeleteBlockMutation, TError, DeleteBlockMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<DeleteBlockMutation, TError, DeleteBlockMutationVariables, TContext>(
+      ['DeleteBlock'],
+      (variables?: DeleteBlockMutationVariables) => fetcher<DeleteBlockMutation, DeleteBlockMutationVariables>(client, DeleteBlockDocument, variables, headers)(),
+      options
+    );
+export const UpdateBlockDocument = `
+    mutation UpdateBlock($id: String!, $input: UpdateBlockInput!) {
+  updateBlock(id: $id, input: $input) {
+    id
+    name
+    created
+    createdBy
+    modified
+    modifiedBy
+    moveable
+    bulk
+    comment
+    level
+    blockGroup
+  }
+}
+    `;
+export const useUpdateBlockMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<UpdateBlockMutation, TError, UpdateBlockMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<UpdateBlockMutation, TError, UpdateBlockMutationVariables, TContext>(
+      ['UpdateBlock'],
+      (variables?: UpdateBlockMutationVariables) => fetcher<UpdateBlockMutation, UpdateBlockMutationVariables>(client, UpdateBlockDocument, variables, headers)(),
       options
     );
 export const GetBuildingStatusConfigsDocument = `
@@ -9078,8 +11551,6 @@ export const GetAllBuildingsDocument = `
       contactPhone
       contactMobile
       contactEmail
-      awsAccessKeyId
-      awsSecretAccessKey
       status
       statusText
       created
@@ -9119,8 +11590,6 @@ export const GetBuildingByIdDocument = `
     contactPhone
     contactMobile
     contactEmail
-    awsAccessKeyId
-    awsSecretAccessKey
     status
     statusText
     created
@@ -9159,8 +11628,6 @@ export const CreateBuildingDocument = `
     contactPhone
     contactMobile
     contactEmail
-    awsAccessKeyId
-    awsSecretAccessKey
     status
   }
 }
@@ -9211,8 +11678,6 @@ export const UpdateBuildingDocument = `
     contactPhone
     contactMobile
     contactEmail
-    awsAccessKeyId
-    awsSecretAccessKey
     status
   }
 }
@@ -9246,6 +11711,1857 @@ export const useSoftDeleteBuildingMutation = <
     useMutation<SoftDeleteBuildingMutation, TError, SoftDeleteBuildingMutationVariables, TContext>(
       ['SoftDeleteBuilding'],
       (variables?: SoftDeleteBuildingMutationVariables) => fetcher<SoftDeleteBuildingMutation, SoftDeleteBuildingMutationVariables>(client, SoftDeleteBuildingDocument, variables, headers)(),
+      options
+    );
+export const GetAllConfigsDocument = `
+    query GetAllConfigs($orderBy: [ConfigOrderByCriterion!], $filters: ConfigSearchFilters, $page: Int!, $itemsPerPage: Int!, $language: String) {
+  configs(
+    orderBy: $orderBy
+    filters: $filters
+    page: $page
+    itemsPerPage: $itemsPerPage
+    language: $language
+  ) {
+    count
+    itemsPerPage
+    totalPages
+    page
+    results {
+      id
+      scope
+      code
+      value
+      extras
+      created
+      createdBy
+      modified
+      modifiedBy
+      translation
+      system
+    }
+  }
+}
+    `;
+export const useGetAllConfigsQuery = <
+      TData = GetAllConfigsQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: GetAllConfigsQueryVariables,
+      options?: UseQueryOptions<GetAllConfigsQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetAllConfigsQuery, TError, TData>(
+      ['GetAllConfigs', variables],
+      fetcher<GetAllConfigsQuery, GetAllConfigsQueryVariables>(client, GetAllConfigsDocument, variables, headers),
+      options
+    );
+export const GetConfigByIdDocument = `
+    query GetConfigById($id: String!, $language: String = "en") {
+  config(id: $id, language: $language) {
+    id
+    scope
+    code
+    value
+    extras
+    created
+    createdBy
+    modified
+    modifiedBy
+    translation
+    system
+  }
+}
+    `;
+export const useGetConfigByIdQuery = <
+      TData = GetConfigByIdQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: GetConfigByIdQueryVariables,
+      options?: UseQueryOptions<GetConfigByIdQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetConfigByIdQuery, TError, TData>(
+      ['GetConfigById', variables],
+      fetcher<GetConfigByIdQuery, GetConfigByIdQueryVariables>(client, GetConfigByIdDocument, variables, headers),
+      options
+    );
+export const CreateConfigDocument = `
+    mutation CreateConfig($input: CreateConfigInput!) {
+  createConfig(input: $input) {
+    id
+    scope
+    code
+    value
+    extras
+    created
+    createdBy
+    modified
+    modifiedBy
+    translation
+    system
+  }
+}
+    `;
+export const useCreateConfigMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<CreateConfigMutation, TError, CreateConfigMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<CreateConfigMutation, TError, CreateConfigMutationVariables, TContext>(
+      ['CreateConfig'],
+      (variables?: CreateConfigMutationVariables) => fetcher<CreateConfigMutation, CreateConfigMutationVariables>(client, CreateConfigDocument, variables, headers)(),
+      options
+    );
+export const DeleteConfigDocument = `
+    mutation DeleteConfig($configId: String!) {
+  deleteConfig(configId: $configId)
+}
+    `;
+export const useDeleteConfigMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<DeleteConfigMutation, TError, DeleteConfigMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<DeleteConfigMutation, TError, DeleteConfigMutationVariables, TContext>(
+      ['DeleteConfig'],
+      (variables?: DeleteConfigMutationVariables) => fetcher<DeleteConfigMutation, DeleteConfigMutationVariables>(client, DeleteConfigDocument, variables, headers)(),
+      options
+    );
+export const UpdateConfigDocument = `
+    mutation UpdateConfig($id: String!, $input: UpdateConfigInput!) {
+  updateConfig(id: $id, input: $input) {
+    id
+    scope
+    code
+    value
+    extras
+    created
+    createdBy
+    modified
+    modifiedBy
+    translation
+    system
+  }
+}
+    `;
+export const useUpdateConfigMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<UpdateConfigMutation, TError, UpdateConfigMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<UpdateConfigMutation, TError, UpdateConfigMutationVariables, TContext>(
+      ['UpdateConfig'],
+      (variables?: UpdateConfigMutationVariables) => fetcher<UpdateConfigMutation, UpdateConfigMutationVariables>(client, UpdateConfigDocument, variables, headers)(),
+      options
+    );
+export const ListConfigsForAScopeDocument = `
+    query ListConfigsForAScope($scope: String!, $code: String, $language: String = "en") {
+  listConfigsForAScope(scope: $scope, code: $code, language: $language) {
+    id
+    scope
+    code
+    text
+  }
+}
+    `;
+export const useListConfigsForAScopeQuery = <
+      TData = ListConfigsForAScopeQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: ListConfigsForAScopeQueryVariables,
+      options?: UseQueryOptions<ListConfigsForAScopeQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<ListConfigsForAScopeQuery, TError, TData>(
+      ['ListConfigsForAScope', variables],
+      fetcher<ListConfigsForAScopeQuery, ListConfigsForAScopeQueryVariables>(client, ListConfigsForAScopeDocument, variables, headers),
+      options
+    );
+export const SimpleGetAllStockOwnersDocument = `
+    query SimpleGetAllStockOwners {
+  stockOwners {
+    results {
+      id
+      name
+    }
+  }
+}
+    `;
+export const useSimpleGetAllStockOwnersQuery = <
+      TData = SimpleGetAllStockOwnersQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables?: SimpleGetAllStockOwnersQueryVariables,
+      options?: UseQueryOptions<SimpleGetAllStockOwnersQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<SimpleGetAllStockOwnersQuery, TError, TData>(
+      variables === undefined ? ['SimpleGetAllStockOwners'] : ['SimpleGetAllStockOwners', variables],
+      fetcher<SimpleGetAllStockOwnersQuery, SimpleGetAllStockOwnersQueryVariables>(client, SimpleGetAllStockOwnersDocument, variables, headers),
+      options
+    );
+export const GetEquipmentTypesConfigsDocument = `
+    query getEquipmentTypesConfigs {
+  listConfigsForAScope(scope: "equipment_type") {
+    id
+    scope
+    code
+    text
+  }
+}
+    `;
+export const useGetEquipmentTypesConfigsQuery = <
+      TData = GetEquipmentTypesConfigsQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables?: GetEquipmentTypesConfigsQueryVariables,
+      options?: UseQueryOptions<GetEquipmentTypesConfigsQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetEquipmentTypesConfigsQuery, TError, TData>(
+      variables === undefined ? ['getEquipmentTypesConfigs'] : ['getEquipmentTypesConfigs', variables],
+      fetcher<GetEquipmentTypesConfigsQuery, GetEquipmentTypesConfigsQueryVariables>(client, GetEquipmentTypesConfigsDocument, variables, headers),
+      options
+    );
+export const GetEquipmentStatusesConfigsDocument = `
+    query getEquipmentStatusesConfigs {
+  listConfigsForAScope(scope: "equipment_status") {
+    id
+    scope
+    code
+    text
+  }
+}
+    `;
+export const useGetEquipmentStatusesConfigsQuery = <
+      TData = GetEquipmentStatusesConfigsQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables?: GetEquipmentStatusesConfigsQueryVariables,
+      options?: UseQueryOptions<GetEquipmentStatusesConfigsQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetEquipmentStatusesConfigsQuery, TError, TData>(
+      variables === undefined ? ['getEquipmentStatusesConfigs'] : ['getEquipmentStatusesConfigs', variables],
+      fetcher<GetEquipmentStatusesConfigsQuery, GetEquipmentStatusesConfigsQueryVariables>(client, GetEquipmentStatusesConfigsDocument, variables, headers),
+      options
+    );
+export const GetEquipmentLimitTypeConfigsDocument = `
+    query getEquipmentLimitTypeConfigs {
+  listConfigsForAScope(scope: "equipment_limit_type") {
+    id
+    scope
+    code
+    text
+  }
+}
+    `;
+export const useGetEquipmentLimitTypeConfigsQuery = <
+      TData = GetEquipmentLimitTypeConfigsQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables?: GetEquipmentLimitTypeConfigsQueryVariables,
+      options?: UseQueryOptions<GetEquipmentLimitTypeConfigsQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetEquipmentLimitTypeConfigsQuery, TError, TData>(
+      variables === undefined ? ['getEquipmentLimitTypeConfigs'] : ['getEquipmentLimitTypeConfigs', variables],
+      fetcher<GetEquipmentLimitTypeConfigsQuery, GetEquipmentLimitTypeConfigsQueryVariables>(client, GetEquipmentLimitTypeConfigsDocument, variables, headers),
+      options
+    );
+export const GetPreparationModeParamsDocument = `
+    query getPreparationModeParams {
+  listParametersForAScope(scope: "preparation_mode") {
+    id
+    scope
+    code
+    text
+  }
+}
+    `;
+export const useGetPreparationModeParamsQuery = <
+      TData = GetPreparationModeParamsQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables?: GetPreparationModeParamsQueryVariables,
+      options?: UseQueryOptions<GetPreparationModeParamsQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetPreparationModeParamsQuery, TError, TData>(
+      variables === undefined ? ['getPreparationModeParams'] : ['getPreparationModeParams', variables],
+      fetcher<GetPreparationModeParamsQuery, GetPreparationModeParamsQueryVariables>(client, GetPreparationModeParamsDocument, variables, headers),
+      options
+    );
+export const GetListOfPrioritiesDocument = `
+    query getListOfPriorities {
+  equipments {
+    results {
+      priority
+      id
+      name
+    }
+  }
+}
+    `;
+export const useGetListOfPrioritiesQuery = <
+      TData = GetListOfPrioritiesQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables?: GetListOfPrioritiesQueryVariables,
+      options?: UseQueryOptions<GetListOfPrioritiesQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetListOfPrioritiesQuery, TError, TData>(
+      variables === undefined ? ['getListOfPriorities'] : ['getListOfPriorities', variables],
+      fetcher<GetListOfPrioritiesQuery, GetListOfPrioritiesQueryVariables>(client, GetListOfPrioritiesDocument, variables, headers),
+      options
+    );
+export const SimpleGetAllPackagingListDocument = `
+    query SimpleGetAllPackagingList {
+  packagings {
+    results {
+      id
+      name
+    }
+  }
+}
+    `;
+export const useSimpleGetAllPackagingListQuery = <
+      TData = SimpleGetAllPackagingListQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables?: SimpleGetAllPackagingListQueryVariables,
+      options?: UseQueryOptions<SimpleGetAllPackagingListQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<SimpleGetAllPackagingListQuery, TError, TData>(
+      variables === undefined ? ['SimpleGetAllPackagingList'] : ['SimpleGetAllPackagingList', variables],
+      fetcher<SimpleGetAllPackagingListQuery, SimpleGetAllPackagingListQueryVariables>(client, SimpleGetAllPackagingListDocument, variables, headers),
+      options
+    );
+export const GetAllEquipmentDocument = `
+    query GetAllEquipment($filters: EquipmentSearchFilters, $orderBy: [EquipmentOrderByCriterion!], $page: Int!, $itemsPerPage: Int!) {
+  equipments(
+    filters: $filters
+    orderBy: $orderBy
+    page: $page
+    itemsPerPage: $itemsPerPage
+  ) {
+    count
+    itemsPerPage
+    totalPages
+    results {
+      id
+      stockOwnerId
+      stockOwner {
+        name
+      }
+      name
+      type
+      typeText
+      priority
+      status
+      statusText
+      available
+      distributed
+      monoCompany
+      monoCarrier
+      boxLineGrouped
+      boxMonoArticle
+      qtyMaxArticle
+      nbMaxBox
+      checkPosition
+      comment
+      virtual
+      limitType
+      limitTypeText
+      length
+      width
+      height
+      toleranceDimension
+      allowPickingOrderFree
+      extras
+      created
+      createdBy
+      modified
+      modifiedBy
+    }
+  }
+}
+    `;
+export const useGetAllEquipmentQuery = <
+      TData = GetAllEquipmentQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: GetAllEquipmentQueryVariables,
+      options?: UseQueryOptions<GetAllEquipmentQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetAllEquipmentQuery, TError, TData>(
+      ['GetAllEquipment', variables],
+      fetcher<GetAllEquipmentQuery, GetAllEquipmentQueryVariables>(client, GetAllEquipmentDocument, variables, headers),
+      options
+    );
+export const GetEquipmentByIdDocument = `
+    query GetEquipmentById($id: String!) {
+  equipment(id: $id) {
+    id
+    stockOwnerId
+    stockOwner {
+      name
+    }
+    name
+    type
+    typeText
+    priority
+    status
+    statusText
+    available
+    distributed
+    monoCompany
+    monoCarrier
+    boxLineGrouped
+    boxMonoArticle
+    qtyMaxArticle
+    nbMaxBox
+    checkPosition
+    comment
+    virtual
+    limitType
+    limitTypeText
+    length
+    width
+    height
+    toleranceDimension
+    allowPickingOrderFree
+    extras
+    created
+    createdBy
+    modified
+    modifiedBy
+  }
+}
+    `;
+export const useGetEquipmentByIdQuery = <
+      TData = GetEquipmentByIdQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: GetEquipmentByIdQueryVariables,
+      options?: UseQueryOptions<GetEquipmentByIdQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetEquipmentByIdQuery, TError, TData>(
+      ['GetEquipmentById', variables],
+      fetcher<GetEquipmentByIdQuery, GetEquipmentByIdQueryVariables>(client, GetEquipmentByIdDocument, variables, headers),
+      options
+    );
+export const GetEquipmentIdsDocument = `
+    query GetEquipmentIds($filters: EquipmentSearchFilters, $orderBy: [EquipmentOrderByCriterion!], $page: Int!, $itemsPerPage: Int!) {
+  equipments(
+    filters: $filters
+    orderBy: $orderBy
+    page: $page
+    itemsPerPage: $itemsPerPage
+  ) {
+    count
+    itemsPerPage
+    totalPages
+    results {
+      id
+      stockOwnerId
+      stockOwner {
+        name
+      }
+      name
+      type
+      typeText
+      priority
+      status
+      statusText
+      available
+      distributed
+      monoCompany
+      monoCarrier
+      boxLineGrouped
+      boxMonoArticle
+      qtyMaxArticle
+      nbMaxBox
+      checkPosition
+      comment
+      virtual
+      limitType
+      limitTypeText
+      length
+      width
+      height
+      toleranceDimension
+      allowPickingOrderFree
+      extras
+      created
+      createdBy
+      modified
+      modifiedBy
+    }
+  }
+}
+    `;
+export const useGetEquipmentIdsQuery = <
+      TData = GetEquipmentIdsQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: GetEquipmentIdsQueryVariables,
+      options?: UseQueryOptions<GetEquipmentIdsQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetEquipmentIdsQuery, TError, TData>(
+      ['GetEquipmentIds', variables],
+      fetcher<GetEquipmentIdsQuery, GetEquipmentIdsQueryVariables>(client, GetEquipmentIdsDocument, variables, headers),
+      options
+    );
+export const CreateEquipmentDocument = `
+    mutation CreateEquipment($input: CreateEquipmentInput!) {
+  createEquipment(input: $input) {
+    id
+    stockOwnerId
+    name
+    type
+    priority
+    status
+    available
+    distributed
+    monoCompany
+    monoCarrier
+    boxLineGrouped
+    boxMonoArticle
+    qtyMaxArticle
+    nbMaxBox
+    checkPosition
+    comment
+    virtual
+    limitType
+    length
+    width
+    height
+    toleranceDimension
+    allowPickingOrderFree
+  }
+}
+    `;
+export const useCreateEquipmentMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<CreateEquipmentMutation, TError, CreateEquipmentMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<CreateEquipmentMutation, TError, CreateEquipmentMutationVariables, TContext>(
+      ['CreateEquipment'],
+      (variables?: CreateEquipmentMutationVariables) => fetcher<CreateEquipmentMutation, CreateEquipmentMutationVariables>(client, CreateEquipmentDocument, variables, headers)(),
+      options
+    );
+export const DeleteEquipmentDocument = `
+    mutation DeleteEquipment($id: String!) {
+  deleteEquipment(id: $id)
+}
+    `;
+export const useDeleteEquipmentMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<DeleteEquipmentMutation, TError, DeleteEquipmentMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<DeleteEquipmentMutation, TError, DeleteEquipmentMutationVariables, TContext>(
+      ['DeleteEquipment'],
+      (variables?: DeleteEquipmentMutationVariables) => fetcher<DeleteEquipmentMutation, DeleteEquipmentMutationVariables>(client, DeleteEquipmentDocument, variables, headers)(),
+      options
+    );
+export const SoftDeleteEquipmentDocument = `
+    mutation SoftDeleteEquipment($equipmentId: String!) {
+  softDeleteEquipment(equipmentId: $equipmentId)
+}
+    `;
+export const useSoftDeleteEquipmentMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<SoftDeleteEquipmentMutation, TError, SoftDeleteEquipmentMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<SoftDeleteEquipmentMutation, TError, SoftDeleteEquipmentMutationVariables, TContext>(
+      ['SoftDeleteEquipment'],
+      (variables?: SoftDeleteEquipmentMutationVariables) => fetcher<SoftDeleteEquipmentMutation, SoftDeleteEquipmentMutationVariables>(client, SoftDeleteEquipmentDocument, variables, headers)(),
+      options
+    );
+export const UpdateEquipmentDocument = `
+    mutation UpdateEquipment($id: String!, $input: UpdateEquipmentInput!) {
+  updateEquipment(id: $id, input: $input) {
+    id
+    stockOwnerId
+    name
+    type
+    priority
+    status
+    available
+    distributed
+    monoCompany
+    monoCarrier
+    boxLineGrouped
+    boxMonoArticle
+    qtyMaxArticle
+    nbMaxBox
+    checkPosition
+    comment
+    virtual
+    limitType
+    length
+    width
+    height
+    toleranceDimension
+    allowPickingOrderFree
+  }
+}
+    `;
+export const useUpdateEquipmentMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<UpdateEquipmentMutation, TError, UpdateEquipmentMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<UpdateEquipmentMutation, TError, UpdateEquipmentMutationVariables, TContext>(
+      ['UpdateEquipment'],
+      (variables?: UpdateEquipmentMutationVariables) => fetcher<UpdateEquipmentMutation, UpdateEquipmentMutationVariables>(client, UpdateEquipmentDocument, variables, headers)(),
+      options
+    );
+export const GetAllEquipmentDetailsDocument = `
+    query GetAllEquipmentDetails($filters: EquipmentDetailSearchFilters, $orderBy: [EquipmentDetailOrderByCriterion!], $page: Int!, $itemsPerPage: Int!) {
+  equipmentDetails(
+    filters: $filters
+    orderBy: $orderBy
+    page: $page
+    itemsPerPage: $itemsPerPage
+  ) {
+    count
+    itemsPerPage
+    totalPages
+    results {
+      id
+      preparationMode
+      preparationModeText
+      stockOwnerId
+      stockOwner {
+        name
+      }
+      equipmentId
+      equipment {
+        name
+      }
+      packagingId
+      packaging {
+        name
+      }
+      extras
+      created
+      createdBy
+      modified
+      modifiedBy
+    }
+  }
+}
+    `;
+export const useGetAllEquipmentDetailsQuery = <
+      TData = GetAllEquipmentDetailsQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: GetAllEquipmentDetailsQueryVariables,
+      options?: UseQueryOptions<GetAllEquipmentDetailsQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetAllEquipmentDetailsQuery, TError, TData>(
+      ['GetAllEquipmentDetails', variables],
+      fetcher<GetAllEquipmentDetailsQuery, GetAllEquipmentDetailsQueryVariables>(client, GetAllEquipmentDetailsDocument, variables, headers),
+      options
+    );
+export const GetEquipmentDetailByIdDocument = `
+    query GetEquipmentDetailById($id: String!) {
+  equipmentDetail(id: $id) {
+    id
+    preparationMode
+    preparationModeText
+    stockOwnerId
+    stockOwner {
+      name
+    }
+    equipmentId
+    equipment {
+      name
+    }
+    packagingId
+    packaging {
+      name
+    }
+    extras
+    created
+    createdBy
+    modified
+    modifiedBy
+  }
+}
+    `;
+export const useGetEquipmentDetailByIdQuery = <
+      TData = GetEquipmentDetailByIdQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: GetEquipmentDetailByIdQueryVariables,
+      options?: UseQueryOptions<GetEquipmentDetailByIdQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetEquipmentDetailByIdQuery, TError, TData>(
+      ['GetEquipmentDetailById', variables],
+      fetcher<GetEquipmentDetailByIdQuery, GetEquipmentDetailByIdQueryVariables>(client, GetEquipmentDetailByIdDocument, variables, headers),
+      options
+    );
+export const CreateEquipmentDetailDocument = `
+    mutation CreateEquipmentDetail($input: CreateEquipmentDetailInput!) {
+  createEquipmentDetail(input: $input) {
+    id
+    preparationMode
+    stockOwnerId
+    equipmentId
+    packagingId
+  }
+}
+    `;
+export const useCreateEquipmentDetailMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<CreateEquipmentDetailMutation, TError, CreateEquipmentDetailMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<CreateEquipmentDetailMutation, TError, CreateEquipmentDetailMutationVariables, TContext>(
+      ['CreateEquipmentDetail'],
+      (variables?: CreateEquipmentDetailMutationVariables) => fetcher<CreateEquipmentDetailMutation, CreateEquipmentDetailMutationVariables>(client, CreateEquipmentDetailDocument, variables, headers)(),
+      options
+    );
+export const DeleteEquipmentDetailDocument = `
+    mutation DeleteEquipmentDetail($id: String!) {
+  deleteEquipmentDetail(id: $id)
+}
+    `;
+export const useDeleteEquipmentDetailMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<DeleteEquipmentDetailMutation, TError, DeleteEquipmentDetailMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<DeleteEquipmentDetailMutation, TError, DeleteEquipmentDetailMutationVariables, TContext>(
+      ['DeleteEquipmentDetail'],
+      (variables?: DeleteEquipmentDetailMutationVariables) => fetcher<DeleteEquipmentDetailMutation, DeleteEquipmentDetailMutationVariables>(client, DeleteEquipmentDetailDocument, variables, headers)(),
+      options
+    );
+export const BulkDeleteEquipmentDetailsDocument = `
+    mutation BulkDeleteEquipmentDetails($id: String!) {
+  bulkDeleteEquipmentDetails(equipmentId: $id)
+}
+    `;
+export const useBulkDeleteEquipmentDetailsMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<BulkDeleteEquipmentDetailsMutation, TError, BulkDeleteEquipmentDetailsMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<BulkDeleteEquipmentDetailsMutation, TError, BulkDeleteEquipmentDetailsMutationVariables, TContext>(
+      ['BulkDeleteEquipmentDetails'],
+      (variables?: BulkDeleteEquipmentDetailsMutationVariables) => fetcher<BulkDeleteEquipmentDetailsMutation, BulkDeleteEquipmentDetailsMutationVariables>(client, BulkDeleteEquipmentDetailsDocument, variables, headers)(),
+      options
+    );
+export const UpdateEquipmentDetailDocument = `
+    mutation UpdateEquipmentDetail($id: String!, $input: UpdateEquipmentDetailInput!) {
+  updateEquipmentDetail(id: $id, input: $input) {
+    id
+    preparationMode
+    stockOwnerId
+    equipmentId
+    packagingId
+  }
+}
+    `;
+export const useUpdateEquipmentDetailMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<UpdateEquipmentDetailMutation, TError, UpdateEquipmentDetailMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<UpdateEquipmentDetailMutation, TError, UpdateEquipmentDetailMutationVariables, TContext>(
+      ['UpdateEquipmentDetail'],
+      (variables?: UpdateEquipmentDetailMutationVariables) => fetcher<UpdateEquipmentDetailMutation, UpdateEquipmentDetailMutationVariables>(client, UpdateEquipmentDetailDocument, variables, headers)(),
+      options
+    );
+export const GetAllFeatureCodesDocument = `
+    query GetAllFeatureCodes($filters: FeatureCodeSearchFilters, $orderBy: [FeatureCodeOrderByCriterion!], $page: Int!, $itemsPerPage: Int!) {
+  featureCodes(
+    filters: $filters
+    orderBy: $orderBy
+    page: $page
+    itemsPerPage: $itemsPerPage
+  ) {
+    count
+    itemsPerPage
+    totalPages
+    results {
+      id
+      name
+      unique
+      dateType
+      prefixBarcode
+      lengthBarcode
+      suffixBarcode
+      stockOwnerId
+      stockOwner {
+        name
+      }
+      extras
+      created
+      createdBy
+      modified
+      modifiedBy
+    }
+  }
+}
+    `;
+export const useGetAllFeatureCodesQuery = <
+      TData = GetAllFeatureCodesQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: GetAllFeatureCodesQueryVariables,
+      options?: UseQueryOptions<GetAllFeatureCodesQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetAllFeatureCodesQuery, TError, TData>(
+      ['GetAllFeatureCodes', variables],
+      fetcher<GetAllFeatureCodesQuery, GetAllFeatureCodesQueryVariables>(client, GetAllFeatureCodesDocument, variables, headers),
+      options
+    );
+export const GetFeatureCodeByIdDocument = `
+    query GetFeatureCodeById($id: String!, $language: String = "en") {
+  featureCode(id: $id, language: $language) {
+    id
+    name
+    unique
+    dateType
+    prefixBarcode
+    lengthBarcode
+    suffixBarcode
+    stockOwnerId
+    stockOwner {
+      name
+    }
+    extras
+    created
+    createdBy
+    modified
+    modifiedBy
+  }
+}
+    `;
+export const useGetFeatureCodeByIdQuery = <
+      TData = GetFeatureCodeByIdQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: GetFeatureCodeByIdQueryVariables,
+      options?: UseQueryOptions<GetFeatureCodeByIdQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetFeatureCodeByIdQuery, TError, TData>(
+      ['GetFeatureCodeById', variables],
+      fetcher<GetFeatureCodeByIdQuery, GetFeatureCodeByIdQueryVariables>(client, GetFeatureCodeByIdDocument, variables, headers),
+      options
+    );
+export const GetFeatureCodeIdsDocument = `
+    query GetFeatureCodeIds($filters: FeatureCodeSearchFilters, $orderBy: [FeatureCodeOrderByCriterion!], $page: Int!, $itemsPerPage: Int!) {
+  featureCodes(
+    filters: $filters
+    orderBy: $orderBy
+    page: $page
+    itemsPerPage: $itemsPerPage
+  ) {
+    count
+    itemsPerPage
+    totalPages
+    results {
+      id
+      name
+    }
+  }
+}
+    `;
+export const useGetFeatureCodeIdsQuery = <
+      TData = GetFeatureCodeIdsQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: GetFeatureCodeIdsQueryVariables,
+      options?: UseQueryOptions<GetFeatureCodeIdsQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetFeatureCodeIdsQuery, TError, TData>(
+      ['GetFeatureCodeIds', variables],
+      fetcher<GetFeatureCodeIdsQuery, GetFeatureCodeIdsQueryVariables>(client, GetFeatureCodeIdsDocument, variables, headers),
+      options
+    );
+export const CreateFeatureCodeDocument = `
+    mutation CreateFeatureCode($input: CreateFeatureCodeInput!) {
+  createFeatureCode(input: $input) {
+    id
+    name
+    unique
+    dateType
+    prefixBarcode
+    lengthBarcode
+    suffixBarcode
+    stockOwnerId
+  }
+}
+    `;
+export const useCreateFeatureCodeMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<CreateFeatureCodeMutation, TError, CreateFeatureCodeMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<CreateFeatureCodeMutation, TError, CreateFeatureCodeMutationVariables, TContext>(
+      ['CreateFeatureCode'],
+      (variables?: CreateFeatureCodeMutationVariables) => fetcher<CreateFeatureCodeMutation, CreateFeatureCodeMutationVariables>(client, CreateFeatureCodeDocument, variables, headers)(),
+      options
+    );
+export const DeleteFeatureCodeDocument = `
+    mutation DeleteFeatureCode($id: String!) {
+  deleteFeatureCode(id: $id)
+}
+    `;
+export const useDeleteFeatureCodeMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<DeleteFeatureCodeMutation, TError, DeleteFeatureCodeMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<DeleteFeatureCodeMutation, TError, DeleteFeatureCodeMutationVariables, TContext>(
+      ['DeleteFeatureCode'],
+      (variables?: DeleteFeatureCodeMutationVariables) => fetcher<DeleteFeatureCodeMutation, DeleteFeatureCodeMutationVariables>(client, DeleteFeatureCodeDocument, variables, headers)(),
+      options
+    );
+export const UpdateFeatureCodeDocument = `
+    mutation UpdateFeatureCode($id: String!, $input: UpdateFeatureCodeInput!) {
+  updateFeatureCode(id: $id, input: $input) {
+    id
+    name
+    unique
+    dateType
+    prefixBarcode
+    lengthBarcode
+    suffixBarcode
+    stockOwnerId
+  }
+}
+    `;
+export const useUpdateFeatureCodeMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<UpdateFeatureCodeMutation, TError, UpdateFeatureCodeMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<UpdateFeatureCodeMutation, TError, UpdateFeatureCodeMutationVariables, TContext>(
+      ['UpdateFeatureCode'],
+      (variables?: UpdateFeatureCodeMutationVariables) => fetcher<UpdateFeatureCodeMutation, UpdateFeatureCodeMutationVariables>(client, UpdateFeatureCodeDocument, variables, headers)(),
+      options
+    );
+export const GetFeatureTypesParamsDocument = `
+    query getFeatureTypesParams {
+  listParametersForAScope(scope: "feature_type") {
+    id
+    scope
+    code
+    text
+  }
+}
+    `;
+export const useGetFeatureTypesParamsQuery = <
+      TData = GetFeatureTypesParamsQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables?: GetFeatureTypesParamsQueryVariables,
+      options?: UseQueryOptions<GetFeatureTypesParamsQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetFeatureTypesParamsQuery, TError, TData>(
+      variables === undefined ? ['getFeatureTypesParams'] : ['getFeatureTypesParams', variables],
+      fetcher<GetFeatureTypesParamsQuery, GetFeatureTypesParamsQueryVariables>(client, GetFeatureTypesParamsDocument, variables, headers),
+      options
+    );
+export const SimpleGetAllFeatureCodesDocument = `
+    query SimpleGetAllFeatureCodes {
+  featureCodes {
+    results {
+      id
+      name
+      stockOwnerId
+    }
+  }
+}
+    `;
+export const useSimpleGetAllFeatureCodesQuery = <
+      TData = SimpleGetAllFeatureCodesQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables?: SimpleGetAllFeatureCodesQueryVariables,
+      options?: UseQueryOptions<SimpleGetAllFeatureCodesQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<SimpleGetAllFeatureCodesQuery, TError, TData>(
+      variables === undefined ? ['SimpleGetAllFeatureCodes'] : ['SimpleGetAllFeatureCodes', variables],
+      fetcher<SimpleGetAllFeatureCodesQuery, SimpleGetAllFeatureCodesQueryVariables>(client, SimpleGetAllFeatureCodesDocument, variables, headers),
+      options
+    );
+export const GetAllFeatureTypeDetailsDocument = `
+    query GetAllFeatureTypeDetails($filters: FeatureTypeDetailSearchFilters, $orderBy: [FeatureTypeDetailOrderByCriterion!], $page: Int!, $itemsPerPage: Int!) {
+  featureTypeDetails(
+    filters: $filters
+    orderBy: $orderBy
+    page: $page
+    itemsPerPage: $itemsPerPage
+  ) {
+    count
+    itemsPerPage
+    totalPages
+    results {
+      id
+      featureType
+      featureTypeText
+      featureCodeId
+      featureCode {
+        id
+        name
+      }
+      stockOwnerId
+      stockOwner {
+        name
+      }
+      atReception
+      atPreparation
+      extras
+      created
+      createdBy
+      modified
+      modifiedBy
+    }
+  }
+}
+    `;
+export const useGetAllFeatureTypeDetailsQuery = <
+      TData = GetAllFeatureTypeDetailsQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: GetAllFeatureTypeDetailsQueryVariables,
+      options?: UseQueryOptions<GetAllFeatureTypeDetailsQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetAllFeatureTypeDetailsQuery, TError, TData>(
+      ['GetAllFeatureTypeDetails', variables],
+      fetcher<GetAllFeatureTypeDetailsQuery, GetAllFeatureTypeDetailsQueryVariables>(client, GetAllFeatureTypeDetailsDocument, variables, headers),
+      options
+    );
+export const GetFeatureTypeDetailByIdDocument = `
+    query GetFeatureTypeDetailById($id: String!) {
+  featureTypeDetail(id: $id) {
+    id
+    featureType
+    featureTypeText
+    featureCodeId
+    featureCode {
+      id
+      name
+    }
+    stockOwnerId
+    stockOwner {
+      name
+    }
+    atReception
+    atPreparation
+    extras
+    created
+    createdBy
+    modified
+    modifiedBy
+  }
+}
+    `;
+export const useGetFeatureTypeDetailByIdQuery = <
+      TData = GetFeatureTypeDetailByIdQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: GetFeatureTypeDetailByIdQueryVariables,
+      options?: UseQueryOptions<GetFeatureTypeDetailByIdQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetFeatureTypeDetailByIdQuery, TError, TData>(
+      ['GetFeatureTypeDetailById', variables],
+      fetcher<GetFeatureTypeDetailByIdQuery, GetFeatureTypeDetailByIdQueryVariables>(client, GetFeatureTypeDetailByIdDocument, variables, headers),
+      options
+    );
+export const CreateFeatureTypeDetailDocument = `
+    mutation CreateFeatureTypeDetail($input: CreateFeatureTypeDetailInput!) {
+  createFeatureTypeDetail(input: $input) {
+    id
+    featureType
+    featureCodeId
+    stockOwnerId
+    atReception
+    atPreparation
+  }
+}
+    `;
+export const useCreateFeatureTypeDetailMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<CreateFeatureTypeDetailMutation, TError, CreateFeatureTypeDetailMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<CreateFeatureTypeDetailMutation, TError, CreateFeatureTypeDetailMutationVariables, TContext>(
+      ['CreateFeatureTypeDetail'],
+      (variables?: CreateFeatureTypeDetailMutationVariables) => fetcher<CreateFeatureTypeDetailMutation, CreateFeatureTypeDetailMutationVariables>(client, CreateFeatureTypeDetailDocument, variables, headers)(),
+      options
+    );
+export const DeleteFeatureTypeDetailDocument = `
+    mutation DeleteFeatureTypeDetail($id: String!) {
+  deleteFeatureTypeDetail(id: $id)
+}
+    `;
+export const useDeleteFeatureTypeDetailMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<DeleteFeatureTypeDetailMutation, TError, DeleteFeatureTypeDetailMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<DeleteFeatureTypeDetailMutation, TError, DeleteFeatureTypeDetailMutationVariables, TContext>(
+      ['DeleteFeatureTypeDetail'],
+      (variables?: DeleteFeatureTypeDetailMutationVariables) => fetcher<DeleteFeatureTypeDetailMutation, DeleteFeatureTypeDetailMutationVariables>(client, DeleteFeatureTypeDetailDocument, variables, headers)(),
+      options
+    );
+export const UpdateFeatureTypeDetailDocument = `
+    mutation UpdateFeatureTypeDetail($id: String!, $input: UpdateFeatureTypeDetailInput!) {
+  updateFeatureTypeDetail(id: $id, input: $input) {
+    id
+    featureType
+    featureCodeId
+    stockOwnerId
+    atReception
+    atPreparation
+  }
+}
+    `;
+export const useUpdateFeatureTypeDetailMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<UpdateFeatureTypeDetailMutation, TError, UpdateFeatureTypeDetailMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<UpdateFeatureTypeDetailMutation, TError, UpdateFeatureTypeDetailMutationVariables, TContext>(
+      ['UpdateFeatureTypeDetail'],
+      (variables?: UpdateFeatureTypeDetailMutationVariables) => fetcher<UpdateFeatureTypeDetailMutation, UpdateFeatureTypeDetailMutationVariables>(client, UpdateFeatureTypeDetailDocument, variables, headers)(),
+      options
+    );
+export const GetAllGoodsInsDocument = `
+    query GetAllGoodsIns($orderBy: [GoodsInOrderByCriterion!], $filters: GoodsInSearchFilters, $page: Int!, $itemsPerPage: Int!, $language: String) {
+  goodsIns(
+    orderBy: $orderBy
+    filters: $filters
+    page: $page
+    itemsPerPage: $itemsPerPage
+    language: $language
+  ) {
+    count
+    itemsPerPage
+    totalPages
+    page
+    results {
+      id
+      extras
+      created
+      createdBy
+      modified
+      modifiedBy
+      name
+      comment
+    }
+  }
+}
+    `;
+export const useGetAllGoodsInsQuery = <
+      TData = GetAllGoodsInsQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: GetAllGoodsInsQueryVariables,
+      options?: UseQueryOptions<GetAllGoodsInsQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetAllGoodsInsQuery, TError, TData>(
+      ['GetAllGoodsIns', variables],
+      fetcher<GetAllGoodsInsQuery, GetAllGoodsInsQueryVariables>(client, GetAllGoodsInsDocument, variables, headers),
+      options
+    );
+export const GetGoodsInByIdDocument = `
+    query GetGoodsInById($id: String!, $language: String = "en") {
+  goodsIn(id: $id, language: $language) {
+    id
+    extras
+    created
+    createdBy
+    modified
+    modifiedBy
+    name
+    comment
+  }
+}
+    `;
+export const useGetGoodsInByIdQuery = <
+      TData = GetGoodsInByIdQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: GetGoodsInByIdQueryVariables,
+      options?: UseQueryOptions<GetGoodsInByIdQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetGoodsInByIdQuery, TError, TData>(
+      ['GetGoodsInById', variables],
+      fetcher<GetGoodsInByIdQuery, GetGoodsInByIdQueryVariables>(client, GetGoodsInByIdDocument, variables, headers),
+      options
+    );
+export const GetGoodsInIdsDocument = `
+    query GetGoodsInIds($filters: GoodsInSearchFilters, $orderBy: [GoodsInOrderByCriterion!], $page: Int!, $itemsPerPage: Int!, $language: String) {
+  goodsIns(
+    filters: $filters
+    orderBy: $orderBy
+    page: $page
+    itemsPerPage: $itemsPerPage
+    language: $language
+  ) {
+    count
+    itemsPerPage
+    totalPages
+    results {
+      id
+      name
+      comment
+    }
+  }
+}
+    `;
+export const useGetGoodsInIdsQuery = <
+      TData = GetGoodsInIdsQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: GetGoodsInIdsQueryVariables,
+      options?: UseQueryOptions<GetGoodsInIdsQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetGoodsInIdsQuery, TError, TData>(
+      ['GetGoodsInIds', variables],
+      fetcher<GetGoodsInIdsQuery, GetGoodsInIdsQueryVariables>(client, GetGoodsInIdsDocument, variables, headers),
+      options
+    );
+export const CreateGoodsInDocument = `
+    mutation CreateGoodsIn($input: CreateGoodsInInput!) {
+  createGoodsIn(input: $input) {
+    id
+    extras
+    created
+    createdBy
+    modified
+    modifiedBy
+    name
+    comment
+  }
+}
+    `;
+export const useCreateGoodsInMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<CreateGoodsInMutation, TError, CreateGoodsInMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<CreateGoodsInMutation, TError, CreateGoodsInMutationVariables, TContext>(
+      ['CreateGoodsIn'],
+      (variables?: CreateGoodsInMutationVariables) => fetcher<CreateGoodsInMutation, CreateGoodsInMutationVariables>(client, CreateGoodsInDocument, variables, headers)(),
+      options
+    );
+export const DeleteGoodsInDocument = `
+    mutation DeleteGoodsIn($id: String!) {
+  deleteGoodsIn(id: $id)
+}
+    `;
+export const useDeleteGoodsInMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<DeleteGoodsInMutation, TError, DeleteGoodsInMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<DeleteGoodsInMutation, TError, DeleteGoodsInMutationVariables, TContext>(
+      ['DeleteGoodsIn'],
+      (variables?: DeleteGoodsInMutationVariables) => fetcher<DeleteGoodsInMutation, DeleteGoodsInMutationVariables>(client, DeleteGoodsInDocument, variables, headers)(),
+      options
+    );
+export const UpdateGoodsInDocument = `
+    mutation UpdateGoodsIn($id: String!, $input: UpdateGoodsInInput!) {
+  updateGoodsIn(id: $id, input: $input) {
+    id
+    extras
+    created
+    createdBy
+    modified
+    modifiedBy
+    name
+    comment
+  }
+}
+    `;
+export const useUpdateGoodsInMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<UpdateGoodsInMutation, TError, UpdateGoodsInMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<UpdateGoodsInMutation, TError, UpdateGoodsInMutationVariables, TContext>(
+      ['UpdateGoodsIn'],
+      (variables?: UpdateGoodsInMutationVariables) => fetcher<UpdateGoodsInMutation, UpdateGoodsInMutationVariables>(client, UpdateGoodsInDocument, variables, headers)(),
+      options
+    );
+export const GetGoodsInLineByIdDocument = `
+    query GetGoodsInLineById($id: String!, $language: String = "en") {
+  goodsInLine(id: $id, language: $language) {
+    id
+    extras
+    quantity
+    reservation
+    stockOwnerId
+    articleId
+    goodsInId
+    purchaseOrderId
+    purchaseOrderLineId
+  }
+}
+    `;
+export const useGetGoodsInLineByIdQuery = <
+      TData = GetGoodsInLineByIdQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: GetGoodsInLineByIdQueryVariables,
+      options?: UseQueryOptions<GetGoodsInLineByIdQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetGoodsInLineByIdQuery, TError, TData>(
+      ['GetGoodsInLineById', variables],
+      fetcher<GetGoodsInLineByIdQuery, GetGoodsInLineByIdQueryVariables>(client, GetGoodsInLineByIdDocument, variables, headers),
+      options
+    );
+export const GetGoodsInLinesDocument = `
+    query GetGoodsInLines($orderBy: [GoodsInLineOrderByCriterion!], $filters: GoodsInLineSearchFilters, $page: Int!, $itemsPerPage: Int!, $language: String = "en") {
+  goodsInLines(
+    orderBy: $orderBy
+    filters: $filters
+    page: $page
+    itemsPerPage: $itemsPerPage
+    language: $language
+  ) {
+    count
+    itemsPerPage
+    totalPages
+    page
+    results {
+      id
+      extras
+      quantity
+      reservation
+      stockOwnerId
+      articleId
+      goodsInId
+      purchaseOrderId
+      purchaseOrderLineId
+    }
+  }
+}
+    `;
+export const useGetGoodsInLinesQuery = <
+      TData = GetGoodsInLinesQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: GetGoodsInLinesQueryVariables,
+      options?: UseQueryOptions<GetGoodsInLinesQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetGoodsInLinesQuery, TError, TData>(
+      ['GetGoodsInLines', variables],
+      fetcher<GetGoodsInLinesQuery, GetGoodsInLinesQueryVariables>(client, GetGoodsInLinesDocument, variables, headers),
+      options
+    );
+export const CreateGoodsInLineDocument = `
+    mutation CreateGoodsInLine($input: CreateGoodsInLineInput!) {
+  createGoodsInLine(input: $input) {
+    id
+    extras
+    created
+    createdBy
+    modified
+    modifiedBy
+    quantity
+    reservation
+    stockOwnerId
+    articleId
+    goodsInId
+    purchaseOrderId
+    purchaseOrderLineId
+  }
+}
+    `;
+export const useCreateGoodsInLineMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<CreateGoodsInLineMutation, TError, CreateGoodsInLineMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<CreateGoodsInLineMutation, TError, CreateGoodsInLineMutationVariables, TContext>(
+      ['CreateGoodsInLine'],
+      (variables?: CreateGoodsInLineMutationVariables) => fetcher<CreateGoodsInLineMutation, CreateGoodsInLineMutationVariables>(client, CreateGoodsInLineDocument, variables, headers)(),
+      options
+    );
+export const DeleteGoodsInLineDocument = `
+    mutation DeleteGoodsInLine($id: String!) {
+  deleteGoodsInLine(id: $id)
+}
+    `;
+export const useDeleteGoodsInLineMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<DeleteGoodsInLineMutation, TError, DeleteGoodsInLineMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<DeleteGoodsInLineMutation, TError, DeleteGoodsInLineMutationVariables, TContext>(
+      ['DeleteGoodsInLine'],
+      (variables?: DeleteGoodsInLineMutationVariables) => fetcher<DeleteGoodsInLineMutation, DeleteGoodsInLineMutationVariables>(client, DeleteGoodsInLineDocument, variables, headers)(),
+      options
+    );
+export const UpdateGoodsInLineDocument = `
+    mutation UpdateGoodsInLine($id: String!, $input: UpdateGoodsInLineInput!) {
+  updateGoodsInLine(id: $id, input: $input) {
+    id
+    extras
+    created
+    createdBy
+    modified
+    modifiedBy
+    quantity
+    reservation
+    stockOwnerId
+    articleId
+    goodsInId
+    purchaseOrderId
+    purchaseOrderLineId
+  }
+}
+    `;
+export const useUpdateGoodsInLineMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<UpdateGoodsInLineMutation, TError, UpdateGoodsInLineMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<UpdateGoodsInLineMutation, TError, UpdateGoodsInLineMutationVariables, TContext>(
+      ['UpdateGoodsInLine'],
+      (variables?: UpdateGoodsInLineMutationVariables) => fetcher<UpdateGoodsInLineMutation, UpdateGoodsInLineMutationVariables>(client, UpdateGoodsInLineDocument, variables, headers)(),
+      options
+    );
+export const GetReplenishTypesConfigsDocument = `
+    query getReplenishTypesConfigs {
+  listConfigsForAScope(scope: "location_replenish_type") {
+    id
+    scope
+    code
+    text
+  }
+}
+    `;
+export const useGetReplenishTypesConfigsQuery = <
+      TData = GetReplenishTypesConfigsQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables?: GetReplenishTypesConfigsQueryVariables,
+      options?: UseQueryOptions<GetReplenishTypesConfigsQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetReplenishTypesConfigsQuery, TError, TData>(
+      variables === undefined ? ['getReplenishTypesConfigs'] : ['getReplenishTypesConfigs', variables],
+      fetcher<GetReplenishTypesConfigsQuery, GetReplenishTypesConfigsQueryVariables>(client, GetReplenishTypesConfigsDocument, variables, headers),
+      options
+    );
+export const GetRotationsParamsDocument = `
+    query getRotationsParams {
+  listParametersForAScope(scope: "rotation") {
+    id
+    scope
+    code
+    text
+  }
+}
+    `;
+export const useGetRotationsParamsQuery = <
+      TData = GetRotationsParamsQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables?: GetRotationsParamsQueryVariables,
+      options?: UseQueryOptions<GetRotationsParamsQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetRotationsParamsQuery, TError, TData>(
+      variables === undefined ? ['getRotationsParams'] : ['getRotationsParams', variables],
+      fetcher<GetRotationsParamsQuery, GetRotationsParamsQueryVariables>(client, GetRotationsParamsDocument, variables, headers),
+      options
+    );
+export const GetAllLocationsDocument = `
+    query GetAllLocations($filters: LocationSearchFilters, $orderBy: [LocationOrderByCriterion!], $page: Int!, $itemsPerPage: Int!) {
+  locations(
+    filters: $filters
+    orderBy: $orderBy
+    page: $page
+    itemsPerPage: $itemsPerPage
+  ) {
+    count
+    itemsPerPage
+    totalPages
+    results {
+      id
+      name
+      barcode
+      aisle
+      column
+      level
+      position
+      replenish
+      blockId
+      block {
+        name
+      }
+      replenishType
+      constraint
+      comment
+      baseUnitRotation
+      allowCycleCountStockMin
+    }
+  }
+}
+    `;
+export const useGetAllLocationsQuery = <
+      TData = GetAllLocationsQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: GetAllLocationsQueryVariables,
+      options?: UseQueryOptions<GetAllLocationsQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetAllLocationsQuery, TError, TData>(
+      ['GetAllLocations', variables],
+      fetcher<GetAllLocationsQuery, GetAllLocationsQueryVariables>(client, GetAllLocationsDocument, variables, headers),
+      options
+    );
+export const GetLocationByIdDocument = `
+    query GetLocationById($id: String!) {
+  location(id: $id) {
+    id
+    name
+    barcode
+    aisle
+    column
+    level
+    position
+    replenish
+    blockId
+    block {
+      name
+    }
+    replenishType
+    constraint
+    comment
+    baseUnitRotation
+    allowCycleCountStockMin
+  }
+}
+    `;
+export const useGetLocationByIdQuery = <
+      TData = GetLocationByIdQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: GetLocationByIdQueryVariables,
+      options?: UseQueryOptions<GetLocationByIdQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetLocationByIdQuery, TError, TData>(
+      ['GetLocationById', variables],
+      fetcher<GetLocationByIdQuery, GetLocationByIdQueryVariables>(client, GetLocationByIdDocument, variables, headers),
+      options
+    );
+export const GetLocationIdsDocument = `
+    query GetLocationIds($filters: LocationSearchFilters, $orderBy: [LocationOrderByCriterion!], $page: Int!, $itemsPerPage: Int!) {
+  locations(
+    filters: $filters
+    orderBy: $orderBy
+    page: $page
+    itemsPerPage: $itemsPerPage
+  ) {
+    count
+    itemsPerPage
+    totalPages
+    results {
+      name
+      barcode
+      aisle
+      column
+      level
+      position
+      replenish
+      blockId
+      block {
+        name
+      }
+      replenishType
+      constraint
+      comment
+      baseUnitRotation
+      allowCycleCountStockMin
+    }
+  }
+}
+    `;
+export const useGetLocationIdsQuery = <
+      TData = GetLocationIdsQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: GetLocationIdsQueryVariables,
+      options?: UseQueryOptions<GetLocationIdsQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetLocationIdsQuery, TError, TData>(
+      ['GetLocationIds', variables],
+      fetcher<GetLocationIdsQuery, GetLocationIdsQueryVariables>(client, GetLocationIdsDocument, variables, headers),
+      options
+    );
+export const CreateLocationDocument = `
+    mutation CreateLocation($input: CreateLocationInput!) {
+  createLocation(input: $input) {
+    __typename
+    ... on Location {
+      id
+      name
+      barcode
+      aisle
+      column
+      level
+      position
+      replenish
+      blockId
+      block {
+        name
+      }
+      replenishType
+      constraint
+      comment
+      baseUnitRotation
+      allowCycleCountStockMin
+    }
+    ... on ValidationError {
+      message
+    }
+  }
+}
+    `;
+export const useCreateLocationMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<CreateLocationMutation, TError, CreateLocationMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<CreateLocationMutation, TError, CreateLocationMutationVariables, TContext>(
+      ['CreateLocation'],
+      (variables?: CreateLocationMutationVariables) => fetcher<CreateLocationMutation, CreateLocationMutationVariables>(client, CreateLocationDocument, variables, headers)(),
+      options
+    );
+export const BulkCreateLocationsDocument = `
+    mutation BulkCreateLocations($input: BulkCreateLocationsInput!) {
+  bulkCreateLocations(input: $input) {
+    __typename
+    ... on Location {
+      id
+      name
+      barcode
+      aisle
+      column
+      level
+      position
+      replenish
+      blockId
+      block {
+        name
+      }
+      replenishType
+      constraint
+      comment
+      baseUnitRotation
+      allowCycleCountStockMin
+    }
+  }
+}
+    `;
+export const useBulkCreateLocationsMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<BulkCreateLocationsMutation, TError, BulkCreateLocationsMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<BulkCreateLocationsMutation, TError, BulkCreateLocationsMutationVariables, TContext>(
+      ['BulkCreateLocations'],
+      (variables?: BulkCreateLocationsMutationVariables) => fetcher<BulkCreateLocationsMutation, BulkCreateLocationsMutationVariables>(client, BulkCreateLocationsDocument, variables, headers)(),
+      options
+    );
+export const DeleteLocationDocument = `
+    mutation DeleteLocation($id: String!) {
+  deleteLocation(id: $id)
+}
+    `;
+export const useDeleteLocationMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<DeleteLocationMutation, TError, DeleteLocationMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<DeleteLocationMutation, TError, DeleteLocationMutationVariables, TContext>(
+      ['DeleteLocation'],
+      (variables?: DeleteLocationMutationVariables) => fetcher<DeleteLocationMutation, DeleteLocationMutationVariables>(client, DeleteLocationDocument, variables, headers)(),
+      options
+    );
+export const UpdateLocationDocument = `
+    mutation UpdateLocation($id: String!, $input: UpdateLocationInput!) {
+  updateLocation(id: $id, input: $input) {
+    id
+    name
+    barcode
+    aisle
+    column
+    level
+    position
+    replenish
+    blockId
+    block {
+      name
+    }
+    replenishType
+    constraint
+    comment
+    baseUnitRotation
+    allowCycleCountStockMin
+  }
+}
+    `;
+export const useUpdateLocationMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<UpdateLocationMutation, TError, UpdateLocationMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<UpdateLocationMutation, TError, UpdateLocationMutationVariables, TContext>(
+      ['UpdateLocation'],
+      (variables?: UpdateLocationMutationVariables) => fetcher<UpdateLocationMutation, UpdateLocationMutationVariables>(client, UpdateLocationDocument, variables, headers)(),
       options
     );
 export const WarehouseLoginDocument = `
@@ -9342,6 +13658,1537 @@ export const useChangePasswordMutation = <
     useMutation<ChangePasswordMutation, TError, ChangePasswordMutationVariables, TContext>(
       ['ChangePassword'],
       (variables?: ChangePasswordMutationVariables) => fetcher<ChangePasswordMutation, ChangePasswordMutationVariables>(client, ChangePasswordDocument, variables, headers)(),
+      options
+    );
+export const GetAllMovementsDocument = `
+    query GetAllMovements($orderBy: [MovementOrderByCriterion!], $filters: MovementSearchFilters, $page: Int!, $itemsPerPage: Int!, $language: String) {
+  movements(
+    orderBy: $orderBy
+    filters: $filters
+    page: $page
+    itemsPerPage: $itemsPerPage
+    language: $language
+  ) {
+    count
+    itemsPerPage
+    totalPages
+    page
+    results {
+      id
+      extras
+      created
+      createdBy
+      modified
+      modifiedBy
+      originalMovement {
+        id
+        extras
+        quantity
+      }
+      quantity
+      initialStatus
+      finalReservation
+      status
+      code
+      type
+      model
+      finalArticle
+      finalQuantity
+      feedback
+      toBeFeedback
+      comment
+      equipmentBarcode
+      priority
+      stockOwnerId
+      articleId
+      originalLocationId
+      finalLocationId
+      goodsInId
+      purchaseOrderId
+      boxId
+      boxLineId
+      originalMovementId
+      returnCodeId
+      actionCodeId
+      initialStatusText
+      finalStatusText
+      statusText
+      typeText
+      modelText
+      codeText
+      priorityText
+    }
+  }
+}
+    `;
+export const useGetAllMovementsQuery = <
+      TData = GetAllMovementsQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: GetAllMovementsQueryVariables,
+      options?: UseQueryOptions<GetAllMovementsQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetAllMovementsQuery, TError, TData>(
+      ['GetAllMovements', variables],
+      fetcher<GetAllMovementsQuery, GetAllMovementsQueryVariables>(client, GetAllMovementsDocument, variables, headers),
+      options
+    );
+export const GetMovementByIdDocument = `
+    query GetMovementById($id: String!, $language: String = "en") {
+  movement(id: $id, language: $language) {
+    id
+    extras
+    created
+    createdBy
+    modified
+    modifiedBy
+    originalMovement {
+      id
+      extras
+      quantity
+    }
+    quantity
+    initialStatus
+    finalReservation
+    status
+    code
+    type
+    model
+    finalArticle
+    finalQuantity
+    feedback
+    toBeFeedback
+    comment
+    equipmentBarcode
+    priority
+    stockOwnerId
+    articleId
+    originalLocationId
+    finalLocationId
+    goodsInId
+    purchaseOrderId
+    boxId
+    boxLineId
+    originalMovementId
+    returnCodeId
+    actionCodeId
+    initialStatusText
+    finalStatusText
+    statusText
+    typeText
+    modelText
+    codeText
+    priorityText
+  }
+}
+    `;
+export const useGetMovementByIdQuery = <
+      TData = GetMovementByIdQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: GetMovementByIdQueryVariables,
+      options?: UseQueryOptions<GetMovementByIdQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetMovementByIdQuery, TError, TData>(
+      ['GetMovementById', variables],
+      fetcher<GetMovementByIdQuery, GetMovementByIdQueryVariables>(client, GetMovementByIdDocument, variables, headers),
+      options
+    );
+export const CreateMovementDocument = `
+    mutation CreateMovement($input: CreateMovementInput!) {
+  createMovement(input: $input) {
+    id
+    extras
+    created
+    createdBy
+    modified
+    modifiedBy
+    originalMovement {
+      id
+      extras
+      quantity
+    }
+    quantity
+    initialStatus
+    finalReservation
+    status
+    code
+    type
+    model
+    finalArticle
+    finalQuantity
+    feedback
+    toBeFeedback
+    comment
+    equipmentBarcode
+    priority
+    stockOwnerId
+    articleId
+    originalLocationId
+    finalLocationId
+    goodsInId
+    purchaseOrderId
+    boxId
+    boxLineId
+    originalMovementId
+    returnCodeId
+    actionCodeId
+    initialStatusText
+    finalStatusText
+    statusText
+    typeText
+    modelText
+    codeText
+    priorityText
+  }
+}
+    `;
+export const useCreateMovementMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<CreateMovementMutation, TError, CreateMovementMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<CreateMovementMutation, TError, CreateMovementMutationVariables, TContext>(
+      ['CreateMovement'],
+      (variables?: CreateMovementMutationVariables) => fetcher<CreateMovementMutation, CreateMovementMutationVariables>(client, CreateMovementDocument, variables, headers)(),
+      options
+    );
+export const DeleteMovementDocument = `
+    mutation DeleteMovement($id: String!) {
+  deleteMovement(id: $id)
+}
+    `;
+export const useDeleteMovementMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<DeleteMovementMutation, TError, DeleteMovementMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<DeleteMovementMutation, TError, DeleteMovementMutationVariables, TContext>(
+      ['DeleteMovement'],
+      (variables?: DeleteMovementMutationVariables) => fetcher<DeleteMovementMutation, DeleteMovementMutationVariables>(client, DeleteMovementDocument, variables, headers)(),
+      options
+    );
+export const UpdateMovementDocument = `
+    mutation UpdateMovement($id: String!, $input: UpdateMovementInput!) {
+  updateMovement(id: $id, input: $input) {
+    id
+    extras
+    created
+    createdBy
+    modified
+    modifiedBy
+    originalMovement {
+      id
+      extras
+      quantity
+    }
+    quantity
+    initialStatus
+    finalReservation
+    status
+    code
+    type
+    model
+    finalArticle
+    finalQuantity
+    feedback
+    toBeFeedback
+    comment
+    equipmentBarcode
+    priority
+    stockOwnerId
+    articleId
+    originalLocationId
+    finalLocationId
+    goodsInId
+    purchaseOrderId
+    boxId
+    boxLineId
+    originalMovementId
+    returnCodeId
+    actionCodeId
+    initialStatusText
+    finalStatusText
+    statusText
+    typeText
+    modelText
+    codeText
+    priorityText
+  }
+}
+    `;
+export const useUpdateMovementMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<UpdateMovementMutation, TError, UpdateMovementMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<UpdateMovementMutation, TError, UpdateMovementMutationVariables, TContext>(
+      ['UpdateMovement'],
+      (variables?: UpdateMovementMutationVariables) => fetcher<UpdateMovementMutation, UpdateMovementMutationVariables>(client, UpdateMovementDocument, variables, headers)(),
+      options
+    );
+export const GetAllPackagingsDocument = `
+    query GetAllPackagings($filters: PackagingSearchFilters, $orderBy: [PackagingOrderByCriterion!], $page: Int!, $itemsPerPage: Int!) {
+  packagings(
+    filters: $filters
+    orderBy: $orderBy
+    page: $page
+    itemsPerPage: $itemsPerPage
+  ) {
+    count
+    itemsPerPage
+    totalPages
+    results {
+      id
+      name
+      description
+      default
+      dispatchable
+      status
+      statusText
+      weight
+      length
+      height
+      width
+      system
+    }
+  }
+}
+    `;
+export const useGetAllPackagingsQuery = <
+      TData = GetAllPackagingsQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: GetAllPackagingsQueryVariables,
+      options?: UseQueryOptions<GetAllPackagingsQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetAllPackagingsQuery, TError, TData>(
+      ['GetAllPackagings', variables],
+      fetcher<GetAllPackagingsQuery, GetAllPackagingsQueryVariables>(client, GetAllPackagingsDocument, variables, headers),
+      options
+    );
+export const GetPackagingByIdDocument = `
+    query GetPackagingById($id: String!) {
+  packaging(id: $id) {
+    id
+    name
+    description
+    default
+    dispatchable
+    status
+    statusText
+    weight
+    length
+    height
+    width
+    closureWeight
+    system
+    extras
+    created
+    createdBy
+    modified
+    modifiedBy
+  }
+}
+    `;
+export const useGetPackagingByIdQuery = <
+      TData = GetPackagingByIdQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: GetPackagingByIdQueryVariables,
+      options?: UseQueryOptions<GetPackagingByIdQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetPackagingByIdQuery, TError, TData>(
+      ['GetPackagingById', variables],
+      fetcher<GetPackagingByIdQuery, GetPackagingByIdQueryVariables>(client, GetPackagingByIdDocument, variables, headers),
+      options
+    );
+export const GetPackagingIdsDocument = `
+    query GetPackagingIds($filters: PackagingSearchFilters, $orderBy: [PackagingOrderByCriterion!], $page: Int!, $itemsPerPage: Int!) {
+  packagings(
+    filters: $filters
+    orderBy: $orderBy
+    page: $page
+    itemsPerPage: $itemsPerPage
+  ) {
+    count
+    itemsPerPage
+    totalPages
+    results {
+      id
+      name
+    }
+  }
+}
+    `;
+export const useGetPackagingIdsQuery = <
+      TData = GetPackagingIdsQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: GetPackagingIdsQueryVariables,
+      options?: UseQueryOptions<GetPackagingIdsQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetPackagingIdsQuery, TError, TData>(
+      ['GetPackagingIds', variables],
+      fetcher<GetPackagingIdsQuery, GetPackagingIdsQueryVariables>(client, GetPackagingIdsDocument, variables, headers),
+      options
+    );
+export const CreatePackagingDocument = `
+    mutation CreatePackaging($input: CreatePackagingInput!) {
+  createPackaging(input: $input) {
+    id
+    name
+    description
+    default
+    dispatchable
+    status
+    statusText
+    weight
+    length
+    height
+    width
+    closureWeight
+    system
+  }
+}
+    `;
+export const useCreatePackagingMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<CreatePackagingMutation, TError, CreatePackagingMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<CreatePackagingMutation, TError, CreatePackagingMutationVariables, TContext>(
+      ['CreatePackaging'],
+      (variables?: CreatePackagingMutationVariables) => fetcher<CreatePackagingMutation, CreatePackagingMutationVariables>(client, CreatePackagingDocument, variables, headers)(),
+      options
+    );
+export const CreateDefaultPackagingDocument = `
+    mutation CreateDefaultPackaging($input: CreatePackagingInput!) {
+  createPackaging(input: $input) {
+    id
+    name
+    description
+    default
+    dispatchable
+    status
+    statusText
+    weight
+    length
+    height
+    width
+    closureWeight
+    system
+  }
+  updatePackagingDefault {
+    id
+    name
+    default
+  }
+}
+    `;
+export const useCreateDefaultPackagingMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<CreateDefaultPackagingMutation, TError, CreateDefaultPackagingMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<CreateDefaultPackagingMutation, TError, CreateDefaultPackagingMutationVariables, TContext>(
+      ['CreateDefaultPackaging'],
+      (variables?: CreateDefaultPackagingMutationVariables) => fetcher<CreateDefaultPackagingMutation, CreateDefaultPackagingMutationVariables>(client, CreateDefaultPackagingDocument, variables, headers)(),
+      options
+    );
+export const DeletePackagingDocument = `
+    mutation DeletePackaging($id: String!) {
+  deletePackaging(id: $id)
+}
+    `;
+export const useDeletePackagingMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<DeletePackagingMutation, TError, DeletePackagingMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<DeletePackagingMutation, TError, DeletePackagingMutationVariables, TContext>(
+      ['DeletePackaging'],
+      (variables?: DeletePackagingMutationVariables) => fetcher<DeletePackagingMutation, DeletePackagingMutationVariables>(client, DeletePackagingDocument, variables, headers)(),
+      options
+    );
+export const SoftDeletePackagingDocument = `
+    mutation SoftDeletePackaging($packagingId: String!) {
+  softDeletePackaging(packagingId: $packagingId)
+}
+    `;
+export const useSoftDeletePackagingMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<SoftDeletePackagingMutation, TError, SoftDeletePackagingMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<SoftDeletePackagingMutation, TError, SoftDeletePackagingMutationVariables, TContext>(
+      ['SoftDeletePackaging'],
+      (variables?: SoftDeletePackagingMutationVariables) => fetcher<SoftDeletePackagingMutation, SoftDeletePackagingMutationVariables>(client, SoftDeletePackagingDocument, variables, headers)(),
+      options
+    );
+export const UpdatePackagingDocument = `
+    mutation UpdatePackaging($id: String!, $input: UpdatePackagingInput!) {
+  updatePackaging(id: $id, input: $input) {
+    id
+    name
+    description
+    default
+    dispatchable
+    status
+    statusText
+    weight
+    length
+    height
+    width
+    closureWeight
+    system
+  }
+}
+    `;
+export const useUpdatePackagingMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<UpdatePackagingMutation, TError, UpdatePackagingMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<UpdatePackagingMutation, TError, UpdatePackagingMutationVariables, TContext>(
+      ['UpdatePackaging'],
+      (variables?: UpdatePackagingMutationVariables) => fetcher<UpdatePackagingMutation, UpdatePackagingMutationVariables>(client, UpdatePackagingDocument, variables, headers)(),
+      options
+    );
+export const UpdateDefaultPackagingDocument = `
+    mutation UpdateDefaultPackaging($id: String!, $input: UpdatePackagingInput!) {
+  updatePackaging(id: $id, input: $input) {
+    id
+    name
+    description
+    default
+    dispatchable
+    status
+    statusText
+    weight
+    length
+    height
+    width
+    closureWeight
+    system
+  }
+  updatePackagingDefault {
+    id
+    name
+    default
+  }
+}
+    `;
+export const useUpdateDefaultPackagingMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<UpdateDefaultPackagingMutation, TError, UpdateDefaultPackagingMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<UpdateDefaultPackagingMutation, TError, UpdateDefaultPackagingMutationVariables, TContext>(
+      ['UpdateDefaultPackaging'],
+      (variables?: UpdateDefaultPackagingMutationVariables) => fetcher<UpdateDefaultPackagingMutation, UpdateDefaultPackagingMutationVariables>(client, UpdateDefaultPackagingDocument, variables, headers)(),
+      options
+    );
+export const GetAllParamsDocument = `
+    query getAllParams($filters: ParameterSearchFilters, $orderBy: [ParameterOrderByCriterion!], $page: Int!, $itemsPerPage: Int!) {
+  parameters(
+    filters: $filters
+    orderBy: $orderBy
+    page: $page
+    itemsPerPage: $itemsPerPage
+  ) {
+    count
+    itemsPerPage
+    totalPages
+    results {
+      id
+      scope
+      code
+      value
+      extras
+      created
+      createdBy
+      modified
+      modifiedBy
+      translation
+      system
+    }
+  }
+}
+    `;
+export const useGetAllParamsQuery = <
+      TData = GetAllParamsQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: GetAllParamsQueryVariables,
+      options?: UseQueryOptions<GetAllParamsQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetAllParamsQuery, TError, TData>(
+      ['getAllParams', variables],
+      fetcher<GetAllParamsQuery, GetAllParamsQueryVariables>(client, GetAllParamsDocument, variables, headers),
+      options
+    );
+export const GetParameterByIdDocument = `
+    query GetParameterById($id: String!) {
+  parameter(id: $id) {
+    id
+    scope
+    code
+    value
+    extras
+    created
+    createdBy
+    modified
+    modifiedBy
+    translation
+    system
+  }
+}
+    `;
+export const useGetParameterByIdQuery = <
+      TData = GetParameterByIdQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: GetParameterByIdQueryVariables,
+      options?: UseQueryOptions<GetParameterByIdQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetParameterByIdQuery, TError, TData>(
+      ['GetParameterById', variables],
+      fetcher<GetParameterByIdQuery, GetParameterByIdQueryVariables>(client, GetParameterByIdDocument, variables, headers),
+      options
+    );
+export const CreateParameterDocument = `
+    mutation CreateParameter($input: CreateParameterInput!) {
+  createParameter(input: $input) {
+    id
+    scope
+    code
+    value
+  }
+}
+    `;
+export const useCreateParameterMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<CreateParameterMutation, TError, CreateParameterMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<CreateParameterMutation, TError, CreateParameterMutationVariables, TContext>(
+      ['CreateParameter'],
+      (variables?: CreateParameterMutationVariables) => fetcher<CreateParameterMutation, CreateParameterMutationVariables>(client, CreateParameterDocument, variables, headers)(),
+      options
+    );
+export const DeleteParameterDocument = `
+    mutation DeleteParameter($id: String!) {
+  deleteParameter(parameterId: $id)
+}
+    `;
+export const useDeleteParameterMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<DeleteParameterMutation, TError, DeleteParameterMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<DeleteParameterMutation, TError, DeleteParameterMutationVariables, TContext>(
+      ['DeleteParameter'],
+      (variables?: DeleteParameterMutationVariables) => fetcher<DeleteParameterMutation, DeleteParameterMutationVariables>(client, DeleteParameterDocument, variables, headers)(),
+      options
+    );
+export const UpdateParameterDocument = `
+    mutation UpdateParameter($id: String!, $input: UpdateParameterInput!) {
+  updateParameter(id: $id, input: $input) {
+    id
+    scope
+    code
+    value
+  }
+}
+    `;
+export const useUpdateParameterMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<UpdateParameterMutation, TError, UpdateParameterMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<UpdateParameterMutation, TError, UpdateParameterMutationVariables, TContext>(
+      ['UpdateParameter'],
+      (variables?: UpdateParameterMutationVariables) => fetcher<UpdateParameterMutation, UpdateParameterMutationVariables>(client, UpdateParameterDocument, variables, headers)(),
+      options
+    );
+export const GetAllPatternsDocument = `
+    query GetAllPatterns($filters: PatternSearchFilters, $orderBy: [PatternOrderByCriterion!], $page: Int!, $itemsPerPage: Int!, $language: String) {
+  patterns(
+    filters: $filters
+    orderBy: $orderBy
+    page: $page
+    itemsPerPage: $itemsPerPage
+    language: $language
+  ) {
+    count
+    itemsPerPage
+    totalPages
+    results {
+      id
+      paths {
+        id
+        name
+        status
+        extras
+      }
+      stockOwner {
+        id
+        name
+      }
+      extras
+      created
+      createdBy
+      modified
+      modifiedBy
+      name
+      patternType
+      status
+      stockOwnerId
+      patternTypeText
+      statusText
+    }
+  }
+}
+    `;
+export const useGetAllPatternsQuery = <
+      TData = GetAllPatternsQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: GetAllPatternsQueryVariables,
+      options?: UseQueryOptions<GetAllPatternsQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetAllPatternsQuery, TError, TData>(
+      ['GetAllPatterns', variables],
+      fetcher<GetAllPatternsQuery, GetAllPatternsQueryVariables>(client, GetAllPatternsDocument, variables, headers),
+      options
+    );
+export const GetPatternByIdDocument = `
+    query GetPatternById($id: String!, $language: String = "en") {
+  pattern(id: $id, language: $language) {
+    id
+    paths {
+      id
+      name
+      status
+      extras
+    }
+    stockOwner {
+      id
+      name
+    }
+    extras
+    created
+    createdBy
+    modified
+    modifiedBy
+    name
+    patternType
+    status
+    stockOwnerId
+    patternTypeText
+    statusText
+  }
+}
+    `;
+export const useGetPatternByIdQuery = <
+      TData = GetPatternByIdQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: GetPatternByIdQueryVariables,
+      options?: UseQueryOptions<GetPatternByIdQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetPatternByIdQuery, TError, TData>(
+      ['GetPatternById', variables],
+      fetcher<GetPatternByIdQuery, GetPatternByIdQueryVariables>(client, GetPatternByIdDocument, variables, headers),
+      options
+    );
+export const CreatePatternDocument = `
+    mutation CreatePattern($input: CreatePatternInput!) {
+  createPattern(input: $input) {
+    id
+    paths {
+      id
+      name
+      status
+      extras
+    }
+    stockOwner {
+      id
+      name
+    }
+    extras
+    created
+    createdBy
+    modified
+    modifiedBy
+    name
+    patternType
+    status
+    stockOwnerId
+    patternTypeText
+    statusText
+  }
+}
+    `;
+export const useCreatePatternMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<CreatePatternMutation, TError, CreatePatternMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<CreatePatternMutation, TError, CreatePatternMutationVariables, TContext>(
+      ['CreatePattern'],
+      (variables?: CreatePatternMutationVariables) => fetcher<CreatePatternMutation, CreatePatternMutationVariables>(client, CreatePatternDocument, variables, headers)(),
+      options
+    );
+export const DeletePatternDocument = `
+    mutation DeletePattern($id: String!) {
+  deletePattern(id: $id)
+}
+    `;
+export const useDeletePatternMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<DeletePatternMutation, TError, DeletePatternMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<DeletePatternMutation, TError, DeletePatternMutationVariables, TContext>(
+      ['DeletePattern'],
+      (variables?: DeletePatternMutationVariables) => fetcher<DeletePatternMutation, DeletePatternMutationVariables>(client, DeletePatternDocument, variables, headers)(),
+      options
+    );
+export const UpdatePatternDocument = `
+    mutation UpdatePattern($id: String!, $input: UpdatePatternInput!) {
+  updatePattern(id: $id, input: $input) {
+    id
+    paths {
+      id
+      name
+      status
+      extras
+    }
+    stockOwner {
+      id
+      name
+    }
+    extras
+    created
+    createdBy
+    modified
+    modifiedBy
+    name
+    patternType
+    status
+    stockOwnerId
+    patternTypeText
+    statusText
+  }
+}
+    `;
+export const useUpdatePatternMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<UpdatePatternMutation, TError, UpdatePatternMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<UpdatePatternMutation, TError, UpdatePatternMutationVariables, TContext>(
+      ['UpdatePattern'],
+      (variables?: UpdatePatternMutationVariables) => fetcher<UpdatePatternMutation, UpdatePatternMutationVariables>(client, UpdatePatternDocument, variables, headers)(),
+      options
+    );
+export const GetPatternIdsDocument = `
+    query GetPatternIds($filters: PatternSearchFilters, $orderBy: [PatternOrderByCriterion!], $page: Int!, $itemsPerPage: Int!) {
+  patterns(
+    filters: $filters
+    orderBy: $orderBy
+    page: $page
+    itemsPerPage: $itemsPerPage
+  ) {
+    count
+    itemsPerPage
+    totalPages
+    results {
+      id
+      name
+    }
+  }
+}
+    `;
+export const useGetPatternIdsQuery = <
+      TData = GetPatternIdsQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: GetPatternIdsQueryVariables,
+      options?: UseQueryOptions<GetPatternIdsQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetPatternIdsQuery, TError, TData>(
+      ['GetPatternIds', variables],
+      fetcher<GetPatternIdsQuery, GetPatternIdsQueryVariables>(client, GetPatternIdsDocument, variables, headers),
+      options
+    );
+export const GetAllPatternPathsDocument = `
+    query GetAllPatternPaths($filters: PatternPathSearchFilters, $orderBy: [PatternPathOrderByCriterion!], $page: Int!, $itemsPerPage: Int!, $language: String) {
+  patternPaths(
+    filters: $filters
+    orderBy: $orderBy
+    page: $page
+    itemsPerPage: $itemsPerPage
+    language: $language
+  ) {
+    count
+    itemsPerPage
+    totalPages
+    results {
+      id
+      extras
+      created
+      createdBy
+      modified
+      modifiedBy
+      name
+      status
+      patternId
+    }
+  }
+}
+    `;
+export const useGetAllPatternPathsQuery = <
+      TData = GetAllPatternPathsQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: GetAllPatternPathsQueryVariables,
+      options?: UseQueryOptions<GetAllPatternPathsQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetAllPatternPathsQuery, TError, TData>(
+      ['GetAllPatternPaths', variables],
+      fetcher<GetAllPatternPathsQuery, GetAllPatternPathsQueryVariables>(client, GetAllPatternPathsDocument, variables, headers),
+      options
+    );
+export const GetPatternPathByIdDocument = `
+    query GetPatternPathById($id: String!, $language: String = "en") {
+  patternPath(id: $id, language: $language) {
+    id
+    extras
+    created
+    createdBy
+    modified
+    modifiedBy
+    name
+    status
+    patternId
+  }
+}
+    `;
+export const useGetPatternPathByIdQuery = <
+      TData = GetPatternPathByIdQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: GetPatternPathByIdQueryVariables,
+      options?: UseQueryOptions<GetPatternPathByIdQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetPatternPathByIdQuery, TError, TData>(
+      ['GetPatternPathById', variables],
+      fetcher<GetPatternPathByIdQuery, GetPatternPathByIdQueryVariables>(client, GetPatternPathByIdDocument, variables, headers),
+      options
+    );
+export const CreatePatternPathDocument = `
+    mutation CreatePatternPath($input: CreatePatternPathInput!) {
+  createPatternPath(input: $input) {
+    id
+    extras
+    created
+    createdBy
+    modified
+    modifiedBy
+    name
+    status
+    patternId
+  }
+}
+    `;
+export const useCreatePatternPathMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<CreatePatternPathMutation, TError, CreatePatternPathMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<CreatePatternPathMutation, TError, CreatePatternPathMutationVariables, TContext>(
+      ['CreatePatternPath'],
+      (variables?: CreatePatternPathMutationVariables) => fetcher<CreatePatternPathMutation, CreatePatternPathMutationVariables>(client, CreatePatternPathDocument, variables, headers)(),
+      options
+    );
+export const DeletePatternPathDocument = `
+    mutation DeletePatternPath($id: String!) {
+  deletePatternPath(id: $id)
+}
+    `;
+export const useDeletePatternPathMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<DeletePatternPathMutation, TError, DeletePatternPathMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<DeletePatternPathMutation, TError, DeletePatternPathMutationVariables, TContext>(
+      ['DeletePatternPath'],
+      (variables?: DeletePatternPathMutationVariables) => fetcher<DeletePatternPathMutation, DeletePatternPathMutationVariables>(client, DeletePatternPathDocument, variables, headers)(),
+      options
+    );
+export const UpdatePatternPathDocument = `
+    mutation UpdatePatternPath($id: String!, $input: UpdatePatternPathInput!) {
+  updatePatternPath(id: $id, input: $input) {
+    id
+    extras
+    created
+    createdBy
+    modified
+    modifiedBy
+    name
+    status
+    patternId
+  }
+}
+    `;
+export const useUpdatePatternPathMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<UpdatePatternPathMutation, TError, UpdatePatternPathMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<UpdatePatternPathMutation, TError, UpdatePatternPathMutationVariables, TContext>(
+      ['UpdatePatternPath'],
+      (variables?: UpdatePatternPathMutationVariables) => fetcher<UpdatePatternPathMutation, UpdatePatternPathMutationVariables>(client, UpdatePatternPathDocument, variables, headers)(),
+      options
+    );
+export const GetPatternPathLocationsDocument = `
+    query GetPatternPathLocations($filters: PatternPathLocationSearchFilters, $orderBy: [PatternPathLocationOrderByCriterion!], $page: Int!, $itemsPerPage: Int!, $language: String) {
+  patternPathLocations(
+    filters: $filters
+    orderBy: $orderBy
+    page: $page
+    itemsPerPage: $itemsPerPage
+    language: $language
+  ) {
+    count
+    totalPages
+    page
+    itemsPerPage
+    results {
+      id
+      extras
+      created
+      createdBy
+      modified
+      modifiedBy
+      order
+      locationId
+      patternPathId
+      location {
+        id
+        name
+        position
+        column
+        level
+        aisle
+      }
+    }
+  }
+}
+    `;
+export const useGetPatternPathLocationsQuery = <
+      TData = GetPatternPathLocationsQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: GetPatternPathLocationsQueryVariables,
+      options?: UseQueryOptions<GetPatternPathLocationsQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetPatternPathLocationsQuery, TError, TData>(
+      ['GetPatternPathLocations', variables],
+      fetcher<GetPatternPathLocationsQuery, GetPatternPathLocationsQueryVariables>(client, GetPatternPathLocationsDocument, variables, headers),
+      options
+    );
+export const GetAllPurchaseOrdersDocument = `
+    query GetAllPurchaseOrders($orderBy: [PurchaseOrderOrderByCriterion!], $filters: PurchaseOrderSearchFilters, $page: Int!, $itemsPerPage: Int!, $language: String) {
+  purchaseOrders(
+    orderBy: $orderBy
+    filters: $filters
+    page: $page
+    itemsPerPage: $itemsPerPage
+    language: $language
+  ) {
+    count
+    itemsPerPage
+    totalPages
+    page
+    results {
+      id
+      extras
+      created
+      createdBy
+      modified
+      modifiedBy
+      name
+      status
+      type
+      supplier
+      orderDate
+      expectedGoodsInDate
+      comment
+      stockOwnerId
+      statusText
+      typeText
+    }
+  }
+}
+    `;
+export const useGetAllPurchaseOrdersQuery = <
+      TData = GetAllPurchaseOrdersQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: GetAllPurchaseOrdersQueryVariables,
+      options?: UseQueryOptions<GetAllPurchaseOrdersQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetAllPurchaseOrdersQuery, TError, TData>(
+      ['GetAllPurchaseOrders', variables],
+      fetcher<GetAllPurchaseOrdersQuery, GetAllPurchaseOrdersQueryVariables>(client, GetAllPurchaseOrdersDocument, variables, headers),
+      options
+    );
+export const GetPurchaseOrderIdsDocument = `
+    query GetPurchaseOrderIds($filters: PurchaseOrderSearchFilters, $orderBy: [PurchaseOrderOrderByCriterion!], $page: Int!, $itemsPerPage: Int!) {
+  purchaseOrders(
+    filters: $filters
+    orderBy: $orderBy
+    page: $page
+    itemsPerPage: $itemsPerPage
+  ) {
+    count
+    itemsPerPage
+    totalPages
+    results {
+      id
+      name
+    }
+  }
+}
+    `;
+export const useGetPurchaseOrderIdsQuery = <
+      TData = GetPurchaseOrderIdsQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: GetPurchaseOrderIdsQueryVariables,
+      options?: UseQueryOptions<GetPurchaseOrderIdsQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetPurchaseOrderIdsQuery, TError, TData>(
+      ['GetPurchaseOrderIds', variables],
+      fetcher<GetPurchaseOrderIdsQuery, GetPurchaseOrderIdsQueryVariables>(client, GetPurchaseOrderIdsDocument, variables, headers),
+      options
+    );
+export const GetPurchaseOrderByIdDocument = `
+    query GetPurchaseOrderById($id: String!, $language: String = "en") {
+  purchaseOrder(id: $id, language: $language) {
+    id
+    extras
+    created
+    createdBy
+    modified
+    modifiedBy
+    name
+    status
+    type
+    supplier
+    orderDate
+    expectedGoodsInDate
+    comment
+    stockOwnerId
+    statusText
+    typeText
+  }
+}
+    `;
+export const useGetPurchaseOrderByIdQuery = <
+      TData = GetPurchaseOrderByIdQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: GetPurchaseOrderByIdQueryVariables,
+      options?: UseQueryOptions<GetPurchaseOrderByIdQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetPurchaseOrderByIdQuery, TError, TData>(
+      ['GetPurchaseOrderById', variables],
+      fetcher<GetPurchaseOrderByIdQuery, GetPurchaseOrderByIdQueryVariables>(client, GetPurchaseOrderByIdDocument, variables, headers),
+      options
+    );
+export const CreatePurchaseOrderDocument = `
+    mutation CreatePurchaseOrder($input: CreatePurchaseOrderInput!) {
+  createPurchaseOrder(input: $input) {
+    id
+    extras
+    created
+    createdBy
+    modified
+    modifiedBy
+    name
+    status
+    type
+    supplier
+    orderDate
+    expectedGoodsInDate
+    comment
+    stockOwnerId
+    statusText
+    typeText
+  }
+}
+    `;
+export const useCreatePurchaseOrderMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<CreatePurchaseOrderMutation, TError, CreatePurchaseOrderMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<CreatePurchaseOrderMutation, TError, CreatePurchaseOrderMutationVariables, TContext>(
+      ['CreatePurchaseOrder'],
+      (variables?: CreatePurchaseOrderMutationVariables) => fetcher<CreatePurchaseOrderMutation, CreatePurchaseOrderMutationVariables>(client, CreatePurchaseOrderDocument, variables, headers)(),
+      options
+    );
+export const DeletePurchaseOrderDocument = `
+    mutation DeletePurchaseOrder($id: String!) {
+  deletePurchaseOrder(id: $id)
+}
+    `;
+export const useDeletePurchaseOrderMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<DeletePurchaseOrderMutation, TError, DeletePurchaseOrderMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<DeletePurchaseOrderMutation, TError, DeletePurchaseOrderMutationVariables, TContext>(
+      ['DeletePurchaseOrder'],
+      (variables?: DeletePurchaseOrderMutationVariables) => fetcher<DeletePurchaseOrderMutation, DeletePurchaseOrderMutationVariables>(client, DeletePurchaseOrderDocument, variables, headers)(),
+      options
+    );
+export const SoftDeletePurchaseOrderDocument = `
+    mutation SoftDeletePurchaseOrder($purchaseOrderId: String!) {
+  softDeletePurchaseOrder(purchaseOrderId: $purchaseOrderId)
+}
+    `;
+export const useSoftDeletePurchaseOrderMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<SoftDeletePurchaseOrderMutation, TError, SoftDeletePurchaseOrderMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<SoftDeletePurchaseOrderMutation, TError, SoftDeletePurchaseOrderMutationVariables, TContext>(
+      ['SoftDeletePurchaseOrder'],
+      (variables?: SoftDeletePurchaseOrderMutationVariables) => fetcher<SoftDeletePurchaseOrderMutation, SoftDeletePurchaseOrderMutationVariables>(client, SoftDeletePurchaseOrderDocument, variables, headers)(),
+      options
+    );
+export const UpdatePurchaseOrderDocument = `
+    mutation UpdatePurchaseOrder($id: String!, $input: UpdatePurchaseOrderInput!) {
+  updatePurchaseOrder(id: $id, input: $input) {
+    id
+    extras
+    created
+    createdBy
+    modified
+    modifiedBy
+    name
+    status
+    type
+    supplier
+    orderDate
+    expectedGoodsInDate
+    comment
+    stockOwnerId
+    statusText
+    typeText
+  }
+}
+    `;
+export const useUpdatePurchaseOrderMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<UpdatePurchaseOrderMutation, TError, UpdatePurchaseOrderMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<UpdatePurchaseOrderMutation, TError, UpdatePurchaseOrderMutationVariables, TContext>(
+      ['UpdatePurchaseOrder'],
+      (variables?: UpdatePurchaseOrderMutationVariables) => fetcher<UpdatePurchaseOrderMutation, UpdatePurchaseOrderMutationVariables>(client, UpdatePurchaseOrderDocument, variables, headers)(),
+      options
+    );
+export const GetAllPurchaseOrderLinesDocument = `
+    query GetAllPurchaseOrderLines($orderBy: [PurchaseOrderLineOrderByCriterion!], $filters: PurchaseOrderLineSearchFilters, $page: Int!, $itemsPerPage: Int!, $language: String) {
+  purchaseOrderLines(
+    orderBy: $orderBy
+    filters: $filters
+    page: $page
+    itemsPerPage: $itemsPerPage
+    language: $language
+  ) {
+    count
+    itemsPerPage
+    totalPages
+    page
+    results {
+      id
+      extras
+      created
+      createdBy
+      modified
+      modifiedBy
+      quantity
+      quantityMax
+      receivedQuantity
+      reservedQuantity
+      status
+      reservation
+      blockingStatus
+      stockOwnerId
+      purchaseOrderId
+      articleId
+      originalPurchaseOrder
+      originalPurchaseOrderLine
+      statusText
+      blockingStatusText
+    }
+  }
+}
+    `;
+export const useGetAllPurchaseOrderLinesQuery = <
+      TData = GetAllPurchaseOrderLinesQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: GetAllPurchaseOrderLinesQueryVariables,
+      options?: UseQueryOptions<GetAllPurchaseOrderLinesQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetAllPurchaseOrderLinesQuery, TError, TData>(
+      ['GetAllPurchaseOrderLines', variables],
+      fetcher<GetAllPurchaseOrderLinesQuery, GetAllPurchaseOrderLinesQueryVariables>(client, GetAllPurchaseOrderLinesDocument, variables, headers),
+      options
+    );
+export const GetPurchaseOrderLineByIdDocument = `
+    query GetPurchaseOrderLineById($id: String!, $language: String = "en") {
+  purchaseOrderLine(id: $id, language: $language) {
+    id
+    extras
+    created
+    createdBy
+    modified
+    modifiedBy
+    quantity
+    quantityMax
+    receivedQuantity
+    reservedQuantity
+    status
+    reservation
+    blockingStatus
+    stockOwnerId
+    purchaseOrderId
+    articleId
+    originalPurchaseOrder
+    originalPurchaseOrderLine
+    statusText
+    blockingStatusText
+  }
+}
+    `;
+export const useGetPurchaseOrderLineByIdQuery = <
+      TData = GetPurchaseOrderLineByIdQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: GetPurchaseOrderLineByIdQueryVariables,
+      options?: UseQueryOptions<GetPurchaseOrderLineByIdQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetPurchaseOrderLineByIdQuery, TError, TData>(
+      ['GetPurchaseOrderLineById', variables],
+      fetcher<GetPurchaseOrderLineByIdQuery, GetPurchaseOrderLineByIdQueryVariables>(client, GetPurchaseOrderLineByIdDocument, variables, headers),
+      options
+    );
+export const CreatePurchaseOrderLineDocument = `
+    mutation CreatePurchaseOrderLine($input: CreatePurchaseOrderLineInput!) {
+  createPurchaseOrderLine(input: $input) {
+    id
+    extras
+    created
+    createdBy
+    modified
+    modifiedBy
+    quantity
+    quantityMax
+    receivedQuantity
+    reservedQuantity
+    status
+    reservation
+    blockingStatus
+    stockOwnerId
+    purchaseOrderId
+    articleId
+    originalPurchaseOrder
+    originalPurchaseOrderLine
+    statusText
+    blockingStatusText
+  }
+}
+    `;
+export const useCreatePurchaseOrderLineMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<CreatePurchaseOrderLineMutation, TError, CreatePurchaseOrderLineMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<CreatePurchaseOrderLineMutation, TError, CreatePurchaseOrderLineMutationVariables, TContext>(
+      ['CreatePurchaseOrderLine'],
+      (variables?: CreatePurchaseOrderLineMutationVariables) => fetcher<CreatePurchaseOrderLineMutation, CreatePurchaseOrderLineMutationVariables>(client, CreatePurchaseOrderLineDocument, variables, headers)(),
+      options
+    );
+export const DeletePurchaseOrderLineDocument = `
+    mutation DeletePurchaseOrderLine($id: String!) {
+  deletePurchaseOrderLine(id: $id)
+}
+    `;
+export const useDeletePurchaseOrderLineMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<DeletePurchaseOrderLineMutation, TError, DeletePurchaseOrderLineMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<DeletePurchaseOrderLineMutation, TError, DeletePurchaseOrderLineMutationVariables, TContext>(
+      ['DeletePurchaseOrderLine'],
+      (variables?: DeletePurchaseOrderLineMutationVariables) => fetcher<DeletePurchaseOrderLineMutation, DeletePurchaseOrderLineMutationVariables>(client, DeletePurchaseOrderLineDocument, variables, headers)(),
+      options
+    );
+export const UpdatePurchaseOrderLineDocument = `
+    mutation UpdatePurchaseOrderLine($id: String!, $input: UpdatePurchaseOrderLineInput!) {
+  updatePurchaseOrderLine(id: $id, input: $input) {
+    id
+    extras
+    created
+    createdBy
+    modified
+    modifiedBy
+    quantity
+    quantityMax
+    receivedQuantity
+    reservedQuantity
+    status
+    reservation
+    blockingStatus
+    stockOwnerId
+    purchaseOrderId
+    articleId
+    originalPurchaseOrder
+    originalPurchaseOrderLine
+    statusText
+    blockingStatusText
+  }
+}
+    `;
+export const useUpdatePurchaseOrderLineMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<UpdatePurchaseOrderLineMutation, TError, UpdatePurchaseOrderLineMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<UpdatePurchaseOrderLineMutation, TError, UpdatePurchaseOrderLineMutationVariables, TContext>(
+      ['UpdatePurchaseOrderLine'],
+      (variables?: UpdatePurchaseOrderLineMutationVariables) => fetcher<UpdatePurchaseOrderLineMutation, UpdatePurchaseOrderLineMutationVariables>(client, UpdatePurchaseOrderLineDocument, variables, headers)(),
       options
     );
 export const GetAllReturnCodesDocument = `
@@ -9498,6 +15345,693 @@ export const useUpdateReturnCodeMutation = <
     useMutation<UpdateReturnCodeMutation, TError, UpdateReturnCodeMutationVariables, TContext>(
       ['UpdateReturnCode'],
       (variables?: UpdateReturnCodeMutationVariables) => fetcher<UpdateReturnCodeMutation, UpdateReturnCodeMutationVariables>(client, UpdateReturnCodeDocument, variables, headers)(),
+      options
+    );
+export const SimpleGetInProgressStockOwnersDocument = `
+    query SimpleGetInProgressStockOwners {
+  stockOwners(filters: {status: 450}) {
+    results {
+      id
+      name
+    }
+  }
+}
+    `;
+export const useSimpleGetInProgressStockOwnersQuery = <
+      TData = SimpleGetInProgressStockOwnersQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables?: SimpleGetInProgressStockOwnersQueryVariables,
+      options?: UseQueryOptions<SimpleGetInProgressStockOwnersQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<SimpleGetInProgressStockOwnersQuery, TError, TData>(
+      variables === undefined ? ['SimpleGetInProgressStockOwners'] : ['SimpleGetInProgressStockOwners', variables],
+      fetcher<SimpleGetInProgressStockOwnersQuery, SimpleGetInProgressStockOwnersQueryVariables>(client, SimpleGetInProgressStockOwnersDocument, variables, headers),
+      options
+    );
+export const SimpleGetAllArticlesDocument = `
+    query SimpleGetAllArticles {
+  articles {
+    results {
+      id
+      name
+    }
+  }
+}
+    `;
+export const useSimpleGetAllArticlesQuery = <
+      TData = SimpleGetAllArticlesQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables?: SimpleGetAllArticlesQueryVariables,
+      options?: UseQueryOptions<SimpleGetAllArticlesQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<SimpleGetAllArticlesQuery, TError, TData>(
+      variables === undefined ? ['SimpleGetAllArticles'] : ['SimpleGetAllArticles', variables],
+      fetcher<SimpleGetAllArticlesQuery, SimpleGetAllArticlesQueryVariables>(client, SimpleGetAllArticlesDocument, variables, headers),
+      options
+    );
+export const GetAllArticleSetDocument = `
+    query GetAllArticleSet($filters: ArticleSetSearchFilters, $orderBy: [ArticleSetOrderByCriterion!], $page: Int!, $itemsPerPage: Int!) {
+  articleSets(
+    filters: $filters
+    orderBy: $orderBy
+    page: $page
+    itemsPerPage: $itemsPerPage
+  ) {
+    count
+    itemsPerPage
+    totalPages
+    results {
+      id
+      name
+      comment
+      stockOwnerId
+      stockOwner {
+        name
+      }
+      articleId
+      article {
+        name
+        additionalDescription
+      }
+      extras
+      created
+      createdBy
+      modified
+      modifiedBy
+    }
+  }
+}
+    `;
+export const useGetAllArticleSetQuery = <
+      TData = GetAllArticleSetQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: GetAllArticleSetQueryVariables,
+      options?: UseQueryOptions<GetAllArticleSetQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetAllArticleSetQuery, TError, TData>(
+      ['GetAllArticleSet', variables],
+      fetcher<GetAllArticleSetQuery, GetAllArticleSetQueryVariables>(client, GetAllArticleSetDocument, variables, headers),
+      options
+    );
+export const GetArticleSetByIdDocument = `
+    query GetArticleSetById($id: String!) {
+  articleSet(id: $id) {
+    id
+    name
+    comment
+    stockOwnerId
+    stockOwner {
+      name
+    }
+    articleId
+    article {
+      name
+      additionalDescription
+    }
+    extras
+    created
+    createdBy
+    modified
+    modifiedBy
+  }
+}
+    `;
+export const useGetArticleSetByIdQuery = <
+      TData = GetArticleSetByIdQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: GetArticleSetByIdQueryVariables,
+      options?: UseQueryOptions<GetArticleSetByIdQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetArticleSetByIdQuery, TError, TData>(
+      ['GetArticleSetById', variables],
+      fetcher<GetArticleSetByIdQuery, GetArticleSetByIdQueryVariables>(client, GetArticleSetByIdDocument, variables, headers),
+      options
+    );
+export const GetArticleSetIdsDocument = `
+    query GetArticleSetIds($filters: ArticleSetSearchFilters, $orderBy: [ArticleSetOrderByCriterion!], $page: Int!, $itemsPerPage: Int!) {
+  articleSets(
+    filters: $filters
+    orderBy: $orderBy
+    page: $page
+    itemsPerPage: $itemsPerPage
+  ) {
+    count
+    itemsPerPage
+    totalPages
+    results {
+      id
+      name
+    }
+  }
+}
+    `;
+export const useGetArticleSetIdsQuery = <
+      TData = GetArticleSetIdsQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: GetArticleSetIdsQueryVariables,
+      options?: UseQueryOptions<GetArticleSetIdsQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetArticleSetIdsQuery, TError, TData>(
+      ['GetArticleSetIds', variables],
+      fetcher<GetArticleSetIdsQuery, GetArticleSetIdsQueryVariables>(client, GetArticleSetIdsDocument, variables, headers),
+      options
+    );
+export const CreateArticleSetDocument = `
+    mutation CreateArticleSet($input: CreateArticleSetInput!) {
+  createArticleSet(input: $input) {
+    id
+    name
+    comment
+    stockOwnerId
+    articleId
+  }
+}
+    `;
+export const useCreateArticleSetMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<CreateArticleSetMutation, TError, CreateArticleSetMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<CreateArticleSetMutation, TError, CreateArticleSetMutationVariables, TContext>(
+      ['CreateArticleSet'],
+      (variables?: CreateArticleSetMutationVariables) => fetcher<CreateArticleSetMutation, CreateArticleSetMutationVariables>(client, CreateArticleSetDocument, variables, headers)(),
+      options
+    );
+export const DeleteArticleSetDocument = `
+    mutation DeleteArticleSet($id: String!) {
+  deleteArticleSet(id: $id)
+}
+    `;
+export const useDeleteArticleSetMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<DeleteArticleSetMutation, TError, DeleteArticleSetMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<DeleteArticleSetMutation, TError, DeleteArticleSetMutationVariables, TContext>(
+      ['DeleteArticleSet'],
+      (variables?: DeleteArticleSetMutationVariables) => fetcher<DeleteArticleSetMutation, DeleteArticleSetMutationVariables>(client, DeleteArticleSetDocument, variables, headers)(),
+      options
+    );
+export const UpdateArticleSetDocument = `
+    mutation UpdateArticleSet($id: String!, $input: UpdateArticleSetInput!) {
+  updateArticleSet(id: $id, input: $input) {
+    id
+    name
+    comment
+    stockOwnerId
+    articleId
+  }
+}
+    `;
+export const useUpdateArticleSetMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<UpdateArticleSetMutation, TError, UpdateArticleSetMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<UpdateArticleSetMutation, TError, UpdateArticleSetMutationVariables, TContext>(
+      ['UpdateArticleSet'],
+      (variables?: UpdateArticleSetMutationVariables) => fetcher<UpdateArticleSetMutation, UpdateArticleSetMutationVariables>(client, UpdateArticleSetDocument, variables, headers)(),
+      options
+    );
+export const GetAllArticleSetDetailsDocument = `
+    query GetAllArticleSetDetails($filters: ArticleSetDetailSearchFilters, $orderBy: [ArticleSetDetailOrderByCriterion!], $page: Int!, $itemsPerPage: Int!) {
+  articleSetDetails(
+    filters: $filters
+    orderBy: $orderBy
+    page: $page
+    itemsPerPage: $itemsPerPage
+  ) {
+    count
+    itemsPerPage
+    totalPages
+    results {
+      id
+      articleSetId
+      articleSet {
+        name
+      }
+      stockOwnerId
+      stockOwner {
+        name
+      }
+      articleId
+      article {
+        name
+        additionalDescription
+      }
+      quantity
+      extras
+      created
+      createdBy
+      modified
+      modifiedBy
+    }
+  }
+}
+    `;
+export const useGetAllArticleSetDetailsQuery = <
+      TData = GetAllArticleSetDetailsQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: GetAllArticleSetDetailsQueryVariables,
+      options?: UseQueryOptions<GetAllArticleSetDetailsQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetAllArticleSetDetailsQuery, TError, TData>(
+      ['GetAllArticleSetDetails', variables],
+      fetcher<GetAllArticleSetDetailsQuery, GetAllArticleSetDetailsQueryVariables>(client, GetAllArticleSetDetailsDocument, variables, headers),
+      options
+    );
+export const GetArticleSetDetailByIdDocument = `
+    query GetArticleSetDetailById($id: String!) {
+  articleSetDetail(id: $id) {
+    id
+    articleSetId
+    articleSet {
+      name
+    }
+    stockOwnerId
+    stockOwner {
+      name
+    }
+    articleId
+    article {
+      name
+      additionalDescription
+    }
+    quantity
+    extras
+    created
+    createdBy
+    modified
+    modifiedBy
+  }
+}
+    `;
+export const useGetArticleSetDetailByIdQuery = <
+      TData = GetArticleSetDetailByIdQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: GetArticleSetDetailByIdQueryVariables,
+      options?: UseQueryOptions<GetArticleSetDetailByIdQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetArticleSetDetailByIdQuery, TError, TData>(
+      ['GetArticleSetDetailById', variables],
+      fetcher<GetArticleSetDetailByIdQuery, GetArticleSetDetailByIdQueryVariables>(client, GetArticleSetDetailByIdDocument, variables, headers),
+      options
+    );
+export const CreateArticleSetDetailDocument = `
+    mutation CreateArticleSetDetail($input: CreateArticleSetDetailInput!) {
+  createArticleSetDetail(input: $input) {
+    id
+    articleSetId
+    stockOwnerId
+    articleId
+  }
+}
+    `;
+export const useCreateArticleSetDetailMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<CreateArticleSetDetailMutation, TError, CreateArticleSetDetailMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<CreateArticleSetDetailMutation, TError, CreateArticleSetDetailMutationVariables, TContext>(
+      ['CreateArticleSetDetail'],
+      (variables?: CreateArticleSetDetailMutationVariables) => fetcher<CreateArticleSetDetailMutation, CreateArticleSetDetailMutationVariables>(client, CreateArticleSetDetailDocument, variables, headers)(),
+      options
+    );
+export const DeleteArticleSetDetailDocument = `
+    mutation DeleteArticleSetDetail($id: String!) {
+  deleteArticleSetDetail(id: $id)
+}
+    `;
+export const useDeleteArticleSetDetailMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<DeleteArticleSetDetailMutation, TError, DeleteArticleSetDetailMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<DeleteArticleSetDetailMutation, TError, DeleteArticleSetDetailMutationVariables, TContext>(
+      ['DeleteArticleSetDetail'],
+      (variables?: DeleteArticleSetDetailMutationVariables) => fetcher<DeleteArticleSetDetailMutation, DeleteArticleSetDetailMutationVariables>(client, DeleteArticleSetDetailDocument, variables, headers)(),
+      options
+    );
+export const UpdateArticleSetDetailDocument = `
+    mutation UpdateArticleSetDetail($id: String!, $input: UpdateArticleSetDetailInput!) {
+  updateArticleSetDetail(id: $id, input: $input) {
+    id
+    articleSetId
+    stockOwnerId
+    articleId
+  }
+}
+    `;
+export const useUpdateArticleSetDetailMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<UpdateArticleSetDetailMutation, TError, UpdateArticleSetDetailMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<UpdateArticleSetDetailMutation, TError, UpdateArticleSetDetailMutationVariables, TContext>(
+      ['UpdateArticleSetDetail'],
+      (variables?: UpdateArticleSetDetailMutationVariables) => fetcher<UpdateArticleSetDetailMutation, UpdateArticleSetDetailMutationVariables>(client, UpdateArticleSetDetailDocument, variables, headers)(),
+      options
+    );
+export const GetAllStatusEvolutionsDocument = `
+    query GetAllStatusEvolutions($orderBy: [StatusEvolutionOrderByCriterion!], $filters: StatusEvolutionSearchFilters, $page: Int!, $itemsPerPage: Int!, $language: String) {
+  statusEvolutions(
+    orderBy: $orderBy
+    filters: $filters
+    page: $page
+    itemsPerPage: $itemsPerPage
+    language: $language
+  ) {
+    count
+    itemsPerPage
+    totalPages
+    page
+    results {
+      id
+      extras
+      created
+      createdBy
+      modified
+      modifiedBy
+      stockOwner {
+        id
+        name
+      }
+      object
+      objectReference
+      status
+      feedback
+      toBeFeedback
+      stockOwnerId
+      objectText
+      statusText
+    }
+  }
+}
+    `;
+export const useGetAllStatusEvolutionsQuery = <
+      TData = GetAllStatusEvolutionsQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: GetAllStatusEvolutionsQueryVariables,
+      options?: UseQueryOptions<GetAllStatusEvolutionsQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetAllStatusEvolutionsQuery, TError, TData>(
+      ['GetAllStatusEvolutions', variables],
+      fetcher<GetAllStatusEvolutionsQuery, GetAllStatusEvolutionsQueryVariables>(client, GetAllStatusEvolutionsDocument, variables, headers),
+      options
+    );
+export const GetStatusEvolutionByIdDocument = `
+    query GetStatusEvolutionById($id: String!, $language: String = "en") {
+  statusEvolution(id: $id, language: $language) {
+    id
+    extras
+    created
+    createdBy
+    modified
+    modifiedBy
+    stockOwner {
+      id
+      name
+    }
+    object
+    objectReference
+    status
+    feedback
+    toBeFeedback
+    stockOwnerId
+    objectText
+    statusText
+  }
+}
+    `;
+export const useGetStatusEvolutionByIdQuery = <
+      TData = GetStatusEvolutionByIdQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: GetStatusEvolutionByIdQueryVariables,
+      options?: UseQueryOptions<GetStatusEvolutionByIdQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetStatusEvolutionByIdQuery, TError, TData>(
+      ['GetStatusEvolutionById', variables],
+      fetcher<GetStatusEvolutionByIdQuery, GetStatusEvolutionByIdQueryVariables>(client, GetStatusEvolutionByIdDocument, variables, headers),
+      options
+    );
+export const CreateStatusEvolutionDocument = `
+    mutation CreateStatusEvolution($input: CreateStatusEvolutionInput!) {
+  createStatusEvolution(input: $input) {
+    id
+    extras
+    created
+    createdBy
+    modified
+    modifiedBy
+    stockOwner {
+      id
+      name
+    }
+    object
+    objectReference
+    status
+    feedback
+    toBeFeedback
+    stockOwnerId
+    objectText
+    statusText
+  }
+}
+    `;
+export const useCreateStatusEvolutionMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<CreateStatusEvolutionMutation, TError, CreateStatusEvolutionMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<CreateStatusEvolutionMutation, TError, CreateStatusEvolutionMutationVariables, TContext>(
+      ['CreateStatusEvolution'],
+      (variables?: CreateStatusEvolutionMutationVariables) => fetcher<CreateStatusEvolutionMutation, CreateStatusEvolutionMutationVariables>(client, CreateStatusEvolutionDocument, variables, headers)(),
+      options
+    );
+export const DeleteStatusEvolutionDocument = `
+    mutation DeleteStatusEvolution($id: String!) {
+  deleteStatusEvolution(id: $id)
+}
+    `;
+export const useDeleteStatusEvolutionMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<DeleteStatusEvolutionMutation, TError, DeleteStatusEvolutionMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<DeleteStatusEvolutionMutation, TError, DeleteStatusEvolutionMutationVariables, TContext>(
+      ['DeleteStatusEvolution'],
+      (variables?: DeleteStatusEvolutionMutationVariables) => fetcher<DeleteStatusEvolutionMutation, DeleteStatusEvolutionMutationVariables>(client, DeleteStatusEvolutionDocument, variables, headers)(),
+      options
+    );
+export const UpdateStatusEvolutionDocument = `
+    mutation UpdateStatusEvolution($id: String!, $input: UpdateStatusEvolutionInput!) {
+  updateStatusEvolution(id: $id, input: $input) {
+    id
+    extras
+    created
+    createdBy
+    modified
+    modifiedBy
+    stockOwner {
+      id
+      name
+    }
+    object
+    objectReference
+    status
+    feedback
+    toBeFeedback
+    stockOwnerId
+    objectText
+    statusText
+  }
+}
+    `;
+export const useUpdateStatusEvolutionMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<UpdateStatusEvolutionMutation, TError, UpdateStatusEvolutionMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<UpdateStatusEvolutionMutation, TError, UpdateStatusEvolutionMutationVariables, TContext>(
+      ['UpdateStatusEvolution'],
+      (variables?: UpdateStatusEvolutionMutationVariables) => fetcher<UpdateStatusEvolutionMutation, UpdateStatusEvolutionMutationVariables>(client, UpdateStatusEvolutionDocument, variables, headers)(),
+      options
+    );
+export const GetAllStockOwnersDocument = `
+    query GetAllStockOwners($orderBy: [StockOwnerOrderByCriterion!], $filters: StockOwnerSearchFilters, $page: Int!, $itemsPerPage: Int!, $language: String) {
+  stockOwners(
+    orderBy: $orderBy
+    filters: $filters
+    page: $page
+    itemsPerPage: $itemsPerPage
+    language: $language
+  ) {
+    count
+    itemsPerPage
+    totalPages
+    page
+    results {
+      id
+      extras
+      created
+      createdBy
+      modified
+      modifiedBy
+      name
+      contact
+      address1
+      address2
+      address3
+      postCode
+      city
+      country
+      countryCode
+      phone
+      mobile
+      email
+      senderName
+      senderContact
+      senderAddress1
+      senderAddress2
+      senderAddress3
+      senderPostCode
+      senderCity
+      senderCountry
+      senderCountryCode
+      senderPhone
+      senderMobile
+      senderEmail
+      exchangePrefix
+      logoUrl
+      awsAccessKeyId
+      awsSecretAccessKey
+      status
+    }
+  }
+}
+    `;
+export const useGetAllStockOwnersQuery = <
+      TData = GetAllStockOwnersQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: GetAllStockOwnersQueryVariables,
+      options?: UseQueryOptions<GetAllStockOwnersQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetAllStockOwnersQuery, TError, TData>(
+      ['GetAllStockOwners', variables],
+      fetcher<GetAllStockOwnersQuery, GetAllStockOwnersQueryVariables>(client, GetAllStockOwnersDocument, variables, headers),
+      options
+    );
+export const GetStockOwnerIdsDocument = `
+    query GetStockOwnerIds($filters: StockOwnerSearchFilters, $orderBy: [StockOwnerOrderByCriterion!], $page: Int!, $itemsPerPage: Int!) {
+  stockOwners(
+    filters: $filters
+    orderBy: $orderBy
+    page: $page
+    itemsPerPage: $itemsPerPage
+  ) {
+    count
+    itemsPerPage
+    totalPages
+    results {
+      id
+      name
+    }
+  }
+}
+    `;
+export const useGetStockOwnerIdsQuery = <
+      TData = GetStockOwnerIdsQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: GetStockOwnerIdsQueryVariables,
+      options?: UseQueryOptions<GetStockOwnerIdsQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetStockOwnerIdsQuery, TError, TData>(
+      ['GetStockOwnerIds', variables],
+      fetcher<GetStockOwnerIdsQuery, GetStockOwnerIdsQueryVariables>(client, GetStockOwnerIdsDocument, variables, headers),
+      options
+    );
+export const ListParametersForAScopeDocument = `
+    query ListParametersForAScope($scope: String!, $code: String, $language: String) {
+  listParametersForAScope(scope: $scope, code: $code, language: $language) {
+    id
+    text
+    scope
+    code
+  }
+}
+    `;
+export const useListParametersForAScopeQuery = <
+      TData = ListParametersForAScopeQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: ListParametersForAScopeQueryVariables,
+      options?: UseQueryOptions<ListParametersForAScopeQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<ListParametersForAScopeQuery, TError, TData>(
+      ['ListParametersForAScope', variables],
+      fetcher<ListParametersForAScopeQuery, ListParametersForAScopeQueryVariables>(client, ListParametersForAScopeDocument, variables, headers),
       options
     );
 export const GetMyInfoDocument = `

@@ -1,4 +1,5 @@
 import { AppHead } from '@components';
+import { META_DEFAULTS } from '@helpers';
 import { SingleBarcode } from 'modules/Barcodes/PagesContainer/SingleBarcode';
 import { useRouter } from 'next/router';
 import { FC } from 'react';
@@ -12,7 +13,7 @@ const BarcodePage: PageComponent = () => {
 
     return (
         <>
-            <AppHead title="Bee V2" />
+            <AppHead title={META_DEFAULTS.title} />
             <SingleBarcode router={router} id={id!} />
         </>
     );

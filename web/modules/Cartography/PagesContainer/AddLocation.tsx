@@ -1,7 +1,7 @@
 import { Layout } from 'antd';
 import { HeaderContent } from '@components';
 import { addLocationRoutes } from 'modules/Cartography/Static/cartographyRoutes';
-import { AddLocationForm } from 'modules/Cartography/Elements/AddLocationForm';
+import { AddLocationForm } from 'modules/Cartography/Forms/AddLocationForm';
 import useTranslation from 'next-translate/useTranslation';
 import styled from 'styled-components';
 

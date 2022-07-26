@@ -30,8 +30,6 @@ query GetAllBuildings(
             contactPhone
             contactMobile
             contactEmail
-            awsAccessKeyId
-            awsSecretAccessKey
             status
             statusText
             created
@@ -56,8 +54,6 @@ query GetBuildingById($id: String!) {
         contactPhone
         contactMobile
         contactEmail
-        awsAccessKeyId
-        awsSecretAccessKey
         status
         statusText
         created
@@ -81,8 +77,6 @@ mutation CreateBuilding($input: CreateBuildingInput!) {
         contactPhone
         contactMobile
         contactEmail
-        awsAccessKeyId
-        awsSecretAccessKey
         status
     }
 }
@@ -105,8 +99,6 @@ mutation UpdateBuilding($id: String!, $input: UpdateBuildingInput!) {
         contactPhone
         contactMobile
         contactEmail
-        awsAccessKeyId
-        awsSecretAccessKey
         status
     }
 }

@@ -136,12 +136,6 @@ export const EditBuildingForm: FC<EditBuildingFormProps> = ({
                 <Form.Item name="contactEmail" label={t('common:contact-email')}>
                     <Input />
                 </Form.Item>
-                <Form.Item name="awsAccessKeyId" label={t('common:aws-access-key-id')}>
-                    <Input />
-                </Form.Item>
-                <Form.Item name="awsSecretAccessKey" label={t('common:aws-secret-access-key')}>
-                    <Input />
-                </Form.Item>
                 <Form.Item label={t('common:status')} name="status">
                     <Select>
                         <Option value=""> </Option>
