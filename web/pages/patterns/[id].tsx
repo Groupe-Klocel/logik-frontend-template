@@ -1,4 +1,5 @@
 import { AppHead } from '@components';
+import { META_DEFAULTS } from '@helpers';
 import { SinglePattern } from 'modules/Patterns/PagesContainer/SinglePattern';
 import { useRouter } from 'next/router';
 import { FC } from 'react';
@@ -12,7 +13,7 @@ const PatternPage: PageComponent = () => {
 
     return (
         <>
-            <AppHead title="Bee V2" />
+            <AppHead title={META_DEFAULTS.title} />
             <SinglePattern router={router} id={id!} />
         </>
     );

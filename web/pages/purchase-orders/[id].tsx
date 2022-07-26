@@ -1,4 +1,5 @@
 import { AppHead } from '@components';
+import { META_DEFAULTS } from '@helpers';
 import { SinglePurchaseOrder } from 'modules/PurchaseOrders/PagesContainer/SinglePurchaseOrder';
 import { useRouter } from 'next/router';
 import { FC } from 'react';
@@ -12,7 +13,7 @@ const PurchaseOrderPage: PageComponent = () => {
 
     return (
         <>
-            <AppHead title="Bee V2" />
+            <AppHead title={META_DEFAULTS.title} />
             <SinglePurchaseOrder router={router} id={id!} />
         </>
     );

@@ -1,5 +1,6 @@
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { Logo, StyledForm, WelcomeText, WrapperLogin } from '@components';
+import { META_DEFAULTS } from '@helpers';
 import { Button, Form, Input } from 'antd';
 import { useAuth } from 'context/AuthContext';
 import useTranslation from 'next-translate/useTranslation';
@@ -34,7 +35,7 @@ export const LoginForm: FC<ILoginFormProps> = ({ }: ILoginFormProps) => {
 
 	return (
 		<WrapperLogin>
-			<Logo title="Bee 2.0" />
+			<Logo title={META_DEFAULTS.title} />
 			<WelcomeText>
 				{welcome}
 			</WelcomeText>
