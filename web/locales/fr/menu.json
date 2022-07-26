@@ -3,6 +3,8 @@
     "access-management": "Gestion des accès",
     "administration": "Administration",
     "articles": "Articles",
+    "article-set-detail": "Composant",
+    "article-set-details": "Composants",
     "barcodes": "Codes barres",
     "blacklisted-barcodes": "CAB blacklistés",
     "blocks": "Blocs",
