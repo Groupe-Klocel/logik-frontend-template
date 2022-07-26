@@ -3,6 +3,7 @@
     "cancel": "Retour",
     "confirm": "OK",
     "delete-confirm": "Etes-vous sûr(e) de vouloir supprimer cet enregistrement ?",
+    "delete-not-possible": "Suppression impossible en l'état",
     "error-message-empty-input": "Le champ ne doit pas être vide",
     "error-message-requiered-input": "Le champ est requis",
     "error-message-select-1": "Vous devez sélectionner un {{name}}",
@@ -34,5 +35,6 @@
     "error-barcode-not-render": "Une erreur est survenue lors de la génération du code à barres",
     "error-selected-article-not-exist": "L'article sélectionné n'existe pas",
     "error-permission": "Permissions insuffisantes",
-    "replenish-validation-error": "Le type doit être vide lorsque Réapprovisionner n'est pas coché"
+    "replenish-validation-error": "Le type doit être vide lorsque Réapprovisionner n'est pas coché",
+    "update-default-first": "Merci de vous assurer qu'un autre emballage est défini par défaut avant la suppression"
 }

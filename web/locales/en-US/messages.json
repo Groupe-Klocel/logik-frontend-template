@@ -3,6 +3,10 @@
     "cancel": "Back",
     "confirm": "OK",
     "delete-confirm": "Are you sure you want to delete this record?",
+<<<<<<< HEAD
+=======
+    "delete-not-possible": "Delete not possibble in the current state",
+>>>>>>> master
     "error-message-empty-input": "Field must not be empty",
     "error-message-requiered-input": "Field is requiered",
     "error-message-select-1": "You must select a {{name}}",
@@ -34,5 +38,6 @@
     "error-barcode-not-render": "An error occurred while generating the barcode",
     "error-selected-article-not-exist": "Selected article does not exist",
     "error-permission": "Insufficient permissions",
-    "replenish-validation-error": "Type must be empty when Replenish is not checked"
+    "replenish-validation-error": "Type must be empty when Replenish is not checked",
+    "update-default-first": "Please ensure another packaging is defined as default before deleting"
 }

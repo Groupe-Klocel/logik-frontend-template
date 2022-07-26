@@ -23,7 +23,9 @@ import {
     useGetAllParamsQuery,
     GetAllParamsQuery,
     useGetAllFeatureTypeDetailsQuery,
-    GetAllFeatureTypeDetailsQuery
+    GetAllFeatureTypeDetailsQuery,
+    useGetAllPackagingsQuery,
+    GetAllPackagingsQuery
 } from 'generated/graphql';
 
 const useArticles = (search: any, page: number, itemsPerPage: number, sort: any) => {
@@ -275,6 +277,35 @@ const useFeatureTypeDetails = (search: any, page: number, itemsPerPage: number, 
     return featureTypeDetails;
 };
 
+const usePackagings = (search: any, page: number, itemsPerPage: number, sort: any) => {
+    const { graphqlRequestClient } = useAuth();
+
+    const sortByDate = {
+        field: 'created',
+        ascending: false
+    };
+
+    let newSort;
+
+    if (sort === null) {
+        newSort = sortByDate;
+    } else {
+        newSort = sort;
+    }
+
+    const packagings = useGetAllPackagingsQuery<Partial<GetAllPackagingsQuery>, Error>(
+        graphqlRequestClient,
+        {
+            filters: search,
+            orderBy: newSort,
+            page: page,
+            itemsPerPage: itemsPerPage
+        }
+    );
+
+    return packagings;
+};
+
 const useReturnCodes = (search: any, page: number, itemsPerPage: number, sort: any) => {
     const { graphqlRequestClient } = useAuth();
 
@@ -386,6 +417,7 @@ export {
     useFeatureTypeDetails,
     useArticleIds,
     useMyInfo,
+    usePackagings,
     useReturnCodes,
     useGoodsIns,
     useGoodsInLines

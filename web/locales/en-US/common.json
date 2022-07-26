@@ -23,6 +23,7 @@
     "custom-value": "Custom value",
     "default": "Default",
     "description": "Description",
+    "dimensions": "Dimensions",
     "dispatchable": "Dispatchable",
     "distributed": "Distributed",
     "equipment-labels": "Equipment labels",
