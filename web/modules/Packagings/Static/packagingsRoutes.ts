@@ -13,7 +13,7 @@ export const packagingsRoutes = [
 export const addPackagingRoutes = [
     ...packagingsRoutes,
     {
-        path: '/add-article',
-        breadcrumbName: 'menu:add-article'
+        path: '/add-packaging',
+        breadcrumbName: 'actions:add-packaging'
     }
 ];
