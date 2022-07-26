@@ -1,4 +1,5 @@
 import { AppHead } from '@components';
+import { META_DEFAULTS } from '@helpers';
 import { EditArticleSetDetail } from 'modules/Articles/PagesContainer/EditSetDetail';
 import { useRouter } from 'next/router';
 import { FC } from 'react';
@@ -12,7 +13,7 @@ const EditSetDetailPage: PageComponent = () => {
 
     return (
         <>
-            <AppHead title="Bee V2" />
+            <AppHead title={META_DEFAULTS.title} />
             <EditArticleSetDetail router={router} id={id!} />
         </>
     );

@@ -1,4 +1,5 @@
 import { AppHead } from '@components';
+import { META_DEFAULTS } from '@helpers';
 import { SingleFeatureTypeDetail } from 'modules/Articles/PagesContainer/SingleFeatureTypeDetail';
 import { useRouter } from 'next/router';
 import { FC } from 'react';
@@ -11,7 +12,7 @@ const FeatureTypeDetailPage: PageComponent = () => {
     const { id } = router.query;
     return (
         <>
-            <AppHead title="Bee V2" />
+            <AppHead title={META_DEFAULTS.title} />
             <SingleFeatureTypeDetail router={router} id={id!} />
         </>
     );

@@ -1,4 +1,5 @@
 import { AppHead } from '@components';
+import { META_DEFAULTS } from '@helpers';
 import { SingleFeatureCode } from 'modules/Articles/PagesContainer/SingleFeatureCode';
 import { useRouter } from 'next/router';
 import { FC } from 'react';
@@ -11,7 +12,7 @@ const FeatureCodePage: PageComponent = () => {
     const { id } = router.query;
     return (
         <>
-            <AppHead title="Bee V2" />
+            <AppHead title={META_DEFAULTS.title} />
             <SingleFeatureCode router={router} id={id!} />
         </>
     );
