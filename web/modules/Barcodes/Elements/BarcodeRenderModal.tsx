@@ -3,13 +3,9 @@ import useTranslation from 'next-translate/useTranslation';
 import { Input, Modal, Typography } from 'antd';
 import { useState } from 'react';
 import {
-    // RenderBarcodeMutation,
-    // RenderBarcodeMutationVariables,
-    // useRenderBarcodeMutation
     RenderDocumentMutation,
     RenderDocumentMutationVariables,
-    useRenderDocumentMutation,
-
+    useRenderDocumentMutation
 } from 'generated/graphql';
 import { showError } from '@helpers';
 import { useAuth } from 'context/AuthContext';
@@ -48,10 +44,14 @@ const BarcodeRenderModal = ({ visible, showhideModal, code }: IBarcodeRenderModa
     };
 
     const onClickOk = () => {
-        // mutate({
-        //     code: code,
-        //     pages: pageNumber
-        // });
+        mutate({
+            templateFilename: 'barcode_template.rml',
+            context: {
+                barcode_code: code,
+                barcode_category: 'Code128',
+                pages: pageNumber
+            }
+        });
         showhideModal();
     };
     return (

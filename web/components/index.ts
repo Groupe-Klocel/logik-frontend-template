@@ -16,6 +16,7 @@ export * from './common/smart/AppTable/AppTable';
 export * from './common/smart/Drawers/DrawerItems';
 export * from '../modules/Articles/Forms/ArticlesSearch';
 export * from '../modules/Barcodes/Forms/BarcodesSearch';
+export * from '../modules/GoodsIns/Forms/GoodsInsSearch';
 export * from './common/smart/DrawerItems/TableFilter';
 export * from './common/smart/DrawerItems/UserSettings';
 export * from './common/smart/ProtectRoute/ProtectRoute';

@@ -1,4 +1,5 @@
 import { AppHead } from '@components';
+import { META_DEFAULTS } from '@helpers';
 import { EditArticle } from 'modules/Articles/PagesContainer/EditArticle';
 import { EditBarcode } from 'modules/Barcodes/PagesContainer/EditBarcode';
 import { useRouter } from 'next/router';
@@ -12,7 +13,7 @@ const EditBarcodePage: PageComponent = () => {
     const { id } = router.query;
     return (
         <>
-            <AppHead title="Bee V2" />
+            <AppHead title={META_DEFAULTS.title} />
             <EditBarcode router={router} id={id!} />
         </>
     );
