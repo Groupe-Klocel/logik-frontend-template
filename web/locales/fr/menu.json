@@ -23,6 +23,8 @@
     "cycle-counts": "Inventaires",
     "dashboard": "Tableau de bord",
     "deliveries": "Livraisons",
+    "equipments": "Equipements",
+    "feedbackOverwrite": "Remontées spécifiques",
     "equipment": "Equipements",
     "equipment-detail": "Détail d'équipement",
     "equipment-piece": "Equipement",

@@ -27,6 +27,8 @@
     "column": "Column",
     "companyId": "Company ID",
     "constraint": "Constraint",
+    "movementCode": "Movement code",
+    "movementCodeText": "Movement code description",
     "status": "Status",
     "code": "Code",
     "name": "Name",

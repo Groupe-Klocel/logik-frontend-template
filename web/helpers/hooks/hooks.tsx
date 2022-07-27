@@ -18,6 +18,8 @@ import {
     useGetAllLocationsQuery,
     useGetAllReturnCodesQuery,
     GetAllReturnCodesQuery,
+    useGetAllFeedbackOverwritesQuery,
+    GetAllFeedbackOverwritesQuery,
     GetPurchaseOrderIdsQuery,
     useGetPurchaseOrderIdsQuery,
     useGetAllStatusFeedbackOverwritesQuery,
@@ -522,6 +524,36 @@ const useFeatureTypeDetails = (search: any, page: number, itemsPerPage: number, 
     return featureTypeDetails;
 };
 
+const useFeedbackOverwrites = (search: any, page: number, itemsPerPage: number, sort: any) => {
+    const { graphqlRequestClient } = useAuth();
+
+    // default sort by creation date
+    const sortByDate = {
+        field: 'created',
+        ascending: false
+    };
+
+    let newSort;
+
+    if (sort === null) {
+        newSort = sortByDate;
+    } else {
+        newSort = sort;
+    }
+
+    const feedbackOverwrites = useGetAllFeedbackOverwritesQuery<
+        Partial<GetAllFeedbackOverwritesQuery>,
+        Error
+    >(graphqlRequestClient, {
+        filters: search,
+        orderBy: newSort,
+        page: page,
+        itemsPerPage: itemsPerPage
+    });
+
+    return feedbackOverwrites;
+};
+
 const usePackagings = (search: any, page: number, itemsPerPage: number, sort: any) => {
     const { graphqlRequestClient } = useAuth();
 
@@ -1017,6 +1049,7 @@ export {
     useFeatureCodes,
     useFeatureTypes,
     useFeatureTypeDetails,
+    useFeedbackOverwrites,
     useArticleIds,
     useMyInfo,
     usePackagings,

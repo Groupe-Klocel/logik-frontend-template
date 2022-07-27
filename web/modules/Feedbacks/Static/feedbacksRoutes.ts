@@ -11,19 +11,19 @@ export const feedbacksRoutes = [
     }
 ];
 
-export const movementsConfigRoutes: Array<BreadcrumbType> = [
+export const feedbackOverwritesRoutes: Array<BreadcrumbType> = [
     ...feedbacksRoutes,
     {
-        path: '/movements-config',
-        breadcrumbName: 'menu:movements-config'
+        path: '/feedback-overwrites',
+        breadcrumbName: 'menu:feedbackOverwrite'
     }
 ];
 
-export const addMovementsConfigRoutes: Array<BreadcrumbType> = [
-    ...movementsConfigRoutes,
+export const addFeedbackOverwriteRoutes: Array<BreadcrumbType> = [
+    ...feedbackOverwritesRoutes,
     {
-        path: '/add-movements-config-feedback',
-        breadcrumbName: 'menu:add-movements-config-feedback'
+        path: '/add-feedbackOverwrite',
+        breadcrumbName: 'actions:add-feedbackOverwrite'
     }
 ];
 

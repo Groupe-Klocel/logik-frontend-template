@@ -10,10 +10,6 @@ import {
     UpdateReturnCodeMutationVariables
 } from 'generated/graphql';
 import { showError, showSuccess, showInfo } from '@helpers';
-import { CheckboxChangeEvent } from 'antd/lib/checkbox';
-
-const { Option } = Select;
-const { TextArea } = Input;
 
 export type EditReturnCodeFormProps = {
     returnCodeId: string;

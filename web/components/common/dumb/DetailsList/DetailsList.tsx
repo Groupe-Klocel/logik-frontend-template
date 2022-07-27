@@ -19,6 +19,7 @@ export interface IDetailsListProps {
 const DetailsList: FC<IDetailsListProps> = ({ details, nbColumns }: IDetailsListProps) => {
     const { t } = useTranslation();
     const tmp_detail = { ...details };
+    delete tmp_detail['id'];
     if ('article' in tmp_detail) delete tmp_detail['article'];
 
     return (

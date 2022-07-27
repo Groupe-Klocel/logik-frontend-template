@@ -2,19 +2,19 @@ import { AppHead } from '@components';
 import { META_DEFAULTS } from '@helpers';
 import MainLayout from 'components/layouts/MainLayout';
 import { FC } from 'react';
-import { AddMovementsConfig } from '../modules/Feedbacks/PagesContainer/AddMovementsConfig';
+import { FeedbackOverwrites } from '../modules/Feedbacks/PagesContainer/FeedbackOverwrites';
 
 type PageComponent = FC & { layout: typeof MainLayout };
 
-const AddMovementsConfigPage: PageComponent = () => {
+const FeedbackOverwritePage: PageComponent = () => {
     return (
         <>
             <AppHead title={META_DEFAULTS.title} />
-            <AddMovementsConfig />
+            <FeedbackOverwrites />
         </>
     );
 };
 
-AddMovementsConfigPage.layout = MainLayout;
+FeedbackOverwritePage.layout = MainLayout;
 
-export default AddMovementsConfigPage;
+export default FeedbackOverwritePage;
