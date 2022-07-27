@@ -1,4 +1,5 @@
 import { AppHead } from '@components';
+import { META_DEFAULTS } from '@helpers';
 import MainLayout from 'components/layouts/MainLayout';
 import { EditCarrier } from 'modules/Carriers/PagesContainer/EditCarrier';
 import { useRouter } from 'next/router';
@@ -11,7 +12,7 @@ const EditCarrierPage: PageComponent = () => {
     const { id } = router.query;
     return (
         <>
-            <AppHead title="Bee V2" />
+            <AppHead title={META_DEFAULTS.title} />
             <EditCarrier router={router} id={id!} />
         </>
     );

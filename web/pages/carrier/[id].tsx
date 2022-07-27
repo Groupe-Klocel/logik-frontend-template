@@ -1,4 +1,5 @@
 import { AppHead } from '@components';
+import { META_DEFAULTS } from '@helpers';
 import MainLayout from 'components/layouts/MainLayout';
 import { SingleCarrier } from 'modules/Carriers/PagesContainer/SingleCarrier';
 import { useRouter } from 'next/router';
@@ -11,7 +12,7 @@ const CarrierPage: PageComponent = () => {
     const { id } = router.query;
     return (
         <>
-            <AppHead title="Bee V2" />
+            <AppHead title={META_DEFAULTS.title} />
             <SingleCarrier router={router} id={id!} />
         </>
     );
