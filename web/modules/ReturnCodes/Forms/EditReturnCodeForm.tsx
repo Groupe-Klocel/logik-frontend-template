@@ -10,10 +10,6 @@ import {
     UpdateReturnCodeMutationVariables
 } from 'generated/graphql';
 import { showError, showSuccess, showInfo } from '@helpers';
-import { CheckboxChangeEvent } from 'antd/lib/checkbox';
-
-const { Option } = Select;
-const { TextArea } = Input;
 
 export type EditReturnCodeFormProps = {
     returnCodeId: string;
@@ -93,7 +89,7 @@ export const EditReturnCodeForm: FC<EditReturnCodeFormProps> = ({
                         { required: true, message: `${t('messages:error-message-empty-input')}` }
                     ]}
                 >
-                    <Input disabled={replenishValue === false ? true : false} />
+                    <Input />
                 </Form.Item>
                 <Form.Item name="description" label={t('common:description')}>
                     <Input />
