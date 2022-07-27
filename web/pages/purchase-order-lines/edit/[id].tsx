@@ -1,4 +1,5 @@
 import { AppHead } from '@components';
+import { META_DEFAULTS } from '@helpers';
 import { EditPurchaseOrderLine } from 'modules/PurchaseOrderLine/PagesContainer/EditPurchaseOrderLine';
 import { useRouter } from 'next/router';
 import { FC } from 'react';
@@ -11,7 +12,7 @@ const EditPurchaseOrderLinePage: PageComponent = () => {
     const { id } = router.query;
     return (
         <>
-            <AppHead title="Bee V2" />
+            <AppHead title={META_DEFAULTS.title} />
             <EditPurchaseOrderLine router={router} id={id!} />
         </>
     );

@@ -1,4 +1,5 @@
 import { AppHead } from '@components';
+import { META_DEFAULTS } from '@helpers';
 import { SinglePurchaseOrderLine } from 'modules/PurchaseOrderLine/PagesContainer/SinglePurchaseOrderLine';
 import { useRouter } from 'next/router';
 import { FC } from 'react';
@@ -11,8 +12,8 @@ const PurchaseOrderLinePage: PageComponent = () => {
     const { id } = router.query;
     return (
         <>
-            <AppHead title="Bee V2" />
-            <SinglePurchaseOrderLine router={router} id={id!}/>
+            <AppHead title={META_DEFAULTS.title} />
+            <SinglePurchaseOrderLine router={router} id={id!} />
         </>
     );
 };
