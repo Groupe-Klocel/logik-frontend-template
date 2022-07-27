@@ -1,5 +1,3 @@
-//CRUDTODO: Convert export components.
-
 import { AppTable, ContentSpin } from '@components';
 import {
     DEFAULT_ITEMS_PER_PAGE,

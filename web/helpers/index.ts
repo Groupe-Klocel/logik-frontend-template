@@ -1,3 +1,4 @@
+export * from './hooks/crudHooks';
 export * from './hooks/hooks';
 export * from './types/types';
 export * from './utils/constant';
