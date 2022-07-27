@@ -47,8 +47,10 @@ const BarcodeRenderModal = ({ visible, showhideModal, code }: IBarcodeRenderModa
         mutate({
             templateFilename: 'barcode_template.rml',
             context: {
-                barcode_code:code,barcode_category:"Code128",pages:pageNumber
-            },
+                barcode_code: code,
+                barcode_category: 'Code128',
+                pages: pageNumber
+            }
         });
         showhideModal();
     };

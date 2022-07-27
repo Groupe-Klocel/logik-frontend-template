@@ -14,6 +14,8 @@ import {
     useGetAllLocationsQuery,
     useGetAllReturnCodesQuery,
     GetAllReturnCodesQuery,
+    GetPurchaseOrderIdsQuery,
+    useGetPurchaseOrderIdsQuery,
     useGetAllStatusFeedbackOverwritesQuery,
     GetAllStatusFeedbackOverwritesQuery,
     GetAllBuildingsQuery,
@@ -905,6 +907,35 @@ const usePatternPathLocations = (search: any, page: number, itemsPerPage: number
     return patternPathLocations;
 };
 
+const usePurchaseOrderIds = (search: any, page: number, itemsPerPage: number, sort: any) => {
+    const { graphqlRequestClient } = useAuth();
+
+    const sortByDate = {
+        field: 'name',
+        ascending: false
+    };
+
+    let newSort;
+
+    if (sort === null) {
+        newSort = sortByDate;
+    } else {
+        newSort = sort;
+    }
+
+    const purchaseOrders = useGetPurchaseOrderIdsQuery<Partial<GetPurchaseOrderIdsQuery>, Error>(
+        graphqlRequestClient,
+        {
+            filters: search,
+            orderBy: newSort,
+            page: page,
+            itemsPerPage: itemsPerPage
+        }
+    );
+
+    return purchaseOrders;
+};
+
 export {
     useArticles,
     useBlocks,
@@ -934,5 +965,6 @@ export {
     usePurchaseOrderLines,
     useMovements,
     useStockStatuses,
-    useStatusEvolutions
+    useStatusEvolutions,
+    usePurchaseOrderIds
 };
