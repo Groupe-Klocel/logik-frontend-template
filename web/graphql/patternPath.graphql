@@ -1,0 +1,111 @@
+query GetAllPatternPaths(
+    $filters: PatternPathSearchFilters
+    $orderBy: [PatternPathOrderByCriterion!]
+    $page: Int!
+    $itemsPerPage: Int!,
+    $language: String
+) {
+    patternPaths(filters: $filters, orderBy: $orderBy, page: $page, itemsPerPage: $itemsPerPage, language: $language) {
+        count
+        itemsPerPage
+        totalPages
+        results {
+            id
+            extras
+            created
+            createdBy
+            modified
+            modifiedBy
+            name
+            status
+            patternId
+        }
+    }
+}
+
+query GetPatternPathById($id: String!, $language:String = "en") {
+    patternPath(id: $id, language: $language) {
+        id
+        extras
+        created
+        createdBy
+        modified
+        modifiedBy
+        name
+        status
+        patternId
+    }
+}
+
+mutation CreatePatternPath($input: CreatePatternPathInput!) {
+    createPatternPath(input: $input) {
+        id
+        extras
+        created
+        createdBy
+        modified
+        modifiedBy
+        name
+        status
+        patternId
+    }
+}
+
+mutation DeletePatternPath($id: String!) {
+    deletePatternPath(id: $id)
+}
+
+mutation UpdatePatternPath($id: String!, $input: UpdatePatternPathInput!) {
+    updatePatternPath(id: $id, input: $input) {
+        id
+        extras
+        created
+        createdBy
+        modified
+        modifiedBy
+        name
+        status
+        patternId
+    }
+}
+
+query GetPatternPathLocations(
+    $filters: PatternPathLocationSearchFilters
+    $orderBy: [PatternPathLocationOrderByCriterion!]
+    $page: Int!
+    $itemsPerPage: Int!,
+    $language: String
+) {
+    patternPathLocations(
+        filters: $filters,
+        orderBy: $orderBy,
+        page: $page,
+        itemsPerPage: $itemsPerPage,
+        language: $language
+    ) {
+        count
+        totalPages
+        page
+        itemsPerPage
+        results {
+            id
+            extras
+            created
+            createdBy
+            modified
+            modifiedBy
+            order
+            locationId
+            patternPathId
+            location {
+                id
+                name
+                position
+                column
+                level
+                aisle
+            }
+        }
+       
+    }
+}
