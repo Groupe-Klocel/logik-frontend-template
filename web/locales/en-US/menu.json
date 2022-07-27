@@ -60,6 +60,8 @@
     "sets": "Sets",
     "article-set": "Article Set",
     "settings": "Settings",
+    "status-feedback-overwrites": "Status Feedback Overwrites",
+    "status-feedback-overwrite": "Status Feedback Overwrite",
     "status-config": "Status configuration",
     "status-evolutions": "Status Evolutions",
     "stock-management": "Stock Management",

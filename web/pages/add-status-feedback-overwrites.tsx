@@ -2,19 +2,19 @@ import { AppHead } from '@components';
 import { META_DEFAULTS } from '@helpers';
 import MainLayout from 'components/layouts/MainLayout';
 import { FC } from 'react';
-import { AddStatusConfig } from '../modules/Feedbacks/PagesContainer/AddStatusConfig';
+import { AddStatusFeedbackOverwrites } from '../modules/Feedbacks/PagesContainer/AddStatusFeedbackOverwrite';
 
 type PageComponent = FC & { layout: typeof MainLayout };
 
-const AddStatusConfigPage: PageComponent = () => {
+const AddStatusFeedbackOverwritesPage: PageComponent = () => {
     return (
         <>
             <AppHead title={META_DEFAULTS.title} />
-            <AddStatusConfig />
+            <AddStatusFeedbackOverwrites />
         </>
     );
 };
 
-AddStatusConfigPage.layout = MainLayout;
+AddStatusFeedbackOverwritesPage.layout = MainLayout;
 
-export default AddStatusConfigPage;
+export default AddStatusFeedbackOverwritesPage;

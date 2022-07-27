@@ -10712,6 +10712,65 @@ export type UpdateStatusEvolutionMutationVariables = Exact<{
 
 export type UpdateStatusEvolutionMutation = { __typename?: 'Mutation', updateStatusEvolution?: { __typename?: 'StatusEvolution', id?: string | null, extras?: any | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, object?: number | null, objectReference?: string | null, status?: number | null, feedback?: boolean | null, toBeFeedback?: boolean | null, stockOwnerId?: string | null, objectText?: string | null, statusText?: string | null, stockOwner: { __typename?: 'StockOwner', id?: string | null, name?: string | null } } | null };
 
+export type GetStatusFeedbackOverwriteStatusConfigsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetStatusFeedbackOverwriteStatusConfigsQuery = { __typename?: 'Query', listConfigsForAScope: Array<{ __typename?: 'ConfigResults', id: string, scope: string, code: string, text: string }> };
+
+export type GetStatusFeedbackOverwriteObjectTypeConfigsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetStatusFeedbackOverwriteObjectTypeConfigsQuery = { __typename?: 'Query', listConfigsForAScope: Array<{ __typename?: 'ConfigResults', id: string, scope: string, code: string, text: string }> };
+
+export type GetAllStatusFeedbackOverwritesQueryVariables = Exact<{
+  filters?: InputMaybe<StatusFeedbackOverwriteSearchFilters>;
+  orderBy?: InputMaybe<Array<StatusFeedbackOverwriteOrderByCriterion> | StatusFeedbackOverwriteOrderByCriterion>;
+  page: Scalars['Int'];
+  itemsPerPage: Scalars['Int'];
+}>;
+
+
+export type GetAllStatusFeedbackOverwritesQuery = { __typename?: 'Query', statusFeedbackOverwrites: { __typename?: 'StatusFeedbackOverwriteListResult', count: number, itemsPerPage: number, totalPages: number, results: Array<{ __typename?: 'StatusFeedbackOverWrite', id?: string | null, stockOwnerId?: string | null, objectType?: number | null, status?: number | null, objectTypeText?: string | null, statusText?: string | null, feedback?: boolean | null, customValue?: number | null, system?: boolean | null, stockOwner: { __typename?: 'StockOwner', name?: string | null } }> } };
+
+export type GetStatusFeedbackOverwriteByIdQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type GetStatusFeedbackOverwriteByIdQuery = { __typename?: 'Query', statusFeedbackOverwrite?: { __typename?: 'StatusFeedbackOverWrite', id?: string | null, stockOwnerId?: string | null, objectType?: number | null, status?: number | null, objectTypeText?: string | null, statusText?: string | null, feedback?: boolean | null, customValue?: number | null, system?: boolean | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, stockOwner: { __typename?: 'StockOwner', name?: string | null } } | null };
+
+export type GetStatusFeedbackOverwriteIdsQueryVariables = Exact<{
+  filters?: InputMaybe<StatusFeedbackOverwriteSearchFilters>;
+  orderBy?: InputMaybe<Array<StatusFeedbackOverwriteOrderByCriterion> | StatusFeedbackOverwriteOrderByCriterion>;
+  page: Scalars['Int'];
+  itemsPerPage: Scalars['Int'];
+}>;
+
+
+export type GetStatusFeedbackOverwriteIdsQuery = { __typename?: 'Query', statusFeedbackOverwrites: { __typename?: 'StatusFeedbackOverwriteListResult', count: number, itemsPerPage: number, totalPages: number, results: Array<{ __typename?: 'StatusFeedbackOverWrite', id?: string | null }> } };
+
+export type CreateStatusFeedbackOverwriteMutationVariables = Exact<{
+  input: CreateStatusFeedbackOverwriteInput;
+}>;
+
+
+export type CreateStatusFeedbackOverwriteMutation = { __typename?: 'Mutation', createStatusFeedbackOverwrite: { __typename?: 'StatusFeedbackOverWrite', id?: string | null, stockOwnerId?: string | null, objectType?: number | null, status?: number | null, feedback?: boolean | null, customValue?: number | null, system?: boolean | null } };
+
+export type DeleteStatusFeedbackOverwriteMutationVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type DeleteStatusFeedbackOverwriteMutation = { __typename?: 'Mutation', deleteStatusFeedbackOverwrite: boolean };
+
+export type UpdateStatusFeedbackOverwriteMutationVariables = Exact<{
+  id: Scalars['String'];
+  input: UpdateStatusFeedbackOverwriteInput;
+}>;
+
+
+export type UpdateStatusFeedbackOverwriteMutation = { __typename?: 'Mutation', updateStatusFeedbackOverwrite?: { __typename?: 'StatusFeedbackOverWrite', id?: string | null, stockOwnerId?: string | null, objectType?: number | null, status?: number | null, feedback?: boolean | null, customValue?: number | null, system?: boolean | null } | null };
+
 export type GetAllStockOwnersQueryVariables = Exact<{
   orderBy?: InputMaybe<Array<StockOwnerOrderByCriterion> | StockOwnerOrderByCriterion>;
   filters?: InputMaybe<StockOwnerSearchFilters>;
@@ -15909,6 +15968,233 @@ export const useUpdateStatusEvolutionMutation = <
     useMutation<UpdateStatusEvolutionMutation, TError, UpdateStatusEvolutionMutationVariables, TContext>(
       ['UpdateStatusEvolution'],
       (variables?: UpdateStatusEvolutionMutationVariables) => fetcher<UpdateStatusEvolutionMutation, UpdateStatusEvolutionMutationVariables>(client, UpdateStatusEvolutionDocument, variables, headers)(),
+      options
+    );
+export const GetStatusFeedbackOverwriteStatusConfigsDocument = `
+    query getStatusFeedbackOverwriteStatusConfigs {
+  listConfigsForAScope(scope: "status_feedback_overwrite_status") {
+    id
+    scope
+    code
+    text
+  }
+}
+    `;
+export const useGetStatusFeedbackOverwriteStatusConfigsQuery = <
+      TData = GetStatusFeedbackOverwriteStatusConfigsQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables?: GetStatusFeedbackOverwriteStatusConfigsQueryVariables,
+      options?: UseQueryOptions<GetStatusFeedbackOverwriteStatusConfigsQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetStatusFeedbackOverwriteStatusConfigsQuery, TError, TData>(
+      variables === undefined ? ['getStatusFeedbackOverwriteStatusConfigs'] : ['getStatusFeedbackOverwriteStatusConfigs', variables],
+      fetcher<GetStatusFeedbackOverwriteStatusConfigsQuery, GetStatusFeedbackOverwriteStatusConfigsQueryVariables>(client, GetStatusFeedbackOverwriteStatusConfigsDocument, variables, headers),
+      options
+    );
+export const GetStatusFeedbackOverwriteObjectTypeConfigsDocument = `
+    query getStatusFeedbackOverwriteObjectTypeConfigs {
+  listConfigsForAScope(scope: "status_object") {
+    id
+    scope
+    code
+    text
+  }
+}
+    `;
+export const useGetStatusFeedbackOverwriteObjectTypeConfigsQuery = <
+      TData = GetStatusFeedbackOverwriteObjectTypeConfigsQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables?: GetStatusFeedbackOverwriteObjectTypeConfigsQueryVariables,
+      options?: UseQueryOptions<GetStatusFeedbackOverwriteObjectTypeConfigsQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetStatusFeedbackOverwriteObjectTypeConfigsQuery, TError, TData>(
+      variables === undefined ? ['getStatusFeedbackOverwriteObjectTypeConfigs'] : ['getStatusFeedbackOverwriteObjectTypeConfigs', variables],
+      fetcher<GetStatusFeedbackOverwriteObjectTypeConfigsQuery, GetStatusFeedbackOverwriteObjectTypeConfigsQueryVariables>(client, GetStatusFeedbackOverwriteObjectTypeConfigsDocument, variables, headers),
+      options
+    );
+export const GetAllStatusFeedbackOverwritesDocument = `
+    query GetAllStatusFeedbackOverwrites($filters: StatusFeedbackOverwriteSearchFilters, $orderBy: [StatusFeedbackOverwriteOrderByCriterion!], $page: Int!, $itemsPerPage: Int!) {
+  statusFeedbackOverwrites(
+    filters: $filters
+    orderBy: $orderBy
+    page: $page
+    itemsPerPage: $itemsPerPage
+  ) {
+    count
+    itemsPerPage
+    totalPages
+    results {
+      id
+      stockOwnerId
+      stockOwner {
+        name
+      }
+      objectType
+      status
+      objectTypeText
+      statusText
+      feedback
+      customValue
+      system
+    }
+  }
+}
+    `;
+export const useGetAllStatusFeedbackOverwritesQuery = <
+      TData = GetAllStatusFeedbackOverwritesQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: GetAllStatusFeedbackOverwritesQueryVariables,
+      options?: UseQueryOptions<GetAllStatusFeedbackOverwritesQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetAllStatusFeedbackOverwritesQuery, TError, TData>(
+      ['GetAllStatusFeedbackOverwrites', variables],
+      fetcher<GetAllStatusFeedbackOverwritesQuery, GetAllStatusFeedbackOverwritesQueryVariables>(client, GetAllStatusFeedbackOverwritesDocument, variables, headers),
+      options
+    );
+export const GetStatusFeedbackOverwriteByIdDocument = `
+    query GetStatusFeedbackOverwriteById($id: String!) {
+  statusFeedbackOverwrite(id: $id) {
+    id
+    stockOwnerId
+    stockOwner {
+      name
+    }
+    objectType
+    status
+    objectTypeText
+    statusText
+    feedback
+    customValue
+    system
+    created
+    createdBy
+    modified
+    modifiedBy
+  }
+}
+    `;
+export const useGetStatusFeedbackOverwriteByIdQuery = <
+      TData = GetStatusFeedbackOverwriteByIdQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: GetStatusFeedbackOverwriteByIdQueryVariables,
+      options?: UseQueryOptions<GetStatusFeedbackOverwriteByIdQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetStatusFeedbackOverwriteByIdQuery, TError, TData>(
+      ['GetStatusFeedbackOverwriteById', variables],
+      fetcher<GetStatusFeedbackOverwriteByIdQuery, GetStatusFeedbackOverwriteByIdQueryVariables>(client, GetStatusFeedbackOverwriteByIdDocument, variables, headers),
+      options
+    );
+export const GetStatusFeedbackOverwriteIdsDocument = `
+    query GetStatusFeedbackOverwriteIds($filters: StatusFeedbackOverwriteSearchFilters, $orderBy: [StatusFeedbackOverwriteOrderByCriterion!], $page: Int!, $itemsPerPage: Int!) {
+  statusFeedbackOverwrites(
+    filters: $filters
+    orderBy: $orderBy
+    page: $page
+    itemsPerPage: $itemsPerPage
+  ) {
+    count
+    itemsPerPage
+    totalPages
+    results {
+      id
+    }
+  }
+}
+    `;
+export const useGetStatusFeedbackOverwriteIdsQuery = <
+      TData = GetStatusFeedbackOverwriteIdsQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: GetStatusFeedbackOverwriteIdsQueryVariables,
+      options?: UseQueryOptions<GetStatusFeedbackOverwriteIdsQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetStatusFeedbackOverwriteIdsQuery, TError, TData>(
+      ['GetStatusFeedbackOverwriteIds', variables],
+      fetcher<GetStatusFeedbackOverwriteIdsQuery, GetStatusFeedbackOverwriteIdsQueryVariables>(client, GetStatusFeedbackOverwriteIdsDocument, variables, headers),
+      options
+    );
+export const CreateStatusFeedbackOverwriteDocument = `
+    mutation CreateStatusFeedbackOverwrite($input: CreateStatusFeedbackOverwriteInput!) {
+  createStatusFeedbackOverwrite(input: $input) {
+    id
+    stockOwnerId
+    objectType
+    status
+    feedback
+    customValue
+    system
+  }
+}
+    `;
+export const useCreateStatusFeedbackOverwriteMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<CreateStatusFeedbackOverwriteMutation, TError, CreateStatusFeedbackOverwriteMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<CreateStatusFeedbackOverwriteMutation, TError, CreateStatusFeedbackOverwriteMutationVariables, TContext>(
+      ['CreateStatusFeedbackOverwrite'],
+      (variables?: CreateStatusFeedbackOverwriteMutationVariables) => fetcher<CreateStatusFeedbackOverwriteMutation, CreateStatusFeedbackOverwriteMutationVariables>(client, CreateStatusFeedbackOverwriteDocument, variables, headers)(),
+      options
+    );
+export const DeleteStatusFeedbackOverwriteDocument = `
+    mutation DeleteStatusFeedbackOverwrite($id: String!) {
+  deleteStatusFeedbackOverwrite(id: $id)
+}
+    `;
+export const useDeleteStatusFeedbackOverwriteMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<DeleteStatusFeedbackOverwriteMutation, TError, DeleteStatusFeedbackOverwriteMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<DeleteStatusFeedbackOverwriteMutation, TError, DeleteStatusFeedbackOverwriteMutationVariables, TContext>(
+      ['DeleteStatusFeedbackOverwrite'],
+      (variables?: DeleteStatusFeedbackOverwriteMutationVariables) => fetcher<DeleteStatusFeedbackOverwriteMutation, DeleteStatusFeedbackOverwriteMutationVariables>(client, DeleteStatusFeedbackOverwriteDocument, variables, headers)(),
+      options
+    );
+export const UpdateStatusFeedbackOverwriteDocument = `
+    mutation UpdateStatusFeedbackOverwrite($id: String!, $input: UpdateStatusFeedbackOverwriteInput!) {
+  updateStatusFeedbackOverwrite(id: $id, input: $input) {
+    id
+    stockOwnerId
+    objectType
+    status
+    feedback
+    customValue
+    system
+  }
+}
+    `;
+export const useUpdateStatusFeedbackOverwriteMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<UpdateStatusFeedbackOverwriteMutation, TError, UpdateStatusFeedbackOverwriteMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<UpdateStatusFeedbackOverwriteMutation, TError, UpdateStatusFeedbackOverwriteMutationVariables, TContext>(
+      ['UpdateStatusFeedbackOverwrite'],
+      (variables?: UpdateStatusFeedbackOverwriteMutationVariables) => fetcher<UpdateStatusFeedbackOverwriteMutation, UpdateStatusFeedbackOverwriteMutationVariables>(client, UpdateStatusFeedbackOverwriteDocument, variables, headers)(),
       options
     );
 export const GetAllStockOwnersDocument = `

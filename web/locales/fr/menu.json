@@ -61,6 +61,8 @@
     "article-set": "Nomenclature",
     "sets": "Nomenclatures",
     "settings": "Paramètres",
+    "status-feedback-overwrites": "Etats de remontée spécifiques",
+    "status-feedback-overwrite": "Etat de remontée spécifique",
     "status-config": "Config. des états",
     "status-evolutions": "Evolution états",
     "stock-management": "Gestion de stock",

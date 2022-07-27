@@ -14,6 +14,8 @@ import {
     useGetAllLocationsQuery,
     useGetAllReturnCodesQuery,
     GetAllReturnCodesQuery,
+    useGetAllStatusFeedbackOverwritesQuery,
+    GetAllStatusFeedbackOverwritesQuery,
     GetAllBuildingsQuery,
     useGetAllBuildingsQuery,
     useGetAllPurchaseOrdersQuery,
@@ -510,6 +512,40 @@ const useReturnCodes = (search: any, page: number, itemsPerPage: number, sort: a
     return returnCodes;
 };
 
+const useStatusFeedbackOverwrites = (
+    search: any,
+    page: number,
+    itemsPerPage: number,
+    sort: any
+) => {
+    const { graphqlRequestClient } = useAuth();
+
+    const sortByDate = {
+        field: 'created',
+        ascending: false
+    };
+
+    let newSort;
+
+    if (sort === null) {
+        newSort = sortByDate;
+    } else {
+        newSort = sort;
+    }
+
+    const statusFeedbackOverwrite = useGetAllStatusFeedbackOverwritesQuery<
+        Partial<GetAllStatusFeedbackOverwritesQuery>,
+        Error
+    >(graphqlRequestClient, {
+        filters: search,
+        orderBy: newSort,
+        page: page,
+        itemsPerPage: itemsPerPage
+    });
+
+    return statusFeedbackOverwrite;
+};
+
 const useStockOwnerIds = (search: any, page: number, itemsPerPage: number, sort: any) => {
     const { graphqlRequestClient } = useAuth();
 
@@ -889,6 +925,7 @@ export {
     useGoodsIns,
     useGoodsInLines,
     usePatterns,
+    useStatusFeedbackOverwrites,
     useStockOwnerIds,
     usePatternPaths,
     usePatternIds,
