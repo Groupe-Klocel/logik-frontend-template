@@ -5,7 +5,7 @@ import { FC, useEffect } from 'react';
 import { NextRouter } from 'next/router';
 import styled from 'styled-components';
 import { showError, useDetail } from '@helpers';
-import { ModelType } from '../Models';
+import { ModelType } from 'models/Models';
 
 const StyledPageContent = styled(Layout.Content)`
     margin: 15px 30px;
@@ -25,7 +25,7 @@ const SingleItemDetail: FC<ISingleItemProps> = (props: ISingleItemProps) => {
 
     const { isLoading, data, error } = useDetail(
         props.id,
-        props.dataModel.detailQueryName,
+        props.dataModel.queryNames.detail,
         props.dataModel.detailColumns
     );
 
@@ -40,9 +40,9 @@ const SingleItemDetail: FC<ISingleItemProps> = (props: ISingleItemProps) => {
             {props.headerComponent}
             <StyledPageContent>
                 {data && !isLoading ? (
-                    data[props.dataModel.detailQueryName] !== null ? (
+                    data[props.dataModel.queryNames.detail] !== null ? (
                         <>
-                            <DetailsList details={data[props.dataModel.detailQueryName]} />
+                            <DetailsList details={data[props.dataModel.queryNames.detail]} />
                             {props.extraDataComponent}
                         </>
                     ) : (

@@ -2,12 +2,13 @@ import { FC, useEffect } from 'react';
 import { Button, Form, Space } from 'antd';
 import { StyledForm } from '@components';
 import useTranslation from 'next-translate/useTranslation';
-import { useAuth } from 'context/AuthContext';
+
 import { useRouter } from 'next/router';
 
 import { showError, showSuccess, showInfo, useUpdate } from '@helpers';
 import { FormGroup } from 'modules/Crud/Components/FormGroup';
-import { FormDataType, ModelType } from 'modules/Crud/Models';
+import { ModelType } from 'models/Models';
+import { formStep1, formStep2, formStep3 } from '../ArticleFormItems';
 
 export interface IEditItemFormProps {
     id: string;
@@ -18,10 +19,14 @@ export interface IEditItemFormProps {
 
 export const EditItemForm: FC<IEditItemFormProps> = (props: IEditItemFormProps) => {
     const { t } = useTranslation();
-    const { graphqlRequestClient } = useAuth();
     const router = useRouter();
 
     const [form] = Form.useForm();
+
+    const errorMessageEmptyInput = t('messages:error-message-empty-input');
+    const formFields1 = formStep1(errorMessageEmptyInput);
+    const formFields2 = formStep2(errorMessageEmptyInput);
+    const formFields3 = formStep3(errorMessageEmptyInput);
 
     const {
         isLoading: updateLoading,
@@ -30,7 +35,7 @@ export const EditItemForm: FC<IEditItemFormProps> = (props: IEditItemFormProps) 
     } = useUpdate(
         props.dataModel.resolverName,
         props.id,
-        props.dataModel.updateQueryName,
+        props.dataModel.queryNames.update,
         props.dataModel.detailColumns
     );
 
@@ -41,7 +46,7 @@ export const EditItemForm: FC<IEditItemFormProps> = (props: IEditItemFormProps) 
             router.push(
                 props.routeAfterSuccess.replace(
                     ':id',
-                    updateResult.data[props.dataModel.updateQueryName]?.id
+                    updateResult.data[props.dataModel.queryNames.update]?.id
                 )
             );
             showSuccess(t('messages:success-updated'));
@@ -89,107 +94,6 @@ export const EditItemForm: FC<IEditItemFormProps> = (props: IEditItemFormProps) 
             showInfo(t('messages:info-update-wip'));
         }
     }, [updateLoading]);
-
-    const errorMessageEmptyInput = t('messages:error-message-empty-input');
-
-    const formFields1 = [
-        {
-            name: 'name',
-            type: FormDataType.String,
-            rules: [{ required: true, message: errorMessageEmptyInput }]
-        },
-        { name: 'additionalDescription', type: FormDataType.TextArea },
-        { name: 'supplierName', type: FormDataType.String },
-        {
-            name: 'status',
-            type: FormDataType.Number,
-            rules: [{ required: true, message: errorMessageEmptyInput }]
-        },
-        {
-            name: 'code',
-            type: FormDataType.String,
-            rules: [{ required: true, message: errorMessageEmptyInput }]
-        },
-        {
-            name: 'stockOwnerId',
-            type: FormDataType.String,
-            rules: [{ required: true, message: errorMessageEmptyInput }]
-        }
-    ];
-    const formFields2 = [
-        {
-            name: 'length',
-            type: FormDataType.Number,
-            numberPrecision: 2,
-            rules: [{ required: true, message: errorMessageEmptyInput }]
-        },
-        {
-            name: 'width',
-            type: FormDataType.Number,
-            numberPrecision: 2,
-            rules: [{ required: true, message: errorMessageEmptyInput }]
-        },
-        {
-            name: 'height',
-            type: FormDataType.Number,
-            numberPrecision: 2,
-            rules: [{ required: true, message: errorMessageEmptyInput }]
-        },
-        {
-            name: 'baseUnitWeight',
-            type: FormDataType.Number,
-            numberPrecision: 2,
-            rules: [{ required: true, message: errorMessageEmptyInput }]
-        },
-        {
-            name: 'baseUnitPicking',
-            type: FormDataType.Boolean
-        },
-        {
-            name: 'cubingType',
-            type: FormDataType.Number,
-            rules: [{ required: true, message: errorMessageEmptyInput }]
-        },
-        {
-            name: 'baseUnitPrice',
-            type: FormDataType.Number
-        },
-        {
-            name: 'baseUnitRotation',
-            type: FormDataType.String
-        },
-        {
-            name: 'boxRotation',
-            type: FormDataType.String
-        }
-    ];
-
-    const formFields3 = [
-        {
-            name: 'family',
-            type: FormDataType.String
-        },
-        {
-            name: 'subfamily',
-            type: FormDataType.String
-        },
-        {
-            name: 'tariffClassification',
-            type: FormDataType.String
-        },
-        {
-            name: 'groupingId',
-            type: FormDataType.Number
-        },
-        {
-            name: 'featureTypeId',
-            type: FormDataType.Number
-        },
-        {
-            name: 'permanentProduct',
-            type: FormDataType.Boolean
-        }
-    ];
 
     return (
         <StyledForm>

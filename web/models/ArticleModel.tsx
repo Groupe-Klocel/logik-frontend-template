@@ -1,56 +1,16 @@
-export enum FormDataType {
-    Number,
-    String,
-    Boolean,
-    TextArea
-}
+import { ModelType, FormDataType } from './Models';
 
-export type FormRuleType = {
-    required: boolean;
-    message: string;
-};
-
-export type FilterColumn = {
-    name: string;
-    type: FormDataType;
-    numberPrecision?: number;
-    rules?: Array<FormRuleType>;
-};
-export type ModelType = {
-    tableName: string;
-    detailQueryName: string;
-    detailColumns: Array<string>;
-    listColumns: Array<string>;
-    sortableColumns: Array<string>;
-    filterColumns: Array<FilterColumn>;
-
-    listQueryName: string;
-    exportQueryName: string;
-    updateQueryName: string;
-    resolverName: string;
-};
-
-var articleLuBarcodeModel: ModelType = {
-    tableName: 'barcode',
-    updateQueryName: 'updateBarcode',
-    detailQueryName: 'barcode',
-    listQueryName: 'articleLuBarcodes',
-    resolverName: 'ArticleLuBarcode',
-    exportQueryName: 'exportArticleLuBarcodes',
-    detailColumns: [],
-    listColumns: ['id', 'barcodeId'],
-    sortableColumns: [],
-    filterColumns: []
-};
-
-var articleModel: ModelType = {
-    tableName: 'ARTICLE',
-    detailQueryName: 'article',
-    listQueryName: 'articles',
+export const ArticleModel: ModelType = {
+    tableName: 'Article',
     resolverName: 'Article',
-    exportQueryName: 'exportArticles',
-    updateQueryName: 'updateArticle',
 
+    queryNames: {
+        list: 'articles',
+        export: 'exportArticles',
+        detail: 'article',
+        create: 'createArticle',
+        update: 'updateArticle'
+    },
     detailColumns: [
         'id',
         'extras',
@@ -112,5 +72,3 @@ var articleModel: ModelType = {
         { name: 'permanentProduct', type: FormDataType.Boolean }
     ]
 };
-
-export { articleLuBarcodeModel, articleModel };

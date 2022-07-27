@@ -16,7 +16,7 @@ import {
 import useTranslation from 'next-translate/useTranslation';
 import { ExportFormat } from 'generated/graphql';
 import { useState, useEffect, useCallback } from 'react';
-import { ModelType } from '../Models';
+import { ModelType } from '../../../models/Models';
 
 export interface IGeneralListProps {
     searchCriteria?: any;
@@ -41,7 +41,7 @@ const ListTableComponent = (props: IGeneralListProps) => {
 
     const { isLoading, data } = useList(
         props.dataModel.resolverName,
-        props.dataModel.listQueryName,
+        props.dataModel.queryNames.list,
         props.dataModel.listColumns,
         props.searchCriteria,
         pagination.current,
@@ -54,7 +54,7 @@ const ListTableComponent = (props: IGeneralListProps) => {
         isLoading: exportLoading,
         result: exportResult,
         mutate
-    } = useExport(props.dataModel.resolverName, props.dataModel.exportQueryName);
+    } = useExport(props.dataModel.resolverName, props.dataModel.queryNames.export);
 
     const exportData = () => {
         mutate({
@@ -107,7 +107,7 @@ const ListTableComponent = (props: IGeneralListProps) => {
     // For pagination
     useEffect(() => {
         if (data) {
-            let listData: any = data?.[props.dataModel.listQueryName];
+            let listData: any = data?.[props.dataModel.queryNames.list];
             if (listData && listData['results'] && listData['results'].length > 0) {
                 let result_list: Array<any> = [];
                 let sort_index: number = 1;
@@ -148,7 +148,7 @@ const ListTableComponent = (props: IGeneralListProps) => {
         <>
             {rows ? (
                 <AppTable
-                    type={props.dataModel.listQueryName}
+                    type={props.dataModel.queryNames.list}
                     columns={columns.concat(props.actionColumns)}
                     data={rows!.results}
                     pagination={pagination}

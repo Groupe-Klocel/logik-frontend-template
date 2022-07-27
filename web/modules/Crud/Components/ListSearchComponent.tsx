@@ -1,11 +1,11 @@
 import { Form, Input, InputNumber, Checkbox } from 'antd';
 import useTranslation from 'next-translate/useTranslation';
 import { FC } from 'react';
-import { FilterColumn, FormDataType } from '../Models';
+import { FilterColumnType, FormDataType } from '../../../models/Models';
 
 export interface IGeneralSearchProps {
     form: any;
-    columns: Array<FilterColumn>;
+    columns: Array<FilterColumnType>;
 }
 
 const ListSearchComponent: FC<IGeneralSearchProps> = ({ form, columns }: IGeneralSearchProps) => {
@@ -14,7 +14,7 @@ const ListSearchComponent: FC<IGeneralSearchProps> = ({ form, columns }: IGenera
     return (
         <>
             <Form form={form} name="control-hooks">
-                {columns.map((item: FilterColumn, number) => {
+                {columns.map((item: FilterColumnType, number) => {
                     if (item.type === FormDataType.Number)
                         return (
                             <Form.Item name={item.name} label={t(`d:${item.name}`)} key={item.name}>

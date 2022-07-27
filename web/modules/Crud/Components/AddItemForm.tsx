@@ -1,24 +1,21 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, FC } from 'react';
 import { Form, Button, Space } from 'antd';
 import { WrapperForm, StepsPanel, WrapperStepContent } from '@components';
-import { AddArticleStep1 } from './Steps/AddArticleStep1';
-import { AddArticleStep2 } from './Steps/AddArticleStep2';
-import { AddArticleStep3 } from './Steps/AddArticleStep3';
 import useTranslation from 'next-translate/useTranslation';
-import { useAuth } from 'context/AuthContext';
 import { useRouter } from 'next/router';
-import {
-    useCreateArticleMutation,
-    CreateArticleMutation,
-    CreateArticleMutationVariables
-} from 'generated/graphql';
-import { showError, showSuccess, showInfo } from '@helpers';
 
-const { Item } = Form;
+import { showError, showSuccess, showInfo, useCreate } from '@helpers';
+import { FilterColumnType, ModelType } from 'models/Models';
+import { FormGroup } from './FormGroup';
 
-export const AddArticleForm = () => {
+export interface IEditItemFormProps {
+    dataModel: ModelType;
+    addSteps: Array<Array<FilterColumnType>>;
+    routeAfterSuccess: string;
+}
+
+export const AddItemForm: FC<IEditItemFormProps> = (props: IEditItemFormProps) => {
     const { t } = useTranslation();
-    const { graphqlRequestClient } = useAuth();
     const router = useRouter();
 
     const [current, setCurrent] = useState(0);
@@ -38,51 +35,47 @@ export const AddArticleForm = () => {
     };
 
     const {
-        mutate,
         isLoading: createLoading,
-        data
-    } = useCreateArticleMutation<Error>(graphqlRequestClient, {
-        onSuccess: (
-            data: CreateArticleMutation,
-            _variables: CreateArticleMutationVariables,
-            _context: any
-        ) => {
-            router.push(`/article/${data.createArticle.id}`);
+        result: createResult,
+        mutate
+    } = useCreate(
+        props.dataModel.resolverName,
+        props.dataModel.queryNames.create,
+        props.dataModel.detailColumns
+    );
+
+    useEffect(() => {
+        if (!(createResult && createResult.data)) return;
+
+        if (createResult.success) {
+            router.push(
+                props.routeAfterSuccess.replace(
+                    ':id',
+                    createResult.data[props.dataModel.queryNames.create]?.id
+                )
+            );
             showSuccess(t('messages:success-created'));
-        },
-        onError: (error) => {
+        } else {
             showError(t('messages:error-creating-data'));
         }
-    });
-
-    const createArticle = ({ input }: CreateArticleMutationVariables) => {
-        mutate({ input });
-    };
+    }, [createResult]);
 
     const onFinish = () => {
         form.validateFields()
             .then(() => {
-                createArticle({
+                mutate({
                     input: { ...form.getFieldsValue(true) }
                 });
             })
             .catch((err) => showError(t('messages:error-creating-data')));
     };
 
-    const steps = [
-        {
-            title: `${t('common:step')} 1`,
-            key: 0
-        },
-        {
-            title: `${t('common:step')} 2`,
-            key: 1
-        },
-        {
-            title: `${t('common:step')} 3`,
-            key: 2
-        }
-    ];
+    const steps = props.addSteps.map((element, index) => {
+        return {
+            title: `${t('common:step')} ` + (index + 1).toString(),
+            key: index
+        };
+    });
 
     useEffect(() => {
         if (createLoading) {
@@ -95,11 +88,7 @@ export const AddArticleForm = () => {
             <StepsPanel currentStep={current} steps={steps} />
             <WrapperStepContent>
                 <Form form={form} scrollToFirstError>
-                    {current === 0 && <AddArticleStep1 />}
-
-                    {current === 1 && <AddArticleStep2 />}
-
-                    {current === 2 && <AddArticleStep3 />}
+                    <FormGroup inputs={props.addSteps[current]} />
                 </Form>
             </WrapperStepContent>
             {current === 0 ? (

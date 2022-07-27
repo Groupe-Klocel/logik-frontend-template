@@ -2,7 +2,7 @@ import { AppHead, LinkButton } from '@components';
 import MainLayout from 'components/layouts/MainLayout';
 import { FC } from 'react';
 
-import { articleModel } from 'modules/Crud/Models';
+import { ArticleModel } from 'models/ArticleModel';
 import { HeaderData, ListWithFilter } from '../modules/Crud/Components/ListWithFilter';
 import { ModeEnum } from 'generated/graphql';
 import { DeleteOutlined, EyeTwoTone } from '@ant-design/icons';
@@ -17,7 +17,7 @@ type PageComponent = FC & { layout: typeof MainLayout };
 const ArticlesPage: PageComponent = () => {
     const { permissions } = useAppState();
     const { t } = useTranslation();
-    const modes = getModesFromPermissions(permissions, articleModel.tableName);
+    const modes = getModesFromPermissions(permissions, ArticleModel.tableName);
 
     let headerData: HeaderData = {
         title: t('common:articles'),
@@ -38,7 +38,7 @@ const ArticlesPage: PageComponent = () => {
             <AppHead title="Bee V2" />
             <ListWithFilter
                 headerData={headerData}
-                dataModel={articleModel}
+                dataModel={ArticleModel}
                 actionColumns={[
                     {
                         title: 'actions:actions',

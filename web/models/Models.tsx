@@ -1,0 +1,36 @@
+export enum FormDataType {
+    Number,
+    String,
+    Boolean,
+    TextArea
+}
+
+export type FormRuleType = {
+    required: boolean;
+    message: string;
+};
+
+export type FilterColumnType = {
+    name: string;
+    type: FormDataType;
+    numberPrecision?: number;
+    rules?: Array<FormRuleType>;
+};
+
+export type QueryNamesType = {
+    list: string;
+    export: string;
+    detail: string;
+    create: string;
+    update: string;
+};
+export type ModelType = {
+    tableName: string;
+    detailColumns: Array<string>;
+    listColumns: Array<string>;
+    sortableColumns: Array<string>;
+    filterColumns: Array<FilterColumnType>;
+
+    queryNames: QueryNamesType;
+    resolverName: string;
+};

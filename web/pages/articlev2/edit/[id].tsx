@@ -2,7 +2,7 @@ import { AppHead, HeaderContent } from '@components';
 import { useRouter } from 'next/router';
 import { FC } from 'react';
 import MainLayout from '../../../components/layouts/MainLayout';
-import { articleModel } from 'modules/Crud/Models';
+import { ArticleModel } from 'models/ArticleModel';
 import { EditItem } from 'modules/Crud/Components/EditItem';
 import { articlesSubRoutes } from 'modules/Articles/Static/articlesRoutes';
 import useTranslation from 'next-translate/useTranslation';
@@ -26,7 +26,7 @@ const EditArticlePage: PageComponent = () => {
             <AppHead title="Bee V2" />
             <EditItem
                 id={id!}
-                dataModel={articleModel}
+                dataModel={ArticleModel}
                 headerComponent={
                     <HeaderContent
                         title={`${t('common:article')} ${id!}`}

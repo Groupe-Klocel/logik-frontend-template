@@ -1,12 +1,12 @@
 import { ContentSpin } from '@components';
 import { Layout } from 'antd';
 import useTranslation from 'next-translate/useTranslation';
-import { useAuth } from 'context/AuthContext';
+
 import { FC, useEffect } from 'react';
 import styled from 'styled-components';
 import { showError, useDetail } from '@helpers';
 import { EditItemForm } from './EditItemForm';
-import { ModelType } from 'modules/Crud/Models';
+import { ModelType } from 'models/Models';
 
 const StyledPageContent = styled(Layout.Content)`
     margin: 0px 30px 50px 30px;
@@ -25,7 +25,7 @@ const EditItem: FC<IEditItemProps> = (props: IEditItemProps) => {
 
     const { isLoading, data, error } = useDetail(
         props.id,
-        props.dataModel.detailQueryName,
+        props.dataModel.queryNames.detail,
         props.dataModel.detailColumns
     );
 
@@ -39,10 +39,10 @@ const EditItem: FC<IEditItemProps> = (props: IEditItemProps) => {
         <>
             {props.headerComponent}
             <StyledPageContent>
-                {data && !isLoading && data[props.dataModel.detailQueryName] ? (
+                {data && !isLoading && data[props.dataModel.queryNames.detail] ? (
                     <EditItemForm
                         id={props.id}
-                        details={data[props.dataModel.detailQueryName]}
+                        details={data[props.dataModel.queryNames.detail]}
                         dataModel={props.dataModel}
                         routeAfterSuccess={props.routeAfterSuccess}
                     />

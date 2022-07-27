@@ -7,7 +7,7 @@ import useTranslation from 'next-translate/useTranslation';
 import { showError } from '@helpers';
 import { useCallback, useState } from 'react';
 import { ListSearchComponent } from './ListSearchComponent';
-import { ModelType } from '../Models';
+import { ModelType } from 'models/Models';
 
 export type HeaderData = {
     title: string;
