@@ -2,6 +2,7 @@ import { LanguageType } from '@helpers';
 import Cookies from 'js-cookie';
 import { isoLangs } from './constant';
 import { message } from 'antd';
+import { stringify } from 'querystring';
 
 export const cookie = Cookies.withAttributes({ path: '/', secure: true, sameSite: 'strict' });
 
@@ -34,9 +35,12 @@ function purgeSorter(data: Array<any> | any): Array<any> | null {
         if (data.order === undefined) {
             return null;
         } else {
+            if (Array.isArray(data.field)) {
+                data.field=data.field.slice(-1)[0] }
             newSorter = [data];
         }
-    } else {
+    } else {   
+        data.map(e => (Array.isArray(e.field) ? e.field=e.field.slice(-1)[0] : e.field));
         newSorter = data;
     }
 

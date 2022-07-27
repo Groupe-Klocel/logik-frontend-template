@@ -1,0 +1,108 @@
+query getBuildingStatusConfigs {
+    listConfigsForAScope(scope: "building_status") {
+        id
+        scope
+        code
+        text
+    }
+}
+
+query GetAllBuildings(
+    $filters: BuildingSearchFilters
+    $orderBy: [BuildingOrderByCriterion!]
+    $page: Int!
+    $itemsPerPage: Int!
+) {
+    buildings(filters: $filters, orderBy: $orderBy, page: $page, itemsPerPage: $itemsPerPage) {
+        count
+        itemsPerPage
+        totalPages
+        results {
+            id
+            name
+            address1
+            address2
+            address3
+            postCode
+            city
+            country
+            contactName
+            contactPhone
+            contactMobile
+            contactEmail
+            status
+            statusText
+            created
+            createdBy
+            modified
+            modifiedBy
+        }
+    }
+}
+
+query GetBuildingById($id: String!) {
+    building(id: $id) {
+        id
+        name
+        address1
+        address2
+        address3
+        postCode
+        city
+        country
+        contactName
+        contactPhone
+        contactMobile
+        contactEmail
+        status
+        statusText
+        created
+        createdBy
+        modified
+        modifiedBy
+    }
+}
+
+mutation CreateBuilding($input: CreateBuildingInput!) {
+    createBuilding(input: $input) {
+        id
+        name
+        address1
+        address2
+        address3
+        postCode
+        city
+        country
+        contactName
+        contactPhone
+        contactMobile
+        contactEmail
+        status
+    }
+}
+
+mutation DeleteBuilding($id: String!) {
+    deleteBuilding(id: $id)
+}
+
+mutation UpdateBuilding($id: String!, $input: UpdateBuildingInput!) {
+    updateBuilding(id: $id, input: $input) {
+        id
+        name
+        address1
+        address2
+        address3
+        postCode
+        city
+        country
+        contactName
+        contactPhone
+        contactMobile
+        contactEmail
+        status
+    }
+}
+
+mutation SoftDeleteBuilding($buildingId: String!) {
+    softDeleteBuilding(buildingId: $buildingId)
+}

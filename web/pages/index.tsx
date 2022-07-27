@@ -10,7 +10,7 @@ const HomePage: PageComponent = () => {
 
     return (
         <>
-            <Welcome text={t('common:bee')} />
+            <Welcome text={t('common:logik')} />
         </>
     );
 };
