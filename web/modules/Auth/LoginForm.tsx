@@ -44,7 +44,7 @@ export const LoginForm = () => {
                         query GetMyInfo {
                             me {
                                 __typename
-                                ... on WarehouseWorker {
+                                ...on WarehouseWorker {
                                     id
                                     password
                                     username
@@ -62,7 +62,7 @@ export const LoginForm = () => {
                                     }
                                 }
 
-                                ... on IntegratorUser {
+                                ...on IntegratorUser {
                                     id
                                     password
                                     email
@@ -107,8 +107,7 @@ export const LoginForm = () => {
     const onFinish = (values: any) => {
         login({
             username: values.username,
-            password: values.password,
-            warehouseId: 'test-warehouse'
+            password: values.password
         });
     };
 

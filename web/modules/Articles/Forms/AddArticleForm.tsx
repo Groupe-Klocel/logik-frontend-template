@@ -62,9 +62,7 @@ export const AddArticleForm = () => {
     const onFinish = () => {
         form.validateFields()
             .then(() => {
-                createArticle({
-                    input: { ...form.getFieldsValue(true) }
-                });
+                createArticle({ input: { ...form.getFieldsValue(true), accountId: 1 } });
             })
             .catch((err) => showError(t('messages:error-creating-data')));
     };
