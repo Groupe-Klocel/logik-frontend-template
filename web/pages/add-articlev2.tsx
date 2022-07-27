@@ -5,10 +5,10 @@ import { AppHead } from '@components';
 import MainLayout from 'components/layouts/MainLayout';
 import { FC } from 'react';
 import useTranslation from 'next-translate/useTranslation';
-import { AddItemForm } from 'modules/Crud/Components/AddItemForm';
 
-import { formStep1, formStep2, formStep3 } from 'modules/Crud/ArticleFormItems';
+import { formStep1, formStep2, formStep3 } from 'modules/Articles/Forms/ArticleFormItems';
 import { ArticleModel } from 'models/ArticleModel';
+import { AddItemComponent } from 'modules/Crud/AddItemComponent';
 
 type PageComponent = FC & { layout: typeof MainLayout };
 
@@ -19,8 +19,13 @@ const AddArticlePage: PageComponent = () => {
     return (
         <>
             <AppHead title="Bee V2" />
-            <HeaderContent title={t('add2', { name: 'Article' })} routes={addArticleRoutes} />
-            <AddItemForm
+            <AddItemComponent
+                headerComponent={
+                    <HeaderContent
+                        title={t('add2', { name: 'Article' })}
+                        routes={addArticleRoutes}
+                    />
+                }
                 addSteps={[
                     formStep1(errorMessageEmptyInput),
                     formStep2(errorMessageEmptyInput),

@@ -7,8 +7,8 @@ import { useState } from 'react';
 import { BarcodeRenderModal } from 'modules/Barcodes/Elements/BarcodeRenderModal';
 import { useAppState } from 'context/AppContext';
 import { ModeEnum, Table } from 'generated/graphql';
-import { ListTableComponent } from './Components/ListTableComponent';
-import { ArticleLuBarcodeModel } from '../../models/ArticleLuBarcodeModel';
+import { ListTableComponent } from 'modules/Crud/submodules/ListTableComponent';
+import { ArticleLuBarcodeModel } from 'models/ArticleLuBarcodeModel';
 
 const { Title } = Typography;
 

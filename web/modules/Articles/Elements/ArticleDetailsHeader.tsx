@@ -12,7 +12,7 @@ import { useAuth } from 'context/AuthContext';
 import { FC, useState } from 'react';
 import { NextRouter } from 'next/router';
 import { HeaderContent } from '@components';
-import { getModesFromPermissions, showError, showSuccess, useDetail } from '@helpers';
+import { getModesFromPermissions, showError, showSuccess } from '@helpers';
 import { useAppState } from 'context/AppContext';
 
 export interface ISingleItemProps {

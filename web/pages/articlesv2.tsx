@@ -3,7 +3,7 @@ import MainLayout from 'components/layouts/MainLayout';
 import { FC } from 'react';
 
 import { ArticleModel } from 'models/ArticleModel';
-import { HeaderData, ListWithFilter } from '../modules/Crud/Components/ListWithFilter';
+import { HeaderData, ListComponentWithFilter } from '../modules/Crud/ListComponentWithFilter';
 import { ModeEnum } from 'generated/graphql';
 import { DeleteOutlined, EyeTwoTone } from '@ant-design/icons';
 import { Button, Space } from 'antd';
@@ -36,7 +36,7 @@ const ArticlesPage: PageComponent = () => {
     return (
         <>
             <AppHead title="Bee V2" />
-            <ListWithFilter
+            <ListComponentWithFilter
                 headerData={headerData}
                 dataModel={ArticleModel}
                 actionColumns={[

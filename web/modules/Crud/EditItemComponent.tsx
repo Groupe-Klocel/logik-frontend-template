@@ -5,7 +5,7 @@ import useTranslation from 'next-translate/useTranslation';
 import { FC, useEffect } from 'react';
 import styled from 'styled-components';
 import { showError, useDetail } from '@helpers';
-import { EditItemForm } from './EditItemForm';
+import { EditItemForm } from './submodules/EditItemForm';
 import { ModelType } from 'models/Models';
 
 const StyledPageContent = styled(Layout.Content)`
@@ -20,7 +20,7 @@ export interface IEditItemProps {
     routeAfterSuccess: string;
 }
 
-const EditItem: FC<IEditItemProps> = (props: IEditItemProps) => {
+const EditItemComponent: FC<IEditItemProps> = (props: IEditItemProps) => {
     const { t } = useTranslation();
 
     const { isLoading, data, error } = useDetail(
@@ -54,6 +54,6 @@ const EditItem: FC<IEditItemProps> = (props: IEditItemProps) => {
     );
 };
 
-EditItem.displayName = 'EditItem';
+EditItemComponent.displayName = 'EditItemComponent';
 
-export { EditItem };
+export { EditItemComponent };

@@ -1,9 +1,9 @@
 import { AppHead } from '@components';
 
-import { ArticleDetailsExtra } from 'modules/Crud/ArticleDetailsExtra';
-import { ArticleDetailsHeader } from 'modules/Crud/ArticleDetailsHeader';
+import { ArticleDetailsExtra } from 'modules/Articles/Elements/ArticleDetailsExtra';
+import { ArticleDetailsHeader } from 'modules/Articles/Elements/ArticleDetailsHeader';
 import { ArticleModel } from 'models/ArticleModel';
-import { SingleItemDetail } from 'modules/Crud/Components/SingleItemDetail';
+import { ItemDetailComponent } from 'modules/Crud/ItemDetailComponent';
 import { useRouter } from 'next/router';
 import { FC } from 'react';
 import MainLayout from '../../components/layouts/MainLayout';
@@ -18,7 +18,7 @@ const ArticlePage: PageComponent = () => {
     return (
         <>
             <AppHead title="Bee V2" />
-            <SingleItemDetail
+            <ItemDetailComponent
                 extraDataComponent={<ArticleDetailsExtra articleId={id!} />}
                 headerComponent={
                     <ArticleDetailsHeader id={id!} router={router} tableName={tableName} />

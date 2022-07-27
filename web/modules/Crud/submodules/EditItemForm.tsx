@@ -6,9 +6,9 @@ import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
 
 import { showError, showSuccess, showInfo, useUpdate } from '@helpers';
-import { FormGroup } from 'modules/Crud/Components/FormGroup';
+import { FormGroup } from 'modules/Crud/submodules/FormGroup';
 import { ModelType } from 'models/Models';
-import { formStep1, formStep2, formStep3 } from '../ArticleFormItems';
+import { formStep1, formStep2, formStep3 } from 'modules/Articles/Forms/ArticleFormItems';
 
 export interface IEditItemFormProps {
     id: string;

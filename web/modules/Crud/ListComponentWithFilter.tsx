@@ -2,11 +2,11 @@ import { SearchOutlined } from '@ant-design/icons';
 import { HeaderContent } from '@components';
 import { Space, Form, Button } from 'antd';
 import { useDrawerDispatch } from 'context/DrawerContext';
-import { ListTableComponent } from 'modules/Crud/Components/ListTableComponent';
+import { ListTableComponent } from 'modules/Crud/submodules/ListTableComponent';
 import useTranslation from 'next-translate/useTranslation';
 import { showError } from '@helpers';
 import { useCallback, useState } from 'react';
-import { ListSearchComponent } from './ListSearchComponent';
+import { ListSearchComponent } from './submodules/ListSearchComponent';
 import { ModelType } from 'models/Models';
 
 export type HeaderData = {
@@ -20,7 +20,7 @@ export interface IListProps {
     headerData: HeaderData;
 }
 
-const ListWithFilter = (props: IListProps) => {
+const ListComponentWithFilter = (props: IListProps) => {
     const defaultProps = {
         actionColumns: []
     };
@@ -103,5 +103,5 @@ const ListWithFilter = (props: IListProps) => {
     );
 };
 
-ListWithFilter.displayName = 'ListWithFilter';
-export { ListWithFilter };
+ListComponentWithFilter.displayName = 'ListWithFilter';
+export { ListComponentWithFilter };

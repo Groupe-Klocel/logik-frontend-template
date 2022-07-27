@@ -20,7 +20,7 @@ export interface ISingleItemProps {
     extraDataComponent: any;
 }
 
-const SingleItemDetail: FC<ISingleItemProps> = (props: ISingleItemProps) => {
+const ItemDetailComponent: FC<ISingleItemProps> = (props: ISingleItemProps) => {
     const { t } = useTranslation();
 
     const { isLoading, data, error } = useDetail(
@@ -56,6 +56,6 @@ const SingleItemDetail: FC<ISingleItemProps> = (props: ISingleItemProps) => {
     );
 };
 
-SingleItemDetail.displayName = 'SingleItemDetail';
+ItemDetailComponent.displayName = 'ItemDetailComponent';
 
-export { SingleItemDetail };
+export { ItemDetailComponent };
