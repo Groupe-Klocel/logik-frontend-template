@@ -1,19 +1,20 @@
 import { AppHead } from '@components';
 import { META_DEFAULTS } from '@helpers';
 import MainLayout from 'components/layouts/MainLayout';
-import { Carriers } from 'modules/Carriers/PagesContainer/Carriers';
+import { AddCarrier } from 'modules/Carriers/PagesContainer/AddCarrier';
 import { FC } from 'react';
 
 type PageComponent = FC & { layout: typeof MainLayout };
 
-const CarriersPage: PageComponent = () => {
+const AddCarrierPage: PageComponent = () => {
     return (
         <>
             <AppHead title={META_DEFAULTS.title} />
-            <Carriers />
+            <AddCarrier />
         </>
     );
 };
-CarriersPage.layout = MainLayout;
 
-export default CarriersPage;
+AddCarrierPage.layout = MainLayout;
+
+export default AddCarrierPage;

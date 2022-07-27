@@ -8,6 +8,10 @@ import {
     GetArticleIdsQuery,
     useGetMyInfoQuery,
     GetMyInfoQuery,
+    useGetAllCarriersQuery,
+    GetAllCarriersQuery,
+    useGetCarrierIdsQuery,
+    GetCarrierIdsQuery,
     useGetAllBlocksQuery,
     GetAllBlocksQuery,
     GetAllLocationsQuery,
@@ -290,6 +294,63 @@ const useBuildings = (search: any, page: number, itemsPerPage: number, sort: any
     return buildings;
 };
 
+const useCarriers = (search: any, page: number, itemsPerPage: number, sort: any) => {
+    const { graphqlRequestClient } = useAuth();
+
+    const sortByDate = {
+        field: 'created',
+        ascending: false
+    };
+
+    let newSort;
+
+    if (sort === null) {
+        newSort = sortByDate;
+    } else {
+        newSort = sort;
+    }
+
+    const carriers = useGetAllCarriersQuery<Partial<GetAllCarriersQuery>, Error>(
+        graphqlRequestClient,
+        {
+            filters: search,
+            orderBy: newSort,
+            page: page,
+            itemsPerPage: itemsPerPage
+        }
+    );
+    return carriers;
+};
+
+const useCarrierIds = (search: any, page: number, itemsPerPage: number, sort: any) => {
+    const { graphqlRequestClient } = useAuth();
+
+    const sortByDate = {
+        field: 'name',
+        ascending: false
+    };
+
+    let newSort;
+
+    if (sort === null) {
+        newSort = sortByDate;
+    } else {
+        newSort = sort;
+    }
+
+    const carriers = useGetCarrierIdsQuery<Partial<GetCarrierIdsQuery>, Error>(
+        graphqlRequestClient,
+        {
+            filters: search,
+            orderBy: newSort,
+            page: page,
+            itemsPerPage: itemsPerPage
+        }
+    );
+
+    return carriers;
+};
+
 const useEquipment = (search: any, page: number, itemsPerPage: number, sort: any) => {
     const { graphqlRequestClient } = useAuth();
 
@@ -362,6 +423,7 @@ const useFeatureCodes = (search: any, page: number, itemsPerPage: number, sort: 
     // default sort by creation date
     const sortByDate = {
         field: 'created',
+
         ascending: false
     };
 
@@ -375,10 +437,14 @@ const useFeatureCodes = (search: any, page: number, itemsPerPage: number, sort: 
 
     const featureCodes = useGetAllFeatureCodesQuery<Partial<GetAllFeatureCodesQuery>, Error>(
         graphqlRequestClient,
+
         {
             filters: search,
+
             orderBy: newSort,
+
             page: page,
+
             itemsPerPage: itemsPerPage
         }
     );
@@ -940,6 +1006,8 @@ export {
     useArticles,
     useBlocks,
     useBuildings,
+    useCarriers,
+    useCarrierIds,
     useEquipment,
     useEquipmentDetails,
     useArticleSets,

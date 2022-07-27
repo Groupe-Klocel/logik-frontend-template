@@ -103,6 +103,9 @@ const SideMenu: FC = () => {
                         <Link href="/pattern-paths">{t('pattern-paths')}</Link>
                     </Menu.Item>
                 </SubMenu>
+                <Menu.Item key="configuration-carriers">
+                    <Link href="/carriers">{t('carriers')}</Link>
+                </Menu.Item>
                 <Menu.Item key="configuration-stock-statuses">
                     <Link href="/stock-statuses">{t('stock-statuses')}</Link>
                 </Menu.Item>

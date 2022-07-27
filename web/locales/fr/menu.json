@@ -13,6 +13,7 @@
     "boxes": "Colis",
     "building": "Entrepôt",
     "buildings": "Entrepôts",
+    "carrier": "Transporteur",
     "carriers": "Transporteurs",
     "location": "Emplacement",
     "cartography": "Cartographie",
@@ -70,5 +71,6 @@
     "users": "Utilisateurs",
     "users-rights": "Droits utilisateurs",
     "warning": "Alertes",
-    "user-settings": "Mes Paramètres"
+    "user-settings": "Mes Paramètres",
+    "add-carrier": "Ajouter un transporteur"
 }

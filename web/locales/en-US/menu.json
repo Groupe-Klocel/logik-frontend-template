@@ -3,12 +3,14 @@
     "access-management": "Access Management",
     "administration": "Administration",
     "articles": "Articles",
+    "bloc": "Bloc",
     "article-set-detail": "Article Set Detail",
     "barcodes": "Barcodes",
     "blacklisted-barcodes": "Blacklisted Barcodes",
     "blocks": "Blocks",
     "box-checking": "Box checking",
     "boxes": "Boxes",
+    "carrier": "Carrier",
     "carriers": "Carriers",
     "block": "Block",
     "buildings": "Buildings",
@@ -69,5 +71,6 @@
     "users": "Users",
     "users-rights": "Users rights",
     "warning": "Warning",
-    "user-settings": "My Settings"
+    "user-settings": "My Settings",
+    "add-carrier": "Add a Carrier"
 }

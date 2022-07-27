@@ -9691,6 +9691,72 @@ export type SoftDeleteBuildingMutationVariables = Exact<{
 
 export type SoftDeleteBuildingMutation = { __typename?: 'Mutation', softDeleteBuilding: boolean };
 
+export type SimpleGetAllCarriersQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type SimpleGetAllCarriersQuery = { __typename?: 'Query', carriers: { __typename?: 'CarrierListResult', results: Array<{ __typename?: 'Carrier', id?: string | null, name?: string | null }> } };
+
+export type GetAllCarriersQueryVariables = Exact<{
+  filters?: InputMaybe<CarrierSearchFilters>;
+  orderBy?: InputMaybe<Array<CarrierOrderByCriterion> | CarrierOrderByCriterion>;
+  page: Scalars['Int'];
+  itemsPerPage: Scalars['Int'];
+}>;
+
+
+export type GetAllCarriersQuery = { __typename?: 'Query', carriers: { __typename?: 'CarrierListResult', count: number, itemsPerPage: number, totalPages: number, results: Array<{ __typename?: 'Carrier', name?: string | null, id?: string | null, code?: string | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, status?: number | null, counter?: number | null, available?: boolean | null, toBeLoaded?: boolean | null, toBePalletized?: boolean | null, useReceiptNumber?: boolean | null, parentCarrierId?: string | null, monoroundgroup?: boolean | null, accountNumber?: string | null, extraInfo?: string | null, isVirtual?: boolean | null }> } };
+
+export type GetCarrierByIdQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type GetCarrierByIdQuery = { __typename?: 'Query', carrier?: { __typename?: 'Carrier', name?: string | null, id?: string | null, code?: string | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, status?: number | null, counter?: number | null, available?: boolean | null, toBeLoaded?: boolean | null, toBePalletized?: boolean | null, useReceiptNumber?: boolean | null, parentCarrierId?: string | null, monoroundgroup?: boolean | null, accountNumber?: string | null, extraInfo?: string | null, isVirtual?: boolean | null } | null };
+
+export type GetCarrierIdsQueryVariables = Exact<{
+  filters?: InputMaybe<CarrierSearchFilters>;
+  orderBy?: InputMaybe<Array<CarrierOrderByCriterion> | CarrierOrderByCriterion>;
+  page: Scalars['Int'];
+  itemsPerPage: Scalars['Int'];
+}>;
+
+
+export type GetCarrierIdsQuery = { __typename?: 'Query', carriers: { __typename?: 'CarrierListResult', count: number, itemsPerPage: number, totalPages: number, results: Array<{ __typename?: 'Carrier', id?: string | null, name?: string | null }> } };
+
+export type CreateCarrierMutationVariables = Exact<{
+  input: CreateCarrierInput;
+}>;
+
+
+export type CreateCarrierMutation = { __typename?: 'Mutation', createCarrier: { __typename?: 'Carrier', name?: string | null, id?: string | null, code?: string | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, status?: number | null, counter?: number | null, available?: boolean | null, toBeLoaded?: boolean | null, toBePalletized?: boolean | null, useReceiptNumber?: boolean | null, parentCarrierId?: string | null, monoroundgroup?: boolean | null, accountNumber?: string | null, extraInfo?: string | null, isVirtual?: boolean | null } };
+
+export type DeleteCarrierMutationVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type DeleteCarrierMutation = { __typename?: 'Mutation', deleteCarrier: boolean };
+
+export type SoftDeleteCarrierMutationVariables = Exact<{
+  carrierId: Scalars['String'];
+}>;
+
+
+export type SoftDeleteCarrierMutation = { __typename?: 'Mutation', softDeleteCarrier: boolean };
+
+export type UpdateCarrierMutationVariables = Exact<{
+  id: Scalars['String'];
+  input: UpdateCarrierInput;
+}>;
+
+
+export type UpdateCarrierMutation = { __typename?: 'Mutation', updateCarrier?: { __typename?: 'Carrier', name?: string | null, id?: string | null, code?: string | null, created?: any | null, createdBy?: string | null, modified?: any | null, modifiedBy?: string | null, status?: number | null, counter?: number | null, available?: boolean | null, toBeLoaded?: boolean | null, toBePalletized?: boolean | null, useReceiptNumber?: boolean | null, parentCarrierId?: string | null, monoroundgroup?: boolean | null, accountNumber?: string | null, extraInfo?: string | null, isVirtual?: boolean | null } | null };
+
+export type GetCarriersStatusesConfigsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetCarriersStatusesConfigsQuery = { __typename?: 'Query', listConfigsForAScope: Array<{ __typename?: 'ConfigResults', id: string, scope: string, code: string, text: string }> };
+
 export type GetAllConfigsQueryVariables = Exact<{
   orderBy?: InputMaybe<Array<ConfigOrderByCriterion> | ConfigOrderByCriterion>;
   filters?: InputMaybe<ConfigSearchFilters>;
@@ -11770,6 +11836,282 @@ export const useSoftDeleteBuildingMutation = <
     useMutation<SoftDeleteBuildingMutation, TError, SoftDeleteBuildingMutationVariables, TContext>(
       ['SoftDeleteBuilding'],
       (variables?: SoftDeleteBuildingMutationVariables) => fetcher<SoftDeleteBuildingMutation, SoftDeleteBuildingMutationVariables>(client, SoftDeleteBuildingDocument, variables, headers)(),
+      options
+    );
+export const SimpleGetAllCarriersDocument = `
+    query SimpleGetAllCarriers {
+  carriers {
+    results {
+      id
+      name
+    }
+  }
+}
+    `;
+export const useSimpleGetAllCarriersQuery = <
+      TData = SimpleGetAllCarriersQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables?: SimpleGetAllCarriersQueryVariables,
+      options?: UseQueryOptions<SimpleGetAllCarriersQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<SimpleGetAllCarriersQuery, TError, TData>(
+      variables === undefined ? ['SimpleGetAllCarriers'] : ['SimpleGetAllCarriers', variables],
+      fetcher<SimpleGetAllCarriersQuery, SimpleGetAllCarriersQueryVariables>(client, SimpleGetAllCarriersDocument, variables, headers),
+      options
+    );
+export const GetAllCarriersDocument = `
+    query GetAllCarriers($filters: CarrierSearchFilters, $orderBy: [CarrierOrderByCriterion!], $page: Int!, $itemsPerPage: Int!) {
+  carriers(
+    filters: $filters
+    orderBy: $orderBy
+    page: $page
+    itemsPerPage: $itemsPerPage
+  ) {
+    count
+    itemsPerPage
+    totalPages
+    results {
+      name
+      id
+      code
+      created
+      createdBy
+      modified
+      modifiedBy
+      status
+      counter
+      available
+      toBeLoaded
+      toBePalletized
+      useReceiptNumber
+      parentCarrierId
+      monoroundgroup
+      accountNumber
+      extraInfo
+      isVirtual
+    }
+  }
+}
+    `;
+export const useGetAllCarriersQuery = <
+      TData = GetAllCarriersQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: GetAllCarriersQueryVariables,
+      options?: UseQueryOptions<GetAllCarriersQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetAllCarriersQuery, TError, TData>(
+      ['GetAllCarriers', variables],
+      fetcher<GetAllCarriersQuery, GetAllCarriersQueryVariables>(client, GetAllCarriersDocument, variables, headers),
+      options
+    );
+export const GetCarrierByIdDocument = `
+    query GetCarrierById($id: String!) {
+  carrier(id: $id) {
+    name
+    id
+    code
+    created
+    createdBy
+    modified
+    modifiedBy
+    status
+    counter
+    available
+    toBeLoaded
+    toBePalletized
+    useReceiptNumber
+    parentCarrierId
+    monoroundgroup
+    accountNumber
+    extraInfo
+    isVirtual
+  }
+}
+    `;
+export const useGetCarrierByIdQuery = <
+      TData = GetCarrierByIdQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: GetCarrierByIdQueryVariables,
+      options?: UseQueryOptions<GetCarrierByIdQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetCarrierByIdQuery, TError, TData>(
+      ['GetCarrierById', variables],
+      fetcher<GetCarrierByIdQuery, GetCarrierByIdQueryVariables>(client, GetCarrierByIdDocument, variables, headers),
+      options
+    );
+export const GetCarrierIdsDocument = `
+    query GetCarrierIds($filters: CarrierSearchFilters, $orderBy: [CarrierOrderByCriterion!], $page: Int!, $itemsPerPage: Int!) {
+  carriers(
+    filters: $filters
+    orderBy: $orderBy
+    page: $page
+    itemsPerPage: $itemsPerPage
+  ) {
+    count
+    itemsPerPage
+    totalPages
+    results {
+      id
+      name
+    }
+  }
+}
+    `;
+export const useGetCarrierIdsQuery = <
+      TData = GetCarrierIdsQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: GetCarrierIdsQueryVariables,
+      options?: UseQueryOptions<GetCarrierIdsQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetCarrierIdsQuery, TError, TData>(
+      ['GetCarrierIds', variables],
+      fetcher<GetCarrierIdsQuery, GetCarrierIdsQueryVariables>(client, GetCarrierIdsDocument, variables, headers),
+      options
+    );
+export const CreateCarrierDocument = `
+    mutation CreateCarrier($input: CreateCarrierInput!) {
+  createCarrier(input: $input) {
+    name
+    id
+    code
+    created
+    createdBy
+    modified
+    modifiedBy
+    status
+    counter
+    available
+    toBeLoaded
+    toBePalletized
+    useReceiptNumber
+    parentCarrierId
+    monoroundgroup
+    accountNumber
+    extraInfo
+    isVirtual
+  }
+}
+    `;
+export const useCreateCarrierMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<CreateCarrierMutation, TError, CreateCarrierMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<CreateCarrierMutation, TError, CreateCarrierMutationVariables, TContext>(
+      ['CreateCarrier'],
+      (variables?: CreateCarrierMutationVariables) => fetcher<CreateCarrierMutation, CreateCarrierMutationVariables>(client, CreateCarrierDocument, variables, headers)(),
+      options
+    );
+export const DeleteCarrierDocument = `
+    mutation DeleteCarrier($id: String!) {
+  deleteCarrier(id: $id)
+}
+    `;
+export const useDeleteCarrierMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<DeleteCarrierMutation, TError, DeleteCarrierMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<DeleteCarrierMutation, TError, DeleteCarrierMutationVariables, TContext>(
+      ['DeleteCarrier'],
+      (variables?: DeleteCarrierMutationVariables) => fetcher<DeleteCarrierMutation, DeleteCarrierMutationVariables>(client, DeleteCarrierDocument, variables, headers)(),
+      options
+    );
+export const SoftDeleteCarrierDocument = `
+    mutation SoftDeleteCarrier($carrierId: String!) {
+  softDeleteCarrier(carrierId: $carrierId)
+}
+    `;
+export const useSoftDeleteCarrierMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<SoftDeleteCarrierMutation, TError, SoftDeleteCarrierMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<SoftDeleteCarrierMutation, TError, SoftDeleteCarrierMutationVariables, TContext>(
+      ['SoftDeleteCarrier'],
+      (variables?: SoftDeleteCarrierMutationVariables) => fetcher<SoftDeleteCarrierMutation, SoftDeleteCarrierMutationVariables>(client, SoftDeleteCarrierDocument, variables, headers)(),
+      options
+    );
+export const UpdateCarrierDocument = `
+    mutation UpdateCarrier($id: String!, $input: UpdateCarrierInput!) {
+  updateCarrier(id: $id, input: $input) {
+    name
+    id
+    code
+    created
+    createdBy
+    modified
+    modifiedBy
+    status
+    counter
+    available
+    toBeLoaded
+    toBePalletized
+    useReceiptNumber
+    parentCarrierId
+    monoroundgroup
+    accountNumber
+    extraInfo
+    isVirtual
+  }
+}
+    `;
+export const useUpdateCarrierMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<UpdateCarrierMutation, TError, UpdateCarrierMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<UpdateCarrierMutation, TError, UpdateCarrierMutationVariables, TContext>(
+      ['UpdateCarrier'],
+      (variables?: UpdateCarrierMutationVariables) => fetcher<UpdateCarrierMutation, UpdateCarrierMutationVariables>(client, UpdateCarrierDocument, variables, headers)(),
+      options
+    );
+export const GetCarriersStatusesConfigsDocument = `
+    query getCarriersStatusesConfigs {
+  listConfigsForAScope(scope: "carrier_status") {
+    id
+    scope
+    code
+    text
+  }
+}
+    `;
+export const useGetCarriersStatusesConfigsQuery = <
+      TData = GetCarriersStatusesConfigsQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables?: GetCarriersStatusesConfigsQueryVariables,
+      options?: UseQueryOptions<GetCarriersStatusesConfigsQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<GetCarriersStatusesConfigsQuery, TError, TData>(
+      variables === undefined ? ['getCarriersStatusesConfigs'] : ['getCarriersStatusesConfigs', variables],
+      fetcher<GetCarriersStatusesConfigsQuery, GetCarriersStatusesConfigsQueryVariables>(client, GetCarriersStatusesConfigsDocument, variables, headers),
       options
     );
 export const GetAllConfigsDocument = `
