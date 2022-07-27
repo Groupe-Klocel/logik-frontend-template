@@ -12,13 +12,14 @@ import {
 import { NextRouter } from 'next/router';
 import { FC } from 'react';
 import { locationsRoutes } from 'modules/Cartography/Static/cartographyRoutes';
-import { ContentSpin, HeaderContent, PageContentWrapper } from '@components';
+import { ContentSpin, HeaderContent, LinkButton, PageContentWrapper } from '@components';
 import useTranslation from 'next-translate/useTranslation';
 import styled from 'styled-components';
 import { Button, Layout, Modal, Space, Typography } from 'antd';
 import { LocationDetails } from '../Elements/LocationDetails';
-import { showError, showSuccess } from '@helpers';
+import { pathParams, showError, showSuccess } from '@helpers';
 import { modalGlobalConfig } from 'antd/lib/modal/confirm';
+import { EditTwoTone } from '@ant-design/icons';
 
 export type SingleLocationTypeProps = {
     id: any;
@@ -39,7 +40,7 @@ const SingleLocation: FC<SingleLocationTypeProps> = ({ id, router }: SingleLocat
     const breadsCrumb = [
         ...locationsRoutes,
         {
-            breadcrumbName: `${id}`
+            breadcrumbName: `${data?.location?.name}`
         }
     ];
 
@@ -82,7 +83,15 @@ const SingleLocation: FC<SingleLocationTypeProps> = ({ id, router }: SingleLocat
                 actionsRight={
                     <Space>
                         {/* ADD HERE*/}
-                        <Button loading={deleteLoading} onClick={() => deleteLocation({ id: id })}>
+                        <LinkButton
+                            icon={<EditTwoTone />}
+                            path={pathParams('/location/edit/[id]', id)}
+                        />
+                        <Button
+                            danger
+                            loading={deleteLoading}
+                            onClick={() => deleteLocation({ id: id })}
+                        >
                             {t('actions:delete')}
                         </Button>
                         {/* ADD HERE*/}
@@ -90,8 +99,6 @@ const SingleLocation: FC<SingleLocationTypeProps> = ({ id, router }: SingleLocat
                 }
             />
             <PageContentWrapper>
-                {/* {!!data} 
-                    <Typography >Content Does not exist</Typography> */}
                 {data && !isLoading ? (
                     data.location !== null ? (
                         <LocationDetails details={data?.location} />

@@ -1,0 +1,74 @@
+query GetAllStockOwners(
+    $orderBy: [StockOwnerOrderByCriterion!]
+    $filters: StockOwnerSearchFilters
+    $page: Int!
+    $itemsPerPage: Int!
+    $language: String
+) {
+    stockOwners(
+        orderBy: $orderBy
+        filters: $filters
+        page: $page
+        itemsPerPage: $itemsPerPage
+        language: $language
+    ) {
+        count
+        itemsPerPage
+        totalPages
+        page
+        results {
+            id
+            extras
+            created
+            createdBy
+            modified
+            modifiedBy
+            name
+            contact
+            address1
+            address2
+            address3
+            postCode
+            city
+            country
+            countryCode
+            phone
+            mobile
+            email
+            senderName
+            senderContact
+            senderAddress1
+            senderAddress2
+            senderAddress3
+            senderPostCode
+            senderCity
+            senderCountry
+            senderCountryCode
+            senderPhone
+            senderMobile
+            senderEmail
+            exchangePrefix
+            logoUrl
+            awsAccessKeyId
+            awsSecretAccessKey
+            status
+        }
+    }
+}
+
+query GetStockOwnerIds(
+    $filters: StockOwnerSearchFilters
+    $orderBy: [StockOwnerOrderByCriterion!]
+    $page: Int!
+    $itemsPerPage: Int!
+) {
+    stockOwners(filters: $filters, orderBy: $orderBy, page: $page, itemsPerPage: $itemsPerPage) {
+        count
+        itemsPerPage
+        totalPages
+        results {
+            id
+            name
+        }
+    }
+}

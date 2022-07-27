@@ -35,7 +35,7 @@ const SingleBlock: FC<SingleBlockTypeProps> = ({ id, router }: SingleBlockTypePr
     const breadsCrumb = [
         ...blocksRoutes,
         {
-            breadcrumbName: `${id}`
+            breadcrumbName: `${data?.block?.name}`
         }
     ];
 
@@ -80,10 +80,6 @@ const SingleBlock: FC<SingleBlockTypeProps> = ({ id, router }: SingleBlockTypePr
                 actionsRight={
                     <Space>
                         {/* ADD HERE*/}
-                        <LinkButton
-                            title={t('actions:list', { name: t('menu:locations') })}
-                            path={'/locations'}
-                        />
                         <LinkButton
                             icon={<EditTwoTone />}
                             path={pathParams('/block/edit/[id]', id)}

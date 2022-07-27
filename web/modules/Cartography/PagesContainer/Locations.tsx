@@ -49,6 +49,8 @@ export const Locations = () => {
                 };
                 if (searchValues['replenish'] == '' || searchValues['replenish'] === undefined)
                     delete newSearchValues['replenish'];
+                if (searchValues['blockId'] == '' || searchValues['blockId'] === undefined)
+                    delete newSearchValues['blockId'];
                 setSearch(newSearchValues);
                 closeDrawer();
             })

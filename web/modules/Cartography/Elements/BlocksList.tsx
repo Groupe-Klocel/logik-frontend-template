@@ -6,7 +6,6 @@ import {
     CloseSquareOutlined
 } from '@ant-design/icons';
 import { Button, Modal, Space } from 'antd';
-// import { blocsData } from 'fake-data/blocs';
 import { AppTable, ContentSpin, LinkButton } from '@components';
 import { useCallback, useEffect, useState } from 'react';
 import {
@@ -24,7 +23,9 @@ import useTranslation from 'next-translate/useTranslation';
 import {
     DeleteBlockMutation,
     DeleteBlockMutationVariables,
-    useDeleteBlockMutation
+    GetBlockLevelsParamsQuery,
+    useDeleteBlockMutation,
+    useGetBlockLevelsParamsQuery
 } from 'generated/graphql';
 import graphqlRequestClient from 'graphql/graphqlRequestClient';
 
@@ -42,6 +43,18 @@ export const BlocksList = ({ searchCriteria }: BlocksListTypeProps) => {
         current: DEFAULT_PAGE_NUMBER,
         itemsPerPage: DEFAULT_ITEMS_PER_PAGE
     });
+    const [blockLevels, setBlockLevels] = useState<any>();
+
+    //To render block Levels from parameter table for the given scope
+    const blockLevelsList = useGetBlockLevelsParamsQuery<Partial<GetBlockLevelsParamsQuery>, Error>(
+        graphqlRequestClient
+    );
+
+    useEffect(() => {
+        if (blockLevelsList) {
+            setBlockLevels(blockLevelsList?.data?.listParametersForAScope);
+        }
+    }, [blockLevelsList]);
 
     // make wrapper function to give child
     const onChangePagination = useCallback(
@@ -86,7 +99,7 @@ export const BlocksList = ({ searchCriteria }: BlocksListTypeProps) => {
                 _context: unknown
             ) => {
                 if (!deleteLoading) {
-                    refetch;
+                    refetch();
                     showSuccess(t('messages:success-deleted'));
                 }
             },
@@ -109,11 +122,20 @@ export const BlocksList = ({ searchCriteria }: BlocksListTypeProps) => {
 
     const columns = [
         {
+            title: 'd:building',
+            dataIndex: ['building', 'name'],
+            key: ['building', 'name'],
+            sorter: {
+                multiple: 1
+            },
+            showSorterTooltip: false
+        },
+        {
             title: 'd:name',
             dataIndex: 'name',
             key: 'name',
             sorter: {
-                multiple: 1
+                multiple: 2
             },
             showSorterTooltip: false
         },
@@ -144,10 +166,11 @@ export const BlocksList = ({ searchCriteria }: BlocksListTypeProps) => {
             dataIndex: 'level',
             key: 'level',
             sorter: {
-                multiple: 2
+                multiple: 3
             },
             showSorterTooltip: false,
-            render: (level: any) => (level == -1 ? 'N/A' : level)
+            render: (level: any) =>
+                level ? blockLevels.find((e: any) => e.code == level).text : 'N/A'
         },
         {
             title: 'd:blockGroup',
@@ -170,7 +193,6 @@ export const BlocksList = ({ searchCriteria }: BlocksListTypeProps) => {
                         icon={<EditTwoTone />}
                         path={pathParams('/block/edit/[id]', record.id)}
                     />
-                    {/* <Button icon={<EditTwoTone />} onClick={() => alert(`Edit ${record.id} `)} /> */}
                     <Button
                         icon={<DeleteOutlined />}
                         danger

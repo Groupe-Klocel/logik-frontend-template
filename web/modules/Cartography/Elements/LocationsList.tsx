@@ -1,5 +1,4 @@
 import { Button, Modal, Space } from 'antd';
-import { locationsData } from 'fake-data/locations';
 import { AppTable, ContentSpin, LinkButton } from '@components';
 import {
     DeleteOutlined,
@@ -75,7 +74,6 @@ export const LocationsList = ({ searchCriteria }: LocationsListTypeProps) => {
 
     const handleTableChange = async (_pagination: any, _filter: any, sorter: any) => {
         await setSort(orderByFormater(sorter));
-        console.log(sorter);
     };
 
     const { mutate, isLoading: deleteLoading } = useDeleteLocationMutation<Error>(

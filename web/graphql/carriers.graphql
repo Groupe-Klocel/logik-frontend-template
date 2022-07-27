@@ -1,0 +1,151 @@
+query SimpleGetAllCarriers {
+    carriers {
+        results {
+            id
+            name
+        }
+    }
+}
+
+query GetAllCarriers(
+    $filters: CarrierSearchFilters
+    $orderBy: [CarrierOrderByCriterion!]
+    $page: Int!
+    $itemsPerPage: Int!
+) {
+    carriers(filters: $filters, orderBy: $orderBy, page: $page, itemsPerPage: $itemsPerPage) {
+        count
+        itemsPerPage
+        totalPages
+        results {
+            name
+            id
+            code
+            created
+            createdBy
+            modified
+            modifiedBy
+            status
+            counter
+            available
+            toBeLoaded
+            toBePalletized
+            useReceiptNumber
+            parentCarrierId
+            # parentCarrier {
+            #     name
+            # }
+            monoroundgroup
+            accountNumber
+            extraInfo
+            isVirtual
+        }
+    }
+}
+
+query GetCarrierById($id: String!) {
+    carrier(id: $id) {
+        name
+        id
+        code
+        created
+        createdBy
+        modified
+        modifiedBy
+        status
+        counter
+        available
+        toBeLoaded
+        toBePalletized
+        useReceiptNumber
+        parentCarrierId
+        # parentCarrier {
+        #     name
+        # }
+        monoroundgroup
+        accountNumber
+        extraInfo
+        isVirtual
+    }
+}
+
+query GetCarrierIds(
+    $filters: CarrierSearchFilters
+    $orderBy: [CarrierOrderByCriterion!]
+    $page: Int!
+    $itemsPerPage: Int!
+) {
+    carriers(filters: $filters, orderBy: $orderBy, page: $page, itemsPerPage: $itemsPerPage) {
+        count
+        itemsPerPage
+        totalPages
+        results {
+            id
+            name
+        }
+    }
+}
+
+mutation CreateCarrier($input: CreateCarrierInput!) {
+    createCarrier(input: $input) {
+        name
+        id
+        code
+        created
+        createdBy
+        modified
+        modifiedBy
+        status
+        counter
+        available
+        toBeLoaded
+        toBePalletized
+        useReceiptNumber
+        parentCarrierId
+
+        monoroundgroup
+        accountNumber
+        extraInfo
+        isVirtual
+    }
+}
+
+mutation DeleteCarrier($id: String!) {
+    deleteCarrier(id: $id)
+}
+
+mutation SoftDeleteCarrier($carrierId: String!) {
+    softDeleteCarrier(carrierId: $carrierId)
+}
+
+mutation UpdateCarrier($id: String!, $input: UpdateCarrierInput!) {
+    updateCarrier(id: $id, input: $input) {
+        name
+        id
+        code
+        created
+        createdBy
+        modified
+        modifiedBy
+        status
+        counter
+        available
+        toBeLoaded
+        toBePalletized
+        useReceiptNumber
+        parentCarrierId
+        monoroundgroup
+        accountNumber
+        extraInfo
+        isVirtual
+    }
+}
+
+query getCarriersStatusesConfigs {
+    listConfigsForAScope(scope: "carrier_status") {
+        id
+        scope
+        code
+        text
+    }
+}

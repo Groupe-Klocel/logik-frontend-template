@@ -7,11 +7,14 @@ import { useRouter } from 'next/router';
 import {
     useUpdateLocationMutation,
     UpdateLocationMutation,
-    UpdateLocationMutationVariables
+    UpdateLocationMutationVariables,
+    useGetReplenishTypesConfigsQuery,
+    GetReplenishTypesConfigsQuery,
+    useGetRotationsParamsQuery,
+    GetRotationsParamsQuery
 } from 'generated/graphql';
 import { showError, showSuccess, showInfo } from '@helpers';
 import { CheckboxChangeEvent } from 'antd/lib/checkbox';
-import { CheckOutlined } from '@ant-design/icons';
 
 const { Option } = Select;
 const { TextArea } = Input;
@@ -21,6 +24,7 @@ export type EditLocationFormProps = {
     details: any;
 };
 
+//FIXME: regarder pourquoi pas de delete de baseRotationUNit
 export const EditLocationForm: FC<EditLocationFormProps> = ({
     locationId,
     details
@@ -33,7 +37,38 @@ export const EditLocationForm: FC<EditLocationFormProps> = ({
     const [form] = Form.useForm();
     const [replenishValue, setReplenishValue] = useState(details.replenish);
     const [stockMinValue, setStockMinValue] = useState(details.allowCycleCountStockMin);
-    console.log('replen', replenishValue);
+    const [replenishTypes, setReplenishTypes] = useState<any>();
+    const [rotations, setRotations] = useState<any>();
+    const [selectedReplenish, setSelectedReplenish] = useState<any>(details.replenish);
+    const [selectedReplenishType, setSelectedReplenishType] = useState<any>(details.replenishType);
+
+    //To render replenish types from config table for the given scope
+    const replenishTypesList = useGetReplenishTypesConfigsQuery<
+        Partial<GetReplenishTypesConfigsQuery>,
+        Error
+    >(graphqlRequestClient);
+
+    useEffect(() => {
+        if (replenishTypesList) {
+            setReplenishTypes(replenishTypesList?.data?.listConfigsForAScope);
+        }
+    }, [replenishTypesList]);
+
+    //To render rotations from parameters table for the given scope
+    const rotationsList = useGetRotationsParamsQuery<Partial<GetRotationsParamsQuery>, Error>(
+        graphqlRequestClient
+    );
+
+    useEffect(() => {
+        if (rotationsList) {
+            setRotations(rotationsList?.data?.listParametersForAScope);
+        }
+    }, [rotationsList]);
+
+    // to handle display of rotations
+    const handleReplenishTypeChange = (value: string) => {
+        setSelectedReplenishType(value);
+    };
 
     const { mutate, isLoading: updateLoading } = useUpdateLocationMutation<Error>(
         graphqlRequestClient,
@@ -58,6 +93,7 @@ export const EditLocationForm: FC<EditLocationFormProps> = ({
 
     const onReplenishChange = (e: CheckboxChangeEvent) => {
         setReplenishValue(!replenishValue);
+        setSelectedReplenish(e.target.checked);
         form.setFieldsValue({ replenish: e.target.checked });
     };
 
@@ -75,9 +111,36 @@ export const EditLocationForm: FC<EditLocationFormProps> = ({
         form.validateFields()
             .then(() => {
                 // Here make api call of something else
-                let formData = form.getFieldsValue(true);
+                const formData = form.getFieldsValue(true);
+                //update replenish type
+                const replenishTypeCode =
+                    formData.replenishTypeText == '-' || formData.replenishTypeText == ''
+                        ? null
+                        : parseInt(
+                              replenishTypes?.find((e: any) => e.text == formData.replenishTypeText)
+                                  .code
+                          );
+                formData.replenishType = replenishTypeCode;
+                // // update rotation
+                const rotationCode =
+                    formData.baseUnitRotationText == '-' || formData.baseUnitRotationText == ''
+                        ? null
+                        : parseInt(
+                              rotations?.find((e: any) => e.text == formData.baseUnitRotationText)
+                                  .code
+                          );
+                formData.baseUnitRotation = rotationCode;
+
+                //check if replenish has been unchecked and remove replenishType value if yes
+                if (formData.replenish == false) {
+                    formData['replenishType'] = null;
+                }
+                if (formData.replenishType != 20610) {
+                    formData['baseUnitRotation'] = null;
+                }
                 delete formData['associatedBlock'];
-                console.log(formData);
+                delete formData['replenishTypeText'];
+                delete formData['baseUnitRotationText'];
                 updateLocation({ id: locationId, input: formData });
             })
             .catch((err) => {
@@ -86,7 +149,16 @@ export const EditLocationForm: FC<EditLocationFormProps> = ({
     };
 
     useEffect(() => {
-        const tmp_details = { ...details, associatedBlock: details.block.name };
+        const tmp_details = {
+            ...details,
+            associatedBlock: details.block.name,
+            replenishTypeText: details.replenishType
+                ? replenishTypes?.find((e: any) => e.code == details.replenishType).text
+                : '-',
+            baseUnitRotationText: details.baseUnitRotation
+                ? rotations?.find((e: any) => e.code == details.baseUnitRotation).text
+                : '-'
+        };
         delete tmp_details['id'];
         delete tmp_details['created'];
         delete tmp_details['createdBy'];
@@ -97,7 +169,7 @@ export const EditLocationForm: FC<EditLocationFormProps> = ({
         if (updateLoading) {
             showInfo(t('messages:info-create-wip'));
         }
-    }, [updateLoading]);
+    }, [updateLoading, replenishTypes, rotations]);
 
     return (
         <WrapperForm>
@@ -124,54 +196,49 @@ export const EditLocationForm: FC<EditLocationFormProps> = ({
                     <Input />
                 </Form.Item>
 
-                <Form.Item
-                    label={t('d:replenishType')}
-                    name="replenishType"
-                    hasFeedback
-                    rules={[
-                        ({ getFieldValue }) => ({
-                            validator(_, value) {
-                                if (value !== null && getFieldValue('replenish') === false) {
-                                    return Promise.reject(
-                                        new Error(t('messages:replenish-validation-error'))
-                                    );
+                {selectedReplenish && (
+                    <Form.Item
+                        label={t('d:replenishType')}
+                        name="replenishTypeText"
+                        hasFeedback
+                        rules={[
+                            ({ getFieldValue }) => ({
+                                validator(_, value) {
+                                    if (value !== null && getFieldValue('replenish') === false) {
+                                        return Promise.reject(
+                                            new Error(t('messages:replenish-validation-error'))
+                                        );
+                                    }
+                                    return Promise.resolve();
                                 }
-                                return Promise.resolve();
-                            }
-                        })
-                    ]}
-                >
-                    <Select
-                        defaultValue=""
-                        placeholder={details.replenishType == null ? '-' : details.replenishType}
+                            })
+                        ]}
                     >
-                        <Option value="">-</Option>
-                        <Option value="fakeReplenishType">fakeReplenishType</Option>
-                    </Select>
-                </Form.Item>
+                        <Select onChange={handleReplenishTypeChange}>
+                            <Option value="">-</Option>
+                            {replenishTypes?.map((replenishType: any) => (
+                                <Option key={replenishType.id} value={replenishType.text}>
+                                    {replenishType.text}
+                                </Option>
+                            ))}
+                        </Select>
+                    </Form.Item>
+                )}
 
-                <Form.Item label={t('d:baseUnitRotation')} name="baseUnitRotation">
-                    <Select
-                        defaultValue=""
-                        placeholder={
-                            details.baseUnitRotation == null ? '-' : details.baseUnitRotation
-                        }
-                    >
-                        <Option value="">-</Option>
-                        <Option value="fakeBaseUnitRotation">fakeBaseUnitRotation</Option>
-                    </Select>
-                </Form.Item>
-
-                <Form.Item label={t('d:boxRotation')} name="boxRotation">
-                    <Select
-                        defaultValue=""
-                        placeholder={details.boxRotation == null ? '-' : details.boxRotation}
-                    >
-                        <Option value="">-</Option>
-                        <Option value="fakeBoxRotation">fakeBoxRotation</Option>
-                    </Select>
-                </Form.Item>
-
+                {selectedReplenish &&
+                    (selectedReplenishType === 'Same rotation' ||
+                        selectedReplenishType === 20610) && (
+                        <Form.Item label={t('d:baseUnitRotation')} name="baseUnitRotationText">
+                            <Select>
+                                <Option value="">-</Option>
+                                {rotations?.map((rotation: any) => (
+                                    <Option key={rotation.id} value={rotation.text}>
+                                        {rotation.text}
+                                    </Option>
+                                ))}
+                            </Select>
+                        </Form.Item>
+                    )}
                 <Form.Item label={t('d:comment')} name="comment">
                     <TextArea />
                 </Form.Item>

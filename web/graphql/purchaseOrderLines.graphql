@@ -1,0 +1,121 @@
+query GetAllPurchaseOrderLines(
+    $orderBy: [PurchaseOrderLineOrderByCriterion!]
+    $filters: PurchaseOrderLineSearchFilters
+    $page: Int!
+    $itemsPerPage: Int!
+    $language: String
+) {
+    purchaseOrderLines(
+        orderBy: $orderBy
+        filters: $filters
+        page: $page
+        itemsPerPage: $itemsPerPage
+        language: $language
+    ) {
+        count
+        itemsPerPage
+        totalPages
+        page
+        results {
+            id
+            extras
+            created
+            createdBy
+            modified
+            modifiedBy
+            quantity
+            quantityMax
+            receivedQuantity
+            reservedQuantity
+            status
+            reservation
+            blockingStatus
+            stockOwnerId
+            purchaseOrderId
+            articleId
+            originalPurchaseOrder
+            originalPurchaseOrderLine
+            statusText
+            blockingStatusText
+        }
+    }
+}
+
+query GetPurchaseOrderLineById($id: String!, $language: String = "en") {
+    purchaseOrderLine(id: $id, language: $language) {
+        id
+        extras
+        created
+        createdBy
+        modified
+        modifiedBy
+        quantity
+        quantityMax
+        receivedQuantity
+        reservedQuantity
+        status
+        reservation
+        blockingStatus
+        stockOwnerId
+        purchaseOrderId
+        articleId
+        originalPurchaseOrder
+        originalPurchaseOrderLine
+        statusText
+        blockingStatusText
+    }
+}
+
+mutation CreatePurchaseOrderLine($input: CreatePurchaseOrderLineInput!) {
+    createPurchaseOrderLine(input: $input) {
+        id
+        extras
+        created
+        createdBy
+        modified
+        modifiedBy
+        quantity
+        quantityMax
+        receivedQuantity
+        reservedQuantity
+        status
+        reservation
+        blockingStatus
+        stockOwnerId
+        purchaseOrderId
+        articleId
+        originalPurchaseOrder
+        originalPurchaseOrderLine
+        statusText
+        blockingStatusText
+    }
+}
+
+mutation DeletePurchaseOrderLine($id: String!) {
+    deletePurchaseOrderLine(id: $id)
+}
+
+mutation UpdatePurchaseOrderLine($id: String!, $input: UpdatePurchaseOrderLineInput!) {
+    updatePurchaseOrderLine(id: $id, input: $input) {
+        id
+        extras
+        created
+        createdBy
+        modified
+        modifiedBy
+        quantity
+        quantityMax
+        receivedQuantity
+        reservedQuantity
+        status
+        reservation
+        blockingStatus
+        stockOwnerId
+        purchaseOrderId
+        articleId
+        originalPurchaseOrder
+        originalPurchaseOrderLine
+        statusText
+        blockingStatusText
+    }
+}

@@ -1,29 +1,22 @@
 import { WrapperForm } from '@components';
-import { Button, Col, Input, InputNumber, Row, Form, AutoComplete, Checkbox } from 'antd';
+import { Button, Col, Input, InputNumber, Row, Form, Checkbox, Select } from 'antd';
 import useTranslation from 'next-translate/useTranslation';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useAuth } from 'context/AuthContext';
 import { useRouter } from 'next/router';
 import {
     useCreateBlockMutation,
     CreateBlockMutation,
-    CreateBlockMutationVariables
+    CreateBlockMutationVariables,
+    useGetBlockLevelsParamsQuery,
+    GetBlockLevelsParamsQuery,
+    useSimpleGetAllBuildingsQuery,
+    SimpleGetAllBuildingsQuery
 } from 'generated/graphql';
-import {
-    showError,
-    showSuccess,
-    showInfo,
-    DEFAULT_PAGE_NUMBER,
-    DEFAULT_ITEMS_PER_PAGE,
-    PaginationType
-} from '@helpers';
+import { showError, showSuccess, showInfo } from '@helpers';
 import { CheckboxChangeEvent } from 'antd/lib/checkbox';
 
-interface IOption {
-    value: string;
-    id: string;
-}
-
+const { Option } = Select;
 const { TextArea } = Input;
 
 export const AddBlockForm = () => {
@@ -35,9 +28,33 @@ export const AddBlockForm = () => {
     const moveable = t('d:moveable');
     const bulk = t('d:bulk');
     const comment = t('common:comment');
-    const level = t('d:level');
     const blockGroup = t('d:blockGroup');
     const errorMessageEmptyInput = t('messages:error-message-empty-input');
+
+    const [blockLevels, setBlockLevels] = useState<any>();
+    const [buildings, setBuildings] = useState<any>();
+
+    //To render block Levels from parameter table for the given scope
+    const blockLevelsList = useGetBlockLevelsParamsQuery<Partial<GetBlockLevelsParamsQuery>, Error>(
+        graphqlRequestClient
+    );
+
+    useEffect(() => {
+        if (blockLevelsList) {
+            setBlockLevels(blockLevelsList?.data?.listParametersForAScope);
+        }
+    }, [blockLevelsList]);
+
+    //To render Simple builgings list
+    const buildingList = useSimpleGetAllBuildingsQuery<Partial<SimpleGetAllBuildingsQuery>, Error>(
+        graphqlRequestClient
+    );
+
+    useEffect(() => {
+        if (buildingList) {
+            setBuildings(buildingList?.data?.buildings?.results);
+        }
+    }, [buildingList]);
 
     // TYPED SAFE ALL
     const [form] = Form.useForm();
@@ -75,6 +92,11 @@ export const AddBlockForm = () => {
             .then(() => {
                 // Here make api call of something else
                 const formData = form.getFieldsValue(true);
+                if (formData.level == undefined) {
+                    formData.level = -1;
+                }
+                const NumberLevel = parseInt(formData.level);
+                formData.level = NumberLevel;
                 delete formData.blockName;
                 createBlock({ input: formData });
             })
@@ -92,6 +114,19 @@ export const AddBlockForm = () => {
     return (
         <WrapperForm>
             <Form form={form} scrollToFirstError>
+                <Form.Item label={t('d:building')} name="buildingId" hasFeedback>
+                    <Select
+                        placeholder={`${t('messages:please-select-a', {
+                            name: t('d:building')
+                        })}`}
+                    >
+                        {buildings?.map((building: any) => (
+                            <Option key={building.id} value={building.id}>
+                                {building.name}
+                            </Option>
+                        ))}
+                    </Select>
+                </Form.Item>
                 <Form.Item
                     label={name}
                     name="name"
@@ -101,10 +136,19 @@ export const AddBlockForm = () => {
                 </Form.Item>
                 <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
                     <Col xs={24} xl={12}>
-                        <Form.Item label={level} name="level">
-                            <InputNumber min={-1} max={10} defaultValue={-1} />
+                        <Form.Item label={t('d:blockLevel')} name="level" hasFeedback>
+                            <Select
+                                placeholder={`${t('messages:please-select-a', {
+                                    name: t('d:blockLevel')
+                                })}`}
+                            >
+                                {blockLevels?.map((blockLevel: any) => (
+                                    <Option key={blockLevel.id} value={blockLevel.code}>
+                                        {blockLevel.text}
+                                    </Option>
+                                ))}
+                            </Select>
                         </Form.Item>
-
                         <Form.Item label={blockGroup} name="blockGroup">
                             <InputNumber min={0} max={10} defaultValue={0} />
                         </Form.Item>
@@ -119,7 +163,11 @@ export const AddBlockForm = () => {
                         </Form.Item>
                     </Col>
                 </Row>
-                <Form.Item label={comment} name="comment">
+                <Form.Item
+                    label={comment}
+                    rules={[{ required: true, message: errorMessageEmptyInput }]}
+                    name="comment"
+                >
                     <TextArea>{comment}</TextArea>
                 </Form.Item>
             </Form>

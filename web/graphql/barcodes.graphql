@@ -14,10 +14,8 @@ query GetAllBarcodes(
             name
             supplierName
             supplierArticleCode
-            quantity
             rotation
             preparationMode
-            flagDouble
             blacklisted
             stockOwnerId
             rotationText
@@ -33,10 +31,8 @@ query GetBarcodeById($id: String!) {
         name
         supplierName
         supplierArticleCode
-        quantity
         rotation
         preparationMode
-        flagDouble
         blacklisted
         stockOwnerId
         rotationText
@@ -51,10 +47,8 @@ mutation CreateBarcode($input: CreateBarcodeInput!) {
         name
         supplierName
         supplierArticleCode
-        quantity
         rotation
         preparationMode
-        flagDouble
         blacklisted
         stockOwnerId
         rotationText
@@ -66,18 +60,23 @@ mutation DeleteBarcode($id: String!) {
     deleteBarcode(id: $id)
 }
 
-# mutation RenderBarcode($code: String!, $pages: Int!) {
-#     renderBarcode(code: $code, pages: $pages) {
-#         __typename
-#         ... on RenderedDocument {
-#             url
-#         }
-#         ... on BarcodeError {
-#             message
-#         }
-#     }
-# }
-
+mutation RenderDocument($templateFilename: String!, $context: JSON!) {
+    renderDocument(templateFilename: $templateFilename, context: $context) {
+        __typename
+        ... on RenderedDocument {
+            url
+        }
+        ... on TemplateDoesNotExist {
+            message
+        }
+        ... on TemplateError {
+            message
+        }
+        ... on MissingContext {
+            message
+        }
+    }
+}
 mutation UpdateBarcode($id: String!, $input: UpdateBarcodeInput!) {
     updateBarcode(id: $id, input: $input) {
         id
@@ -85,10 +84,8 @@ mutation UpdateBarcode($id: String!, $input: UpdateBarcodeInput!) {
         name
         supplierName
         supplierArticleCode
-        quantity
         rotation
         preparationMode
-        flagDouble
         blacklisted
         stockOwnerId
         rotationText

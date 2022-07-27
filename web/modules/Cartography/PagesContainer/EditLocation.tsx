@@ -36,7 +36,7 @@ const EditLocation: FC<EditLocationProps> = ({ id, router }: EditLocationProps) 
     const breadsCrumb = [
         ...locationsRoutes,
         {
-            breadcrumbName: `${id}`
+            breadcrumbName: `${data?.location?.name}`
         }
     ];
 

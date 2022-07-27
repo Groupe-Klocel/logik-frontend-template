@@ -1,0 +1,156 @@
+query GetAllPackagings(
+    $filters: PackagingSearchFilters
+    $orderBy: [PackagingOrderByCriterion!]
+    $page: Int!
+    $itemsPerPage: Int!
+) {
+    packagings(filters: $filters, orderBy: $orderBy, page: $page, itemsPerPage: $itemsPerPage) {
+        count
+        itemsPerPage
+        totalPages
+        results {
+            id
+            name
+            description
+            default
+            dispatchable
+            status
+            statusText
+            weight
+            length
+            height
+            width
+            system
+        }
+    }
+}
+
+query GetPackagingById($id: String!) {
+    packaging(id: $id) {
+        id
+        name
+        description
+        default
+        dispatchable
+        status
+        statusText
+        weight
+        length
+        height
+        width
+        closureWeight
+        system
+        extras
+        created
+        createdBy
+        modified
+        modifiedBy
+    }
+}
+
+query GetPackagingIds(
+    $filters: PackagingSearchFilters
+    $orderBy: [PackagingOrderByCriterion!]
+    $page: Int!
+    $itemsPerPage: Int!
+) {
+    packagings(filters: $filters, orderBy: $orderBy, page: $page, itemsPerPage: $itemsPerPage) {
+        count
+        itemsPerPage
+        totalPages
+        results {
+            id
+            name
+        }
+    }
+}
+
+mutation CreatePackaging($input: CreatePackagingInput!) {
+    createPackaging(input: $input) {
+        id
+        name
+        description
+        default
+        dispatchable
+        status
+        statusText
+        weight
+        length
+        height
+        width
+        closureWeight
+        system
+    }
+}
+
+mutation CreateDefaultPackaging($input: CreatePackagingInput!) {
+    createPackaging(input: $input) {
+        id
+        name
+        description
+        default
+        dispatchable
+        status
+        statusText
+        weight
+        length
+        height
+        width
+        closureWeight
+        system
+    }
+    updatePackagingDefault {
+        id
+        name
+        default
+    }
+}
+
+mutation DeletePackaging($id: String!) {
+    deletePackaging(id: $id)
+}
+
+mutation SoftDeletePackaging($packagingId: String!) {
+    softDeletePackaging(packagingId: $packagingId)
+}
+
+mutation UpdatePackaging($id: String!, $input: UpdatePackagingInput!) {
+    updatePackaging(id: $id, input: $input) {
+        id
+        name
+        description
+        default
+        dispatchable
+        status
+        statusText
+        weight
+        length
+        height
+        width
+        closureWeight
+        system
+    }
+}
+
+mutation UpdateDefaultPackaging($id: String!, $input: UpdatePackagingInput!) {
+    updatePackaging(id: $id, input: $input) {
+        id
+        name
+        description
+        default
+        dispatchable
+        status
+        statusText
+        weight
+        length
+        height
+        width
+        closureWeight
+        system
+    }
+    updatePackagingDefault {
+        id
+        name
+        default
+    }
+}
