@@ -5,8 +5,6 @@ import { FC } from 'react';
 import { ArticleModel } from 'models/ArticleModel';
 import { HeaderData, ListComponentWithFilter } from '../modules/Crud/ListComponentWithFilter';
 import { ModeEnum } from 'generated/graphql';
-import { DeleteOutlined, EyeTwoTone } from '@ant-design/icons';
-import { Button, Space } from 'antd';
 import { useAppState } from 'context/AppContext';
 import { getModesFromPermissions, pathParams } from '@helpers';
 import { articlesSubRoutes } from 'modules/Articles/Static/articlesRoutes';
@@ -39,29 +37,7 @@ const ArticlesPage: PageComponent = () => {
             <ListComponentWithFilter
                 headerData={headerData}
                 dataModel={ArticleModel}
-                actionColumns={[
-                    {
-                        title: 'actions:actions',
-                        key: 'actions',
-                        render: (record: { id: string }) => (
-                            <Space>
-                                <LinkButton
-                                    icon={<EyeTwoTone />}
-                                    path={pathParams('/article/[id]', record.id)}
-                                />
-                                {modes.length > 0 && modes.includes(ModeEnum.Write) ? (
-                                    <Button
-                                        icon={<DeleteOutlined />}
-                                        danger
-                                        onClick={() => alert(`delete article N° ${record.id}`)}
-                                    />
-                                ) : (
-                                    <></>
-                                )}
-                            </Space>
-                        )
-                    }
-                ]}
+                routeDetailPage={'/article/:id'}
             />
         </>
     );

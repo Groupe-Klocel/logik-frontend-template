@@ -6,9 +6,10 @@ export const ArticleLuBarcodeModel: ModelType = {
     queryNames: {
         list: 'articleLuBarcodes',
         export: 'exportArticleLuBarcodes',
-        detail: 'barcode',
-        create: 'createBarcode',
-        update: 'updateBarcode'
+        detail: 'articleLuBarcode',
+        create: 'createArticleLuBarcode',
+        update: 'updateArticleLuBarcode',
+        delete: 'deleteArticleLuBarcode'
     },
     detailColumns: [],
     listColumns: ['id', 'barcodeId'],

@@ -9,7 +9,8 @@ export const ArticleModel: ModelType = {
         export: 'exportArticles',
         detail: 'article',
         create: 'createArticle',
-        update: 'updateArticle'
+        update: 'updateArticle',
+        delete: 'deleteArticle'
     },
     detailColumns: [
         'id',

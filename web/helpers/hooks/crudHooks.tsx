@@ -184,4 +184,33 @@ const useExport = (resolverName: string, queryName: string) => {
     return { isLoading, result, mutate };
 };
 
-export { useList, useDetail, useCreate, useUpdate, useExport };
+const useDelete = (queryName: string) => {
+    const { graphqlRequestClient } = useAuth();
+
+    const query = gql`mutation ${queryName}($id: String!) {
+        ${queryName}(id: $id)
+      }`;
+
+    const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [result, setResult] = useState<any>({ data: null, success: false });
+
+    let mutate = (id: string) => {
+        setIsLoading(true);
+        graphqlRequestClient
+            .request(query, {
+                id: id
+            })
+            .then((result: any) => {
+                setIsLoading(false);
+                setResult({ data: result, success: true });
+            })
+            .catch((error: any) => {
+                setResult({ data: null, success: false });
+                setIsLoading(false);
+            });
+    };
+
+    return { isLoading, result, mutate };
+};
+
+export { useList, useDetail, useCreate, useUpdate, useExport, useDelete };

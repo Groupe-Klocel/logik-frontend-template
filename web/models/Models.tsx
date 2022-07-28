@@ -23,6 +23,7 @@ export type QueryNamesType = {
     detail: string;
     create: string;
     update: string;
+    delete: string;
 };
 export type ModelType = {
     tableName: string;
