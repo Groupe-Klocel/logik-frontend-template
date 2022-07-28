@@ -8,13 +8,13 @@ import { showError, showSuccess, showInfo, useCreate } from '@helpers';
 import { FilterColumnType, ModelType } from 'models/Models';
 import { FormGroup } from './FormGroup';
 
-export interface IEditItemFormProps {
+export interface IAddItemFormProps {
     dataModel: ModelType;
     addSteps: Array<Array<FilterColumnType>>;
     routeAfterSuccess: string;
 }
 
-export const AddItemForm: FC<IEditItemFormProps> = (props: IEditItemFormProps) => {
+export const AddItemForm: FC<IAddItemFormProps> = (props: IAddItemFormProps) => {
     const { t } = useTranslation();
     const router = useRouter();
 

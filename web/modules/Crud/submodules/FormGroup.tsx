@@ -1,4 +1,4 @@
-import { Form, Input, Select, InputNumber, Checkbox } from 'antd';
+import { Form, Input, InputNumber, Checkbox } from 'antd';
 import useTranslation from 'next-translate/useTranslation';
 import { FC } from 'react';
 import { FilterColumnType, FormDataType } from '../../../models/Models';
@@ -9,8 +9,6 @@ export interface IFormGroupProps {
 
 const FormGroup: FC<IFormGroupProps> = (props: IFormGroupProps) => {
     const { t } = useTranslation();
-
-    // END TEXTS TRANSLATION
 
     return (
         <>

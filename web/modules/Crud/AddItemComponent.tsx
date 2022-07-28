@@ -10,14 +10,14 @@ const StyledPageContent = styled(Layout.Content)`
     padding: 0px 20px;
 `;
 
-export interface IEditItemProps {
+export interface IAddItemFormProps {
     headerComponent: any;
     dataModel: ModelType;
     addSteps: Array<Array<FilterColumnType>>;
     routeAfterSuccess: string;
 }
 
-const AddItemComponent: FC<IEditItemProps> = (props: IEditItemProps) => {
+const AddItemComponent: FC<IAddItemFormProps> = (props: IAddItemFormProps) => {
     return (
         <>
             <StyledPageContent>
