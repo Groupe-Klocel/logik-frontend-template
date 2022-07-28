@@ -21,7 +21,12 @@ const ArticlePage: PageComponent = () => {
             <ItemDetailComponent
                 extraDataComponent={<ArticleDetailsExtra articleId={id!} />}
                 headerComponent={
-                    <ArticleDetailsHeader id={id!} router={router} tableName={tableName} />
+                    <ArticleDetailsHeader
+                        id={id!}
+                        router={router}
+                        tableName={tableName}
+                        dataModel={ArticleModel}
+                    />
                 }
                 router={router}
                 id={id!}

@@ -2,31 +2,26 @@ import { LinkButton } from '@components';
 import { Space, Button } from 'antd';
 import { articlesSubRoutes } from 'modules/Articles/Static/articlesRoutes';
 import useTranslation from 'next-translate/useTranslation';
-import {
-    useDeleteArticleMutation,
-    DeleteArticleMutation,
-    DeleteArticleMutationVariables,
-    ModeEnum
-} from 'generated/graphql';
-import { useAuth } from 'context/AuthContext';
-import { FC, useState } from 'react';
+
+import { FC, useEffect, useState } from 'react';
 import { NextRouter } from 'next/router';
 import { HeaderContent } from '@components';
-import { getModesFromPermissions, showError, showSuccess } from '@helpers';
+import { getModesFromPermissions, showError, showSuccess, useDelete } from '@helpers';
 import { useAppState } from 'context/AppContext';
+import { ModelType } from 'models/Models';
+import { ModeEnum } from 'generated/graphql';
 
 export interface ISingleItemProps {
     id: string | any;
     router: NextRouter;
     tableName: string;
+    dataModel: ModelType;
 }
 
 const ArticleDetailsHeader: FC<ISingleItemProps> = (props: ISingleItemProps) => {
     const { t } = useTranslation();
     const { permissions } = useAppState();
     const modes = getModesFromPermissions(permissions, props.tableName);
-
-    const { graphqlRequestClient } = useAuth();
 
     const [isCalculating, setIsCalculating] = useState(false);
     const breadsCrumb = [
@@ -36,28 +31,22 @@ const ArticleDetailsHeader: FC<ISingleItemProps> = (props: ISingleItemProps) => 
         }
     ];
 
-    const { mutate, isLoading: deleteLoading } = useDeleteArticleMutation<Error>(
-        graphqlRequestClient,
-        {
-            onSuccess: (
-                data: DeleteArticleMutation,
-                _variables: DeleteArticleMutationVariables,
-                _context: any
-            ) => {
-                props.router.back();
-                if (!deleteLoading) {
-                    showSuccess(t('messages:success-deleted'));
-                }
-            },
-            onError: () => {
-                showError(t('messages:error-deleting-data'));
-            }
-        }
-    );
+    const {
+        isLoading: deleteLoading,
+        result: deleteResult,
+        mutate: deleteArticle
+    } = useDelete(props.dataModel.queryNames.delete);
 
-    const deleteArticle = ({ id }: DeleteArticleMutationVariables) => {
-        mutate({ id });
-    };
+    useEffect(() => {
+        if (!(deleteResult && deleteResult.data)) return;
+
+        if (deleteResult.success) {
+            showSuccess(t('messages:success-deleted'));
+            props.router.back();
+        } else {
+            showError(t('messages:error-deleting-data'));
+        }
+    }, [deleteResult]);
 
     const updateBoxQuantity = async () => {
         setIsCalculating(true);
@@ -89,10 +78,7 @@ const ArticleDetailsHeader: FC<ISingleItemProps> = (props: ISingleItemProps) => 
                             path={`/article/edit/${props.id}`}
                             type="primary"
                         />
-                        <Button
-                            loading={deleteLoading}
-                            onClick={() => deleteArticle({ id: props.id })}
-                        >
+                        <Button loading={deleteLoading} onClick={() => deleteArticle(props.id)}>
                             {t('actions:delete')}
                         </Button>
                     </Space>
