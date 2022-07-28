@@ -1,0 +1,148 @@
+query getHUModelsTypesParams {
+    listParametersForAScope(scope: "handling_unit_model_type") {
+        id
+        scope
+        code
+        text
+    }
+}
+
+query getHUModelsCategoriesParams {
+    listParametersForAScope(scope: "handling_unit_model_category") {
+        id
+        scope
+        code
+        text
+    }
+}
+
+query GetAllHandlingUnitModels(
+    $filters: HandlingUnitModelSearchFilters
+    $orderBy: [HandlingUnitModelOrderByCriterion!]
+    $page: Int!
+    $itemsPerPage: Int!
+    $language: String
+) {
+    handlingUnitModels(
+        filters: $filters
+        orderBy: $orderBy
+        page: $page
+        itemsPerPage: $itemsPerPage
+        language: $language
+    ) {
+        count
+        itemsPerPage
+        totalPages
+        results {
+            id
+            name
+            type
+            typeText
+            category
+            categoryText
+            status
+            statusText
+            length
+            width
+            height
+            weight
+            parentHandlingUnitModelId
+            parentHandlingUnitModel {
+                name
+            }
+            extras
+            created
+            createdBy
+            modified
+            modifiedBy
+        }
+    }
+}
+
+query GetHandlingUnitModelById($id: String!) {
+    handlingUnitModel(id: $id) {
+        id
+        name
+        type
+        typeText
+        category
+        categoryText
+        status
+        statusText
+        length
+        width
+        height
+        weight
+        parentHandlingUnitModelId
+        parentHandlingUnitModel {
+            name
+        }
+        extras
+        created
+        createdBy
+        modified
+        modifiedBy
+    }
+}
+
+query GetHandlingUnitModelIds(
+    $filters: HandlingUnitModelSearchFilters
+    $orderBy: [HandlingUnitModelOrderByCriterion!]
+    $page: Int!
+    $itemsPerPage: Int!
+    $language: String
+) {
+    handlingUnitModels(
+        filters: $filters
+        orderBy: $orderBy
+        page: $page
+        itemsPerPage: $itemsPerPage
+        language: $language
+    ) {
+        count
+        itemsPerPage
+        totalPages
+        results {
+            id
+            name
+        }
+    }
+}
+
+mutation CreateHandlingUnitModel($input: CreateHandlingUnitModelInput!) {
+    createHandlingUnitModel(input: $input) {
+        id
+        name
+        type
+        category
+        status
+        length
+        width
+        height
+        weight
+        parentHandlingUnitModelId
+    }
+}
+
+mutation DeleteHandlingUnitModel($id: String!) {
+    deleteHandlingUnitModel(id: $id)
+}
+
+mutation SoftDeleteHandlingUnitModel($handlingUnitModelId: String!) {
+    softDeleteHandlingUnitModel(handlingUnitModelId: $handlingUnitModelId)
+}
+
+mutation UpdateHandlingUnitModel($id: String!, $input: UpdateHandlingUnitModelInput!) {
+    updateHandlingUnitModel(id: $id, input: $input) {
+        id
+        name
+        type
+        category
+        status
+        length
+        width
+        height
+        weight
+        parentHandlingUnitModelId
+    }
+}

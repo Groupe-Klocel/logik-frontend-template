@@ -65,7 +65,13 @@ import {
     useGetAllArticleSetDetailsQuery,
     GetAllArticleSetDetailsQuery,
     useGetAllPackagingsQuery,
-    GetAllPackagingsQuery
+    GetAllPackagingsQuery,
+    useGetAllHandlingUnitsQuery,
+    GetAllHandlingUnitsQuery,
+    useGetAllHandlingUnitModelsQuery,
+    GetAllHandlingUnitModelsQuery,
+    useGetHandlingUnitModelIdsQuery,
+    GetHandlingUnitModelIdsQuery
 } from 'generated/graphql';
 
 const useArticles = (search: any, page: number, itemsPerPage: number, sort: any) => {
@@ -875,6 +881,107 @@ const useGoodsInLines = (
     return goodsInLine;
 };
 
+const useHandlingUnits = (
+    search: any,
+    page: number,
+    itemsPerPage: number,
+    sort: any,
+    language = 'en'
+) => {
+    const { graphqlRequestClient } = useAuth();
+
+    const sortByDate = {
+        field: 'created',
+        ascending: false
+    };
+
+    let newSort;
+
+    if (sort === null) {
+        newSort = sortByDate;
+    } else {
+        newSort = sort;
+    }
+
+    const handlingUnits = useGetAllHandlingUnitsQuery<Partial<GetAllHandlingUnitsQuery>, Error>(
+        graphqlRequestClient,
+        {
+            filters: search,
+            orderBy: newSort,
+            page: page,
+            itemsPerPage: itemsPerPage,
+            language: language
+        }
+    );
+
+    return handlingUnits;
+};
+
+const useHandlingUnitModels = (
+    search: any,
+    page: number,
+    itemsPerPage: number,
+    sort: any,
+    language = 'en'
+) => {
+    const { graphqlRequestClient } = useAuth();
+
+    const sortByDate = {
+        field: 'created',
+        ascending: false
+    };
+
+    let newSort;
+
+    if (sort === null) {
+        newSort = sortByDate;
+    } else {
+        newSort = sort;
+    }
+
+    const handlingUnitModels = useGetAllHandlingUnitModelsQuery<
+        Partial<GetAllHandlingUnitModelsQuery>,
+        Error
+    >(graphqlRequestClient, {
+        filters: search,
+        orderBy: newSort,
+        page: page,
+        itemsPerPage: itemsPerPage,
+        language: language
+    });
+
+    return handlingUnitModels;
+};
+
+const useHandlingUnitModelIds = (search: any, page: number, itemsPerPage: number, sort: any) => {
+    const { graphqlRequestClient } = useAuth();
+
+    const sortByDate = {
+        field: 'name',
+        ascending: false
+    };
+
+    let newSort;
+
+    if (sort === null) {
+        newSort = sortByDate;
+    } else {
+        newSort = sort;
+    }
+
+    const handlingUnitModels = useGetHandlingUnitModelIdsQuery<
+        Partial<GetHandlingUnitModelIdsQuery>,
+        Error
+    >(graphqlRequestClient, {
+        filters: search,
+        orderBy: newSort,
+        page: page,
+        itemsPerPage: itemsPerPage
+    });
+
+    return handlingUnitModels;
+};
+
 const usePatterns = (
     search: any,
     page: number,
@@ -1050,6 +1157,9 @@ export {
     useFeatureTypes,
     useFeatureTypeDetails,
     useFeedbackOverwrites,
+    useHandlingUnits,
+    useHandlingUnitModels,
+    useHandlingUnitModelIds,
     useArticleIds,
     useMyInfo,
     usePackagings,

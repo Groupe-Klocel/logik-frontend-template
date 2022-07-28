@@ -1,0 +1,164 @@
+query GetAllHandlingUnits(
+    $filters: HandlingUnitSearchFilters
+    $orderBy: [HandlingUnitOrderByCriterion!]
+    $page: Int!
+    $itemsPerPage: Int!
+    $language: String
+) {
+    handlingUnits(
+        filters: $filters
+        orderBy: $orderBy
+        page: $page
+        itemsPerPage: $itemsPerPage
+        language: $language
+    ) {
+        count
+        itemsPerPage
+        totalPages
+        results {
+            id
+            name
+            code
+            name
+            category
+            categoryText
+            status
+            statusText
+            length
+            width
+            height
+            weight
+            reservation
+            warehouseCode
+            comment
+            parentHandlingUnitId
+            parentHandlingUnit {
+                name
+            }
+            stockOwnerId
+            stockOwner {
+                name
+            }
+            locationId
+            location {
+                name
+            }
+            extras
+            created
+            createdBy
+            modified
+            modifiedBy
+        }
+    }
+}
+
+query GetHandlingUnitById($id: String!) {
+    handlingUnit(id: $id) {
+        id
+        name
+        code
+        name
+        categoryText
+        status
+        statusText
+        status
+        length
+        width
+        height
+        weight
+        reservation
+        warehouseCode
+        comment
+        parentHandlingUnitId
+        parentHandlingUnit {
+            name
+        }
+        stockOwnerId
+        stockOwner {
+            name
+        }
+        locationId
+        location {
+            name
+        }
+        extras
+        created
+        createdBy
+        modified
+        modifiedBy
+    }
+}
+
+query GetHandlingUnitIds(
+    $filters: HandlingUnitSearchFilters
+    $orderBy: [HandlingUnitOrderByCriterion!]
+    $page: Int!
+    $itemsPerPage: Int!
+    $language: String
+) {
+    handlingUnits(
+        filters: $filters
+        orderBy: $orderBy
+        page: $page
+        itemsPerPage: $itemsPerPage
+        language: $language
+    ) {
+        count
+        itemsPerPage
+        totalPages
+        results {
+            id
+            name
+        }
+    }
+}
+
+mutation CreateHandlingUnit($input: CreateHandlingUnitInput!) {
+    createHandlingUnit(input: $input) {
+        id
+        name
+        code
+        name
+        category
+        status
+        length
+        width
+        height
+        weight
+        reservation
+        warehouseCode
+        comment
+        parentHandlingUnitId
+        stockOwnerId
+        locationId
+    }
+}
+
+mutation DeleteHandlingUnit($id: String!) {
+    deleteHandlingUnit(id: $id)
+}
+
+mutation SoftDeleteHandlingUnit($handlingUnitId: String!) {
+    softDeleteHandlingUnit(handlingUnitId: $handlingUnitId)
+}
+
+mutation UpdateHandlingUnit($id: String!, $input: UpdateHandlingUnitInput!) {
+    updateHandlingUnit(id: $id, input: $input) {
+        id
+        name
+        code
+        name
+        category
+        status
+        length
+        width
+        height
+        weight
+        reservation
+        warehouseCode
+        comment
+        parentHandlingUnitId
+        stockOwnerId
+        locationId
+    }
+}

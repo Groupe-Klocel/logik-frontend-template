@@ -36,6 +36,7 @@
     "limit-type": "Limit type",
     "limitTypeText": "Limit type",
     "packaging": "Packaging",
+    "parentHandlingUnitModel": "Parent model",
     "preparationModeText": "Preparation Mode",
     "qty-max-article": "Max articles quantity",
     "qtyMaxArticle": "Max articles quantity",
@@ -120,6 +121,7 @@
     "address3": "Address 3",
     "awsAccessKeyId": "AWS Access Key Id",
     "awsSecretAccessKey": "AWS Secret Access Key",
+    "category": "Category",
     "city": "City",
     "contactEmail": "Contact Email",
     "contactMobile": "Contact Mobile",
@@ -127,8 +129,8 @@
     "contactPhone": "Contact Phone",
     "country": "Country",
     "postCode": "Post Code",
-    "emptyWeight": "Empty weight",
-    "empty-weight": "Empty weight",
+    "emptyWeight": "Empty weight (g)",
+    "empty-weight": "Empty weight (g)",
     "block": "Block",
     "aisle": "Aisle",
     "level": "Level",
@@ -161,5 +163,6 @@
     "order": "Order",
     "statusText": "Status",
     "stockOwnerId": "Stock Owner Id",
-    "unique": "Unique"
+    "unique": "Unique",
+    "weight": "Weight (g)"
 }
