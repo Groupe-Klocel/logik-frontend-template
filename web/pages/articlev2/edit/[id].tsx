@@ -6,11 +6,18 @@ import { ArticleModel } from 'models/ArticleModel';
 import { EditItemComponent } from 'modules/Crud/EditItemComponent';
 import { articlesSubRoutes } from 'modules/Articles/Static/articlesRoutes';
 import useTranslation from 'next-translate/useTranslation';
+import {
+    articleFormStep1,
+    articleFormStep2,
+    articleFormStep3
+} from 'modules/Articles/Forms/ArticleFormItems';
 
 type PageComponent = FC & { layout: typeof MainLayout };
 
 const EditArticlePage: PageComponent = () => {
     const { t } = useTranslation();
+    const errorMessageEmptyInput = t('messages:error-message-empty-input');
+
     const router = useRouter();
     const { id } = router.query;
 
@@ -34,7 +41,12 @@ const EditArticlePage: PageComponent = () => {
                         onBack={() => router.back()}
                     />
                 }
-                routeAfterSuccess={`/article/:id`}
+                editSteps={[
+                    articleFormStep1(errorMessageEmptyInput),
+                    articleFormStep2(errorMessageEmptyInput),
+                    articleFormStep3(errorMessageEmptyInput)
+                ]}
+                routeAfterSuccess={`/articlev2/:id`}
             />
         </>
     );

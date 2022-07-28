@@ -7,14 +7,14 @@ import { useRouter } from 'next/router';
 
 import { showError, showSuccess, showInfo, useUpdate } from '@helpers';
 import { FormGroup } from 'modules/Crud/submodules/FormGroup';
-import { ModelType } from 'models/Models';
-import { formStep1, formStep2, formStep3 } from 'modules/Articles/Forms/ArticleFormItems';
+import { FilterColumnType, ModelType } from 'models/Models';
 
 export interface IEditItemFormProps {
     id: string;
     details: any;
     dataModel: ModelType;
     routeAfterSuccess: string;
+    editSteps: Array<Array<FilterColumnType>>;
 }
 
 export const EditItemForm: FC<IEditItemFormProps> = (props: IEditItemFormProps) => {
@@ -22,11 +22,6 @@ export const EditItemForm: FC<IEditItemFormProps> = (props: IEditItemFormProps) 
     const router = useRouter();
 
     const [form] = Form.useForm();
-
-    const errorMessageEmptyInput = t('messages:error-message-empty-input');
-    const formFields1 = formStep1(errorMessageEmptyInput);
-    const formFields2 = formStep2(errorMessageEmptyInput);
-    const formFields3 = formStep3(errorMessageEmptyInput);
 
     const {
         isLoading: updateLoading,
@@ -69,25 +64,24 @@ export const EditItemForm: FC<IEditItemFormProps> = (props: IEditItemFormProps) 
     useEffect(() => {
         const tmp_details = { ...props.details };
 
-        let allFields = formFields1.map((item) => {
-            return item.name;
-        });
-        allFields = allFields.concat(
-            formFields2.map((item) => {
+        if (props.editSteps.length > 0) {
+            let allFields = props.editSteps[0].map((item) => {
                 return item.name;
-            })
-        );
-        allFields = allFields.concat(
-            formFields3.map((item) => {
-                return item.name;
-            })
-        );
-
-        Object.keys(tmp_details).forEach((key) => {
-            if (!allFields.includes(key)) {
-                delete tmp_details[key];
+            });
+            for (let i = 1; i < props.editSteps.length; i++) {
+                allFields = allFields.concat(
+                    props.editSteps[i].map((item) => {
+                        return item.name;
+                    })
+                );
             }
-        });
+
+            Object.keys(tmp_details).forEach((key) => {
+                if (!allFields.includes(key)) {
+                    delete tmp_details[key];
+                }
+            });
+        }
 
         form.setFieldsValue(tmp_details);
         if (updateLoading) {
@@ -98,9 +92,9 @@ export const EditItemForm: FC<IEditItemFormProps> = (props: IEditItemFormProps) 
     return (
         <StyledForm>
             <Form form={form} scrollToFirstError>
-                <FormGroup inputs={formFields1} />
-                <FormGroup inputs={formFields2} />
-                <FormGroup inputs={formFields3} />
+                {props.editSteps.map((item) => (
+                    <FormGroup inputs={item} />
+                ))}
                 <div style={{ textAlign: 'right' }}>
                     <Space>
                         <Button onClick={() => onFinish()} type="primary">

@@ -3,7 +3,7 @@ import { Space, Button } from 'antd';
 import { articlesSubRoutes } from 'modules/Articles/Static/articlesRoutes';
 import useTranslation from 'next-translate/useTranslation';
 
-import { FC, useEffect, useState } from 'react';
+import { FC, useEffect } from 'react';
 import { NextRouter } from 'next/router';
 import { HeaderContent } from '@components';
 import { getModesFromPermissions, showError, showSuccess, useDelete } from '@helpers';
@@ -23,7 +23,6 @@ const ArticleDetailsHeader: FC<ISingleItemProps> = (props: ISingleItemProps) => 
     const { permissions } = useAppState();
     const modes = getModesFromPermissions(permissions, props.tableName);
 
-    const [isCalculating, setIsCalculating] = useState(false);
     const breadsCrumb = [
         ...articlesSubRoutes,
         {
@@ -49,24 +48,21 @@ const ArticleDetailsHeader: FC<ISingleItemProps> = (props: ISingleItemProps) => 
     }, [deleteResult]);
 
     const updateBoxQuantity = async () => {
-        setIsCalculating(true);
         const res = await fetch(`/api/article/update-quantity/${props.id}`);
         if (!res.ok) {
             const message = t('An error has occured: ') + res.status;
             showError(t('messages:error-update-data'));
-            setIsCalculating(false);
         }
         const qntData = await res.json();
 
         showSuccess(t('messages:success-update-data'));
-        setIsCalculating(false);
     };
 
     return (
         <HeaderContent
             title={`${t('common:article')} ${props.id}`}
             routes={breadsCrumb}
-            onBack={() => props.router.push('/articles')}
+            onBack={() => props.router.push('/articlesv2')}
             actionsRight={
                 modes.length > 0 || !modes.includes(ModeEnum.Write) ? (
                     <Space>
@@ -75,7 +71,7 @@ const ArticleDetailsHeader: FC<ISingleItemProps> = (props: ISingleItemProps) => 
                         </Button>
                         <LinkButton
                             title={t('actions:edit')}
-                            path={`/article/edit/${props.id}`}
+                            path={`/articlev2/edit/${props.id}`}
                             type="primary"
                         />
                         <Button loading={deleteLoading} onClick={() => deleteArticle(props.id)}>

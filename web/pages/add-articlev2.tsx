@@ -6,7 +6,11 @@ import MainLayout from 'components/layouts/MainLayout';
 import { FC } from 'react';
 import useTranslation from 'next-translate/useTranslation';
 
-import { formStep1, formStep2, formStep3 } from 'modules/Articles/Forms/ArticleFormItems';
+import {
+    articleFormStep1,
+    articleFormStep2,
+    articleFormStep3
+} from 'modules/Articles/Forms/ArticleFormItems';
 import { ArticleModel } from 'models/ArticleModel';
 import { AddItemComponent } from 'modules/Crud/AddItemComponent';
 
@@ -27,12 +31,12 @@ const AddArticlePage: PageComponent = () => {
                     />
                 }
                 addSteps={[
-                    formStep1(errorMessageEmptyInput),
-                    formStep2(errorMessageEmptyInput),
-                    formStep3(errorMessageEmptyInput)
+                    articleFormStep1(errorMessageEmptyInput),
+                    articleFormStep2(errorMessageEmptyInput),
+                    articleFormStep3(errorMessageEmptyInput)
                 ]}
                 dataModel={ArticleModel}
-                routeAfterSuccess={`/article/:id`}
+                routeAfterSuccess={`/articlev2/:id`}
             />
         </>
     );

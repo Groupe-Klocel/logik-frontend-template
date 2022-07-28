@@ -1,6 +1,6 @@
 import { FormDataType } from 'models/Models';
 
-const formStep1 = (errorMessageEmptyInput: string) => {
+const articleFormStep1 = (errorMessageEmptyInput: string) => {
     return [
         {
             name: 'name',
@@ -27,7 +27,7 @@ const formStep1 = (errorMessageEmptyInput: string) => {
     ];
 };
 
-const formStep2 = (errorMessageEmptyInput: string) => {
+const articleFormStep2 = (errorMessageEmptyInput: string) => {
     return [
         {
             name: 'length',
@@ -76,7 +76,7 @@ const formStep2 = (errorMessageEmptyInput: string) => {
         }
     ];
 };
-const formStep3 = (errorMessageEmptyInput: string) => {
+const articleFormStep3 = (errorMessageEmptyInput: string) => {
     return [
         {
             name: 'family',
@@ -104,4 +104,4 @@ const formStep3 = (errorMessageEmptyInput: string) => {
         }
     ];
 };
-export { formStep1, formStep2, formStep3 };
+export { articleFormStep1, articleFormStep2, articleFormStep3 };

@@ -26,7 +26,7 @@ const ArticlesPage: PageComponent = () => {
         headerData.actionsComponent = (
             <LinkButton
                 title={t('actions:add2', { name: t('common:article') })}
-                path="/add-article"
+                path="/add-articlev2"
                 type="primary"
             />
         );
@@ -37,7 +37,7 @@ const ArticlesPage: PageComponent = () => {
             <ListComponentWithFilter
                 headerData={headerData}
                 dataModel={ArticleModel}
-                routeDetailPage={'/article/:id'}
+                routeDetailPage={'/articlev2/:id'}
             />
         </>
     );
