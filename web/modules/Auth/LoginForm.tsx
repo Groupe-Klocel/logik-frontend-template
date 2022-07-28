@@ -1,6 +1,6 @@
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { Logo, StyledForm, WelcomeText, WrapperLogin, LinkButton } from '@components';
-import { cookie, showSuccess } from '@helpers';
+import { cookie, META_DEFAULTS, showSuccess } from '@helpers';
 import { Button, Form, Input } from 'antd';
 import { useAppDispatch, useAppState } from 'context/AppContext';
 import { useAuth } from 'context/AuthContext';
@@ -61,7 +61,7 @@ export const LoginForm = () => {
                                         }
                                     }
                                 }
-
+                        
                                 ...on IntegratorUser {
                                     id
                                     password
@@ -86,6 +86,7 @@ export const LoginForm = () => {
                                     }
                                     isAdmin
                                 }
+                        
                             }
                         }
                     `;
@@ -116,7 +117,7 @@ export const LoginForm = () => {
             <WrapperLogin className="login">
                 <Logo width={100} />
 
-                <WelcomeText>{welcome} Bee V2</WelcomeText>
+                <WelcomeText>{welcome} {META_DEFAULTS.title}</WelcomeText>
                 <StyledForm
                     form={form}
                     name="login"
