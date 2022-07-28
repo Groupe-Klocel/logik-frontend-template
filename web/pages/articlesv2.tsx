@@ -17,19 +17,18 @@ const ArticlesPage: PageComponent = () => {
     const { t } = useTranslation();
     const modes = getModesFromPermissions(permissions, ArticleModel.tableName);
 
-    let headerData: HeaderData = {
+    const headerData: HeaderData = {
         title: t('common:articles'),
         routes: articlesSubRoutes,
-        actionsComponent: null
+        actionsComponent:
+            modes.length > 0 || modes.includes(ModeEnum.Write) ? (
+                <LinkButton
+                    title={t('actions:add2', { name: t('common:article') })}
+                    path="/add-articlev2"
+                    type="primary"
+                />
+            ) : null
     };
-    if (modes.length > 0 || modes.includes(ModeEnum.Write))
-        headerData.actionsComponent = (
-            <LinkButton
-                title={t('actions:add2', { name: t('common:article') })}
-                path="/add-articlev2"
-                type="primary"
-            />
-        );
 
     return (
         <>
