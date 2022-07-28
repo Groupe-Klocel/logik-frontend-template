@@ -131,7 +131,7 @@ const CarriersList = ({ searchCriteria }: CarriersListTypeProps) => {
                 _context: any
             ) => {
                 if (!softDeleteLoading) {
-                    refetch;
+                    refetch();
                     showSuccess(succesDetetionMessage);
                 }
             },

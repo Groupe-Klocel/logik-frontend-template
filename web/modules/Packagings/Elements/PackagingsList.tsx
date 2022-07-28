@@ -84,7 +84,7 @@ export const PackagingsList = () => {
                 _context: any
             ) => {
                 if (!softDeleteLoading) {
-                    refetch;
+                    refetch();
                     showSuccess(t('messages:success-deleted'));
                 }
             },

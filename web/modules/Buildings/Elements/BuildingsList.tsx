@@ -121,7 +121,7 @@ export const BuildingList = ({ searchCriteria }: BuildingListTypeProps) => {
                 _context: any
             ) => {
                 if (!softDeleteLoading) {
-                    refetch;
+                    refetch();
                     showSuccess(t('messages:success-deleted'));
                 }
             },
