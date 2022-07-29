@@ -1,0 +1,128 @@
+query SimpleGetAllStockOwners {
+    stockOwners {
+        results {
+            id
+            name
+        }
+    }
+}
+
+query getStatusFeedbackOverwriteStatusConfigs {
+    listConfigsForAScope(scope: "status_feedback_overwrite_status") {
+        id
+        scope
+        code
+        text
+    }
+}
+
+query getStatusFeedbackOverwriteObjectTypeConfigs {
+    listConfigsForAScope(scope: "status_object") {
+        id
+        scope
+        code
+        text
+    }
+}
+
+query GetAllStatusFeedbackOverwrites(
+    $filters: StatusFeedbackOverwriteSearchFilters
+    $orderBy: [StatusFeedbackOverwriteOrderByCriterion!]
+    $page: Int!
+    $itemsPerPage: Int!
+) {
+    statusFeedbackOverwrites(
+        filters: $filters
+        orderBy: $orderBy
+        page: $page
+        itemsPerPage: $itemsPerPage
+    ) {
+        count
+        itemsPerPage
+        totalPages
+        results {
+            id
+            stockOwnerId
+            stockOwner {
+                name
+            }
+            objectType
+            status
+            objectTypeText
+            statusText
+            feedback
+            customValue
+            system
+        }
+    }
+}
+
+query GetStatusFeedbackOverwriteById($id: String!) {
+    statusFeedbackOverwrite(id: $id) {
+        id
+        stockOwnerId
+        stockOwner {
+            name
+        }
+        objectType
+        status
+        objectTypeText
+        statusText
+        feedback
+        customValue
+        system
+        created
+        createdBy
+        modified
+        modifiedBy
+    }
+}
+
+query GetStatusFeedbackOverwriteIds(
+    $filters: StatusFeedbackOverwriteSearchFilters
+    $orderBy: [StatusFeedbackOverwriteOrderByCriterion!]
+    $page: Int!
+    $itemsPerPage: Int!
+) {
+    statusFeedbackOverwrites(
+        filters: $filters
+        orderBy: $orderBy
+        page: $page
+        itemsPerPage: $itemsPerPage
+    ) {
+        count
+        itemsPerPage
+        totalPages
+        results {
+            id
+        }
+    }
+}
+
+mutation CreateStatusFeedbackOverwrite($input: CreateStatusFeedbackOverwriteInput!) {
+    createStatusFeedbackOverwrite(input: $input) {
+        id
+        stockOwnerId
+        objectType
+        status
+        feedback
+        customValue
+        system
+    }
+}
+
+mutation DeleteStatusFeedbackOverwrite($id: String!) {
+    deleteStatusFeedbackOverwrite(id: $id)
+}
+
+mutation UpdateStatusFeedbackOverwrite($id: String!, $input: UpdateStatusFeedbackOverwriteInput!) {
+    updateStatusFeedbackOverwrite(id: $id, input: $input) {
+        id
+        stockOwnerId
+        objectType
+        status
+        feedback
+        customValue
+        system
+    }
+}

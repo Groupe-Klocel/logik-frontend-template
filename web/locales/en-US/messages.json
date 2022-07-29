@@ -2,7 +2,8 @@
     "action-impossible": "{{name}} action is not possible, you must select a record",
     "cancel": "Back",
     "confirm": "OK",
-    "delete-confirm":"Are you sure you want to delete this record?",
+    "delete-confirm": "Are you sure you want to delete this record?",
+    "delete-not-possible": "Delete not possibble in the current state",
     "error-message-empty-input": "Field must not be empty",
     "error-message-requiered-input": "Field is requiered",
     "error-message-select-1": "You must select a {{name}}",
@@ -11,7 +12,7 @@
     "please-input": "Please input {{name}}",
     "please-select": "Please select {{name}}",
     "please-select-a": "Please select a {{name}}",
-    "please-select-an": "Please select a {{name}}",
+    "please-select-an": "Please select an {{name}}",
     "please-select-your": "Please select your {{name}}",
     "login-success": "You are now login",
     "filter_only_actions_visibles_warn": "You are not allow to only show actions column",
@@ -33,5 +34,8 @@
     "success-update-box-quantity": "The quantity has been updated successfully",
     "error-barcode-not-render": "An error occurred while generating the barcode",
     "error-selected-article-not-exist": "Selected article does not exist",
-    "error-permission": "Insufficient permissions"
+    "error-permission": "Insufficient permissions",
+    "maximum-priority-reached": "Highest priority reached",
+    "replenish-validation-error": "Type must be empty when Replenish is not checked",
+    "update-default-first": "Please ensure another packaging is defined as default before deleting"
 }

@@ -1,0 +1,107 @@
+query GetAllStatusEvolutions(
+    $orderBy: [StatusEvolutionOrderByCriterion!]
+    $filters: StatusEvolutionSearchFilters
+    $page: Int!
+    $itemsPerPage: Int!
+    $language: String
+) {
+    statusEvolutions(orderBy: $orderBy, filters: $filters, page: $page, itemsPerPage: $itemsPerPage, language: $language) {
+        count
+        itemsPerPage
+        totalPages
+        page
+        results {
+            id
+            extras
+            created
+            createdBy
+            modified
+            modifiedBy
+            stockOwner {
+                id
+                name
+            }
+            object
+            objectReference
+            status
+            feedback
+            toBeFeedback
+            stockOwnerId
+            objectText
+            statusText
+        }
+    }
+}
+
+query GetStatusEvolutionById($id: String!, $language:String = "en") {
+    statusEvolution(id: $id, language: $language) {
+        id
+        extras
+        created
+        createdBy
+        modified
+        modifiedBy
+        stockOwner {
+            id
+            name
+        }
+        object
+        objectReference
+        status
+        feedback
+        toBeFeedback
+        stockOwnerId
+        objectText
+        statusText
+    }
+}
+
+mutation CreateStatusEvolution($input: CreateStatusEvolutionInput!) {
+    createStatusEvolution(input: $input) {
+        id
+        extras
+        created
+        createdBy
+        modified
+        modifiedBy
+        stockOwner {
+            id
+            name
+        }
+        object
+        objectReference
+        status
+        feedback
+        toBeFeedback
+        stockOwnerId
+        objectText
+        statusText
+    }
+}
+
+mutation DeleteStatusEvolution($id: String!) {
+    deleteStatusEvolution(id: $id)
+}
+
+mutation UpdateStatusEvolution($id: String!, $input: UpdateStatusEvolutionInput!) {
+    updateStatusEvolution(id: $id, input: $input) {
+        id
+        extras
+        created
+        createdBy
+        modified
+        modifiedBy
+        stockOwner {
+            id
+            name
+        }
+        object
+        objectReference
+        status
+        feedback
+        toBeFeedback
+        stockOwnerId
+        objectText
+        statusText
+    }
+}

@@ -1,0 +1,96 @@
+query SimpleGetAllStockOwners {
+    stockOwners {
+        results {
+            id
+            name
+        }
+    }
+}
+
+query getFeedbackOverwriteMovementCodeParams {
+    listParametersForAScope(scope: "movement_code") {
+        id
+        scope
+        code
+        text
+    }
+}
+
+query GetAllFeedbackOverwrites(
+    $filters: FeedbackOverwriteSearchFilters
+    $orderBy: [FeedbackOverwriteOrderByCriterion!]
+    $page: Int!
+    $itemsPerPage: Int!
+) {
+    feedbackOverwrites(
+        filters: $filters
+        orderBy: $orderBy
+        page: $page
+        itemsPerPage: $itemsPerPage
+    ) {
+        count
+        itemsPerPage
+        totalPages
+        results {
+            id
+            stockOwnerId
+            stockOwner {
+                name
+            }
+            movementCode
+            movementCodeText
+            feedback
+            customValue
+            system
+            created
+            createdBy
+            modified
+            modifiedBy
+        }
+    }
+}
+
+query GetFeedbackOverwriteById($id: String!) {
+    feedbackOverwrite(id: $id) {
+        id
+        stockOwnerId
+        stockOwner {
+            name
+        }
+        movementCode
+        movementCodeText
+        feedback
+        customValue
+        system
+        created
+        createdBy
+        modified
+        modifiedBy
+    }
+}
+
+mutation CreateFeedbackOverwrite($input: CreateFeedbackOverwriteInput!) {
+    createFeedbackOverwrite(input: $input) {
+        id
+        stockOwnerId
+        movementCode
+        feedback
+        customValue
+        system
+    }
+}
+
+mutation DeleteFeedbackOverwrite($id: String!) {
+    deleteFeedbackOverwrite(id: $id)
+}
+
+mutation UpdateFeedbackOverwrite($id: String!, $input: UpdateFeedbackOverwriteInput!) {
+    updateFeedbackOverwrite(id: $id, input: $input) {
+        id
+        stockOwnerId
+        movementCode
+        feedback
+        customValue
+        system
+    }
+}

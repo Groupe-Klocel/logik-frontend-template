@@ -1,0 +1,357 @@
+query SimpleGetAllStockOwners {
+    stockOwners {
+        results {
+            id
+            name
+        }
+    }
+}
+
+query getEquipmentTypesConfigs {
+    listConfigsForAScope(scope: "equipment_type") {
+        id
+        scope
+        code
+        text
+    }
+}
+
+query getEquipmentStatusesConfigs {
+    listConfigsForAScope(scope: "equipment_status") {
+        id
+        scope
+        code
+        text
+    }
+}
+
+query getEquipmentLimitTypeConfigs {
+    listConfigsForAScope(scope: "equipment_limit_type") {
+        id
+        scope
+        code
+        text
+    }
+}
+
+query getPreparationModeParams {
+    listParametersForAScope(scope: "preparation_mode") {
+        id
+        scope
+        code
+        text
+    }
+}
+
+query getListOfPriorities {
+    equipments {
+        results {
+            priority
+            id
+            name
+        }
+    }
+}
+
+query SimpleGetAllPackagingList {
+    packagings {
+        results {
+            id
+            name
+        }
+    }
+}
+
+query GetAllEquipment(
+    $filters: EquipmentSearchFilters
+    $orderBy: [EquipmentOrderByCriterion!]
+    $page: Int!
+    $itemsPerPage: Int!
+) {
+    equipments(filters: $filters, orderBy: $orderBy, page: $page, itemsPerPage: $itemsPerPage) {
+        count
+        itemsPerPage
+        totalPages
+        results {
+            id
+            stockOwnerId
+            stockOwner {
+                name
+            }
+            name
+            type
+            typeText
+            priority
+            status
+            statusText
+            available
+            distributed
+            monoCompany
+            monoCarrier
+            boxLineGrouped
+            boxMonoArticle
+            qtyMaxArticle
+            nbMaxBox
+            checkPosition
+            comment
+            virtual
+            limitType
+            limitTypeText
+            length
+            width
+            height
+            toleranceDimension
+            allowPickingOrderFree
+            extras
+            created
+            createdBy
+            modified
+            modifiedBy
+        }
+    }
+}
+
+query GetEquipmentById($id: String!) {
+    equipment(id: $id) {
+        id
+        stockOwnerId
+        stockOwner {
+            name
+        }
+        name
+        type
+        typeText
+        priority
+        status
+        statusText
+        available
+        distributed
+        monoCompany
+        monoCarrier
+        boxLineGrouped
+        boxMonoArticle
+        qtyMaxArticle
+        nbMaxBox
+        checkPosition
+        comment
+        virtual
+        limitType
+        limitTypeText
+        length
+        width
+        height
+        toleranceDimension
+        allowPickingOrderFree
+        extras
+        created
+        createdBy
+        modified
+        modifiedBy
+    }
+}
+
+query GetEquipmentIds(
+    $filters: EquipmentSearchFilters
+    $orderBy: [EquipmentOrderByCriterion!]
+    $page: Int!
+    $itemsPerPage: Int!
+) {
+    equipments(filters: $filters, orderBy: $orderBy, page: $page, itemsPerPage: $itemsPerPage) {
+        count
+        itemsPerPage
+        totalPages
+        results {
+            id
+            stockOwnerId
+            stockOwner {
+                name
+            }
+            name
+            type
+            typeText
+            priority
+            status
+            statusText
+            available
+            distributed
+            monoCompany
+            monoCarrier
+            boxLineGrouped
+            boxMonoArticle
+            qtyMaxArticle
+            nbMaxBox
+            checkPosition
+            comment
+            virtual
+            limitType
+            limitTypeText
+            length
+            width
+            height
+            toleranceDimension
+            allowPickingOrderFree
+            extras
+            created
+            createdBy
+            modified
+            modifiedBy
+        }
+    }
+}
+
+mutation CreateEquipment($input: CreateEquipmentInput!) {
+    createEquipment(input: $input) {
+        id
+        stockOwnerId
+        name
+        type
+        priority
+        status
+        available
+        distributed
+        monoCompany
+        monoCarrier
+        boxLineGrouped
+        boxMonoArticle
+        qtyMaxArticle
+        nbMaxBox
+        checkPosition
+        comment
+        virtual
+        limitType
+        length
+        width
+        height
+        toleranceDimension
+        allowPickingOrderFree
+    }
+}
+
+mutation DeleteEquipment($id: String!) {
+    deleteEquipment(id: $id)
+}
+
+mutation SoftDeleteEquipment($equipmentId: String!) {
+    softDeleteEquipment(equipmentId: $equipmentId)
+}
+
+mutation UpdateEquipment($id: String!, $input: UpdateEquipmentInput!) {
+    updateEquipment(id: $id, input: $input) {
+        id
+        stockOwnerId
+        name
+        type
+        priority
+        status
+        available
+        distributed
+        monoCompany
+        monoCarrier
+        boxLineGrouped
+        boxMonoArticle
+        qtyMaxArticle
+        nbMaxBox
+        checkPosition
+        comment
+        virtual
+        limitType
+        length
+        width
+        height
+        toleranceDimension
+        allowPickingOrderFree
+    }
+}
+
+query GetAllEquipmentDetails(
+    $filters: EquipmentDetailSearchFilters
+    $orderBy: [EquipmentDetailOrderByCriterion!]
+    $page: Int!
+    $itemsPerPage: Int!
+) {
+    equipmentDetails(
+        filters: $filters
+        orderBy: $orderBy
+        page: $page
+        itemsPerPage: $itemsPerPage
+    ) {
+        count
+        itemsPerPage
+        totalPages
+        results {
+            id
+            preparationMode
+            preparationModeText
+            stockOwnerId
+            stockOwner {
+                name
+            }
+            equipmentId
+            equipment {
+                name
+            }
+            packagingId
+            packaging {
+                name
+            }
+            extras
+            created
+            createdBy
+            modified
+            modifiedBy
+        }
+    }
+}
+
+query GetEquipmentDetailById($id: String!) {
+    equipmentDetail(id: $id) {
+        id
+        preparationMode
+        preparationModeText
+        stockOwnerId
+        stockOwner {
+            name
+        }
+        equipmentId
+        equipment {
+            name
+        }
+        packagingId
+        packaging {
+            name
+        }
+        extras
+        created
+        createdBy
+        modified
+        modifiedBy
+    }
+}
+
+mutation CreateEquipmentDetail($input: CreateEquipmentDetailInput!) {
+    createEquipmentDetail(input: $input) {
+        id
+        preparationMode
+        stockOwnerId
+        equipmentId
+        packagingId
+    }
+}
+
+mutation DeleteEquipmentDetail($id: String!) {
+    deleteEquipmentDetail(id: $id)
+}
+
+mutation BulkDeleteEquipmentDetails($id: String!) {
+    bulkDeleteEquipmentDetails(equipmentId: $id)
+}
+
+mutation UpdateEquipmentDetail($id: String!, $input: UpdateEquipmentDetailInput!) {
+    updateEquipmentDetail(id: $id, input: $input) {
+        id
+        preparationMode
+        stockOwnerId
+        equipmentId
+        packagingId
+    }
+}

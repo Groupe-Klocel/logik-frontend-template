@@ -1,0 +1,120 @@
+query GetAllPurchaseOrders(
+    $orderBy: [PurchaseOrderOrderByCriterion!]
+    $filters: PurchaseOrderSearchFilters
+    $page: Int!
+    $itemsPerPage: Int!
+    $language: String
+) {
+    purchaseOrders(orderBy: $orderBy, filters: $filters, page: $page, itemsPerPage: $itemsPerPage, language: $language) {
+        count
+        itemsPerPage
+        totalPages
+        page
+        results {
+            id
+            extras
+            created
+            createdBy
+            modified
+            modifiedBy
+            name
+            status
+            type
+            supplier
+            orderDate
+            expectedGoodsInDate
+            comment
+            stockOwnerId
+            statusText
+            typeText
+        }
+    }
+}
+
+query GetPurchaseOrderIds(
+    $filters: PurchaseOrderSearchFilters
+    $orderBy: [PurchaseOrderOrderByCriterion!]
+    $page: Int!
+    $itemsPerPage: Int!
+) {
+    purchaseOrders(filters: $filters, orderBy: $orderBy, page: $page, itemsPerPage: $itemsPerPage) {
+        count
+        itemsPerPage
+        totalPages
+        results {
+            id
+            name
+        }
+    }
+}
+
+query GetPurchaseOrderById($id: String!, $language:String = "en") {
+    purchaseOrder(id: $id, language: $language) {
+        id
+        extras
+        created
+        createdBy
+        modified
+        modifiedBy
+        name
+        status
+        type
+        supplier
+        orderDate
+        expectedGoodsInDate
+        comment
+        stockOwnerId
+        statusText
+        typeText
+    }
+}
+
+mutation CreatePurchaseOrder($input: CreatePurchaseOrderInput!) {
+    createPurchaseOrder(input: $input) {
+        id
+        extras
+        created
+        createdBy
+        modified
+        modifiedBy
+        name
+        status
+        type
+        supplier
+        orderDate
+        expectedGoodsInDate
+        comment
+        stockOwnerId
+        statusText
+        typeText
+    }
+}
+
+mutation DeletePurchaseOrder($id: String!) {
+    deletePurchaseOrder(id: $id)
+}
+
+mutation SoftDeletePurchaseOrder($purchaseOrderId: String!) {
+    softDeletePurchaseOrder(purchaseOrderId: $purchaseOrderId)
+}
+
+mutation UpdatePurchaseOrder($id: String!, $input: UpdatePurchaseOrderInput!) {
+    updatePurchaseOrder(id: $id, input: $input) {
+        id
+        extras
+        created
+        createdBy
+        modified
+        modifiedBy
+        name
+        status
+        type
+        supplier
+        orderDate
+        expectedGoodsInDate
+        comment
+        stockOwnerId
+        statusText
+        typeText
+    }
+}

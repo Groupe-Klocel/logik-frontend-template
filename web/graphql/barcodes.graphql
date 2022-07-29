@@ -109,17 +109,23 @@ mutation ExportBarcodes(
     }
 }
 
-# mutation RenderBarcode($code: String!, $category: BarcodeCategory, $pages: Int!) {
-#     renderBarcode(code: $code, category: $category, pages: $pages) {
-#         __typename
-#         ... on RenderedDocument {
-#             url
-#         }
-#         ... on BarcodeError {
-#             message
-#         }
-#     }
-# }
+mutation RenderDocument($templateFilename: String!, $context: JSON!) {
+    renderDocument(templateFilename: $templateFilename, context: $context) {
+        __typename
+        ... on RenderedDocument {
+            url
+        }
+        ... on TemplateDoesNotExist {
+            message
+        }
+        ... on TemplateError {
+            message
+        }
+        ... on MissingContext {
+            message
+        }
+    }
+}
 
 mutation UpdateBarcode($id: String!, $input: UpdateBarcodeInput!) {
     updateBarcode(id: $id, input: $input) {

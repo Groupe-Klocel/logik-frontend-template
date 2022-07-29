@@ -1,4 +1,4 @@
-import { META_DEFAULTS } from '@configs/misc'
+import { META_DEFAULTS } from '@helpers'
 import Head from 'next/head'
 import { FC, useMemo } from 'react'
 

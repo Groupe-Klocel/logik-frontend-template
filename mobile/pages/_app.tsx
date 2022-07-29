@@ -1,4 +1,4 @@
-import { META_DEFAULTS } from '@configs/misc';
+import { META_DEFAULTS } from '@helpers';
 import { cookie, getDefaultTheme } from '@helpers';
 import 'antd/dist/antd.css';
 import { AppProvider } from 'context/AppContext';
