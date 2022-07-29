@@ -2,7 +2,6 @@ import { ContentSpin, DetailsList } from '@components';
 import { Layout, Typography } from 'antd';
 import useTranslation from 'next-translate/useTranslation';
 import { FC, useEffect } from 'react';
-import { NextRouter } from 'next/router';
 import styled from 'styled-components';
 import { showError, useDetail } from '@helpers';
 import { ModelType } from 'models/Models';
@@ -14,7 +13,6 @@ const StyledPageContent = styled(Layout.Content)`
 
 export interface ISingleItemProps {
     id: string | any;
-    router: NextRouter;
     dataModel: ModelType;
     headerComponent: any;
     extraDataComponent: any;
