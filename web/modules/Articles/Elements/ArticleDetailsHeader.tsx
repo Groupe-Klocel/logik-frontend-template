@@ -65,7 +65,7 @@ const ArticleDetailsHeader: FC<ISingleItemProps> = (props: ISingleItemProps) => 
             routes={breadsCrumb}
             onBack={() => router.push('/articlesv2')}
             actionsRight={
-                modes.length > 0 || !modes.includes(ModeEnum.Write) ? (
+                modes.length > 0 && modes.includes(ModeEnum.Write) ? (
                     <Space>
                         <Button onClick={updateBoxQuantity} type="primary">
                             {t('actions:update-quantity')}

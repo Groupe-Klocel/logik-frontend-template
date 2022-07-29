@@ -21,7 +21,7 @@ const ArticlesPage: PageComponent = () => {
         title: t('common:articles'),
         routes: articlesSubRoutes,
         actionsComponent:
-            modes.length > 0 || modes.includes(ModeEnum.Write) ? (
+            modes.length > 0 && modes.includes(ModeEnum.Write) ? (
                 <LinkButton
                     title={t('actions:add2', { name: t('common:article') })}
                     path="/add-articlev2"
