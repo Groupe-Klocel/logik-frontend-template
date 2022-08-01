@@ -3,7 +3,7 @@ import MainLayout from 'components/layouts/MainLayout';
 import { FC } from 'react';
 
 import { ArticleModel } from 'models/ArticleModel';
-import { HeaderData, ListComponentWithFilter } from '../modules/Crud/ListComponentWithFilter';
+import { HeaderData, ListComponent } from '../modules/Crud/ListComponent';
 import { ModeEnum } from 'generated/graphql';
 import { useAppState } from 'context/AppContext';
 import { getModesFromPermissions, pathParams } from '@helpers';
@@ -33,7 +33,7 @@ const ArticlesPage: PageComponent = () => {
     return (
         <>
             <AppHead title="Bee V2" />
-            <ListComponentWithFilter
+            <ListComponent
                 headerData={headerData}
                 dataModel={ArticleModel}
                 routeDetailPage={'/articlev2/:id'}

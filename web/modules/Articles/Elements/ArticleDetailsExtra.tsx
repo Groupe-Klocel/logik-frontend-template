@@ -7,8 +7,8 @@ import { useState } from 'react';
 import { BarcodeRenderModal } from 'modules/Barcodes/Elements/BarcodeRenderModal';
 import { useAppState } from 'context/AppContext';
 import { ModeEnum, Table } from 'generated/graphql';
-import { ListTableComponent } from 'modules/Crud/submodules/ListTableComponent';
 import { ArticleLuBarcodeModel } from 'models/ArticleLuBarcodeModel';
+import { ListComponent } from 'modules/Crud/ListComponent';
 
 const { Title } = Typography;
 
@@ -28,7 +28,7 @@ const ArticleDetailsExtra = ({ articleId }: IItemDetailsProps) => {
         <>
             <Divider />
             <Title level={4}>{t('common:associated', { name: t('common:barcodes') })}</Title>
-            <ListTableComponent
+            <ListComponent
                 searchCriteria={{ articleId: articleId }}
                 dataModel={ArticleLuBarcodeModel}
                 actionColumns={[
@@ -58,7 +58,7 @@ const ArticleDetailsExtra = ({ articleId }: IItemDetailsProps) => {
                         )
                     }
                 ]}
-                disableFilters={true}
+                searchable={false}
             />
             <BarcodeRenderModal
                 visible={showModal}

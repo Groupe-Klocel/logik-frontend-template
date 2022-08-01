@@ -11,7 +11,7 @@ import { useAuth } from 'context/AuthContext';
  * @param page page number to query
  * @param itemsPerPage number of items to request in each page
  * @param sort sorting information dictionary {field:string,ascending:boolean}
- * @returns isLoading and data as state variable.
+ * @returns { data, isLoading, reload } where isLoading and result are state variable and reload is method to call for reloading list.
  */
 const useList = (
     resolverName: string,
@@ -52,10 +52,11 @@ const useList = (
             }
         }
     `;
-
-    const [data, setData] = useState<any>({ isLoading: true, data: [] });
-
-    useEffect(() => {
+    const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [data, setData] = useState<any>([]);
+    
+    let reload = () => {
+        setIsLoading(true);
         let newSort;
 
         if (sort === null) {
@@ -72,11 +73,12 @@ const useList = (
         };
 
         graphqlRequestClient.request(query, variables).then((result: any) => {
-            setData({ isLoading: false, data: result });
+            setData(result);
+            setIsLoading(false);
         });
-    }, [search, page, itemsPerPage, sort]);
+    };
 
-    return data;
+    return {data, isLoading, reload};
 };
 
 /**
