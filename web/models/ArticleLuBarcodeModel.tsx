@@ -11,8 +11,6 @@ export const ArticleLuBarcodeModel: ModelType = {
         update: 'updateArticleLuBarcode',
         delete: 'deleteArticleLuBarcode'
     },
-    detailColumns: [],
-    listColumns: ['id', 'barcodeId'],
-    sortableColumns: [],
-    filterColumns: []
+    detailColumns: ['id','barcodeId'],
+    listColumns: ['id', 'barcodeId']
 };

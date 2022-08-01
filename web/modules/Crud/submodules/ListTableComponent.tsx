@@ -111,7 +111,7 @@ const ListTableComponent = (props: IGeneralListProps) => {
                 let sort_index: number = 1;
                 Object.keys(listData['results'][0]).forEach((column_name) => {
                     let useCols = props.dataModel.listColumns;
-                    let sortableColumns = props.dataModel.sortableColumns;
+                    let sortableColumns = props.dataModel.sortableColumns || [];
                     if (useCols.length > 0 && !useCols.includes(column_name)) return;
 
                     let row_data: any = {

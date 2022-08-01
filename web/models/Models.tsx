@@ -29,8 +29,8 @@ export type ModelType = {
     tableName: string;
     detailColumns: Array<string>;
     listColumns: Array<string>;
-    sortableColumns: Array<string>;
-    filterColumns: Array<FilterColumnType>;
+    sortableColumns?: Array<string>;
+    filterColumns?: Array<FilterColumnType>;
 
     endpoints: EndpointsType;
     resolverName: string;
