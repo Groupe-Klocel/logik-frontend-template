@@ -35,7 +35,7 @@ const ArticleDetailsHeader: FC<ISingleItemProps> = (props: ISingleItemProps) => 
         isLoading: deleteLoading,
         result: deleteResult,
         mutate: deleteArticle
-    } = useDelete(props.dataModel.queryNames.delete);
+    } = useDelete(props.dataModel.endpoints.delete);
 
     useEffect(() => {
         if (!(deleteResult && deleteResult.data)) return;

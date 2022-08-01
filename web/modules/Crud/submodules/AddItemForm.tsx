@@ -40,7 +40,7 @@ export const AddItemForm: FC<IAddItemFormProps> = (props: IAddItemFormProps) => 
         mutate
     } = useCreate(
         props.dataModel.resolverName,
-        props.dataModel.queryNames.create,
+        props.dataModel.endpoints.create,
         props.dataModel.detailColumns
     );
 
@@ -51,7 +51,7 @@ export const AddItemForm: FC<IAddItemFormProps> = (props: IAddItemFormProps) => 
             router.push(
                 props.routeAfterSuccess.replace(
                     ':id',
-                    createResult.data[props.dataModel.queryNames.create]?.id
+                    createResult.data[props.dataModel.endpoints.create]?.id
                 )
             );
             showSuccess(t('messages:success-created'));

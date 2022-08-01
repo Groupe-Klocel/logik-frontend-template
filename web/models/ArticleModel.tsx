@@ -4,7 +4,7 @@ export const ArticleModel: ModelType = {
     tableName: 'Article',
     resolverName: 'Article',
 
-    queryNames: {
+    endpoints: {
         list: 'articles',
         export: 'exportArticles',
         detail: 'article',

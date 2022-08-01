@@ -61,7 +61,7 @@ const ListComponentWithFilter = (props: IListProps) => {
         isLoading: deleteLoading,
         result: deleteResult,
         mutate: callDelete
-    } = useDelete(props.dataModel.queryNames.delete);
+    } = useDelete(props.dataModel.endpoints.delete);
 
     useEffect(() => {
         if (deleteLoading) {

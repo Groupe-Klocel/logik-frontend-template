@@ -26,7 +26,7 @@ const EditItemComponent: FC<IEditItemProps> = (props: IEditItemProps) => {
 
     const { isLoading, data, error } = useDetail(
         props.id,
-        props.dataModel.queryNames.detail,
+        props.dataModel.endpoints.detail,
         props.dataModel.detailColumns
     );
 
@@ -40,10 +40,10 @@ const EditItemComponent: FC<IEditItemProps> = (props: IEditItemProps) => {
         <>
             {props.headerComponent}
             <StyledPageContent>
-                {data && !isLoading && data[props.dataModel.queryNames.detail] ? (
+                {data && !isLoading && data[props.dataModel.endpoints.detail] ? (
                     <EditItemForm
                         id={props.id}
-                        details={data[props.dataModel.queryNames.detail]}
+                        details={data[props.dataModel.endpoints.detail]}
                         dataModel={props.dataModel}
                         routeAfterSuccess={props.routeAfterSuccess}
                         editSteps={props.editSteps}

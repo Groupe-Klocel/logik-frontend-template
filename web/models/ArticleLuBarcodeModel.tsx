@@ -3,7 +3,7 @@ import { ModelType } from './Models';
 export const ArticleLuBarcodeModel: ModelType = {
     tableName: 'barcode',
     resolverName: 'ArticleLuBarcode',
-    queryNames: {
+    endpoints: {
         list: 'articleLuBarcodes',
         export: 'exportArticleLuBarcodes',
         detail: 'articleLuBarcode',

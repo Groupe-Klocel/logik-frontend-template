@@ -23,7 +23,7 @@ const ItemDetailComponent: FC<ISingleItemProps> = (props: ISingleItemProps) => {
 
     const { isLoading, data, error } = useDetail(
         props.id,
-        props.dataModel.queryNames.detail,
+        props.dataModel.endpoints.detail,
         props.dataModel.detailColumns
     );
 
@@ -38,9 +38,9 @@ const ItemDetailComponent: FC<ISingleItemProps> = (props: ISingleItemProps) => {
             {props.headerComponent}
             <StyledPageContent>
                 {data && !isLoading ? (
-                    data[props.dataModel.queryNames.detail] !== null ? (
+                    data[props.dataModel.endpoints.detail] !== null ? (
                         <>
-                            <DetailsList details={data[props.dataModel.queryNames.detail]} />
+                            <DetailsList details={data[props.dataModel.endpoints.detail]} />
                             {props.extraDataComponent}
                         </>
                     ) : (

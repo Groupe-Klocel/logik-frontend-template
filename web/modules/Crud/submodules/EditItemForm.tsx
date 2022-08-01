@@ -30,7 +30,7 @@ export const EditItemForm: FC<IEditItemFormProps> = (props: IEditItemFormProps) 
     } = useUpdate(
         props.dataModel.resolverName,
         props.id,
-        props.dataModel.queryNames.update,
+        props.dataModel.endpoints.update,
         props.dataModel.detailColumns
     );
 
@@ -41,7 +41,7 @@ export const EditItemForm: FC<IEditItemFormProps> = (props: IEditItemFormProps) 
             router.push(
                 props.routeAfterSuccess.replace(
                     ':id',
-                    updateResult.data[props.dataModel.queryNames.update]?.id
+                    updateResult.data[props.dataModel.endpoints.update]?.id
                 )
             );
             showSuccess(t('messages:success-updated'));

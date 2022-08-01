@@ -17,7 +17,7 @@ export type FilterColumnType = {
     rules?: Array<FormRuleType>;
 };
 
-export type QueryNamesType = {
+export type EndpointsType = {
     list: string;
     export: string;
     detail: string;
@@ -32,6 +32,6 @@ export type ModelType = {
     sortableColumns: Array<string>;
     filterColumns: Array<FilterColumnType>;
 
-    queryNames: QueryNamesType;
+    endpoints: EndpointsType;
     resolverName: string;
 };
