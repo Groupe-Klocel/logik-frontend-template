@@ -6,7 +6,7 @@ import { FC, useEffect } from 'react';
 import styled from 'styled-components';
 import { showError, useDetail } from '@helpers';
 import { EditItemForm } from './submodules/EditItemForm';
-import { FilterColumnType, ModelType } from 'models/Models';
+import { FilterFieldType, ModelType } from 'models/Models';
 
 const StyledPageContent = styled(Layout.Content)`
     margin: 0px 30px 50px 30px;
@@ -18,7 +18,7 @@ export interface IEditItemProps {
     headerComponent: any;
     dataModel: ModelType;
     routeAfterSuccess: string;
-    editSteps: Array<Array<FilterColumnType>>;
+    editSteps: Array<Array<FilterFieldType>>;
 }
 
 const EditItemComponent: FC<IEditItemProps> = (props: IEditItemProps) => {
@@ -27,7 +27,7 @@ const EditItemComponent: FC<IEditItemProps> = (props: IEditItemProps) => {
     const { isLoading, data, error } = useDetail(
         props.id,
         props.dataModel.endpoints.detail,
-        props.dataModel.detailColumns
+        props.dataModel.detailFields
     );
 
     useEffect(() => {

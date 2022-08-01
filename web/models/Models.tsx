@@ -10,7 +10,7 @@ export type FormRuleType = {
     message: string;
 };
 
-export type FilterColumnType = {
+export type FilterFieldType = {
     name: string;
     type: FormDataType;
     numberPrecision?: number;
@@ -27,10 +27,10 @@ export type EndpointsType = {
 };
 export type ModelType = {
     tableName: string;
-    detailColumns: Array<string>;
-    listColumns: Array<string>;
-    sortableColumns?: Array<string>;
-    filterColumns?: Array<FilterColumnType>;
+    detailFields: Array<string>;
+    listFields: Array<string>;
+    sortableFields?: Array<string>;
+    filterFields?: Array<FilterFieldType>;
 
     endpoints: EndpointsType;
     resolverName: string;

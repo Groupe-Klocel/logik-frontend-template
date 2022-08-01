@@ -102,7 +102,7 @@ const ListComponentWithFilter = (props: IListProps) => {
                 content: (
                     <ListSearchComponent
                         form={formSearch}
-                        columns={props.dataModel.filterColumns || []}
+                        columns={props.dataModel.filterFields || []}
                     />
                 ),
                 onCancel: () => handleReset(),

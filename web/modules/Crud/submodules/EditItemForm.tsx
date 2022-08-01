@@ -7,14 +7,14 @@ import { useRouter } from 'next/router';
 
 import { showError, showSuccess, showInfo, useUpdate } from '@helpers';
 import { FormGroup } from 'modules/Crud/submodules/FormGroup';
-import { FilterColumnType, ModelType } from 'models/Models';
+import { FilterFieldType, ModelType } from 'models/Models';
 
 export interface IEditItemFormProps {
     id: string;
     details: any;
     dataModel: ModelType;
     routeAfterSuccess: string;
-    editSteps: Array<Array<FilterColumnType>>;
+    editSteps: Array<Array<FilterFieldType>>;
 }
 
 export const EditItemForm: FC<IEditItemFormProps> = (props: IEditItemFormProps) => {
@@ -29,9 +29,8 @@ export const EditItemForm: FC<IEditItemFormProps> = (props: IEditItemFormProps) 
         mutate
     } = useUpdate(
         props.dataModel.resolverName,
-        props.id,
         props.dataModel.endpoints.update,
-        props.dataModel.detailColumns
+        props.dataModel.detailFields
     );
 
     useEffect(() => {

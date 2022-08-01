@@ -12,7 +12,7 @@ export const ArticleModel: ModelType = {
         update: 'updateArticle',
         delete: 'deleteArticle'
     },
-    detailColumns: [
+    detailFields: [
         'id',
         'extras',
         'created',
@@ -49,7 +49,7 @@ export const ArticleModel: ModelType = {
         'baseUnitRotationText',
         'featureTypeText'
     ],
-    listColumns: [
+    listFields: [
         'id',
         'extras',
         'created',
@@ -60,8 +60,8 @@ export const ArticleModel: ModelType = {
         'code',
         'name'
     ],
-    sortableColumns: ['name', 'code'],
-    filterColumns: [
+    sortableFields: ['name', 'code'],
+    filterFields: [
         { name: 'name', type: FormDataType.String },
         { name: 'code', type: FormDataType.String },
         { name: 'status', type: FormDataType.Number },

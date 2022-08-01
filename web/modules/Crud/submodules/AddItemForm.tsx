@@ -5,12 +5,12 @@ import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
 
 import { showError, showSuccess, showInfo, useCreate } from '@helpers';
-import { FilterColumnType, ModelType } from 'models/Models';
+import { FilterFieldType, ModelType } from 'models/Models';
 import { FormGroup } from './FormGroup';
 
 export interface IAddItemFormProps {
     dataModel: ModelType;
-    addSteps: Array<Array<FilterColumnType>>;
+    addSteps: Array<Array<FilterFieldType>>;
     routeAfterSuccess: string;
 }
 
@@ -41,7 +41,7 @@ export const AddItemForm: FC<IAddItemFormProps> = (props: IAddItemFormProps) => 
     } = useCreate(
         props.dataModel.resolverName,
         props.dataModel.endpoints.create,
-        props.dataModel.detailColumns
+        props.dataModel.detailFields
     );
 
     useEffect(() => {

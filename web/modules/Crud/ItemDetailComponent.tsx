@@ -24,7 +24,7 @@ const ItemDetailComponent: FC<ISingleItemProps> = (props: ISingleItemProps) => {
     const { isLoading, data, error } = useDetail(
         props.id,
         props.dataModel.endpoints.detail,
-        props.dataModel.detailColumns
+        props.dataModel.detailFields
     );
 
     useEffect(() => {

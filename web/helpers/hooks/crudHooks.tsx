@@ -2,6 +2,17 @@ import { gql } from 'graphql-request';
 import { useEffect, useState } from 'react';
 import { useAuth } from 'context/AuthContext';
 
+/**
+ * Getting list of items from CRUD API.
+ * @param resolverName resolverName to query.
+ * @param queryName endpoint of list query
+ * @param fields list of fields to fetch
+ * @param search search filter dictionary if you need filtering
+ * @param page page number to query
+ * @param itemsPerPage number of items to request in each page
+ * @param sort sorting information dictionary {field:string,ascending:boolean}
+ * @returns isLoading and data as state variable.
+ */
 const useList = (
     resolverName: string,
     queryName: string,
@@ -11,6 +22,7 @@ const useList = (
     itemsPerPage: number,
     sort: any
 ) => {
+    
     const { graphqlRequestClient } = useAuth();
 
     const sortByDate = {
@@ -67,6 +79,14 @@ const useList = (
     return data;
 };
 
+/**
+ * Getting item detail from CRUD API.
+ * @param id Item id to query.
+ * @param queryName endpoint of list query
+ * @param fields list of fields to fetch
+ * @returns { isLoading, result, mutate } where isLoading and result are state variable and mutate is method to call for fetching detail.
+ */
+
 const useDetail = (id: string, queryName: string, fields: Array<string>) => {
     const { graphqlRequestClient } = useAuth();
 
@@ -120,7 +140,14 @@ const useCreate = (resolverName: string, queryName: string, fields: Array<string
     return { isLoading, result, mutate };
 };
 
-const useUpdate = (resolverName: string, id: string, queryName: string, fields: Array<string>) => {
+/**
+ * Updating item detail using CRUD API.
+ * @param resolverName resolverName to query
+ * @param queryName endpoint of update query
+ * @param fields list of fields to return after update
+ * @returns { isLoading, result, mutate } where isLoading and result are state variable and mutate is method to call for updating.
+ */
+const useUpdate = (resolverName: string, queryName: string, fields: Array<string>) => {
     const { graphqlRequestClient } = useAuth();
 
     const query = gql`mutation ${queryName}($id: String!, $input: Update${resolverName}Input!) {
@@ -149,6 +176,12 @@ const useUpdate = (resolverName: string, id: string, queryName: string, fields: 
     return { isLoading, result, mutate };
 };
 
+/**
+ * Exporting items Using CRUD API.
+ * @param resolverName resolverName to query
+ * @param queryName endpoint of export query
+ * @returns { isLoading, result, mutate } where isLoading and result are state variable and mutate is method to call for exporting.
+ */
 const useExport = (resolverName: string, queryName: string) => {
     const { graphqlRequestClient } = useAuth();
 
@@ -184,6 +217,11 @@ const useExport = (resolverName: string, queryName: string) => {
     return { isLoading, result, mutate };
 };
 
+/**
+ * Deleting items Using CRUD API.
+ * @param queryName endpoint of delete query
+ * @returns { isLoading, result, mutate } where isLoading and result are state variable and mutate is method to call for deleting.
+ */
 const useDelete = (queryName: string) => {
     const { graphqlRequestClient } = useAuth();
 

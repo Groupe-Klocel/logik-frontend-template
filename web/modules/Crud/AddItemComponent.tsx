@@ -3,7 +3,7 @@ import { Layout } from 'antd';
 import { FC } from 'react';
 import styled from 'styled-components';
 import { AddItemForm } from './submodules/AddItemForm';
-import { FilterColumnType, ModelType } from 'models/Models';
+import { FilterFieldType, ModelType } from 'models/Models';
 
 const StyledPageContent = styled(Layout.Content)`
     margin: 0px 30px 50px 30px;
@@ -13,7 +13,7 @@ const StyledPageContent = styled(Layout.Content)`
 export interface IAddItemFormProps {
     headerComponent: any;
     dataModel: ModelType;
-    addSteps: Array<Array<FilterColumnType>>;
+    addSteps: Array<Array<FilterFieldType>>;
     routeAfterSuccess: string;
 }
 

@@ -1,10 +1,10 @@
 import { Form, Input, InputNumber, Checkbox } from 'antd';
 import useTranslation from 'next-translate/useTranslation';
 import { FC } from 'react';
-import { FilterColumnType, FormDataType } from '../../../models/Models';
+import { FilterFieldType, FormDataType } from '../../../models/Models';
 
 export interface IFormGroupProps {
-    inputs: Array<FilterColumnType>;
+    inputs: Array<FilterFieldType>;
 }
 
 const FormGroup: FC<IFormGroupProps> = (props: IFormGroupProps) => {
@@ -12,7 +12,7 @@ const FormGroup: FC<IFormGroupProps> = (props: IFormGroupProps) => {
 
     return (
         <>
-            {props.inputs.map((item: FilterColumnType, number) => {
+            {props.inputs.map((item: FilterFieldType, number) => {
                 if (item.type === FormDataType.Number)
                     return (
                         <Form.Item

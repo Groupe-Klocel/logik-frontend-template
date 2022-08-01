@@ -40,7 +40,7 @@ const ListTableComponent = (props: IGeneralListProps) => {
     const { isLoading, data } = useList(
         props.dataModel.resolverName,
         props.dataModel.endpoints.list,
-        props.dataModel.listColumns,
+        props.dataModel.listFields,
         props.searchCriteria,
         pagination.current,
         pagination.itemsPerPage,
@@ -110,8 +110,8 @@ const ListTableComponent = (props: IGeneralListProps) => {
                 let result_list: Array<any> = [];
                 let sort_index: number = 1;
                 Object.keys(listData['results'][0]).forEach((column_name) => {
-                    let useCols = props.dataModel.listColumns;
-                    let sortableColumns = props.dataModel.sortableColumns || [];
+                    let useCols = props.dataModel.listFields;
+                    let sortableFields = props.dataModel.sortableFields || [];
                     if (useCols.length > 0 && !useCols.includes(column_name)) return;
 
                     let row_data: any = {
@@ -120,7 +120,7 @@ const ListTableComponent = (props: IGeneralListProps) => {
                         key: column_name,
                         showSorterTooltip: false
                     };
-                    if (sortableColumns.length > 0 && sortableColumns.includes(column_name)) {
+                    if (sortableFields.length > 0 && sortableFields.includes(column_name)) {
                         row_data['sorter'] = { multiple: sort_index };
                         row_data['showSorterTooltip'] = false;
                         sort_index++;
