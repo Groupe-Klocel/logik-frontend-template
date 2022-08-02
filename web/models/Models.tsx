@@ -1,15 +1,16 @@
+// Used for CRUD form field type declarations.
 export enum FormDataType {
     Number,
     String,
     Boolean,
     TextArea
 }
-
+// Used for CRUD form validation rule definitions
 export type FormRuleType = {
     required: boolean;
     message: string;
 };
-
+// Used for CRUD form item definitons
 export type FilterFieldType = {
     name: string;
     type: FormDataType;
@@ -17,6 +18,7 @@ export type FilterFieldType = {
     rules?: Array<FormRuleType>;
 };
 
+// Used for defining endpoints inside ModelType
 export type EndpointsType = {
     list: string;
     export: string;
@@ -25,6 +27,7 @@ export type EndpointsType = {
     update: string;
     delete: string;
 };
+// Used for model definition of CRUD operations.
 export type ModelType = {
     tableName: string;
     detailFields: Array<string>;

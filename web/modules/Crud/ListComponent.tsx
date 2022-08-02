@@ -6,7 +6,7 @@ import { useDrawerDispatch } from 'context/DrawerContext';
 import useTranslation from 'next-translate/useTranslation';
 import { DataQueryType, DEFAULT_ITEMS_PER_PAGE, DEFAULT_PAGE_NUMBER, getModesFromPermissions, orderByFormater, PaginationType, showError, showInfo, showSuccess, useDelete, useExport, useList } from '@helpers';
 import { useCallback, useEffect, useState } from 'react';
-import { ListSearchComponent } from './submodules/ListSearchComponent';
+import { ListFilters } from './submodules/ListFilters';
 import { ModelType } from 'models/Models';
 import { useAppState } from 'context/AppContext';
 import { ExportFormat, ModeEnum } from 'generated/graphql';
@@ -109,7 +109,7 @@ const ListComponent = (props: IListProps) => {
                 cancelButton: true,
                 submit: true,
                 content: (
-                    <ListSearchComponent
+                    <ListFilters
                         form={formSearch}
                         columns={props.dataModel.filterFields || []}
                     />

@@ -8,7 +8,7 @@ export interface IGeneralSearchProps {
     columns: Array<FilterFieldType>;
 }
 
-const ListSearchComponent: FC<IGeneralSearchProps> = ({ form, columns }: IGeneralSearchProps) => {
+const ListFilters: FC<IGeneralSearchProps> = ({ form, columns }: IGeneralSearchProps) => {
     const { t } = useTranslation();
 
     return (
@@ -44,6 +44,6 @@ const ListSearchComponent: FC<IGeneralSearchProps> = ({ form, columns }: IGenera
     );
 };
 
-ListSearchComponent.displayName = 'ListSearchComponent';
+ListFilters.displayName = 'ListFilters';
 
-export { ListSearchComponent };
+export { ListFilters };
