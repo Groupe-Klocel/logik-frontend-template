@@ -1,0 +1,75 @@
+import { ModelType, FormDataType } from './Models';
+
+export const ArticleModel: ModelType = {
+    tableName: 'Article',
+    resolverName: 'Article',
+
+    endpoints: {
+        list: 'articles',
+        export: 'exportArticles',
+        detail: 'article',
+        create: 'createArticle',
+        update: 'updateArticle',
+        delete: 'deleteArticle'
+    },
+    detailFields: [
+        'id',
+        'extras',
+        'created',
+        'createdBy',
+        'modified',
+        'modifiedBy',
+        'status',
+        'code',
+        'name',
+        'additionalDescription',
+        'supplierName',
+        'translation',
+        'length',
+        'width',
+        'height',
+        'baseUnitPrice',
+        'baseUnitWeight',
+        'baseUnitPicking',
+        'baseUnitRotation',
+        'cubingType',
+        'featureType',
+        'permanentProduct',
+        'tariffClassification',
+        'family',
+        'subfamily',
+        'groupingId',
+        'countryOfOrigin',
+        'newProduct',
+        'endOfLife',
+        'supportQuantity',
+        'stockOwnerId',
+        'statusText',
+        'cubingTypeText',
+        'baseUnitRotationText',
+        'featureTypeText'
+    ],
+    listFields: [
+        'id',
+        'extras',
+        'created',
+        'createdBy',
+        'modified',
+        'modifiedBy',
+        'status',
+        'code',
+        'name'
+    ],
+    sortableFields: ['name', 'code'],
+    filterFields: [
+        { name: 'name', type: FormDataType.String },
+        { name: 'code', type: FormDataType.String },
+        { name: 'status', type: FormDataType.Number },
+        { name: 'length', type: FormDataType.Number },
+        { name: 'width', type: FormDataType.Number },
+        { name: 'height', type: FormDataType.Number },
+        { name: 'baseUnitWeight', type: FormDataType.Number },
+        { name: 'boxWeight', type: FormDataType.Number },
+        { name: 'permanentProduct', type: FormDataType.Boolean }
+    ]
+};
